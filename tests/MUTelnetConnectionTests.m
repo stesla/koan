@@ -310,5 +310,4 @@
   [self assertNotNil:_connectionError];
 }
 
-
 @end

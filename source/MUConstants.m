@@ -20,12 +20,20 @@
 
 #import "MUConstants.h"
 
-// Preference pane constants.
+// Preference pane localization constants.
 
 NSString *MULPreferencePaneConnectionsName = @"PreferencePaneConnectionsName";
 NSString *MULPreferencePaneConnectionsToolTip = @"PreferencePaneConnectionsToolTip";
 NSString *MULPreferencePaneLoggingName = @"PreferencePaneLoggingName";
 NSString *MULPreferencePaneLoggingToolTip = @"PreferencePaneLoggingToolTip";
+
+// Status message localization constants.
+
+NSString *MULConnectionOpening = @"ConnectionOpening";
+NSString *MULConnectionOpen = @"ConnectionOpen";
+NSString *MULConnectionClosed = @"ConnectionClosed";
+NSString *MULConnectionClosedByServer = @"ConnectionClosedByServer";
+NSString *MULConnectionClosedByError = @"ConnectionClosedByError";
 
 // Toolbar item constants.
 

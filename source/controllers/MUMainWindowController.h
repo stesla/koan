@@ -25,7 +25,7 @@
 {
   IBOutlet NSTextField *hostNameField;
   IBOutlet NSTextField *portField;
-  IBOutlet NSTextView *textView;
+  IBOutlet NSTextView *receivedTextView;
   IBOutlet NSTextField *inputField;
   IBOutlet NSButton *connectButton;
   IBOutlet NSButton *disconnectButton;
@@ -40,9 +40,7 @@
 - (IBAction) disconnect:(id)sender;
 - (IBAction) writeLine:(id)sender;
 
-// Telnet Delegate Methods
-- (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
-- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet;
+- (IBAction) nextCommand:(id)sender;
+- (IBAction) previousCommand:(id)sender;
 
-- (void) displayString:(NSString *)string;
 @end

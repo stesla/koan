@@ -20,12 +20,20 @@
 
 #import <Cocoa/Cocoa.h>
 
-// Preference pane constants.
+// Preference pane localization constants.
 
 extern NSString *MULPreferencePaneConnectionsName;
 extern NSString *MULPreferencePaneConnectionsToolTip;
 extern NSString *MULPreferencePaneLoggingName;
 extern NSString *MULPreferencePaneLoggingToolTip;
+
+// Status message localization constants.
+
+extern NSString *MULConnectionOpening;
+extern NSString *MULConnectionOpen;
+extern NSString *MULConnectionClosed;
+extern NSString *MULConnectionClosedByServer;
+extern NSString *MULConnectionClosedByError;
 
 // Toolbar item constants.
 

@@ -17,7 +17,7 @@
                 hostNameField = NSTextField; 
                 inputField = NSTextField; 
                 portField = NSTextField; 
-                textView = NSTextView; 
+                receivedTextView = NSTextView; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 

@@ -27,10 +27,20 @@
   NSFont *monacoFont = [NSFont fontWithName:@"Monaco" size:10];
   NSDictionary *attributeDictionary = [NSDictionary dictionaryWithObject:monacoFont
                                                                   forKey:NSFontAttributeName];
-  [textView setTypingAttributes:attributeDictionary];
+  [receivedTextView setTypingAttributes:attributeDictionary];
+  
+  _historyIndex = -1;
+  _historyArray = [[NSMutableArray alloc] init];
   
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
+}
+
+- (void) dealloc
+{
+  [_telnetConnection close];
+  [_telnetConnection dealloc];
+  [_historyArray dealloc];
 }
 
 - (IBAction) connect:(id)sender
@@ -50,7 +60,7 @@
 
 - (IBAction) disconnect:(id)sender
 {
-  [_telnetConnection close];  
+  [_telnetConnection close];
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
 }
@@ -60,42 +70,71 @@
   NSString *input = [inputField stringValue];
   NSString *inputToWrite;
   
-  if ([input length] == 0)
+  if ([input length] > 0)
   {
-    [[self window] makeFirstResponder:inputField];
-    return;
-  }
-  
-  inputToWrite = [NSString stringWithFormat:@"%@\n", [inputField stringValue]];
-  [inputField setStringValue:@""];
-  
-  if ([_telnetConnection isConnected])
-  {
-    [_telnetConnection writeString:inputToWrite];
+    inputToWrite = [NSString stringWithFormat:@"%@\n", [inputField stringValue]];
+    
+    if ([_telnetConnection isConnected])
+    {
+      [_telnetConnection writeString:inputToWrite];
+    }
+    
+    if (_historyIndex >= 0 && _historyIndex < [_historyArray count])
+      [_historyArray removeObjectAtIndex:_historyIndex];
+    [_historyArray addObject:[inputField stringValue]];
+    _historyIndex = -1;
+    
+    [inputField setStringValue:@""];
   }
   
   [[self window] makeFirstResponder:inputField];
 }
 
-- (void) displayString:(NSString *)string
+- (void) _displayString:(NSString *)string
 {
   NSAttributedString *attributedString;
   attributedString = [[NSAttributedString alloc] initWithString:string 
-                                                     attributes:[textView typingAttributes]];
-  NSTextStorage *textStorage = [textView textStorage];
+                                                     attributes:[receivedTextView typingAttributes]];
+  NSTextStorage *textStorage = [receivedTextView textStorage];
   
   [textStorage beginEditing];
   [textStorage appendAttributedString:attributedString];
   [textStorage endEditing];
   [string release];
   
-  if ([[(NSScrollView *) [[textView superview] superview] verticalScroller] floatValue] == 1.0)
-    [textView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];  
+  if ([[(NSScrollView *) [[receivedTextView superview] superview] verticalScroller] floatValue] == 1.0)
+    [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];  
 }
+
+- (IBAction) nextCommand:(id)sender
+{
+  if (++_historyIndex == [_historyArray count])
+  {
+    _historyIndex = -1;
+    [inputField setStringValue:@""];
+  }
+  else
+  {
+    [inputField setStringValue:[_historyArray objectAtIndex:_historyIndex]];
+  }
+}
+
+- (IBAction) previousCommand:(id)sender
+{
+  if (--_historyIndex == -2)
+    _historyIndex = [_historyArray count] - 1;
+
+  if (_historyIndex == -1)
+    [inputField setStringValue:@""]; 
+  else
+    [inputField setStringValue:[_historyArray objectAtIndex:_historyIndex]];
+}
+
+// Delegate methods for MUTelnetConnection.
 
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet
 {
-  [self displayString:[telnet read]];
+  [self _displayString:[telnet read]];
 }
 
 - (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet
@@ -103,29 +142,29 @@
   switch ([telnet connectionStatus])
   {
     case MUConnectionStatusConnecting:
-      [self displayString:@"Trying to open connection...\n"];
+      [self _displayString:NSLocalizedString (MULConnectionOpening, nil)];
       break;
 
     case MUConnectionStatusConnected:
-      [self displayString:@"Connected.\n"];
+      [self _displayString:NSLocalizedString (MULConnectionOpen, nil)];
       break;
 
     case MUConnectionStatusClosed:
-      switch([telnet reasonClosed])
-      { 
+      switch ([telnet reasonClosed])
+      {
         case MUConnectionClosedReasonServer:
-          [self displayString:@"Connection closed by server.\n"];
+          [self _displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
           break;
 
         case MUConnectionClosedReasonError:
-          [self displayString:[NSString stringWithFormat:@"Connection closed with error: %@\n", 
-            [telnet errorMessage]]];
+          [self _displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
+                                                         [telnet errorMessage]]];
           break;
 
         default:
-          [self displayString:@"Connection closed.\n"];
+          [self _displayString:NSLocalizedString (MULConnectionClosed, nil)];
       }
-      [_telnetConnection release];
+      [telnet release];
       [disconnectButton setEnabled:NO];
       [connectButton setEnabled:YES];      
       break;
@@ -134,6 +173,8 @@
       //Do nothing
       break;
   }
+  
+  [self _displayString:@"\n"];
 }
 
 // Delegate methods for NSTextView.
@@ -142,23 +183,21 @@
 {
   if (commandSelector == @selector(moveUp:))
   {
-    NSRange range;
-    NSRect rect;
-
-    //TODO: FIX THIS
-    //rect = [[textView layoutManager] lineFragmentRectForGlyphAtIndex:selectedRange.location
-    //                                                  effectiveRange:&range];
-    if (range.location == 0)
+    if ([textView selectedRange].location == 0)
     {
-      
+      [self previousCommand:self];
+      [textView setSelectedRange:NSMakeRange (0, 0)];
       return YES;
     }
-    else
-      return NO;
   }
   else if (commandSelector == @selector(moveDown:))
   {
-
+    if ([textView selectedRange].location == [[textView textStorage] length])
+    {
+      [self nextCommand:self];
+      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      return YES;
+    }
   }
   return NO;
 }

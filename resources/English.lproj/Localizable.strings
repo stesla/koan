@@ -4,3 +4,11 @@
 "PreferencePaneConnectionsToolTip" = "Server connection setup";
 "PreferencePaneLoggingName" = "Logs";
 "PreferencePaneLoggingToolTip" = "Keeping logs of sessions";
+
+// Connection status messages.
+
+"ConnectionOpening" = "Trying to open connection...";
+"ConnectionOpen" = "Connection open.";
+"ConnectionClosed" = "Connection closed.";
+"ConnectionClosedByServer" = "Connection closed by server.";
+"ConnectionClosedWithError" = "Connection closed with error: %@";
