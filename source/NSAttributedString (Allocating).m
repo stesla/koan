@@ -1,7 +1,7 @@
 //
 // NSAttributedString (Allocating).m
 //
-// Copyright (C) 2004 Tyler Berry and Samuel Tesla
+// Copyright (C) 2004 3James Software
 //
 // This file is in the public domain.
 //
