@@ -7,9 +7,10 @@
 #import <Cocoa/Cocoa.h>
 #import <J3Terminal/J3TelnetConnection.h>
 
-#import "MUWorld.h"
 #import "MUFilter.h"
 #import "MUHistoryRing.h"
+#import "MUPlayer.h"
+#import "MUWorld.h"
 
 @interface MUConnectionWindowController : NSWindowController
 {
@@ -18,6 +19,7 @@
   IBOutlet id delegate;
   
   MUWorld *world;
+  MUPlayer *player;
   J3TelnetConnection *telnetConnection;
   
   MUFilterQueue *filterQueue;
@@ -25,7 +27,9 @@
 }
 
 // Designated initializer.
-- (id) initWithWorld:(MUWorld *)world;
+- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
+
+- (id) initWithWorld:(MUWorld *)newWorld;
 
 - (BOOL) isConnected;
 
@@ -34,7 +38,8 @@
 
 - (IBAction) connect:(id)sender;
 - (IBAction) disconnect:(id)sender;
-- (IBAction) writeLine:(id)sender;
+- (BOOL) sendString:(NSString *)string;
+- (IBAction) sendInputText:(id)sender;
 
 - (IBAction) nextCommand:(id)sender;
 - (IBAction) previousCommand:(id)sender;

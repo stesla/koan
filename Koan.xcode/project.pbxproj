@@ -161,6 +161,7 @@
 				E622A550074231A60069335B,
 				E6A231270772E166008EF744,
 				E6E7A6210749693A007005AC,
+				E677D20E0778041F00B417D2,
 				E6DA667007776D9900C46267,
 				E6E79CEA07697FD100A8FB96,
 				E64C9632076BF95E00D0D7C0,
@@ -169,6 +170,7 @@
 				E622A551074231A60069335B,
 				E6A231280772E166008EF744,
 				E6E7A62707496940007005AC,
+				E677D20F0778041F00B417D2,
 				E6DA667107776D9900C46267,
 				E6E79CEB07697FD100A8FB96,
 				32CA4F630368D1EE00C91783,
@@ -439,7 +441,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				HEADER_SEARCH_PATHS = "./source ./filters ./j3terminal";
+				HEADER_SEARCH_PATHS = "./source ./filters";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PREBINDING = YES;
@@ -466,7 +468,7 @@
 				E65CE072075438F9003A796A,
 				E6EB62C107569D33009F47D5,
 				E6EB62BF07569D2E009F47D5,
-				E6DA667207776D9900C46267,
+				E6F60DAD0778A3C600E0EBB4,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,6 +493,8 @@
 				E6550DFB07763B57002E81FF,
 				E6550E0107763B72002E81FF,
 				E6DA667307776D9900C46267,
+				E677D2110778041F00B417D2,
+				E6F60DAE0778A3C600E0EBB4,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,6 +621,7 @@
 		E62040F706B054E400236608 = {
 			buildActionMask = 2147483647;
 			files = (
+				E6F60DED0778A6C900E0EBB4,
 				E6055FCF07492AA1007A13BD,
 				E6E7A6F6074971FF007005AC,
 				E6E7A6F7074971FF007005AC,
@@ -655,7 +660,8 @@
 				E62040F906B054E400236608,
 			);
 			buildSettings = {
-				HEADER_SEARCH_PATHS = "J3Terminal/source filters";
+				FRAMEWORK_SEARCH_PATHS = "";
+				HEADER_SEARCH_PATHS = "./source ./filters";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -907,9 +913,11 @@
 		E6550EF307764C01002E81FF = {
 			children = (
 				E6055F7C07492729007A13BD,
+				E6F60DAB0778A3C600E0EBB4,
 				E6550DFE07763B72002E81FF,
 				E6550DF807763B57002E81FF,
 				E6055F7D07492729007A13BD,
+				E6F60DAC0778A3C600E0EBB4,
 				E6550DFF07763B72002E81FF,
 				E6550DF907763B57002E81FF,
 			);
@@ -1009,6 +1017,28 @@
 		};
 		E670A84207420FDF00E2DAEB = {
 			fileRef = E670A84007420FDF00E2DAEB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E677D20E0778041F00B417D2 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUPlayer.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E677D20F0778041F00B417D2 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUPlayer.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E677D2110778041F00B417D2 = {
+			fileRef = E677D20F0778041F00B417D2;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1150,12 +1180,6 @@
 			path = MUWorld.m;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E6DA667207776D9900C46267 = {
-			fileRef = E6DA667007776D9900C46267;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E6DA667307776D9900C46267 = {
 			fileRef = E6DA667107776D9900C46267;
@@ -1335,6 +1359,40 @@
 		};
 		E6EB62C107569D33009F47D5 = {
 			fileRef = E6EB62C007569D33009F47D5;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6F60DAB0778A3C600E0EBB4 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = "NSFileManager (Recursive).h";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6F60DAC0778A3C600E0EBB4 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = "NSFileManager (Recursive).m";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6F60DAD0778A3C600E0EBB4 = {
+			fileRef = E6F60DAB0778A3C600E0EBB4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6F60DAE0778A3C600E0EBB4 = {
+			fileRef = E6F60DAC0778A3C600E0EBB4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6F60DED0778A6C900E0EBB4 = {
+			fileRef = E6F60DAC0778A3C600E0EBB4;
 			isa = PBXBuildFile;
 			settings = {
 			};

@@ -20,5 +20,6 @@
 
 // Miscellaneous messages.
 
+"ConnectWithoutLogin" = "Connect Without Login";
 "UnnamedPlayer" = "Unnamed Player";
 "UntitledWorld" = "Untitled World";

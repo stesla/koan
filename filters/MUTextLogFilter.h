@@ -7,17 +7,20 @@
 #import <Cocoa/Cocoa.h>
 #import "MUFilter.h"
 
+@class MUPlayer;
+@class MUWorld;
+
 @interface MUTextLogFilter : MUFilter
 {
   NSOutputStream *output;
-  NSMutableData *writeBuffer;
-  NSString *errorMessage;
-  // MUConnectionStatus _connectionStatus;
-  // MUConnectionClosedReason _reasonClosed;
-  BOOL canWrite;
-  BOOL isConnected;
 }
 
++ (id) filterWithWorld:(MUWorld *)world;
++ (id) filterWithWorld:(MUWorld *)world player:(MUPlayer *)player;
+
+// Designated initializer.
 - (id) initWithOutputStream:(NSOutputStream *)stream;
+- (id) initWithWorld:(MUWorld *)world;
+- (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player;
 
 @end

@@ -5,9 +5,10 @@
 //
 
 #import "FontNameToDisplayNameTransformer.h"
+#import "J3PortFormatter.h"
 #import "MUApplicationController.h"
 #import "MUConnectionWindowController.h"
-#import "J3PortFormatter.h"
+#import "MUPlayer.h"
 
 @interface MUApplicationController (Private)
 
@@ -15,6 +16,8 @@
 - (void) updateConnectionsMenu;
 
 @end
+
+#pragma mark -
 
 @implementation MUApplicationController
 
@@ -51,7 +54,23 @@
   
   if (worldsData)
   {
+    int i, worldsCount;
+    
     [self setWorlds:[NSKeyedUnarchiver unarchiveObjectWithData:worldsData]];
+    
+    worldsCount = [[self worlds] count];
+    
+    for (i = 0; i < worldsCount; i++)
+    {
+      MUWorld *world = [worlds objectAtIndex:i];
+      NSArray *players = [world players];
+      int j, playersCount = [players count];
+      
+      for (j = 0; j < playersCount; j++)
+      {
+        [[players objectAtIndex:j] setWorld:world];
+      }
+    }
   }
   else
   {
@@ -197,6 +216,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation MUApplicationController (Private)
 
 - (IBAction) openConnection:(id)sender
@@ -212,6 +233,22 @@
   [controller release];
 }
 
+- (IBAction) openConnectionAndLogin:(id)sender
+{
+  MUPlayer *player = [sender representedObject];
+  MUWorld *world = [player world];
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world player:player];
+  
+  [controller setDelegate:self];
+  
+  [connectionWindowControllers addObject:controller];
+  [controller showWindow:self];
+  [controller connect:sender];
+  NSLog (@"Sending %@", [player loginString]);
+  [controller sendString:[player loginString]];
+  [controller release];
+}
+
 - (void) updateConnectionsMenu
 {
   int i, worldsCount = [worlds count], menuCount = [openConnectionMenu numberOfItems];
@@ -224,11 +261,30 @@
   for (i = 0; i < worldsCount; i++)
   {
     MUWorld *world = [worlds objectAtIndex:i];
+    NSArray *players = [world players];
     NSMenuItem *worldItem = [[NSMenuItem alloc] init];
     NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world worldName]];
-    NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle:[world worldName]
+    NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString (MULConnectWithoutLogin, nil)
                                                          action:@selector(openConnection:)
                                                   keyEquivalent:@""];
+    int j, playersCount = [players count];
+    
+    for (j = 0; j < playersCount; j++)
+    {
+      MUPlayer *player = [players objectAtIndex:j];
+      NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle:[player name]
+                                                           action:@selector(openConnectionAndLogin:)
+                                                    keyEquivalent:@""];
+      [playerItem setTarget:self];
+      [playerItem setRepresentedObject:player];
+      [worldMenu addItem:playerItem];
+      [playerItem release];
+    }
+    
+    if (playersCount > 0)
+    {
+      [worldMenu addItem:[NSMenuItem separatorItem]];
+    }
     
     [connectItem setTarget:self];
     [connectItem setRepresentedObject:world];

@@ -6,6 +6,8 @@
 
 #import "MUWorld.h"
 
+#import <J3Terminal/J3TelnetConnection.h>
+
 static const int32_t currentVersion = 0;
 
 @implementation MUWorld
@@ -13,12 +15,14 @@ static const int32_t currentVersion = 0;
 - (id) initWithWorldName:(NSString *)newWorldName
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
+                 players:(NSArray *)newPlayers
 {
   if (self = [super init])
   {
     [self setWorldName:newWorldName];
     [self setWorldHostname:newWorldHostname];
     [self setWorldPort:newWorldPort];
+    [self setPlayers:newPlayers];
   }
   return self;
 }
@@ -27,7 +31,17 @@ static const int32_t currentVersion = 0;
 {
   return [self initWithWorldName:NSLocalizedString (MULUntitledWorld, nil)
                    worldHostname:@""
-                       worldPort:[NSNumber numberWithInt:0]];
+                       worldPort:[NSNumber numberWithInt:0]
+                         players:[NSArray array]];
+}
+
+- (void) dealloc
+{
+  [worldName release];
+  [worldHostname release];
+  [worldPort release];
+  [players release];
+  [super dealloc];
 }
 
 #pragma mark -
@@ -69,15 +83,14 @@ static const int32_t currentVersion = 0;
   worldPort = copy;
 }
 
-
-- (NSDictionary *) players
+- (NSArray *) players
 {
   return players;
 }
 
-- (void) setPlayers:(NSDictionary *)newPlayers
+- (void) setPlayers:(NSArray *)newPlayers
 {
-  NSDictionary *copy = [newPlayers copy];
+  NSArray *copy = [newPlayers copy];
   [players release];
   players = copy;
 }
@@ -101,6 +114,7 @@ static const int32_t currentVersion = 0;
   [encoder encodeObject:[self worldName] forKey:@"worldName"];
   [encoder encodeObject:[self worldHostname] forKey:@"worldHostname"];
   [encoder encodeObject:[self worldPort] forKey:@"worldPort"];
+  [encoder encodeObject:[self players] forKey:@"players"];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
@@ -112,6 +126,7 @@ static const int32_t currentVersion = 0;
     [self setWorldName:[decoder decodeObjectForKey:@"worldName"]];
     [self setWorldHostname:[decoder decodeObjectForKey:@"worldHostname"]];
     [self setWorldPort:[decoder decodeObjectForKey:@"worldPort"]];
+    [self setPlayers:[decoder decodeObjectForKey:@"players"]];
   }
   return self;
 }
@@ -123,7 +138,8 @@ static const int32_t currentVersion = 0;
 {
   return [[MUWorld allocWithZone:zone] initWithWorldName:[self worldName]
                                            worldHostname:[self worldHostname]
-                                               worldPort:[self worldPort]];
+                                               worldPort:[self worldPort]
+                                                 players:[self players]];
 }
 
 @end

@@ -15,21 +15,44 @@
 
 @end
 
+#pragma mark -
+
 @implementation MUConnectionWindowController
 
-- (id) initWithWorld:(MUWorld *)newWorld;
+- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 {
   if (self = [super initWithWindowNibName:@"MUConnectionWindow"])
   {
-    world = newWorld;
+    world = [newWorld retain];
+    player = [newPlayer retain];
     
     historyRing = [[MUHistoryRing alloc] init];
     
     filterQueue = [[MUFilterQueue alloc] init];
     [filterQueue addFilter:[MUAnsiRemovingFilter filter]];
-    [filterQueue addFilter:[MUTextLogFilter filter]];
+    
+    if (world)
+    {
+      if (player)
+      {
+        [filterQueue addFilter:[MUTextLogFilter filterWithWorld:world player:player]];
+      }
+      else
+      {
+        [filterQueue addFilter:[MUTextLogFilter filterWithWorld:world]];
+      }
+    }
+    else
+    {
+      [filterQueue addFilter:[MUTextLogFilter filter]];
+    }
   }
   return self;
+}
+
+- (id) initWithWorld:(MUWorld *)newWorld
+{
+  return [self initWithWorld:newWorld player:nil];
 }
 
 - (void) awakeFromNib
@@ -59,6 +82,7 @@
   [telnetConnection release];
   [filterQueue release];
   [historyRing release];
+  [world release];
 }
 
 #pragma mark -
@@ -104,22 +128,33 @@
   telnetConnection = nil;
 }
 
-- (IBAction) writeLine:(id)sender
+- (BOOL) sendString:(NSString *)string
 {
-  NSString *input = [inputView string];
   NSString *inputToWrite;
   
-  if ([input length] > 0)
+  if ([string length] > 0)
   {
-    inputToWrite = [NSString stringWithFormat:@"%@\n", [inputView string]];
+    inputToWrite = [NSString stringWithFormat:@"%@\n", string];
     
     if ([telnetConnection isConnected])
     {
       [telnetConnection writeString:inputToWrite];
+      return YES;
     }
-    
+    else
+    {
+      return NO;
+    }
+  }
+}
+
+- (IBAction) sendInputText:(id)sender
+{
+  NSString *input = [inputView string];
+  
+  if ([self sendString:input])
+  {
     [historyRing saveString:input];
-    
     [inputView setString:@""];
   }
   
@@ -243,7 +278,7 @@
       
       if (key == NSCarriageReturnCharacter || key == NSEnterCharacter)
       {
-        [self writeLine:textView];
+        [self sendInputText:textView];
         return YES;
       }
     }
@@ -317,6 +352,8 @@
 }
 
 @end
+
+#pragma mark -
 
 @implementation MUConnectionWindowController (Private)
 
