@@ -34,7 +34,7 @@
   _historyArray = [[NSMutableArray alloc] init];
   
   _filterQueue = [[MUInputFilterQueue alloc] init];
-  //[_filterQueue addFilter:[MUAnsiRemovingFilter filter]];
+  [_filterQueue addFilter:[MUAnsiRemovingFilter filter]];
   
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
@@ -106,7 +106,6 @@
   [textStorage beginEditing];
   [textStorage appendAttributedString:attributedString];
   [textStorage endEditing];
-  [string release];
   
   if ([[(NSScrollView *) [[receivedTextView superview] superview] verticalScroller] floatValue] == 1.0)
     [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];  
@@ -114,7 +113,9 @@
 
 - (IBAction) nextCommand:(id)sender
 {
-  if (++_historyIndex == [_historyArray count])
+  _historyIndex++;
+  
+  if (_historyIndex >= [_historyArray count] || _historyIndex < -1)
   {
     _historyIndex = -1;
     [inputField setStringValue:@""];
@@ -127,8 +128,12 @@
 
 - (IBAction) previousCommand:(id)sender
 {
-  if (--_historyIndex == -2)
+  _historyIndex--;
+  
+  if (_historyIndex == -2)
     _historyIndex = [_historyArray count] - 1;
+  else if (_historyIndex >= [_historyArray count] || _historyIndex < -2)
+    _historyIndex == -1;
 
   if (_historyIndex == -1)
     [inputField setStringValue:@""]; 

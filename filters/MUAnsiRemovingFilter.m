@@ -23,10 +23,11 @@
 
 - (void) filter:(NSString *)string
 {
-  NSMutableString *editString = 
-    [[NSMutableString alloc] initWithString:string];
+  NSMutableString *editString = [[NSMutableString alloc] initWithString:string];
+  
   while ([self extractCode:editString])
     ;
+  
   [[self successor] filter:editString];
   [editString release];
 }

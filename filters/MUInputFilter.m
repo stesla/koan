@@ -70,7 +70,7 @@
   do
   {
     next = [curr successor];
-    [(id)curr release];
+    [(id) curr release];
     curr = [next chaining];
   }
   while (curr);
@@ -78,13 +78,20 @@
 
 - (NSString *) processString:(NSString *)string
 {
+  NSString *returnString;
+  
   [_head filter:string];
-  return _outputString;
+
+  returnString = [[_outputString copy] autorelease];
+  [_outputString release];
+  _outputString = nil;
+  
+  return returnString;
 }
 
 - (void) addFilter:(id <MUFiltering, MUFilterChaining>)filter
 {
-  [(id)filter retain];
+  [(id) filter retain];
   [_tail setSuccessor:filter];
   _tail = filter;
   [_tail setSuccessor:self];
@@ -93,7 +100,6 @@
 - (void) filter:(NSString *)string
 {
   _outputString = [string copy];
-  [_outputString retain];
 }
 
 - (id <MUFilterChaining>) chaining
