@@ -10,8 +10,6 @@
 #import "J3Filter.h"
 #import "MUForwardingTextView.h"
 #import "J3HistoryRing.h"
-#import "MUPlayer.h"
-#import "MUWorld.h"
 #import "MUProfile.h"
 
 @interface MUConnectionWindowController : NSWindowController
@@ -41,7 +39,6 @@
 
 - (IBAction) connect:(id)sender;
 - (IBAction) disconnect:(id)sender;
-- (BOOL) sendString:(NSString *)string;
 - (IBAction) sendInputText:(id)sender;
 
 - (IBAction) nextCommand:(id)sender;

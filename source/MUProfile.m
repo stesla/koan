@@ -91,6 +91,23 @@
   return telnet;
 }
 
+- (void) loginWithConnection:(J3TelnetConnection *)connection
+{
+  if (!loggedIn && player)
+  {
+    [connection sendLine:[player loginString]];
+    loggedIn = YES;
+  }
+}
+
+- (void) logoutWithConnection:(J3TelnetConnection *)connection
+{
+  /* We don't do anything with the connection at this point, but we could.
+   * I put it there for parallelism with -loginWithConnection: and to make it
+   * easy to add any shutdown we may decide we need later
+   */
+  loggedIn = NO;
+}
 @end
 
 @implementation MUProfile (Private)

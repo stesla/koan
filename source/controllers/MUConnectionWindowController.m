@@ -25,8 +25,6 @@
   {
     profile = [[MUProfile alloc] initWithWorld:newWorld player:newPlayer];
     
-    autoLoggedIn = NO;
-    
     historyRing = [[J3HistoryRing alloc] init];
     
     filterQueue = [[J3FilterQueue alloc] init];
@@ -147,37 +145,17 @@
 
 - (IBAction) disconnect:(id)sender
 {
+  [profile logoutWithConnection:telnetConnection];
   [telnetConnection close];
   [telnetConnection release];
   telnetConnection = nil;
-  autoLoggedIn = NO;
-}
-
-- (BOOL) sendString:(NSString *)string
-{
-  NSString *inputToWrite;
-  
-  if ([string length] > 0)
-  {
-    inputToWrite = [NSString stringWithFormat:@"%@\n", string];
-    
-    if ([telnetConnection isConnected])
-    {
-      [telnetConnection writeString:inputToWrite];
-      return YES;
-    }
-    else
-    {
-      return NO;
-    }
-  }
 }
 
 - (IBAction) sendInputText:(id)sender
 {
   NSString *input = [inputView string];
   
-  if ([self sendString:input])
+  if ([telnetConnection sendLine:input])
   {
     [historyRing saveString:input];
     [inputView setString:@""];
@@ -218,11 +196,7 @@
         break;
         
       case J3ConnectionStatusConnected:
-        if (!autoLoggedIn && [profile player])
-        {
-          [self sendString:[profile loginString]];
-          autoLoggedIn = YES;
-        }
+        [profile loginWithConnection:telnetConnection];  
         [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
         break;
         

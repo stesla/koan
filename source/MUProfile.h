@@ -14,6 +14,7 @@
 {
   MUWorld   * world;
   MUPlayer  * player;
+  bool loggedIn;
 }
 
 // designated initializer
@@ -27,7 +28,8 @@
 - (NSString *) loginString;
 - (J3Filter *) logger;
 - (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate;
-
+- (void) loginWithConnection:(J3TelnetConnection *)connection;
+- (void) logoutWithConnection:(J3TelnetConnection *)connection;
 
 - (MUWorld *) world;
 - (MUPlayer *) player;
