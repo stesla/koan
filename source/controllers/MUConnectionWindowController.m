@@ -19,11 +19,11 @@
 
 @implementation MUConnectionWindowController
 
-- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
+- (id) initWithProfile:(MUProfile*)newProfile;
 {
   if (self = [super initWithWindowNibName:@"MUConnectionWindow"])
   {
-    profile = [[MUProfile alloc] initWithWorld:newWorld player:newPlayer];
+    profile = [newProfile retain];
     
     historyRing = [[J3HistoryRing alloc] init];
     
@@ -33,6 +33,11 @@
     [filterQueue addFilter:[self createLogger]];
   }
   return self;
+}
+
+- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
+{
+  return [self initWithProfile:[MUProfile profileWithWorld:newWorld player:newPlayer]];
 }
 
 - (id) initWithWorld:(MUWorld *)newWorld

@@ -225,20 +225,23 @@
   MUConnectionWindowController *controller;
   MUWorld *world = nil;
   MUPlayer *player = nil;
+  MUProfile *profile = nil;
+  // TODO: This should end up being an MUProfile
   id object = [sender representedObject];
   
   if ([object class] == [MUWorld class])
   {
     world = (MUWorld *) object;
-    controller = [[MUConnectionWindowController alloc] initWithWorld:world];
   }
   else if ([object class] == [MUPlayer class])
   {
     player = (MUPlayer *) object;
     world = [player world];
-    controller = [[MUConnectionWindowController alloc] initWithWorld:world player:player];
   }
-  
+  profile = [MUProfile profileWithWorld:world player:player];
+
+  controller = [[MUConnectionWindowController alloc] initWithProfile:profile];
+
   [controller setDelegate:self];
   
   [connectionWindowControllers addObject:controller];

@@ -14,6 +14,16 @@
 
 @implementation MUProfile
 
++ (MUProfile *) profileWithWorld:(MUWorld *)aWorld player:(MUPlayer *)aPlayer
+{
+  return [[[self alloc] initWithWorld:aWorld player:aPlayer] autorelease];
+}
+
++ (MUProfile *) profileWithWorlD:(MUWorld *)aWorld
+{
+  return [[[self alloc] initWithWorld:aWorld] autorelease];
+}
+
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer
 {
   self = [super init];

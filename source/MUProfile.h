@@ -17,6 +17,9 @@
   bool loggedIn;
 }
 
++ (MUProfile *) profileWithWorld:(MUWorld *)world player:(MUPlayer *)player;
++ (MUProfile *) profileWithWorlD:(MUWorld *)world;
+
 // designated initializer
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player;
 - (id) initWithWorld:(MUWorld *)world;

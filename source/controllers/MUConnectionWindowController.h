@@ -28,8 +28,9 @@
 }
 
 // Designated initializer.
-- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
+- (id) initWithProfile:(MUProfile*)newProfile;
 
+- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 - (id) initWithWorld:(MUWorld *)newWorld;
 
 - (BOOL) isConnected;
