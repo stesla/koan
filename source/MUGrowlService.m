@@ -127,7 +127,7 @@ static BOOL growlAvailable = NO;
                                                                  userInfo:growlRegistration];    
   }
   
-  [self release];
+  [self autorelease];
 }
 
 @end

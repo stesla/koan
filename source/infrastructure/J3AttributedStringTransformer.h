@@ -1,19 +1,21 @@
 //
-//  J3AttributedStringTransformer.h
-//  Koan
+// J3AttributedStringTransformer.h
 //
-//  Created by Samuel on 2/1/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 
 @protocol J3AttributedStringTransforming
+
 - (NSAttributedString *) transform:(NSAttributedString *)string 
-                      upToLocation:(int)aLocation;
+                      upToLocation:(int)location;
 - (int) location;
 - (NSString *) name;
+
 @end
+
+#pragma mark -
 
 @interface J3AttributedStringTransformer : NSObject 
 {
@@ -22,10 +24,10 @@
 
 + (J3AttributedStringTransformer *) transformer;
 
-- (void) changeAttributeWithName:(NSString *)aName 
-                         toValue:(id)aValue
-                      atLocation:(int)aLocation;
+- (void) changeAttributeWithName:(NSString *)name 
+                         toValue:(id)value
+                      atLocation:(int)location;
 
+- (NSAttributedString *) transform:(NSAttributedString *)string;
 
-- (NSAttributedString *) transform:(NSAttributedString *)aString;
 @end

@@ -1,9 +1,7 @@
 //
-//  J3AttributedStringTransformerTests.m
-//  Koan
+// J3AttributedStringTransformerTests.m
 //
-//  Created by Samuel on 2/1/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3AttributedStringTransformerTests.h"
@@ -36,7 +34,7 @@
   
   [self assertAttribute:@"Foo"
                  equals:@"Bar"
-               inString:output
+     inAttributedString:output
               withRange:range];
 }
 
@@ -57,17 +55,17 @@
   range.location = 1;
   [self assertAttribute:@"Foo"
                  equals:@"Bar"
-               inString:output
+     inAttributedString:output
               withRange:range];
   range.location = 2;
   [self assertAttribute:@"Foo"
                  equals:@"Baz"
-               inString:output
+     inAttributedString:output
               withRange:range];
   range.location = 3;
   [self assertAttribute:@"Foo"
                  equals:@"Quux"
-               inString:output
+     inAttributedString:output
               withRange:range];
 }
 
@@ -79,7 +77,7 @@
   range.length = [input length] - range.location;
   [self assertAttribute:@"Foo"
                  equals:nil
-               inString:output
+     inAttributedString:output
               withRange:range];
 }
 
@@ -92,11 +90,11 @@
   range.length = [input length] - range.location;
   [self assertAttribute:@"Foo"
                  equals:@"Bar"
-               inString:output
+     inAttributedString:output
               withRange:range];
   [self assertAttribute:@"MagicWord"
                  equals:@"xyzzy"
-               inString:output
+     inAttributedString:output
               withRange:range];
 }
 

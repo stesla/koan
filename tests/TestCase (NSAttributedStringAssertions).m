@@ -1,27 +1,24 @@
 //
-//  TestCase (NSAttributedStringAssertions).m
-//  Koan
+// TestCase (NSAttributedStringAssertions).m
 //
-//  Created by Samuel on 1/26/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "TestCase (NSAttributedStringAssertions).h"
 
-
 @implementation TestCase (NSAttributedStringAssertions)
 
 - (void) assertAttributedString:(NSAttributedString *)actual 
-                   stringEquals:(NSString *)expected
+                   equalsString:(NSString *)expected
                         message:(NSString *)message
 {
   [self assert:[actual string] equals:expected message:message];  
 }
 
 - (void) assertAttributedString:(NSAttributedString *)actual 
-                   stringEquals:(NSString *)expected
+                   equalsString:(NSString *)expected
 {
-  [self assertAttributedString:actual stringEquals:expected message:nil];
+  [self assertAttributedString:actual equalsString:expected message:nil];
 }
 
 - (void) assertAttributesTheSameInString:(NSAttributedString *)string
@@ -49,7 +46,7 @@
 
 - (void) assertAttribute:(NSString *)aName
                   equals:(id)object
-                inString:(NSAttributedString *)string
+      inAttributedString:(NSAttributedString *)string
                  atIndex:(int)index
                  message:(NSString *)message
 {
@@ -62,38 +59,39 @@
 
 - (void) assertAttribute:(NSString *)aName
                   equals:(id)object
-                inString:(NSAttributedString *)string
+      inAttributedString:(NSAttributedString *)string
                  atIndex:(int)index
 {
   [self assertAttribute:aName
                  equals:object
-               inString:string
+     inAttributedString:string
                 atIndex:index
                 message:nil];
 }
 
 - (void) assertAttribute:(NSString *)aName
                   equals:(id)object
-                inString:(NSAttributedString*)string
+      inAttributedString:(NSAttributedString*)string
                withRange:(NSRange)range
                  message:(NSString *)message
 {
   [self assertAttribute:aName
                  equals:object
-               inString:string
+     inAttributedString:string
                 atIndex:range.location];
   [self assertAttributesTheSameInString:string withRange:range message:message];
 }
 
 - (void) assertAttribute:(NSString *)aName
                   equals:(id)object
-                inString:(NSAttributedString*)string
+      inAttributedString:(NSAttributedString*)string
                withRange:(NSRange)range
 {
   [self assertAttribute:aName
                  equals:object
-               inString:string
+     inAttributedString:string
               withRange:range
                 message:nil];
 }
+
 @end

@@ -1,9 +1,7 @@
 //
-//  J3AttributedStringTransformerTests.h
-//  Koan
+// J3AttributedStringTransformerTests.h
 //
-//  Created by Samuel on 2/1/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>

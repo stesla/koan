@@ -1,44 +1,42 @@
 //
-//  J3AttributedStringTransformer.m
-//  Koan
+// J3AttributedStringTransformer.m
 //
-//  Created by Samuel on 2/1/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3AttributedStringTransformer.h"
 
-@interface J3AttributedStringTransform : NSObject<J3AttributedStringTransforming>
+@interface J3AttributedStringTransform : NSObject <J3AttributedStringTransforming>
 {
   NSString *name;
   id value;
   int location;
 }
 
-- (id) initTransformWithName:(NSString *)aName 
-                       value:(id)aValue
-                  atLocation:(int)aLocation;
+- (id) initTransformWithName:(NSString *)newName 
+                       value:(id)newValue
+                  atLocation:(int)newLocation;
 
 - (NSAttributedString *) transform:(NSAttributedString *)string 
-                      upToLocation:(int)aLocation;
+                      upToLocation:(int)endLocation;
 - (int) location;
+
 @end
 
+#pragma mark -
+
 @implementation J3AttributedStringTransform
-- (id) initTransformWithName:(NSString *)aName 
-                       value:(id)aValue
-                  atLocation:(int)aLocation;
+
+- (id) initTransformWithName:(NSString *)newName 
+                       value:(id)newValue
+                  atLocation:(int)newLocation
 {
   self = [super init];
   if (self)
   {
-    [aName retain];
-    name = aName;
-    
-    [aValue retain];
-    value = aValue;
-    
-    location = aLocation;
+    name = [newName copy];
+    value = [newValue copy];
+    location = newLocation;
   }
   return self;
 }
@@ -61,26 +59,33 @@
 }
 
 - (NSAttributedString *) transform:(NSAttributedString *)string 
-                      upToLocation:(int)aLocation
+                      upToLocation:(int)endLocation
 {
   NSMutableAttributedString *stringCopy = [[string mutableCopy] autorelease];
-  NSMutableDictionary *dict = 
-    [[[string attributesAtIndex:location 
-                 effectiveRange:NULL] 
-      mutableCopy] autorelease];
+  NSMutableDictionary *dict =
+    [[[string attributesAtIndex:location
+                 effectiveRange:NULL] mutableCopy] autorelease];
   NSRange range;
 
   [dict setValue:value forKey:name];
   range.location = location;
-  range.length = aLocation - location;
+  range.length = endLocation - location;
   [stringCopy setAttributes:dict range:range];
+  
   return stringCopy;
 }
+
 @end
 
-@interface J3AttributedStringTransformer(Private)
+#pragma mark -
+
+@interface J3AttributedStringTransformer (Private)
+
 - (id <J3AttributedStringTransforming>) nextTransformAfter:(id <J3AttributedStringTransforming>)transform;
+
 @end
+
+#pragma mark -
 
 @implementation J3AttributedStringTransformer
 
@@ -104,22 +109,22 @@
   [super dealloc];
 }
 
-- (void) changeAttributeWithName:(NSString *)aName 
-                         toValue:(id)aValue
-                         atLocation:(int)aLocation
+- (void) changeAttributeWithName:(NSString *)name 
+                         toValue:(id)value
+                         atLocation:(int)location
 {
   J3AttributedStringTransform *transform =
-    [[J3AttributedStringTransform alloc] initTransformWithName:aName
-                                                         value:aValue
-                                                    atLocation:aLocation];
+    [[J3AttributedStringTransform alloc] initTransformWithName:name
+                                                         value:value
+                                                    atLocation:location];
   [transforms addObject:transform];
 }
 
-- (NSAttributedString *) transform:(NSAttributedString *)aString
+- (NSAttributedString *) transform:(NSAttributedString *)string
 {
-  NSAttributedString *resultString = [[aString copy] autorelease];
-  id<J3AttributedStringTransforming> transform, nextTransform;
-  int i, location, count = [transforms count], length = [aString length];
+  NSAttributedString *resultString = [[string copy] autorelease];
+  id <J3AttributedStringTransforming> transform, nextTransform;
+  int i, location, count = [transforms count], length = [string length];
   
   for (i = 0; i < count; i++)
   {
@@ -146,24 +151,28 @@
 
 @end
 
-@implementation J3AttributedStringTransformer(Private)
+#pragma mark -
+
+@implementation J3AttributedStringTransformer (Private)
+
 - (id <J3AttributedStringTransforming>) nextTransformAfter:(id <J3AttributedStringTransforming>)transform
 {
   int i = [transforms indexOfObject:transform] + 1, count = [transforms count];
-  id <J3AttributedStringTransforming> curr = nil;
+  id <J3AttributedStringTransforming> currentTransform = nil;
   BOOL found = NO;
   
   while (!found && (i < count))
   {
-    curr = [transforms objectAtIndex:i];
-    if ([[curr name] isEqualToString:[transform name]])
+    currentTransform = [transforms objectAtIndex:i];
+    if ([[currentTransform name] isEqualToString:[transform name]])
       found = YES;
     i++;
   }
   
   if (found)
-    return curr;
+    return currentTransform;
   else
     return nil;
 }
+
 @end

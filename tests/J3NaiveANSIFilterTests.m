@@ -32,7 +32,7 @@
 {
   NSAttributedString *input = [self makeString:@"Foo"];
   [self assertAttributedString:[filter filter:input]
-                  stringEquals:@"Foo"];
+                  equalsString:@"Foo"];
 }
 
 - (void) testExtractsCode
@@ -40,11 +40,11 @@
   NSAttributedString *input = [self makeString:@"F\x1B[0moo"];
 
   [self assertAttributedString:[filter filter:input]
-                  stringEquals:@"Foo"];
+                  equalsString:@"Foo"];
 
   input = [self makeString:@"F\x1B[moo"];
   [self assertAttributedString:input
-                  stringEquals:[input string]];
+                  equalsString:[input string]];
 }
 
 - (void) testSetsSpecificForeColor
@@ -117,7 +117,7 @@
   
   [self assertAttribute:aName
                  equals:aValue
-               inString:[filter filter:input]
+     inAttributedString:[filter filter:input]
               withRange:range];  
 }
 
@@ -134,4 +134,5 @@
          setsAttribute:J3ANSIBackColorAttributeName
                toValue:color];
 }
+
 @end
