@@ -39,25 +39,6 @@
   int portNumber = [portField intValue];
   _telnetConnection = [[MUTelnetConnection alloc] initWithHostName:name
                                                             onPort:portNumber];
-  
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-  
-  [notificationCenter addObserver:self 
-                         selector:@selector(handleConnectionConnecting:) 
-                             name:MUConnectionConnecting
-                           object:_telnetConnection];
-  
-  [notificationCenter addObserver:self 
-                         selector:@selector(handleConnectionConnected:) 
-                             name:MUConnectionConnected
-                           object:_telnetConnection];
-  
-  [notificationCenter addObserver:self 
-                         selector:@selector(handleConnectionClosed:)
-                             name:MUConnectionClosed
-                           object:_telnetConnection];
-  
   [_telnetConnection setDelegate:self];
   [_telnetConnection open];
   
@@ -117,46 +98,42 @@
   [self displayString:[telnet read]];
 }
 
-- (void) telnet:(MUTelnetConnection *)telnet statusMessage:(NSString *)message
+- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet
 {
-  [self displayString:[NSString stringWithFormat:@"%@\n", message]];
-}
-
-- (void) handleConnectionConnecting:(NSNotification *)note
-{
-  [self displayString:@"Trying to open connection...\n"];
-}
-
-- (void) handleConnectionConnected:(NSNotification *)note
-{
-  [self displayString:@"Connected.\n"];
-}
-
-- (void) handleConnectionClosed:(NSNotification *)note
-{
-  MUTelnetConnection *telnet = [note object];
-  switch([telnet reasonClosed])
+  switch ([telnet connectionStatus])
   {
-    case MUConnectionClosedReasonServer:
-      [self displayString:@"Connection closed by server.\n"];
+    case MUConnectionStatusConnecting:
+      [self displayString:@"Trying to open connection...\n"];
       break;
 
-    case MUConnectionClosedReasonError:
-      [self displayString:[NSString stringWithFormat:@"Connection closed with error: %@\n", 
-        [telnet errorMessage]]];
+    case MUConnectionStatusConnected:
+      [self displayString:@"Connected.\n"];
       break;
 
+    case MUConnectionStatusClosed:
+      switch([telnet reasonClosed])
+      { 
+        case MUConnectionClosedReasonServer:
+          [self displayString:@"Connection closed by server.\n"];
+          break;
+
+        case MUConnectionClosedReasonError:
+          [self displayString:[NSString stringWithFormat:@"Connection closed with error: %@\n", 
+            [telnet errorMessage]]];
+          break;
+
+        default:
+          [self displayString:@"Connection closed.\n"];
+      }
+      [_telnetConnection release];
+      [disconnectButton setEnabled:NO];
+      [connectButton setEnabled:YES];      
+      break;
+      
     default:
-      [self displayString:@"Connection closed.\n"];
+      //Do nothing
+      break;
   }
-  
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-  [notificationCenter removeObserver:self];
-  
-  [_telnetConnection release];
-  [disconnectButton setEnabled:NO];
-  [connectButton setEnabled:YES];
 }
 
 // Delegate methods for NSTextView.
@@ -168,8 +145,9 @@
     NSRange range;
     NSRect rect;
 
-    rect = [[textView layoutManager] lineFragmentRectForGlyphAtIndex:selectedRange.location
-                                                      effectiveRange:&range];
+    //TODO: FIX THIS
+    //rect = [[textView layoutManager] lineFragmentRectForGlyphAtIndex:selectedRange.location
+    //                                                  effectiveRange:&range];
     if (range.location == 0)
     {
       

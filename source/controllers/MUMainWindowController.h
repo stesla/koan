@@ -40,7 +40,9 @@
 - (IBAction) disconnect:(id)sender;
 - (IBAction) writeLine:(id)sender;
 
+// Telnet Delegate Methods
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
+- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet;
 
 - (void) displayString:(NSString *)string;
 @end

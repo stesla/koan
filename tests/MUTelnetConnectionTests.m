@@ -83,22 +83,28 @@
   _lineRead = [telnet read];
 }
 
-- (void) handleConnectionConnecting:(NSNotification *)note
+- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet
 {
-  _connectionConnecting = YES;
-}
+  switch ([telnet connectionStatus])
+  {
+    case MUConnectionStatusConnecting:
+      _connectionConnecting = YES;
+      break;
+      
+    case MUConnectionStatusConnected:
+      _connectionConnected = YES;
+      break;
 
-- (void) handleConnectionConnected:(NSNotification *)note
-{
-  _connectionConnected = YES;
-}
+    case MUConnectionStatusClosed:
+      _connectionEnded = YES;
+      if ([telnet reasonClosed] == MUConnectionClosedReasonError)
+        _connectionError = [telnet errorMessage];
+      break;  
 
-- (void) handleConnectionClosed:(NSNotification *)note
-{
-  _connectionEnded = YES;
-  MUTelnetConnection *telnet = [note object];
-  if ([telnet reasonClosed] == MUConnectionClosedReasonError)
-    _connectionError = [telnet errorMessage];
+    default:
+      //Do nothing
+      break;
+  }
 }
 
 - (void) setUp
@@ -111,32 +117,10 @@
   _messageCount = 0;
   _telnet = [[MUTelnetConnection alloc] initWithInputStream:nil outputStream:nil];
   [_telnet setDelegate:self];
-  
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-  
-  [notificationCenter addObserver:self 
-                         selector:@selector(handleConnectionConnecting:) 
-                             name:MUConnectionConnecting
-                           object:_telnet];
-  
-  [notificationCenter addObserver:self 
-                         selector:@selector(handleConnectionConnected:) 
-                             name:MUConnectionConnected
-                           object:_telnet];
-  
-  [notificationCenter addObserver:self 
-                         selector:@selector(handleConnectionClosed:)
-                             name:MUConnectionClosed
-                           object:_telnet];
 }
 
 - (void) tearDown
 {
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-  [notificationCenter removeObserver:self];
-  
   [_telnet release];
 }
 

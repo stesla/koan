@@ -20,10 +20,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-extern NSString *MUConnectionConnecting;
-extern NSString *MUConnectionConnected;
-extern NSString *MUConnectionClosed;
-
 typedef enum _MUConnectionStatus
 {
   MUConnectionStatusNotConnected,
@@ -121,4 +117,5 @@ enum MUTelnetCommands
 // Delegate Methods
 @interface NSObject (MUTelnetConnectionDelegate)
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
+- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet;
 @end

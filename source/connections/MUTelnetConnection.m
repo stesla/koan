@@ -22,10 +22,6 @@
 
 #include <string.h>
 
-NSString *MUConnectionConnecting = @"MUConnectionConnecting";
-NSString *MUConnectionConnected = @"MUConnectionConnected";
-NSString *MUConnectionClosed = @"MUConnectionClosed";
-
 @interface MUTelnetConnection (Private)
 - (void) readFromStream:(NSInputStream *)stream;
 - (void) appendByteToBuffer:(uint8_t)byte;
@@ -46,6 +42,7 @@ NSString *MUConnectionClosed = @"MUConnectionClosed";
 
 @interface MUTelnetConnection (DelegateMethods)
 - (void) didReadLine;
+- (void) didChangeStatus;
 @end
 
 @interface MUTelnetConnection (TelnetCommands)
@@ -121,6 +118,11 @@ NSString *MUConnectionClosed = @"MUConnectionClosed";
     NSLog (@"Warning: setting delegate to object '%@'," 
            "which does not respond to delegate method "
            "telnetDidReadLine:.", delegate);
+
+  if (delegate && ![delegate respondsToSelector:@selector(telnetDidChangeStatus:)])
+    NSLog (@"Warning: setting delegate to object '%@'," 
+           "which does not respond to delegate method "
+           "telnetDidChangeStatus:.", delegate);
   
   _delegate = delegate;
 }
@@ -463,31 +465,19 @@ NSString *MUConnectionClosed = @"MUConnectionClosed";
 - (void) connectionClosed
 {
   _connectionStatus = MUConnectionStatusClosed;
-  
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-  [notificationCenter postNotificationName:MUConnectionClosed
-                                    object:self];
+  [self didChangeStatus];
 }
 
 - (void) connectionConnecting
 {
   _connectionStatus = MUConnectionStatusConnecting;
-  
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-  [notificationCenter postNotificationName:MUConnectionConnecting
-                                    object:self];  
+  [self didChangeStatus];
 }
 
 - (void) connectionConnected
 {
   _connectionStatus = MUConnectionStatusConnected;
-  
-  NSNotificationCenter *notificationCenter;
-  notificationCenter = [NSNotificationCenter defaultCenter];
-  [notificationCenter postNotificationName:MUConnectionConnected
-                                    object:self];  
+  [self didChangeStatus];
 }
 
 @end
@@ -498,6 +488,12 @@ NSString *MUConnectionClosed = @"MUConnectionClosed";
 {
   if ([_delegate respondsToSelector:@selector(telnetDidReadLine:)])
     [_delegate telnetDidReadLine:self];
+}
+
+- (void) didChangeStatus
+{
+  if ([_delegate respondsToSelector:@selector(telnetDidChangeStatus:)])
+    [_delegate telnetDidChangeStatus:self];
 }
 
 @end
