@@ -21,6 +21,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
+#import "MUHistoryRing.h"
+
 @interface MUHistoryRingTests : TestCase
+{
+  MUHistoryRing *_ring;
+}
 
 @end

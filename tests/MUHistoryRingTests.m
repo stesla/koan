@@ -19,134 +19,125 @@
 //
 
 #import "MUHistoryRingTests.h"
-#import "MUHistoryRing.h"
 
 @implementation MUHistoryRingTests
 
+- (void) setUp
+{
+  _ring = [[MUHistoryRing alloc] init];
+}
+
+- (void) tearDown
+{
+  [_ring release];
+}
+
 - (void) testSinglePrevious
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
   
-  [ring saveString:@"Foo"];
-  
-  [self assert:[ring previousString] equals:@"Foo"];
+  [self assert:[_ring previousString] equals:@"Foo"];
 }
 
 - (void) testMultiplePrevious
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
+  [_ring saveString:@"Bar"];
+  [_ring saveString:@"Baz"];
   
-  [ring saveString:@"Foo"];
-  [ring saveString:@"Bar"];
-  [ring saveString:@"Baz"];
-  
-  [self assert:[ring previousString] equals:@"Baz"];
-  [self assert:[ring previousString] equals:@"Bar"];
-  [self assert:[ring previousString] equals:@"Foo"];
+  [self assert:[_ring previousString] equals:@"Baz"];
+  [self assert:[_ring previousString] equals:@"Bar"];
+  [self assert:[_ring previousString] equals:@"Foo"];
 }
 
 - (void) testFullCirclePrevious
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
   
-  [ring saveString:@"Foo"];
-  
-  [self assert:[ring previousString] equals:@"Foo"];
-  [self assert:[ring previousString] equals:@""];
+  [self assert:[_ring previousString] equals:@"Foo"];
+  [self assert:[_ring previousString] equals:@""];
 }
 
 - (void) testSingleNext
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
   
-  [ring saveString:@"Foo"];
-  
-  [self assert:[ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@"Foo"];
 }
 
 - (void) testMultipleNext
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
+  [_ring saveString:@"Bar"];
+  [_ring saveString:@"Baz"];
   
-  [ring saveString:@"Foo"];
-  [ring saveString:@"Bar"];
-  [ring saveString:@"Baz"];
-  
-  [self assert:[ring nextString] equals:@"Foo"];
-  [self assert:[ring nextString] equals:@"Bar"];
-  [self assert:[ring nextString] equals:@"Baz"];
+  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@"Bar"];
+  [self assert:[_ring nextString] equals:@"Baz"];
 }
 
 - (void) testFullCircleNext
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
   
-  [ring saveString:@"Foo"];
-  
-  [self assert:[ring nextString] equals:@"Foo"];
-  [self assert:[ring nextString] equals:@""];
+  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@""];
 }
 
 - (void) testBothWays
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
+  [_ring saveString:@"Bar"];
+  [_ring saveString:@"Baz"];
   
-  [ring saveString:@"Foo"];
-  [ring saveString:@"Bar"];
-  [ring saveString:@"Baz"];
-  
-  [self assert:[ring previousString] equals:@"Baz"];
-  [self assert:[ring previousString] equals:@"Bar"];
-  [self assert:[ring nextString] equals:@"Baz"];
-  [self assert:[ring nextString] equals:@""];
-  [self assert:[ring nextString] equals:@"Foo"];
-  [self assert:[ring nextString] equals:@"Bar"];
-  [self assert:[ring previousString] equals:@"Foo"];
-  [self assert:[ring previousString] equals:@""];
+  [self assert:[_ring previousString] equals:@"Baz"];
+  [self assert:[_ring previousString] equals:@"Bar"];
+  [self assert:[_ring nextString] equals:@"Baz"];
+  [self assert:[_ring nextString] equals:@""];
+  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@"Bar"];
+  [self assert:[_ring previousString] equals:@"Foo"];
+  [self assert:[_ring previousString] equals:@""];
 }
 
 - (void) testUpdateMiddle
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
-  
-  [ring saveString:@"Foo"];
-  [ring saveString:@"Bar"];
-  [ring saveString:@"Baz"];
+  [_ring saveString:@"Foo"];
+  [_ring saveString:@"Bar"];
+  [_ring saveString:@"Baz"];
 
-  [self assert:[ring previousString] equals:@"Baz"];
-  [self assert:[ring previousString] equals:@"Bar"];
+  [self assert:[_ring previousString] equals:@"Baz"];
+  [self assert:[_ring previousString] equals:@"Bar"];
   
-  [ring updateString:@"Bar Two"];
+  [_ring updateString:@"Bar Two"];
   
-  [self assert:[ring previousString] equals:@"Foo"];
-  [self assert:[ring previousString] equals:@""];
-  [self assert:[ring previousString] equals:@"Baz"];
-  [self assert:[ring previousString] equals:@"Bar Two"];
+  [self assert:[_ring previousString] equals:@"Foo"];
+  [self assert:[_ring previousString] equals:@""];
+  [self assert:[_ring previousString] equals:@"Baz"];
+  [self assert:[_ring previousString] equals:@"Bar Two"];
 }
 
 - (void) testUpdateBuffer
 {
-  MUHistoryRing *ring = [[MUHistoryRing alloc] init];
+  [_ring saveString:@"Foo"];
+  [_ring saveString:@"Bar"];
   
-  [ring saveString:@"Foo"];
-  [ring saveString:@"Bar"];
+  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@"Bar"];
+  [self assert:[_ring nextString] equals:@""];
   
-  [self assert:[ring nextString] equals:@"Foo"];
-  [self assert:[ring nextString] equals:@"Bar"];
-  [self assert:[ring nextString] equals:@""];
+  [_ring updateString:@"Temporary"];
   
-  [ring updateString:@"Temporary"];
+  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@"Bar"];
+  [self assert:[_ring nextString] equals:@"Temporary"];
   
-  [self assert:[ring nextString] equals:@"Foo"];
-  [self assert:[ring nextString] equals:@"Bar"];
-  [self assert:[ring nextString] equals:@"Temporary"];
+  [_ring saveString:@"Something entirely different"];
   
-  [ring saveString:@"Something entirely different"];
-  
-  [self assert:[ring previousString] equals:@"Something entirely different"];
-  [self assert:[ring previousString] equals:@"Bar"];
-  [self assert:[ring previousString] equals:@"Foo"];
-  [self assert:[ring previousString] equals:@""];
+  [self assert:[_ring previousString] equals:@"Something entirely different"];
+  [self assert:[_ring previousString] equals:@"Bar"];
+  [self assert:[_ring previousString] equals:@"Foo"];
+  [self assert:[_ring previousString] equals:@""];
 }
 
 @end
