@@ -73,6 +73,7 @@
 - (NSString *) processString:(NSString *)string
 {
   [_head filter:string];
+  // We retained this in -filter:
   [_outputString autorelease];
   return _outputString;
 }
@@ -87,8 +88,8 @@
 
 - (void) filter:(NSString *)string
 {
+  // This gets autoreleased in -processString:
   [string retain];
-  [_outputString release];
   _outputString = string;
 }
 

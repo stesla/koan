@@ -32,6 +32,8 @@
   _historyIndex = -1;
   _historyArray = [[NSMutableArray alloc] init];
   
+  _filterQueue = [[MUInputFilterQueue alloc] init];
+  
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
 }
@@ -39,8 +41,9 @@
 - (void) dealloc
 {
   [_telnetConnection close];
-  [_telnetConnection dealloc];
-  [_historyArray dealloc];
+  [_telnetConnection release];
+  [_filterQueue release];
+  [_historyArray release];
 }
 
 - (IBAction) connect:(id)sender
@@ -92,8 +95,9 @@
 
 - (void) _displayString:(NSString *)string
 {
+  NSString *filteredString = [_filterQueue processString:string];
   NSAttributedString *attributedString;
-  attributedString = [[NSAttributedString alloc] initWithString:string 
+  attributedString = [[NSAttributedString alloc] initWithString:filteredString 
                                                      attributes:[receivedTextView typingAttributes]];
   NSTextStorage *textStorage = [receivedTextView textStorage];
   

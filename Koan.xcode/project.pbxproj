@@ -396,7 +396,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				HEADER_SEARCH_PATHS = ./source;
+				HEADER_SEARCH_PATHS = "./source ./filters";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Koan;

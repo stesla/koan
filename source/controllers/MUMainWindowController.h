@@ -20,6 +20,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "Connections/MUTelnetConnection.h"
+#import "MUInputFilter.h"
 
 @interface MUMainWindowController : NSWindowController
 {
@@ -31,6 +32,7 @@
   IBOutlet NSButton *disconnectButton;
   
   MUTelnetConnection *_telnetConnection;
+  MUInputFilterQueue *_filterQueue;
   
   NSMutableArray *_historyArray;
   int _historyIndex;
