@@ -9,6 +9,52 @@
 #import "MUTelnetConnectionTests.h"
 #import "MUTelnetConnection.h"
 
+@interface MUTelnetConnectionTests (HelperMethods)
+- (void) negotiationCommand:(int)byteRead response:(int)byteWritten;
+- (NSInputStream *) openInputStreamWithBytes:(const void *)bytes length:(int)length;
+- (NSOutputStream *)openOutputStreamWithBuffer:(void *)buffer maxLength:(int)maxLength;
+@end
+
+@implementation MUTelnetConnectionTests (HelperMethods)
+- (void) negotiationCommand:(int)byteRead response:(int)byteWritten
+{
+  char cstring[3];
+  cstring[0] = TEL_IAC;
+  cstring[1] = byteRead;
+  cstring[2] = 1; // This is the option code for ECHO
+  NSInputStream *input = [self openInputStreamWithBytes:(const void *)cstring length:3];
+  
+  uint8_t outputBuffer[MUTelnetBufferMax];
+  NSOutputStream *output = [self openOutputStreamWithBuffer:outputBuffer
+                                                  maxLength:MUTelnetBufferMax];
+  
+  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  [_telnet stream:output handleEvent:NSStreamEventHasSpaceAvailable];
+  [self assertTrue:outputBuffer[0] == TEL_IAC message:@"First isn't IAC"];
+  [self assertTrue:outputBuffer[1] == byteWritten message:@"Second isn't WONT"];
+  NSString *telnetString = [_telnet read];
+  [self assert:telnetString equals:@""];  
+}
+
+- (NSOutputStream *)openOutputStreamWithBuffer:(void *)buffer maxLength:(int)maxLength
+{
+  bzero(buffer, maxLength);
+  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:buffer
+                                                       capacity:maxLength];
+  [output open];
+  return output;
+}
+
+- (NSInputStream *) openInputStreamWithBytes:(const void *)bytes length:(int)length
+{
+  NSData *data = [NSData dataWithBytes:(const void *)bytes length:length];
+  NSInputStream *input = [NSInputStream inputStreamWithData:data];
+  [input open];
+  return input;
+}
+
+@end
+
 @implementation MUTelnetConnectionTests
 
 - (void) setUp
@@ -23,9 +69,7 @@
 
 - (void) testRead
 {
-  NSData *data = [NSData dataWithBytes:(const void *)"Foo" length:3];
-  NSInputStream *input = [NSInputStream inputStreamWithData:data];
-  [input open];
+  NSInputStream *input = [self openInputStreamWithBytes:(const void *)"Foo" length:3];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   NSString *telnetString = [_telnet read];
   [self assert:telnetString equals:@"Foo"];
@@ -33,14 +77,9 @@
 
 - (void) testConsecutiveReads
 {
-  NSData *data = [NSData dataWithBytes:(const void *)"Foo" length:3];
-  NSInputStream *input = [NSInputStream inputStreamWithData:data];
-  [input open];
-  
+  NSInputStream *input = [self openInputStreamWithBytes:(const void *)"Foo" length:3];  
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
-  data = [NSData dataWithBytes:(const void *)"Bar" length:3];
-  input = [NSInputStream inputStreamWithData:data];
-  [input open];
+  input = [self openInputStreamWithBytes:(const void *)"Bar" length:3];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   NSString *telnetString = [_telnet read];
   [self assert:telnetString equals:@"FooBar"];
@@ -48,9 +87,7 @@
   [self assert:telnetString equals:@""];
   
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
-  data = [NSData dataWithBytes:(const void *)"Baz" length:3];
-  input = [NSInputStream inputStreamWithData:data];
-  [input open];
+  input = [self openInputStreamWithBytes:(const void *)"Baz" length:3];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   telnetString = [_telnet read];  
   [self assert:telnetString equals:@"Baz"];
@@ -76,9 +113,7 @@
   cstring[1] = TEL_IAC;
   cstring[2] = TEL_NOP;
   cstring[3] = 'b';
-  NSData *data = [NSData dataWithBytes:(const void *)cstring length:4];
-  NSInputStream *input = [NSInputStream inputStreamWithData:data];
-  [input open];
+  NSInputStream *input = [self openInputStreamWithBytes:(const void *)cstring length:4];
   
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   NSString *telnetString = [_telnet read];
@@ -88,11 +123,9 @@
 - (void) testWrite
 {
   uint8_t outputBuffer[MUTelnetBufferMax];
-  bzero(outputBuffer, MUTelnetBufferMax);
-  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:outputBuffer
-                                                       capacity:MUTelnetBufferMax];
-  [output open];
-  [_telnet write:@"Foo"];
+  NSOutputStream *output = [self openOutputStreamWithBuffer:outputBuffer
+                                                  maxLength:MUTelnetBufferMax];
+  [_telnet writeString:@"Foo"];
   [_telnet stream:output
       handleEvent:NSStreamEventHasSpaceAvailable];
   NSString *outputString = [NSString stringWithCString:(const char *)outputBuffer];
@@ -102,12 +135,10 @@
 - (void) testConsecutiveWrites
 {
   uint8_t outputBuffer[MUTelnetBufferMax];
-  bzero(outputBuffer, MUTelnetBufferMax);
-  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:outputBuffer
-                                                       capacity:MUTelnetBufferMax];
-  [output open];
-  [_telnet write:@"Foo"];
-  [_telnet write:@"Bar"];
+  NSOutputStream *output = [self openOutputStreamWithBuffer:outputBuffer
+                                                  maxLength:MUTelnetBufferMax];
+  [_telnet writeString:@"Foo"];
+  [_telnet writeString:@"Bar"];
   [_telnet stream:output
       handleEvent:NSStreamEventHasSpaceAvailable];
   NSString *outputString = [NSString stringWithCString:(const char *)outputBuffer];
@@ -116,6 +147,26 @@
       handleEvent:NSStreamEventHasSpaceAvailable];
   outputString = [NSString stringWithCString:(const char *)outputBuffer];
   [self assert:outputString equals:@"FooBar"];
+}
+
+- (void) testWillWont
+{
+  [self negotiationCommand:TEL_WILL response:TEL_WONT];
+}
+
+- (void) testWontWont
+{
+  [self negotiationCommand:TEL_WONT response:TEL_WONT];
+}
+
+- (void) testDoDont
+{
+  [self negotiationCommand:TEL_DO response:TEL_DONT];
+}
+
+- (void) testDontDont
+{
+  [self negotiationCommand:TEL_DONT response:TEL_DONT];
 }
 
 @end

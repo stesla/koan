@@ -44,9 +44,10 @@ enum MUTelnetCommands
 
 @interface MUTelnetConnection : NSObject
 {
-  NSMutableData *_data;
-  NSMutableData *_outputBuffer;
+  NSMutableData *_readBuffer;
+  NSMutableData *_writeBuffer;
   BOOL _isInCommand;
+  BOOL _discardNextByte;
 }
 
 // State Flags
@@ -54,7 +55,8 @@ enum MUTelnetCommands
 
 // IO
 - (NSString *) read;
-- (void) write:(NSString *)string;
+- (void) writeData:(NSData *)data;
+- (void) writeString:(NSString *)string;
 
 // NSStream delegate
 - (void) stream:(NSStream *)stream handleEvent:(NSStreamEvent)event;

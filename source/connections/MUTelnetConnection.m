@@ -31,6 +31,8 @@
 @interface MUTelnetConnection (TelnetCommands)
 - (BOOL) doInterpretAsCommand;
 - (BOOL) doNoOperation;
+- (BOOL) doDoOrDont;
+- (BOOL) doWillOrWont;
 @end
 
 @implementation MUTelnetConnection
@@ -39,29 +41,30 @@
 {
   if (self = [super init])
   {
-    _data = [[NSMutableData alloc] init];
-    _outputBuffer = [[NSMutableData alloc] init];
+    _readBuffer = [[NSMutableData alloc] init];
+    _writeBuffer = [[NSMutableData alloc] init];
     _isInCommand = NO;
+    _discardNextByte = NO;
   }
   return self;
 }
 
 - (void) dealloc
 {
-  [_data release];
-  [_outputBuffer release];
+  [_readBuffer release];
+  [_writeBuffer release];
   [super dealloc];
 }
 
 - (NSString *) read
 {
   NSString *result;
-  if ([_data length])
+  if ([_readBuffer length])
   {
-    result = [[NSString alloc] initWithData:_data
+    result = [[NSString alloc] initWithData:_readBuffer
                                    encoding:NSASCIIStringEncoding];
     [result autorelease];
-    [_data setData:[NSData data]];
+    [_readBuffer setData:[NSData data]];
   }
   else
   {
@@ -70,10 +73,15 @@
   return result;
 }
 
-- (void) write:(NSString *)string
+- (void) writeData:(NSData *)data
+{
+  [_writeBuffer appendData:data];
+}
+
+- (void) writeString:(NSString *)string
 {
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
-  [_outputBuffer appendData:data];
+  [self writeData:data];
 }
 
 - (BOOL) isInCommand
@@ -119,6 +127,14 @@
         
       case TEL_NOP:
         return [self doNoOperation];
+      
+      case TEL_WILL:
+      case TEL_WONT:
+        return [self doWillOrWont];
+        
+      case TEL_DO:
+      case TEL_DONT:
+        return [self doDoOrDont];
         
       default:
         return true;
@@ -138,24 +154,29 @@
   int bytesWritten = 0;
   for (i = 0; i < bytesRead; i++)
   {
-    if (![self parseCommandMaybe:socketBuffer[i]])
+    if (_discardNextByte)
+      _discardNextByte = NO;
+    else
     {
-      dataBuffer[bytesWritten] = socketBuffer[i];
-      bytesWritten++;
+      if (![self parseCommandMaybe:socketBuffer[i]])
+      {
+        dataBuffer[bytesWritten] = socketBuffer[i];
+        bytesWritten++;
+      }
     }
   }
   
   if (bytesRead)
   {
-    [_data appendBytes:(const void *)dataBuffer length:bytesWritten];
+    [_readBuffer appendBytes:(const void *)dataBuffer length:bytesWritten];
   }
 }
 
 - (void) writeToStream:(NSOutputStream *)stream
 {
-  const uint8_t *buffer = [_outputBuffer bytes];
-  [stream write:buffer maxLength:[_outputBuffer length]];
-  [_outputBuffer setData:[NSData data]];
+  const uint8_t *buffer = [_writeBuffer bytes];
+  [stream write:buffer maxLength:[_writeBuffer length]];
+  [_writeBuffer setData:[NSData data]];
 }
 
 @end
@@ -179,6 +200,34 @@
     return true;
   else
     return false;
+}
+
+- (BOOL) doWillOrWont
+{
+  if ([self isInCommand])
+  {
+    char command[2];
+    command[0] = TEL_IAC;
+    command[1] = TEL_WONT;
+    NSData *data = [NSData dataWithBytes:(const void *)command length:2];
+    [self writeData:data];
+    _discardNextByte = YES;
+  }
+  return true;
+}
+
+- (BOOL) doDoOrDont
+{
+  if ([self isInCommand])
+  {
+    char command[2];
+    command[0] = TEL_IAC;
+    command[1] = TEL_DONT;
+    NSData *data = [NSData dataWithBytes:(const void *)command length:2];
+    [self writeData:data];
+    _discardNextByte = YES;    
+  }
+  return true;
 }
 
 @end
