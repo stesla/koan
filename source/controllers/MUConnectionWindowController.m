@@ -10,10 +10,18 @@
 #import "J3NaiveURLFilter.h"
 #import "J3TextLogger.h"
 
+enum MUSearchDirections
+{
+  MUBackwardSearch,
+  MUForwardSearch
+};
+
 @interface MUConnectionWindowController (Private)
 - (J3Filter *) createLogger;
 - (void) displayString:(NSString *)string;
+- (void) endCompletion;
 - (void) sendPeriodicPing:(NSTimer *)timer;
+- (void) tabCompleteWithDirection:(enum MUSearchDirections)direction;
 @end
 
 #pragma mark -
@@ -298,41 +306,12 @@
     }
     if (commandSelector == @selector(insertTab:))
     {
-      NSString *currentPrefix;
-      NSString *foundString;
-      
-      if (currentlySearching)
-      {
-        currentPrefix = [[[[inputView string] copy] autorelease] substringToIndex:[textView selectedRange].location];
-        
-        if ([historyRing numberOfUniqueMatchesForStringPrefix:currentPrefix] == 1)
-        {
-          [inputView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
-          currentlySearching = NO;
-          [historyRing resetSearchCursor];
-          return YES;
-        }
-      }
-      else
-        currentPrefix = [[[inputView string] copy] autorelease];
-      
-      foundString = [historyRing searchBackwardForStringPrefix:currentPrefix];
-      
-      if (foundString)
-      {
-        while ([foundString isEqualToString:[textView string]])
-          foundString = [historyRing searchBackwardForStringPrefix:currentPrefix];
-          
-        [inputView setString:foundString];
-        [inputView setSelectedRange:NSMakeRange ([currentPrefix length], [[textView textStorage] length] - [currentPrefix length])];
-      }
-      
-      currentlySearching = YES;
-      
+      [self tabCompleteWithDirection:MUBackwardSearch];
       return YES;
     }
     else if (commandSelector == @selector(insertBacktab:))
     {
+      [self tabCompleteWithDirection:MUForwardSearch];
       return YES;
     }
     else if (commandSelector == @selector(insertNewline:))
@@ -342,8 +321,7 @@
       if ([[event charactersIgnoringModifiers] length])
         key = [[event charactersIgnoringModifiers] characterAtIndex:0];
       
-      currentlySearching = NO;
-      [historyRing resetSearchCursor];
+      [self endCompletion];
       
       if (key == NSCarriageReturnCharacter || key == NSEnterCharacter)
       {
@@ -358,8 +336,7 @@
       if ([[event charactersIgnoringModifiers] length])
         key = [[event charactersIgnoringModifiers] characterAtIndex:0];
       
-      currentlySearching = NO;
-      [historyRing resetSearchCursor];
+      [self endCompletion];
       
       if ([textView selectedRange].location == 0 &&
           key == NSUpArrowFunctionKey)
@@ -376,8 +353,7 @@
       if ([[event charactersIgnoringModifiers] length])
         key = [[event charactersIgnoringModifiers] characterAtIndex:0];
       
-      currentlySearching = NO;
-      [historyRing resetSearchCursor];
+      [self endCompletion];
       
       if ([textView selectedRange].location == [[textView textStorage] length] &&
           key == NSDownArrowFunctionKey)
@@ -404,8 +380,7 @@
   }
   else if (textView == inputView)
   {
-    currentlySearching = NO;
-    [historyRing resetSearchCursor];
+    [self endCompletion];
     return NO;
   }
   return NO;
@@ -484,9 +459,50 @@
                                                       object:self];
 }
 
+- (void) endCompletion
+{
+  currentlySearching = NO;
+  [historyRing resetSearchCursor];
+}
+
 - (void) sendPeriodicPing:(NSTimer *)timer
 {
   [telnetConnection sendLine:@"@pemit me="];
+}
+
+- (void) tabCompleteWithDirection:(enum MUSearchDirections)direction
+{
+  NSString *currentPrefix;
+  NSString *foundString;
+  
+  if (currentlySearching)
+  {
+    currentPrefix = [[[[inputView string] copy] autorelease] substringToIndex:[inputView selectedRange].location];
+    
+    if ([historyRing numberOfUniqueMatchesForStringPrefix:currentPrefix] == 1)
+    {
+      [inputView setSelectedRange:NSMakeRange ([[inputView textStorage] length], 0)];
+      [self endCompletion];
+      return;
+    }
+  }
+  else
+    currentPrefix = [[[inputView string] copy] autorelease];
+  
+  foundString = (direction == MUBackwardSearch) ? [historyRing searchBackwardForStringPrefix:currentPrefix]
+                                                : [historyRing searchForwardForStringPrefix:currentPrefix];
+  
+  if (foundString)
+  {
+    while ([foundString isEqualToString:[inputView string]])
+      foundString = (direction == MUBackwardSearch) ? [historyRing searchBackwardForStringPrefix:currentPrefix]
+                                                    : [historyRing searchForwardForStringPrefix:currentPrefix];
+    
+    [inputView setString:foundString];
+    [inputView setSelectedRange:NSMakeRange ([currentPrefix length], [[inputView textStorage] length] - [currentPrefix length])];
+  }
+  
+  currentlySearching = YES;
 }
 
 @end
