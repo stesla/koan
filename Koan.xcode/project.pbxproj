@@ -353,6 +353,46 @@
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7E5E161806CC30E200518E61 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUTelnetConnection.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7E5E161906CC30E200518E61 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUTelnetConnection.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7E5E161A06CC30E200518E61 = {
+			fileRef = 7E5E161806CC30E200518E61;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7E5E161B06CC30E200518E61 = {
+			fileRef = 7E5E161906CC30E200518E61;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7E5E161C06CC30E200518E61 = {
+			fileRef = 7E5E161806CC30E200518E61;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7E5E161D06CC30E200518E61 = {
+			fileRef = 7E5E161906CC30E200518E61;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		7E9F451706C4BE4B00686DF0 = {
 			explicitFileType = "compiled.mach-o.executable";
 			includeInIndex = 0;
@@ -434,6 +474,7 @@
 				E6B5E3B906A6EEA600F53EBB,
 				E6B5E61206A73B0A00F53EBB,
 				7E27F94D06C52291006D46AA,
+				7E5E161C06CC30E200518E61,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -443,6 +484,7 @@
 			files = (
 				8D11072D0486CEB800E47090,
 				7E27F94E06C52291006D46AA,
+				7E5E161D06CC30E200518E61,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E62041AA06B0566B00236608,
+				7E5E161A06CC30E200518E61,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,6 +550,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E62041AB06B0566B00236608,
+				7E5E161B06CC30E200518E61,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -696,6 +740,8 @@
 		};
 		E6B5E46B06A700E400F53EBB = {
 			children = (
+				7E5E161806CC30E200518E61,
+				7E5E161906CC30E200518E61,
 				7E27F94B06C52291006D46AA,
 				7E27F94C06C52291006D46AA,
 				E6B5E46C06A7011100F53EBB,

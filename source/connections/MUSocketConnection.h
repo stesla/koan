@@ -33,11 +33,11 @@
 
 @interface MUSocketConnection : NSObject
 {
-   int         _bufferSize;
-   id          _delegate;
-   NSString*   _host;
-   short       _port;
-   int         _socket;
+  int         _bufferSize;
+  id          _delegate;
+  NSString*   _host;
+  short       _port;
+  int         _socket;
 }
 
 + (id) socketWithHost:(NSString *)host port:(short)port;
@@ -50,12 +50,12 @@
 - (NSString *) host;
 - (BOOL) isConnected;
 - (short) port;
-- (void) open;
+- (BOOL) open;
 - (void) setBufferSize:(int)size;
 - (void) setDelegate:(id)delegate;
 - (void) setHost:(NSString *)host;
 - (void) setPort:(short)port;
-- (void) writeData:(NSData *)data;
+- (int) writeData:(NSData *)data;
 @end
 
 @interface NSObject (MUSocketConnectionDelegate)

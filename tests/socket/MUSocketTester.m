@@ -14,9 +14,9 @@
 
 - (void) socket:(MUSocketConnection *)socket didReadData:(NSData *)data
 {
-    NSString *string = [[NSString alloc] initWithData: data encoding: NSASCIIStringEncoding];
-    NSLog(string);
-    [string release];
+  NSString *string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+  NSLog (string);
+  [string release];
 }
 
 @end
