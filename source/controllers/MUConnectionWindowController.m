@@ -180,12 +180,13 @@ enum MUSearchDirections
 
 - (IBAction) disconnect:(id)sender
 {
+	[pingTimer invalidate];
+	[pingTimer release];
+	
+	[profile logoutWithConnection:telnetConnection];
+	
   if ([self isConnected])
   {
-    [pingTimer invalidate];
-    [pingTimer release];
-    
-    [profile logoutWithConnection:telnetConnection];
     [telnetConnection close];
     [telnetConnection release];
     telnetConnection = nil;

@@ -635,7 +635,7 @@
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
 				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
-				OTHER_LDFLAGS = "-weak_framework Growl";
+				OTHER_LDFLAGS = "-weak_framework GrowlAppBridge";
 				PREBINDING = YES;
 				PRODUCT_NAME = Koan;
 				WRAPPER_EXTENSION = app;

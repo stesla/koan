@@ -23,7 +23,6 @@
   MUProfile *profile;
   J3TelnetConnection *telnetConnection;
   
-  BOOL autoLoggedIn;
   BOOL currentlySearching;
   
   NSDictionary *baseAttributes;
