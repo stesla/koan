@@ -265,7 +265,7 @@
     [connectItem setTarget:self];
     [connectItem setRepresentedObject:profile];
 
-    if (autoconnect && [profile autoconnect])
+    if (autoconnect)
     {
       [profile setWorld:world];
       if ([profile autoconnect])
