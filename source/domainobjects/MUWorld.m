@@ -170,6 +170,7 @@
   {
     [players addObject:player];
     [player setWorld:self];
+		[self postWorldsUpdatedNotification];
   }
 }
 
@@ -182,6 +183,7 @@
 {
   [player setWorld:nil];
   [players removeObject:player];
+	[self postWorldsUpdatedNotification];
 }
 
 #pragma mark -

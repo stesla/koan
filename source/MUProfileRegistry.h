@@ -37,4 +37,5 @@
 - (void) removeAllProfilesForWorld:(MUWorld *)world;
 
 - (void) saveProfiles;
+
 @end

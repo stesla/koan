@@ -48,7 +48,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 }
 
 #pragma mark -
-#pragma mark Accessors
+#pragma mark Key-value coding accessors
 
 - (NSMutableArray *) worlds
 {
@@ -86,6 +86,12 @@ static MUWorldRegistry *sharedRegistry = nil;
 - (unsigned) count
 {
   return [worlds count];
+}
+
+- (void) removeWorld:(MUWorld *)world
+{
+	[worlds removeObject:world];
+	[self postWorldsUpdatedNotification];
 }
 
 - (void) saveWorlds

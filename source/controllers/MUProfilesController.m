@@ -157,7 +157,7 @@ enum MUProfilesEditingReturnValues
 	if (item)
 		return [[(MUWorld *) item players] objectAtIndex:index];
 	else
-		return [[MUWorldRegistry sharedRegistry] worldAtIndex:index];
+		return [[MUServices worldRegistry] worldAtIndex:index];
 }
 
 - (BOOL) outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
@@ -173,7 +173,7 @@ enum MUProfilesEditingReturnValues
 	if (item)
 		return [[(MUWorld *) item players] count];
 	else
-		return [[MUWorldRegistry sharedRegistry] count];
+		return [[MUServices worldRegistry] count];
 }
 
 - (id) outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)column byItem:(id)item
@@ -347,17 +347,19 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) removePlayer:(MUPlayer *)player
 {
-	// FIXME.
-  
   [[MUServices profileRegistry] removeProfileForWorld:[player world]
 																							 player:player];
+	[[player world] removePlayer:player];
+	
+	[worldsAndPlayersOutlineView reloadData];
 }
 
 - (IBAction) removeWorld:(MUWorld *)world
 {
-	// FIXME.
-	
   [[MUServices profileRegistry] removeAllProfilesForWorld:world];
+	[[MUServices worldRegistry] removeWorld:world];
+	
+	[worldsAndPlayersOutlineView reloadData];
 }
 
 - (void) updateProfilesForWorld:(MUWorld *)world 

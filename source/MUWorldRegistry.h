@@ -22,6 +22,10 @@
 - (void) removeObjectFromWorldsAtIndex:(unsigned)index;
 
 - (unsigned) count;
-- (void) saveWorlds;
 - (MUWorld *) worldAtIndex:(unsigned)index;
+
+- (void) removeWorld:(MUWorld *)world;
+
+- (void) saveWorlds;
+
 @end
