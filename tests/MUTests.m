@@ -20,6 +20,10 @@
 
 #import "MUTests.h"
 
+#import "MUTelnetConnectionTests.h"
+#import "MUInputFilterTests.h"
+#import "MUAnsiRemovingFilterTests.h"
+
 int
 main (int argc, const char *argv[])
 {
@@ -37,6 +41,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[MUTelnetConnectionTests class]];
   [suite addTestSuite:[MUInputFilterTests class]];
   [suite addTestSuite:[MUInputFilterQueueTests class]];
+  [suite addTestSuite:[MUAnsiRemovingFilterTests class]];
   return suite;
 }
 

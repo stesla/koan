@@ -22,6 +22,11 @@
 
 @implementation MUInputFilter
 
++ (MUInputFilter *) filter
+{
+  return [[[MUInputFilter alloc] init] autorelease];
+}
+
 - (void) filter:(NSString *)string
 {
   [[self successor] filter:string];

@@ -26,6 +26,8 @@
   id <MUFiltering> _successor;
 }
 
++ (MUInputFilter *) filter;
+
 - (void) filter:(NSString *)string;
 - (id <MUFilterChaining>) chaining;
 

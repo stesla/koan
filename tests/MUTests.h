@@ -21,9 +21,6 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
-#import "MUTelnetConnectionTests.h"
-#import "MUInputFilterTests.h"
-
 @interface  MUTests : NSObject
 {
   
