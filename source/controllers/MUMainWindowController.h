@@ -19,8 +19,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <J3Terminal/J3TelnetConnection.h>
+
 #import "MUHistoryRing.h"
-#import "connections/J3TelnetConnection.h"
 #import "MUFilter.h"
 
 @interface MUMainWindowController : NSWindowController
