@@ -120,6 +120,36 @@
   searchCursor = cursor;
 }
 
+- (unsigned) numberOfUniqueMatchesForStringPrefix:(NSString *)prefix
+{
+  int savedCursor = searchCursor;
+  unsigned uniqueMatchCount = 0;
+  NSMutableDictionary *uniqueMatchDictionary = [[NSMutableDictionary alloc] init];
+  
+  searchCursor = 0;
+  
+  while (searchCursor < [self count])
+  {
+    NSString *candidate = [self stringAtIndex:searchCursor];
+    
+    if ([candidate hasPrefix:prefix] && ![candidate isEqualToString:prefix])
+    {
+      if (![uniqueMatchDictionary objectForKey:candidate])
+      {
+        [uniqueMatchDictionary setObject:[NSNull null] forKey:candidate];
+        uniqueMatchCount++;
+      }
+    }
+    
+    searchCursor++;
+  }
+  
+  [uniqueMatchDictionary release];
+  searchCursor = savedCursor;
+    
+  return uniqueMatchCount;
+}
+
 - (NSString *) searchForwardForStringPrefix:(NSString *)prefix
 {
   int originalSearchCursor = searchCursor;
@@ -134,13 +164,15 @@
     if (searchCursor > [self count] - 1)
     {
       searchCursor = -1;
+      if (originalSearchCursor == -1)
+        return nil;
     }
     
     if (searchCursor != -1)
     {
       NSString *candidate = [self stringAtIndex:searchCursor];
       
-      if ([candidate hasPrefix:prefix])
+      if ([candidate hasPrefix:prefix] && ![candidate isEqualToString:prefix])
       {
         return candidate;
       }
@@ -166,13 +198,15 @@
     if (searchCursor < 0)
     {
       searchCursor = [self count] - 1;
+      if (originalSearchCursor == [self count] - 1)
+        return nil;
     }
     
     if (searchCursor != -1)
     {
       NSString *candidate = [self stringAtIndex:searchCursor];
       
-      if ([candidate hasPrefix:prefix])
+      if ([candidate hasPrefix:prefix] && ![candidate isEqualToString:prefix])
       {
         return candidate;
       }

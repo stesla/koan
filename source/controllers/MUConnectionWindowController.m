@@ -74,6 +74,8 @@
   [splitView adjustSubviews];
   
   baseAttributes = [[receivedTextView typingAttributes] copy];
+  
+  currentlySearching = NO;
 }
 
 - (void) dealloc
@@ -296,16 +298,36 @@
     }
     if (commandSelector == @selector(insertTab:))
     {
-      NSString *currentPrefix = [[[inputView string] copy] autorelease];
-      NSString *foundString = [historyRing searchBackwardForStringPrefix:currentPrefix];
+      NSString *currentPrefix;
+      NSString *foundString;
+      
+      if (currentlySearching)
+      {
+        currentPrefix = [[[[inputView string] copy] autorelease] substringToIndex:[textView selectedRange].location];
+        
+        if ([historyRing numberOfUniqueMatchesForStringPrefix:currentPrefix] == 1)
+        {
+          [inputView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+          currentlySearching = NO;
+          [historyRing resetSearchCursor];
+          return YES;
+        }
+      }
+      else
+        currentPrefix = [[[inputView string] copy] autorelease];
+      
+      foundString = [historyRing searchBackwardForStringPrefix:currentPrefix];
       
       if (foundString)
       {
+        while ([foundString isEqualToString:[textView string]])
+          foundString = [historyRing searchBackwardForStringPrefix:currentPrefix];
+          
         [inputView setString:foundString];
         [inputView setSelectedRange:NSMakeRange ([currentPrefix length], [[textView textStorage] length] - [currentPrefix length])];
       }
-      else
-        [inputView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      
+      currentlySearching = YES;
       
       return YES;
     }
@@ -320,6 +342,9 @@
       if ([[event charactersIgnoringModifiers] length])
         key = [[event charactersIgnoringModifiers] characterAtIndex:0];
       
+      currentlySearching = NO;
+      [historyRing resetSearchCursor];
+      
       if (key == NSCarriageReturnCharacter || key == NSEnterCharacter)
       {
         [self sendInputText:textView];
@@ -332,6 +357,9 @@
       
       if ([[event charactersIgnoringModifiers] length])
         key = [[event charactersIgnoringModifiers] characterAtIndex:0];
+      
+      currentlySearching = NO;
+      [historyRing resetSearchCursor];
       
       if ([textView selectedRange].location == 0 &&
           key == NSUpArrowFunctionKey)
@@ -347,6 +375,9 @@
       
       if ([[event charactersIgnoringModifiers] length])
         key = [[event charactersIgnoringModifiers] characterAtIndex:0];
+      
+      currentlySearching = NO;
+      [historyRing resetSearchCursor];
       
       if ([textView selectedRange].location == [[textView textStorage] length] &&
           key == NSDownArrowFunctionKey)
@@ -370,6 +401,12 @@
     [inputView insertText:string];
     [[self window] makeFirstResponder:inputView];
     return YES;
+  }
+  else if (textView == inputView)
+  {
+    currentlySearching = NO;
+    [historyRing resetSearchCursor];
+    return NO;
   }
   return NO;
 }

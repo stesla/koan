@@ -256,116 +256,130 @@ NSString *Third = @"Third";
   [self assertPrevious:@""];
 }
 
-- (void) testSearchForward
+- (void) testSearchFindsNothing
+{
+  [ring saveString:@"Dog"];
+  
+  [self assertNil:[ring searchForwardForStringPrefix:@"Cat"]];
+}
+
+- (void) testPerfectMatchFindsNothing
 {
   [ring saveString:@"Cat"];
+  
+  [self assertNil:[ring searchForwardForStringPrefix:@"Cat"]];
+}
+
+- (void) testSearchForward
+{
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
 }
 
 - (void) testWraparoundSearchForward
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
 }
 
 - (void) testMoveForwardThenSearchForward
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
-  [self assertNext:@"Cat"];
+  [self assertNext:@"Catastrophic"];
   
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
 }
 
 - (void) testMoveBackwardThenSearchForward
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
   [self assertPrevious:@"Catatonic"];
   
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
   
   [self assertPrevious:@"Dog"];
   
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
 }
 
 - (void) testSearchForwardWithInterspersedResets
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Catalogue"];
   [ring saveString:@"Catatonic"];
   
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [ring resetSearchCursor];
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catalogue"];
   [ring resetSearchCursor];
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catalogue"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
 }
 
 - (void) testSearchBackward
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
   [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
-  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
 }
 
 - (void) testMoveForwardThenSearchBackward
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
-  [self assertNext:@"Cat"];
+  [self assertNext:@"Catastrophic"];
   
   [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
-  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   
   [self assertNext:@"Dog"];
   
-  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
   
 }
 
 - (void) testMoveBackwardThenSearchBackward
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
   [self assertPrevious:@"Catatonic"];
   
-  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
 }
 
 - (void) testSearchBackwardWithInterspersedResets
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Catalogue"];
   [ring saveString:@"Catatonic"];
   
@@ -376,40 +390,40 @@ NSString *Third = @"Third";
   [ring resetSearchCursor];
   [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
   [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catalogue"];
-  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
 }
 
 - (void) testSearchForwardAndBackward
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Catalogue"];
   [ring saveString:@"Catatonic"];
   
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catalogue"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
   [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catalogue"];
-  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchBackwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catalogue"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
 }
 
 - (void) testSearchHonorsUpdates
 {
-  [ring saveString:@"Cat"];
+  [ring saveString:@"Catastrophic"];
   [ring saveString:@"Dog"];
   [ring saveString:@"Catatonic"];
   
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
   
-  [self assertNext:@"Cat"];
+  [self assertNext:@"Catastrophic"];
   [self assertNext:@"Dog"];
   
   [ring updateString:@"Catalogue"];
   
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catatonic"];
-  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Cat"];
+  [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catastrophic"];
   [self assert:[ring searchForwardForStringPrefix:@"Cat"] equals:@"Catalogue"];
 }
 
@@ -419,6 +433,34 @@ NSString *Third = @"Third";
   
   [self assertNil:[ring searchForwardForStringPrefix:@""]];
   [self assertNil:[ring searchBackwardForStringPrefix:@""]];
+}
+
+- (void) testNumberOfUniqueMatches
+{
+  [ring saveString:@"Dog"];
+  
+  [self assertInt:[ring numberOfUniqueMatchesForStringPrefix:@"Cat"]
+           equals:0];
+  
+  [ring saveString:@"Cat"];
+  
+  [self assertInt:[ring numberOfUniqueMatchesForStringPrefix:@"Cat"]
+           equals:0];
+  
+  [ring saveString:@"Catatonic"];
+  
+  [self assertInt:[ring numberOfUniqueMatchesForStringPrefix:@"Cat"]
+           equals:1];
+  
+  [ring saveString:@"Catastrophic"];
+  
+  [self assertInt:[ring numberOfUniqueMatchesForStringPrefix:@"Cat"]
+           equals:2];
+  
+  [ring saveString:@"Catastrophic"];
+  
+  [self assertInt:[ring numberOfUniqueMatchesForStringPrefix:@"Cat"]
+           equals:2];
 }
 
 @end
