@@ -1,5 +1,5 @@
 //
-// MUTelnetConnectionTests.h
+// J3TelnetConnectionTests.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -21,11 +21,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
-@class MUTelnetConnection;
+@class J3TelnetConnection;
 
-@interface MUTelnetConnectionTests : TestCase
+@interface J3TelnetConnectionTests : TestCase
 {
-  MUTelnetConnection *_telnet;
+  J3TelnetConnection *_telnet;
   NSString *_lineRead;
   bool _connectionConnecting;
   bool _connectionConnected;

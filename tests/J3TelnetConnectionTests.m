@@ -1,5 +1,5 @@
 //
-// MUTelnetConnectionTests.m
+// J3TelnetConnectionTests.m
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,17 +18,17 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#import "MUTelnetConnectionTests.h"
-#import "MUTelnetConnection.h"
+#import "J3TelnetConnectionTests.h"
+#import "J3TelnetConnection.h"
 
-@interface MUTelnetConnectionTests (HelperMethods)
+@interface J3TelnetConnectionTests (HelperMethods)
 - (void) negotiationCommand:(int)byteRead response:(int)byteWritten;
 - (NSInputStream *) openInputStreamWithBytes:(const char *)bytes;
 - (NSOutputStream *)openOutputStreamWithBuffer:(void *)buffer maxLength:(int)maxLength;
 - (NSData *) dataWithCString:(const char *)cstring;
 @end
 
-@implementation MUTelnetConnectionTests (HelperMethods)
+@implementation J3TelnetConnectionTests (HelperMethods)
 - (void) negotiationCommand:(int)byteRead response:(int)byteWritten
 {
   char cstring[3];
@@ -75,15 +75,15 @@
 
 @end
 
-@implementation MUTelnetConnectionTests
+@implementation J3TelnetConnectionTests
 
 // Delegate Methods
-- (void) telnetDidReadLine:(MUTelnetConnection *)telnet
+- (void) telnetDidReadLine:(J3TelnetConnection *)telnet
 {
   _lineRead = [telnet read];
 }
 
-- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet
+- (void) telnetDidChangeStatus:(J3TelnetConnection *)telnet
 {
   switch ([telnet connectionStatus])
   {
@@ -117,7 +117,7 @@
   _connectionEnded = NO;
   _connectionError = nil;
   _messageCount = 0;
-  _telnet = [[MUTelnetConnection alloc] initWithInputStream:input outputStream:output];
+  _telnet = [[J3TelnetConnection alloc] initWithInputStream:input outputStream:output];
   [_telnet setDelegate:self];
 }
 
@@ -316,11 +316,11 @@
 {
   NSInputStream *input = [NSInputStream inputStreamWithData:[NSData data]];
   NSOutputStream *output = [NSOutputStream outputStreamToMemory];
-  [self assertNil:[[MUTelnetConnection alloc]
+  [self assertNil:[[J3TelnetConnection alloc]
     initWithInputStream:nil outputStream:output] message:@"input"];
-  [self assertNil:[[MUTelnetConnection alloc]
+  [self assertNil:[[J3TelnetConnection alloc]
     initWithInputStream:input outputStream:nil] message:@"output"];
-  [self assertNil:[[MUTelnetConnection alloc]
+  [self assertNil:[[J3TelnetConnection alloc]
     initWithInputStream:nil outputStream:nil] message:@"both"];
 }
 

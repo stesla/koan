@@ -1,5 +1,5 @@
 //
-// MUTelnetConnection.m
+// J3TelnetConnection.m
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,11 +18,11 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#import "MUTelnetConnection.h"
+#import "J3TelnetConnection.h"
 
 #include <string.h>
 
-@interface MUTelnetConnection (Private)
+@interface J3TelnetConnection (Private)
 - (void) readFromStream:(NSInputStream *)stream;
 - (void) appendByteToBuffer:(uint8_t)byte;
 - (void) processByte:(uint8_t)byte;
@@ -34,18 +34,18 @@
 - (void) closeWithReason:(MUConnectionClosedReason)reason;
 @end
 
-@interface MUTelnetConnection (StatusChangeMethods)
+@interface J3TelnetConnection (StatusChangeMethods)
 - (void) connectionClosed;
 - (void) connectionConnecting;
 - (void) connectionConnected;
 @end
 
-@interface MUTelnetConnection (DelegateMethods)
+@interface J3TelnetConnection (DelegateMethods)
 - (void) didReadLine;
 - (void) didChangeStatus;
 @end
 
-@interface MUTelnetConnection (TelnetCommands)
+@interface J3TelnetConnection (TelnetCommands)
 - (void) doDo:(uint8_t)option;
 - (void) doDont:(uint8_t)option;
 - (void) doWill:(uint8_t)option;
@@ -54,7 +54,7 @@
 - (void) sendDont;
 @end
 
-@implementation MUTelnetConnection
+@implementation J3TelnetConnection
 
 - (id) init
 {
@@ -288,7 +288,7 @@
 
 @end
 
-@implementation MUTelnetConnection (Private)
+@implementation J3TelnetConnection (Private)
 
 - (void) readFromStream:(NSInputStream *)stream
 {
@@ -418,7 +418,7 @@
 
 @end
 
-@implementation MUTelnetConnection (TelnetCommands)
+@implementation J3TelnetConnection (TelnetCommands)
 
 - (void) doDo:(uint8_t)option
 {
@@ -464,7 +464,7 @@
 
 @end
 
-@implementation MUTelnetConnection (StatusChangeMethods)
+@implementation J3TelnetConnection (StatusChangeMethods)
 
 - (void) connectionClosed
 {
@@ -486,7 +486,7 @@
 
 @end
 
-@implementation MUTelnetConnection (DelegateMethods)
+@implementation J3TelnetConnection (DelegateMethods)
 
 - (void) didReadLine
 {

@@ -20,7 +20,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MUHistoryRing.h"
-#import "Connections/MUTelnetConnection.h"
+#import "Connections/J3TelnetConnection.h"
 #import "MUFilter.h"
 
 @interface MUMainWindowController : NSWindowController
@@ -32,7 +32,7 @@
   IBOutlet NSButton *connectButton;
   IBOutlet NSButton *disconnectButton;
   
-  MUTelnetConnection *_telnetConnection;
+  J3TelnetConnection *_telnetConnection;
   MUFilterQueue *_filterQueue;
   
   MUHistoryRing *_historyRing;

@@ -59,7 +59,7 @@
 {
   NSString *name = [hostNameField stringValue];
   int portNumber = [portField intValue];
-  _telnetConnection = [[MUTelnetConnection alloc] initWithHostName:name
+  _telnetConnection = [[J3TelnetConnection alloc] initWithHostName:name
                                                             onPort:portNumber];
   if(_telnetConnection)
   {
@@ -132,14 +132,14 @@
   [inputField setStringValue:[_historyRing previousString]];
 }
 
-// Delegate methods for MUTelnetConnection.
+// Delegate methods for J3TelnetConnection.
 
-- (void) telnetDidReadLine:(MUTelnetConnection *)telnet
+- (void) telnetDidReadLine:(J3TelnetConnection *)telnet
 {
   [self _displayString:[telnet read]];
 }
 
-- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet
+- (void) telnetDidChangeStatus:(J3TelnetConnection *)telnet
 {
   switch ([telnet connectionStatus])
   {

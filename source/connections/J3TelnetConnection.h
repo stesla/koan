@@ -1,5 +1,5 @@
 //
-// MUTelnetConnection.h
+// J3TelnetConnection.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -59,7 +59,7 @@ enum MUTelnetCommands
 
 #define MUTelnetBufferMax 1024
 
-@interface MUTelnetConnection : NSObject
+@interface J3TelnetConnection : NSObject
 {
   NSInputStream *_input;
   NSMutableData *_readBuffer;
@@ -115,7 +115,7 @@ enum MUTelnetCommands
 @end
 
 // Delegate Methods
-@interface NSObject (MUTelnetConnectionDelegate)
-- (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
-- (void) telnetDidChangeStatus:(MUTelnetConnection *)telnet;
+@interface NSObject (J3TelnetConnectionDelegate)
+- (void) telnetDidReadLine:(J3TelnetConnection *)telnet;
+- (void) telnetDidChangeStatus:(J3TelnetConnection *)telnet;
 @end
