@@ -1,15 +1,15 @@
 //
-// MUTextLogFilter.m
+// MUTextLogger.m
 //
 // Copyright (C) 2004 3James Software
 //
 
 #import "Categories/NSFileManager (Recursive).h"
-#import "MUTextLogFilter.h"
+#import "MUTextLogger.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"
 
-@interface MUTextLogFilter (Private)
+@interface MUTextLogger (Private)
 
 - (void) log:(NSAttributedString *)editString;
 
@@ -17,21 +17,21 @@
 
 #pragma mark -
 
-@implementation MUTextLogFilter
+@implementation MUTextLogger
 
 + (MUFilter *) filter
 {
-  return [[[MUTextLogFilter alloc] init] autorelease];
+  return [[[MUTextLogger alloc] init] autorelease];
 }
 
 + (id) filterWithWorld:(MUWorld *)world
 {
-  return [[[MUTextLogFilter alloc] initWithWorld:world] autorelease];
+  return [[[MUTextLogger alloc] initWithWorld:world] autorelease];
 }
 
 + (id) filterWithWorld:(MUWorld *)world player:(MUPlayer *)player
 {
-  return [[[MUTextLogFilter alloc] initWithWorld:world player:player] autorelease];
+  return [[[MUTextLogger alloc] initWithWorld:world player:player] autorelease];
 }
 
 - (id) initWithOutputStream:(NSOutputStream *)stream
@@ -113,7 +113,7 @@
 
 #pragma mark -
 
-@implementation MUTextLogFilter (Private)
+@implementation MUTextLogger (Private)
 
 - (void) log:(NSAttributedString *)string
 {

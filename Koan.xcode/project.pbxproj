@@ -1249,7 +1249,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = MUTextLogFilter.h;
+			path = MUTextLogger.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1257,7 +1257,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
-			path = MUTextLogFilter.m;
+			path = MUTextLogger.m;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1271,7 +1271,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = MUTextLogFilterTests.h;
+			path = MUTextLoggerTests.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1279,7 +1279,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
-			path = MUTextLogFilterTests.m;
+			path = MUTextLoggerTests.m;
 			refType = 4;
 			sourceTree = "<group>";
 		};

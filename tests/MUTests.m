@@ -8,7 +8,7 @@
 
 #import "MUFilterTests.h"
 #import "MUAnsiRemovingFilterTests.h"
-#import "MUTextLogFilterTests.h"
+#import "MUTextLoggerTests.h"
 #import "MUHistoryRingTests.h"
 
 int
@@ -29,7 +29,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[MUFilterQueueTests class]];
   [suite addTestSuite:[MUAnsiRemovingFilterTests class]];
   [suite addTestSuite:[MUHistoryRingTests class]];
-  [suite addTestSuite:[MUTextLogFilterTests class]];
+  [suite addTestSuite:[MUTextLoggerTests class]];
   return suite;
 }
 

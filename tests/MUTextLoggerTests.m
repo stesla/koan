@@ -1,19 +1,18 @@
 //
-// MUTextLogFilterTests.m
+// MUTextLoggerTests.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUTextLogFilterTests.h"
-#import "MUTextLogFilter.h"
+#import "MUTextLoggerTests.h"
 
-@interface MUTextLogFilterTests (Private)
+@interface MUTextLoggerTests (Private)
 - (void) assertFilter:(id)object;
 - (void) assertFilterString:(NSString *)string;
 - (void) assertLoggedOutput:(NSString *)string;
 @end
 
-@implementation MUTextLogFilterTests (Private)
+@implementation MUTextLoggerTests (Private)
 
 - (void) assertFilter:(id)object
 {
@@ -34,7 +33,7 @@
 
 @end
 
-@implementation MUTextLogFilterTests
+@implementation MUTextLoggerTests
 
 - (void) setUp
 {
@@ -43,7 +42,7 @@
                                                        capacity:MUTextLogTestBufferMax];
   [output open];
   
-  filter = [[MUTextLogFilter alloc] initWithOutputStream:output];
+  filter = [[MUTextLogger alloc] initWithOutputStream:output];
 }
 
 - (void) tearDown

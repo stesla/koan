@@ -1,5 +1,5 @@
 //
-// MUTextLogFilter.h
+// MUTextLogger.h
 //
 // Copyright (C) 2004 3James Software
 //
@@ -10,7 +10,7 @@
 @class MUPlayer;
 @class MUWorld;
 
-@interface MUTextLogFilter : MUFilter
+@interface MUTextLogger : MUFilter
 {
   NSOutputStream *output;
 }

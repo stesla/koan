@@ -1,5 +1,5 @@
 //
-// MUTextLogFilterTests.h
+// MUTextLoggerTests.h
 //
 // Copyright (C) 2004 3James Software
 //
@@ -7,13 +7,13 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
-#import "MUTextLogFilter.h"
+#import "MUTextLogger.h"
 
 #define MUTextLogTestBufferMax 1024
 
-@interface MUTextLogFilterTests : TestCase
+@interface MUTextLoggerTests : TestCase
 {
-  MUTextLogFilter *filter;
+  MUTextLogger *filter;
   uint8_t outputBuffer[1024];
 }
 

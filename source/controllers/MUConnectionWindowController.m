@@ -7,7 +7,7 @@
 #import "MUConnectionWindowController.h"
 
 #import "MUAnsiRemovingFilter.h"
-#import "MUTextLogFilter.h"
+#import "MUTextLogger.h"
 
 @interface MUConnectionWindowController (Private)
 
@@ -37,16 +37,16 @@
     {
       if (player)
       {
-        [filterQueue addFilter:[MUTextLogFilter filterWithWorld:world player:player]];
+        [filterQueue addFilter:[MUTextLogger filterWithWorld:world player:player]];
       }
       else
       {
-        [filterQueue addFilter:[MUTextLogFilter filterWithWorld:world]];
+        [filterQueue addFilter:[MUTextLogger filterWithWorld:world]];
       }
     }
     else
     {
-      [filterQueue addFilter:[MUTextLogFilter filter]];
+      [filterQueue addFilter:[MUTextLogger filter]];
     }
   }
   return self;
