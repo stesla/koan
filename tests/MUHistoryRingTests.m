@@ -117,6 +117,23 @@
   [self assert:[_ring previousString] equals:@"Bar Two"];
 }
 
+- (void) testSaveReordering
+{
+  [_ring saveString:@"Foo"];
+  [_ring saveString:@"Bar"];
+  [_ring saveString:@"Baz"];
+  
+  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@"Bar"];
+  
+  [_ring saveString:@"Bar Two"];
+  
+  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assert:[_ring nextString] equals:@"Baz"];
+  [self assert:[_ring nextString] equals:@"Bar Two"];
+  [self assert:[_ring nextString] equals:@""];
+}
+
 - (void) testUpdateBuffer
 {
   [_ring saveString:@"Foo"];
