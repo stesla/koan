@@ -10,12 +10,6 @@ static const int32_t currentVersion = 0;
 
 @implementation MUWorld
 
-+ (void) initialize
-{
-  [MUWorld setKeys:[NSArray arrayWithObjects:@"worldName", @"worldHostname", @"worldPort", nil]
-    triggerChangeNotificationsForDependentKey:@"description"];
-}
-
 - (id) initWithWorldName:(NSString *)newWorldName
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
@@ -34,11 +28,6 @@ static const int32_t currentVersion = 0;
   return [self initWithWorldName:NSLocalizedString (MULUntitledWorld, nil)
                    worldHostname:@""
                        worldPort:[NSNumber numberWithInt:0]];
-}
-
-- (NSString *) description
-{
-  return [NSString stringWithFormat:@"%@ (%@ %@)", [self worldName], [self worldHostname], [self worldPort]];
 }
 
 #pragma mark -
