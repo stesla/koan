@@ -144,7 +144,7 @@
   if (openConnections > 0)
   {
     NSAlert *alert;
-    int choice = NSAlertDefaultReturn;
+    int choice;
     
     alert = [NSAlert alertWithMessageText:NSLocalizedString (MULConfirmQuitTitle, nil)
                             defaultButton:NSLocalizedString (MULOkay, nil)
@@ -188,7 +188,9 @@
 
 - (void) windowIsClosingForConnectionWindowController:(MUConnectionWindowController *)controller
 {
+  [controller retain];
   [connectionWindowControllers removeObject:controller];
+  [controller autorelease];
 }
 
 @end

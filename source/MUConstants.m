@@ -27,6 +27,9 @@ NSString *MULConnectionClosedByError = @"ConnectionClosedByError";
 NSString *MULOkay = @"Okay";
 NSString *MULCancel = @"Cancel";
 
+NSString *MULConfirmCloseTitle = @"ConfirmCloseTitle";
+NSString *MULConfirmCloseMessage = @"ConfirmCloseMessage";
+
 NSString *MULConfirmQuitTitle = @"ConfirmQuitTitle";
 NSString *MULConfirmQuitMessageSingular = @"ConfirmQuitMessageSingular";
 NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";

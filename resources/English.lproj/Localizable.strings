@@ -11,9 +11,12 @@
 "Okay" = "OK";
 "Cancel" = "Cancel";
 
+"ConfirmCloseTitle" = "Are you sure you want to close %@?";
+"ConfirmCloseMessage" = "The currently open connection to %@ will be closed.";
+
 "ConfirmQuitTitle" = "Are you sure you want to quit Koan?";
-"ConfirmQuitMessageSingular" = "%d connection is still open and will be disconnected if you quit.";
-"ConfirmQuitMessagePlural" = "%d connections are still open and will be disconnected if you quit.";
+"ConfirmQuitMessageSingular" = "%d connection is still open and will be disconnected.";
+"ConfirmQuitMessagePlural" = "%d connections are still open and will be disconnected.";
 
 // Miscellaneous messages.
 

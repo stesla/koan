@@ -251,12 +251,34 @@
 
 - (BOOL) windowShouldClose:(id)sender
 {
+  if ([self isConnected])
+  {
+    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), [connectionSpec name]];
+    NSAlert *alert;
+    int choice;
+    
+    alert = [NSAlert alertWithMessageText:title
+                            defaultButton:NSLocalizedString (MULOkay, nil)
+                          alternateButton:NSLocalizedString (MULCancel, nil)
+                              otherButton:nil
+                informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
+      [connectionSpec hostname]];
+    
+    choice = [alert runModal];
+    
+    if (choice == NSAlertAlternateReturn)
+    {
+      return NO;
+    }
+  }
+  
   [sender autorelease];
   [self disconnect:sender];
   if ([[self delegate] respondsToSelector:@selector(windowIsClosingForConnectionWindowController:)])
   {
     [[self delegate] windowIsClosingForConnectionWindowController:self];
   }
+  return YES;
 }
 
 @end

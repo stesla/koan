@@ -27,6 +27,9 @@ extern NSString *MULConnectionClosedByError;
 extern NSString *MULOkay;
 extern NSString *MULCancel;
 
+extern NSString *MULConfirmCloseTitle;
+extern NSString *MULConfirmCloseMessage;
+
 extern NSString *MULConfirmQuitTitle;
 extern NSString *MULConfirmQuitMessageSingular;
 extern NSString *MULConfirmQuitMessagePlural;
