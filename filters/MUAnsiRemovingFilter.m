@@ -53,23 +53,33 @@
   NSRange codeRange;
   
   codeRange.location = [self scanUpToCodeInString:[editString string]];
-  codeRange.length = [self scanThruEndOfCodeAt:codeRange.location
-                                      inString:[editString string]];
   
-  if (codeRange.location < [editString length])
+  if (codeRange.location != NSNotFound)
   {
-    [editString deleteCharactersInRange:codeRange];
-    return YES;
+    codeRange.length = [self scanThruEndOfCodeAt:codeRange.location
+                                        inString:[editString string]];
+    
+    if (codeRange.location < [editString length])
+    {
+      [editString deleteCharactersInRange:codeRange];
+      return YES;
+    }
   }
-  else
-    return NO;
+
+  return NO;
 }
 
 - (int) scanUpToCodeInString:(NSString *)string
 {
+  NSRange stopRange;
   NSCharacterSet *stopSet = 
     [NSCharacterSet characterSetWithCharactersInString:@"\033"];
   NSScanner *scanner = [NSScanner scannerWithString:string];
+  
+  stopRange = [string rangeOfCharacterFromSet:stopSet];
+  if (stopRange.location == NSNotFound)
+    return NSNotFound;
+  
   while ([scanner scanUpToCharactersFromSet:stopSet intoString:nil])
     ;
   return [scanner scanLocation];

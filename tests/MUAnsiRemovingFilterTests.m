@@ -62,6 +62,12 @@
           hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]];
 }
 
+- (void) testSingleCharacter
+{
+  [self assertInput:[NSAttributedString attributedStringWithString:@"Q"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Q"]];
+}
+
 - (void) testBasicCode
 {
   [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[moo"]
@@ -87,10 +93,22 @@
           hasOutput:[NSAttributedString attributedStringWithString:@"Foo\n"]];
 }
 
+- (void) testNewLineOnly
+{
+  [self assertInput:[NSAttributedString attributedStringWithString:@"\n"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"\n"]];
+}
+
 - (void) testCodeAtEndOfLine
 {
   [self assertInput:[NSAttributedString attributedStringWithString:@"Foo\033[36m\n"]
           hasOutput:[NSAttributedString attributedStringWithString:@"Foo\n"]];
+}
+
+- (void) testCodeAtBeginningOfString
+{
+  [self assertInput:[NSAttributedString attributedStringWithString:@"\033[36mFoo"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]];
 }
 
 - (void) testCodeAtEndOfString
