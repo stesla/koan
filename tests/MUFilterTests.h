@@ -23,14 +23,14 @@
 
 #import "MUFilter.h"
 
-@interface MUInputFilterTests : TestCase
+@interface MUFilterTests : TestCase
 
 @end
 
-@interface MUInputFilterQueueTests : TestCase
+@interface MUFilterQueueTests : TestCase
 
 @end
 
-@interface MUUpperInputFilter : MUFilter
+@interface MUUpperCaseFilter : MUFilter
 
 @end

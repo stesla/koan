@@ -21,7 +21,7 @@
 #import "MUTests.h"
 
 #import "MUTelnetConnectionTests.h"
-#import "MUInputFilterTests.h"
+#import "MUFilterTests.h"
 #import "MUAnsiRemovingFilterTests.h"
 #import "MUTextLogFilterTests.h"
 #import "MUHistoryRingTests.h"
@@ -41,8 +41,8 @@ main (int argc, const char *argv[])
   
   // Add tests here.
   [suite addTestSuite:[MUTelnetConnectionTests class]];
-  [suite addTestSuite:[MUInputFilterTests class]];
-  [suite addTestSuite:[MUInputFilterQueueTests class]];
+  [suite addTestSuite:[MUFilterTests class]];
+  [suite addTestSuite:[MUFilterQueueTests class]];
   [suite addTestSuite:[MUAnsiRemovingFilterTests class]];
   [suite addTestSuite:[MUHistoryRingTests class]];
   [suite addTestSuite:[MUTextLogFilterTests class]];

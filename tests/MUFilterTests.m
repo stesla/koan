@@ -18,10 +18,9 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#import "MUInputFilterTests.h"
-#import "MUFilter.h"
+#import "MUFilterTests.h"
 
-@implementation MUInputFilterTests
+@implementation MUFilterTests
 
 - (void) testFilter
 {
@@ -35,7 +34,7 @@
 
 @end
 
-@implementation MUUpperInputFilter
+@implementation MUUpperCaseFilter
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
 {
@@ -45,7 +44,7 @@
 
 @end
 
-@implementation MUInputFilterQueueTests
+@implementation MUFilterQueueTests
 
 - (void) testFilter
 {
@@ -58,7 +57,7 @@
 - (void) testQueue
 {
   MUFilterQueue *queue = [[MUFilterQueue alloc] init];
-  MUUpperInputFilter *filter = [[MUUpperInputFilter alloc] init];
+  MUUpperCaseFilter *filter = [[MUUpperCaseFilter alloc] init];
   [queue addFilter:filter];
   
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
