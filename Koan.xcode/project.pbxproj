@@ -8,6 +8,7 @@
 		1058C7A0FEA54F0111CA2CBB = {
 			children = (
 				1058C7A1FEA54F0111CA2CBB,
+				E620410A06B0551D00236608,
 			);
 			isa = PBXGroup;
 			name = "Linked Frameworks";
@@ -45,6 +46,7 @@
 		19C28FACFE9D520D11CA2CBB = {
 			children = (
 				8D1107320486CEB800E47090,
+				E62040FB06B054E400236608,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -74,6 +76,7 @@
 			projectDirPath = "";
 			targets = (
 				8D1107260486CEB800E47090,
+				E62040FA06B054E400236608,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -115,6 +118,7 @@
 				E6B5E3AA06A6EE0C00F53EBB,
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
+				E6B5E61106A73B0A00F53EBB,
 			);
 			isa = PBXGroup;
 			path = Resources;
@@ -238,6 +242,7 @@
 			files = (
 				E6B5E3B306A6EE8400F53EBB,
 				E6B5E3B906A6EEA600F53EBB,
+				E6B5E61206A73B0A00F53EBB,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,7 +251,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090,
-				E6B5E46D06A7011100F53EBB,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -299,6 +303,126 @@
 //E62
 //E63
 //E64
+		E62040F606B054E400236608 = {
+			buildActionMask = 2147483647;
+			files = (
+				E62041AA06B0566B00236608,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E62040F706B054E400236608 = {
+			buildActionMask = 2147483647;
+			files = (
+				E62041AB06B0566B00236608,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E62040F806B054E400236608 = {
+			buildActionMask = 2147483647;
+			files = (
+				E620418406B0555C00236608,
+				E620410B06B0551D00236608,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E62040F906B054E400236608 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			isa = PBXRezBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E62040FA06B054E400236608 = {
+			buildPhases = (
+				E62040F606B054E400236608,
+				E62040F706B054E400236608,
+				E62040F806B054E400236608,
+				E62040F906B054E400236608,
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Test Suite";
+				REZ_EXECUTABLE = YES;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXToolTarget;
+			name = "Test Suite";
+			productInstallPath = /usr/local/bin;
+			productName = "Test Suite";
+			productReference = E62040FB06B054E400236608;
+		};
+		E62040FB06B054E400236608 = {
+			explicitFileType = "compiled.mach-o.executable";
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = "Test Suite";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E620410A06B0551D00236608 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = ObjcUnit.framework;
+			path = /Library/Frameworks/ObjcUnit.framework;
+			refType = 0;
+			sourceTree = "<absolute>";
+		};
+		E620410B06B0551D00236608 = {
+			fileRef = E620410A06B0551D00236608;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E620418406B0555C00236608 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62041A806B0566B00236608 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUTests.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E62041A906B0566B00236608 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUTests.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E62041AA06B0566B00236608 = {
+			fileRef = E62041A806B0566B00236608;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62041AB06B0566B00236608 = {
+			fileRef = E62041A906B0566B00236608;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E648B8E906B03FBC0070F73E = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			name = "Tests-Info.plist";
+			path = "tests/Tests-Info.plist";
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
 		E6B5E3AA06A6EE0C00F53EBB = {
 			children = (
 				E6B5E3B106A6EE8400F53EBB,
@@ -360,6 +484,9 @@
 		};
 		E6B5E40A06A6F28400F53EBB = {
 			children = (
+				E62041A806B0566B00236608,
+				E62041A906B0566B00236608,
+				E648B8E906B03FBC0070F73E,
 			);
 			isa = PBXGroup;
 			path = Tests;
@@ -392,8 +519,17 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		E6B5E46D06A7011100F53EBB = {
-			fileRef = E6B5E46C06A7011100F53EBB;
+		E6B5E61106A73B0A00F53EBB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			name = version.plist;
+			path = resources/version.plist;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6B5E61206A73B0A00F53EBB = {
+			fileRef = E6B5E61106A73B0A00F53EBB;
 			isa = PBXBuildFile;
 			settings = {
 			};
