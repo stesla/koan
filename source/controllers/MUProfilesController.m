@@ -61,6 +61,8 @@ enum MUProfilesEditingReturnValues
   [playerNameField setStringValue:@""];
   [playerPasswordField setStringValue:@""];
   
+  [playerEditorSheet makeFirstResponder:playerNameField];
+  
   [NSApp beginSheet:playerEditorSheet
      modalForWindow:[self window]
       modalDelegate:self
@@ -74,6 +76,8 @@ enum MUProfilesEditingReturnValues
   [worldHostnameField setStringValue:@""];
   [worldPortField setStringValue:@""];
   [worldURLField setStringValue:@""];
+  
+  [worldEditorSheet makeFirstResponder:worldNameField];
   
   [NSApp beginSheet:worldEditorSheet
      modalForWindow:[self window]
@@ -89,6 +93,8 @@ enum MUProfilesEditingReturnValues
   
   [playerNameField setStringValue:[playersArrayController valueForKeyPath:@"selection.name"]];
   [playerPasswordField setStringValue:[playersArrayController valueForKeyPath:@"selection.password"]];
+  
+  [playerEditorSheet makeFirstResponder:playerNameField];
   
   if ([playersTable rowAtPoint:location] == -1)
     return;
@@ -109,6 +115,8 @@ enum MUProfilesEditingReturnValues
   [worldHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldHostname"]];
   [worldPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.worldPort"]];
   [worldURLField setStringValue:@""];
+  
+  [worldEditorSheet makeFirstResponder:worldNameField];
   
   if ([worldsTable rowAtPoint:location] == -1)
     return;
