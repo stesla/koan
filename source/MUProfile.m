@@ -5,6 +5,7 @@
 //
 
 #import "MUProfile.h"
+#import "J3TextLogger.h"
 
 @interface MUProfile (Private)
 - (void) setPlayer:(MUPlayer *)player;
@@ -57,6 +58,37 @@
 - (NSString *) windowName
 {
   return (player ? [player windowName] : [world windowName]);
+}
+
+- (NSString *) loginString
+{
+  return [player loginString];
+}
+
+- (J3Filter *) logger
+{
+  if (player)
+    return [J3TextLogger filterWithWorld:world player:player];
+  else
+    return [J3TextLogger filterWithWorld:world];
+}
+
+- (NSString *) hostname;
+{
+  return [world worldHostname];
+}
+
+- (J3TelnetConnection *) openTelnetWithDelegate:(id)aDelegate
+{
+  J3TelnetConnection  * telnet = [world newTelnetConnection];
+  
+  if (telnet)
+  {
+    [telnet setDelegate:aDelegate];
+    [telnet open];
+  }  
+  
+  return telnet;
 }
 
 @end

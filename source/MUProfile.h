@@ -5,8 +5,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <J3Terminal/J3TelnetConnection.h>
 #import "MUWorld.h"
 #import "MUPlayer.h"
+#import "J3Filter.h"
 
 @interface MUProfile : NSObject 
 {
@@ -18,11 +20,15 @@
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player;
 - (id) initWithWorld:(MUWorld *)world;
 
-// UI-Related info
 - (NSString *) frameName;
 - (NSString *) windowName;
 
-// Accessors
+- (NSString *) hostname;
+- (NSString *) loginString;
+- (J3Filter *) logger;
+- (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate;
+
+
 - (MUWorld *) world;
 - (MUPlayer *) player;
 @end

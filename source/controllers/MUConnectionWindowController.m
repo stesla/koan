@@ -15,10 +15,6 @@
 - (J3Filter *) createLogger;
 @end
 
-@interface MUConnectionWindowController (SelfEncapsulation)
-- (MUPlayer *) player;
-@end
-
 #pragma mark -
 
 @implementation MUConnectionWindowController
@@ -136,16 +132,8 @@
 
 - (IBAction) connect:(id)sender
 {
-  telnetConnection = [[profile world] newTelnetConnection];
-  
-  if (telnetConnection)
-  {
-    [telnetConnection setDelegate:self];
-    [telnetConnection open];
-  }
-  //else
-  //TODO: Error messaging goes here
-  
+  telnetConnection = [profile openTelnetWithDelegate:self];
+  //TODO: if (!telnetConnection) { //ERROR! }
   [[self window] makeFirstResponder:inputView];
 }
 
@@ -232,7 +220,7 @@
       case J3ConnectionStatusConnected:
         if (!autoLoggedIn && [profile player])
         {
-          [self sendString:[[profile player] loginString]];
+          [self sendString:[profile loginString]];
           autoLoggedIn = YES;
         }
         [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
@@ -375,7 +363,7 @@
                           alternateButton:NSLocalizedString (MULCancel, nil)
                               otherButton:nil
                 informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
-      [[profile world] worldHostname]];
+      [profile hostname]];
     
     choice = [alert runModal];
     
@@ -425,21 +413,9 @@
 - (J3Filter *) createLogger
 {
   if (profile)
-  {
-    if ([profile player])
-      return [J3TextLogger filterWithWorld:[profile world] player:[profile player]];
-    else
-      return [J3TextLogger filterWithWorld:[profile world]];
-  }
+    return [profile logger];
   else
     return [J3TextLogger filter];
 }
 
-@end
-
-@implementation MUConnectionWindowController (SelfEncapsulation)
-- (MUPlayer *) player
-{
-  return [profile player];
-}
 @end
