@@ -19,8 +19,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MUInputFilter.h"
+#import "MUFilter.h"
 
-@interface MUAnsiRemovingFilter : MUInputFilter
+@interface MUAnsiRemovingFilter : MUFilter
 
 @end

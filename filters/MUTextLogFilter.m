@@ -22,7 +22,7 @@
 
 @implementation MUTextLogFilter
 
-+ (MUInputFilter *) filter
++ (MUFilter *) filter
 {
   return [[[MUTextLogFilter alloc] init] autorelease];
 }

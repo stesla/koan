@@ -18,13 +18,13 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#import "MUInputFilter.h"
+#import "MUFilter.h"
 
-@implementation MUInputFilter
+@implementation MUFilter
 
-+ (MUInputFilter *) filter
++ (MUFilter *) filter
 {
-  return [[[MUInputFilter alloc] init] autorelease];
+  return [[[MUFilter alloc] init] autorelease];
 }
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
@@ -34,7 +34,7 @@
 
 @end
 
-@implementation MUInputFilterQueue
+@implementation MUFilterQueue
 
 - (id) init
 {

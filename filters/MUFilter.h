@@ -19,15 +19,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MUFiltering.h"
 
-@interface MUInputFilter : NSObject <MUFiltering> 
+@protocol MUFiltering
 
-+ (MUInputFilter *) filter;
+- (NSAttributedString *) filter:(NSAttributedString *)string;
 
 @end
 
-@interface MUInputFilterQueue : NSObject
+@interface MUFilter : NSObject <MUFiltering> 
+
++ (MUFilter *) filter;
+
+@end
+
+@interface MUFilterQueue : NSObject
 {
   NSMutableArray *_filters;
 }

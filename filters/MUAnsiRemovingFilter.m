@@ -28,7 +28,7 @@
 
 @implementation MUAnsiRemovingFilter
 
-+ (MUInputFilter *) filter
++ (MUFilter *) filter
 {
   return [[[MUAnsiRemovingFilter alloc] init] autorelease];
 }

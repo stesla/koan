@@ -19,9 +19,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MUInputFilter.h"
+#import "MUFilter.h"
 
-@interface MUTextLogFilter : MUInputFilter
+@interface MUTextLogFilter : MUFilter
 {
 
 }
