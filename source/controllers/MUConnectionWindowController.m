@@ -32,11 +32,6 @@
   return self;
 }
 
-- (BOOL) isConnected
-{
-  return [telnetConnection isConnected];
-}
-
 - (void) awakeFromNib
 {
   NSDictionary *bindingOptions = [NSDictionary dictionaryWithObject:NSUnarchiveFromDataTransformerName
@@ -65,6 +60,25 @@
   [filterQueue release];
   [historyRing release];
 }
+
+// Accessors.
+
+- (id) delegate
+{
+  return delegate;
+}
+
+- (void) setDelegate:(id)newDelegate
+{
+  delegate = newDelegate;
+}
+
+- (BOOL) isConnected
+{
+  return [telnetConnection isConnected];
+}
+
+// Actions.
 
 - (IBAction) connect:(id)sender
 {
@@ -238,6 +252,11 @@
 - (BOOL) windowShouldClose:(id)sender
 {
   [sender autorelease];
+  [self disconnect:sender];
+  if ([[self delegate] respondsToSelector:@selector(windowIsClosingForConnectionWindowController:)])
+  {
+    [[self delegate] windowIsClosingForConnectionWindowController:self];
+  }
 }
 
 @end

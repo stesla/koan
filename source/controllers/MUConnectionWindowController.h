@@ -15,6 +15,7 @@
 {
   IBOutlet NSTextView *receivedTextView;
   IBOutlet NSTextView *inputView;
+  IBOutlet id delegate;
   
   MUConnectionSpec *connectionSpec;
   J3TelnetConnection *telnetConnection;
@@ -28,11 +29,20 @@
 
 - (BOOL) isConnected;
 
+- (id) delegate;
+- (void) setDelegate:(id)delegate;
+
 - (IBAction) connect:(id)sender;
 - (IBAction) disconnect:(id)sender;
 - (IBAction) writeLine:(id)sender;
 
 - (IBAction) nextCommand:(id)sender;
 - (IBAction) previousCommand:(id)sender;
+
+@end
+
+@interface NSObject (MUConnectionWindowControllerDelegate)
+
+- (void) windowIsClosingForConnectionWindowController:(MUConnectionWindowController *)controller;
 
 @end

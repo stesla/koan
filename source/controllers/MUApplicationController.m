@@ -184,6 +184,13 @@
   [self updateConnectionsMenu];
 }
 
+// Delegate methods for MUConnectionWindowController.
+
+- (void) windowIsClosingForConnectionWindowController:(MUConnectionWindowController *)controller
+{
+  [connectionWindowControllers removeObject:controller];
+}
+
 @end
 
 @implementation MUApplicationController (Private)
@@ -192,6 +199,8 @@
 {
   MUConnectionSpec *connectionSpec = [sender representedObject];
   MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithConnectionSpec:connectionSpec];
+  
+  [controller setDelegate:self];
   
   [connectionWindowControllers addObject:controller];
   [controller showWindow:self];
