@@ -77,10 +77,28 @@
 
 @implementation MUTelnetConnectionTests
 
+// Delegate Methods
+- (void) telnetDidReadLine:(MUTelnetConnection *)telnet
+{
+  _lineRead = [telnet read];
+}
+
+- (void) telnetConnectionDidEnd:(MUTelnetConnection *)telnet
+{
+  _connectionEnded = true;
+}
+
+- (void) telnet:(MUTelnetConnection *)telnet statusMessage:(NSString *)message
+{
+  _messageCount++;
+}
+
 - (void) setUp
 {
-  _telnet = [[MUTelnetConnection alloc] initWithInputStream:nil outputStream:nil];
   _lineRead = @"";
+  _connectionEnded = false;
+  _messageCount = 0;
+  _telnet = [[MUTelnetConnection alloc] initWithInputStream:nil outputStream:nil];
   [_telnet setDelegate:self];
 }
 
@@ -193,11 +211,6 @@
   [self negotiationCommand:TEL_DONT response:TEL_WONT];
 }
 
-- (void) telnetDidReadLine:(MUTelnetConnection *)telnet
-{
-  _lineRead = [telnet read];
-}
-
 - (void) testDidReadLine
 {
   NSData *data = [self dataWithCString:"Fo"];
@@ -220,6 +233,38 @@
   [input open];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   [self assert:_lineRead equals:@"bar\n"];
+}
+
+- (void) testStatusMessagesNormalEnd
+{
+  NSInputStream *input; 
+  input = [self openInputStreamWithBytes:"Foo\n"];
+  [_telnet setInput:input];
+  [_telnet open];
+  [_telnet stream:input handleEvent:NSStreamEventOpenCompleted];
+  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  [_telnet stream:input handleEvent:NSStreamEventEndEncountered];
+  
+  [self assertFalse:[_telnet isConnected]];
+  [self assert:_lineRead equals:@"Foo\n"];
+  [self assertTrue:_connectionEnded];
+  [self assertInt:_messageCount equals:3];
+}
+
+- (void) testStatusMessagesErrorEnd
+{
+  NSInputStream *input; 
+  input = [self openInputStreamWithBytes:"Bar\n"];
+  [_telnet setInput:input];
+  [_telnet open];
+  [_telnet stream:input handleEvent:NSStreamEventOpenCompleted];
+  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  [_telnet stream:input handleEvent:NSStreamEventErrorOccurred];
+  
+  [self assertFalse:[_telnet isConnected]];
+  [self assert:_lineRead equals:@"Bar\n"];
+  [self assertTrue:_connectionEnded];
+  [self assertInt:_messageCount equals:3];
 }
 
 @end

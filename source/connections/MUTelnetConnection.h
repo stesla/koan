@@ -37,7 +37,8 @@ enum MUTelnetCommands
   TEL_WONT = 252,
   TEL_DO   = 253,
   TEL_DONT = 254,
-  TEL_IAC  = 255
+  TEL_IAC  = 255,
+  TEL_NONE = 256
 };
 
 #define MUTelnetBufferMax 1024
@@ -51,7 +52,7 @@ enum MUTelnetCommands
   BOOL _canWrite;
   BOOL _isConnected;
   BOOL _isInCommand;
-  BOOL _discardNextByte;
+  int _commandChar;
   id _delegate;
 }
 
@@ -62,9 +63,15 @@ enum MUTelnetCommands
 - (id) initWithHostName:(NSString *)hostName 
              onPort:(int)port;
 
-// Setters/Getters
-- (void) setDelegate:(id)delegate;
+// Getters
 - (id) delegate;
+- (NSInputStream *) input;
+- (NSOutputStream *) output;
+
+// Setters
+- (void) setDelegate:(id)delegate;
+- (void) setInput:(NSInputStream *)input;
+- (void) setOutput:(NSOutputStream *)output;
 
 // Connecting
 - (void) open;

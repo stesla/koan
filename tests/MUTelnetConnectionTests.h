@@ -27,6 +27,8 @@
 {
   MUTelnetConnection *_telnet;
   NSString *_lineRead;
+  bool _connectionEnded;
+  int _messageCount;
 }
 
 @end

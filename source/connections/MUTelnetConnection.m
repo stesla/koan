@@ -23,15 +23,13 @@
 #include <string.h>
 
 @interface MUTelnetConnection (Private)
-- (BOOL) parseCommandMaybe:(uint8_t)current;
 - (void) readFromStream:(NSInputStream *)stream;
 // WARNING - Counter must be a valid offset from buffer.
 // The value of counter may change inside this routine.
 - (void) processByte:(uint8_t)byte withBuffer:(uint8_t *)buffer at:(int *)counter;
 - (void) appendBytesToBuffer:(const void *)bytes length:(int)length;
 - (void) writeToStream:(NSOutputStream *)stream;
-- (void) setInput:(NSInputStream *)input;
-- (void) setOutput:(NSOutputStream *)output;
+- (void) closeWithMessage:(NSString *)message;
 @end
 
 @interface MUTelnetConnection (DelegateMethods)
@@ -41,10 +39,12 @@
 @end
 
 @interface MUTelnetConnection (TelnetCommands)
-- (BOOL) doInterpretAsCommand;
-- (BOOL) doNoOperation;
-- (BOOL) doDoOrDont;
-- (BOOL) doWillOrWont;
+- (void) doDo:(uint8_t)option;
+- (void) doDont:(uint8_t)option;
+- (void) doWill:(uint8_t)option;
+- (void) doWont:(uint8_t)option;
+- (void) sendWont;
+- (void) sendDont;
 @end
 
 @implementation MUTelnetConnection
@@ -65,7 +65,7 @@
     _writeBuffer = [[NSMutableData alloc] init];
     _isConnected = NO;
     _isInCommand = NO;
-    _discardNextByte = NO;
+    _commandChar = TEL_NONE;
   }
   return self;
 }
@@ -104,15 +104,46 @@
 - (void) setDelegate:(id)delegate
 {
   if (delegate && ![delegate respondsToSelector:@selector(telnetDidReadLine:)])
-    NSLog (@"Warning: setting delegate to object '%@', which does not respond to delegate method telnetDidReadLine:.", delegate);
+    NSLog (@"Warning: setting delegate to object '%@'," 
+           "which does not respond to delegate method "
+           "telnetDidReadLine:.", delegate);
   
   if (delegate && ![delegate respondsToSelector:@selector(telnetConnectionDidEnd:)])
-    NSLog (@"Warning: setting delegate to object '%@', which does not respond to delegate method telnetConnectionDidEnd:.", delegate);
+    NSLog (@"Warning: setting delegate to object '%@',"
+           "which does not respond to delegate method "
+           "telnetConnectionDidEnd:.", delegate);
   
-  // Removed retain and release here, to avoid retain cycles. The standard Cocoa
-  // library doesn't retain delegates, dataSources, or targets, and I'm
-  // following its lead. - T
   _delegate = delegate;
+}
+
+- (NSInputStream *) input
+{
+  return _input;
+}
+
+- (void) setInput:(NSInputStream *)input
+{
+  [input retain];
+  [_input release];
+  _input = input;
+  [_input setDelegate:self];
+  [_input scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                    forMode:NSDefaultRunLoopMode];
+}
+
+- (NSOutputStream *) output
+{
+  return _output;
+}
+
+- (void) setOutput:(NSOutputStream *)output
+{
+  [output retain];
+  [_output release];
+  _output = output;
+  [_output setDelegate:self];
+  [_output scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                     forMode:NSDefaultRunLoopMode];
 }
 
 - (NSString *) read
@@ -156,23 +187,9 @@
   }
 }
 
-- (void) _close
-{
-  if ([self isConnected])
-  {    
-    [_input close];
-    [_output close];
-    _isConnected = NO;
-  }
-}
-
 - (void) close
 {
-  if ([self isConnected])
-  {
-    [self _close];
-    [self statusMessage:@"Connection closed."];
-  }
+  [self closeWithMessage:@"Connection closed."];
 }
 
 - (BOOL) isConnected
@@ -219,15 +236,14 @@
       break;
       
     case NSStreamEventEndEncountered:
-      [self _close];
-      [self statusMessage:@"Connection closed by server."];
+      [self closeWithMessage:@"Connection closed by server."];
       [self connectionDidEnd];
       break;
 
     case NSStreamEventErrorOccurred:
-      [self _close];
-      [self statusMessage:[NSString stringWithFormat:@"Connection closed on error: %@",
-                                      [[stream streamError] localizedDescription]]];
+      [self closeWithMessage:
+        [NSString stringWithFormat:@"Connection closed on error: %@", 
+          [[stream streamError] localizedDescription]]];
       [self connectionDidEnd];
       break;
       
@@ -237,41 +253,9 @@
   }
 }
 
-- (NSString *) line
-{
-  return @"";
-}
-
 @end
 
 @implementation MUTelnetConnection (Private)
-// Returns true if this was a command character
-- (BOOL) parseCommandMaybe:(uint8_t)current
-{
-  if (current >= TEL_SE) // I don't need the high end, because 255 is the highest value it could be
-  {
-    switch (current)
-    {
-      case TEL_IAC:
-        return [self doInterpretAsCommand];
-        
-      case TEL_NOP:
-        return [self doNoOperation];
-      
-      case TEL_WILL:
-      case TEL_WONT:
-        return [self doWillOrWont];
-        
-      case TEL_DO:
-      case TEL_DONT:
-        return [self doDoOrDont];
-        
-      default:
-        return true;
-    }
-  }
-  return false;
-}
 
 - (void) readFromStream:(NSInputStream *)stream
 {
@@ -286,14 +270,9 @@
   int bytesWritten = 0;
   for (i = 0; i < bytesRead; i++)
   {
-    if (_discardNextByte)
-      _discardNextByte = NO;
-    else
-    {
-      [self processByte:socketBuffer[i] 
-             withBuffer:dataBuffer
-                     at:&bytesWritten];
-    }
+    [self processByte:socketBuffer[i] 
+           withBuffer:dataBuffer
+                   at:&bytesWritten];
   }
   
   [self appendBytesToBuffer:(const void *)dataBuffer length:bytesWritten];
@@ -301,19 +280,69 @@
 
 - (void) processByte:(uint8_t)byte withBuffer:(uint8_t *)buffer at:(int *)counter
 {
-  if (![self parseCommandMaybe:byte])
+  if ([self isInCommand])
   {
-    buffer[*counter] = byte;
-    (*counter)++;
-    if (byte == '\n')
+    if (_commandChar == TEL_NONE)
     {
-      [self appendBytesToBuffer:(const void *)buffer length:*counter];
-      [self didReadLine];
-      [_readBuffer setData:[NSData data]];
-      memset(buffer, 0, *counter);
-      *counter = 0;
+      _commandChar = byte;
+      switch (_commandChar)
+      {
+        case TEL_IAC:
+          buffer[*counter] = _commandChar;
+          (*counter)++;
+          _isInCommand = false;
+          break;
+          
+        case TEL_NOP:
+          _isInCommand = false;
+          break;
+      }
     }
-  }  
+    else
+    {
+      switch(_commandChar)
+      {
+        case TEL_DO:
+          [self doDo:byte];
+          break;
+        
+        case TEL_DONT:
+          [self doDont:byte];
+          break;
+          
+        case TEL_WILL:
+          [self doWill:byte];
+          break;
+          
+        case TEL_WONT:
+          [self doWont:byte];
+          break;
+      }
+      
+      _isInCommand = false;      
+    }
+  }
+  else
+  {
+    if (byte == TEL_IAC)
+    {
+      _isInCommand = true;
+      _commandChar = TEL_NONE;
+    }
+    else
+    {
+      buffer[*counter] = byte;
+      (*counter)++;
+      if (byte == '\n')
+      {
+        [self appendBytesToBuffer:(const void *)buffer length:*counter];
+        [self didReadLine];
+        [_readBuffer setData:[NSData data]];
+        memset(buffer, 0, *counter);
+        *counter = 0;
+      }
+    }
+  }
 }
 
 - (void) appendBytesToBuffer:(const void *)bytes length:(int)length
@@ -327,79 +356,65 @@
 - (void) writeToStream:(NSOutputStream *)stream
 {
   const uint8_t *buffer = [_writeBuffer bytes];
-  int bytesWritten = [stream write:buffer 
-                         maxLength:[_writeBuffer length]];
+  [stream write:buffer maxLength:[_writeBuffer length]];
   [_writeBuffer setData:[NSData data]];
 }
 
-- (void) setInput:(NSInputStream *)input
+- (void) closeWithMessage:(NSString *)message
 {
-  [input retain];
-  [_input release];
-  _input = input;
-  [_input setDelegate:self];
-  [_input scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                    forMode:NSDefaultRunLoopMode];
+  if ([self isConnected])
+  {
+    [_input close];
+    [_output close];
+    _isConnected = NO;
+    [self statusMessage:message];
+  }  
 }
 
-- (void) setOutput:(NSOutputStream *)output
-{
-  [output retain];
-  [_output release];
-  _output = output;
-  [_output setDelegate:self];
-  [_output scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                     forMode:NSDefaultRunLoopMode];
-}
 @end
 
 @implementation MUTelnetConnection (TelnetCommands)
-- (BOOL) doInterpretAsCommand
+
+- (void) doDo:(uint8_t)option
 {
-  if ([self isInCommand])
-    return false;
-  else
-  {
-    _isInCommand = true;
-    return true;
-  }
-  
+  // We won't do anything
+  [self sendWont];
 }
 
-- (BOOL) doNoOperation
+- (void) doDont:(uint8_t)option
 {
-  if ([self isInCommand])
-    return true;
-  else
-    return false;
+  // We wont do anything
+  [self sendWont];
 }
 
-- (BOOL) doWillOrWont
+- (void) doWill:(uint8_t)option
 {
-  if ([self isInCommand])
-  {
-    char command[2];
-    command[0] = TEL_IAC;
-    command[1] = TEL_DONT;
-    NSData *data = [NSData dataWithBytes:(const void *)command length:2];
-    [self writeData:data];
-    _discardNextByte = YES;
-  }
-  return true;
+  // We dont do anything
+  [self sendDont];
 }
 
-- (BOOL) doDoOrDont
+- (void) doWont:(uint8_t)option
 {
-  if ([self isInCommand])
-  {
-    char command[2];
-    command[0] = TEL_IAC;
-    command[1] = TEL_WONT;
-    NSData *data = [NSData dataWithBytes:(const void *)command length:2];
-    [self writeData:data];
-    _discardNextByte = YES;    
-  }
-  return true;
+  // We dont do anything
+  [self sendDont];
+}
+
+- (void) sendDont
+{
+  char command[2];
+  command[0] = TEL_IAC;
+  command[1] = TEL_DONT;
+  NSData *data = [NSData dataWithBytes:(const void *)command length:2];
+  [self writeData:data];
+}
+
+- (void) sendWont
+{
+  char command[2];
+  command[0] = TEL_IAC;
+  command[1] = TEL_WONT;
+  NSData *data = [NSData dataWithBytes:(const void *)command length:2];
+  [self writeData:data];
 }
 
 @end
