@@ -85,4 +85,37 @@
   [self assert:telnetString equals:@"ab"];
 }
 
+- (void) testWrite
+{
+  uint8_t outputBuffer[MUTelnetBufferMax];
+  bzero(outputBuffer, MUTelnetBufferMax);
+  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:outputBuffer
+                                                       capacity:MUTelnetBufferMax];
+  [output open];
+  [_telnet write:@"Foo"];
+  [_telnet stream:output
+      handleEvent:NSStreamEventHasSpaceAvailable];
+  NSString *outputString = [NSString stringWithCString:(const char *)outputBuffer];
+  [self assert:outputString equals:@"Foo"];
+}
+
+- (void) testConsecutiveWrites
+{
+  uint8_t outputBuffer[MUTelnetBufferMax];
+  bzero(outputBuffer, MUTelnetBufferMax);
+  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:outputBuffer
+                                                       capacity:MUTelnetBufferMax];
+  [output open];
+  [_telnet write:@"Foo"];
+  [_telnet write:@"Bar"];
+  [_telnet stream:output
+      handleEvent:NSStreamEventHasSpaceAvailable];
+  NSString *outputString = [NSString stringWithCString:(const char *)outputBuffer];
+  [self assert:outputString equals:@"FooBar"];
+  [_telnet stream:output
+      handleEvent:NSStreamEventHasSpaceAvailable];
+  outputString = [NSString stringWithCString:(const char *)outputBuffer];
+  [self assert:outputString equals:@"FooBar"];
+}
+
 @end

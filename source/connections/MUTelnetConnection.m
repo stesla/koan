@@ -25,6 +25,7 @@
 @interface MUTelnetConnection (Private)
 - (BOOL) parseCommandMaybe:(uint8_t)current;
 - (void) readFromStream:(NSInputStream *)stream;
+- (void) writeToStream:(NSOutputStream *)stream;
 @end
 
 @interface MUTelnetConnection (TelnetCommands)
@@ -39,6 +40,7 @@
   if (self = [super init])
   {
     _data = [[NSMutableData alloc] init];
+    _outputBuffer = [[NSMutableData alloc] init];
     _isInCommand = NO;
   }
   return self;
@@ -47,6 +49,7 @@
 - (void) dealloc
 {
   [_data release];
+  [_outputBuffer release];
   [super dealloc];
 }
 
@@ -67,6 +70,12 @@
   return result;
 }
 
+- (void) write:(NSString *)string
+{
+  NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
+  [_outputBuffer appendData:data];
+}
+
 - (BOOL) isInCommand
 {
   return _isInCommand;
@@ -85,6 +94,10 @@
     case NSStreamEventEndEncountered:
     case NSStreamEventErrorOccurred:
     case NSStreamEventHasSpaceAvailable:
+    {
+      [self writeToStream:(NSOutputStream *)stream];
+      break;
+    }
     case NSStreamEventOpenCompleted:
     case NSStreamEventNone:
     default:
@@ -136,6 +149,13 @@
   {
     [_data appendBytes:(const void *)dataBuffer length:bytesWritten];
   }
+}
+
+- (void) writeToStream:(NSOutputStream *)stream
+{
+  const uint8_t *buffer = [_outputBuffer bytes];
+  [stream write:buffer maxLength:[_outputBuffer length]];
+  [_outputBuffer setData:[NSData data]];
 }
 
 @end
