@@ -123,7 +123,7 @@ NSString *Third = @"Third";
   [self assertPrevious:@""];
 }
 
-- (void) testUpdateMiddle
+- (void) testSimpleUpdate
 {
   [self saveThree];
   
@@ -136,21 +136,6 @@ NSString *Third = @"Third";
   [self assertPrevious:@""];
   [self assertPrevious:Third];
   [self assertPrevious:@"Bar Two"];
-}
-
-- (void) testSaveReordering
-{
-  [self saveThree];
-  
-  [self assertNext:First];
-  [self assertNext:Second];
-  
-  [ring saveString:@"Bar Two"];
-  
-  [self assertNext:First];
-  [self assertNext:Third];
-  [self assertNext:@"Bar Two"];
-  [self assertNext:@""];
 }
 
 - (void) testUpdateBuffer
@@ -171,6 +156,78 @@ NSString *Third = @"Third";
   
   [self assertPrevious:@"Something entirely different"];
   [self assertPrevious:Second];
+  [self assertPrevious:First];
+  [self assertPrevious:@""];
+}
+
+- (void) testInternalSave
+{
+  [self saveThree];
+  
+  [self assertNext:First];
+  [self assertNext:Second];
+  
+  [ring saveString:@"Bar Two"];
+  
+  [self assertNext:First];
+  [self assertNext:Second];
+  [self assertNext:Third];
+  [self assertNext:@"Bar Two"];
+  [self assertNext:@""];
+}
+
+- (void) testUpdateThenSaveBuffer
+{
+  [self saveThree];
+  
+  [self assertPrevious:Third];
+  [self assertPrevious:Second];
+  
+  [ring updateString:@"Bar Two"];
+  
+  [self assertPrevious:First];
+  [self assertPrevious:@""];
+  [self assertPrevious:Third];
+  [self assertPrevious:@"Bar Two"];
+  [self assertPrevious:First];
+  [self assertPrevious:@""];
+  
+  [ring saveString:@"New"];
+  
+  [self assertPrevious:@"New"];
+  [self assertPrevious:Third];
+  [self assertPrevious:@"Bar Two"];
+}
+
+- (void) testUpdateAndSaveUpdatedValue
+{
+  [self saveThree];
+  
+  [self assertPrevious:Third];
+  [self assertPrevious:Second];
+  
+  [ring updateString:@"Bar Two"];
+  
+  [self assertPrevious:First];
+  [self assertPrevious:@""];
+  [self assertPrevious:Third];
+  [self assertPrevious:@"Bar Two"];
+  
+  [ring saveString:@"Updated Bar"];
+  
+  [self assertPrevious:@"Updated Bar"];
+  [self assertPrevious:Third];
+  [self assertPrevious:Second];
+}
+
+- (void) testNonduplicationOfPreviousCommand
+{
+  [self saveOne];
+  
+  [self assertPrevious:First];
+  
+  [ring saveString:First];
+  
   [self assertPrevious:First];
   [self assertPrevious:@""];
 }

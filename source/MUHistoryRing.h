@@ -10,6 +10,7 @@
 {
   NSString *buffer;
   NSMutableArray *ring;
+  NSMutableDictionary *updates;
   int cursor;
 }
 

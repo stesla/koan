@@ -13,6 +13,7 @@
   if (self = [super init])
   {
     ring = [[NSMutableArray alloc] init];
+    updates = [[NSMutableDictionary alloc] init];
     cursor = -1;
   }
   return self;
@@ -21,6 +22,7 @@
 - (void) dealloc
 {
   [ring release];
+  [updates release];
   [super dealloc];
 }
 
@@ -28,9 +30,12 @@
 {
   NSString *copy = [[string copy] autorelease];
   
-  if (cursor >= 0 && cursor < [ring count])
-    [ring removeObjectAtIndex:cursor];
-  [ring addObject:copy];
+  [updates removeObjectForKey:[NSNumber numberWithInt:cursor]];
+  
+  if (!((cursor != -1) && (cursor == [ring count] - 1) && [string isEqualToString:[ring objectAtIndex:cursor]]))
+  {
+    [ring addObject:copy];
+  }
   [buffer release];
   buffer = nil;
   cursor = -1;
@@ -47,7 +52,7 @@
   }
   else
   {
-    [ring replaceObjectAtIndex:cursor withObject:[copy autorelease]];
+    [updates setObject:[copy autorelease] forKey:[NSNumber numberWithInt:cursor]];
   }
 }
 
@@ -62,7 +67,12 @@
   }
   else
   {
-    return [ring objectAtIndex:cursor];
+    NSString *string = [updates objectForKey:[NSNumber numberWithInt:cursor]];
+    
+    if (string)
+      return string;
+    else
+      return [ring objectAtIndex:cursor];
   }
 }
 
@@ -78,7 +88,14 @@
   if (cursor == -1)
     return buffer == nil ? @"" : buffer;
   else
-    return [ring objectAtIndex:cursor];
+  {
+    NSString *string = [updates objectForKey:[NSNumber numberWithInt:cursor]];
+    
+    if (string)
+      return string;
+    else
+      return [ring objectAtIndex:cursor];
+  }
 }
 
 @end
