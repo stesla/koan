@@ -127,6 +127,13 @@
   [dict setValue:color forKey:J3ANSIBackColorAttributeName];
 }
 
+/*
+- (NSColor *) getForegroundAtIndex:(int)i
+{
+    
+}
+*/
+
 - (void) setAttributeInString:(NSMutableAttributedString *)editString
                       atIndex:(int)index
                       forCode:(J3ANSICode)code

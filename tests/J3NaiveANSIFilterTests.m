@@ -71,6 +71,30 @@
   [self assertANSICode:J3ANSIBackWhite setsBackColor:[NSColor whiteColor]];
 }
 
+/*
+- (void) testDefaultFore
+{
+  NSRange range;
+  NSAttributedString *input =
+    [self makeString:[NSString stringWithFormat:
+      @"F\x1B[%dmo\x1B[%dmo", J3ANSIForeRed, J3ANSIForeDefault]];
+  NSColor *color =
+    [input attribute:NSForegroundColorAttributeName
+             atIndex:[input length] - 1
+      effectiveRange:NULL];
+  NSAttributedString *output =
+    [filter filter:input];
+  
+  range.location = 2;
+  range.length = 1;
+  
+  [self assertAttribute:J3ANSIForeColorAttributeName
+                 equals:color
+               inString:output
+                atIndex:[output length] -1];
+}
+*/
+
 @end
 
 @implementation J3NaiveANSIFilterTests (Private)
@@ -85,7 +109,7 @@
                 toValue:(id)aValue
 {
   NSAttributedString *input =
-  [self makeString:[NSString stringWithFormat:@"F\x1B[%dmoo", code]];
+    [self makeString:[NSString stringWithFormat:@"F\x1B[%dmoo", code]];
   NSRange range;
   
   range.location = 1;

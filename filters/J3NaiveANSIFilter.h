@@ -44,6 +44,7 @@ typedef enum _J3ANSICode
 
 @interface J3NaiveANSIFilter : J3Filter 
 {
+  NSColor *defaultForeground;
 }
 
 
