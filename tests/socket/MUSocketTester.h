@@ -1,5 +1,5 @@
 //
-//  MUSocketTester.h
+// MUSocketTester.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -22,11 +22,7 @@
 #import "MUSocketConnection.h"
 
 @interface MUSocketTester : NSObject
-{
-}
 
 - (void) socket:(MUSocketConnection *)socket didReadData:(NSData *)data;
-
-
 
 @end

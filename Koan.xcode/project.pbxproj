@@ -307,7 +307,7 @@
 				7E45F30906C5387A0090E3FB,
 			);
 			isa = PBXGroup;
-			name = socket;
+			name = Socket;
 			refType = 4;
 			sourceTree = "<group>";
 		};

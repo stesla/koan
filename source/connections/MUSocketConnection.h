@@ -1,5 +1,5 @@
 //
-//  MUSocketConnection.h
+// MUSocketConnection.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
