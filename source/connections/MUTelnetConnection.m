@@ -29,6 +29,7 @@
   if (self = [super init])
   {
     _data = [[NSMutableData alloc] init];
+    _isInCommand = NO;
   }
   return self;
 }
@@ -41,10 +42,24 @@
 
 - (NSString *) read
 {
-  return [[[NSString alloc] initWithBytes:_data
-                                   length:[_data length]
-                                 encoding:NSASCIIStringEncoding] autorelease];
+  NSString *result;
+  if ([_data length])
+  {
+    result = [[NSString alloc] initWithData:_data
+                                   encoding:NSASCIIStringEncoding];
+    [result autorelease];
+    [_data setData:[NSData data]];
+  }
+  else
+  {
+    result = @"";
+  }
+  return result;
+}
 
+- (BOOL) isInCommand
+{
+  return _isInCommand;
 }
 
 // NSStream delegate
@@ -54,15 +69,23 @@
   {
     case NSStreamEventHasBytesAvailable: 
     {      
+      int i;
       uint8_t buffer[MUTelnetBufferMax];
       bzero(buffer, MUTelnetBufferMax);
-      unsigned int length;
-      length = 0;
-      length = [(NSInputStream *)stream read:buffer maxLength:MUTelnetBufferMax];
-      if (length)
+      unsigned int bytesRead = [(NSInputStream *)stream read:buffer maxLength:MUTelnetBufferMax];
+      for (i = 0; i < bytesRead; i++)
       {
-        [_data appendBytes:buffer length:length];
+        if (buffer[i] == TEL_IAC)
+        {
+          _isInCommand = true;
+        }
       }
+      
+      if (bytesRead)
+      {
+        [_data appendBytes:(const void *)buffer length:bytesRead];
+      }
+      
       break;
     }
     case NSStreamEventEndEncountered:

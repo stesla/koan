@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
+@class MUTelnetConnection;
 
 @interface MUTelnetConnectionTests : TestCase
 {
+  MUTelnetConnection *_telnet;
 }
 
 @end

@@ -45,9 +45,12 @@ enum MUTelnetCommands
 @interface MUTelnetConnection : NSObject
 {
   NSMutableData *_data;
+  BOOL _isInCommand;
 }
 
+- (BOOL) isInCommand;
 - (NSString *) read;
+
 
 // NSStream delegate
 - (void) stream:(NSStream *)stream handleEvent:(NSStreamEvent)event;
