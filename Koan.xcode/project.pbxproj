@@ -98,7 +98,9 @@
 		};
 		29B97315FDCFA39411CA2CEA = {
 			children = (
+				E6E46D5806F8024D002809F0,
 				E6B5E46B06A700E400F53EBB,
+				E6BD29C706F580E10091A5E7,
 				32CA4F630368D1EE00C91783,
 				29B97316FDCFA39411CA2CEA,
 			);
@@ -118,6 +120,7 @@
 		29B97317FDCFA39411CA2CEA = {
 			children = (
 				E6B5E3AA06A6EE0C00F53EBB,
+				E6E46D7E06F803ED002809F0,
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
 				E6B5E61106A73B0A00F53EBB,
@@ -484,6 +487,7 @@
 		8D1107260486CEB800E47090 = {
 			buildPhases = (
 				8D1107290486CEB800E47090,
+				E6E46D6806F802BB002809F0,
 				8D11072C0486CEB800E47090,
 				8D11072E0486CEB800E47090,
 			);
@@ -513,8 +517,7 @@
 				E6B5E3B306A6EE8400F53EBB,
 				E6B5E3B906A6EEA600F53EBB,
 				E6B5E61206A73B0A00F53EBB,
-				7E27F94D06C52291006D46AA,
-				7E5E161C06CC30E200518E61,
+				E6E46D7F06F803ED002809F0,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -525,6 +528,7 @@
 				8D11072D0486CEB800E47090,
 				7E27F94E06C52291006D46AA,
 				7E5E161D06CC30E200518E61,
+				E6E46D6006F8026E002809F0,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -787,10 +791,10 @@
 		E6B5E46B06A700E400F53EBB = {
 			children = (
 				7E5E161806CC30E200518E61,
-				7E5E161906CC30E200518E61,
 				7E27F94B06C52291006D46AA,
-				7E27F94C06C52291006D46AA,
 				E6B5E46C06A7011100F53EBB,
+				7E27F94C06C52291006D46AA,
+				7E5E161906CC30E200518E61,
 			);
 			isa = PBXGroup;
 			name = Connections;
@@ -817,6 +821,118 @@
 		};
 		E6B5E61206A73B0A00F53EBB = {
 			fileRef = E6B5E61106A73B0A00F53EBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6BD29C706F580E10091A5E7 = {
+			children = (
+				E6BD29E606F581C40091A5E7,
+				E6BD29EA06F581D00091A5E7,
+			);
+			isa = PBXGroup;
+			name = Controls;
+			path = controls;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6BD29E606F581C40091A5E7 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = SRTabView.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6BD29E706F581C40091A5E7 = {
+			fileRef = E6BD29E606F581C40091A5E7;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6BD29EA06F581D00091A5E7 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = SRTabView.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E46D5806F8024D002809F0 = {
+			children = (
+				E6E46D5B06F8026E002809F0,
+				E6E46D5C06F8026E002809F0,
+				E6E46D5D06F8026E002809F0,
+			);
+			isa = PBXGroup;
+			path = SSPrefsController;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E46D5B06F8026E002809F0 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = SSPreferencePaneProtocol.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E46D5C06F8026E002809F0 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = SSPrefsController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E46D5D06F8026E002809F0 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = SSPrefsController.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E46D5E06F8026E002809F0 = {
+			fileRef = E6E46D5B06F8026E002809F0;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E46D5F06F8026E002809F0 = {
+			fileRef = E6E46D5C06F8026E002809F0;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E46D6006F8026E002809F0 = {
+			fileRef = E6E46D5D06F8026E002809F0;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E46D6806F802BB002809F0 = {
+			buildActionMask = 2147483647;
+			files = (
+				7E27F94D06C52291006D46AA,
+				7E5E161C06CC30E200518E61,
+				E6BD29E706F581C40091A5E7,
+				E6E46D5E06F8026E002809F0,
+				E6E46D5F06F8026E002809F0,
+			);
+			isa = PBXHeadersBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6E46D7E06F803ED002809F0 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.html;
+			path = Credits.html;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E46D7F06F803ED002809F0 = {
+			fileRef = E6E46D7E06F803ED002809F0;
 			isa = PBXBuildFile;
 			settings = {
 			};
