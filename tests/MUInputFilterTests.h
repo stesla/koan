@@ -21,13 +21,28 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
+#import "MUInputFilter.h"
 #import "MUFiltering.h"
 
-@interface MUInputFilterTests : TestCase <MUFiltering>
+@interface MUInputFilterTests : TestCase <MUFiltering> 
 {
-  NSAttributedString *_output;
+  NSString *_output;
 }
 
-- (void) filter:(NSAttributedString *)string;
+- (void) filter:(NSString *)string;
+- (id <MUFilterChaining>) chaining;
+
+@end
+
+@interface MUInputFilterQueueTests : TestCase
+{
+}
+@end
+
+@interface MUUpperInputFilter : MUInputFilter
+{
+}
+
+- (void) filter:(NSString *)string;
 
 @end

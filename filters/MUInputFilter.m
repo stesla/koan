@@ -22,14 +22,79 @@
 
 @implementation MUInputFilter
 
-- (void) filter:(NSAttributedString *)string
+- (void) filter:(NSString *)string
 {
-  [_successor filter:string];
+  [[self successor] filter:string];
+}
+
+- (id <MUFilterChaining>) chaining
+{
+  return self;
 }
 
 - (void) setSuccessor:(id <MUFiltering>)successor;
 {
   _successor = successor;
+}
+
+- (id <MUFiltering>) successor
+{
+  return _successor;
+}
+
+@end
+
+@implementation MUInputFilterQueue
+
+- (id) init
+{
+  if (self = [super init])
+  {
+    _head = [[MUInputFilter alloc] init];
+    _tail = _head;
+    [_tail setSuccessor:self];
+  }
+  return self;
+}
+
+- (void) dealloc
+{
+  id <MUFilterChaining> curr = _head;
+  id <MUFiltering> next = nil; 
+  do
+  {
+    next = [curr successor];
+    [(id)curr release];
+    curr = [next chaining];
+  }
+  while (curr);
+}
+
+- (NSString *) processString:(NSString *)string
+{
+  [_head filter:string];
+  [_outputString autorelease];
+  return _outputString;
+}
+
+- (void) addFilter:(id <MUFiltering, MUFilterChaining>)filter
+{
+  [(id)filter retain];
+  [_tail setSuccessor:filter];
+  _tail = filter;
+  [_tail setSuccessor:self];
+}
+
+- (void) filter:(NSString *)string
+{
+  [string retain];
+  [_outputString release];
+  _outputString = string;
+}
+
+- (id <MUFilterChaining>) chaining
+{
+  return nil;
 }
 
 @end

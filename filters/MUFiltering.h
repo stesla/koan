@@ -20,8 +20,14 @@
 
 #include <Carbon/Carbon.h>
 
+@protocol MUFilterChaining;
+
 @protocol MUFiltering
+- (void) filter:(NSString *)string;
+- (id <MUFilterChaining>) chaining;
+@end
 
-- (void) filter:(NSAttributedString *)string;
-
+@protocol MUFilterChaining
+- (void) setSuccessor:(id <MUFiltering>)successor;
+- (id <MUFiltering>) successor;
 @end

@@ -23,9 +23,14 @@
 
 @implementation MUInputFilterTests
 
-- (void) filter:(NSAttributedString *)string
+- (void) filter:(NSString *)string
 {
   _output = string;
+}
+
+- (id <MUFilterChaining>) chaining
+{
+  return nil;
 }
 
 - (void) testFilter
@@ -33,12 +38,46 @@
   MUInputFilter *filter = [[MUInputFilter alloc] init];
   [filter setSuccessor:self];
   
-  NSAttributedString *input =
-    [[NSAttributedString alloc] initWithString:@"Foo"];
-  
+  NSString *input = @"Foo";
+
   [filter filter:input];
   
   [self assert:_output equals:input];
+  [input release];
+  [filter release];
+}
+
+@end
+
+@implementation MUUpperInputFilter
+
+- (void) filter:(NSString *)string
+{
+  [[self successor] filter:[string uppercaseString]];
+}
+
+@end
+
+@implementation MUInputFilterQueueTests
+
+- (void) testFilter
+{
+  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
+  NSString *input = @"foo";
+  NSString *output = [queue processString:input];
+  [self assert:output equals:input];
+}
+
+- (void) testQueue
+{
+  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
+  MUUpperInputFilter *filter = [[MUUpperInputFilter alloc] init];
+  [queue addFilter:filter];
+  
+  NSString *input = @"foo";
+  NSString *output = [queue processString:input];
+  [self assert:output equals:@"FOO"];
+  [queue release];
 }
 
 @end
