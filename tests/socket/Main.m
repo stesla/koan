@@ -30,6 +30,10 @@ main (int argc, char *argv[])
     MUSocketTester *tester = [[MUSocketTester alloc] init];
     [socket setDelegate: tester];
     [socket open];
+    [socket writeData: [@"Testing this code\n" dataUsingEncoding: NSASCIIStringEncoding]];
+    [socket writeData: [@"More testing\n" dataUsingEncoding: NSASCIIStringEncoding]];
+    [socket writeData: [@"quit\n" dataUsingEncoding: NSASCIIStringEncoding]];
+    [socket close];
     [pool release];
     return 0;
 }

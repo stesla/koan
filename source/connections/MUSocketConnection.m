@@ -22,6 +22,16 @@
 
 @implementation MUSocketConnection
 
+void* _mu_malloc(int count)
+{
+    void *result;
+    if ((result = malloc(count)) == NULL)
+    {
+        NSLog(@"Error Allocating Memory");
+    }
+    return result;
+}
+
 + (id) socketWithHost:(NSString *)host port:(short)port
 {
     return [[[MUSocketConnection alloc] initWithHost: host port: port] autorelease];
@@ -68,7 +78,10 @@
 
 - (BOOL) isConnected
 {
-    return _socket >= 0;
+    if (_socket >= 0)
+        return YES;
+    else
+        return NO;
 }
 
 - (BOOL) connect
@@ -104,32 +117,62 @@
     if ((connect (_socket, (struct sockaddr *)&server_addr,
          sizeof(struct sockaddr)) < 0))
     {
+        [self close];
         //TODO: This should probably be strerror_r
         perror("Error connecting to host");
         return NO;
     }
-
-    return YES;
+    else
+        return YES;
 }
 
-- (void) open;
+- (void) readThreadMethod:(id)obj
 {
+    NSAutoreleasePool *pool = [NSAutoreleasePool new];
     void *buffer = NULL;
     NSData *data = nil;
     ssize_t bytesRead = 0;
-            
-    [self connect];
-    
-    //TODO: Thread this
-    if ([self isConnected])
+    fd_set rdfs;
+    int retval;
+                
+    while ([self isConnected])
     {
-        if ((buffer = malloc([self bufferSize])) == NULL)
+        FD_ZERO(&rdfs);
+        FD_SET(_socket, &rdfs);
+    
+        errno = 0;
+        retval = select(_socket + 1, &rdfs, NULL, NULL, NULL);
+        if (retval < 0)
+            perror("select()");
+        else if (retval > 0)
         {
-            NSLog(@"Error Allocating Memory");
+    
+            errno = 0;
+            buffer = _mu_malloc([self bufferSize]);
+            bytesRead = read(_socket, buffer, [self bufferSize]);
+            if (bytesRead < 0)
+            {
+                //TODO: this should probably be strerror_r
+                perror("Error reading from socket");
+            }
+            else if (bytesRead > 0)
+            {
+                data = [NSData dataWithBytes: buffer length: bytesRead];
+                [[self delegate] socket: self didReadData: data];
+            }
         }
-        bytesRead = read(_socket, buffer, [self bufferSize]);
-        data = [NSData dataWithBytes: buffer length: [self bufferSize]];
-        [[self delegate] socket: self didReadData: data];
+        //TODO: do we ever not get something since we wait indefinitely?
+    }
+    
+    [pool release];
+}
+
+- (void) open;
+{          
+    if([self connect])
+    {
+        [NSThread detachNewThreadSelector: @selector(readThreadMethod:)
+            toTarget: self withObject: nil];
     }
 }
 
@@ -163,6 +206,26 @@
 - (void) setPort:(short)port
 {
     _port = port;
+}
+
+- (void) writeData:(NSData *)data
+{
+    int bytesWritten;
+    if([self isConnected])
+    {
+        errno = 0;
+        bytesWritten = write(_socket, [data bytes], [data length]);
+        if(bytesWritten < 0)
+        {
+            //TODO: This should probably be strerror_r
+            perror("Error writing to socket");
+            return;
+        }
+        else if(bytesWritten < [data length])
+        {
+            NSLog(@"No bytes were written");
+        }
+    }
 }
 
 @end
