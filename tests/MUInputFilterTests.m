@@ -23,9 +23,9 @@
 
 @implementation MUInputFilterTests
 
-- (void) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter:(NSAttributedString *)string
 {
-  _output = string;
+  return string;
 }
 
 - (id <MUFilterChaining>) chaining
@@ -40,7 +40,7 @@
   
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
 
-  [filter filter:input];
+  _output = [filter filter:input];
   
   [self assert:_output equals:input];
   [filter release];
@@ -50,10 +50,10 @@
 
 @implementation MUUpperInputFilter
 
-- (void) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter:(NSAttributedString *)string
 {
-  [[self successor] filter:[NSAttributedString attributedStringWithString:[[string string] uppercaseString]
-                                                               attributes:[string attributesAtIndex:0 effectiveRange:0]]];
+  return [NSAttributedString attributedStringWithString:[[string string] uppercaseString]
+                                             attributes:[string attributesAtIndex:0 effectiveRange:0]];
 }
 
 @end

@@ -33,15 +33,15 @@
   return [[[MUAnsiRemovingFilter alloc] init] autorelease];
 }
 
-- (void) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter:(NSAttributedString *)string
 {
   NSMutableAttributedString *editString = [[NSMutableAttributedString alloc] initWithAttributedString:string];
   
   while ([self extractCode:editString])
     ;
   
-  [[self successor] filter:editString];
-  [editString release];
+  [editString autorelease];
+  return editString;
 }
 
 @end

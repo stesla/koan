@@ -27,9 +27,9 @@
   return [[[MUInputFilter alloc] init] autorelease];
 }
 
-- (void) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter:(NSAttributedString *)string
 {
-  [[self successor] filter:string];
+  return string;
 }
 
 - (id <MUFilterChaining>) chaining
@@ -78,14 +78,16 @@
 
 - (NSAttributedString *) processAttributedString:(NSAttributedString *)string
 {
-  NSAttributedString *returnString;
+  NSAttributedString *returnString = string;
   
-  [_head filter:string];
+  id <MUFiltering> curr = _head;
+  id <MUFilterChaining> chain = nil;
+  while (chain = [curr chaining])
+  {
+    returnString = [curr filter:returnString];
+    curr = [chain successor];
+  }
 
-  returnString = [[_outputString copy] autorelease];
-  [_outputString release];
-  _outputString = nil;
-  
   return returnString;
 }
 
@@ -97,9 +99,9 @@
   [_tail setSuccessor:self];
 }
 
-- (void) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter:(NSAttributedString *)string
 {
-  _outputString = [string copy];
+  return string;
 }
 
 - (id <MUFilterChaining>) chaining
