@@ -104,7 +104,6 @@
 		29B97315FDCFA39411CA2CEA = {
 			children = (
 				E6E46D5806F8024D002809F0,
-				E6B5E46B06A700E400F53EBB,
 				E670A81207420F8C00E2DAEB,
 				32CA4F630368D1EE00C91783,
 				E622A550074231A60069335B,
@@ -230,11 +229,62 @@
 //7E4
 		7E0146B5074DBD5900913653 = {
 			children = (
+				7E0147A7074DCA2400913653,
 			);
 			isa = PBXGroup;
 			path = J3Terminal;
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
+		};
+		7E0147A7074DCA2400913653 = {
+			children = (
+				7E0147A8074DCA2400913653,
+				7E0147A9074DCA2400913653,
+			);
+			isa = PBXGroup;
+			path = Connections;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7E0147A8074DCA2400913653 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = J3TelnetConnection.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7E0147A9074DCA2400913653 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = J3TelnetConnection.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7E0147AA074DCA2400913653 = {
+			fileRef = 7E0147A8074DCA2400913653;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7E0147AB074DCA2400913653 = {
+			fileRef = 7E0147A9074DCA2400913653;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7E0147AC074DCA2400913653 = {
+			fileRef = 7E0147A8074DCA2400913653;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7E0147AD074DCA2400913653 = {
+			fileRef = 7E0147A9074DCA2400913653;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 		7E20A8A60748474E00D1A5BF = {
 			fileEncoding = 4;
@@ -296,68 +346,6 @@
 		};
 		7E20A8EC07486C2500D1A5BF = {
 			fileRef = 7E20A8EB07486C2500D1A5BF;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E5E161806CC30E200518E61 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = J3TelnetConnection.h;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		7E5E161906CC30E200518E61 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.objc;
-			path = J3TelnetConnection.m;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		7E5E161A06CC30E200518E61 = {
-			fileRef = 7E5E161806CC30E200518E61;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E5E161B06CC30E200518E61 = {
-			fileRef = 7E5E161906CC30E200518E61;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E5E161D06CC30E200518E61 = {
-			fileRef = 7E5E161906CC30E200518E61;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7EA9674706FA80B700D57864 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = J3TelnetConnectionTests.h;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		7EA9674806FA80B700D57864 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.objc;
-			path = J3TelnetConnectionTests.m;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		7EA9674906FA80B700D57864 = {
-			fileRef = 7EA9674706FA80B700D57864;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7EA9674A06FA80B700D57864 = {
-			fileRef = 7EA9674806FA80B700D57864;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -455,7 +443,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				HEADER_SEARCH_PATHS = "./source ./filters";
+				HEADER_SEARCH_PATHS = "./source ./filters ./j3terminal";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PREBINDING = YES;
@@ -482,6 +470,7 @@
 				E6E46D7F06F803ED002809F0,
 				E62C909F07422669005662BC,
 				7EFE43860749C7CE002C7D48,
+				7E0147AC074DCA2400913653,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -490,7 +479,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090,
-				7E5E161D06CC30E200518E61,
 				E6E46D6006F8026E002809F0,
 				E670A84207420FDF00E2DAEB,
 				E62C8FBE07421D83005662BC,
@@ -501,6 +489,7 @@
 				E6E7A62807496940007005AC,
 				E6E7A6350749697C007005AC,
 				7EFE43870749C7CE002C7D48,
+				7E0147AD074DCA2400913653,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,13 +691,12 @@
 		E62040F606B054E400236608 = {
 			buildActionMask = 2147483647;
 			files = (
-				7E5E161A06CC30E200518E61,
 				E62041AA06B0566B00236608,
-				7EA9674906FA80B700D57864,
 				7E20A8A80748474E00D1A5BF,
 				7E20A8EA07486C1300D1A5BF,
 				7EFE43840749C7CE002C7D48,
 				7EFE43B30749CB16002C7D48,
+				7E0147AA074DCA2400913653,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -721,13 +709,12 @@
 				E6E7A6F7074971FF007005AC,
 				E62041AB06B0566B00236608,
 				E6A0F572074AD9DC00A99066,
-				7E5E161B06CC30E200518E61,
 				E6E7A72A07497275007005AC,
-				7EA9674A06FA80B700D57864,
 				7E20A8A90748474E00D1A5BF,
 				7E20A8EC07486C2500D1A5BF,
 				7EFE43850749C7CE002C7D48,
 				7EFE43B40749CB16002C7D48,
+				7E0147AB074DCA2400913653,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1396,13 +1383,11 @@
 				7E20A8E907486C1300D1A5BF,
 				7EFE43B10749CB16002C7D48,
 				E6E7A6CC074970FE007005AC,
-				7EA9674706FA80B700D57864,
 				E62041A806B0566B00236608,
 				E6E7A63D0749698F007005AC,
 				7E20A8EB07486C2500D1A5BF,
 				7EFE43B20749CB16002C7D48,
 				E6E7A6CD074970FE007005AC,
-				7EA9674806FA80B700D57864,
 				E62041A906B0566B00236608,
 				E6E7A63E0749698F007005AC,
 				E6055FB6074929F3007A13BD,
@@ -1420,17 +1405,6 @@
 			path = Documentation;
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
-		};
-		E6B5E46B06A700E400F53EBB = {
-			children = (
-				7E5E161806CC30E200518E61,
-				7E5E161906CC30E200518E61,
-			);
-			isa = PBXGroup;
-			name = Connections;
-			path = connections;
-			refType = 4;
-			sourceTree = "<group>";
 		};
 		E6B5E61106A73B0A00F53EBB = {
 			fileEncoding = 30;

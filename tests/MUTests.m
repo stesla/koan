@@ -20,7 +20,6 @@
 
 #import "MUTests.h"
 
-#import "J3TelnetConnectionTests.h"
 #import "MUFilterTests.h"
 #import "MUAnsiRemovingFilterTests.h"
 #import "MUTextLogFilterTests.h"
@@ -40,7 +39,6 @@ main (int argc, const char *argv[])
   TestSuite *suite = [TestSuite suiteWithName:@"Koan Tests"];
   
   // Add tests here.
-  [suite addTestSuite:[J3TelnetConnectionTests class]];
   [suite addTestSuite:[MUFilterTests class]];
   [suite addTestSuite:[MUFilterQueueTests class]];
   [suite addTestSuite:[MUAnsiRemovingFilterTests class]];
