@@ -5,8 +5,10 @@
 //
 
 #import "MUConnectionWindowController.h"
+#import "MUGrowlService.h"
 
-#import "J3AnsiRemovingFilter.h"
+#import "J3ANSIRemovingFilter.h"
+#import "J3NaiveANSIFilter.h"
 #import "J3NaiveURLFilter.h"
 #import "J3TextLogger.h"
 
@@ -37,8 +39,9 @@ enum MUSearchDirections
     historyRing = [[J3HistoryRing alloc] init];
     
     filterQueue = [[J3FilterQueue alloc] init];
-    [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
+//    [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
     [filterQueue addFilter:[J3NaiveURLFilter filter]];
+    [filterQueue addFilter:[J3NaiveANSIFilter filter]];
     [filterQueue addFilter:[self createLogger]];
   }
   return self;
@@ -236,6 +239,7 @@ enum MUSearchDirections
       case J3ConnectionStatusConnected:
         [profile loginWithConnection:telnetConnection];  
         [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
+        [MUGrowlService connectionOpenedForTitle:[profile windowTitle]];
         break;
         
       case J3ConnectionStatusClosed:
@@ -243,21 +247,25 @@ enum MUSearchDirections
         {
           case J3ConnectionClosedReasonServer:
             [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
+            [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
             break;
             
           case J3ConnectionClosedReasonError:
             [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
               [telnet errorMessage]]];
+            [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:[telnet errorMessage]];
             break;
             
           default:
             [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
+            [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
+            break;
         }
         [self disconnect:nil];
         break;
         
       default:
-        //Do nothing
+        // Do nothing.
         break;
     }
     

@@ -8,6 +8,7 @@
 		1058C7A0FEA54F0111CA2CBB = {
 			children = (
 				E6505A31078203FC0016F30E,
+				E6F199FF07AF0FD2007E9BA9,
 				16D5FA06075434E4007C5F34,
 				E6505D4507836DD00016F30E,
 				1058C7A1FEA54F0111CA2CBB,
@@ -66,6 +67,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				E6505DB007836EFD0016F30E,
+				E6F19A0B07AF1022007E9BA9,
 				16D5FA0B07543500007C5F34,
 				E6505DB107836F000016F30E,
 			);
@@ -151,12 +153,14 @@
 				E6E7BF540788FDED0065EDD6,
 				7E231039079A374B00E7CBA6,
 				E622A550074231A60069335B,
+				E653A7CF07AEFAB900023476,
 				7E1FC01A0787A2220070AF39,
 				E6F3A71D077A1B270011A461,
 				7E230FFB079A0FE500E7CBA6,
 				29B97316FDCFA39411CA2CEA,
 				7E23103A079A374B00E7CBA6,
 				E622A551074231A60069335B,
+				E653A7D007AEFAB900023476,
 				7E1FC01B0787A2220070AF39,
 				E6F3A71E077A1B270011A461,
 				7E230FFC079A0FE500E7CBA6,
@@ -476,12 +480,6 @@
 			settings = {
 			};
 		};
-		7EA5BA5407A733F9002336EE = {
-			fileRef = 7EA5BA5107A733F9002336EE;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7EA5BA5507A733F9002336EE = {
 			fileRef = 7EA5BA5207A733F9002336EE;
 			isa = PBXBuildFile;
@@ -595,19 +593,21 @@
 				8D1107290486CEB800E47090,
 				8D11072C0486CEB800E47090,
 				8D11072E0486CEB800E47090,
-				E622A48707422DB90069335B,
 				16D5FA0A075434F9007C5F34,
 			);
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "";
+				FRAMEWORK_SEARCH_PATHS = /Volumes/Iori/Users/loki/Projects/Koan/build;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
 				HEADER_SEARCH_PATHS = "./source ./filters";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(USER_APPS_DIR)";
+				MACOSX_DEPLOYMENT_TARGET = 10.3;
+				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
+				OTHER_LDFLAGS = "-weak_framework GrowlAppBridge";
 				PREBINDING = YES;
 				PRODUCT_NAME = Koan;
 				WRAPPER_EXTENSION = app;
@@ -644,7 +644,6 @@
 				E6C9D4ED077C0FA3007BB2C1,
 				E6C9D4EE077C0FA3007BB2C1,
 				E6E7BF0E07867F080065EDD6,
-				7EA5BA5407A733F9002336EE,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -681,6 +680,7 @@
 				E62E7FA307A1AB5400BF15E9,
 				E62E832007A1D10400BF15E9,
 				7EA5BA5507A733F9002336EE,
+				E653A7D207AEFAB900023476,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -698,6 +698,7 @@
 			files = (
 				8D11072F0486CEB800E47090,
 				E6505D4C07836DDC0016F30E,
+				E6F19A0007AF0FD2007E9BA9,
 				16D5FA07075434E4007C5F34,
 				E6505D4607836DD00016F30E,
 			);
@@ -817,15 +818,6 @@
 			path = MUTests.m;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E622A48707422DB90069335B = {
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			isa = PBXCopyFilesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E622A550074231A60069335B = {
 			fileEncoding = 4;
@@ -1102,6 +1094,28 @@
 		};
 		E6505DB107836F000016F30E = {
 			fileRef = E6505D4507836DD00016F30E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E653A7CF07AEFAB900023476 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUGrowlService.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E653A7D007AEFAB900023476 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUGrowlService.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E653A7D207AEFAB900023476 = {
+			fileRef = E653A7D007AEFAB900023476;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1583,12 +1597,14 @@
 			);
 			inputPaths = (
 				"$(SOURCE_ROOT)/frameworks/AGRegex.framework.tar.gz",
+				"$(SOURCE_ROOT)/frameworks/GrowlAppBridge.framework.tar.gz",
 				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework.tar.gz",
 				"$(SOURCE_ROOT)/frameworks/RBSplitView.framework.tar.gz",
 			);
 			isa = PBXShellScriptBuildPhase;
 			outputPaths = (
 				"$(SOURCE_ROOT)/build/AGRegex.framework",
+				"$(SOURCE_ROOT)/build/GrowlAppBridge.framework",
 				"$(SOURCE_ROOT)/build/J3Terminal.framework",
 				"$(SOURCE_ROOT)/build/RBSplitView.framework",
 			);
@@ -2148,6 +2164,26 @@
 		};
 		E6EB62C107569D33009F47D5 = {
 			fileRef = E6EB62C007569D33009F47D5;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6F199FF07AF0FD2007E9BA9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = GrowlAppBridge.framework;
+			path = build/GrowlAppBridge.framework;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6F19A0007AF0FD2007E9BA9 = {
+			fileRef = E6F199FF07AF0FD2007E9BA9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6F19A0B07AF1022007E9BA9 = {
+			fileRef = E6F199FF07AF0FD2007E9BA9;
 			isa = PBXBuildFile;
 			settings = {
 			};

@@ -7,10 +7,11 @@
 #import "FontNameToDisplayNameTransformer.h"
 #import "MUApplicationController.h"
 #import "MUConnectionWindowController.h"
+#import "MUGrowlService.h"
 #import "MUPlayer.h"
 #import "MUProfilesController.h"
-#import "MUWorld.h"
 #import "MUServices.h"
+#import "MUWorld.h"
 
 @interface MUApplicationController (Private)
 
@@ -49,6 +50,8 @@
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
   
   [[NSFontManager sharedFontManager] setAction:@selector(changeGlobalFont:)];
+  
+  [MUGrowlService initializeGrowl];
 }
 
 - (void) awakeFromNib

@@ -6,6 +6,10 @@
 
 #import "MUConstants.h"
 
+// Application constants.
+
+NSString *MUApplicationName = @"Koan";
+
 // User defaults constants.
 
 NSString *MUPBackgroundColor = @"MUPBackgroundColor";
@@ -20,6 +24,17 @@ NSString *MUPProfiles = @"MUPProfiles";
 NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";
 NSString *MUConnectionWindowControllerDidReceiveTextNotification = @"MUConnectionWindowControllerDidReceiveTextNotification";
 NSString *MUWorldsUpdatedNotification = @"MUWorldsUpdatedNotification";
+
+// Growl localization constants.
+
+NSString *MUGConnectionClosedByErrorName = @"GrowlConnectionClosedByErrorName";
+NSString *MUGConnectionClosedByErrorDescription = @"GrowlConnectionClosedByErrorDescription";
+NSString *MUGConnectionClosedByServerName = @"GrowlConnectionClosedByServerName";
+NSString *MUGConnectionClosedByServerDescription = @"GrowlConnectionClosedByServerDescription";
+NSString *MUGConnectionClosedName = @"GrowlConnectionClosedName";
+NSString *MUGConnectionClosedDescription = @"GrowlConnectionClosedDescription";
+NSString *MUGConnectionOpenedName = @"GrowlConnectionOpenedName";
+NSString *MUGConnectionOpenedDescription = @"GrowlConnectionOpenedDescription";
 
 // Status message localization constants.
 

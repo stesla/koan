@@ -6,6 +6,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+// Application constants.
+
+extern NSString *MUApplicationName;
+
 // User defaults constants.
 
 extern NSString *MUPBackgroundColor;
@@ -20,6 +24,17 @@ extern NSString *MUPProfiles;
 extern NSString *MUConnectionWindowControllerWillCloseNotification;
 extern NSString *MUConnectionWindowControllerDidReceiveTextNotification;
 extern NSString *MUWorldsUpdatedNotification;
+
+// Growl constants.
+
+extern NSString *MUGConnectionClosedByErrorName;
+extern NSString *MUGConnectionClosedByErrorDescription;
+extern NSString *MUGConnectionClosedByServerName;
+extern NSString *MUGConnectionClosedByServerDescription;
+extern NSString *MUGConnectionClosedName;
+extern NSString *MUGConnectionClosedDescription;
+extern NSString *MUGConnectionOpenedName;
+extern NSString *MUGConnectionOpenedDescription;
 
 // Status message localization constants.
 
