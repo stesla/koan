@@ -1,7 +1,7 @@
 //
 // MUWorldTests.m
 //
-// Copyright (C) 2005 3James Software
+// Copyright (c) 2005 3James Software
 //
 
 #import "MUWorldTests.h"
@@ -27,7 +27,6 @@
   [world setWorldName:@"Test World"];
   [self assert:[world uniqueIdentifier] equals:@"test.world"]; 
 }
-
 - (void) testAddPlayer
 {
   [world addPlayer:player];

@@ -1,7 +1,7 @@
 //
 // MUTests.m
 //
-// Copyright (C) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005 3James Software
 //
 
 #import "MUTests.h"
@@ -22,6 +22,8 @@ main (int argc, const char *argv[])
   TestRunnerMain ([MUTests class]);
   return 0;
 }
+
+#pragma mark -
 
 @implementation MUTests
 

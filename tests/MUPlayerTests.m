@@ -1,7 +1,7 @@
 //
 // MUPlayerTests.m
 //
-// Copyright (C) 2005 3James Software
+// Copyright (c) 2005 3James Software
 //
 
 #import "MUPlayerTests.h"

@@ -320,12 +320,6 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		7E1FC01C0787A2220070AF39 = {
-			fileRef = 7E1FC01A0787A2220070AF39;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7E1FC01D0787A2220070AF39 = {
 			fileRef = 7E1FC01B0787A2220070AF39;
 			isa = PBXBuildFile;
@@ -386,12 +380,6 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		7E230FFD079A0FE500E7CBA6 = {
-			fileRef = 7E230FFB079A0FE500E7CBA6;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7E230FFE079A0FE500E7CBA6 = {
 			fileRef = 7E230FFC079A0FE500E7CBA6;
 			isa = PBXBuildFile;
@@ -416,12 +404,6 @@
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
 		};
-		7E23103B079A374B00E7CBA6 = {
-			fileRef = 7E231039079A374B00E7CBA6;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7E23103C079A374B00E7CBA6 = {
 			fileRef = 7E23103A079A374B00E7CBA6;
 			isa = PBXBuildFile;
@@ -443,12 +425,6 @@
 			path = MUProfile.m;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		7E39EF9D0783938F0042A17A = {
-			fileRef = 7E39EF9B0783938F0042A17A;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		7E39EF9E0783938F0042A17A = {
 			fileRef = 7E39EF9C0783938F0042A17A;
@@ -589,12 +565,7 @@
 				E6C9D4EC077C0FA3007BB2C1,
 				E6C9D4ED077C0FA3007BB2C1,
 				E6C9D4EE077C0FA3007BB2C1,
-				7E39EF9D0783938F0042A17A,
 				E6E7BF0E07867F080065EDD6,
-				7E1FC01C0787A2220070AF39,
-				E696783E078F55590033A4C8,
-				7E230FFD079A0FE500E7CBA6,
-				7E23103B079A374B00E7CBA6,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -628,6 +599,7 @@
 				7E1FC01D0787A2220070AF39,
 				7E230FFE079A0FE500E7CBA6,
 				7E23103C079A374B00E7CBA6,
+				E62E7FA307A1AB5400BF15E9,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -864,6 +836,28 @@
 			settings = {
 			};
 		};
+		E62E7FA007A1AB5400BF15E9 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = "NSCursor (Finger).h";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E62E7FA107A1AB5400BF15E9 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = "NSCursor (Finger).m";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E62E7FA307A1AB5400BF15E9 = {
+			fileRef = E62E7FA107A1AB5400BF15E9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E63CC4E2077A06CD003A54AA = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -1056,11 +1050,13 @@
 		E6550EF307764C01002E81FF = {
 			children = (
 				E6055F7C07492729007A13BD,
+				E62E7FA007A1AB5400BF15E9,
 				E6F60DAB0778A3C600E0EBB4,
 				E6550DFE07763B72002E81FF,
 				E6550DF807763B57002E81FF,
 				E6505679077ECE760016F30E,
 				E6055F7D07492729007A13BD,
+				E62E7FA107A1AB5400BF15E9,
 				E6F60DAC0778A3C600E0EBB4,
 				E6550DFF07763B72002E81FF,
 				E6550DF907763B57002E81FF,
@@ -1205,12 +1201,6 @@
 			path = MUProfileRegistryTests.m;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E696783E078F55590033A4C8 = {
-			fileRef = E696783C078F55590033A4C8;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E6967991078F59B60033A4C8 = {
 			buildActionMask = 2147483647;
@@ -1546,7 +1536,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = MUForwardingTextView.h;
+			path = MUDisplayTextView.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1554,7 +1544,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
-			path = MUForwardingTextView.m;
+			path = MUDisplayTextView.m;
 			refType = 4;
 			sourceTree = "<group>";
 		};

@@ -1,7 +1,7 @@
 //
 // MUWorld.m
 //
-// Copyright (C) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005 3James Software
 //
 
 #import <J3Terminal/J3TelnetConnection.h>

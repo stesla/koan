@@ -1,7 +1,7 @@
 //
 // MUProfile.m
 //
-// Copyright (C) 2004, 2005 3James Softwareautoconnect
+// Copyright (c) 2004, 2005 3James Softwareautoconnect
 //
 
 #import "MUCodingService.h"

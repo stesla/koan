@@ -1,13 +1,12 @@
 //
 // NSFileManager (Recursive).h
 //
-// Copyright (C) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005 3James Software
 //
 // This file is in the public domain.
 //
 
 #import <Cocoa/Cocoa.h>
-
 
 @interface NSFileManager (Recursive)
 

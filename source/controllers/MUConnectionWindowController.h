@@ -1,7 +1,7 @@
 //
 // MUConnectionWindowController.h
 //
-// Copyright (C) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -9,13 +9,13 @@
 #import <RBSplitView/RBSplitView.h>
 
 #import "J3Filter.h"
-#import "MUForwardingTextView.h"
+#import "MUDisplayTextView.h"
 #import "J3HistoryRing.h"
 #import "MUProfile.h"
 
 @interface MUConnectionWindowController : NSWindowController
 {
-  IBOutlet MUForwardingTextView *receivedTextView;
+  IBOutlet MUDisplayTextView *receivedTextView;
   IBOutlet NSTextView *inputView;
   IBOutlet RBSplitView *splitView;
   IBOutlet id delegate;

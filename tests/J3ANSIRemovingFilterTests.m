@@ -1,7 +1,7 @@
 //
 // J3ANSIRemovingFilterTests.m
 //
-// Copyright (C) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005 3James Software
 //
 
 #import "J3ANSIRemovingFilterTests.h"

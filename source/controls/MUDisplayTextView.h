@@ -1,7 +1,11 @@
 //
-// FontNameToDisplayNameTransformer.h
+// MUDisplayTextView.h
 //
-// Copyright (c) 2004, Apple Computer, Inc., all rights reserved.
+// Copyright (c) 2004, 2005 3James Software
+//
+// Based partially on NSTextViewWithLinks.h
+//
+// Copyright (c) 2003 Apple Computer, Inc. All rights reserved.
 //
 // IMPORTANT:  This Apple software is supplied to you by Apple Computer, Inc. ("Apple") in
 // consideration of your agreement to the following terms, and your use, installation, 
@@ -35,8 +39,19 @@
 // OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
-@interface FontNameToDisplayNameTransformer : NSValueTransformer
+@interface MUDisplayTextView : NSTextView
+{
+  IBOutlet NSTextView *insertTextProxy;
+}
+
+@end
+
+@interface NSObject (MUDisplayTextViewDelegate)
+
+- (NSCursor *) cursorForLink:(NSObject *)linkObject
+                     atIndex:(unsigned)charIndex
+                  ofTextView:(NSTextView *)aTextView;
 
 @end

@@ -1,7 +1,7 @@
 //
 // Koan-Tests-Prefix.pch
 //
-// Copyright (C) 2004 3James Software
+// Copyright (c) 2004 3James Software
 //
 
 #ifdef __OBJC__

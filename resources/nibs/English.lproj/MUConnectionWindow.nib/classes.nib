@@ -20,13 +20,13 @@
             OUTLETS = {
                 delegate = id; 
                 inputView = NSTextView; 
-                receivedTextView = MUForwardingTextView; 
+                receivedTextView = MUDisplayTextView; 
                 splitView = RBSplitView; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
         {
-            CLASS = MUForwardingTextView; 
+            CLASS = MUDisplayTextView; 
             LANGUAGE = ObjC; 
             OUTLETS = {targetTextView = NSTextView; }; 
             SUPERCLASS = NSTextView; 
