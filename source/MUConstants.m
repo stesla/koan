@@ -20,6 +20,13 @@
 
 #import "MUConstants.h"
 
+// User defaults constants.
+
+NSString *MUPBackgroundColor = @"MUPBackgroundColor";
+NSString *MUPFontName = @"MUPFontName";
+NSString *MUPFontSize = @"MUPFontSize";
+NSString *MUPTextColor = @"MUPTextColor";
+
 // Preference pane localization constants.
 
 NSString *MULPreferencePaneConnectionsName = @"PreferencePaneConnectionsName";

@@ -33,7 +33,7 @@
 
 - (id) init
 {
-  return [self initWithOutputStream:[[NSOutputStream alloc] initToFileAtPath:[@"~/Koan.log" stringByExpandingTildeInPath]
+  return [self initWithOutputStream:[NSOutputStream outputStreamToFileAtPath:[@"~/Koan.log" stringByExpandingTildeInPath]
                                                                       append:YES]];
 }
 
@@ -42,6 +42,7 @@
   if (self = [super init])
   {
     _output = [stream retain];
+    [_output open];
     _writeBuffer = [[NSMutableData alloc] init];
     _errorMessage = @"";
     _isConnected = NO;

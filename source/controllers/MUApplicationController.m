@@ -22,19 +22,34 @@
 
 @implementation MUApplicationController
 
++ (void) initialize
+{
+  NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+  NSData *archivedWhite = [NSArchiver archivedDataWithRootObject:[NSColor lightGrayColor]];
+  NSData *archivedBlack = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
+  NSFont *fixedFont = [NSFont userFixedPitchFontOfSize:[NSFont smallSystemFontSize]];
+  
+  [defaults setObject:[fixedFont fontName] forKey:MUPFontName];
+  [defaults setObject:[NSNumber numberWithFloat:[fixedFont pointSize]] forKey:MUPFontSize];
+  [defaults setObject:archivedBlack forKey:MUPBackgroundColor];
+  [defaults setObject:archivedWhite forKey:MUPTextColor];
+  
+  [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
+}
+
 - (IBAction) showPreferences:(id)sender
 {
-  if (!prefsController)
-  {
-    prefsController = [[SSPrefsController alloc] init];
+  if (!_prefsController)
+  {    
+    _prefsController = [[SSPrefsController alloc] init];
     
-    [prefsController setPanesOrder:[NSArray arrayWithObjects:
+    [_prefsController setPanesOrder:[NSArray arrayWithObjects:
       NSLocalizedString (MULPreferencePaneConnectionsName, nil),
       NSLocalizedString (MULPreferencePaneLoggingName, nil),
       nil]];
   }
   
-  [prefsController showPreferencesWindow];
+  [_prefsController showPreferencesWindow];
 }
 
 @end

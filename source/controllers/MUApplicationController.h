@@ -23,7 +23,7 @@
 
 @interface MUApplicationController : NSObject
 {
-  SSPrefsController *prefsController;
+  SSPrefsController *_prefsController;
 }
 
 - (IBAction) showPreferences:(id)sender;

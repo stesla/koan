@@ -26,10 +26,17 @@
 
 - (void) awakeFromNib
 {
-  NSFont *monacoFont = [NSFont fontWithName:@"Monaco" size:10];
-  NSDictionary *attributeDictionary = [NSDictionary dictionaryWithObject:monacoFont
-                                                                  forKey:NSFontAttributeName];
-  [receivedTextView setTypingAttributes:attributeDictionary];
+  NSDictionary *bindingOptions = [NSDictionary dictionaryWithObject:NSUnarchiveFromDataTransformerName
+                                                             forKey:@"NSValueTransformerName"];
+  
+  [receivedTextView bind:@"backgroundColor"
+                toObject:[NSUserDefaultsController sharedUserDefaultsController]
+             withKeyPath:@"values.MUPBackgroundColor"
+                 options:bindingOptions];
+  [inputField bind:@"backgroundColor"
+          toObject:[NSUserDefaultsController sharedUserDefaultsController]
+       withKeyPath:@"values.MUPBackgroundColor"
+           options:bindingOptions];
   
   _historyRing = [[MUHistoryRing alloc] init];
   

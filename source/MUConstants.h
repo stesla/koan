@@ -20,6 +20,13 @@
 
 #import <Cocoa/Cocoa.h>
 
+// User defaults constants.
+
+extern NSString *MUPBackgroundColor;
+extern NSString *MUPFontName;
+extern NSString *MUPFontSize;
+extern NSString *MUPTextColor;
+
 // Preference pane localization constants.
 
 extern NSString *MULPreferencePaneConnectionsName;
