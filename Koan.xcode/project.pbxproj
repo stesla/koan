@@ -626,7 +626,7 @@
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Volumes/Iori/Builds;
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
@@ -1052,6 +1052,18 @@
 			settings = {
 			};
 		};
+		E62F2B1207CD3DB700DC8C1B = {
+			fileRef = 7E23103A079A374B00E7CBA6;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62F2B1B07CD3DEC00DC8C1B = {
+			fileRef = E61C3C6D07B7312B00519A89;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E63CC4E2077A06CD003A54AA = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -1256,7 +1268,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "# shell script goes here\n\nPATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\nexport PATH\n\nset +x\n\ncd $SOURCE_ROOT/resources/\n\npwd\n$okay=`./update-svnversion.plx < Info.plist > Info.plist~`\nmv Info.plist~ Info.plist\ncp Info.plist $SOURCE_ROOT/build/Koan.build/Koan.build/Info.plist\n\nexit $okay";
+			shellScript = "# shell script goes here\n\nPATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\nexport PATH\n\nset +x\n\ncd $SOURCE_ROOT/resources/\n\npwd\nokay=`./update-svnversion.plx < Info.plist > Info.plist~`\nmv Info.plist~ Info.plist\ncp Info.plist $SOURCE_ROOT/build/Koan.build/Koan.build/Info.plist\n\nexit $okay";
 		};
 		E659F6D00770D4DA00534D1B = {
 			buildPhases = (
@@ -1445,6 +1457,7 @@
 				7EA5BB2007A76A98002336EE,
 				7E05EFF807B07F5800B2D3BC,
 				7E05F00A07B080D700B2D3BC,
+				E62F2B1207CD3DB700DC8C1B,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1454,6 +1467,7 @@
 			files = (
 				E69679D3078F59DF0033A4C8,
 				E69679D4078F59DF0033A4C8,
+				E62F2B1B07CD3DEC00DC8C1B,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1466,7 +1480,7 @@
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "";
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests/Koan-Tests-Prefix.pch";
 				HEADER_SEARCH_PATHS = "./source ./filters";
