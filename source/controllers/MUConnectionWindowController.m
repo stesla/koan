@@ -325,14 +325,15 @@
                                         attributes:[receivedTextView typingAttributes]];
   NSAttributedString *filteredString = [filterQueue processAttributedString:unfilteredString];
   NSTextStorage *textStorage = [receivedTextView textStorage];
-  float scrollerPosition = [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
+  float scrollerPosition = 
+    [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
   
   [textStorage replaceCharactersInRange:NSMakeRange ([textStorage length], 0)
                    withAttributedString:filteredString];
   
   [[receivedTextView window] invalidateCursorRectsForView:receivedTextView];
   
-  if (scrollerPosition - 1.0 < 0.000001) // Avoiding inaccuracy of == for floats.
+  if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
     [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 0)];
   
   if (![NSApp isActive])
