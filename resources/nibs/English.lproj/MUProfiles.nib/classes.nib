@@ -5,14 +5,11 @@
             ACTIONS = {
                 addPlayer = id; 
                 addWorld = id; 
-                editClickedPlayer = id; 
-                editClickedWorld = id; 
-                editPlayer = id; 
-                editWorld = id; 
+                editClickedRow = id; 
+                editSelectedRow = id; 
                 endEditingPlayer = id; 
                 endEditingWorld = id; 
-                removePlayer = id; 
-                removeWorld = id; 
+                removeSelectedRow = id; 
             }; 
             CLASS = MUProfilesController; 
             LANGUAGE = ObjC; 
@@ -22,8 +19,6 @@
                 playerNameField = NSTextField; 
                 playerPasswordField = NSSecureTextField; 
                 playerSaveButton = NSButton; 
-                playersArrayController = NSArrayController; 
-                playersTable = NSTableView; 
                 worldConnectOnAppLaunchButton = NSButton; 
                 worldEditorSheet = NSWindow; 
                 worldHostnameField = NSTextField; 
@@ -38,8 +33,7 @@
                 worldURLField = NSTextField; 
                 worldUsesProxyButton = NSButton; 
                 worldUsesSSLButton = NSButton; 
-                worldsArrayController = NSArrayController; 
-                worldsTable = NSTableView; 
+                worldsAndPlayersOutlineView = NSOutlineView; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 

@@ -15,11 +15,13 @@ The following features/problems are blocking 1.0:
 * Growl 0.6 support.
 * Update support via MacPAD.
 * Sounds.
+* Store passwords in the Keychain.
 
 The following features are currently unscheduled.
 
 * Bug 33. (Page up and down in buffer.)
-* Tabs.
+* Actually using the toolbar.
+* Tabs, and chat routing via filter.
 * IRC.
 * Keybinding.
 * Macros/custom commands.
@@ -27,3 +29,11 @@ The following features are currently unscheduled.
 * Plugins.
 * Filter manager.
 * Help book.
+* MCP support.
+* Scripting.
+* Log viewer.
+* TWIN support?
+* MCCP1 and MCCP2 support.
+* Auto-relogin.
+* Smart programmable tab completion.
+* Other telnet options as appropriate. (In J3Terminal.)

@@ -672,6 +672,7 @@
 				E6C9D4ED077C0FA3007BB2C1,
 				E6C9D4EE077C0FA3007BB2C1,
 				E6E7BF0E07867F080065EDD6,
+				E62F2BA007CD4EC500DC8C1B,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1060,6 +1061,20 @@
 		};
 		E62F2B1B07CD3DEC00DC8C1B = {
 			fileRef = E61C3C6D07B7312B00519A89;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62F2B9F07CD4EC400DC8C1B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = Backlog.txt;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E62F2BA007CD4EC500DC8C1B = {
+			fileRef = E62F2B9F07CD4EC400DC8C1B;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1853,6 +1868,7 @@
 		};
 		E6B5E42906A6F36300F53EBB = {
 			children = (
+				E62F2B9F07CD4EC400DC8C1B,
 				E650559A077EB6080016F30E,
 				E65055A9077EBA820016F30E,
 				E6505ABF07820CC00016F30E,

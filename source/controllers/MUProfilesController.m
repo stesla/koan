@@ -46,22 +46,12 @@ enum MUProfilesEditingReturnValues
 {
   J3PortFormatter *worldPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
   J3PortFormatter *proxyPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
-  NSSortDescriptor *worldsSortDesc = [[NSSortDescriptor alloc] initWithKey:@"worldName" ascending:YES];
-  NSSortDescriptor *playersSortDesc = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
   
   [worldPortField setFormatter:worldPortFormatter];
   [worldProxyPortField setFormatter:proxyPortFormatter];
   
-  [playersTable setTarget:self];
-  [playersTable setDoubleAction:@selector(editClickedPlayer:)];
-  [worldsTable setTarget:self];
-  [worldsTable setDoubleAction:@selector(editClickedWorld:)];
-  
-  [worldsArrayController setSortDescriptors:[NSArray arrayWithObject:worldsSortDesc]];
-  [worldsSortDesc release];
-  
-  [playersArrayController setSortDescriptors:[NSArray arrayWithObject:playersSortDesc]];
-  [playersSortDesc release];
+  [worldsAndPlayersOutlineView setTarget:self];
+  [worldsAndPlayersOutlineView setDoubleAction:@selector(editClickedRow:)];
 }
 
 - (MUWorldRegistry *) registry
@@ -111,26 +101,15 @@ enum MUProfilesEditingReturnValues
         contextInfo:nil];
 }
 
-- (IBAction) editClickedPlayer:(id)sender
+- (IBAction) editClickedRow:(id)sender
 {
   NSEvent *event = [NSApp currentEvent];
-  NSPoint location = [playersTable convertPoint:[event locationInWindow] fromView:nil];
+  NSPoint location = [worldsAndPlayersOutlineView convertPoint:[event locationInWindow] fromView:nil];
   
-  if ([playersTable rowAtPoint:location] == -1)
+  if ([worldsAndPlayersOutlineView rowAtPoint:location] == -1)
     return;
   
   [self editPlayer:sender];
-}
-
-- (IBAction) editClickedWorld:(id)sender
-{
-  NSEvent *event = [NSApp currentEvent];
-  NSPoint location = [worldsTable convertPoint:[event locationInWindow] fromView:nil];
-  
-  if ([worldsTable rowAtPoint:location] == -1)
-    return;
-  
-  [self editWorld:sender];
 }
 
 - (IBAction) editPlayer:(id)sender
@@ -210,21 +189,56 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) removePlayer:(id)sender
 {
+	// FIXME.
   MUPlayer *player = [self selectedPlayer];
   
   [[MUServices profileRegistry] removeProfileForWorld:[player world]
-                                                     player:player];
-  
-  [playersArrayController removeObject:player];
-  [playersArrayController rearrangeObjects];
+																							 player:player];
 }
 
 - (IBAction) removeWorld:(id)sender
 {
+	// FIXME.
   MUWorld *world = [self selectedWorld];
+	
   [[MUServices profileRegistry] removeAllProfilesForWorld:world];
-  [worldsArrayController removeObject:world];
-  [worldsArrayController rearrangeObjects];
+}
+
+#pragma mark -
+#pragma mark NSOutlineView data source
+
+- (id) outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
+{
+	if (item)
+		return [[(MUWorld *) item players] objectAtIndex:index];
+	else
+		return [[MUWorldRegistry sharedRegistry] worldAtIndex:index];
+}
+
+- (BOOL) outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
+{
+	if ([item isKindOfClass:[MUWorld class]])
+		return YES;
+	else
+		return NO;
+}
+
+- (int) outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+{
+	if (item)
+		return [[(MUWorld *) item players] count];
+	else
+		return [[MUWorldRegistry sharedRegistry] count];
+}
+
+- (id) outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)column byItem:(id)item
+{
+	if ([item isKindOfClass:[MUWorld class]])
+		return [(MUWorld *) item worldName];
+	else if ([item isKindOfClass:[MUPlayer class]])
+		return [(MUPlayer *) item name];
+	else
+		return item;
 }
 
 @end
@@ -235,6 +249,8 @@ enum MUProfilesEditingReturnValues
 
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
+	// FIXME.
+	
   if (returnCode == MUEditOkay)
   {  
     MUWorld *selectedWorld = [self selectedWorld];
@@ -243,17 +259,17 @@ enum MUProfilesEditingReturnValues
                                                    world:selectedWorld];
     
     [[[MUServices profileRegistry] profileForWorld:selectedWorld
-                                                  player:newPlayer]
+																						player:newPlayer]
       setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
     
-    [playersArrayController addObject:newPlayer];
     [newPlayer release];
-    [playersArrayController rearrangeObjects];
   }
 }
 
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
+	// FIXME.
+	
   if (returnCode == MUEditOkay)
   {
     MUWorld *selectedWorld = [self selectedWorld];
@@ -269,48 +285,40 @@ enum MUProfilesEditingReturnValues
     [[[MUServices profileRegistry] profileForWorld:selectedWorld
                                                   player:selectedPlayer]
       setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
-
-    
-    
-    [playersArrayController removeObject:selectedPlayer];
-    [playersArrayController addObject:newPlayer];
+		
     [newPlayer release];
-    [playersArrayController rearrangeObjects];
   }
 }
 
 - (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
+	// FIXME.
+	
   if (returnCode == MUEditOkay)
   {
     MUWorld *world = [self createWorldFromSheetWithPlayers:[NSArray array]];
     
     [[[MUServices profileRegistry] profileForWorld:world]
       setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
-
-    [worldsArrayController addObject:world];
-    [worldsArrayController rearrangeObjects];
   }
 }
 
 - (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
+	// FIXME.
+	
   if (returnCode == MUEditOkay)
   {
     MUWorld *selectedWorld = [self selectedWorld];
     MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[selectedWorld players]];
 
-    // This updates the world for every profile that has this world
+    // This updates the world for every profile that has this world.
     [self updateProfilesForWorld:selectedWorld
                        withWorld:newWorld];
     
-    // This changes the setting on just the profile for the world itself
+    // This changes the setting on just the profile for the world itself.
     [[[MUServices profileRegistry] profileForWorld:selectedWorld]
       setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
-    
-    [worldsArrayController removeObject:selectedWorld];
-    [worldsArrayController addObject:newWorld];
-    [worldsArrayController rearrangeObjects];
   }
 }
 
@@ -339,7 +347,6 @@ enum MUProfilesEditingReturnValues
 
 - (void) updateProfilesForWorld:(MUWorld *)world 
                       withWorld:(MUWorld *)newWorld
-
 {
   MUProfile *profile = nil;
   MUProfileRegistry *registry = [MUServices profileRegistry];
@@ -379,16 +386,5 @@ enum MUProfilesEditingReturnValues
   [registry profileForProfile:profile];
   [profile release];
 }
-
-- (MUWorld *) selectedWorld
-{
-  return [[worldsArrayController selectedObjects] objectAtIndex:0];
-}
-
-- (MUPlayer *) selectedPlayer
-{
-  return [[playersArrayController selectedObjects] objectAtIndex:0];
-}
-
 
 @end

@@ -10,11 +10,7 @@
 
 @interface MUProfilesController : NSWindowController
 {
-  IBOutlet NSTableView *worldsTable;
-  IBOutlet NSTableView *playersTable;
-  
-  IBOutlet NSArrayController *playersArrayController;
-  IBOutlet NSArrayController *worldsArrayController;
+  IBOutlet NSOutlineView *worldsAndPlayersOutlineView;
   
   IBOutlet NSWindow *worldEditorSheet;
   IBOutlet NSTextField *worldNameField;
@@ -40,15 +36,10 @@
 
 - (IBAction) addPlayer:(id)sender;
 - (IBAction) addWorld:(id)sender;
-- (IBAction) editClickedPlayer:(id)sender;
-- (IBAction) editClickedWorld:(id)sender;
-- (IBAction) editPlayer:(id)sender;
-- (IBAction) editWorld:(id)sender;
+- (IBAction) editClickedRow:(id)sender;
+- (IBAction) editSelectedRow:(id)sender;
 - (IBAction) endEditingPlayer:(id)sender;
 - (IBAction) endEditingWorld:(id)sender;
-- (IBAction) removePlayer:(id)sender;
-- (IBAction) removeWorld:(id)sender;
-
-- (MUWorldRegistry *) registry;
+- (IBAction) removeSelectedRow:(id)sender;
 
 @end
