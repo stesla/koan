@@ -7,7 +7,7 @@
 #import <Cocoa/Cocoa.h>
 #import <J3Terminal/J3TelnetConnection.h>
 
-#import "MUConnectionSpec.h"
+#import "MUWorld.h"
 #import "MUFilter.h"
 #import "MUHistoryRing.h"
 
@@ -17,7 +17,7 @@
   IBOutlet NSTextView *inputView;
   IBOutlet id delegate;
   
-  MUConnectionSpec *connectionSpec;
+  MUWorld *world;
   J3TelnetConnection *telnetConnection;
   
   MUFilterQueue *filterQueue;
@@ -25,7 +25,7 @@
 }
 
 // Designated initializer.
-- (id) initWithConnectionSpec:(MUConnectionSpec *)newConnectionSpec;
+- (id) initWithWorld:(MUWorld *)world;
 
 - (BOOL) isConnected;
 

@@ -1,5 +1,5 @@
 //
-// MUConnectionSpec.h
+// MUWorld.h
 //
 // Copyright (C) 2004 3James Software
 //
@@ -7,21 +7,21 @@
 #import <Cocoa/Cocoa.h>
 #import "MUConstants.h"
 
-@interface MUConnectionSpec : NSObject <NSCopying>
+@interface MUWorld : NSObject <NSCopying>
 {
   NSString *name;
   NSString *hostname;
   NSNumber *port;
-  NSString *username;
-  NSString *password;
+  NSDictionary *players;
 }
 
 + (id) connectionWithDictionary:(NSDictionary *)dictionary;
 
 // Designated initializer.
-- (id) initWithName:(NSString *)name hostname:(NSString *)hostname port:(NSNumber *)port username:(NSString *)username password:(NSString *)password;
+- (id) initWithName:(NSString *)name hostname:(NSString *)hostname port:(NSNumber *)port;
 
 - (id) initWithDictionary:(NSDictionary *)dictionary;
+- (NSDictionary *) objectDictionary;
 
 - (NSString *) name;
 - (void) setName:(NSString *)newName;
@@ -29,11 +29,7 @@
 - (void) setHostname:(NSString *)newHostname;
 - (NSNumber *) port;
 - (void) setPort:(NSNumber *)newPort;
-- (NSString *) username;
-- (void) setUsername:(NSString *)newUsername;
-- (NSString *) password;
-- (void) setPassword:(NSString *)newPassword;
-
-- (NSDictionary *) objectDictionary;
+- (NSDictionary *) players;
+- (void) setPlayers:(NSDictionary *)newPlayers;
 
 @end

@@ -19,6 +19,12 @@
             LANGUAGE = ObjC; 
             OUTLETS = {inputView = NSTextView; receivedTextView = NSTextView; }; 
             SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            CLASS = MUForwardingTextView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {targetTextView = NSTextView; }; 
+            SUPERCLASS = NSTextView; 
         }
     ); 
     IBVersion = 1; 

@@ -30,7 +30,7 @@
   NSData *archivedBlack = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
   NSFont *fixedFont = [NSFont userFixedPitchFontOfSize:[NSFont smallSystemFontSize]];
   
-  [defaults setObject:[NSArray array] forKey:MUPConnections];
+  [defaults setObject:[NSArray array] forKey:MUPWorlds];
   
   [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
   
@@ -46,7 +46,7 @@
 
 - (void) awakeFromNib
 {
-  NSArray *prefsConnections = [[NSUserDefaults standardUserDefaults] objectForKey:MUPConnections];
+  NSArray *prefsConnections = [[NSUserDefaults standardUserDefaults] objectForKey:MUPWorlds];
   NSMutableArray *array = [NSMutableArray array];
   MUPortFormatter *formatter = [[[MUPortFormatter alloc] init] autorelease];
   int i, connectionsCount = [prefsConnections count];
@@ -55,32 +55,32 @@
   
   for (i = 0; i < connectionsCount; i++)
   {
-    [array addObject:[MUConnectionSpec connectionWithDictionary:[prefsConnections objectAtIndex:i]]];
+    [array addObject:[MUWorld connectionWithDictionary:[prefsConnections objectAtIndex:i]]];
   }
   
   [[portColumn dataCell] setFormatter:formatter];
   
-  [self setConnectionSpecs:array];
+  [self setWorlds:array];
 }
 
 - (void) dealloc
 {
   [connectionWindowControllers release];
-  [connectionSpecs release];
+  [worlds release];
 }
 
 // Accessors.
 
-- (NSArray *) connectionSpecs
+- (NSArray *) worlds
 {
-  return connectionSpecs;
+  return worlds;
 }
 
-- (void) setConnectionSpecs:(NSArray *)newConnectionSpecs
+- (void) setWorlds:(NSArray *)newWorlds
 {
-  NSArray *copy = [newConnectionSpecs copy];
-  [connectionSpecs release];
-  connectionSpecs = copy;
+  NSArray *copy = [newWorlds copy];
+  [worlds release];
+  worlds = copy;
   
   [self updateConnectionsMenu];
 }
@@ -118,6 +118,7 @@
   {
     font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
   }
+  
   [[NSFontManager sharedFontManager] setSelectedFont:font isMultiple:NO];
   [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
 }
@@ -166,15 +167,15 @@
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
   NSMutableArray *array = [NSMutableArray array];
-  int i, connectionsCount = [connectionSpecs count];
+  int i, worldsCount = [worlds count];
   int controllerCount = [connectionWindowControllers count];
   
-  for (i = 0; i < connectionsCount; i++)
+  for (i = 0; i < worldsCount; i++)
   {
-    [array addObject:[[connectionSpecs objectAtIndex:i] objectDictionary]];
+    [array addObject:[[worlds objectAtIndex:i] objectDictionary]];
   }
   
-  [[NSUserDefaults standardUserDefaults] setObject:array forKey:MUPConnections];
+  [[NSUserDefaults standardUserDefaults] setObject:array forKey:MUPWorlds];
 }
 
 // Delegate methods for NSControl.
@@ -199,8 +200,8 @@
 
 - (IBAction) openConnection:(id)sender
 {
-  MUConnectionSpec *connectionSpec = [sender representedObject];
-  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithConnectionSpec:connectionSpec];
+  MUWorld *world = [sender representedObject];
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
   
   [controller setDelegate:self];
   
@@ -212,7 +213,7 @@
 
 - (void) updateConnectionsMenu
 {
-  int i, connectionsCount = [connectionSpecs count], menuCount = [openConnectionMenu numberOfItems];
+  int i, worldsCount = [worlds count], menuCount = [openConnectionMenu numberOfItems];
   
   NSLog (@"Updating menu.");
   
@@ -221,15 +222,15 @@
     [openConnectionMenu removeItemAtIndex:i];
   }
   
-  for (i = 0; i < connectionsCount; i++)
+  for (i = 0; i < worldsCount; i++)
   {
-    MUConnectionSpec *connectionSpec = [connectionSpecs objectAtIndex:i];
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[connectionSpec name]
+    MUWorld *world = [worlds objectAtIndex:i];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[world name]
                                                   action:@selector(openConnection:)
                                            keyEquivalent:@""];
     
     [item setTarget:self];
-    [item setRepresentedObject:connectionSpec];
+    [item setRepresentedObject:world];
     [openConnectionMenu addItem:item];
     [item release];
   }

@@ -13,11 +13,11 @@
   IBOutlet NSTableColumn *portColumn;
   
   NSMutableArray *connectionWindowControllers;
-  NSArray *connectionSpecs;
+  NSArray *worlds;
 }
 
-- (NSArray *) connectionSpecs;
-- (void) setConnectionSpecs:(NSArray *)newConnectionSpecs;
+- (NSArray *) worlds;
+- (void) setWorlds:(NSArray *)newWorlds;
 
 - (IBAction) changeGlobalFont:(id)sender;
 - (IBAction) chooseNewFont:(id)sender;

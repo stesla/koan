@@ -9,10 +9,10 @@
 // User defaults constants.
 
 NSString *MUPBackgroundColor = @"MUPBackgroundColor";
-NSString *MUPConnections = @"MUPConnections";
 NSString *MUPFontName = @"MUPFontName";
 NSString *MUPFontSize = @"MUPFontSize";
 NSString *MUPTextColor = @"MUPTextColor";
+NSString *MUPWorlds = @"MUPWorlds";
 
 // Status message localization constants.
 
@@ -36,4 +36,4 @@ NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
 
 // Miscellaneous localization constants.
 
-NSString *MULUntitledConnection = @"UntitledConnection";
+NSString *MULUntitledWorld = @"UntitledWorld";

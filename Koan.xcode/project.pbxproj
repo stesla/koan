@@ -158,6 +158,7 @@
 				E60DDB83076CE889009870E4,
 				E689647F075D05A500321730,
 				E622A550074231A60069335B,
+				E6A231270772E166008EF744,
 				E6E7A6210749693A007005AC,
 				E64C9631076BF95E00D0D7C0,
 				E6055F7C07492729007A13BD,
@@ -166,6 +167,7 @@
 				29B97316FDCFA39411CA2CEA,
 				E6896480075D05A500321730,
 				E622A551074231A60069335B,
+				E6A231280772E166008EF744,
 				E6E7A62707496940007005AC,
 				E64C9632076BF95E00D0D7C0,
 				E6055F7D07492729007A13BD,
@@ -465,6 +467,7 @@
 				E65CE072075438F9003A796A,
 				E6EB62C107569D33009F47D5,
 				E6EB62BF07569D2E009F47D5,
+				E6A231290772E166008EF744,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -486,6 +489,7 @@
 				E6E79CED07697FD100A8FB96,
 				E64C9634076BF95E00D0D7C0,
 				E60DDB86076CE889009870E4,
+				E6A2312A0772E166008EF744,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -873,7 +877,6 @@
 				E659F6CF0770D4DA00534D1B,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -953,7 +956,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = MUConnectionSpec.h;
+			path = MUWorld.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -961,7 +964,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
-			path = MUConnectionSpec.m;
+			path = MUWorld.m;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -973,6 +976,34 @@
 		};
 		E6A0F572074AD9DC00A99066 = {
 			fileRef = E6E7A6340749697C007005AC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6A231270772E166008EF744 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUForwardingTextView.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6A231280772E166008EF744 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUForwardingTextView.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6A231290772E166008EF744 = {
+			fileRef = E6A231270772E166008EF744;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6A2312A0772E166008EF744 = {
+			fileRef = E6A231280772E166008EF744;
 			isa = PBXBuildFile;
 			settings = {
 			};

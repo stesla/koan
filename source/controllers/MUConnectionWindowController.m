@@ -17,11 +17,11 @@
 
 @implementation MUConnectionWindowController
 
-- (id) initWithConnectionSpec:(MUConnectionSpec *)newConnectionSpec;
+- (id) initWithWorld:(MUWorld *)newWorld;
 {
   if (self = [super initWithWindowNibName:@"MUConnectionWindow"])
   {
-    connectionSpec = newConnectionSpec;
+    world = newWorld;
     
     historyRing = [[MUHistoryRing alloc] init];
     
@@ -50,7 +50,7 @@
       withKeyPath:@"values.MUPTextColor"
           options:bindingOptions];
   
-  [[self window] setTitle:[connectionSpec name]];
+  [[self window] setTitle:[world name]];
 }
 
 - (void) dealloc
@@ -82,8 +82,8 @@
 
 - (IBAction) connect:(id)sender
 {
-  NSString *name = [connectionSpec hostname];
-  int portNumber = [[connectionSpec port] intValue];
+  NSString *name = [world hostname];
+  int portNumber = [[world port] intValue];
   
   telnetConnection = [[J3TelnetConnection alloc] initWithHostName:name
                                                             onPort:portNumber];
@@ -194,11 +194,44 @@
 {
   NSEvent *event = [NSApp currentEvent];
   
-  if (textView == inputView)
+  if (textView == receivedTextView)
+  {
+    if ([event type] != NSKeyDown ||
+        commandSelector == @selector(moveUp:) ||
+        commandSelector == @selector(moveDown:) ||
+        commandSelector == @selector(scrollPageUp:) ||
+        commandSelector == @selector(scrollPageDown:) ||
+        commandSelector == @selector(scrollToBeginningOfDocument:) ||
+        commandSelector == @selector(scrollToEndOfDocument:))
+    {
+      return NO;
+    }
+    else if (commandSelector == @selector(insertNewline:) ||
+             commandSelector == @selector(insertTab:) ||
+             commandSelector == @selector(insertBacktab:))
+    {
+      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      [[self window] makeFirstResponder:inputView];
+      return YES;
+    }
+    else
+    {
+      [inputView doCommandBySelector:commandSelector];
+      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      [[self window] makeFirstResponder:inputView];
+      return YES;
+    }
+  }
+  else if (textView == inputView)
   {
     if ([event type] != NSKeyDown)
     {
       return NO;
+    }
+    else if (commandSelector == @selector(insertTab:) ||
+             commandSelector == @selector(insertBacktab:))
+    {
+      return YES;
     }
     else if (commandSelector == @selector(insertNewline:))
     {
@@ -253,7 +286,7 @@
 {
   if ([self isConnected])
   {
-    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), [connectionSpec name]];
+    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), [world name]];
     NSAlert *alert;
     int choice;
     
@@ -262,7 +295,7 @@
                           alternateButton:NSLocalizedString (MULCancel, nil)
                               otherButton:nil
                 informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
-      [connectionSpec hostname]];
+      [world hostname]];
     
     choice = [alert runModal];
     
