@@ -57,9 +57,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 - (void) setWorlds:(NSArray *)newWorlds
 {
-  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"worldName" ascending:YES] autorelease];
-  NSMutableArray *copy = [[newWorlds sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDesc]] mutableCopy];
-  
+  NSMutableArray *copy = [newWorlds mutableCopy];
   [worlds release];
   worlds = copy;
   [self postWorldsUpdatedNotification];
@@ -67,10 +65,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 - (void) insertObject:(MUWorld *)world inWorldsAtIndex:(unsigned)index
 {
-  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"worldName" ascending:YES] autorelease];
-  
   [worlds insertObject:world atIndex:index];
-  [worlds sortUsingDescriptors:[NSArray arrayWithObject:sortDesc]];
   [self postWorldsUpdatedNotification];
 }
 
@@ -88,6 +83,23 @@ static MUWorldRegistry *sharedRegistry = nil;
   return [worlds count];
 }
 
+- (int) indexOfWorld:(MUWorld *)world
+{
+	unsigned i, worldsCount = [worlds count];
+	
+	for (i = 0; i < worldsCount; i++)
+	{
+		MUWorld *iteratedWorld = [worlds objectAtIndex:i];
+		
+		if (world == iteratedWorld)
+		{
+			return (int) i;
+		}
+	}
+	
+	return -1;
+}
+
 - (void) removeWorld:(MUWorld *)world
 {
 	[worlds removeObject:world];
@@ -100,7 +112,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 	
 	for (i = 0; i < worldsCount; i++)
 	{
-		MUPlayer *world = [worlds objectAtIndex:i];
+		MUWorld *world = [worlds objectAtIndex:i];
 		
 		if (world == oldWorld)
 		{
@@ -121,13 +133,13 @@ static MUWorldRegistry *sharedRegistry = nil;
   return [worlds objectAtIndex:index];
 }
 
-- (MUProfile *) worldForUniqueIdentifier:(NSString *)identifier
+- (MUWorld *) worldForUniqueIdentifier:(NSString *)identifier
 {
 	unsigned i, worldsCount = [worlds count];
 	
 	for (i = 0; i < worldsCount; i++)
 	{
-		MUPlayer *world = [worlds objectAtIndex:i];
+		MUWorld *world = [worlds objectAtIndex:i];
 		
 		if ([identifier isEqualToString:[world uniqueIdentifier]])
 			return world;

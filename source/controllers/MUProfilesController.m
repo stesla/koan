@@ -54,9 +54,62 @@ enum MUProfilesEditingReturnValues
 	[worldsAndPlayersOutlineView setAutosaveExpandedItems:YES];
   [worldsAndPlayersOutlineView setTarget:self];
   [worldsAndPlayersOutlineView setDoubleAction:@selector(editClickedRow:)];
+}
 
-	[editSelectedRowButton setEnabled:NO];
-	[removeSelectedRowButton setEnabled:NO];
+- (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
+{
+	SEL toolbarItemAction = [toolbarItem action];
+	
+	if (toolbarItemAction == @selector(addWorld:))
+	{
+		return YES;
+	}
+	else if (toolbarItemAction == @selector(addPlayer:))
+	{
+		if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
+			return NO;
+		else
+			return YES;
+	}
+	else if (toolbarItemAction == @selector(editSelectedRow:))
+	{
+		if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
+		{
+			[toolbarItem setLabel:NSLocalizedString (MULEditItem, nil)];
+			return NO;
+		}
+		else
+		{
+			id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
+			
+			if ([item isKindOfClass:[MUWorld class]])
+				[toolbarItem setLabel:NSLocalizedString (MULEditWorld, nil)];
+			else
+				[toolbarItem setLabel:NSLocalizedString (MULEditPlayer, nil)];
+			
+			return YES;
+		}
+	}
+	else if (toolbarItemAction == @selector(removeSelectedRow:))
+	{
+		if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
+		{
+			[toolbarItem setLabel:NSLocalizedString (MULRemoveItem, nil)];
+			return NO;
+		}
+		else
+		{
+			id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
+			
+			if ([item isKindOfClass:[MUWorld class]])
+				[toolbarItem setLabel:NSLocalizedString (MULRemoveWorld, nil)];
+			else
+				[toolbarItem setLabel:NSLocalizedString (MULRemovePlayer, nil)];
+			
+			return YES;
+		}
+	}
+	return NO;
 }
 
 #pragma mark -
@@ -79,6 +132,11 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) addWorld:(id)sender
 {
+	int selectedRow = [worldsAndPlayersOutlineView selectedRow];
+	id selectedItem;
+	MUWorld *selectedWorld;
+	int insertionIndex;
+	
   [worldNameField setStringValue:@""];
   [worldHostnameField setStringValue:@""];
   [worldPortField setStringValue:@""];
@@ -94,11 +152,25 @@ enum MUProfilesEditingReturnValues
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   
+	if (selectedRow == -1)
+		insertionIndex = [[MUServices worldRegistry] count];
+	else
+	{
+		selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
+		
+		if ([selectedItem isKindOfClass:[MUWorld class]])
+			selectedWorld = (MUWorld *) selectedItem;
+		else if ([selectedItem isKindOfClass:[MUPlayer class]])
+			selectedWorld = [(MUPlayer *) selectedItem world];
+		
+		insertionIndex = [[MUServices worldRegistry] indexOfWorld:selectedWorld] + 1;
+	}
+	
   [NSApp beginSheet:worldEditorSheet
      modalForWindow:[self window]
       modalDelegate:self
      didEndSelector:@selector(worldSheetDidEndAdding:returnCode:contextInfo:)
-        contextInfo:nil];
+        contextInfo:[NSNumber numberWithUnsignedInt:insertionIndex]];
 }
 
 - (IBAction) editClickedRow:(id)sender
@@ -106,16 +178,17 @@ enum MUProfilesEditingReturnValues
   NSEvent *event = [NSApp currentEvent];
   NSPoint location = [worldsAndPlayersOutlineView convertPoint:[event locationInWindow] fromView:nil];
   int row = [worldsAndPlayersOutlineView rowAtPoint:location];
+	id clickedItem;
 	
   if (row == -1)
     return;
 	
-	id item = [worldsAndPlayersOutlineView itemAtRow:row];
+	clickedItem = [worldsAndPlayersOutlineView itemAtRow:row];
 		
-	if ([item isKindOfClass:[MUWorld class]])
-		[self editWorld:item];
-	else if ([item isKindOfClass:[MUPlayer class]])
-		[self editPlayer:item];
+	if ([clickedItem isKindOfClass:[MUWorld class]])
+		[self editWorld:clickedItem];
+	else if ([clickedItem isKindOfClass:[MUPlayer class]])
+		[self editPlayer:clickedItem];
 }
 
 - (IBAction) endEditingPlayer:(id)sender
@@ -132,22 +205,34 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editSelectedRow:(id)sender
 {
-	id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
+	int selectedRow = [worldsAndPlayersOutlineView selectedRow];
+	id selectedItem;
 	
-	if ([item isKindOfClass:[MUWorld class]])
-		[self editWorld:item];
-	else if ([item isKindOfClass:[MUPlayer class]])
-		[self editPlayer:item];
+	if (selectedRow == -1)
+		return;
+	
+	selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
+	
+	if ([selectedItem isKindOfClass:[MUWorld class]])
+		[self editWorld:selectedItem];
+	else if ([selectedItem isKindOfClass:[MUPlayer class]])
+		[self editPlayer:selectedItem];
 }
 
 - (IBAction) removeSelectedRow:(id)sender
 {
-	id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
+	int selectedRow = [worldsAndPlayersOutlineView selectedRow];
+	id selectedItem;
 	
-	if ([item isKindOfClass:[MUWorld class]])
-		[self removeWorld:item];
-	else if ([item isKindOfClass:[MUPlayer class]])
-		[self removePlayer:item];
+	if (selectedRow == -1)
+		return;
+	
+	selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
+	
+	if ([selectedItem isKindOfClass:[MUWorld class]])
+		[self removeWorld:selectedItem];
+	else if ([selectedItem isKindOfClass:[MUPlayer class]])
+		[self removePlayer:selectedItem];
 }
 
 #pragma mark -
@@ -211,20 +296,6 @@ enum MUProfilesEditingReturnValues
 - (BOOL) outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
 	return NO;
-}
-
-- (void)outlineViewSelectionDidChange:(NSNotification *)notification
-{
-	if ([worldsAndPlayersOutlineView selectedRow] == -1)
-	{
-		[editSelectedRowButton setEnabled:NO];
-		[removeSelectedRowButton setEnabled:NO];
-	}
-	else
-	{
-		[editSelectedRowButton setEnabled:YES];
-		[removeSelectedRowButton setEnabled:YES];
-	}
 }
 
 @end
@@ -345,8 +416,8 @@ enum MUProfilesEditingReturnValues
 		MUPlayer *oldPlayer = (MUPlayer *) contextInfo;
     MUWorld *oldWorld = [oldPlayer world];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
-																			password:[playerPasswordField stringValue]
-																				 world:oldWorld];
+																								password:[playerPasswordField stringValue]
+																									 world:oldWorld];
 		
     // Updates the profile for the player/world with the new player object.
     [self updateProfileForWorld:oldWorld
@@ -427,16 +498,20 @@ enum MUProfilesEditingReturnValues
 
 - (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	// FIXME.
-	
-	return;
-	
   if (returnCode == MUEditOkay)
   {
-    MUWorld *world = [self createWorldFromSheetWithPlayers:[NSArray array]];
+    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[NSArray array]];
+		unsigned insertionIndex = [(NSNumber *) contextInfo unsignedIntValue];
     
-    [[[MUServices profileRegistry] profileForWorld:world]
+    [[[MUServices profileRegistry] profileForWorld:newWorld]
       setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
+		
+		[[MUServices worldRegistry] insertObject:newWorld inWorldsAtIndex:insertionIndex];
+		
+		[newWorld release];
+		
+		[worldsAndPlayersOutlineView reloadData];
+		[worldsAndPlayersOutlineView expandItem:newWorld];
   }
 }
 

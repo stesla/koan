@@ -26,6 +26,24 @@ extern NSString *MUConnectionWindowControllerWillCloseNotification;
 extern NSString *MUConnectionWindowControllerDidReceiveTextNotification;
 extern NSString *MUWorldsUpdatedNotification;
 
+// Toolbar item constants.
+
+extern NSString *MUAddWorldToolbarItem;
+extern NSString *MUAddPlayerToolbarItem;
+extern NSString *MUEditSelectedRowToolbarItem;
+extern NSString *MURemoveSelectedRowToolbarItem;
+
+// Toolbar item localization constants.
+
+extern NSString *MULAddWorld;
+extern NSString *MULAddPlayer;
+extern NSString *MULEditItem;
+extern NSString *MULEditWorld;
+extern NSString *MULEditPlayer;
+extern NSString *MULRemoveItem;
+extern NSString *MULRemoveWorld;
+extern NSString *MULRemovePlayer;
+
 // Growl constants.
 
 extern NSString *MUGConnectionClosedByErrorName;

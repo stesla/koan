@@ -6,6 +6,17 @@
 "ConnectionClosedByServer" = "Connection closed by server.";
 "ConnectionClosedByError" = "Connection closed by %@";
 
+// Toolbar item titles.
+
+"AddWorld" = "Add World";
+"AddPlayer" = "Add Player";
+"EditItem" = "Edit Item";
+"EditWorld" = "Edit World";
+"EditPlayer" = "Edit Player";
+"RemoveItem" = "Remove Item";
+"RemoveWorld" = "Remove World";
+"RemovePlayer" = "Remove Player";
+
 // Growl messages.
 
 "GrowlConnectionClosedByErrorName" = "Connection Closed By Error";

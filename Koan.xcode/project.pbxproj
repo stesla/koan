@@ -713,6 +713,7 @@
 				7E05F00C07B080D700B2D3BC,
 				E62F2AEA07CD3B5100DC8C1B,
 				E62F2AEB07CD3B5100DC8C1B,
+				E67CBF3207D03FEE004BB3DB,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1334,11 +1335,13 @@
 				E62C8FBB07421D83005662BC,
 				E670A83F07420FDF00E2DAEB,
 				E63CC4E2077A06CD003A54AA,
+				E67CBF3107D03FEE004BB3DB,
 				E6824F8A07B177A5002C9507,
 				E62C905B07422595005662BC,
 				E62C8FBC07421D83005662BC,
 				E670A84007420FDF00E2DAEB,
 				E63CC4E3077A06CD003A54AA,
+				E67CBF3007D03FEE004BB3DB,
 				E6824F8B07B177A5002C9507,
 			);
 			isa = PBXGroup;
@@ -1387,6 +1390,28 @@
 		};
 		E677D2110778041F00B417D2 = {
 			fileRef = E677D20F0778041F00B417D2;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E67CBF3007D03FEE004BB3DB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUProfilesToolbarController.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E67CBF3107D03FEE004BB3DB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUProfilesToolbarController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E67CBF3207D03FEE004BB3DB = {
+			fileRef = E67CBF3007D03FEE004BB3DB;
 			isa = PBXBuildFile;
 			settings = {
 			};

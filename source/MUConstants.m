@@ -26,6 +26,24 @@ NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWind
 NSString *MUConnectionWindowControllerDidReceiveTextNotification = @"MUConnectionWindowControllerDidReceiveTextNotification";
 NSString *MUWorldsUpdatedNotification = @"MUWorldsUpdatedNotification";
 
+// Toolbar item constants.
+
+NSString *MUAddWorldToolbarItem = @"MUAddWorldToolbarItem";
+NSString *MUAddPlayerToolbarItem = @"MUAddPlayerToolbarItem";
+NSString *MUEditSelectedRowToolbarItem = @"MUEditSelectedRowToolbarItem";
+NSString *MURemoveSelectedRowToolbarItem = @"MURemoveSelectedRowToolbarItem";
+
+// Toolbar item localization constants.
+
+NSString *MULAddWorld = @"AddWorld";
+NSString *MULAddPlayer = @"AddPlayer";
+NSString *MULEditItem = @"EditItem";
+NSString *MULEditWorld = @"EditWorld";
+NSString *MULEditPlayer = @"EditPlayer";
+NSString *MULRemoveItem = @"RemoveItem";
+NSString *MULRemoveWorld = @"RemoveWorld";
+NSString *MULRemovePlayer = @"RemovePlayer";
+
 // Growl localization constants.
 
 NSString *MUGConnectionClosedByErrorName = @"GrowlConnectionClosedByErrorName";

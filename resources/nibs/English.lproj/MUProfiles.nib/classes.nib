@@ -14,13 +14,11 @@
             CLASS = MUProfilesController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                editSelectedRowButton = NSButton; 
                 playerConnectOnAppLaunchButton = NSButton; 
                 playerEditorSheet = NSWindow; 
                 playerNameField = NSTextField; 
                 playerPasswordField = NSSecureTextField; 
                 playerSaveButton = NSButton; 
-                removeSelectedRowButton = NSButton; 
                 worldConnectOnAppLaunchButton = NSButton; 
                 worldEditorSheet = NSWindow; 
                 worldHostnameField = NSTextField; 
@@ -38,6 +36,12 @@
                 worldsAndPlayersOutlineView = NSOutlineView; 
             }; 
             SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            CLASS = MUProfilesToolbarController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {window = NSWindow; windowController = NSWindowController; }; 
+            SUPERCLASS = NSObject; 
         }, 
         {CLASS = MUWorldRegistry; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
     ); 
