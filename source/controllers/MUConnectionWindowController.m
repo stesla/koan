@@ -64,9 +64,9 @@
       withKeyPath:@"values.MUPTextColor"
           options:bindingOptions];
   
-  [[self window] setTitle:[profile windowName]];
-  [[self window] setFrameAutosaveName:[profile frameName]];
-  [[self window] setFrameUsingName:[profile frameName]];
+  [[self window] setTitle:[profile windowTitle]];
+  [[self window] setFrameAutosaveName:[profile uniqueIdentifier]];
+  [[self window] setFrameUsingName:[profile uniqueIdentifier]];
 }
 
 - (void) dealloc
@@ -348,7 +348,7 @@
   if ([self isConnected])
   {
     NSString *title = [NSString stringWithFormat:
-      NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowName]];
+      NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowTitle]];
     NSAlert *alert;
     int choice;
     

@@ -190,20 +190,6 @@ static const int32_t currentVersion = 3;
   [players removeObject:player];
 }
 
-- (NSString *) uniqueIdentifier
-{
-  NSArray *tokens = [worldName componentsSeparatedByString:@" "];
-  NSMutableString *result = [NSMutableString string];
-  if ([tokens count] > 0)
-  {
-    int i = 0;
-    [result appendFormat:@"%@", [[tokens objectAtIndex:i] lowercaseString]];
-    for (i = 1; i < [tokens count]; i++)
-      [result appendFormat:@".%@", [[tokens objectAtIndex:i] lowercaseString]];
-  }
-  return result;
-}
-
 #pragma mark -
 #pragma mark Actions
 
@@ -223,12 +209,21 @@ static const int32_t currentVersion = 3;
   return telnet;
 }
 
-- (NSString *) frameName
+- (NSString *) uniqueIdentifier
 {
-  return [NSString stringWithFormat:@"%@.%@", [self worldHostname], [self worldPort]];
+  NSArray *tokens = [worldName componentsSeparatedByString:@" "];
+  NSMutableString *result = [NSMutableString string];
+  if ([tokens count] > 0)
+  {
+    int i = 0;
+    [result appendFormat:@"%@", [[tokens objectAtIndex:i] lowercaseString]];
+    for (i = 1; i < [tokens count]; i++)
+      [result appendFormat:@".%@", [[tokens objectAtIndex:i] lowercaseString]];
+  }
+  return result;
 }
 
-- (NSString *) windowName
+- (NSString *) windowTitle
 {
   return [NSString stringWithFormat:@"%@", [self worldName]];
 }

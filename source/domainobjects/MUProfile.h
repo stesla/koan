@@ -31,23 +31,23 @@
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 - (id) initWithWorld:(MUWorld *)newWorld;
 
-- (NSString *) frameName;
-- (NSString *) windowName;
-
-- (NSString *) hostname;
-- (NSString *) loginString;
-- (J3Filter *) logger;
-- (NSString *) uniqueIdentifier;
-
-- (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate;
-- (void) loginWithConnection:(J3TelnetConnection *)connection;
-- (void) logoutWithConnection:(J3TelnetConnection *)connection;
-
+// Accessors.
 - (MUWorld *) world;
 - (void) setWorld:(MUWorld *)newWorld;
 - (MUPlayer *) player;
 - (void) setPlayer:(MUPlayer *)newPlayer;
 - (BOOL) autoconnect;
 - (void) setAutoconnect:(BOOL)newAutoconnect;
+
+// Actions.
+- (NSString *) hostname;
+- (J3Filter *) logger;
+- (NSString *) loginString;
+- (NSString *) uniqueIdentifier;
+- (NSString *) windowTitle;
+
+- (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate;
+- (void) loginWithConnection:(J3TelnetConnection *)connection;
+- (void) logoutWithConnection:(J3TelnetConnection *)connection;
 
 @end

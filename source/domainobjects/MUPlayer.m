@@ -75,17 +75,17 @@ static const int32_t currentVersion = 2;
 #pragma mark -
 #pragma mark Actions
 
-- (NSString *) frameName
-{
-  return [NSString stringWithFormat:@"%@.%@.%@", [world worldHostname], [world worldPort], [self name]];
-}
-
 - (NSString *) loginString
 {
   return [NSString stringWithFormat:@"connect \"%@\" %@", [self name], [self password]];
 }
 
-- (NSString *) windowName
+- (NSString *) uniqueIdentifier
+{
+  return [NSString stringWithFormat:@"%@.%@.%@", [world worldHostname], [world worldPort], [self name]];
+}
+
+- (NSString *) windowTitle
 {
   return [NSString stringWithFormat:@"%@ @ %@", [self name], [world worldName]];
 }

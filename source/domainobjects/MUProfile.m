@@ -101,22 +101,12 @@ static const int32_t currentVersion = 1;
   autoconnect = newAutoconnect;
 }
 
-- (NSString *) frameName
-{
-  if (player)
-    return [player frameName];
-  else
-    return [world frameName];
-}
+#pragma mark -
+#pragma mark Actions
 
-- (NSString *) windowName
+- (NSString *) hostname;
 {
-  return (player ? [player windowName] : [world windowName]);
-}
-
-- (NSString *) loginString
-{
-  return [player loginString];
+  return [world worldHostname];
 }
 
 - (J3Filter *) logger
@@ -127,9 +117,31 @@ static const int32_t currentVersion = 1;
     return [J3TextLogger filterWithWorld:world];
 }
 
-- (NSString *) hostname;
+- (NSString *) loginString
 {
-  return [world worldHostname];
+  return [player loginString];
+}
+
+- (NSString *) uniqueIdentifier
+{
+  NSString *rval = nil;
+  if (player)
+  {
+    // Consider offloading the generation of a unique name for the player on
+    // MUPlayer.
+    rval = [NSString stringWithFormat:@"%@.%@", 
+      [world uniqueIdentifier], [[player name] lowercaseString]];
+  }
+  else
+  {
+    rval = [world uniqueIdentifier];
+  }
+  return rval;
+}
+
+- (NSString *) windowTitle
+{
+  return (player ? [player windowTitle] : [world windowTitle]);
 }
 
 - (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate
@@ -162,24 +174,9 @@ static const int32_t currentVersion = 1;
   loggedIn = NO;
 }
 
-- (NSString *) uniqueIdentifier
-{
-  NSString *rval = nil;
-  if (player)
-  {
-    // Consider offloading the generation of a unique name for the player on
-    // MUPlayer.
-    rval = [NSString stringWithFormat:@"%@.%@", 
-      [world uniqueIdentifier], [[player name] lowercaseString]];
-  }
-  else
-  {
-    rval = [world uniqueIdentifier];
-  }
-  return rval;
-}
+#pragma mark -
+#pragma mark NSCoding protocol
 
-// NSCoding protocol
 - (void) encodeWithCoder:(NSCoder *)encoder
 {
   [encoder encodeInt32:currentVersion forKey:@"version"];

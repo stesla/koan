@@ -19,6 +19,7 @@
            password:(NSString *)newPassword
               world:(MUWorld *)world;
 
+// Accessors.
 - (NSString *) name;
 - (void) setName:(NSString *)newName;
 - (NSString *) password;
@@ -26,8 +27,9 @@
 - (MUWorld *) world;
 - (void) setWorld:(MUWorld *)newWorld;
 
-- (NSString *) frameName;
+// Actions.
 - (NSString *) loginString;
-- (NSString *) windowName;
+- (NSString *) uniqueIdentifier;
+- (NSString *) windowTitle;
 
 @end

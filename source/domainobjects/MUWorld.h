@@ -56,13 +56,9 @@
 - (BOOL) containsPlayer:(MUPlayer *)player;
 - (void) removePlayer:(MUPlayer *)player;
 
-
-
-- (NSString *) uniqueIdentifier;
-
 // Actions.
 - (J3TelnetConnection *) newTelnetConnection;
-- (NSString *) frameName;
-- (NSString *) windowName;
+- (NSString *) uniqueIdentifier;
+- (NSString *) windowTitle;
 
 @end
