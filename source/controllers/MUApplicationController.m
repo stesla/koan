@@ -29,7 +29,7 @@
 
   [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
   
-  NSData *archivedWhite = [NSArchiver archivedDataWithRootObject:[NSColor lightGrayColor]];
+  NSData *archivedLightGray = [NSArchiver archivedDataWithRootObject:[NSColor lightGrayColor]];
   NSData *archivedBlack = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
   NSFont *fixedFont = [NSFont userFixedPitchFontOfSize:[NSFont smallSystemFontSize]];
   
@@ -40,7 +40,7 @@
   [initialValues setObject:archivedBlack forKey:MUPBackgroundColor];
   [initialValues setObject:[fixedFont fontName] forKey:MUPFontName];
   [initialValues setObject:[NSNumber numberWithFloat:[fixedFont pointSize]] forKey:MUPFontSize];
-  [initialValues setObject:archivedWhite forKey:MUPTextColor];
+  [initialValues setObject:archivedLightGray forKey:MUPTextColor];
   
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
   

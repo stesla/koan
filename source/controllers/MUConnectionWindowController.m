@@ -59,6 +59,8 @@
 
 - (void) awakeFromNib
 {
+  NSString *frameName;
+  NSString *windowName;
   NSDictionary *bindingOptions = [NSDictionary dictionaryWithObject:NSUnarchiveFromDataTransformerName
                                                              forKey:@"NSValueTransformerName"];
   
@@ -74,8 +76,23 @@
          toObject:[NSUserDefaultsController sharedUserDefaultsController]
       withKeyPath:@"values.MUPTextColor"
           options:bindingOptions];
+
+  if ([world worldName])
+    windowName = [world worldName];
+  else if ([world worldHostname] && [world worldPort])
+    windowName = [NSString stringWithFormat:@"%@:%@", [world worldHostname], [world worldPort]];
+  else
+    windowName = @"Koan";
   
-  [[self window] setTitle:[world worldName]];
+  [[self window] setTitle:windowName];
+  
+  if (!player)
+    frameName = [NSString stringWithFormat:@"%@.%@", [world worldHostname], [world worldPort]];
+  else
+    frameName = [NSString stringWithFormat:@"%@.%@.%@", [world worldHostname], [world worldPort], [player name]];
+  
+  [[self window] setFrameAutosaveName:frameName];
+  [[self window] setFrameUsingName:frameName];
 }
 
 - (void) dealloc
