@@ -26,6 +26,8 @@
     world = [newWorld retain];
     player = [newPlayer retain];
     
+    autoLoggedIn = NO;
+    
     historyRing = [[MUHistoryRing alloc] init];
     
     filterQueue = [[MUFilterQueue alloc] init];
@@ -193,6 +195,11 @@
         break;
         
       case J3ConnectionStatusConnected:
+        if (!autoLoggedIn && player)
+        {
+          [self sendString:[player loginString]];
+          autoLoggedIn = YES;
+        }
         [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
         break;
         

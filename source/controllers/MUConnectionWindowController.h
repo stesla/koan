@@ -22,6 +22,8 @@
   MUPlayer *player;
   J3TelnetConnection *telnetConnection;
   
+  BOOL autoLoggedIn;
+  
   MUFilterQueue *filterQueue;
   MUHistoryRing *historyRing;
 }

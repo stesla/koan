@@ -222,30 +222,28 @@
 
 - (IBAction) openConnection:(id)sender
 {
-  MUWorld *world = [sender representedObject];
-  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+  MUConnectionWindowController *controller;
+  MUWorld *world = nil;
+  MUPlayer *player = nil;
+  id object = [sender representedObject];
+  
+  if ([object class] == [MUWorld class])
+  {
+    world = (MUWorld *) object;
+    controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+  }
+  else if ([object class] == [MUPlayer class])
+  {
+    player = (MUPlayer *) object;
+    world = [player world];
+    controller = [[MUConnectionWindowController alloc] initWithWorld:world player:player];
+  }
   
   [controller setDelegate:self];
   
   [connectionWindowControllers addObject:controller];
   [controller showWindow:self];
   [controller connect:sender];
-  [controller release];
-}
-
-- (IBAction) openConnectionAndLogin:(id)sender
-{
-  MUPlayer *player = [sender representedObject];
-  MUWorld *world = [player world];
-  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world player:player];
-  
-  [controller setDelegate:self];
-  
-  [connectionWindowControllers addObject:controller];
-  [controller showWindow:self];
-  [controller connect:sender];
-  NSLog (@"Sending %@", [player loginString]);
-  [controller sendString:[player loginString]];
   [controller release];
 }
 
@@ -273,7 +271,7 @@
     {
       MUPlayer *player = [players objectAtIndex:j];
       NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle:[player name]
-                                                           action:@selector(openConnectionAndLogin:)
+                                                           action:@selector(openConnection:)
                                                     keyEquivalent:@""];
       [playerItem setTarget:self];
       [playerItem setRepresentedObject:player];
