@@ -107,9 +107,9 @@ static MUProfileRegistry * sharedRegistry = nil;
 - (void) removeAllProfilesForWorld:(MUWorld *)world
 {
   NSArray *players = [world players];
-  int i;
+  int i, count = [players count];
   
-  for (i = 0; i < [players count]; i++)
+  for (i = 0; i < count; i++)
   {
     [self removeProfileForWorld:world
                          player:[players objectAtIndex:i]];

@@ -7,9 +7,9 @@
 #import <J3Terminal/J3ProxySettings.h>
 #import "MUProfilesController.h"
 #import "J3PortFormatter.h"
-#import "MUPlayer.h"
-#import "MUWorld.h"
+#import "MUProfile.h"
 #import "MUWorldRegistry.h"
+#import "MUProfileRegistry.h"
 
 enum MUProfilesEditingReturnValues
 {
@@ -198,6 +198,10 @@ enum MUProfilesEditingReturnValues
 - (IBAction) removePlayer:(id)sender
 {
   MUPlayer *player = [[playersArrayController selectedObjects] objectAtIndex:0];
+  
+  [[MUProfileRegistry sharedRegistry] removeProfileForWorld:[player world]
+                                                     player:player];
+  
   [playersArrayController removeObject:player];
   [playersArrayController rearrangeObjects];
 }
@@ -205,6 +209,9 @@ enum MUProfilesEditingReturnValues
 - (IBAction) removeWorld:(id)sender
 {
   MUWorld *world = [[worldsArrayController selectedObjects] objectAtIndex:0];
+  
+  [[MUProfileRegistry sharedRegistry] removeAllProfilesForWorld:world];
+  
   [worldsArrayController removeObject:world];
   [worldsArrayController rearrangeObjects];
 }
@@ -235,12 +242,21 @@ enum MUProfilesEditingReturnValues
 {
   if (returnCode == MUEditOkay)
   {
+    MUProfile *profile = nil;
+    MUProfileRegistry *registry = [MUProfileRegistry sharedRegistry];
     MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
-    MUWorld *selectedPlayer = [[playersArrayController selectedObjects] objectAtIndex:0];
+    MUPlayer *selectedPlayer = [[playersArrayController selectedObjects] objectAtIndex:0];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
                                                 password:[playerPasswordField stringValue]
                                       connectOnAppLaunch:([playerConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    world:selectedWorld];
+          
+    // Update the player reference in the profile  
+    profile = [registry profileForWorld:selectedWorld
+                                 player:selectedPlayer];
+    [registry removeProfile:profile];
+    [profile setPlayer:newPlayer];
+    [registry profileForProfile:profile];
     
     [playersArrayController removeObject:selectedPlayer];
     [playersArrayController addObject:newPlayer];
