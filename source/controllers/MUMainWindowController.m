@@ -140,67 +140,75 @@
 
 - (void) telnetDidReadLine:(J3TelnetConnection *)telnet
 {
-  [self _displayString:[telnet read]];
+  if (telnet == _telnetConnection)
+    [self _displayString:[telnet read]];
 }
 
 - (void) telnetDidChangeStatus:(J3TelnetConnection *)telnet
 {
-  switch ([telnet connectionStatus])
+  if (telnet == _telnetConnection)
   {
-    case MUConnectionStatusConnecting:
-      [self _displayString:NSLocalizedString (MULConnectionOpening, nil)];
-      break;
-
-    case MUConnectionStatusConnected:
-      [self _displayString:NSLocalizedString (MULConnectionOpen, nil)];
-      break;
-
-    case MUConnectionStatusClosed:
-      switch ([telnet reasonClosed])
-      {
-        case MUConnectionClosedReasonServer:
-          [self _displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
-          break;
-
-        case MUConnectionClosedReasonError:
-          [self _displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
-                                                         [telnet errorMessage]]];
-          break;
-
-        default:
-          [self _displayString:NSLocalizedString (MULConnectionClosed, nil)];
-      }
-	  [self disconnect:nil];
-      break;
-      
-    default:
-      //Do nothing
-      break;
+    switch ([telnet connectionStatus])
+    {
+      case MUConnectionStatusConnecting:
+        [self _displayString:NSLocalizedString (MULConnectionOpening, nil)];
+        break;
+        
+      case MUConnectionStatusConnected:
+        [self _displayString:NSLocalizedString (MULConnectionOpen, nil)];
+        break;
+        
+      case MUConnectionStatusClosed:
+        switch ([telnet reasonClosed])
+        {
+          case MUConnectionClosedReasonServer:
+            [self _displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
+            break;
+            
+          case MUConnectionClosedReasonError:
+            [self _displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
+              [telnet errorMessage]]];
+            break;
+            
+          default:
+            [self _displayString:NSLocalizedString (MULConnectionClosed, nil)];
+        }
+        [self disconnect:nil];
+        break;
+        
+      default:
+        //Do nothing
+        break;
+    }
+    
+    [self _displayString:@"\n"];    
   }
-  
-  [self _displayString:@"\n"];
 }
 
 // Delegate methods for NSTextView.
 
 - (BOOL) control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
-  if (commandSelector == @selector(moveUp:))
+  if (control == inputField)
   {
-    if ([textView selectedRange].location == 0)
+    
+    if (commandSelector == @selector(moveUp:))
     {
-      [self previousCommand:self];
-      [textView setSelectedRange:NSMakeRange (0, 0)];
-      return YES;
+      if ([textView selectedRange].location == 0)
+      {
+        [self previousCommand:self];
+        [textView setSelectedRange:NSMakeRange (0, 0)];
+        return YES;
+      }
     }
-  }
-  else if (commandSelector == @selector(moveDown:))
-  {
-    if ([textView selectedRange].location == [[textView textStorage] length])
+    else if (commandSelector == @selector(moveDown:))
     {
-      [self nextCommand:self];
-      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
-      return YES;
+      if ([textView selectedRange].location == [[textView textStorage] length])
+      {
+        [self nextCommand:self];
+        [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+        return YES;
+      }
     }
   }
   return NO;
