@@ -315,12 +315,13 @@ static const int32_t currentVersion = 2;
 @implementation MUWorld (CodingHelpers)
 - (void) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version
 {
-  NSString *hostname = @"", *username = @"", *password = @"";
+  NSString *hostname = nil, *username = nil, *password = nil;
   NSNumber *port = [NSNumber numberWithInt:0];
   int newProxyVersion = 5;
   
   if (version == 2)
   {
+    [decoder decodeBoolForKey:@"usesProxy"];
     hostname = [decoder decodeObjectForKey:@"proxyHostname"];
     port = [decoder decodeObjectForKey:@"proxyPort"];
     newProxyVersion = [decoder decodeIntForKey:@"proxyVersion"];
@@ -328,14 +329,15 @@ static const int32_t currentVersion = 2;
     password = [decoder decodeObjectForKey:@"proxyPassword"];
   }
 
-  if (hostname && port && username && password)
-  {
-    [self setProxySettings:[[J3ProxySettings alloc]
-        initWithHostname:hostname
-                    port:[port intValue]
-                 version:newProxyVersion
-                username:username
-                password:password]];
-  }
+  // If this came out nil, then something isn't kosher
+  if (!port)
+    return;
+    
+  [self setProxySettings:[[J3ProxySettings alloc]
+      initWithHostname:hostname
+                  port:[port intValue]
+               version:newProxyVersion
+              username:username
+              password:password]];
 }
 @end
