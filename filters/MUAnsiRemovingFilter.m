@@ -75,6 +75,8 @@
     [NSCharacterSet characterSetWithCharactersInString:@"\033"];
   NSRange stopRange = [string rangeOfCharacterFromSet:stopSet];
   NSScanner *scanner = [NSScanner scannerWithString:string];
+  [scanner setCharactersToBeSkipped:
+    [NSCharacterSet characterSetWithCharactersInString:@""]];
 
   if (stopRange.location == NSNotFound)
     return NSNotFound;
@@ -88,6 +90,9 @@
 {
   NSScanner *scanner = [NSScanner scannerWithString:string];
   [scanner setScanLocation:index];
+  [scanner setCharactersToBeSkipped:
+    [NSCharacterSet characterSetWithCharactersInString:@""]];
+
   NSCharacterSet *resumeSet = 
     [NSCharacterSet characterSetWithCharactersInString:
       @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];

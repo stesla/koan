@@ -22,23 +22,28 @@
 #import "MUAnsiRemovingFilter.h"
 
 @interface MUAnsiRemovingFilterTests (Private)
-- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output;
-- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message;
 @end
 
 @implementation MUAnsiRemovingFilterTests (Private)
 
-- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
 {
-  [self assert:[_queue processAttributedString:input] equals:output];
+  [self assertInput:input hasOutput:output message:nil];
 }
 
-- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message
 {
-  [self assert:[_queue processAttributedString:input] equals:output
-       message:message];
+  NSAttributedString *attributedInput = 
+    [NSAttributedString attributedStringWithString:input];
+  NSAttributedString *attributedOutput = 
+    [NSAttributedString attributedStringWithString:output];
+  [self assert:[_queue processAttributedString:attributedInput] 
+        equals:attributedOutput
+       message:message];  
 }
 
 @end
@@ -58,83 +63,89 @@
 
 - (void) testNoCode
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]];
+  [self assertInput:@"Foo"
+          hasOutput:@"Foo"];
 }
 
 - (void) testSingleCharacter
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"Q"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Q"]];
+  [self assertInput:@"Q"
+          hasOutput:@"Q"];
 }
 
 - (void) testBasicCode
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[moo"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]
+  [self assertInput:@"F\033[moo"
+          hasOutput:@"Foo"
             message:@"One"];
-  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[3moo"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]
+  [self assertInput:@"F\033[3moo"
+          hasOutput:@"Foo"
             message:@"Two"];
-  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[36moo"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]
+  [self assertInput:@"F\033[36moo"
+          hasOutput:@"Foo"
             message:@"Three"];
 }
 
 - (void) testTwoCodes
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[36moa\033[3mob"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foaob"]];
+  [self assertInput:@"F\033[36moa\033[3mob"
+          hasOutput:@"Foaob"];
 }
 
 - (void) testNewLine
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo\n"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo\n"]];
+  [self assertInput:@"Foo\n"
+          hasOutput:@"Foo\n"];
 }
 
 - (void) testNewLineOnly
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"\n"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"\n"]];
+  [self assertInput:@"\n"
+          hasOutput:@"\n"];
 }
 
 - (void) testCodeAtEndOfLine
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo\033[36m\n"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo\n"]];
+  [self assertInput:@"Foo\033[36m\n"
+          hasOutput:@"Foo\n"];
 }
 
 - (void) testCodeAtBeginningOfString
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"\033[36mFoo"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]];
+  [self assertInput:@"\033[36mFoo"
+          hasOutput:@"Foo"];
 }
 
 - (void) testCodeAtEndOfString
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo\033[36m"]
-          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]];
+  [self assertInput:@"Foo\033[36m"
+          hasOutput:@"Foo"];
 }
 
 - (void) testEmptyString
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@""]
-          hasOutput:[NSAttributedString attributedStringWithString:@""]];
+  [self assertInput:@"" 
+          hasOutput:@""];
 }
 
 - (void) testOnlyCode
 {
-  [self assertInput:[NSAttributedString attributedStringWithString:@"\033[36m"]
-          hasOutput:[NSAttributedString attributedStringWithString:@""]];
+  [self assertInput:@"\033[36m"
+          hasOutput:@""];
 }
 
 - (void) testLongString
 {
   NSString *longString = 
     @"        #@@N         (@@)     (@@@)        J@@@@F      @@@@@@@L";
-  [self assertInput:[NSAttributedString attributedStringWithString:longString]
-          hasOutput:[NSAttributedString attributedStringWithString:longString]];
+  [self assertInput:longString
+          hasOutput:longString];
+}
+
+- (void) testOnlyWhitespaceBeforeCode
+{
+  [self assertInput:@" \033[1m"
+          hasOutput:@" "];
 }
 
 @end
