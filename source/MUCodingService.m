@@ -1,9 +1,7 @@
 //
-//  MUCodingService.m
-//  Koan
+// MUCodingService.h
 //
-//  Created by Samuel on 1/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <J3Terminal/J3ProxySettings.h>
@@ -15,10 +13,13 @@ static const int32_t currentPlayerVersion = 2;
 static const int32_t currentWorldVersion = 3;
 
 @interface MUCodingService (Private)
+
 + (J3ProxySettings *) decodeProxySettingsWithCoder:(NSCoder *)decoder
                                            version:(int)version;
+
 @end
 
+#pragma mark -
 
 @implementation MUCodingService
 
@@ -103,7 +104,10 @@ static const int32_t currentWorldVersion = 3;
 
 @end
 
+#pragma mark -
+
 @implementation MUCodingService (Private)
+
 + (J3ProxySettings *) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version
 {
   NSString *hostname = nil, *username = nil, *password = nil;
@@ -121,7 +125,7 @@ static const int32_t currentWorldVersion = 3;
     password = [decoder decodeObjectForKey:@"proxyPassword"];
   }
   
-  // If this came out nil, then something isn't kosher
+  // If this came out nil, then something isn't kosher.
   if (!port)
     return nil;
   
@@ -132,4 +136,5 @@ static const int32_t currentWorldVersion = 3;
                   username:username
                   password:password] autorelease];
 }
+
 @end

@@ -1,13 +1,10 @@
 //
-//  MUServices.m
-//  Koan
+// MUServices.m
 //
-//  Created by Samuel on 1/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "MUServices.h"
-
 
 @implementation MUServices
 
@@ -16,11 +13,9 @@
   return [MUProfileRegistry sharedRegistry];
 }
 
-
 + (MUWorldRegistry *) worldRegistry
 {
   return [MUWorldRegistry sharedRegistry];
 }
-
 
 @end

@@ -1,18 +1,14 @@
 //
-//  MUServices.h
-//  Koan
+// MUServices.h
 //
-//  Created by Samuel on 1/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 #import "MUProfileRegistry.h"
 #import "MUWorldRegistry.h"
 
-@interface MUServices : NSObject 
-{
-}
+@interface MUServices : NSObject
 
 + (MUProfileRegistry *) profileRegistry;
 + (MUWorldRegistry *) worldRegistry;

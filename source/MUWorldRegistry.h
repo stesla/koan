@@ -9,15 +9,12 @@
 @class MUWorld;
 @class MUPlayer;
 
-// MUWorldRegistry is a Singleton.
-
 @interface MUWorldRegistry : NSObject
 {
   NSMutableArray *worlds;
 }
 
-// This is how you should get an MUWorldRegistry instance
-+ (id) sharedRegistry;
++ (MUWorldRegistry *) sharedRegistry;
 
 - (NSMutableArray *) worlds;
 - (void) setWorlds:(NSArray *)newWorlds;

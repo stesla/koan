@@ -1,9 +1,7 @@
 //
-//  MUCodingService.h
-//  Koan
+// MUCodingService.h
 //
-//  Created by Samuel on 1/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -12,9 +10,7 @@
 @class MUProfile;
 @class MUWorld;
 
-@interface MUCodingService : NSObject 
-{
-}
+@interface MUCodingService : NSObject
 
 + (void) decodePlayer:(MUPlayer *)player withCoder:(NSCoder *)decoder;
 + (void) decodeProfile:(MUProfile *)profile withCoder:(NSCoder *)decoder;
