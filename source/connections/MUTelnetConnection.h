@@ -44,12 +44,20 @@ enum MUTelnetCommands
 
 @interface MUTelnetConnection : NSObject
 {
+  NSInputStream *_input;
   NSMutableData *_readBuffer;
+  NSOutputStream *_output;
   NSMutableData *_writeBuffer;
   BOOL _isInCommand;
   BOOL _discardNextByte;
   id _delegate;
 }
+
+// Designated initializer
+- (id) initWithInputStream:(NSInputStream *)input  
+              outputStream:(NSOutputStream *)output; 
+- (id) initWithHostName:(NSString *)hostName 
+             onPort:(int)port;
 
 // Setters/Getters
 - (void) setDelegate:(id)delegate;

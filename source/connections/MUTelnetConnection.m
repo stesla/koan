@@ -47,14 +47,40 @@
 
 - (id) init
 {
+  return [self initWithInputStream:nil 
+                      outputStream:nil];
+}
+
+- (id) initWithInputStream:(NSInputStream *)input  
+              outputStream:(NSOutputStream *)output
+{
   if (self = [super init])
   {
+    [input retain];
+    _input = input;
+    [output retain];
+    _output = output;
     _readBuffer = [[NSMutableData alloc] init];
     _writeBuffer = [[NSMutableData alloc] init];
     _isInCommand = NO;
     _discardNextByte = NO;
   }
   return self;
+}
+
+- (id) initWithHostName:(NSString *)hostName
+             onPort:(int)port;
+{
+  NSInputStream *input;
+  NSOutputStream *output;
+  NSHost *host = [NSHost hostWithName:hostName];
+  [NSStream getStreamsToHost:host
+                        port:port
+                 inputStream:&input 
+                outputStream:&output];
+  
+  return [self initWithInputStream:input
+                      outputStream:output];
 }
 
 - (void) dealloc
