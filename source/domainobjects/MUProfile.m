@@ -1,7 +1,7 @@
 //
 // MUProfile.m
 //
-// Copyright (C) 2004, 2005 3James Software
+// Copyright (C) 2004, 2005 3James Softwareautoconnect
 //
 
 #import "MUProfile.h"
@@ -9,9 +9,19 @@
 
 @implementation MUProfile
 
++ (MUProfile *) profileWithWorld:(MUWorld *)newWorld 
+                          player:(MUPlayer *)newPlayer
+                     autoconnect:(BOOL)newAutoconnect
+{
+  return [[[self alloc] initWithWorld:newWorld
+                               player:newPlayer
+                          autoconnect:newAutoconnect] autorelease];
+}
+
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer
 {
-  return [[[self alloc] initWithWorld:newWorld player:newPlayer] autorelease];
+  return [[[self alloc] initWithWorld:newWorld 
+                               player:newPlayer] autorelease];
 }
 
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld
@@ -21,11 +31,21 @@
 
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer
 {
+  return [self initWithWorld:newWorld 
+                      player:newPlayer 
+                 autoconnect:NO];
+}
+
+- (id) initWithWorld:(MUWorld *)newWorld 
+              player:(MUPlayer *)newPlayer
+         autoconnect:(BOOL)newAutoconnect
+{
   self = [super init];
   if (self && newWorld)
   {
     [self setWorld:newWorld];
     [self setPlayer:newPlayer];
+    [self setAutoconnect:newAutoconnect];
   }
   return self;
 }
@@ -69,8 +89,15 @@
   player = newPlayer;
 }
 
-#pragma mark -
-#pragma mark Actions
+- (BOOL) autoconnect
+{
+  return autoconnect;
+}
+
+- (void) setAutoconnect:(BOOL)newAutoconnect
+{
+  autoconnect = newAutoconnect;
+}
 
 - (NSString *) frameName
 {

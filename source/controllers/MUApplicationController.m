@@ -261,7 +261,7 @@
     [connectItem setTarget:self];
     [connectItem setRepresentedObject:profile];
     
-    if (autoconnect && [[profile world] connectOnAppLaunch])
+    if (autoconnect && [profile autoconnect])
     {
       [self openConnection:connectItem];
     }
@@ -277,7 +277,7 @@
       [playerItem setTarget:self];
       [playerItem setRepresentedObject:profile];
       
-      if (autoconnect && [[profile player] connectOnAppLaunch])
+      if (autoconnect && [profile autoconnect])
       {
         [self openConnection:playerItem];
       }

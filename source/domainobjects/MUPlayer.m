@@ -6,20 +6,18 @@
 
 #import "MUPlayer.h"
 
-static const int32_t currentVersion = 1;
+static const int32_t currentVersion = 2;
 
 @implementation MUPlayer
 
 - (id) initWithName:(NSString *)newName
            password:(NSString *)newPassword
- connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
               world:(MUWorld *)newWorld
 {
   if (self = [super init])
   {
     [self setName:newName];
     [self setPassword:newPassword];
-    [self setConnectOnAppLaunch:newConnectOnAppLaunch];
     [self setWorld:newWorld];
   }
   return self;
@@ -27,7 +25,7 @@ static const int32_t currentVersion = 1;
 
 - (id) init
 {
-  return [self initWithName:@"" password:@"" connectOnAppLaunch:NO world:nil];
+  return [self initWithName:@"" password:@"" world:nil];
 }
 
 - (void) dealloc
@@ -62,16 +60,6 @@ static const int32_t currentVersion = 1;
   NSString *copy = [newPassword copy];
   [password release];
   password = copy;
-}
-
-- (BOOL) connectOnAppLaunch
-{
-  return connectOnAppLaunch;
-}
-
-- (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch
-{
-  connectOnAppLaunch = newConnectOnAppLaunch;
 }
 
 - (MUWorld *) world
@@ -111,8 +99,6 @@ static const int32_t currentVersion = 1;
   
   [encoder encodeObject:[self name] forKey:@"name"];
   [encoder encodeObject:[self password] forKey:@"password"];
-  
-  [encoder encodeBool:[self connectOnAppLaunch] forKey:@"connectOnAppLaunch"];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
@@ -124,14 +110,8 @@ static const int32_t currentVersion = 1;
     [self setName:[decoder decodeObjectForKey:@"name"]];
     [self setPassword:[decoder decodeObjectForKey:@"password"]];
     
-    if (version >= 1)
-    {
-      [self setConnectOnAppLaunch:[decoder decodeBoolForKey:@"connectOnAppLaunch"]];
-    }
-    else
-    {
-      [self setConnectOnAppLaunch:NO];
-    }
+    if (version == 1)
+      [decoder decodeBoolForKey:@"connectOnAppLaunch"];
   }
   return self;
 }
@@ -143,7 +123,6 @@ static const int32_t currentVersion = 1;
 {
   return [[MUPlayer allocWithZone:zone] initWithName:[self name]
                                             password:[self password]
-                                  connectOnAppLaunch:[self connectOnAppLaunch]
                                                world:[self world]];
 }
 

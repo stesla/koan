@@ -15,12 +15,19 @@
   MUWorld *world;
   MUPlayer *player;
   BOOL loggedIn;
+  BOOL autoconnect;
 }
 
++ (MUProfile *) profileWithWorld:(MUWorld *)newWorld 
+                          player:(MUPlayer *)newPlayer
+                     autoconnect:(BOOL)autoconnect;
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld;
 
 // Designated initializer.
+- (id) initWithWorld:(MUWorld *)newWorld 
+              player:(MUPlayer *)newPlayenewAutoconnectr
+         autoconnect:(BOOL)autoconnect;
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 - (id) initWithWorld:(MUWorld *)newWorld;
 
@@ -36,9 +43,11 @@
 - (void) loginWithConnection:(J3TelnetConnection *)connection;
 - (void) logoutWithConnection:(J3TelnetConnection *)connection;
 
-- (MUWorld *) newWorld;
+- (MUWorld *) world;
 - (void) setWorld:(MUWorld *)newWorld;
-- (MUPlayer *) newPlayer;
+- (MUPlayer *) player;
 - (void) setPlayer:(MUPlayer *)newPlayer;
+- (BOOL) autoconnect;
+- (void) setAutoconnect:(BOOL)newAutoconnect;
 
 @end

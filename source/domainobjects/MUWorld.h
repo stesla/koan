@@ -16,9 +16,7 @@
   NSString *worldHostname;
   NSNumber *worldPort;
   NSString *worldURL;
-  
-  BOOL connectOnAppLaunch;
-  
+
   BOOL usesSSL;
   BOOL usesProxy;
     
@@ -32,7 +30,6 @@
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
                 worldURL:(NSString *)newWorldURL
-      connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
                  usesSSL:(BOOL)newUsesSSL
            proxySettings:(J3ProxySettings *)newProxySettings
                  players:(NSArray *)newPlayers;
@@ -46,8 +43,6 @@
 - (void) setWorldPort:(NSNumber *)newWorldPort;
 - (NSString *) worldURL;
 - (void) setWorldURL:(NSString *)newWorldURL;
-- (BOOL) connectOnAppLaunch;
-- (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch;
 - (BOOL) usesSSL;
 - (void) setUsesSSL:(BOOL)newUsesSSL;
 - (J3ProxySettings *) proxySettings;

@@ -29,6 +29,8 @@ enum MUProfilesEditingReturnValues
 - (void) updateProfileForWorld:(MUWorld *)world 
                         player:(MUPlayer *)player 
                     withPlayer:(MUPlayer *)newPlayer;
+- (MUWorld *) selectedWorld;
+- (MUPlayer *) selectedPlayer;
 @end
 
 #pragma mark -
@@ -133,9 +135,15 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editPlayer:(id)sender
 {
-  [playerNameField setStringValue:[playersArrayController valueForKeyPath:@"selection.name"]];
-  [playerPasswordField setStringValue:[playersArrayController valueForKeyPath:@"selection.password"]];
-  [playerConnectOnAppLaunchButton setState:([[playersArrayController valueForKeyPath:@"selection.connectOnAppLaunch"] boolValue] ? NSOnState : NSOffState)];
+  MUWorld *world = [self selectedWorld];
+  MUPlayer *player = [self selectedPlayer];
+  
+  [playerNameField setStringValue:[player name]];
+  [playerPasswordField setStringValue:[player password]];
+  [playerConnectOnAppLaunchButton setState:
+    ([[[MUProfileRegistry sharedRegistry] profileForWorld:world
+                                                   player:player] autoconnect]
+     ? NSOnState : NSOffState)];
   
   [playerEditorSheet makeFirstResponder:playerNameField];
   
@@ -148,16 +156,18 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editWorld:(id)sender
 {
-  J3ProxySettings * settings =
-    [worldsArrayController valueForKeyPath:@"selection.proxySettings"];  
+  MUWorld *world = [self selectedWorld];
+  J3ProxySettings * settings = [world proxySettings];
 
-  [worldNameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldName"]];
-  [worldHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldHostname"]];
-  [worldPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.worldPort"]];
-  [worldURLField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldURL"]];
-  [worldConnectOnAppLaunchButton setState:([[worldsArrayController valueForKeyPath:@"selection.connectOnAppLaunch"] boolValue] ? NSOnState : NSOffState)];
-  [worldUsesSSLButton setState:([[worldsArrayController valueForKeyPath:@"selection.usesSSL"] boolValue] ? NSOnState : NSOffState)];
-
+  [worldNameField setStringValue:[world worldName]];
+  [worldHostnameField setStringValue:[world worldHostname]];
+  [worldPortField setObjectValue:[world worldPort]];
+  [worldURLField setStringValue:[world worldURL]];
+  [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
+  [worldConnectOnAppLaunchButton setState:
+    ([[[MUProfileRegistry sharedRegistry] profileForWorld:world] autoconnect]
+     ? NSOnState : NSOffState)];
+  
   if (settings)
   {
     [worldUsesProxyButton setState:NSOnState];
@@ -200,7 +210,7 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) removePlayer:(id)sender
 {
-  MUPlayer *player = [[playersArrayController selectedObjects] objectAtIndex:0];
+  MUPlayer *player = [self selectedPlayer];
   
   [[MUProfileRegistry sharedRegistry] removeProfileForWorld:[player world]
                                                      player:player];
@@ -211,10 +221,8 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) removeWorld:(id)sender
 {
-  MUWorld *world = [[worldsArrayController selectedObjects] objectAtIndex:0];
-  
+  MUWorld *world = [self selectedWorld];
   [[MUProfileRegistry sharedRegistry] removeAllProfilesForWorld:world];
-  
   [worldsArrayController removeObject:world];
   [worldsArrayController rearrangeObjects];
 }
@@ -229,10 +237,9 @@ enum MUProfilesEditingReturnValues
 {
   if (returnCode == MUEditOkay)
   {  
-    MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
+    MUWorld *selectedWorld = [self selectedWorld];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
                                                 password:[playerPasswordField stringValue]
-                                      connectOnAppLaunch:([playerConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    world:selectedWorld];
     
     [playersArrayController addObject:newPlayer];
@@ -245,16 +252,21 @@ enum MUProfilesEditingReturnValues
 {
   if (returnCode == MUEditOkay)
   {
-    MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
-    MUPlayer *selectedPlayer = [[playersArrayController selectedObjects] objectAtIndex:0];
+    MUWorld *selectedWorld = [self selectedWorld];
+    MUPlayer *selectedPlayer = [self selectedPlayer];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
                                                 password:[playerPasswordField stringValue]
-                                      connectOnAppLaunch:([playerConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    world:selectedWorld];
-          
+    // This updates the profile for the player with the new objects       
     [self updateProfileForWorld:selectedWorld
                          player:selectedPlayer
                      withPlayer:newPlayer];
+    
+    [[[MUProfileRegistry sharedRegistry] profileForWorld:selectedWorld
+                                                  player:selectedPlayer]
+      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
+
+    
     
     [playersArrayController removeObject:selectedPlayer];
     [playersArrayController addObject:newPlayer];
@@ -276,11 +288,16 @@ enum MUProfilesEditingReturnValues
 {
   if (returnCode == MUEditOkay)
   {
-    MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
+    MUWorld *selectedWorld = [self selectedWorld];
     MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[selectedWorld players]];
 
+    // This updates the world for every profile that has this world
     [self updateProfilesForWorld:selectedWorld
                        withWorld:newWorld];
+    
+    // This changes the setting on just the profile for the world itself
+    [[[MUProfileRegistry sharedRegistry] profileForWorld:selectedWorld]
+      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
     
     [worldsArrayController removeObject:selectedWorld];
     [worldsArrayController addObject:newWorld];
@@ -306,13 +323,14 @@ enum MUProfilesEditingReturnValues
                               worldHostname:[worldHostnameField stringValue]
                                   worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
                                    worldURL:[worldURLField stringValue]
-                         connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                     usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
                               proxySettings:settings
                                     players:players];
 }
 
-- (void) updateProfilesForWorld:(MUWorld *)world withWorld:(MUWorld *)newWorld
+- (void) updateProfilesForWorld:(MUWorld *)world 
+                      withWorld:(MUWorld *)newWorld
+
 {
   MUProfile *profile = nil;
   MUProfileRegistry *registry = [MUProfileRegistry sharedRegistry];
@@ -353,6 +371,15 @@ enum MUProfilesEditingReturnValues
   [profile release];
 }
 
+- (MUWorld *) selectedWorld
+{
+  return [[worldsArrayController selectedObjects] objectAtIndex:0];
+}
+
+- (MUPlayer *) selectedPlayer
+{
+  return [[playersArrayController selectedObjects] objectAtIndex:0];
+}
 
 
 @end

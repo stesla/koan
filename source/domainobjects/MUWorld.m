@@ -10,7 +10,7 @@
 
 #import <J3Terminal/J3TelnetConnection.h>
 
-static const int32_t currentVersion = 2;
+static const int32_t currentVersion = 3;
 
 @interface MUWorld (Private)
 - (void) postWorldsUpdatedNotification;
@@ -28,7 +28,6 @@ static const int32_t currentVersion = 2;
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
                 worldURL:(NSString *)newWorldURL
-      connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
                  usesSSL:(BOOL)newUsesSSL
            proxySettings:(J3ProxySettings *)newProxySettings
                  players:(NSArray *)newPlayers
@@ -39,7 +38,6 @@ static const int32_t currentVersion = 2;
     [self setWorldHostname:newWorldHostname];
     [self setWorldPort:newWorldPort];
     [self setWorldURL:newWorldURL];
-    [self setConnectOnAppLaunch:newConnectOnAppLaunch];
     [self setUsesSSL:newUsesSSL];
     [self setProxySettings:newProxySettings];
     [self setPlayers:newPlayers];
@@ -53,7 +51,6 @@ static const int32_t currentVersion = 2;
                    worldHostname:@""
                        worldPort:[NSNumber numberWithInt:0]
                         worldURL:@""
-              connectOnAppLaunch:NO
                          usesSSL:NO
                    proxySettings:nil
                          players:[NSArray array]];
@@ -119,16 +116,6 @@ static const int32_t currentVersion = 2;
   NSString *copy = [newWorldURL copy];
   [worldURL release];
   worldURL = copy;
-}
-
-- (BOOL) connectOnAppLaunch
-{
-  return connectOnAppLaunch;
-}
-
-- (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch
-{
-  connectOnAppLaunch = newConnectOnAppLaunch;
 }
 
 - (BOOL) usesSSL
@@ -257,13 +244,8 @@ static const int32_t currentVersion = 2;
   [encoder encodeObject:[self worldHostname] forKey:@"worldHostname"];
   [encoder encodeObject:[self worldPort] forKey:@"worldPort"];
   [encoder encodeObject:[self players] forKey:@"players"];
-  
   [encoder encodeObject:[self worldURL] forKey:@"worldURL"];
-  
-  [encoder encodeBool:[self connectOnAppLaunch] forKey:@"connectOnAppLaunch"];
-  
   [encoder encodeBool:[self usesSSL] forKey:@"usesSSL"];
-  
   [encoder encodeBool:(proxySettings == nil) forKey:@"usesProxy"];
   [encoder encodeObject:[proxySettings hostname] forKey:@"proxyHostname"];
   [encoder encodeObject:[NSNumber numberWithInt:[proxySettings port]] forKey:@"proxyPort"];
@@ -286,12 +268,12 @@ static const int32_t currentVersion = 2;
     if (version >= 1)
     {
       [self setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
-      [self setConnectOnAppLaunch:[decoder decodeBoolForKey:@"connectOnAppLaunch"]];
+      if (version < 3)
+        [decoder decodeBoolForKey:@"connectOnAppLaunch"];
     }
     else
     {
       [self setWorldURL:@""];
-      [self setConnectOnAppLaunch:NO];
     }
     
     if (version >= 2)
@@ -313,7 +295,6 @@ static const int32_t currentVersion = 2;
                                            worldHostname:[self worldHostname]
                                                worldPort:[self worldPort]
                                                 worldURL:[self worldURL]
-                                      connectOnAppLaunch:[self connectOnAppLaunch]
                                                  usesSSL:[self usesSSL]
                                            proxySettings:[self proxySettings]
                                                  players:[self players]];
