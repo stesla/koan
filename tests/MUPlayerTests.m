@@ -13,7 +13,6 @@
 {
   MUPlayer *player = [[[MUPlayer alloc] initWithName:@"My User"
                                             password:@"password"
-                                  connectOnAppLaunch:NO
                                                world:nil] autorelease];
   
   [self assert:[player loginString]

@@ -135,7 +135,6 @@
 {
   return [[[MUPlayer alloc] initWithName:@"User"
                                 password:@""
-                      connectOnAppLaunch:NO
                                    world:world] autorelease];
 }
 @end

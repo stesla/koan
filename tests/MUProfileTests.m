@@ -24,7 +24,6 @@
   
   player = [[[MUPlayer alloc] initWithName:@"User"
                                   password:@""
-                        connectOnAppLaunch:NO
                                      world:world] autorelease];
   
   profile = [MUProfile profileWithWorld:world player:player];
