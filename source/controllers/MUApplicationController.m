@@ -47,8 +47,17 @@
 - (void) awakeFromNib
 {
   J3PortFormatter *formatter = [[[J3PortFormatter alloc] init] autorelease];
+  NSData *worldsData = [[NSUserDefaults standardUserDefaults] dataForKey:MUPWorlds];
   
-  [self setWorlds:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"newworlds"]]];
+  if (worldsData)
+  {
+    [self setWorlds:[NSKeyedUnarchiver unarchiveObjectWithData:worldsData]];
+  }
+  else
+  {
+    [self setWorlds:[NSArray array]];
+  }
+
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
   [[portColumn dataCell] setFormatter:formatter];
@@ -165,7 +174,7 @@
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
-  [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:worlds] forKey:@"newworlds"];
+  [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:worlds] forKey:MUPWorlds];
 }
 
 #pragma mark -
@@ -207,8 +216,6 @@
 {
   int i, worldsCount = [worlds count], menuCount = [openConnectionMenu numberOfItems];
   
-  NSLog (@"Updating menu.");
-  
   for (i = menuCount - 1; i >= 0; i--)
   {
     [openConnectionMenu removeItemAtIndex:i];
@@ -217,14 +224,21 @@
   for (i = 0; i < worldsCount; i++)
   {
     MUWorld *world = [worlds objectAtIndex:i];
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[world worldName]
-                                                  action:@selector(openConnection:)
-                                           keyEquivalent:@""];
+    NSMenuItem *worldItem = [[NSMenuItem alloc] init];
+    NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world worldName]];
+    NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle:[world worldName]
+                                                         action:@selector(openConnection:)
+                                                  keyEquivalent:@""];
     
-    [item setTarget:self];
-    [item setRepresentedObject:world];
-    [openConnectionMenu addItem:item];
-    [item release];
+    [connectItem setTarget:self];
+    [connectItem setRepresentedObject:world];
+    [worldMenu addItem:connectItem];
+    [worldItem setTitle:[world worldName]];
+    [worldItem setSubmenu:worldMenu];
+    [openConnectionMenu addItem:worldItem];
+    [worldItem release];
+    [worldMenu release];
+    [connectItem release];
   }
 }
 
