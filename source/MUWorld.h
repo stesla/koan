@@ -7,6 +7,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class J3TelnetConnection;
+@class MUPlayer;
 
 @interface MUWorld : NSObject <NSCoding, NSCopying>
 {
@@ -14,7 +15,7 @@
   NSString *worldHostname;
   NSNumber *worldPort;
   
-  NSArray *players;
+  NSMutableArray *players;
 }
 
 // Designated initializer.
@@ -29,8 +30,10 @@
 - (void) setWorldHostname:(NSString *)newHostname;
 - (NSNumber *) worldPort;
 - (void) setWorldPort:(NSNumber *)newWorldPort;
-- (NSArray *) players;
+- (NSMutableArray *) players;
 - (void) setPlayers:(NSArray *)newPlayers;
+- (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index;
+- (void) removeObjectFromPlayersAtIndex:(unsigned)index;
 
 - (J3TelnetConnection *) newTelnetConnection;
 - (NSString *) frameName;

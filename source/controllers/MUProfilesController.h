@@ -8,15 +8,20 @@
 
 @interface MUProfilesController : NSWindowController
 {
-  IBOutlet NSWindow *worldEditorSheet;
-  IBOutlet NSWindow *playerEditorSheet;
+  IBOutlet NSTableView *worldsTable;
+  IBOutlet NSTableView *playersTable;
   
+  IBOutlet NSArrayController *playersArrayController;
+  IBOutlet NSArrayController *worldsArrayController;
+  
+  IBOutlet NSWindow *worldEditorSheet;
   IBOutlet NSTextField *worldNameField;
   IBOutlet NSTextField *worldHostnameField;
   IBOutlet NSTextField *worldPortField;
   IBOutlet NSTextField *worldURLField;
   IBOutlet NSButton *worldSaveButton;
   
+  IBOutlet NSWindow *playerEditorSheet;
   IBOutlet NSTextField *playerNameField;
   IBOutlet NSSecureTextField *playerPasswordField;
   IBOutlet NSButton *playerSaveButton;

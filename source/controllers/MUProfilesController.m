@@ -6,6 +6,14 @@
 
 #import "MUProfilesController.h"
 #import "J3PortFormatter.h"
+#import "MUPlayer.h"
+#import "MUWorld.h"
+
+enum MUProfilesEditingReturnValues
+{
+  MUEditOkay,
+  MUEditCancel
+};
 
 @interface MUProfilesController (Private)
 
@@ -28,8 +36,21 @@
 - (void) awakeFromNib
 {
   J3PortFormatter *formatter = [[[J3PortFormatter alloc] init] autorelease];
+  NSSortDescriptor *worldsSortDesc = [[NSSortDescriptor alloc] initWithKey:@"worldName" ascending:YES];
+  NSSortDescriptor *playersSortDesc = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
   
   [worldPortField setFormatter:formatter];
+  
+  [playersTable setTarget:self];
+  [playersTable setDoubleAction:@selector(editPlayer:)];
+  [worldsTable setTarget:self];
+  [worldsTable setDoubleAction:@selector(editWorld:)];
+  
+  [worldsArrayController setSortDescriptors:[NSArray arrayWithObject:worldsSortDesc]];
+  [worldsSortDesc release];
+  
+  [playersArrayController setSortDescriptors:[NSArray arrayWithObject:playersSortDesc]];
+  [playersSortDesc release];
 }
 
 #pragma mark -
@@ -63,6 +84,15 @@
 
 - (IBAction) editPlayer:(id)sender
 {
+  NSEvent *event = [NSApp currentEvent];
+  NSPoint location = [playersTable convertPoint:[event locationInWindow] fromView:nil];
+  
+  [playerNameField setStringValue:[playersArrayController valueForKeyPath:@"selection.name"]];
+  [playerPasswordField setStringValue:[playersArrayController valueForKeyPath:@"selection.password"]];
+  
+  if ([playersTable rowAtPoint:location] == -1)
+    return;
+  
   [NSApp beginSheet:playerEditorSheet
      modalForWindow:[self window]
       modalDelegate:self
@@ -72,6 +102,17 @@
 
 - (IBAction) editWorld:(id)sender
 {
+  NSEvent *event = [NSApp currentEvent];
+  NSPoint location = [worldsTable convertPoint:[event locationInWindow] fromView:nil];
+  
+  [worldNameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldName"]];
+  [worldHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldHostname"]];
+  [worldPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.worldPort"]];
+  [worldURLField setStringValue:@""];
+  
+  if ([worldsTable rowAtPoint:location] == -1)
+    return;
+  
   [NSApp beginSheet:worldEditorSheet
      modalForWindow:[self window]
       modalDelegate:self
@@ -82,13 +123,13 @@
 - (IBAction) endEditingPlayer:(id)sender
 {
   [playerEditorSheet orderOut:sender];
-  [NSApp endSheet:playerEditorSheet];
+  [NSApp endSheet:playerEditorSheet returnCode:(sender == playerSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
 - (IBAction) endEditingWorld:(id)sender
 {
   [worldEditorSheet orderOut:sender];
-  [NSApp endSheet:worldEditorSheet];
+  [NSApp endSheet:worldEditorSheet returnCode:(sender == worldSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
 @end
@@ -99,22 +140,66 @@
 
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-  
+  if (returnCode == MUEditOkay)
+  {  
+    MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
+    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
+                                                password:[playerPasswordField stringValue]
+                                                   world:selectedWorld];
+    
+    [playersArrayController addObject:newPlayer];
+    [newPlayer release];
+    [playersArrayController rearrangeObjects];
+  }
 }
 
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-  
+  if (returnCode == MUEditOkay)
+  {
+    MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
+    MUWorld *selectedPlayer = [[playersArrayController selectedObjects] objectAtIndex:0];
+    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
+                                                password:[playerPasswordField stringValue]
+                                                   world:selectedWorld];
+    
+    [playersArrayController removeObject:selectedPlayer];
+    [playersArrayController addObject:newPlayer];
+    [newPlayer release];
+    [playersArrayController rearrangeObjects];
+  }
 }
 
 - (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-  
+  if (returnCode == MUEditOkay)
+  {
+    MUWorld *newWorld = [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
+                                             worldHostname:[worldHostnameField stringValue]
+                                                 worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
+                                                   players:[NSArray array]];
+    
+    [worldsArrayController addObject:newWorld];
+    [newWorld release];
+    [worldsArrayController rearrangeObjects];
+  }
 }
 
 - (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-  
+  if (returnCode == MUEditOkay)
+  {
+    MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
+    MUWorld *newWorld = [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
+                                             worldHostname:[worldHostnameField stringValue]
+                                                 worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
+                                                   players:[selectedWorld players]];
+    
+    [worldsArrayController removeObject:selectedWorld];
+    [worldsArrayController addObject:newWorld];
+    [newWorld release];
+    [worldsArrayController rearrangeObjects];
+  }
 }
 
 @end

@@ -53,12 +53,12 @@
 {
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
+  [self updateConnectionsMenu:nil];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(updateConnectionsMenu:)
                                                name:MUWorldsUpdatedNotification
-                                             object:[MUWorldRegistry sharedRegistry]];
-  
-  [self updateConnectionsMenu:nil];
+                                             object:nil];
 }
 
 - (void) dealloc

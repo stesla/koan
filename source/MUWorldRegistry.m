@@ -64,16 +64,34 @@ static MUWorldRegistry *sharedRegistry = nil;
 #pragma mark -
 #pragma mark Accessors
 
-- (NSArray *) worlds
+- (NSMutableArray *) worlds
 {
   return worlds;
 }
 
 - (void) setWorlds:(NSArray *)newWorlds
 {
-  NSArray *copy = [newWorlds copy];
+  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"worldName" ascending:YES] autorelease];
+  NSMutableArray *copy = [[newWorlds sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDesc]] mutableCopy];
+  
   [worlds release];
   worlds = copy;
+  [self postWorldsUpdatedNotification];
+}
+
+- (void) insertObject:(MUWorld *)world inWorldsAtIndex:(unsigned)index
+{
+  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"worldName" ascending:YES] autorelease];
+  
+  [worlds insertObject:world atIndex:index];
+  [worlds sortUsingDescriptors:[NSArray arrayWithObject:sortDesc]];
+  [self postWorldsUpdatedNotification];
+}
+
+- (void) removeObjectFromWorldsAtIndex:(unsigned)index
+{
+  [worlds removeObjectAtIndex:index];
+  [self postWorldsUpdatedNotification];
 }
 
 - (NSString *) worldsKey
@@ -86,7 +104,6 @@ static MUWorldRegistry *sharedRegistry = nil;
   NSString *copy = [newWorldsKey copy];
   [worldsKey release];
   worldsKey = copy;
-  [self postWorldsUpdatedNotification];
 }
 
 #pragma mark -

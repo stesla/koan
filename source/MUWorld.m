@@ -10,6 +10,14 @@
 
 static const int32_t currentVersion = 0;
 
+@interface MUWorld (Private)
+
+- (void) postWorldsUpdatedNotification;
+
+@end
+
+#pragma mark -
+
 @implementation MUWorld
 
 - (id) initWithWorldName:(NSString *)newWorldName
@@ -83,16 +91,34 @@ static const int32_t currentVersion = 0;
   worldPort = copy;
 }
 
-- (NSArray *) players
+- (NSMutableArray *) players
 {
   return players;
 }
 
 - (void) setPlayers:(NSArray *)newPlayers
 {
-  NSArray *copy = [newPlayers copy];
+  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease];
+  NSMutableArray *copy = [[newPlayers sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDesc]] mutableCopy];
+  
   [players release];
   players = copy;
+  [self postWorldsUpdatedNotification];
+}
+
+- (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index
+{
+  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease];
+  
+  [players insertObject:player atIndex:index];
+  [players sortUsingDescriptors:[NSArray arrayWithObject:sortDesc]];
+  [self postWorldsUpdatedNotification];
+}
+
+- (void) removeObjectFromPlayersAtIndex:(unsigned)index
+{
+  [players removeObjectAtIndex:index];
+  [self postWorldsUpdatedNotification];
 }
 
 #pragma mark -
@@ -150,6 +176,18 @@ static const int32_t currentVersion = 0;
                                            worldHostname:[self worldHostname]
                                                worldPort:[self worldPort]
                                                  players:[self players]];
+}
+
+@end
+
+#pragma mark -
+
+@implementation MUWorld (Private)
+
+- (void) postWorldsUpdatedNotification
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUWorldsUpdatedNotification
+                                                      object:self];
 }
 
 @end

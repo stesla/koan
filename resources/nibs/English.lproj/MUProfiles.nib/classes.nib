@@ -17,12 +17,16 @@
                 playerNameField = NSTextField; 
                 playerPasswordField = NSSecureTextField; 
                 playerSaveButton = NSButton; 
+                playersArrayController = NSArrayController; 
+                playersTable = NSTableView; 
                 worldEditorSheet = NSWindow; 
                 worldHostnameField = NSTextField; 
                 worldNameField = NSTextField; 
                 worldPortField = NSTextField; 
                 worldSaveButton = NSButton; 
                 worldURLField = NSTextField; 
+                worldsArrayController = NSArrayController; 
+                worldsTable = NSTableView; 
             }; 
             SUPERCLASS = NSWindowController; 
         }, 
