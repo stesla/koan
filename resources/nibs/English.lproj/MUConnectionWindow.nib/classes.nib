@@ -28,7 +28,7 @@
         {
             CLASS = MUDisplayTextView; 
             LANGUAGE = ObjC; 
-            OUTLETS = {targetTextView = NSTextView; }; 
+            OUTLETS = {insertTextProxy = NSTextView; }; 
             SUPERCLASS = NSTextView; 
         }, 
         {CLASS = NSObject; LANGUAGE = ObjC; }
