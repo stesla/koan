@@ -40,13 +40,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MUTextView.h"
 
-@interface MUDisplayTextView : NSTextView
-{
-  IBOutlet NSTextView *insertTextProxy;
-}
+@interface MUDisplayTextView : MUTextView
 
 @end
+
+#pragma mark -
 
 @interface NSObject (MUDisplayTextViewDelegate)
 

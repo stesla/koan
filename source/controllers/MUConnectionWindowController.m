@@ -278,15 +278,12 @@
              commandSelector == @selector(insertTab:) ||
              commandSelector == @selector(insertBacktab:))
     {
-      [receivedTextView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
-      [inputView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
       [[self window] makeFirstResponder:inputView];
       return YES;
     }
     else
     {
       [inputView doCommandBySelector:commandSelector];
-      [receivedTextView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
       [[self window] makeFirstResponder:inputView];
       return YES;
     }
@@ -359,6 +356,20 @@
         return YES;
       }
     }
+  }
+  return NO;
+}
+
+#pragma mark -
+#pragma mark MUTextView delegate
+
+- (BOOL) textView:(MUTextView *)textView insertText:(id)string
+{
+  if (textView == receivedTextView)
+  {
+    [inputView insertText:string];
+    [[self window] makeFirstResponder:inputView];
+    return YES;
   }
   return NO;
 }

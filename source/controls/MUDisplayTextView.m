@@ -107,10 +107,4 @@
   }
 }
 
-- (void) insertText:(id)string
-{
-  [insertTextProxy insertText:string];
-  [[self window] makeFirstResponder:insertTextProxy];
-}
-
 @end
