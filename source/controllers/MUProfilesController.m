@@ -9,7 +9,7 @@
 #import "J3PortFormatter.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"
-
+#import "MUWorldRegistry.h"
 
 enum MUProfilesEditingReturnValues
 {
@@ -57,6 +57,11 @@ enum MUProfilesEditingReturnValues
   
   [playersArrayController setSortDescriptors:[NSArray arrayWithObject:playersSortDesc]];
   [playersSortDesc release];
+}
+
+- (MUWorldRegistry *) registry
+{
+  return [MUWorldRegistry sharedRegistry];
 }
 
 #pragma mark -

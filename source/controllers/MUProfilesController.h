@@ -6,6 +6,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MUWorldRegistry;
+
 @interface MUProfilesController : NSWindowController
 {
   IBOutlet NSTableView *worldsTable;
@@ -46,5 +48,7 @@
 - (IBAction) endEditingWorld:(id)sender;
 - (IBAction) removePlayer:(id)sender;
 - (IBAction) removeWorld:(id)sender;
+
+- (MUWorldRegistry *) registry;
 
 @end
