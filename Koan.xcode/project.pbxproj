@@ -179,8 +179,6 @@
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
 				E62C909E07422669005662BC,
-				E63B5EB40785460C003FDA45,
-				E63B5EDB0785497C003FDA45,
 				E6B5E61106A73B0A00F53EBB,
 				E6C9D4E7077C0FA3007BB2C1,
 				E6C9D4E8077C0FA3007BB2C1,
@@ -530,9 +528,6 @@
 				E6C9D4ED077C0FA3007BB2C1,
 				E6C9D4EE077C0FA3007BB2C1,
 				7E39EF9D0783938F0042A17A,
-				E63B5E8207854008003FDA45,
-				E63B5EB60785460C003FDA45,
-				E63B5EDC0785497C003FDA45,
 				E6E7BF0E07867F080065EDD6,
 				7E1FC01C0787A2220070AF39,
 				E696783E078F55590033A4C8,
@@ -566,7 +561,6 @@
 				E6F3A720077A1B270011A461,
 				E6C9D607077C2DC6007BB2C1,
 				7E39EF9E0783938F0042A17A,
-				E63B5E8107854008003FDA45,
 				7E1FC01D0787A2220070AF39,
 			);
 			isa = PBXSourcesBuildPhase;
@@ -794,73 +788,6 @@
 		};
 		E62C909F07422669005662BC = {
 			fileRef = E62C909E07422669005662BC;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E63B5E7F07854008003FDA45 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.objc;
-			path = UKUpdateChecker.m;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E63B5E8007854008003FDA45 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = UKUpdateChecker.h;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E63B5E8107854008003FDA45 = {
-			fileRef = E63B5E7F07854008003FDA45;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E63B5E8207854008003FDA45 = {
-			fileRef = E63B5E8007854008003FDA45;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E63B5EB40785460C003FDA45 = {
-			children = (
-				E63B5EB50785460C003FDA45,
-			);
-			isa = PBXVariantGroup;
-			name = UKUpdateChecker.strings;
-			path = "";
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E63B5EB50785460C003FDA45 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = text.plist.strings;
-			name = English;
-			path = English.lproj/UKUpdateChecker.strings;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E63B5EB60785460C003FDA45 = {
-			fileRef = E63B5EB40785460C003FDA45;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E63B5EDB0785497C003FDA45 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = text;
-			path = MacPAD.url;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E63B5EDC0785497C003FDA45 = {
-			fileRef = E63B5EDB0785497C003FDA45;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1992,11 +1919,9 @@
 				E60DDB83076CE889009870E4,
 				E6A231270772E166008EF744,
 				E6E79CEA07697FD100A8FB96,
-				E63B5E8007854008003FDA45,
 				E60DDB84076CE889009870E4,
 				E6A231280772E166008EF744,
 				E6E79CEB07697FD100A8FB96,
-				E63B5E7F07854008003FDA45,
 			);
 			isa = PBXGroup;
 			name = Controls;
