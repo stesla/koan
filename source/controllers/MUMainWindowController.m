@@ -19,6 +19,7 @@
 //
 
 #import "MUMainWindowController.h"
+
 #import "MUAnsiRemovingFilter.h"
 
 @implementation MUMainWindowController
@@ -30,8 +31,7 @@
                                                                   forKey:NSFontAttributeName];
   [receivedTextView setTypingAttributes:attributeDictionary];
   
-  _historyIndex = -1;
-  _historyArray = [[NSMutableArray alloc] init];
+  _historyRing = [[MUHistoryRing alloc] init];
   
   _filterQueue = [[MUInputFilterQueue alloc] init];
   [_filterQueue addFilter:[MUAnsiRemovingFilter filter]];
@@ -45,7 +45,7 @@
   [_telnetConnection close];
   [_telnetConnection release];
   [_filterQueue release];
-  [_historyArray release];
+  [_historyRing release];
 }
 
 - (IBAction) connect:(id)sender
@@ -84,10 +84,7 @@
       [_telnetConnection writeString:inputToWrite];
     }
     
-    if (_historyIndex >= 0 && _historyIndex < [_historyArray count])
-      [_historyArray removeObjectAtIndex:_historyIndex];
-    [_historyArray addObject:[inputField stringValue]];
-    _historyIndex = -1;
+    [_historyRing saveString:[inputField stringValue]];
     
     [inputField setStringValue:@""];
   }
@@ -114,32 +111,14 @@
 
 - (IBAction) nextCommand:(id)sender
 {
-  _historyIndex++;
-  
-  if (_historyIndex >= [_historyArray count] || _historyIndex < -1)
-  {
-    _historyIndex = -1;
-    [inputField setStringValue:@""];
-  }
-  else
-  {
-    [inputField setStringValue:[_historyArray objectAtIndex:_historyIndex]];
-  }
+  [_historyRing updateString:[inputField stringValue]];
+  [inputField setStringValue:[_historyRing nextString]];
 }
 
 - (IBAction) previousCommand:(id)sender
 {
-  _historyIndex--;
-  
-  if (_historyIndex == -2)
-    _historyIndex = [_historyArray count] - 1;
-  else if (_historyIndex >= [_historyArray count] || _historyIndex < -2)
-    _historyIndex == -1;
-
-  if (_historyIndex == -1)
-    [inputField setStringValue:@""]; 
-  else
-    [inputField setStringValue:[_historyArray objectAtIndex:_historyIndex]];
+  [_historyRing updateString:[inputField stringValue]];
+  [inputField setStringValue:[_historyRing previousString]];
 }
 
 // Delegate methods for MUTelnetConnection.

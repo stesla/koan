@@ -107,9 +107,11 @@
 				E670A81207420F8C00E2DAEB,
 				32CA4F630368D1EE00C91783,
 				E622A550074231A60069335B,
+				E6E7A6210749693A007005AC,
 				E6055F7C07492729007A13BD,
 				29B97316FDCFA39411CA2CEA,
 				E622A551074231A60069335B,
+				E6E7A62707496940007005AC,
 				E6055F7D07492729007A13BD,
 			);
 			isa = PBXGroup;
@@ -479,6 +481,8 @@
 				7E4A5E540745677400926969,
 				7E20A8AB0748474E00D1A5BF,
 				E6055F7F07492729007A13BD,
+				E6E7A62807496940007005AC,
+				E6E7A6350749697C007005AC,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -695,8 +699,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				E6055FCF07492AA1007A13BD,
+				E6E7A6F6074971FF007005AC,
+				E6E7A6F7074971FF007005AC,
 				E62041AB06B0566B00236608,
 				7E5E161B06CC30E200518E61,
+				E6E7A72A07497275007005AC,
 				7EA9674A06FA80B700D57864,
 				7E4A5E420745659300926969,
 				7E4A5E520745677400926969,
@@ -1361,15 +1368,19 @@
 		};
 		E6B5E40A06A6F28400F53EBB = {
 			children = (
-				E6055FB6074929F3007A13BD,
 				7E20A8E907486C1300D1A5BF,
-				7E20A8EB07486C2500D1A5BF,
+				E6E7A6CC074970FE007005AC,
 				7E4A5E3F0745659300926969,
-				7E4A5E400745659300926969,
 				7EA9674706FA80B700D57864,
-				7EA9674806FA80B700D57864,
 				E62041A806B0566B00236608,
+				E6E7A63D0749698F007005AC,
+				7E20A8EB07486C2500D1A5BF,
+				E6E7A6CD074970FE007005AC,
+				7E4A5E400745659300926969,
+				7EA9674806FA80B700D57864,
 				E62041A906B0566B00236608,
+				E6E7A63E0749698F007005AC,
+				E6055FB6074929F3007A13BD,
 				E648B8E906B03FBC0070F73E,
 			);
 			isa = PBXGroup;
@@ -1414,9 +1425,12 @@
 		E6D0A56C0745518A002DA041 = {
 			children = (
 				7E20A8A60748474E00D1A5BF,
-				7E20A8A70748474E00D1A5BF,
+				E6E7A63A07496982007005AC,
 				7E4A5E4F0745677400926969,
+				E6E7A62E07496971007005AC,
+				7E20A8A70748474E00D1A5BF,
 				7E4A5E500745677400926969,
+				E6E7A6340749697C007005AC,
 			);
 			isa = PBXGroup;
 			name = Filters;
@@ -1475,6 +1489,113 @@
 		};
 		E6E46D7F06F803ED002809F0 = {
 			fileRef = E6E46D7E06F803ED002809F0;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E7A6210749693A007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUHistoryRing.h;
+			path = source/MUHistoryRing.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6E7A62707496940007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = MUHistoryRing.m;
+			path = source/MUHistoryRing.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6E7A62807496940007005AC = {
+			fileRef = E6E7A62707496940007005AC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E7A62E07496971007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUTextLogFilter.h;
+			path = filters/MUTextLogFilter.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6E7A6340749697C007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUTextLogFilter.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E7A6350749697C007005AC = {
+			fileRef = E6E7A6340749697C007005AC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E7A63A07496982007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUFiltering.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E7A63D0749698F007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUTextLogFilterTests.h;
+			path = tests/MUTextLogFilterTests.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6E7A63E0749698F007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = MUTextLogFilterTests.m;
+			path = tests/MUTextLogFilterTests.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6E7A6CC074970FE007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUHistoryRingTests.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E7A6CD074970FE007005AC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUHistoryRingTests.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E7A6F6074971FF007005AC = {
+			fileRef = E6E7A63E0749698F007005AC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E7A6F7074971FF007005AC = {
+			fileRef = E6E7A6CD074970FE007005AC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E7A72A07497275007005AC = {
+			fileRef = E6E7A62707496940007005AC;
 			isa = PBXBuildFile;
 			settings = {
 			};

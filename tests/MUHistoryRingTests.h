@@ -1,5 +1,5 @@
 //
-// MUMainWindowController.h
+// MUHistoryRingTests.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -19,30 +19,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MUHistoryRing.h"
-#import "Connections/MUTelnetConnection.h"
-#import "MUInputFilter.h"
+#import <ObjcUnit/ObjcUnit.h>
 
-@interface MUMainWindowController : NSWindowController
-{
-  IBOutlet NSTextField *hostNameField;
-  IBOutlet NSTextField *portField;
-  IBOutlet NSTextView *receivedTextView;
-  IBOutlet NSTextField *inputField;
-  IBOutlet NSButton *connectButton;
-  IBOutlet NSButton *disconnectButton;
-  
-  MUTelnetConnection *_telnetConnection;
-  MUInputFilterQueue *_filterQueue;
-  
-  MUHistoryRing *_historyRing;
-}
-
-- (IBAction) connect:(id)sender;
-- (IBAction) disconnect:(id)sender;
-- (IBAction) writeLine:(id)sender;
-
-- (IBAction) nextCommand:(id)sender;
-- (IBAction) previousCommand:(id)sender;
+@interface MUHistoryRingTests : TestCase
 
 @end

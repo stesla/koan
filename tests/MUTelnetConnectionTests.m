@@ -50,9 +50,9 @@
   [self assert:telnetString equals:@""];
 }
 
-- (NSOutputStream *)openOutputStreamWithBuffer:(void *)buffer maxLength:(int)maxLength
+- (NSOutputStream *) openOutputStreamWithBuffer:(void *)buffer maxLength:(int)maxLength
 {
-  bzero(buffer, maxLength);
+  memset (buffer, 0, maxLength);
   NSOutputStream *output = [NSOutputStream outputStreamToBuffer:buffer
                                                        capacity:maxLength];
   [output open];

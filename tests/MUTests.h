@@ -22,9 +22,6 @@
 #import <ObjcUnit/ObjcUnit.h>
 
 @interface  MUTests : NSObject
-{
-  
-}
 
 + (TestSuite *) suite;
 

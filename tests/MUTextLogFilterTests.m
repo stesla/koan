@@ -1,5 +1,5 @@
 //
-// MUTests.m
+// MUTextLogFilterTests.m
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,35 +18,24 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#import "MUTests.h"
-
-#import "MUTelnetConnectionTests.h"
-#import "MUInputFilterTests.h"
-#import "MUAnsiRemovingFilterTests.h"
 #import "MUTextLogFilterTests.h"
-#import "MUHistoryRingTests.h"
+#import "MUTextLogFilter.h"
 
-int
-main (int argc, const char *argv[])
+@implementation MUTextLogFilterTests
+
+- (void) setUp
 {
-  TestRunnerMain ([MUTests class]);
-  return 0;
+  
 }
 
-@implementation MUTests
-
-+ (TestSuite *) suite
+- (void) tearDown
 {
-  TestSuite *suite = [TestSuite suiteWithName:@"Koan Tests"];
   
-  // Add tests here.
-  [suite addTestSuite:[MUTelnetConnectionTests class]];
-  [suite addTestSuite:[MUInputFilterTests class]];
-  [suite addTestSuite:[MUInputFilterQueueTests class]];
-  [suite addTestSuite:[MUAnsiRemovingFilterTests class]];
-  [suite addTestSuite:[MUHistoryRingTests class]];
-  [suite addTestSuite:[MUTextLogFilterTests class]];
-  return suite;
+}
+
+- (void) testNull
+{
+  [self assertNil:nil];
 }
 
 @end

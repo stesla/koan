@@ -71,12 +71,11 @@
 
 - (int) scanUpToCodeInString:(NSString *)string
 {
-  NSRange stopRange;
   NSCharacterSet *stopSet = 
     [NSCharacterSet characterSetWithCharactersInString:@"\033"];
+  NSRange stopRange = [string rangeOfCharacterFromSet:stopSet];
   NSScanner *scanner = [NSScanner scannerWithString:string];
-  
-  stopRange = [string rangeOfCharacterFromSet:stopSet];
+
   if (stopRange.location == NSNotFound)
     return NSNotFound;
   
