@@ -7,7 +7,7 @@
 	objects = {
 		1058C7A0FEA54F0111CA2CBB = {
 			children = (
-				7E569B85074ED5A60068AF3F,
+				16D5FA06075434E4007C5F34,
 				1058C7A1FEA54F0111CA2CBB,
 				E620410A06B0551D00236608,
 			);
@@ -39,6 +39,61 @@
 //102
 //103
 //104
+//160
+//161
+//162
+//163
+//164
+		16D5FA06075434E4007C5F34 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = J3Terminal.framework;
+			path = frameworks/J3Terminal.framework;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		16D5FA07075434E4007C5F34 = {
+			fileRef = 16D5FA06075434E4007C5F34;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		16D5FA0A075434F9007C5F34 = {
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				16D5FA0B07543500007C5F34,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16D5FA0B07543500007C5F34 = {
+			fileRef = 16D5FA06075434E4007C5F34;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		16D5FA5F075435C9007C5F34 = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework.tar.gz",
+			);
+			isa = PBXShellScriptBuildPhase;
+			outputPaths = (
+				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${SOURCE_ROOT}/frameworks\n# Add more frameworks below\ntar zxvf J3Terminal.framework.tar.gz";
+		};
+//160
+//161
+//162
+//163
+//164
 //190
 //191
 //192
@@ -84,7 +139,6 @@
 				E622A845074247E20069335B,
 				E60D0867074DB859004BE1E4,
 				E61963010742288B008B6447,
-				7E569D9E074EEEDC0068AF3F,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -295,81 +349,6 @@
 			settings = {
 			};
 		};
-		7E563548074EFB4300F595F8 = {
-			containerPortal = 29B97313FDCFA39411CA2CEA;
-			isa = PBXContainerItemProxy;
-			proxyType = 1;
-			remoteGlobalIDString = 7E569D9E074EEEDC0068AF3F;
-			remoteInfo = "Extract Frameworks";
-		};
-		7E563549074EFB4300F595F8 = {
-			isa = PBXTargetDependency;
-			target = 7E569D9E074EEEDC0068AF3F;
-			targetProxy = 7E563548074EFB4300F595F8;
-		};
-		7E569B85074ED5A60068AF3F = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = J3Terminal.framework;
-			path = frameworks/J3Terminal.framework;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
-		};
-		7E569B86074ED5A60068AF3F = {
-			fileRef = 7E569B85074ED5A60068AF3F;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E569B87074ED5C60068AF3F = {
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				7E569B88074ED5D20068AF3F,
-			);
-			isa = PBXCopyFilesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7E569B88074ED5D20068AF3F = {
-			fileRef = 7E569B85074ED5A60068AF3F;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E569D9D074EEEDC0068AF3F = {
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework.tar.gz",
-			);
-			isa = PBXShellScriptBuildPhase;
-			outputPaths = (
-				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd frameworks\n# Add any more frameworks here\ntar zxvf J3Terminal.framework.tar.gz";
-		};
-		7E569D9E074EEEDC0068AF3F = {
-			buildPhases = (
-				7E569D9D074EEEDC0068AF3F,
-			);
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Extract Frameworks";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
-			};
-			dependencies = (
-			);
-			isa = PBXAggregateTarget;
-			name = "Extract Frameworks";
-			productName = "Extract Frameworks";
-		};
 		7EFE43820749C7CE002C7D48 = {
 			fileEncoding = 30;
 			isa = PBXFileReference;
@@ -446,20 +425,21 @@
 //8D4
 		8D1107260486CEB800E47090 = {
 			buildPhases = (
+				16D5FA5F075435C9007C5F34,
 				8D1107290486CEB800E47090,
 				8D11072C0486CEB800E47090,
 				8D11072E0486CEB800E47090,
 				E622A48707422DB90069335B,
-				7E569B87074ED5C60068AF3F,
+				16D5FA0A075434F9007C5F34,
 			);
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Users/samuel/wa/koan/frameworks;
+				FRAMEWORK_SEARCH_PATHS = /Users/build/Documents/koan69/frameworks;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				HEADER_SEARCH_PATHS = "./source ./filters";
+				HEADER_SEARCH_PATHS = "./source ./filters ./j3terminal";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PREBINDING = YES;
@@ -467,7 +447,6 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
-				7E563549074EFB4300F595F8,
 				E622A879074248640069335B,
 				E60D0872074DB8AB004BE1E4,
 				E622A49707422E0E0069335B,
@@ -521,7 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090,
-				7E569B86074ED5A60068AF3F,
+				16D5FA07075434E4007C5F34,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
