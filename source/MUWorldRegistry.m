@@ -8,7 +8,6 @@
 #import "MUWorldRegistry.h"
 #import "MUProfile.h"
 
-static NSString *defaultWorldsKey = @"MUPWorlds";
 static MUWorldRegistry *sharedRegistry = nil;
 
 @interface MUWorldRegistry (Private)
@@ -27,38 +26,25 @@ static MUWorldRegistry *sharedRegistry = nil;
 {
   if (!sharedRegistry)
   {
-    sharedRegistry = [[MUWorldRegistry alloc] createSharedRegistryWithDefaultsKey:defaultWorldsKey];
+    sharedRegistry = [[MUWorldRegistry alloc] init];
+    [sharedRegistry readWorldsFromUserDefaults];
   }
-  
   return sharedRegistry;
-}
-
-- (id) createSharedRegistryWithDefaultsKey:(NSString *)key
-{
-  if (sharedRegistry)
-  {
-    [self autorelease];
-    return sharedRegistry;
-  }
-  if (self = [super init])
-  {
-    [self setWorldsKey:key];
-    [self readWorldsFromUserDefaults];
-    sharedRegistry = self;
-  }
-  return self;
 }
 
 - (id) init
 {
-  [self autorelease];
-  return [MUWorldRegistry sharedRegistry];
+  self = [super init];
+  if (self)
+  {
+    [self setWorlds:[NSArray array]];
+  }
+  return self;
 }
 
 - (void) dealloc
 {
   [worlds release];
-  [worldsKey release];
 }
 
 #pragma mark -
@@ -92,18 +78,6 @@ static MUWorldRegistry *sharedRegistry = nil;
 {
   [worlds removeObjectAtIndex:index];
   [self postWorldsUpdatedNotification];
-}
-
-- (NSString *) worldsKey
-{
-  return worldsKey;
-}
-
-- (void) setWorldsKey:(NSString *)newWorldsKey
-{
-  NSString *copy = [newWorldsKey copy];
-  [worldsKey release];
-  worldsKey = copy;
 }
 
 #pragma mark -
@@ -168,15 +142,13 @@ static MUWorldRegistry *sharedRegistry = nil;
       }
     }
   }
-  else
-  {
-    [self setWorlds:[NSArray array]];
-  }  
 }
 
 - (void) writeWorldsToUserDefaults
 {
-  [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:worlds] forKey:worldsKey];
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:worlds];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setObject:data forKey:MUPWorlds];
 }
 
 @end

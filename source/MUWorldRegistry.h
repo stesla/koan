@@ -13,21 +13,14 @@
 @interface MUWorldRegistry : NSObject
 {
   NSMutableArray *worlds;
-  NSString *worldsKey;
 }
 
 + (id) sharedRegistry;
-
-// Default sort-of-initializer.
-- (id) createSharedRegistryWithDefaultsKey:(NSString *)key;
 
 - (NSMutableArray *) worlds;
 - (void) setWorlds:(NSArray *)newWorlds;
 - (void) insertObject:(MUWorld *)world inWorldsAtIndex:(unsigned)index;
 - (void) removeObjectFromWorldsAtIndex:(unsigned)index;
-
-- (NSString *) worldsKey;
-- (void) setWorldsKey:(NSString *)newWorldsKey;
 
 - (unsigned) count;
 - (void) saveWorlds;
