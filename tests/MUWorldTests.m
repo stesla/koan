@@ -57,6 +57,7 @@
   [world addPlayer:player];
   [world removePlayer:player];
   [self assertFalse:[world containsPlayer:player]];
+  [self assertNil:[player world]];
 }
 
 @end

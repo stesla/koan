@@ -199,6 +199,7 @@ static const int32_t currentVersion = 2;
 
 - (void) removePlayer:(MUPlayer *)player
 {
+  [player setWorld:nil];
   [players removeObject:player];
 }
 

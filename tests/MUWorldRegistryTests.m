@@ -60,8 +60,24 @@
   
   [registry addWorld:world];
   [registry addPlayer:player toWorld:world];
-  [self assert:[player world] equals:world];
-  [self assert:[[world players] objectAtIndex:0]
-        equals:player];
+  [self assertTrue:[world containsPlayer:player]];
+}
+
+- (void) testAddWorldAndPlayer
+{
+  MUPlayer *player = [[[MUPlayer alloc] init] autorelease];
+  
+  [registry addPlayer:player toWorld:world];
+  [self assertTrue:[registry containsWorld:world] message:@"World"];
+  [self assertTrue:[world containsPlayer:player] message:@"Player"];
+}
+
+- (void) testRemovePlayer
+{
+  MUPlayer *player = [[[MUPlayer alloc] init] autorelease];
+  
+  [registry addPlayer:player toWorld:world];
+  [registry removePlayer:player fromWorld:world];
+  [self assertFalse:[world containsPlayer:player] message:@"Player"];
 }
 @end

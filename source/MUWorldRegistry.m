@@ -116,7 +116,13 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 - (void) addPlayer:(MUPlayer *)player toWorld:(MUWorld *)world
 {
+  [self addWorld:world];
   [world addPlayer:player];
+}
+
+- (void) removePlayer:(MUPlayer *)player fromWorld:(MUWorld *)world
+{
+  [world removePlayer:player];
 }
 @end
 

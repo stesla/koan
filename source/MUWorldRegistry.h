@@ -31,4 +31,5 @@
 - (BOOL) containsWorld:(MUWorld *)world;
 - (void) removeWorld:(MUWorld *)world;
 - (void) addPlayer:(MUPlayer *)player toWorld:(MUWorld *)world;
+- (void) removePlayer:(MUPlayer *)player fromWorld:(MUWorld *)world;
 @end
