@@ -32,8 +32,4 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-// Coding
-+ (void) encodePlayer:(MUPlayer *)player withCoder:(NSCoder *)encoder;
-+ (void) decodePlayer:(MUPlayer *)player withCoder:(NSCoder *)decoder;
-
 @end

@@ -4,10 +4,9 @@
 // Copyright (C) 2004, 2005 3James Softwareautoconnect
 //
 
+#import "MUCodingService.h"
 #import "MUProfile.h"
 #import "J3TextLogger.h"
-
-static const int32_t currentVersion = 1;
 
 @implementation MUProfile
 
@@ -179,26 +178,13 @@ static const int32_t currentVersion = 1;
 
 - (void) encodeWithCoder:(NSCoder *)encoder
 {
-  [MUProfile encodeProfile:self withCoder:encoder];
+  [MUCodingService encodeProfile:self withCoder:encoder];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
 {
-  [MUProfile decodeProfile:self withCoder:decoder];
+  [MUCodingService decodeProfile:self withCoder:decoder];
   return self;
-}
-
-+ (void) encodeProfile:(MUProfile *)profile withCoder:(NSCoder *)encoder
-{
-  [encoder encodeInt32:currentVersion forKey:@"version"];
-  [encoder encodeBool:[profile autoconnect] forKey:@"autoconnect"];  
-}
-
-+ (void) decodeProfile:(MUProfile *)profile withCoder:(NSCoder *)decoder
-{
-  // Actually assign this after we start caring
-  [decoder decodeInt32ForKey:@"version"];
-  [profile setAutoconnect:[decoder decodeBoolForKey:@"autoconnect"]];
 }
 
 @end

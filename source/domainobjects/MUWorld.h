@@ -61,8 +61,4 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-// Coding
-+ (void) encodeWorld:(MUWorld *)world withCoder:(NSCoder *)encoder;
-+ (void) decodeWorld:(MUWorld *)world withCoder:(NSCoder *)decoder;
-
 @end
