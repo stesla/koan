@@ -139,95 +139,6 @@ static const int32_t currentVersion = 2;
   usesSSL = newUsesSSL;
 }
 
-- (BOOL) usesProxy
-{
-  return (proxySettings != nil);
-}
-
-- (void) setUsesProxy:(BOOL)newUsesProxy
-{
-  //do nothing
-}
-
-- (NSString *) proxyHostname
-{
-  return [proxySettings hostname];
-}
-
-- (void) setProxyHostname:(NSString *)newProxyHostname
-{
-  J3ProxySettings * settings;
-  settings = [J3ProxySettings settingsWithHostname:newProxyHostname ? newProxyHostname : @""
-                                              port:[proxySettings port]
-                                           version:[proxySettings version]
-                                          username:[proxySettings username]
-                                          password:[proxySettings password]];
-  [self setProxySettings:settings];
-}
-
-- (NSNumber *) proxyPort
-{
-  return [NSNumber numberWithInt:[proxySettings port]];
-}
-
-- (void) setProxyPort:(NSNumber *)newProxyPort
-{
-  J3ProxySettings * settings;
-  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
-                                              port:[newProxyPort intValue]
-                                           version:[proxySettings version]
-                                          username:[proxySettings username]
-                                          password:[proxySettings password]];
-  [self setProxySettings:settings];
-}
-
-- (int) proxyVersion
-{
-  return [proxySettings version];
-}
-
-- (void) setProxyVersion:(int)newProxyVersion
-{
-  J3ProxySettings * settings;
-  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
-                                              port:[proxySettings port]
-                                           version:newProxyVersion
-                                          username:[proxySettings username]
-                                          password:[proxySettings password]];
-  [self setProxySettings:settings];}
-
-- (NSString *) proxyUsername
-{
-  return [proxySettings username];
-}
-
-- (void) setProxyUsername:(NSString *)newProxyUsername
-{
-  J3ProxySettings * settings;
-  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
-                                              port:[proxySettings port]
-                                           version:[proxySettings version]
-                                          username:newProxyUsername ? newProxyUsername : @"" 
-                                          password:[proxySettings password]];
-  [self setProxySettings:settings];
-}
-
-- (NSString *) proxyPassword
-{
-  return [proxySettings password];
-}
-
-- (void) setProxyPassword:(NSString *)newProxyPassword
-{
-  J3ProxySettings * settings;
-  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
-                                              port:[proxySettings port]
-                                           version:[proxySettings version]
-                                          username:[proxySettings username]
-                                          password:newProxyPassword ? newProxyPassword : @""];
-  [self setProxySettings:settings];
-}
-
 - (J3ProxySettings *) proxySettings
 {
   return proxySettings;
@@ -283,17 +194,8 @@ static const int32_t currentVersion = 2;
   if ([self usesSSL])
     [telnet setSecurityLevel:NSStreamSocketSecurityLevelNegotiatedSSL];
   
-  if ([self usesProxy])
-  {
-    J3ProxySettings * settings;
-    settings = [J3ProxySettings settingsWithHostname:[self proxyHostname]
-                                                     port:[[self proxyPort] intValue]
-                                                  version:[self proxyVersion]
-                                                 username:[self proxyUsername]
-                                                 password:[self proxyPassword]];
-    
-    [telnet enableProxyWithSettings:settings];
-  }
+  if (proxySettings)
+    [telnet enableProxyWithSettings:proxySettings];
   
   return telnet;
 }
@@ -326,12 +228,12 @@ static const int32_t currentVersion = 2;
   
   [encoder encodeBool:[self usesSSL] forKey:@"usesSSL"];
   
-  [encoder encodeBool:[self usesProxy] forKey:@"usesProxy"];
-  [encoder encodeObject:[self proxyHostname] forKey:@"proxyHostname"];
-  [encoder encodeObject:[self proxyPort] forKey:@"proxyPort"];
-  [encoder encodeInt:[self proxyVersion] forKey:@"proxyVersion"];
-  [encoder encodeObject:[self proxyUsername] forKey:@"proxyUsername"];
-  [encoder encodeObject:[self proxyPassword] forKey:@"proxyPassword"];  
+  [encoder encodeBool:(proxySettings == nil) forKey:@"usesProxy"];
+  [encoder encodeObject:[proxySettings hostname] forKey:@"proxyHostname"];
+  [encoder encodeObject:[NSNumber numberWithInt:[proxySettings port]] forKey:@"proxyPort"];
+  [encoder encodeInt:[proxySettings version] forKey:@"proxyVersion"];
+  [encoder encodeObject:[proxySettings username] forKey:@"proxyUsername"];
+  [encoder encodeObject:[proxySettings password] forKey:@"proxyPassword"];  
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
@@ -404,7 +306,7 @@ static const int32_t currentVersion = 2;
   
   if (version == 2)
   {
-    [self setUsesProxy:[decoder decodeBoolForKey:@"usesProxy"]];
+    [decoder decodeBoolForKey:@"usesProxy"]; // Throw value away
 
     hostname = [decoder decodeObjectForKey:@"proxyHostname"];
     port = [decoder decodeObjectForKey:@"proxyPort"];

@@ -140,18 +140,34 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editWorld:(id)sender
 {
+  J3ProxySettings * settings =
+    [worldsArrayController valueForKeyPath:@"selection.proxySettings"];  
+
   [worldNameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldName"]];
   [worldHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldHostname"]];
   [worldPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.worldPort"]];
   [worldURLField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldURL"]];
   [worldConnectOnAppLaunchButton setState:([[worldsArrayController valueForKeyPath:@"selection.connectOnAppLaunch"] boolValue] ? NSOnState : NSOffState)];
   [worldUsesSSLButton setState:([[worldsArrayController valueForKeyPath:@"selection.usesSSL"] boolValue] ? NSOnState : NSOffState)];
-  [worldUsesProxyButton setState:([[worldsArrayController valueForKeyPath:@"selection.usesProxy"] boolValue] ? NSOnState : NSOffState)];
-  [worldProxyHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.proxyHostname"]];
-  [worldProxyPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.proxyPort"]];
-  [worldProxyVersionButton selectItemAtIndex:([[worldsArrayController valueForKeyPath:@"selection.proxyVersion"] intValue] == 4 ? 0 : 1)];
-  [worldProxyUsernameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.proxyUsername"]];
-  [worldProxyPasswordField setStringValue:[worldsArrayController valueForKeyPath:@"selection.proxyPassword"]];
+
+  if (settings)
+  {
+    [worldUsesProxyButton setState:NSOnState];
+    [worldProxyHostnameField setStringValue:[settings hostname]];
+    [worldProxyPortField setIntValue:[settings port]];
+    [worldProxyVersionButton selectItemAtIndex:([settings version] == 4 ? 0 : 1)];
+    [worldProxyUsernameField setStringValue:[settings username]];
+    [worldProxyPasswordField setStringValue:[settings password]];
+  }
+  else
+  {
+    [worldUsesProxyButton setState:NSOffState];
+    [worldProxyHostnameField setStringValue:@""];
+    [worldProxyPortField setStringValue:@""];
+    [worldProxyVersionButton selectItemAtIndex:1];
+    [worldProxyUsernameField setStringValue:@""];
+    [worldProxyPasswordField setStringValue:@""];
+  }
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   
