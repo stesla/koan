@@ -12,6 +12,9 @@
 {
   IBOutlet NSOutlineView *worldsAndPlayersOutlineView;
   
+	IBOutlet NSButton *editSelectedRowButton;
+	IBOutlet NSButton *removeSelectedRowButton;
+	
   IBOutlet NSWindow *worldEditorSheet;
   IBOutlet NSTextField *worldNameField;
   IBOutlet NSTextField *worldHostnameField;

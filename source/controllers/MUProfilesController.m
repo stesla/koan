@@ -18,18 +18,19 @@ enum MUProfilesEditingReturnValues
 
 @interface MUProfilesController (Private)
 
+- (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players;
+- (IBAction) editPlayer:(MUPlayer *)player;
+- (IBAction) editWorld:(MUWorld *)world;
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-- (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-- (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-
-- (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players;
+- (IBAction) removePlayer:(MUPlayer *)player;
+- (IBAction) removeWorld:(MUWorld *)world;
 - (void) updateProfilesForWorld:(MUWorld *)world withWorld:(MUWorld *)newWorld;
 - (void) updateProfileForWorld:(MUWorld *)world 
                         player:(MUPlayer *)player 
                     withPlayer:(MUPlayer *)newPlayer;
-- (MUWorld *) selectedWorld;
-- (MUPlayer *) selectedPlayer;
+- (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 @end
 
@@ -52,11 +53,9 @@ enum MUProfilesEditingReturnValues
   
   [worldsAndPlayersOutlineView setTarget:self];
   [worldsAndPlayersOutlineView setDoubleAction:@selector(editClickedRow:)];
-}
 
-- (MUWorldRegistry *) registry
-{
-  return [MUServices worldRegistry];
+	[editSelectedRowButton setEnabled:NO];
+	[removeSelectedRowButton setEnabled:NO];
 }
 
 #pragma mark -
@@ -105,74 +104,17 @@ enum MUProfilesEditingReturnValues
 {
   NSEvent *event = [NSApp currentEvent];
   NSPoint location = [worldsAndPlayersOutlineView convertPoint:[event locationInWindow] fromView:nil];
-  
-  if ([worldsAndPlayersOutlineView rowAtPoint:location] == -1)
+  int row = [worldsAndPlayersOutlineView rowAtPoint:location];
+	
+  if (row == -1)
     return;
-  
-  [self editPlayer:sender];
-}
-
-- (IBAction) editPlayer:(id)sender
-{
-  MUWorld *world = [self selectedWorld];
-  MUPlayer *player = [self selectedPlayer];
-  
-  [playerNameField setStringValue:[player name]];
-  [playerPasswordField setStringValue:[player password]];
-  [playerConnectOnAppLaunchButton setState:
-    ([[[MUServices profileRegistry] profileForWorld:world
-                                                   player:player] autoconnect]
-     ? NSOnState : NSOffState)];
-  
-  [playerEditorSheet makeFirstResponder:playerNameField];
-  
-  [NSApp beginSheet:playerEditorSheet
-     modalForWindow:[self window]
-      modalDelegate:self
-     didEndSelector:@selector(playerSheetDidEndEditing:returnCode:contextInfo:)
-        contextInfo:nil];
-}
-
-- (IBAction) editWorld:(id)sender
-{
-  MUWorld *world = [self selectedWorld];
-  J3ProxySettings * settings = [world proxySettings];
-
-  [worldNameField setStringValue:[world worldName]];
-  [worldHostnameField setStringValue:[world worldHostname]];
-  [worldPortField setObjectValue:[world worldPort]];
-  [worldURLField setStringValue:[world worldURL]];
-  [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
-  [worldConnectOnAppLaunchButton setState:
-    ([[[MUServices profileRegistry] profileForWorld:world] autoconnect]
-     ? NSOnState : NSOffState)];
-  
-  if (settings)
-  {
-    [worldUsesProxyButton setState:NSOnState];
-    [worldProxyHostnameField setStringValue:[settings hostname]];
-    [worldProxyPortField setIntValue:[settings port]];
-    [worldProxyVersionButton selectItemAtIndex:([settings version] == 4 ? 0 : 1)];
-    [worldProxyUsernameField setStringValue:[settings username]];
-    [worldProxyPasswordField setStringValue:[settings password]];
-  }
-  else
-  {
-    [worldUsesProxyButton setState:NSOffState];
-    [worldProxyHostnameField setStringValue:@""];
-    [worldProxyPortField setStringValue:@""];
-    [worldProxyVersionButton selectItemAtIndex:1];
-    [worldProxyUsernameField setStringValue:@""];
-    [worldProxyPasswordField setStringValue:@""];
-  }
-  
-  [worldEditorSheet makeFirstResponder:worldNameField];
-  
-  [NSApp beginSheet:worldEditorSheet
-     modalForWindow:[self window]
-      modalDelegate:self
-     didEndSelector:@selector(worldSheetDidEndEditing:returnCode:contextInfo:)
-        contextInfo:nil];
+	
+	id item = [worldsAndPlayersOutlineView itemAtRow:row];
+		
+	if ([item isKindOfClass:[MUWorld class]])
+		[self editWorld:item];
+	else if ([item isKindOfClass:[MUPlayer class]])
+		[self editPlayer:item];
 }
 
 - (IBAction) endEditingPlayer:(id)sender
@@ -187,21 +129,24 @@ enum MUProfilesEditingReturnValues
   [NSApp endSheet:worldEditorSheet returnCode:(sender == worldSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
-- (IBAction) removePlayer:(id)sender
+- (IBAction) editSelectedRow:(id)sender
 {
-	// FIXME.
-  MUPlayer *player = [self selectedPlayer];
-  
-  [[MUServices profileRegistry] removeProfileForWorld:[player world]
-																							 player:player];
+	id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
+	
+	if ([item isKindOfClass:[MUWorld class]])
+		[self editWorld:item];
+	else if ([item isKindOfClass:[MUPlayer class]])
+		[self editPlayer:item];
 }
 
-- (IBAction) removeWorld:(id)sender
+- (IBAction) removeSelectedRow:(id)sender
 {
-	// FIXME.
-  MUWorld *world = [self selectedWorld];
+	id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
 	
-  [[MUServices profileRegistry] removeAllProfilesForWorld:world];
+	if ([item isKindOfClass:[MUWorld class]])
+		[self removeWorld:item];
+	else if ([item isKindOfClass:[MUPlayer class]])
+		[self removePlayer:item];
 }
 
 #pragma mark -
@@ -241,86 +186,33 @@ enum MUProfilesEditingReturnValues
 		return item;
 }
 
+#pragma mark -
+#pragma mark NSOutlineView delegate
+
+- (BOOL) outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
+{
+	return NO;
+}
+
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
+	if ([worldsAndPlayersOutlineView selectedRow] == -1)
+	{
+		[editSelectedRowButton setEnabled:NO];
+		[removeSelectedRowButton setEnabled:NO];
+	}
+	else
+	{
+		[editSelectedRowButton setEnabled:YES];
+		[removeSelectedRowButton setEnabled:YES];
+	}
+}
+
 @end
 
 #pragma mark -
 
 @implementation MUProfilesController (Private)
-
-- (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	// FIXME.
-	
-  if (returnCode == MUEditOkay)
-  {  
-    MUWorld *selectedWorld = [self selectedWorld];
-    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
-                                                password:[playerPasswordField stringValue]
-                                                   world:selectedWorld];
-    
-    [[[MUServices profileRegistry] profileForWorld:selectedWorld
-																						player:newPlayer]
-      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
-    
-    [newPlayer release];
-  }
-}
-
-- (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	// FIXME.
-	
-  if (returnCode == MUEditOkay)
-  {
-    MUWorld *selectedWorld = [self selectedWorld];
-    MUPlayer *selectedPlayer = [self selectedPlayer];
-    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
-                                                password:[playerPasswordField stringValue]
-                                                   world:selectedWorld];
-    // This updates the profile for the player with the new objects       
-    [self updateProfileForWorld:selectedWorld
-                         player:selectedPlayer
-                     withPlayer:newPlayer];
-    
-    [[[MUServices profileRegistry] profileForWorld:selectedWorld
-                                                  player:selectedPlayer]
-      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
-		
-    [newPlayer release];
-  }
-}
-
-- (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	// FIXME.
-	
-  if (returnCode == MUEditOkay)
-  {
-    MUWorld *world = [self createWorldFromSheetWithPlayers:[NSArray array]];
-    
-    [[[MUServices profileRegistry] profileForWorld:world]
-      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
-  }
-}
-
-- (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	// FIXME.
-	
-  if (returnCode == MUEditOkay)
-  {
-    MUWorld *selectedWorld = [self selectedWorld];
-    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[selectedWorld players]];
-
-    // This updates the world for every profile that has this world.
-    [self updateProfilesForWorld:selectedWorld
-                       withWorld:newWorld];
-    
-    // This changes the setting on just the profile for the world itself.
-    [[[MUServices profileRegistry] profileForWorld:selectedWorld]
-      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
-  }
-}
 
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
 {
@@ -343,6 +235,129 @@ enum MUProfilesEditingReturnValues
                                     usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
                               proxySettings:settings
                                     players:players];
+}
+
+- (IBAction) editPlayer:(MUPlayer *)player
+{
+  MUWorld *world = [player world];
+  
+  [playerNameField setStringValue:[player name]];
+  [playerPasswordField setStringValue:[player password]];
+  [playerConnectOnAppLaunchButton setState:
+    ([[[MUServices profileRegistry] profileForWorld:world
+																						 player:player] autoconnect]
+     ? NSOnState : NSOffState)];
+  
+  [playerEditorSheet makeFirstResponder:playerNameField];
+  
+  [NSApp beginSheet:playerEditorSheet
+     modalForWindow:[self window]
+      modalDelegate:self
+     didEndSelector:@selector(playerSheetDidEndEditing:returnCode:contextInfo:)
+        contextInfo:nil];
+}
+
+- (IBAction) editWorld:(MUWorld *)world
+{
+  J3ProxySettings * settings = [world proxySettings];
+	
+  [worldNameField setStringValue:[world worldName]];
+  [worldHostnameField setStringValue:[world worldHostname]];
+  [worldPortField setObjectValue:[world worldPort]];
+  [worldURLField setStringValue:[world worldURL]];
+  [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
+  [worldConnectOnAppLaunchButton setState:
+    ([[[MUServices profileRegistry] profileForWorld:world] autoconnect]
+     ? NSOnState : NSOffState)];
+  
+  if (settings)
+  {
+    [worldUsesProxyButton setState:NSOnState];
+    [worldProxyHostnameField setStringValue:[settings hostname]];
+    [worldProxyPortField setIntValue:[settings port]];
+    [worldProxyVersionButton selectItemAtIndex:([settings version] == 4 ? 0 : 1)];
+    [worldProxyUsernameField setStringValue:[settings username]];
+    [worldProxyPasswordField setStringValue:[settings password]];
+  }
+  else
+  {
+    [worldUsesProxyButton setState:NSOffState];
+    [worldProxyHostnameField setStringValue:@""];
+    [worldProxyPortField setStringValue:@""];
+    [worldProxyVersionButton selectItemAtIndex:1];
+    [worldProxyUsernameField setStringValue:@""];
+    [worldProxyPasswordField setStringValue:@""];
+  }
+  
+  [worldEditorSheet makeFirstResponder:worldNameField];
+  
+  [NSApp beginSheet:worldEditorSheet
+     modalForWindow:[self window]
+      modalDelegate:self
+     didEndSelector:@selector(worldSheetDidEndEditing:returnCode:contextInfo:)
+        contextInfo:nil];
+}
+
+- (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	// FIXME.
+	
+	return;
+	
+  if (returnCode == MUEditOkay)
+  {  
+    MUWorld *selectedWorld = [self selectedWorld];
+    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
+                                                password:[playerPasswordField stringValue]
+                                                   world:selectedWorld];
+    
+    [[[MUServices profileRegistry] profileForWorld:selectedWorld
+																						player:newPlayer]
+      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
+    
+    [newPlayer release];
+  }
+}
+
+- (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	// FIXME.
+	
+	return;
+	
+  if (returnCode == MUEditOkay)
+  {
+    MUWorld *selectedWorld = [self selectedWorld];
+    MUPlayer *selectedPlayer = [self selectedPlayer];
+    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
+                                                password:[playerPasswordField stringValue]
+                                                   world:selectedWorld];
+    // This updates the profile for the player with the new objects       
+    [self updateProfileForWorld:selectedWorld
+                         player:selectedPlayer
+                     withPlayer:newPlayer];
+    
+    [[[MUServices profileRegistry] profileForWorld:selectedWorld
+																						player:selectedPlayer]
+      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
+		
+    [newPlayer release];
+  }
+}
+
+- (IBAction) removePlayer:(MUPlayer *)player
+{
+	// FIXME.
+  
+  [[MUServices profileRegistry] removeProfileForWorld:[player world]
+																							 player:player];
+}
+
+- (IBAction) removeWorld:(MUWorld *)world
+{
+	// FIXME.
+	
+  [[MUServices profileRegistry] removeAllProfilesForWorld:world];
 }
 
 - (void) updateProfilesForWorld:(MUWorld *)world 
@@ -385,6 +400,42 @@ enum MUProfilesEditingReturnValues
   [profile setPlayer:newPlayer];
   [registry profileForProfile:profile];
   [profile release];
+}
+
+- (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	// FIXME.
+	
+	return;
+	
+  if (returnCode == MUEditOkay)
+  {
+    MUWorld *world = [self createWorldFromSheetWithPlayers:[NSArray array]];
+    
+    [[[MUServices profileRegistry] profileForWorld:world]
+      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
+  }
+}
+
+- (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+	// FIXME.
+	
+	return;
+	
+  if (returnCode == MUEditOkay)
+  {
+    MUWorld *selectedWorld = [self selectedWorld];
+    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[selectedWorld players]];
+		
+    // This updates the world for every profile that has this world.
+    [self updateProfilesForWorld:selectedWorld
+                       withWorld:newWorld];
+    
+    // This changes the setting on just the profile for the world itself.
+    [[[MUServices profileRegistry] profileForWorld:selectedWorld]
+      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
+  }
 }
 
 @end
