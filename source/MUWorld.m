@@ -270,11 +270,14 @@ static const int32_t currentVersion = 2;
   
   if ([self usesProxy])
   {
-    [telnet enableProxyWithHostname:[self proxyHostname]
-                             onPort:[[self proxyPort] intValue]
-                            version:[self proxyVersion]
-                           username:[self proxyUsername]
-                           password:[self proxyPassword]];
+    J3ProxySettings * proxySettings;
+    proxySettings = [J3ProxySettings settingsWithHostname:[self proxyHostname]
+                                                     port:[[self proxyPort] intValue]
+                                                  version:[self proxyVersion]
+                                                 username:[self proxyUsername]
+                                                 password:[self proxyPassword]];
+    
+    [telnet enableProxyWithSettings:proxySettings];
   }
   
   return telnet;
