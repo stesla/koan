@@ -9,14 +9,14 @@
 
 @implementation MUProfile
 
-+ (MUProfile *) profileWithWorld:(MUWorld *)aWorld player:(MUPlayer *)aPlayer
++ (MUProfile *) profileWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer
 {
-  return [[[self alloc] initWithWorld:aWorld player:aPlayer] autorelease];
+  return [[[self alloc] initWithWorld:newWorld player:newPlayer] autorelease];
 }
 
-+ (MUProfile *) profileWithWorld:(MUWorld *)aWorld
++ (MUProfile *) profileWithWorld:(MUWorld *)newWorld
 {
-  return [[[self alloc] initWithWorld:aWorld] autorelease];
+  return [[[self alloc] initWithWorld:newWorld] autorelease];
 }
 
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer
@@ -42,6 +42,9 @@
   [super dealloc];
 }
 
+#pragma mark -
+#pragma mark Accessors
+
 - (MUWorld *) world
 {
   return world;
@@ -65,6 +68,10 @@
   [player release];
   player = newPlayer;
 }
+
+#pragma mark -
+#pragma mark Actions
+
 - (NSString *) frameName
 {
   if (player)
@@ -96,13 +103,13 @@
   return [world worldHostname];
 }
 
-- (J3TelnetConnection *) openTelnetWithDelegate:(id)aDelegate
+- (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate
 {
-  J3TelnetConnection  * telnet = [world newTelnetConnection];
+  J3TelnetConnection *telnet = [world newTelnetConnection];
   
   if (telnet)
   {
-    [telnet setDelegate:aDelegate];
+    [telnet setDelegate:delegate];
     [telnet open];
   }  
   
@@ -120,10 +127,9 @@
 
 - (void) logoutWithConnection:(J3TelnetConnection *)connection
 {
-  /* We don't do anything with the connection at this point, but we could.
-   * I put it there for parallelism with -loginWithConnection: and to make it
-   * easy to add any shutdown we may decide we need later
-   */
+  // We don't do anything with the connection at this point, but we could.
+  // I put it there for parallelism with -loginWithConnection: and to make it
+  // easy to add any shutdown we may decide we need later.
   loggedIn = NO;
 }
 

@@ -15,7 +15,8 @@
                                             password:@"password"
                                   connectOnAppLaunch:NO
                                                world:nil] autorelease];
-  [self assert:[player loginString] 
+  
+  [self assert:[player loginString]
         equals:@"connect \"My User\" password"];
 }
 

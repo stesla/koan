@@ -17,12 +17,12 @@
   BOOL loggedIn;
 }
 
-+ (MUProfile *) profileWithWorld:(MUWorld *)world player:(MUPlayer *)player;
-+ (MUProfile *) profileWithWorld:(MUWorld *)world;
++ (MUProfile *) profileWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
++ (MUProfile *) profileWithWorld:(MUWorld *)newWorld;
 
 // Designated initializer.
-- (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player;
-- (id) initWithWorld:(MUWorld *)world;
+- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
+- (id) initWithWorld:(MUWorld *)newWorld;
 
 - (NSString *) frameName;
 - (NSString *) windowName;
@@ -36,9 +36,9 @@
 - (void) loginWithConnection:(J3TelnetConnection *)connection;
 - (void) logoutWithConnection:(J3TelnetConnection *)connection;
 
-- (MUWorld *) world;
-- (void) setWorld:(MUWorld *)world;
-- (MUPlayer *) player;
-- (void) setPlayer:(MUPlayer *)player;
+- (MUWorld *) newWorld;
+- (void) setWorld:(MUWorld *)newWorld;
+- (MUPlayer *) newPlayer;
+- (void) setPlayer:(MUPlayer *)newPlayer;
 
 @end
