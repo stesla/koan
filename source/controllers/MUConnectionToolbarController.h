@@ -9,7 +9,6 @@
 @interface MUConnectionToolbarController : NSObject
 {
   NSToolbar *toolbar;
-  NSMutableDictionary *items; // All items that are allowed to be in the toolbar.
   
   IBOutlet NSWindow *window;
   IBOutlet NSWindowController *windowController;

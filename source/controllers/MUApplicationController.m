@@ -145,6 +145,12 @@
 #pragma mark -
 #pragma mark NSApplication delegate
 
+- (void) applicationDidBecomeActive:(NSNotification *)notification
+{
+  unreadCount = 0;
+  [self updateApplicationBadge];
+}
+
 - (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *)app
 {
   unsigned count = [connectionWindowControllers count];
@@ -177,12 +183,6 @@
   }
   
   return NSTerminateNow;
-}
-
-- (void) applicationWillBecomeActive:(NSNotification *)notification
-{
-  unreadCount = 0;
-  [self updateApplicationBadge];
 }
 
 - (void) applicationWillTerminate:(NSNotification *)notification

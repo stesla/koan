@@ -30,6 +30,7 @@ enum MUProfilesEditingReturnValues
                     withPlayer:(MUPlayer *)newPlayer;
 - (MUWorld *) selectedWorld;
 - (MUPlayer *) selectedPlayer;
+
 @end
 
 #pragma mark -

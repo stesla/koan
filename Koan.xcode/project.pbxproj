@@ -732,6 +732,8 @@
 				7EA5BA5507A733F9002336EE,
 				E653A7D207AEFAB900023476,
 				7E05F00C07B080D700B2D3BC,
+				E6824F5407B174DF002C9507,
+				E6824F8D07B177A5002C9507,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1299,10 +1301,12 @@
 				E62C8FBB07421D83005662BC,
 				E670A83F07420FDF00E2DAEB,
 				E63CC4E2077A06CD003A54AA,
+				E6824F8A07B177A5002C9507,
 				E62C905B07422595005662BC,
 				E62C8FBC07421D83005662BC,
 				E670A84007420FDF00E2DAEB,
 				E63CC4E3077A06CD003A54AA,
+				E6824F8B07B177A5002C9507,
 			);
 			isa = PBXGroup;
 			name = Controllers;
@@ -1350,6 +1354,50 @@
 		};
 		E677D2110778041F00B417D2 = {
 			fileRef = E677D20F0778041F00B417D2;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6824F5107B174DF002C9507 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MacPADSocket.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6824F5207B174DF002C9507 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MacPADSocket.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6824F5407B174DF002C9507 = {
+			fileRef = E6824F5207B174DF002C9507;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6824F8A07B177A5002C9507 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUUpdateController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6824F8B07B177A5002C9507 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUUpdateController.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6824F8D07B177A5002C9507 = {
+			fileRef = E6824F8B07B177A5002C9507;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -2165,10 +2213,12 @@
 		E6E7BF6C0788FE180065EDD6 = {
 			children = (
 				E60DDB83076CE889009870E4,
+				E6824F5107B174DF002C9507,
 				E6A231270772E166008EF744,
 				E62E831D07A1D10400BF15E9,
 				E6E79CEA07697FD100A8FB96,
 				E60DDB84076CE889009870E4,
+				E6824F5207B174DF002C9507,
 				E6A231280772E166008EF744,
 				E62E831E07A1D10400BF15E9,
 				E6E79CEB07697FD100A8FB96,

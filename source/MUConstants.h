@@ -9,6 +9,7 @@
 // Application constants.
 
 extern NSString *MUApplicationName;
+extern NSString *MUUpdateURL;
 
 // User defaults constants.
 

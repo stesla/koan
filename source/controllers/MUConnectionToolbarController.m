@@ -18,6 +18,12 @@
   [window setToolbar:[toolbar autorelease]];
 }
 
+- (void) dealloc
+{
+  [toolbar release];
+  [super dealloc];
+}
+
 // Implementation of NSToolbar delegate methods.
 
 - (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
