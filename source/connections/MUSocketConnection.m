@@ -22,7 +22,7 @@
 
 @implementation MUSocketConnection
 
-void* 
+void *
 _mu_malloc (int count)
 {
   void *result;
@@ -38,19 +38,21 @@ _mu_malloc (int count)
   return [[[MUSocketConnection alloc] initWithHost:host port:port] autorelease];
 }
 
-- (id) init
+- (id) initWithHost:(NSString *)host port:(short)port
 {
-  _bufferSize = 512;
-  _socket = -1;
+  if (self = [super init])
+  {
+    _bufferSize = 512;
+    _socket = -1;
+    [self setHost:host];
+    [self setPort:port];
+  }
   return self;
 }
 
-- (id) initWithHost:(NSString *)host port:(short)port
+- (id) init
 {
-  [self init];
-  [self setHost:host];
-  [self setPort:port];
-  return self;
+  return [self initWithHost:nil port:-1];
 }
 
 - (int) bufferSize
