@@ -10,17 +10,45 @@
 
 #import "J3NaiveANSIFilter.h"
 
+@interface J3NaiveANSIFilterTests (Private)
+- (NSAttributedString *) makeString:(NSString *)string;
+- (void) assertAttributedString:(NSAttributedString *)actual 
+                   stringEquals:(NSString *)expected;
+- (void) assertAttributedString:(NSAttributedString *)actual 
+                   stringEquals:(NSString *)expected
+                        message:(NSString *)message;
+@end
 
 @implementation J3NaiveANSIFilterTests
 
-- (void) testInCode
+- (void) testNoCode
 {
-  J3NaiveANSIFilter *filter = (J3NaiveANSIFilter *)[J3NaiveANSIFilter filter];
-  char inChar = '\x1B';
+  NSAttributedString *input = [self makeString:@"Foo"];
+  J3NaiveANSIFilter *filter;
   
-  [self assertFalse:[filter inCode] message:@"Before"];
-  [filter parseChar:inChar];
-  [self assertTrue:[filter inCode] message:@"After"];
+  filter = (J3NaiveANSIFilter *)[J3NaiveANSIFilter filter];
+  [self assertAttributedString:[filter filter:input]
+                  stringEquals:@"Foo"];
 }
 
+@end
+
+@implementation J3NaiveANSIFilterTests (Private)
+- (NSAttributedString *) makeString:(NSString *)string
+{
+  return [NSAttributedString attributedStringWithString:string];
+}
+
+- (void) assertAttributedString:(NSAttributedString *)actual 
+                   stringEquals:(NSString *)expected
+                        message:(NSString *)message
+{
+  [self assert:[actual string] equals:expected message:message];  
+}
+
+- (void) assertAttributedString:(NSAttributedString *)actual 
+                   stringEquals:(NSString *)expected
+{
+  [self assertAttributedString:actual stringEquals:expected message:nil];
+}
 @end

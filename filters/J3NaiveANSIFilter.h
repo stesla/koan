@@ -11,11 +11,7 @@
 
 @interface J3NaiveANSIFilter : J3Filter 
 {
-  BOOL inCodeFlag;
 }
 
-- (void) parseChar:(char)inChar;
-- (BOOL) inCode;
-- (void) setInCode:(BOOL)newValue;
 
 @end

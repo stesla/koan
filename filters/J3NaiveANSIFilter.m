@@ -11,27 +11,9 @@
 
 @implementation J3NaiveANSIFilter
 
-- (void) parseChar:(char)inChar
+- (NSAttributedString *) filter:(NSAttributedString *)string
 {
-  switch (inChar)
-  {
-    case '\x1B':
-      [self setInCode:YES];
-      break;
-      
-    default:
-      break;
-  }
-}
-
-- (BOOL) inCode
-{
-  return inCodeFlag;
-}
-
-- (void) setInCode:(BOOL)newValue
-{
-  inCodeFlag = newValue;
+  return [super filter:string];
 }
 
 @end
