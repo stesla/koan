@@ -6,6 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <J3Terminal/J3TelnetConnection.h>
+#import <RBSplitView/RBSplitView.h>
 
 #import "J3Filter.h"
 #import "MUForwardingTextView.h"
@@ -16,6 +17,7 @@
 {
   IBOutlet MUForwardingTextView *receivedTextView;
   IBOutlet NSTextView *inputView;
+  IBOutlet RBSplitView *splitView;
   IBOutlet id delegate;
   
   MUProfile *profile;

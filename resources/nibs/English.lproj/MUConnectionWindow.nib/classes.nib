@@ -13,11 +13,16 @@
                 disconnect = id; 
                 nextCommand = id; 
                 previousCommand = id; 
-                writeLine = id; 
+                sendInputText = id; 
             }; 
             CLASS = MUConnectionWindowController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {inputView = NSTextView; receivedTextView = NSTextView; }; 
+            OUTLETS = {
+                delegate = id; 
+                inputView = NSTextView; 
+                receivedTextView = MUForwardingTextView; 
+                splitView = RBSplitView; 
+            }; 
             SUPERCLASS = NSWindowController; 
         }, 
         {
@@ -25,7 +30,8 @@
             LANGUAGE = ObjC; 
             OUTLETS = {targetTextView = NSTextView; }; 
             SUPERCLASS = NSTextView; 
-        }
+        }, 
+        {CLASS = NSObject; LANGUAGE = ObjC; }
     ); 
     IBVersion = 1; 
 }

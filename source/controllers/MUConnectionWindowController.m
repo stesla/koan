@@ -67,6 +67,11 @@
   [[self window] setTitle:[profile windowTitle]];
   [[self window] setFrameAutosaveName:[profile uniqueIdentifier]];
   [[self window] setFrameUsingName:[profile uniqueIdentifier]];
+
+  [splitView setAutosaveName:[NSString stringWithFormat:@"%@.split", [profile uniqueIdentifier]]
+                 recursively:YES];
+  [splitView restoreState:YES];
+  [splitView adjustSubviews];
   
   baseAttributes = [[receivedTextView typingAttributes] copy];
 }
@@ -371,6 +376,8 @@
     
     [self disconnect:sender];
   }
+  
+  [splitView saveState:YES];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
                                                       object:self];
