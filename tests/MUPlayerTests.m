@@ -19,4 +19,13 @@
         equals:@"connect \"My User\" password"];
 }
 
+- (void) testNoQuotesForSingleWordUsername
+{
+  MUPlayer *player = [[[MUPlayer alloc] initWithName:@"Bob"
+                                            password:@"drowssap"
+                                               world:nil] autorelease];
+  [self assert:[player loginString]
+        equals:@"connect Bob drowssap"];
+}
+
 @end

@@ -76,7 +76,16 @@
 
 - (NSString *) loginString
 {
-  return [NSString stringWithFormat:@"connect \"%@\" %@", [self name], [self password]];
+  NSString *format;
+  NSRange whitespaceRange;
+    
+  whitespaceRange = [[self name] rangeOfCharacterFromSet: [NSCharacterSet whitespaceCharacterSet]];
+  if (whitespaceRange.location == NSNotFound)
+    format = @"connect %@ %@";
+  else
+    format = @"connect \"%@\" %@";
+  
+  return [NSString stringWithFormat:format, [self name], [self password]];
 }
 
 - (NSString *) uniqueIdentifier
