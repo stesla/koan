@@ -21,10 +21,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>32</integer>
+				<integer>19</integer>
 			</dict>
 			<key>ID</key>
-			<integer>39</integer>
+			<integer>26</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
 			<key>OrthogonalBarPosition</key>
@@ -51,7 +51,7 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>27</integer>
+				<integer>14</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -60,10 +60,10 @@
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>15</integer>
 			</dict>
 			<key>ID</key>
-			<integer>38</integer>
+			<integer>25</integer>
 			<key>Labels</key>
 			<array>
 				<dict>
@@ -93,8 +93,8 @@
 			</array>
 			<key>Points</key>
 			<array>
-				<string>{219, 241.635}</string>
-				<string>{275, 241.339}</string>
+				<string>{219, 241}</string>
+				<string>{275, 241}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -111,12 +111,12 @@
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>37</integer>
+				<integer>24</integer>
 			</dict>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{81, 207}, {138, 70}}</string>
+			<string>{{81, 213}, {138, 56}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -124,7 +124,7 @@
 			<key>Flow</key>
 			<string>Resize</string>
 			<key>ID</key>
-			<integer>37</integer>
+			<integer>24</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -171,8 +171,7 @@ worlds}</string>
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f0\fs24 \cf0 save\
-load}</string>
+\f0\fs24 \cf0 saveWorlds}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -184,10 +183,10 @@ load}</string>
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>29</integer>
+				<integer>16</integer>
 			</dict>
 			<key>ID</key>
-			<integer>36</integer>
+			<integer>23</integer>
 			<key>Labels</key>
 			<array>
 				<dict>
@@ -239,7 +238,7 @@ load}</string>
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>15</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -248,10 +247,10 @@ load}</string>
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>27</integer>
+				<integer>14</integer>
 			</dict>
 			<key>ID</key>
-			<integer>35</integer>
+			<integer>22</integer>
 			<key>Labels</key>
 			<array>
 				<dict>
@@ -281,8 +280,8 @@ load}</string>
 			</array>
 			<key>Points</key>
 			<array>
-				<string>{219, 70}</string>
-				<string>{262, 70}</string>
+				<string>{219, 70.6349}</string>
+				<string>{262, 70.4074}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -299,12 +298,12 @@ load}</string>
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>34</integer>
+				<integer>21</integer>
 			</dict>
 		</dict>
 		<dict>
 			<key>Bounds</key>
-			<string>{{81, 35}, {138, 70}}</string>
+			<string>{{81, 43}, {138, 56}}</string>
 			<key>Class</key>
 			<string>MultiTextGraphic</string>
 			<key>FitText</key>
@@ -312,7 +311,7 @@ load}</string>
 			<key>Flow</key>
 			<string>Resize</string>
 			<key>ID</key>
-			<integer>34</integer>
+			<integer>21</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -359,8 +358,7 @@ profiles}</string>
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f0\fs24 \cf0 save\
-load}</string>
+\f0\fs24 \cf0 saveProfiles}</string>
 				</dict>
 			</array>
 			<key>TextPlacement</key>
@@ -372,10 +370,10 @@ load}</string>
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>32</integer>
+				<integer>19</integer>
 			</dict>
 			<key>ID</key>
-			<integer>33</integer>
+			<integer>20</integer>
 			<key>OrthogonalBarAutomatic</key>
 			<true/>
 			<key>OrthogonalBarPosition</key>
@@ -402,7 +400,7 @@ load}</string>
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>15</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -411,7 +409,7 @@ load}</string>
 			<key>Class</key>
 			<string>ShapedGraphic</string>
 			<key>ID</key>
-			<integer>32</integer>
+			<integer>19</integer>
 			<key>Magnets</key>
 			<array>
 				<string>{0, 1}</string>
@@ -453,10 +451,10 @@ load}</string>
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>27</integer>
+				<integer>14</integer>
 			</dict>
 			<key>ID</key>
-			<integer>31</integer>
+			<integer>18</integer>
 			<key>Labels</key>
 			<array>
 				<dict>
@@ -506,7 +504,7 @@ load}</string>
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>29</integer>
+				<integer>16</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -515,10 +513,10 @@ load}</string>
 			<key>Head</key>
 			<dict>
 				<key>ID</key>
-				<integer>27</integer>
+				<integer>14</integer>
 			</dict>
 			<key>ID</key>
-			<integer>30</integer>
+			<integer>17</integer>
 			<key>Labels</key>
 			<array>
 				<dict>
@@ -568,7 +566,7 @@ load}</string>
 			<key>Tail</key>
 			<dict>
 				<key>ID</key>
-				<integer>28</integer>
+				<integer>15</integer>
 			</dict>
 		</dict>
 		<dict>
@@ -581,7 +579,7 @@ load}</string>
 			<key>Flow</key>
 			<string>Resize</string>
 			<key>ID</key>
-			<integer>29</integer>
+			<integer>16</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -653,7 +651,7 @@ password}</string>
 			<key>Flow</key>
 			<string>Resize</string>
 			<key>ID</key>
-			<integer>28</integer>
+			<integer>15</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -728,7 +726,7 @@ uniqueIdentifier}</string>
 			<key>Flow</key>
 			<string>Resize</string>
 			<key>ID</key>
-			<integer>27</integer>
+			<integer>14</integer>
 			<key>ListOrientation</key>
 			<string>Vertical</string>
 			<key>Style</key>
@@ -772,7 +770,7 @@ uniqueIdentifier}</string>
 {\colortbl;\red255\green255\blue255;}
 \pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural
 
-\f0\fs24 \cf0 openOnAppLaunch\
+\f0\fs24 \cf0 autoconnect\
 frameName\
 windowName}</string>
 				</dict>
@@ -913,7 +911,7 @@ logoutWithConnection:}</string>
 	YWw+CgkJCQkJPC9hcnJheT4KCQkJCQk8a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQu
 	Y2xpZW50PC9rZXk+CgkJCQkJPHN0cmluZz5jb20uYXBwbGUucHJpbnRpbmdtYW5hZ2Vy
 	PC9zdHJpbmc+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0Lm1vZERhdGU8
-	L2tleT4KCQkJCQk8ZGF0ZT4yMDA1LTAxLTAzVDA1OjQ5OjEwWjwvZGF0ZT4KCQkJCQk8
+	L2tleT4KCQkJCQk8ZGF0ZT4yMDA1LTAxLTExVDA2OjE1OjAxWjwvZGF0ZT4KCQkJCQk8
 	a2V5PmNvbS5hcHBsZS5wcmludC50aWNrZXQuc3RhdGVGbGFnPC9rZXk+CgkJCQkJPGlu
 	dGVnZXI+MDwvaW50ZWdlcj4KCQkJCTwvZGljdD4KCQkJPC9hcnJheT4KCQk8L2RpY3Q+
 	CgkJPGtleT5jb20uYXBwbGUucHJpbnQuUGFnZUZvcm1hdC5QTUFkanVzdGVkUGFwZXJS
@@ -927,7 +925,7 @@ logoutWithConnection:}</string>
 	YXk+CgkJCQkJPGtleT5jb20uYXBwbGUucHJpbnQudGlja2V0LmNsaWVudDwva2V5PgoJ
 	CQkJCTxzdHJpbmc+Y29tLmFwcGxlLnByaW50aW5nbWFuYWdlcjwvc3RyaW5nPgoJCQkJ
 	CTxrZXk+Y29tLmFwcGxlLnByaW50LnRpY2tldC5tb2REYXRlPC9rZXk+CgkJCQkJPGRh
-	dGU+MjAwNS0wMS0wM1QwNTo0OToxMFo8L2RhdGU+CgkJCQkJPGtleT5jb20uYXBwbGUu
+	dGU+MjAwNS0wMS0xMVQwNjoxNTowMVo8L2RhdGU+CgkJCQkJPGtleT5jb20uYXBwbGUu
 	cHJpbnQudGlja2V0LnN0YXRlRmxhZzwva2V5PgoJCQkJCTxpbnRlZ2VyPjA8L2ludGVn
 	ZXI+CgkJCQk8L2RpY3Q+CgkJCTwvYXJyYXk+CgkJPC9kaWN0PgoJCTxrZXk+Y29tLmFw
 	cGxlLnByaW50LlBhcGVySW5mby5QTVBhcGVyTmFtZTwva2V5PgoJCTxkaWN0PgoJCQk8
