@@ -8,39 +8,6 @@
 
 #import "J3NaiveANSIFilter.h"
 
-typedef enum _J3NaiveANSICode
-{
-  J3NaiveANSIReset = 0,
-  J3NaiveANSIBoldOn = 1,
-  J3NaiveANSIItalicsOn = 3,
-  J3NaiveANSIUnderlineOn = 4,
-  J3NaiveANSIInverseOn = 7,
-  J3NaiveANSIStrikeOn = 9,
-  J3NaiveANSIBoldOff = 22,
-  J3NaiveANSIItalicsOff = 23,
-  J3NaiveANSIUnderlineOff = 24,
-  J3NaiveANSIInverseOff = 27,
-  J3NaiveANSIStrikeOff = 29,
-  J3NaiveANSIForeBlack = 30,
-  J3NaiveANSIForeRed = 31,
-  J3NaiveANSIForeGreen = 32,
-  J3NaiveANSIForeYellow = 33,
-  J3NaiveANSIForeBlue = 34,
-  J3NaiveANSIForeMagenta = 35,
-  J3NaiveANSIForeCyan = 36,
-  J3NaiveANSIForeWhite = 37,
-  J3NaiveANSIForeDefault = 39,
-  J4NaiveANSIBackBlack = 40,
-  J4NaiveANSIBackRed = 41,
-  J4NaiveANSIBackGreen = 42,
-  J4NaiveANSIBackYellow = 43,
-  J4NaiveANSIBackBlue = 44,
-  J4NaiveANSIBackMagenta = 45,
-  J4NaiveANSIBackCyan = 46,
-  J4NaiveANSIBackWhite = 47,
-  J4NaiveANSIBackDefault = 49
-} J3NaiveANSICode;
-
 @interface J3NaiveANSIFilter (Private)
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
 - (int) getNumber:(int *)num atIndex:(int)index inString:(NSString *)string;
@@ -49,7 +16,7 @@ typedef enum _J3NaiveANSICode
 - (void) setForeColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict;
 - (void) setAttributeInString:(NSMutableAttributedString *)editString
                       atIndex:(int)index
-                      forCode:(J3NaiveANSICode)code;
+                      forCode:(J3ANSICode)code;
 @end
 
 @implementation J3NaiveANSIFilter
@@ -156,7 +123,7 @@ typedef enum _J3NaiveANSICode
 
 - (void) setAttributeInString:(NSMutableAttributedString *)editString
                       atIndex:(int)index
-                      forCode:(J3NaiveANSICode)code
+                      forCode:(J3ANSICode)code
 {
   NSMutableDictionary *attrs = 
     [[[editString attributesAtIndex:index
@@ -167,38 +134,38 @@ typedef enum _J3NaiveANSICode
   
   switch (code)
   {
-    case J3NaiveANSIForeBlack:
+    case J3ANSIForeBlack:
       [self setForeColor:[NSColor blackColor] inDictionary:attrs];
       break;
-      
-    case J3NaiveANSIForeRed:
+
+    case J3ANSIForeRed:
       [self setForeColor:[NSColor redColor] inDictionary:attrs];
       break;
-    
-    case J3NaiveANSIForeGreen:
+
+    case J3ANSIForeGreen:
       [self setForeColor:[NSColor greenColor] inDictionary:attrs];
       break;
       
-    case J3NaiveANSIForeYellow:
+    case J3ANSIForeYellow:
       [self setForeColor:[NSColor yellowColor] inDictionary:attrs];
       break;
       
-    case J3NaiveANSIForeBlue:
+    case J3ANSIForeBlue:
       [self setForeColor:[NSColor blueColor] inDictionary:attrs];
       break;
       
-    case J3NaiveANSIForeMagenta:
+    case J3ANSIForeMagenta:
       [self setForeColor:[NSColor magentaColor] inDictionary:attrs];
       break;
       
-    case J3NaiveANSIForeCyan:
+    case J3ANSIForeCyan:
       [self setForeColor:[NSColor cyanColor] inDictionary:attrs];
       break;
       
-    case J3NaiveANSIForeWhite:
-      [self setForeColor:[NSColor cyanColor] inDictionary:attrs];
+    case J3ANSIForeWhite:
+      [self setForeColor:[NSColor whiteColor] inDictionary:attrs];
       break;
-      
+
     default:
       break;
   }

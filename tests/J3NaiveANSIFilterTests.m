@@ -13,6 +13,8 @@
 
 @interface J3NaiveANSIFilterTests (Private)
 - (NSAttributedString *) makeString:(NSString *)string;
+
+- (void) assertANSICode:(J3ANSICode)code setsForeColor:(NSColor *)color;
 @end
 
 @implementation J3NaiveANSIFilterTests
@@ -32,27 +34,25 @@
 - (void) testExtractsCode
 {
   NSAttributedString *input = [self makeString:@"F\x1B[0moo"];
-  
+
   [self assertAttributedString:[filter filter:input]
                   stringEquals:@"Foo"];
-  
+
   input = [self makeString:@"F\x1B[moo"];
   [self assertAttributedString:input
                   stringEquals:[input string]];
 }
 
-- (void) testSetsColor
+- (void) testSetsSpecificForeColor
 {
-  NSAttributedString *input = [self makeString:@"F\x1B[31moo"];
-  NSRange range;
-  
-  range.location = 1;
-  range.location = 2; // "oo"
-  
-  [self assertAttribute:J3ANSIForeColorAttributeName
-                 equals:[NSColor redColor]
-               inString:[filter filter:input]
-              withRange:range];
+  [self assertANSICode:J3ANSIForeBlack setsForeColor:[NSColor blackColor]];
+  [self assertANSICode:J3ANSIForeRed setsForeColor:[NSColor redColor]];
+  [self assertANSICode:J3ANSIForeGreen setsForeColor:[NSColor greenColor]];
+  [self assertANSICode:J3ANSIForeYellow setsForeColor:[NSColor yellowColor]];
+  [self assertANSICode:J3ANSIForeBlue setsForeColor:[NSColor blueColor]];
+  [self assertANSICode:J3ANSIForeMagenta setsForeColor:[NSColor magentaColor]];
+  [self assertANSICode:J3ANSIForeCyan setsForeColor:[NSColor cyanColor]];
+  [self assertANSICode:J3ANSIForeWhite setsForeColor:[NSColor whiteColor]];
 }
 
 @end
@@ -64,4 +64,18 @@
   return [NSAttributedString attributedStringWithString:string];
 }
 
+- (void) assertANSICode:(J3ANSICode)code setsForeColor:(NSColor *)color
+{
+  NSAttributedString *input =
+  [self makeString:[NSString stringWithFormat:@"F\x1B[%dmoo", code]];
+  NSRange range;
+  
+  range.location = 1;
+  range.location = 2; // "oo"
+  
+  [self assertAttribute:J3ANSIForeColorAttributeName
+                 equals:color
+               inString:[filter filter:input]
+              withRange:range];
+}
 @end
