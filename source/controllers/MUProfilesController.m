@@ -254,12 +254,12 @@ enum MUProfilesEditingReturnValues
      modalForWindow:[self window]
       modalDelegate:self
      didEndSelector:@selector(playerSheetDidEndEditing:returnCode:contextInfo:)
-        contextInfo:nil];
+        contextInfo:player];
 }
 
 - (IBAction) editWorld:(MUWorld *)world
 {
-  J3ProxySettings * settings = [world proxySettings];
+  J3ProxySettings *settings = [world proxySettings];
 	
   [worldNameField setStringValue:[world worldName]];
   [worldHostnameField setStringValue:[world worldHostname]];
@@ -321,27 +321,28 @@ enum MUProfilesEditingReturnValues
 
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	// FIXME.
-	
-	return;
-	
   if (returnCode == MUEditOkay)
   {
-    MUWorld *selectedWorld = [self selectedWorld];
-    MUPlayer *selectedPlayer = [self selectedPlayer];
+		MUPlayer *oldPlayer = (MUPlayer *) contextInfo;
+    MUWorld *oldWorld = [oldPlayer world];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
-                                                password:[playerPasswordField stringValue]
-                                                   world:selectedWorld];
-    // This updates the profile for the player with the new objects       
-    [self updateProfileForWorld:selectedWorld
-                         player:selectedPlayer
+																			password:[playerPasswordField stringValue]
+																				 world:oldWorld];
+		
+    // This updates the profile for the player with the new objects.
+    [self updateProfileForWorld:oldWorld
+                         player:oldPlayer
                      withPlayer:newPlayer];
+		
+		[oldWorld replacePlayer:oldPlayer withPlayer:newPlayer];
     
-    [[[MUServices profileRegistry] profileForWorld:selectedWorld
-																						player:selectedPlayer]
+    [[[MUServices profileRegistry] profileForWorld:oldWorld
+																						player:newPlayer]
       setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
 		
     [newPlayer release];
+		
+		[worldsAndPlayersOutlineView reloadData];
   }
 }
 
@@ -382,6 +383,7 @@ enum MUProfilesEditingReturnValues
     [registry profileForProfile:profile];
     [profile release];
   }
+	
   profile = [registry profileForWorld:world];
   [profile retain];
   [registry removeProfile:profile];

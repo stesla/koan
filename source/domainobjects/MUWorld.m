@@ -186,6 +186,23 @@
 	[self postWorldsUpdatedNotification];
 }
 
+- (void) replacePlayer:(MUPlayer *)oldPlayer withPlayer:(MUPlayer *)newPlayer
+{
+	unsigned i, playersCount = [players count];
+	
+	for (i = 0; i < playersCount; i++)
+	{
+		MUPlayer *player = [players objectAtIndex:i];
+		
+		if (player == oldPlayer)
+		{
+			[players replaceObjectAtIndex:i withObject:newPlayer];
+			[self postWorldsUpdatedNotification];
+			break;
+		}
+	}
+}
+
 #pragma mark -
 #pragma mark Actions
 

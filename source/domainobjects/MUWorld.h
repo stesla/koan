@@ -55,6 +55,7 @@
 - (void) addPlayer:(MUPlayer *)player;
 - (BOOL) containsPlayer:(MUPlayer *)player;
 - (void) removePlayer:(MUPlayer *)player;
+- (void) replacePlayer:(MUPlayer *)oldPlayer withPlayer:(MUPlayer *)newPlayer;
 
 // Actions.
 - (J3TelnetConnection *) newTelnetConnection;
