@@ -49,6 +49,7 @@
 				E62040FB06B054E400236608,
 				E61963020742288B008B6447,
 				E622A846074247E20069335B,
+				E60D0868074DB859004BE1E4,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -80,6 +81,7 @@
 				8D1107260486CEB800E47090,
 				E62040FA06B054E400236608,
 				E622A845074247E20069335B,
+				E60D0867074DB859004BE1E4,
 				E61963010742288B008B6447,
 			);
 		};
@@ -88,7 +90,6 @@
 				29B97315FDCFA39411CA2CEA,
 				E6D0A56C0745518A002DA041,
 				E62C90BA074226DA005662BC,
-				7E0146B5074DBD5900913653,
 				E6B5E40A06A6F28400F53EBB,
 				29B97317FDCFA39411CA2CEA,
 				E6B5E42906A6F36300F53EBB,
@@ -103,6 +104,7 @@
 		};
 		29B97315FDCFA39411CA2CEA = {
 			children = (
+				7E0146B5074DBD5900913653,
 				E6E46D5806F8024D002809F0,
 				E670A81207420F8C00E2DAEB,
 				32CA4F630368D1EE00C91783,
@@ -115,7 +117,8 @@
 				E6055F7D07492729007A13BD,
 			);
 			isa = PBXGroup;
-			path = Source;
+			name = Source;
+			path = source;
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -233,8 +236,8 @@
 			);
 			isa = PBXGroup;
 			path = J3Terminal;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
+			refType = 4;
+			sourceTree = "<group>";
 		};
 		7E0147A7074DCA2400913653 = {
 			children = (
@@ -242,7 +245,8 @@
 				7E0147A9074DCA2400913653,
 			);
 			isa = PBXGroup;
-			path = Connections;
+			name = Connections;
+			path = source/connections;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -270,12 +274,6 @@
 		};
 		7E0147AB074DCA2400913653 = {
 			fileRef = 7E0147A9074DCA2400913653;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E0147AC074DCA2400913653 = {
-			fileRef = 7E0147A8074DCA2400913653;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -378,12 +376,6 @@
 			settings = {
 			};
 		};
-		7EFE43860749C7CE002C7D48 = {
-			fileRef = 7EFE43820749C7CE002C7D48;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7EFE43870749C7CE002C7D48 = {
 			fileRef = 7EFE43830749C7CE002C7D48;
 			isa = PBXBuildFile;
@@ -452,6 +444,7 @@
 			};
 			dependencies = (
 				E622A879074248640069335B,
+				E60D0872074DB8AB004BE1E4,
 				E622A49707422E0E0069335B,
 			);
 			isa = PBXNativeTarget;
@@ -469,8 +462,6 @@
 				E6B5E61206A73B0A00F53EBB,
 				E6E46D7F06F803ED002809F0,
 				E62C909F07422669005662BC,
-				7EFE43860749C7CE002C7D48,
-				7E0147AC074DCA2400913653,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,6 +565,225 @@
 		};
 		E6055FCF07492AA1007A13BD = {
 			fileRef = E6055F7D07492729007A13BD;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E60D0849074DB79E004BE1E4 = {
+			children = (
+				E60D08C5074DC627004BE1E4,
+				E60D087E074DB93A004BE1E4,
+				E60D087F074DB93A004BE1E4,
+				E6A7A526074DDCD900874E60,
+				E6A7A527074DDCD900874E60,
+				E60D0885074DB949004BE1E4,
+				E60D088A074DBA5A004BE1E4,
+			);
+			isa = PBXGroup;
+			name = Fonts/Colors;
+			path = FontsColors;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D0864074DB859004BE1E4 = {
+			buildActionMask = 2147483647;
+			files = (
+				E60D08C6074DC627004BE1E4,
+				E60D0887074DB949004BE1E4,
+				E60D088B074DBA69004BE1E4,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E60D0865074DB859004BE1E4 = {
+			buildActionMask = 2147483647;
+			files = (
+				E60D0892074DBA88004BE1E4,
+				E60D0882074DB93B004BE1E4,
+				E6A7A529074DDCD900874E60,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E60D0866074DB859004BE1E4 = {
+			buildActionMask = 2147483647;
+			files = (
+				E60D088C074DBA75004BE1E4,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E60D0867074DB859004BE1E4 = {
+			buildPhases = (
+				E60D0864074DB859004BE1E4,
+				E60D0865074DB859004BE1E4,
+				E60D0866074DB859004BE1E4,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = ./source;
+				INFOPLIST_FILE = preferencepanes/FontsColors/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				LIBRARY_STYLE = BUNDLE;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-framework Foundation -framework AppKit";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = FontsColors;
+				SECTORDER_FLAGS = "";
+				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = preferencePane;
+			};
+			dependencies = (
+			);
+			isa = PBXNativeTarget;
+			name = "Fonts/Colors Preference Pane";
+			productName = Fonts/Colors;
+			productReference = E60D0868074DB859004BE1E4;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Fonts/Colors</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.yourcompany.Fonts_Colors</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+</dict>
+</plist>
+";
+			productType = "com.apple.product-type.bundle";
+		};
+		E60D0868074DB859004BE1E4 = {
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = FontsColors.preferencePane;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E60D086E074DB8A2004BE1E4 = {
+			fileRef = E60D0868074DB859004BE1E4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E60D0871074DB8AB004BE1E4 = {
+			containerPortal = 29B97313FDCFA39411CA2CEA;
+			isa = PBXContainerItemProxy;
+			proxyType = 1;
+			remoteGlobalIDString = E60D0867074DB859004BE1E4;
+			remoteInfo = Fonts/Colors;
+		};
+		E60D0872074DB8AB004BE1E4 = {
+			isa = PBXTargetDependency;
+			target = E60D0867074DB859004BE1E4;
+			targetProxy = E60D0871074DB8AB004BE1E4;
+		};
+		E60D087E074DB93A004BE1E4 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUFontsColorsPaneController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D087F074DB93A004BE1E4 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUFontsColorsPaneController.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D0882074DB93B004BE1E4 = {
+			fileRef = E60D087F074DB93A004BE1E4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E60D0885074DB949004BE1E4 = {
+			children = (
+				E60D0886074DB949004BE1E4,
+			);
+			isa = PBXVariantGroup;
+			name = InfoPlist.strings;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D0886074DB949004BE1E4 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
+			name = English;
+			path = English.lproj/InfoPlist.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D0887074DB949004BE1E4 = {
+			fileRef = E60D0885074DB949004BE1E4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E60D088A074DBA5A004BE1E4 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = Info.plist;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D088B074DBA69004BE1E4 = {
+			fileRef = E62C909E07422669005662BC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E60D088C074DBA75004BE1E4 = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E60D0892074DBA88004BE1E4 = {
+			fileRef = E622A551074231A60069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E60D08C3074DC615004BE1E4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = English;
+			path = English.lproj/MUFontsColorsPane.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D08C5074DC627004BE1E4 = {
+			children = (
+				E60D08C3074DC615004BE1E4,
+			);
+			isa = PBXVariantGroup;
+			name = MUFontsColorsPane.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E60D08C6074DC627004BE1E4 = {
+			fileRef = E60D08C5074DC627004BE1E4;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -743,7 +953,7 @@
 				E62040F906B054E400236608,
 			);
 			buildSettings = {
-				HEADER_SEARCH_PATHS = filters;
+				HEADER_SEARCH_PATHS = "J3Terminal/source filters";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -894,8 +1104,8 @@
 			dstSubfolderSpec = 7;
 			files = (
 				E622A87C074248820069335B,
+				E60D086E074DB8A2004BE1E4,
 				E622A48807422DCF0069335B,
-				E622A915074249180069335B,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1020,9 +1230,10 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-framework Foundation -framework AppKit";
 				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
+				PREBINDING = YES;
 				PRODUCT_NAME = Connections;
 				SECTORDER_FLAGS = "";
+				SKIP_INSTALL = YES;
 				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
 				WRAPPER_EXTENSION = preferencePane;
 			};
@@ -1123,12 +1334,6 @@
 			path = preferencepanes/Connections/MUConnectionsPaneController.m;
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
-		};
-		E622A915074249180069335B = {
-			fileRef = E622A903074249180069335B;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E622A93D074249CC0069335B = {
 			fileRef = E62C909E07422669005662BC;
@@ -1258,6 +1463,7 @@
 		E62C90BA074226DA005662BC = {
 			children = (
 				E622A839074247B50069335B,
+				E60D0849074DB79E004BE1E4,
 				E61962E50742283D008B6447,
 			);
 			isa = PBXGroup;
@@ -1315,6 +1521,28 @@
 		};
 		E6A0F572074AD9DC00A99066 = {
 			fileRef = E6E7A6340749697C007005AC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6A7A526074DDCD900874E60 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = FontNameToDisplayNameTransformer.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6A7A527074DDCD900874E60 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = FontNameToDisplayNameTransformer.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6A7A529074DDCD900874E60 = {
+			fileRef = E6A7A527074DDCD900874E60;
 			isa = PBXBuildFile;
 			settings = {
 			};

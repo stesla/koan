@@ -343,6 +343,9 @@
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   [defaults setObject:name forKey:Last_Pane_Defaults_Key];
   
+  // Update the window delegate.
+  [prefsWindow setDelegate:pane];
+  
   return YES;
 }
 

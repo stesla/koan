@@ -1,5 +1,5 @@
 //
-// MUMainWindowController.h
+// MUFontsColorsPaneController.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -19,30 +19,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MUHistoryRing.h"
-#import "J3Terminal/source/connections/J3TelnetConnection.h"
-#import "MUFilter.h"
+#import "SSPrefsController/SSPreferencePaneProtocol.h"
 
-@interface MUMainWindowController : NSWindowController
+@interface MUFontsColorsPaneController : NSObject <SSPreferencePaneProtocol>
 {
-  IBOutlet NSTextField *hostNameField;
-  IBOutlet NSTextField *portField;
-  IBOutlet NSTextView *receivedTextView;
-  IBOutlet NSTextField *inputField;
-  IBOutlet NSButton *connectButton;
-  IBOutlet NSButton *disconnectButton;
-  
-  J3TelnetConnection *_telnetConnection;
-  MUFilterQueue *_filterQueue;
-  
-  MUHistoryRing *_historyRing;
+  IBOutlet NSView *paneView;
 }
 
-- (IBAction) connect:(id)sender;
-- (IBAction) disconnect:(id)sender;
-- (IBAction) writeLine:(id)sender;
-
-- (IBAction) nextCommand:(id)sender;
-- (IBAction) previousCommand:(id)sender;
+- (void) changeTextFont:(id)sender;
 
 @end

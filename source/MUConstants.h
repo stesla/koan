@@ -31,6 +31,8 @@ extern NSString *MUPTextColor;
 
 extern NSString *MULPreferencePaneConnectionsName;
 extern NSString *MULPreferencePaneConnectionsToolTip;
+extern NSString *MULPreferencePaneFontsColorsName;
+extern NSString *MULPreferencePaneFontsColorsToolTip;
 extern NSString *MULPreferencePaneLoggingName;
 extern NSString *MULPreferencePaneLoggingToolTip;
 

@@ -31,6 +31,8 @@ NSString *MUPTextColor = @"MUPTextColor";
 
 NSString *MULPreferencePaneConnectionsName = @"PreferencePaneConnectionsName";
 NSString *MULPreferencePaneConnectionsToolTip = @"PreferencePaneConnectionsToolTip";
+NSString *MULPreferencePaneFontsColorsName = @"PreferencePaneFontsColorsName";
+NSString *MULPreferencePaneFontsColorsToolTip = @"PreferencePaneFontsColorsToolTip";
 NSString *MULPreferencePaneLoggingName = @"PreferencePaneLoggingName";
 NSString *MULPreferencePaneLoggingToolTip = @"PreferencePaneLoggingToolTip";
 

@@ -2,6 +2,8 @@
 
 "PreferencePaneConnectionsName" = "Connections";
 "PreferencePaneConnectionsToolTip" = "Server connection setup";
+"PreferencePaneFontsColorsName" = "Fonts and Colors";
+"PreferencePaneFontsColorsToolTip" = "Select preferred display fonts and colors";
 "PreferencePaneLoggingName" = "Logs";
 "PreferencePaneLoggingToolTip" = "Keeping logs of sessions";
 

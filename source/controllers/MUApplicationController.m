@@ -45,6 +45,7 @@
     
     [_prefsController setPanesOrder:[NSArray arrayWithObjects:
       NSLocalizedString (MULPreferencePaneConnectionsName, nil),
+      NSLocalizedString (MULPreferencePaneFontsColorsName, nil),
       NSLocalizedString (MULPreferencePaneLoggingName, nil),
       nil]];
   }
