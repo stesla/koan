@@ -4,6 +4,7 @@
 // Copyright (C) 2004 3James Software
 //
 
+#import "MUProfileRegistry.h"
 #import "MUWorldRegistry.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"
@@ -142,6 +143,7 @@ static MUWorldRegistry *sharedRegistry = nil;
   
   if (worldsData)
   {
+    MUProfileRegistry *profiles = [MUProfileRegistry sharedRegistry];
     int i, worldsCount;
     
     [self setWorlds:[NSKeyedUnarchiver unarchiveObjectWithData:worldsData]];
