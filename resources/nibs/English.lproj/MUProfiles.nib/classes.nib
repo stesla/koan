@@ -11,6 +11,8 @@
                 editWorld = id; 
                 endEditingPlayer = id; 
                 endEditingWorld = id; 
+                removePlayer = id; 
+                removeWorld = id; 
             }; 
             CLASS = MUProfilesController; 
             LANGUAGE = ObjC; 

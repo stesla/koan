@@ -44,5 +44,7 @@
 - (IBAction) editWorld:(id)sender;
 - (IBAction) endEditingPlayer:(id)sender;
 - (IBAction) endEditingWorld:(id)sender;
+- (IBAction) removePlayer:(id)sender;
+- (IBAction) removeWorld:(id)sender;
 
 @end

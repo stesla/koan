@@ -190,6 +190,20 @@ enum MUProfilesEditingReturnValues
   [NSApp endSheet:worldEditorSheet returnCode:(sender == worldSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
+- (IBAction) removePlayer:(id)sender
+{
+  MUPlayer *player = [[playersArrayController selectedObjects] objectAtIndex:0];
+  [playersArrayController removeObject:player];
+  [playersArrayController rearrangeObjects];
+}
+
+- (IBAction) removeWorld:(id)sender
+{
+  MUWorld *world = [[worldsArrayController selectedObjects] objectAtIndex:0];
+  [worldsArrayController removeObject:world];
+  [worldsArrayController rearrangeObjects];
+}
+
 @end
 
 #pragma mark -
