@@ -20,6 +20,25 @@
 
 #import "MUHistoryRingTests.h"
 
+@interface MUHistoryRingTests (Private)
+- (void) assertPrevious:(NSString *)expected;
+- (void) assertNext:(NSString *)expected;
+@end
+
+@implementation MUHistoryRingTests (Private)
+
+- (void) assertPrevious:(NSString *)expected
+{
+  [self assert:[_ring previousString] equals:expected];
+}
+
+- (void) assertNext:(NSString *)expected
+{
+  [self assert:[_ring nextString] equals:expected];
+}
+
+@end
+
 @implementation MUHistoryRingTests
 
 - (void) setUp
@@ -36,7 +55,7 @@
 {
   [_ring saveString:@"Foo"];
   
-  [self assert:[_ring previousString] equals:@"Foo"];
+  [self assertPrevious:@"Foo"];
 }
 
 - (void) testMultiplePrevious
@@ -44,25 +63,25 @@
   [_ring saveString:@"Foo"];
   [_ring saveString:@"Bar"];
   [_ring saveString:@"Baz"];
-  
-  [self assert:[_ring previousString] equals:@"Baz"];
-  [self assert:[_ring previousString] equals:@"Bar"];
-  [self assert:[_ring previousString] equals:@"Foo"];
+
+  [self assertPrevious:@"Baz"];
+  [self assertPrevious:@"Bar"];
+  [self assertPrevious:@"Foo"];
 }
 
 - (void) testFullCirclePrevious
 {
   [_ring saveString:@"Foo"];
   
-  [self assert:[_ring previousString] equals:@"Foo"];
-  [self assert:[_ring previousString] equals:@""];
+  [self assertPrevious:@"Foo"];
+  [self assertPrevious:@""];
 }
 
 - (void) testSingleNext
 {
   [_ring saveString:@"Foo"];
   
-  [self assert:[_ring nextString] equals:@"Foo"];
+  [self assertNext:@"Foo"];
 }
 
 - (void) testMultipleNext
@@ -71,17 +90,17 @@
   [_ring saveString:@"Bar"];
   [_ring saveString:@"Baz"];
   
-  [self assert:[_ring nextString] equals:@"Foo"];
-  [self assert:[_ring nextString] equals:@"Bar"];
-  [self assert:[_ring nextString] equals:@"Baz"];
+  [self assertNext:@"Foo"];
+  [self assertNext:@"Bar"];
+  [self assertNext:@"Baz"];
 }
 
 - (void) testFullCircleNext
 {
   [_ring saveString:@"Foo"];
   
-  [self assert:[_ring nextString] equals:@"Foo"];
-  [self assert:[_ring nextString] equals:@""];
+  [self assertNext:@"Foo"];
+  [self assertNext:@""];
 }
 
 - (void) testBothWays
@@ -90,14 +109,14 @@
   [_ring saveString:@"Bar"];
   [_ring saveString:@"Baz"];
   
-  [self assert:[_ring previousString] equals:@"Baz"];
-  [self assert:[_ring previousString] equals:@"Bar"];
-  [self assert:[_ring nextString] equals:@"Baz"];
-  [self assert:[_ring nextString] equals:@""];
-  [self assert:[_ring nextString] equals:@"Foo"];
-  [self assert:[_ring nextString] equals:@"Bar"];
-  [self assert:[_ring previousString] equals:@"Foo"];
-  [self assert:[_ring previousString] equals:@""];
+  [self assertPrevious:@"Baz"];
+  [self assertPrevious:@"Bar"];
+  [self assertNext:@"Baz"];
+  [self assertNext:@""];
+  [self assertNext:@"Foo"];
+  [self assertNext:@"Bar"];
+  [self assertPrevious:@"Foo"];
+  [self assertPrevious:@""];
 }
 
 - (void) testUpdateMiddle
@@ -106,15 +125,15 @@
   [_ring saveString:@"Bar"];
   [_ring saveString:@"Baz"];
 
-  [self assert:[_ring previousString] equals:@"Baz"];
-  [self assert:[_ring previousString] equals:@"Bar"];
+  [self assertPrevious:@"Baz"];
+  [self assertPrevious:@"Bar"];
   
   [_ring updateString:@"Bar Two"];
   
-  [self assert:[_ring previousString] equals:@"Foo"];
-  [self assert:[_ring previousString] equals:@""];
-  [self assert:[_ring previousString] equals:@"Baz"];
-  [self assert:[_ring previousString] equals:@"Bar Two"];
+  [self assertPrevious:@"Foo"];
+  [self assertPrevious:@""];
+  [self assertPrevious:@"Baz"];
+  [self assertPrevious:@"Bar Two"];
 }
 
 - (void) testSaveReordering
@@ -123,15 +142,15 @@
   [_ring saveString:@"Bar"];
   [_ring saveString:@"Baz"];
   
-  [self assert:[_ring nextString] equals:@"Foo"];
-  [self assert:[_ring nextString] equals:@"Bar"];
+  [self assertNext:@"Foo"];
+  [self assertNext:@"Bar"];
   
   [_ring saveString:@"Bar Two"];
   
-  [self assert:[_ring nextString] equals:@"Foo"];
-  [self assert:[_ring nextString] equals:@"Baz"];
-  [self assert:[_ring nextString] equals:@"Bar Two"];
-  [self assert:[_ring nextString] equals:@""];
+  [self assertNext:@"Foo"];
+  [self assertNext:@"Baz"];
+  [self assertNext:@"Bar Two"];
+  [self assertNext:@""];
 }
 
 - (void) testUpdateBuffer
@@ -139,22 +158,22 @@
   [_ring saveString:@"Foo"];
   [_ring saveString:@"Bar"];
   
-  [self assert:[_ring nextString] equals:@"Foo"];
-  [self assert:[_ring nextString] equals:@"Bar"];
-  [self assert:[_ring nextString] equals:@""];
+  [self assertNext:@"Foo"];
+  [self assertNext:@"Bar"];
+  [self assertNext:@""];
   
   [_ring updateString:@"Temporary"];
   
-  [self assert:[_ring nextString] equals:@"Foo"];
-  [self assert:[_ring nextString] equals:@"Bar"];
-  [self assert:[_ring nextString] equals:@"Temporary"];
+  [self assertNext:@"Foo"];
+  [self assertNext:@"Bar"];
+  [self assertNext:@"Temporary"];
   
   [_ring saveString:@"Something entirely different"];
   
-  [self assert:[_ring previousString] equals:@"Something entirely different"];
-  [self assert:[_ring previousString] equals:@"Bar"];
-  [self assert:[_ring previousString] equals:@"Foo"];
-  [self assert:[_ring previousString] equals:@""];
+  [self assertPrevious:@"Something entirely different"];
+  [self assertPrevious:@"Bar"];
+  [self assertPrevious:@"Foo"];
+  [self assertPrevious:@""];
 }
 
 @end
