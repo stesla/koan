@@ -1,5 +1,5 @@
 //
-// MUConnection.h - Protocol for connection classes
+// MUConnection.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
