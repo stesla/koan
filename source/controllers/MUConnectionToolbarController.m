@@ -15,13 +15,8 @@
   [toolbar setAllowsUserCustomization:YES];
   [toolbar setAutosavesConfiguration:YES];
   
-  [window setToolbar:[toolbar autorelease]];
-}
-
-- (void) dealloc
-{
-  [toolbar release];
-  [super dealloc];
+  [window setToolbar:toolbar];
+	[toolbar release];
 }
 
 #pragma mark -

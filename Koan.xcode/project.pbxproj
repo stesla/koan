@@ -710,8 +710,8 @@
 				7EA5BA5507A733F9002336EE,
 				E653A7D207AEFAB900023476,
 				7E05F00C07B080D700B2D3BC,
-				E6824F5407B174DF002C9507,
-				E6824F8D07B177A5002C9507,
+				E62F2AEA07CD3B5100DC8C1B,
+				E62F2AEB07CD3B5100DC8C1B,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1036,6 +1036,18 @@
 		};
 		E62E832007A1D10400BF15E9 = {
 			fileRef = E62E831E07A1D10400BF15E9;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62F2AEA07CD3B5100DC8C1B = {
+			fileRef = E6824F8B07B177A5002C9507;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62F2AEB07CD3B5100DC8C1B = {
+			fileRef = E6824F5207B174DF002C9507;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1368,12 +1380,6 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		E6824F5407B174DF002C9507 = {
-			fileRef = E6824F5207B174DF002C9507;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		E6824F8A07B177A5002C9507 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -1389,12 +1395,6 @@
 			path = MUUpdateController.m;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E6824F8D07B177A5002C9507 = {
-			fileRef = E6824F8B07B177A5002C9507;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E696783C078F55590033A4C8 = {
 			fileEncoding = 4;
