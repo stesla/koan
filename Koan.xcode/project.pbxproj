@@ -133,6 +133,7 @@
 			targets = (
 				8D1107260486CEB800E47090,
 				E62040FA06B054E400236608,
+				E6EBD9CC076FDAB500C0A99A,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -427,8 +428,8 @@
 				8D1107290486CEB800E47090,
 				8D11072C0486CEB800E47090,
 				8D11072E0486CEB800E47090,
-				E622A48707422DB90069335B,
 				16D5FA0A075434F9007C5F34,
+				E6EBD9E4076FDBAC00C0A99A,
 			);
 			buildRules = (
 			);
@@ -445,6 +446,7 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
+				E6EBD9D6076FDB2D00C0A99A,
 			);
 			isa = PBXNativeTarget;
 			name = Koan;
@@ -723,15 +725,6 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		E622A48707422DB90069335B = {
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			isa = PBXCopyFilesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E622A550074231A60069335B = {
 			fileEncoding = 4;
@@ -1196,6 +1189,68 @@
 		};
 		E6EB62C107569D33009F47D5 = {
 			fileRef = E6EB62C007569D33009F47D5;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6EBD9CB076FDAB500C0A99A = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$SOURCE_ROOT/resources/Info.plist-template",
+			);
+			isa = PBXShellScriptBuildPhase;
+			outputPaths = (
+				$SOURCE_ROOT/resources/Info.plist,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#set -x\nPATH=\"/opt/local/bin:/usr/local/bin:/sw/bin:/bin:/usr/bin\"\nexport PATH\n\ncd $SOURCE_ROOT/resources/\n\nsvnrevision=`svnversion .`\n\nsed \"s/SUBVERSION_REVISION/$svnrevision/\" Info.plist-template > Info.plist\n";
+		};
+		E6EBD9CC076FDAB500C0A99A = {
+			buildPhases = (
+				E6EBD9CB076FDAB500C0A99A,
+			);
+			buildSettings = {
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Update plists";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXAggregateTarget;
+			name = "Update plists";
+			productName = "Update plists";
+		};
+		E6EBD9D5076FDB2D00C0A99A = {
+			containerPortal = 29B97313FDCFA39411CA2CEA;
+			isa = PBXContainerItemProxy;
+			proxyType = 1;
+			remoteGlobalIDString = E6EBD9CC076FDAB500C0A99A;
+			remoteInfo = "Update plists";
+		};
+		E6EBD9D6076FDB2D00C0A99A = {
+			isa = PBXTargetDependency;
+			target = E6EBD9CC076FDAB500C0A99A;
+			targetProxy = E6EBD9D5076FDB2D00C0A99A;
+		};
+		E6EBD9E4076FDBAC00C0A99A = {
+			buildActionMask = 2147483647;
+			dstPath = Koan.app/Contents;
+			dstSubfolderSpec = 16;
+			files = (
+				E6EBD9F4076FDC4700C0A99A,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6EBD9F4076FDC4700C0A99A = {
+			fileRef = 8D1107310486CEB800E47090;
 			isa = PBXBuildFile;
 			settings = {
 			};
