@@ -83,4 +83,44 @@
               withRange:range];
 }
 
+- (void) testTwoPropertiesAtSameLocation
+{
+  [transformer changeAttributeWithName:@"Foo" toValue:@"Bar" atLocation:1];
+  [transformer changeAttributeWithName:@"MagicWord" toValue:@"xyzzy" atLocation:1];
+  output = [transformer transform:input];
+  range.location = 1;
+  range.length = [input length] - range.location;
+  [self assertAttribute:@"Foo"
+                 equals:@"Bar"
+               inString:output
+              withRange:range];
+  [self assertAttribute:@"MagicWord"
+                 equals:@"xyzzy"
+               inString:output
+              withRange:range];
+}
+
+/*
+- (void) testTwoPropertiesAtSubsequentLocations
+{
+  [transformer changeAttributeWithName:@"Foo" toValue:@"Bar" atLocation:1];
+  [transformer changeAttributeWithName:@"MagicWord" toValue:@"xyzzy" atLocation:2];
+  output = [transformer transform:input];
+  
+  range.location = 1;
+  range.length = [input length] - range.location;
+  [self assertAttribute:@"Foo"
+                 equals:@"Bar"
+               inString:output
+              withRange:range
+                message:@"Foo"];
+  range.location = 2;
+  range.length = [input length] - range.location;
+  [self assertAttribute:@"MagicWord"
+                 equals:@"xyzzy"
+               inString:output
+              withRange:range
+                message:@"MagicWord"];
+}*/
+
 @end

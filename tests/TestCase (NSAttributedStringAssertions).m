@@ -82,7 +82,7 @@
                  equals:object
                inString:string
                 atIndex:range.location];
-  [self assertAttributesTheSameInString:string withRange:range];
+  [self assertAttributesTheSameInString:string withRange:range message:message];
 }
 
 - (void) assertAttribute:(NSString *)aName

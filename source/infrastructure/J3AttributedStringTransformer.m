@@ -55,6 +55,11 @@
   return location;
 }
 
+- (NSString *) name
+{
+  return name;
+}
+
 - (NSAttributedString *) transform:(NSAttributedString *)string 
                       upToLocation:(int)aLocation
 {
@@ -71,6 +76,10 @@
   [stringCopy setAttributes:dict range:range];
   return stringCopy;
 }
+@end
+
+@interface J3AttributedStringTransformer(Private)
+- (id <J3AttributedStringTransforming>) nextTransformAfter:(id <J3AttributedStringTransforming>)transform;
 @end
 
 @implementation J3AttributedStringTransformer
@@ -109,7 +118,7 @@
 - (NSAttributedString *) transform:(NSAttributedString *)aString
 {
   NSAttributedString *resultString = [[aString copy] autorelease];
-  id<J3AttributedStringTransforming> transform;
+  id<J3AttributedStringTransforming> transform, nextTransform;
   int i, location, count = [transforms count], length = [aString length];
   
   for (i = 0; i < count; i++)
@@ -119,14 +128,14 @@
     if ([transform location] >= length)
       break;
     
-    if (i == (count - 1))
+    nextTransform = [self nextTransformAfter:transform];
+    if (nextTransform)
     {
-      location = length;
+      location = [nextTransform location];
     }
     else
     {
-      location = [(id<J3AttributedStringTransforming>)
-        [transforms objectAtIndex:i+1] location];
+      location = length;
     }
     
     resultString = [transform transform:resultString
@@ -135,4 +144,26 @@
   return resultString;
 }
 
+@end
+
+@implementation J3AttributedStringTransformer(Private)
+- (id <J3AttributedStringTransforming>) nextTransformAfter:(id <J3AttributedStringTransforming>)transform
+{
+  int i = [transforms indexOfObject:transform] + 1, count = [transforms count];
+  id <J3AttributedStringTransforming> curr = nil;
+  BOOL found = NO;
+  
+  while (!found && (i < count))
+  {
+    curr = [transforms objectAtIndex:i];
+    if ([[curr name] isEqualToString:[transform name]])
+      found = YES;
+    i++;
+  }
+  
+  if (found)
+    return curr;
+  else
+    return nil;
+}
 @end

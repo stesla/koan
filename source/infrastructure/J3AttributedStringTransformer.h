@@ -12,6 +12,7 @@
 - (NSAttributedString *) transform:(NSAttributedString *)string 
                       upToLocation:(int)aLocation;
 - (int) location;
+- (NSString *) name;
 @end
 
 @interface J3AttributedStringTransformer : NSObject 
