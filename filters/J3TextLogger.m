@@ -1,7 +1,7 @@
 //
 // J3TextLogger.m
 //
-// Copyright (C) 2004 3James Software
+// Copyright (C) 2004, 2005 3James Software
 //
 
 #import "Categories/NSFileManager (Recursive).h"

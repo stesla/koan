@@ -1,7 +1,7 @@
 //
 //  MUProfile.h
 //
-// Copyright (C) 2004 3James Software
+// Copyright (C) 2004, 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -12,15 +12,15 @@
 
 @interface MUProfile : NSObject 
 {
-  MUWorld   * world;
-  MUPlayer  * player;
-  bool loggedIn;
+  MUWorld *world;
+  MUPlayer *player;
+  BOOL loggedIn;
 }
 
 + (MUProfile *) profileWithWorld:(MUWorld *)world player:(MUPlayer *)player;
 + (MUProfile *) profileWithWorld:(MUWorld *)world;
 
-// designated initializer
+// Designated initializer.
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player;
 - (id) initWithWorld:(MUWorld *)world;
 
@@ -40,4 +40,5 @@
 - (void) setWorld:(MUWorld *)world;
 - (MUPlayer *) player;
 - (void) setPlayer:(MUPlayer *)player;
+
 @end

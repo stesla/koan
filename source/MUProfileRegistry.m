@@ -1,9 +1,7 @@
 //
-//  MUProfileRegistry.m
-//  Koan
+// MUProfileRegistry.m
 //
-//  Created by Samuel on 1/1/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (C) 2005 3James Software
 //
 
 #import "MUProfileRegistry.h"

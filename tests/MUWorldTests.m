@@ -1,9 +1,7 @@
 //
-//  MUWorldTests.m
-//  Koan
+// MUWorldTests.m
 //
-//  Created by Samuel on 1/2/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (C) 2005 3James Software
 //
 
 #import "MUWorldTests.h"

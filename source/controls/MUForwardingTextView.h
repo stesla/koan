@@ -1,7 +1,7 @@
 //
 // MUForwardingTextView.h
 //
-// Copyright (C) 2004 3James Software
+// Copyright (C) 2004, 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>

@@ -1,7 +1,7 @@
 //
 // Koan-Prefix.pch
 //
-// Copyright (C) 2004 3James Software
+// Copyright (C) 2004, 2005 3James Software
 //
 
 #ifdef __OBJC__

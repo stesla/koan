@@ -1,9 +1,7 @@
 //
-//  MUProfileTests.m
-//  Koan
+// MUProfileTests.m
 //
-//  Created by Samuel on 1/3/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (C) 2005 3James Software
 //
 
 #import "MUProfileTests.h"

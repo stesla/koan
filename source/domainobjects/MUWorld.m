@@ -1,7 +1,7 @@
 //
 // MUWorld.m
 //
-// Copyright (C) 2004 3James Software
+// Copyright (C) 2004, 2005 3James Software
 //
 
 #import "MUWorld.h"
@@ -194,7 +194,7 @@ static const int32_t currentVersion = 2;
 
 - (BOOL) containsPlayer:(MUPlayer *)player
 {
-  [players containsObject:player];
+  return [players containsObject:player];
 }
 
 - (void) removePlayer:(MUPlayer *)player
