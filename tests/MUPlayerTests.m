@@ -14,11 +14,11 @@
 - (void) testQuotedUsername
 {
   MUPlayer *player = [[[MUPlayer alloc] initWithName:@"My User"
-                                            password:@"pass word"
+                                            password:@"password"
                                   connectOnAppLaunch:NO
                                                world:nil] autorelease];
   [self assert:[player loginString] 
-        equals:@"connect \"My User\" \"pass word\""];
+        equals:@"connect \"My User\" password"];
 }
 
 @end
