@@ -8,7 +8,7 @@
 
 @implementation MUWorld
 
-- (void) initialize
++ (void) initialize
 {
   [MUWorld setKeys:[NSArray arrayWithObjects:@"name", @"hostname", @"port", nil]
     triggerChangeNotificationsForDependentKey:@"descript"];
@@ -53,10 +53,13 @@
                    hostname:@"" port:[NSNumber numberWithInt:0]];
 }
 
-- (NSString *) descript
+- (NSString *) description
 {
   return [NSString stringWithFormat:@"%@ (%@ %@)", [self name], [self hostname], [self port]];
 }
+
+#pragma mark -
+#pragma mark Accessors
 
 - (NSString *) name
 {
@@ -107,13 +110,23 @@
   players = copy;
 }
 
-// Implementation of the NSCopying protocol.
+#pragma mark -
+#pragma mark Actions
+
+- (J3TelnetConnection *) newTelnetConnection
+{
+  return [[J3TelnetConnection alloc] initWithHostName:hostname
+                                               onPort:[port intValue]];
+}
+
+#pragma mark -
+#pragma mark NSCopying protocol
 
 - (id) copyWithZone:(NSZone *)zone
 {
   return [[MUWorld allocWithZone:zone] initWithName:name
-                                                    hostname:hostname
-                                                        port:port];
+                                           hostname:hostname
+                                               port:port];
 }
 
 @end

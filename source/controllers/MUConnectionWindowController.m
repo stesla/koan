@@ -82,11 +82,8 @@
 
 - (IBAction) connect:(id)sender
 {
-  NSString *name = [world hostname];
-  int portNumber = [[world port] intValue];
+  telnetConnection = [world newTelnetConnection];
   
-  telnetConnection = [[J3TelnetConnection alloc] initWithHostName:name
-                                                            onPort:portNumber];
   if (telnetConnection)
   {
     [telnetConnection setDelegate:self];

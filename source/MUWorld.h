@@ -5,7 +5,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MUConstants.h"
+#import <J3Terminal/J3TelnetConnection.h>
 
 @interface MUWorld : NSObject <NSCopying>
 {
@@ -31,5 +31,7 @@
 - (void) setPort:(NSNumber *)newPort;
 - (NSDictionary *) players;
 - (void) setPlayers:(NSDictionary *)newPlayers;
+
+- (J3TelnetConnection *) newTelnetConnection;
 
 @end
