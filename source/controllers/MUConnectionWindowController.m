@@ -127,6 +127,18 @@
   
   if (telnetConnection)
   {
+    if ([world usesSSL])
+      [telnetConnection setSecurityLevel:NSStreamSocketSecurityLevelNegotiatedSSL];
+    
+    if ([world usesProxy])
+    {
+      [telnetConnection enableProxyWithHostname:[world proxyHostname]
+                                         onPort:[[world proxyPort] intValue]
+                                        version:[world proxyVersion]
+                                       username:[world proxyUsername]
+                                       password:[world proxyPassword]];
+    }
+    
     [telnetConnection setDelegate:self];
     [telnetConnection open];
   }

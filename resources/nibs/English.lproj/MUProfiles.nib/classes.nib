@@ -5,6 +5,8 @@
             ACTIONS = {
                 addPlayer = id; 
                 addWorld = id; 
+                editClickedPlayer = id; 
+                editClickedWorld = id; 
                 editPlayer = id; 
                 editWorld = id; 
                 endEditingPlayer = id; 
@@ -25,8 +27,15 @@
                 worldHostnameField = NSTextField; 
                 worldNameField = NSTextField; 
                 worldPortField = NSTextField; 
+                worldProxyHostnameField = NSTextField; 
+                worldProxyPasswordField = NSSecureTextField; 
+                worldProxyPortField = NSTextField; 
+                worldProxyUsernameField = NSTextField; 
+                worldProxyVersionButton = NSPopUpButton; 
                 worldSaveButton = NSButton; 
                 worldURLField = NSTextField; 
+                worldUsesProxyButton = NSButton; 
+                worldUsesSSLButton = NSButton; 
                 worldsArrayController = NSArrayController; 
                 worldsTable = NSTableView; 
             }; 

@@ -35,16 +35,18 @@ enum MUProfilesEditingReturnValues
 
 - (void) awakeFromNib
 {
-  J3PortFormatter *formatter = [[[J3PortFormatter alloc] init] autorelease];
+  J3PortFormatter *worldPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
+  J3PortFormatter *proxyPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
   NSSortDescriptor *worldsSortDesc = [[NSSortDescriptor alloc] initWithKey:@"worldName" ascending:YES];
   NSSortDescriptor *playersSortDesc = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
   
-  [worldPortField setFormatter:formatter];
+  [worldPortField setFormatter:worldPortFormatter];
+  [worldProxyPortField setFormatter:proxyPortFormatter];
   
   [playersTable setTarget:self];
-  [playersTable setDoubleAction:@selector(editPlayer:)];
+  [playersTable setDoubleAction:@selector(editClickedPlayer:)];
   [worldsTable setTarget:self];
-  [worldsTable setDoubleAction:@selector(editWorld:)];
+  [worldsTable setDoubleAction:@selector(editClickedWorld:)];
   
   [worldsArrayController setSortDescriptors:[NSArray arrayWithObject:worldsSortDesc]];
   [worldsSortDesc release];
@@ -78,6 +80,13 @@ enum MUProfilesEditingReturnValues
   [worldPortField setStringValue:@""];
   [worldURLField setStringValue:@""];
   [worldConnectOnAppLaunchButton setState:NSOffState];
+  [worldUsesSSLButton setState:NSOffState];
+  [worldUsesProxyButton setState:NSOffState];
+  [worldProxyHostnameField setStringValue:@""];
+  [worldProxyPortField setStringValue:@""];
+  [worldProxyVersionButton selectItemAtIndex:1];
+  [worldProxyUsernameField setStringValue:@""];
+  [worldProxyPasswordField setStringValue:@""];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   
@@ -88,19 +97,35 @@ enum MUProfilesEditingReturnValues
         contextInfo:nil];
 }
 
-- (IBAction) editPlayer:(id)sender
+- (IBAction) editClickedPlayer:(id)sender
 {
   NSEvent *event = [NSApp currentEvent];
   NSPoint location = [playersTable convertPoint:[event locationInWindow] fromView:nil];
   
+  if ([playersTable rowAtPoint:location] == -1)
+    return;
+  
+  [self editPlayer:sender];
+}
+
+- (IBAction) editClickedWorld:(id)sender
+{
+  NSEvent *event = [NSApp currentEvent];
+  NSPoint location = [worldsTable convertPoint:[event locationInWindow] fromView:nil];
+  
+  if ([worldsTable rowAtPoint:location] == -1)
+    return;
+  
+  [self editWorld:sender];
+}
+
+- (IBAction) editPlayer:(id)sender
+{
   [playerNameField setStringValue:[playersArrayController valueForKeyPath:@"selection.name"]];
   [playerPasswordField setStringValue:[playersArrayController valueForKeyPath:@"selection.password"]];
   [playerConnectOnAppLaunchButton setState:([[playersArrayController valueForKeyPath:@"selection.connectOnAppLaunch"] boolValue] ? NSOnState : NSOffState)];
   
   [playerEditorSheet makeFirstResponder:playerNameField];
-  
-  if ([playersTable rowAtPoint:location] == -1)
-    return;
   
   [NSApp beginSheet:playerEditorSheet
      modalForWindow:[self window]
@@ -111,19 +136,20 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editWorld:(id)sender
 {
-  NSEvent *event = [NSApp currentEvent];
-  NSPoint location = [worldsTable convertPoint:[event locationInWindow] fromView:nil];
-  
   [worldNameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldName"]];
   [worldHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldHostname"]];
   [worldPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.worldPort"]];
   [worldURLField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldURL"]];
   [worldConnectOnAppLaunchButton setState:([[worldsArrayController valueForKeyPath:@"selection.connectOnAppLaunch"] boolValue] ? NSOnState : NSOffState)];
+  [worldUsesSSLButton setState:([[worldsArrayController valueForKeyPath:@"selection.usesSSL"] boolValue] ? NSOnState : NSOffState)];
+  [worldUsesProxyButton setState:([[worldsArrayController valueForKeyPath:@"selection.usesProxy"] boolValue] ? NSOnState : NSOffState)];
+  [worldProxyHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.proxyHostname"]];
+  [worldProxyPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.proxyPort"]];
+  [worldProxyVersionButton selectItemAtIndex:([[worldsArrayController valueForKeyPath:@"selection.proxyVersion"] intValue] == 4 ? 0 : 1)];
+  [worldProxyUsernameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.proxyUsername"]];
+  [worldProxyPasswordField setStringValue:[worldsArrayController valueForKeyPath:@"selection.proxyPassword"]];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
-  
-  if ([worldsTable rowAtPoint:location] == -1)
-    return;
   
   [NSApp beginSheet:worldEditorSheet
      modalForWindow:[self window]
@@ -193,6 +219,13 @@ enum MUProfilesEditingReturnValues
                                                  worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
                                                   worldURL:[worldURLField stringValue]
                                         connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
+                                                   usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
+                                                 usesProxy:([worldUsesProxyButton state] == NSOnState ? YES : NO)
+                                             proxyHostname:[worldProxyHostnameField stringValue]
+                                                 proxyPort:[NSNumber numberWithInt:[worldProxyPortField intValue]]
+                                              proxyVersion:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
+                                             proxyUsername:[worldProxyUsernameField stringValue]
+                                             proxyPassword:[worldProxyPasswordField stringValue]
                                                    players:[NSArray array]];
     
     [worldsArrayController addObject:newWorld];
@@ -211,6 +244,13 @@ enum MUProfilesEditingReturnValues
                                                  worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
                                                   worldURL:[worldURLField stringValue]
                                         connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
+                                                   usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
+                                                 usesProxy:([worldUsesProxyButton state] == NSOnState ? YES : NO)
+                                             proxyHostname:[worldProxyHostnameField stringValue]
+                                                 proxyPort:[NSNumber numberWithInt:[worldProxyPortField intValue]]
+                                              proxyVersion:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
+                                             proxyUsername:[worldProxyUsernameField stringValue]
+                                             proxyPassword:[worldProxyPasswordField stringValue]
                                                    players:[selectedWorld players]];
     
     [worldsArrayController removeObject:selectedWorld];

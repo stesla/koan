@@ -20,6 +20,13 @@
   IBOutlet NSTextField *worldPortField;
   IBOutlet NSTextField *worldURLField;
   IBOutlet NSButton *worldConnectOnAppLaunchButton;
+  IBOutlet NSButton *worldUsesSSLButton;
+  IBOutlet NSButton *worldUsesProxyButton;
+  IBOutlet NSTextField *worldProxyHostnameField;
+  IBOutlet NSTextField *worldProxyPortField;
+  IBOutlet NSPopUpButton *worldProxyVersionButton;
+  IBOutlet NSTextField *worldProxyUsernameField;
+  IBOutlet NSSecureTextField *worldProxyPasswordField;
   IBOutlet NSButton *worldSaveButton;
   
   IBOutlet NSWindow *playerEditorSheet;
@@ -31,6 +38,8 @@
 
 - (IBAction) addPlayer:(id)sender;
 - (IBAction) addWorld:(id)sender;
+- (IBAction) editClickedPlayer:(id)sender;
+- (IBAction) editClickedWorld:(id)sender;
 - (IBAction) editPlayer:(id)sender;
 - (IBAction) editWorld:(id)sender;
 - (IBAction) endEditingPlayer:(id)sender;

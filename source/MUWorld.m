@@ -8,7 +8,7 @@
 
 #import <J3Terminal/J3TelnetConnection.h>
 
-static const int32_t currentVersion = 1;
+static const int32_t currentVersion = 2;
 
 @interface MUWorld (Private)
 
@@ -24,7 +24,14 @@ static const int32_t currentVersion = 1;
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
                 worldURL:(NSString *)newWorldURL
-        connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
+      connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
+                 usesSSL:(BOOL)newUsesSSL
+               usesProxy:(BOOL)newUsesProxy
+           proxyHostname:(NSString *)newProxyHostname
+               proxyPort:(NSNumber *)newProxyPort
+            proxyVersion:(int)newProxyVersion
+           proxyUsername:(NSString *)newProxyUsername
+           proxyPassword:(NSString *)newProxyPassword
                  players:(NSArray *)newPlayers
 {
   if (self = [super init])
@@ -34,6 +41,13 @@ static const int32_t currentVersion = 1;
     [self setWorldPort:newWorldPort];
     [self setWorldURL:newWorldURL];
     [self setConnectOnAppLaunch:newConnectOnAppLaunch];
+    [self setUsesSSL:newUsesSSL];
+    [self setUsesProxy:newUsesProxy];
+    [self setProxyHostname:newProxyHostname];
+    [self setProxyPort:newProxyPort];
+    [self setProxyVersion:newProxyVersion];
+    [self setProxyUsername:newProxyUsername];
+    [self setProxyPassword:newProxyPassword];
     [self setPlayers:newPlayers];
   }
   return self;
@@ -45,7 +59,14 @@ static const int32_t currentVersion = 1;
                    worldHostname:@""
                        worldPort:[NSNumber numberWithInt:0]
                         worldURL:@""
-                connectOnAppLaunch:NO
+              connectOnAppLaunch:NO
+                         usesSSL:NO
+                       usesProxy:NO
+                   proxyHostname:@""
+                       proxyPort:[NSNumber numberWithInt:0]
+                    proxyVersion:5
+                   proxyUsername:@""
+                   proxyPassword:@""
                          players:[NSArray array]];
 }
 
@@ -55,6 +76,10 @@ static const int32_t currentVersion = 1;
   [worldHostname release];
   [worldPort release];
   [worldURL release];
+  [proxyHostname release];
+  [proxyPort release];
+  [proxyUsername release];
+  [proxyPassword release];
   [players release];
   [super dealloc];
 }
@@ -120,6 +145,84 @@ static const int32_t currentVersion = 1;
   connectOnAppLaunch = newConnectOnAppLaunch;
 }
 
+- (BOOL) usesSSL
+{
+  return usesSSL;
+}
+
+- (void) setUsesSSL:(BOOL)newUsesSSL
+{
+  usesSSL = newUsesSSL;
+}
+
+- (BOOL) usesProxy
+{
+  return usesProxy;
+}
+
+- (void) setUsesProxy:(BOOL)newUsesProxy
+{
+  usesProxy = newUsesProxy;
+}
+
+- (NSString *) proxyHostname
+{
+  return proxyHostname;
+}
+
+- (void) setProxyHostname:(NSString *)newProxyHostname
+{
+  NSString *copy = [newProxyHostname copy];
+  [proxyHostname release];
+  proxyHostname = copy;
+}
+
+- (NSNumber *) proxyPort
+{
+  return proxyPort;
+}
+
+- (void) setProxyPort:(NSNumber *)newProxyPort
+{
+  NSNumber *copy = [newProxyPort copy];
+  [proxyPort release];
+  proxyPort = copy;
+}
+
+- (int) proxyVersion
+{
+  return proxyVersion;
+}
+
+- (void) setProxyVersion:(int)newProxyVersion
+{
+  proxyVersion = newProxyVersion;
+}
+
+- (NSString *) proxyUsername
+{
+  return proxyUsername;
+}
+
+- (void) setProxyUsername:(NSString *)newProxyUsername
+{
+  NSString *copy = [newProxyUsername copy];
+  [proxyUsername release];
+  proxyUsername = copy;
+}
+
+- (NSString *) proxyPassword
+{
+  return proxyPassword;
+}
+
+- (void) setProxyPassword:(NSString *)newProxyPassword
+{
+  NSString *copy = [newProxyPassword copy];
+  [proxyPassword release];
+  proxyPassword = copy;
+}
+
 - (NSMutableArray *) players
 {
   return players;
@@ -183,6 +286,14 @@ static const int32_t currentVersion = 1;
   
   [encoder encodeObject:[self worldURL] forKey:@"worldURL"];
   [encoder encodeBool:[self connectOnAppLaunch] forKey:@"connectOnAppLaunch"];
+  
+  [encoder encodeBool:[self usesSSL] forKey:@"usesSSL"];
+  [encoder encodeBool:[self usesProxy] forKey:@"usesProxy"];
+  [encoder encodeObject:[self proxyHostname] forKey:@"proxyHostname"];
+  [encoder encodeObject:[self proxyPort] forKey:@"proxyPort"];
+  [encoder encodeInt:[self proxyVersion] forKey:@"proxyVersion"];
+  [encoder encodeObject:[self proxyUsername] forKey:@"proxyUsername"];
+  [encoder encodeObject:[self proxyPassword] forKey:@"proxyPassword"];  
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
@@ -206,6 +317,27 @@ static const int32_t currentVersion = 1;
       [self setWorldURL:@""];
       [self setConnectOnAppLaunch:NO];
     }
+    
+    if (version >= 2)
+    {
+      [self setUsesSSL:[decoder decodeBoolForKey:@"usesSSL"]];
+      [self setUsesProxy:[decoder decodeBoolForKey:@"usesProxy"]];
+      [self setProxyHostname:[decoder decodeObjectForKey:@"proxyHostname"]];
+      [self setProxyPort:[decoder decodeObjectForKey:@"proxyPort"]];
+      [self setProxyVersion:[decoder decodeIntForKey:@"proxyVersion"]];
+      [self setProxyUsername:[decoder decodeObjectForKey:@"proxyUsername"]];
+      [self setProxyPassword:[decoder decodeObjectForKey:@"proxyPassword"]];
+    }
+    else
+    {
+      [self setUsesSSL:NO];
+      [self setUsesProxy:NO];
+      [self setProxyHostname:@""];
+      [self setProxyPort:[NSNumber numberWithInt:0]];
+      [self setProxyVersion:5];
+      [self setProxyUsername:@""];
+      [self setProxyPassword:@""];
+    }
   }
   return self;
 }
@@ -220,6 +352,13 @@ static const int32_t currentVersion = 1;
                                                worldPort:[self worldPort]
                                                 worldURL:[self worldURL]
                                         connectOnAppLaunch:[self connectOnAppLaunch]
+                                                 usesSSL:[self usesSSL]
+                                               usesProxy:[self usesProxy]
+                                           proxyHostname:[self proxyHostname]
+                                               proxyPort:[self proxyPort]
+                                            proxyVersion:[self proxyVersion]
+                                           proxyUsername:[self proxyUsername]
+                                           proxyPassword:[self proxyPassword]
                                                  players:[self players]];
 }
 
