@@ -153,22 +153,22 @@
   {
     switch ([telnet connectionStatus])
     {
-      case MUConnectionStatusConnecting:
+      case J3ConnectionStatusConnecting:
         [self displayString:NSLocalizedString (MULConnectionOpening, nil)];
         break;
         
-      case MUConnectionStatusConnected:
+      case J3ConnectionStatusConnected:
         [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
         break;
         
-      case MUConnectionStatusClosed:
+      case J3ConnectionStatusClosed:
         switch ([telnet reasonClosed])
         {
-          case MUConnectionClosedReasonServer:
+          case J3ConnectionClosedReasonServer:
             [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
             break;
             
-          case MUConnectionClosedReasonError:
+          case J3ConnectionClosedReasonError:
             [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
               [telnet errorMessage]]];
             break;
