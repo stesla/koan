@@ -1,31 +1,43 @@
 //
-//  MUAnsiRemovingFilterTests.m
-//  Koan
+// MUAnsiRemovingFilterTests.m
 //
-//  Created by Samuel on 11/14/04.
-//  Copyright 2004 __MyCompanyName__. All rights reserved.
+// Copyright (C) 2004 Tyler Berry and Samuel Tesla
+//
+// Koan is free software; you can redistribute it and/or modify it under the
+// terms of the GNU General Public License as published by the Free Software
+// Foundation; either version 2 of the License, or (at your option) any later
+// version.
+//
+// Koan is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// Koan; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
+// Suite 330, Boston, MA 02111-1307 USA
 //
 
 #import "MUAnsiRemovingFilterTests.h"
 #import "MUAnsiRemovingFilter.h"
 
 @interface MUAnsiRemovingFilterTests (Private)
-- (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
-- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
+- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output;
+- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output
              message:(NSString *)message;
 @end
 
 @implementation MUAnsiRemovingFilterTests (Private)
 
-- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
+- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output
 {
-  [self assert:[_queue processString:input] equals:output];
+  [self assert:[_queue processAttributedString:input] equals:output];
 }
 
-- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
+- (void) assertInput:(NSAttributedString *)input hasOutput:(NSAttributedString *)output
              message:(NSString *)message
 {
-  [self assert:[_queue processString:input] equals:output
+  [self assert:[_queue processAttributedString:input] equals:output
        message:message];
 }
 
@@ -46,54 +58,65 @@
 
 - (void) testNoCode
 {
-  [self assertInput:@"Foo" hasOutput:@"Foo"];
+  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]];
 }
 
 - (void) testBasicCode
 {
-  [self assertInput:@"F\033[moo" hasOutput:@"Foo"
+  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[moo"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]
             message:@"One"];
-  [self assertInput:@"F\033[3moo" hasOutput:@"Foo"
+  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[3moo"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]
             message:@"Two"];
-  [self assertInput:@"F\033[36moo" hasOutput:@"Foo"
+  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[36moo"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]
             message:@"Three"];
 }
 
 - (void) testTwoCodes
 {
-  [self assertInput:@"F\033[36moa\033[3mob" hasOutput:@"Foaob"];
+  [self assertInput:[NSAttributedString attributedStringWithString:@"F\033[36moa\033[3mob"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foaob"]];
 }
 
 - (void) testNewLine
 {
-  [self assertInput:@"Foo\n" hasOutput:@"Foo\n"];
+  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo\n"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo\n"]];
 }
 
 - (void) testCodeAtEndOfLine
 {
-  [self assertInput:@"Foo\033[36m\n" hasOutput:@"Foo\n"];
+  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo\033[36m\n"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo\n"]];
 }
 
 - (void) testCodeAtEndOfString
 {
-  [self assertInput:@"Foo\033[36m" hasOutput:@"Foo"];
+  [self assertInput:[NSAttributedString attributedStringWithString:@"Foo\033[36m"]
+          hasOutput:[NSAttributedString attributedStringWithString:@"Foo"]];
 }
 
 - (void) testEmptyString
 {
-  [self assertInput:@"" hasOutput:@""];
+  [self assertInput:[NSAttributedString attributedStringWithString:@""]
+          hasOutput:[NSAttributedString attributedStringWithString:@""]];
 }
 
 - (void) testOnlyCode
 {
-  [self assertInput:@"\033[36m" hasOutput:@""];
+  [self assertInput:[NSAttributedString attributedStringWithString:@"\033[36m"]
+          hasOutput:[NSAttributedString attributedStringWithString:@""]];
 }
 
 - (void) testLongString
 {
   NSString *longString = 
     @"        #@@N         (@@)     (@@@)        J@@@@F      @@@@@@@L";
-  [self assertInput:longString hasOutput:longString];
+  [self assertInput:[NSAttributedString attributedStringWithString:longString]
+          hasOutput:[NSAttributedString attributedStringWithString:longString]];
 }
 
 @end

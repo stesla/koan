@@ -1,15 +1,27 @@
 //
-//  MUAnsiRemovingFilter.m
-//  Koan
+// MUAnsiRemovingFilter.m
 //
-//  Created by Samuel on 11/14/04.
-//  Copyright 2004 __MyCompanyName__. All rights reserved.
+// Copyright (C) 2004 Tyler Berry and Samuel Tesla
+//
+// Koan is free software; you can redistribute it and/or modify it under the
+// terms of the GNU General Public License as published by the Free Software
+// Foundation; either version 2 of the License, or (at your option) any later
+// version.
+//
+// Koan is distributed in the hope that it will be useful, but WITHOUT ANY
+// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+// details.
+//
+// You should have received a copy of the GNU General Public License along with
+// Koan; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
+// Suite 330, Boston, MA 02111-1307 USA
 //
 
 #import "MUAnsiRemovingFilter.h"
 
 @interface MUAnsiRemovingFilter (Private)
-- (BOOL) extractCode:(NSMutableString *)editString;
+- (BOOL) extractCode:(NSMutableAttributedString *)editString;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 @end
@@ -21,9 +33,9 @@
   return [[[MUAnsiRemovingFilter alloc] init] autorelease];
 }
 
-- (void) filter:(NSString *)string
+- (void) filter:(NSAttributedString *)string
 {
-  NSMutableString *editString = [[NSMutableString alloc] initWithString:string];
+  NSMutableAttributedString *editString = [[NSMutableAttributedString alloc] initWithAttributedString:string];
   
   while ([self extractCode:editString])
     ;
@@ -36,13 +48,13 @@
 
 @implementation MUAnsiRemovingFilter (Private)
 
-- (BOOL) extractCode:(NSMutableString *)editString
+- (BOOL) extractCode:(NSMutableAttributedString *)editString
 {
   NSRange codeRange;
   
-  codeRange.location = [self scanUpToCodeInString:editString];
+  codeRange.location = [self scanUpToCodeInString:[editString string]];
   codeRange.length = [self scanThruEndOfCodeAt:codeRange.location
-                                      inString:editString];
+                                      inString:[editString string]];
   
   if (codeRange.location < [editString length])
   {
@@ -58,7 +70,7 @@
   NSCharacterSet *stopSet = 
     [NSCharacterSet characterSetWithCharactersInString:@"\033"];
   NSScanner *scanner = [NSScanner scannerWithString:string];
-  while([scanner scanUpToCharactersFromSet:stopSet intoString:nil])
+  while ([scanner scanUpToCharactersFromSet:stopSet intoString:nil])
     ;
   return [scanner scanLocation];
 }

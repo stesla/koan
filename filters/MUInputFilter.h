@@ -28,24 +28,16 @@
 
 + (MUInputFilter *) filter;
 
-- (void) filter:(NSString *)string;
-- (id <MUFilterChaining>) chaining;
-
-- (void) setSuccessor:(id <MUFiltering>)successor;
-- (id <MUFiltering>) successor;
-
 @end
 
 @interface MUInputFilterQueue : NSObject <MUFiltering>
 {
-  NSString *_outputString;
+  NSAttributedString *_outputString;
   id <MUFiltering, MUFilterChaining> _head;
   id <MUFiltering, MUFilterChaining> _tail;
 }
 
-- (NSString *) processString:(NSString *)string;
+- (NSAttributedString *) processAttributedString:(NSAttributedString *)string;
 - (void) addFilter:(id <MUFiltering, MUFilterChaining>)filter;
-- (void) filter:(NSString *)string;
-- (id <MUFilterChaining>) chaining;
 
 @end

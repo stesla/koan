@@ -23,7 +23,7 @@
 
 @implementation MUInputFilterTests
 
-- (void) filter:(NSString *)string
+- (void) filter:(NSAttributedString *)string
 {
   _output = string;
 }
@@ -38,12 +38,11 @@
   MUInputFilter *filter = [[MUInputFilter alloc] init];
   [filter setSuccessor:self];
   
-  NSString *input = @"Foo";
+  NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
 
   [filter filter:input];
   
   [self assert:_output equals:input];
-  [input release];
   [filter release];
 }
 
@@ -51,9 +50,10 @@
 
 @implementation MUUpperInputFilter
 
-- (void) filter:(NSString *)string
+- (void) filter:(NSAttributedString *)string
 {
-  [[self successor] filter:[string uppercaseString]];
+  [[self successor] filter:[NSAttributedString attributedStringWithString:[[string string] uppercaseString]
+                                                               attributes:[string attributesAtIndex:0 effectiveRange:0]]];
 }
 
 @end
@@ -63,8 +63,8 @@
 - (void) testFilter
 {
   MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
-  NSString *input = @"foo";
-  NSString *output = [queue processString:input];
+  NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
+  NSAttributedString *output = [queue processAttributedString:input];
   [self assert:output equals:input];
 }
 
@@ -74,9 +74,9 @@
   MUUpperInputFilter *filter = [[MUUpperInputFilter alloc] init];
   [queue addFilter:filter];
   
-  NSString *input = @"foo";
-  NSString *output = [queue processString:input];
-  [self assert:output equals:@"FOO"];
+  NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
+  NSAttributedString *output = [queue processAttributedString:input];
+  [self assert:[output string] equals:@"FOO"];
   [queue release];
 }
 

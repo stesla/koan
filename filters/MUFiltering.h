@@ -23,7 +23,7 @@
 @protocol MUFilterChaining;
 
 @protocol MUFiltering
-- (void) filter:(NSString *)string;
+- (void) filter:(NSAttributedString *)string;
 - (id <MUFilterChaining>) chaining;
 @end
 

@@ -27,7 +27,7 @@
   return [[[MUInputFilter alloc] init] autorelease];
 }
 
-- (void) filter:(NSString *)string
+- (void) filter:(NSAttributedString *)string
 {
   [[self successor] filter:string];
 }
@@ -76,9 +76,9 @@
   while (curr);
 }
 
-- (NSString *) processString:(NSString *)string
+- (NSAttributedString *) processAttributedString:(NSAttributedString *)string
 {
-  NSString *returnString;
+  NSAttributedString *returnString;
   
   [_head filter:string];
 
@@ -97,7 +97,7 @@
   [_tail setSuccessor:self];
 }
 
-- (void) filter:(NSString *)string
+- (void) filter:(NSAttributedString *)string
 {
   _outputString = [string copy];
 }

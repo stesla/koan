@@ -1,5 +1,5 @@
 //
-// MUAnsiRemovingFilterTests.h
+// Koan-Tests-Prefix.pch
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,14 +18,8 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#endif
 
-#import "MUInputFilter.h"
-
-@interface MUAnsiRemovingFilterTests : TestCase
-{
-  MUInputFilterQueue *_queue;
-}
-
-@end
+#import "NSAttributedString (Allocating).h"

@@ -97,14 +97,15 @@
 
 - (void) _displayString:(NSString *)string
 {
-  NSString *filteredString = [_filterQueue processString:string];
-  NSAttributedString *attributedString;
-  attributedString = [[NSAttributedString alloc] initWithString:filteredString 
-                                                     attributes:[receivedTextView typingAttributes]];
+  NSAttributedString *unfilteredString =
+    [NSAttributedString attributedStringWithString:string
+                                        attributes:[receivedTextView typingAttributes]];
+  NSAttributedString *filteredString = [_filterQueue processAttributedString:unfilteredString];
+
   NSTextStorage *textStorage = [receivedTextView textStorage];
   
   [textStorage beginEditing];
-  [textStorage appendAttributedString:attributedString];
+  [textStorage appendAttributedString:filteredString];
   [textStorage endEditing];
   
   if ([[(NSScrollView *) [[receivedTextView superview] superview] verticalScroller] floatValue] == 1.0)

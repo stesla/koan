@@ -26,23 +26,15 @@
 
 @interface MUInputFilterTests : TestCase <MUFiltering> 
 {
-  NSString *_output;
+  NSAttributedString *_output;
 }
-
-- (void) filter:(NSString *)string;
-- (id <MUFilterChaining>) chaining;
 
 @end
 
 @interface MUInputFilterQueueTests : TestCase
-{
-}
+
 @end
 
 @interface MUUpperInputFilter : MUInputFilter
-{
-}
-
-- (void) filter:(NSString *)string;
 
 @end
