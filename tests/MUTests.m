@@ -8,6 +8,7 @@
 
 #import "J3FilterTests.h"
 #import "J3ANSIRemovingFilterTests.h"
+#import "J3AttributedStringTransformerTests.h"
 #import "J3TextLoggerTests.h"
 #import "J3HistoryRingTests.h"
 #import "J3NaiveANSIFilterTests.h"
@@ -36,6 +37,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[J3FilterTests class]];
   [suite addTestSuite:[J3FilterQueueTests class]];
   [suite addTestSuite:[J3ANSIRemovingFilterTests class]];
+  [suite addTestSuite:[J3AttributedStringTransformerTests class]];
   [suite addTestSuite:[J3HistoryRingTests class]];
   [suite addTestSuite:[J3NaiveURLFilterTests class]];
   [suite addTestSuite:[J3TextLoggerTests class]];
