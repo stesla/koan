@@ -10,16 +10,19 @@
 
 @interface MUProfile : NSObject 
 {
-  MUWorld   * profileWorld;
-  MUPlayer  * profilePlayer;
+  MUWorld   * world;
+  MUPlayer  * player;
 }
 
 // designated initializer
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player;
 - (id) initWithWorld:(MUWorld *)world;
 
+// UI-Related info
+- (NSString *) frameName;
+- (NSString *) windowName;
+
+// Accessors
 - (MUWorld *) world;
-- (void) setWorld:(MUWorld *)world;
 - (MUPlayer *) player;
-- (void) setPlayer:(MUPlayer *)player;
 @end

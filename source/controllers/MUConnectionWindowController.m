@@ -48,8 +48,6 @@
 
 - (void) awakeFromNib
 {
-  NSString *frameName;
-  NSString *windowName;
   NSDictionary *bindingOptions = [NSDictionary dictionaryWithObject:NSUnarchiveFromDataTransformerName
                                                              forKey:@"NSValueTransformerName"];
   
@@ -66,18 +64,9 @@
       withKeyPath:@"values.MUPTextColor"
           options:bindingOptions];
   
-  if ([profile player])
-  {
-    [[self window] setTitle:[[profile player] windowName]];
-    [[self window] setFrameAutosaveName:[[profile player] frameName]];
-    [[self window] setFrameUsingName:[[profile player] frameName]];
-  }
-  else
-  {
-    [[self window] setTitle:[[profile world] windowName]];
-    [[self window] setFrameAutosaveName:[[profile world] frameName]];
-    [[self window] setFrameUsingName:[[profile world] frameName]];
-  }
+  [[self window] setTitle:[profile windowName]];
+  [[self window] setFrameAutosaveName:[profile frameName]];
+  [[self window] setFrameUsingName:[profile frameName]];
 }
 
 - (void) dealloc
@@ -87,7 +76,8 @@
   [filterQueue release];
   [historyRing release];
   [profile release];
-  [super dealloc];
+  //TODO: Why do we blow up if this is uncommented?
+  //[super dealloc];
 }
 
 - (BOOL) validateMenuItem:(NSMenuItem *)menuItem
@@ -376,8 +366,7 @@
   if ([self isConnected])
   {
     NSString *title = [NSString stringWithFormat:
-      NSLocalizedString (MULConfirmCloseTitle, nil), 
-      [profile player] ? [[profile player] windowName] : [[profile world] windowName]];
+      NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowName]];
     NSAlert *alert;
     int choice;
     

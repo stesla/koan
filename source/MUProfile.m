@@ -6,53 +6,73 @@
 
 #import "MUProfile.h"
 
+@interface MUProfile (Private)
+- (void) setPlayer:(MUPlayer *)player;
+- (void) setWorld:(MUWorld *)world;
+@end
 
 @implementation MUProfile
 
-- (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player
+- (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer
 {
   self = [super init];
-  if (self && world)
+  if (self && newWorld)
   {
-    [self setWorld:world];
-    [self setPlayer:player];
+    [self setWorld:newWorld];
+    [self setPlayer:newPlayer];
   }
   return self;
 }
 
-- (id) initWithWorld:(MUWorld *)world
+- (id) initWithWorld:(MUWorld *)newWorld
 {
-  [self initWithWorld:world player:nil];
+  [self initWithWorld:newWorld player:nil];
 }
 
 - (void) dealloc
 {
-  [profilePlayer release];
-  [profileWorld release];
+  [player release];
+  [world release];
   [super dealloc];
 }
 
 - (MUWorld *) world
 {
-  return profileWorld;
-}
-
-- (void) setWorld:(MUWorld *)world
-{
-  [world retain];
-  [profileWorld release];
-  profileWorld = world;
+  return world;
 }
 
 - (MUPlayer *) player
 {
-  return profilePlayer;
+  return player;
 }
 
-- (void) setPlayer:(MUPlayer *)player
+- (NSString *) frameName
 {
-  [player retain];
-  [profilePlayer release];
-  profilePlayer = player;
+  if (player)
+    return [player frameName];
+  else
+    return [world frameName];
+}
+
+- (NSString *) windowName
+{
+  return (player ? [player windowName] : [world windowName]);
+}
+
+@end
+
+@implementation MUProfile (Private)
+- (void) setWorld:(MUWorld *)newWorld
+{
+  [newWorld retain];
+  [world release];
+  world = newWorld;
+}
+
+- (void) setPlayer:(MUPlayer *)newPlayer
+{
+  [newPlayer retain];
+  [player release];
+  player = newPlayer;
 }
 @end
