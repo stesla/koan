@@ -8,8 +8,7 @@
 #import "MUProfilesController.h"
 #import "J3PortFormatter.h"
 #import "MUProfile.h"
-#import "MUWorldRegistry.h"
-#import "MUProfileRegistry.h"
+#import "MUServices.h"
 
 enum MUProfilesEditingReturnValues
 {
@@ -66,7 +65,7 @@ enum MUProfilesEditingReturnValues
 
 - (MUWorldRegistry *) registry
 {
-  return [MUWorldRegistry sharedRegistry];
+  return [MUServices worldRegistry];
 }
 
 #pragma mark -
@@ -141,7 +140,7 @@ enum MUProfilesEditingReturnValues
   [playerNameField setStringValue:[player name]];
   [playerPasswordField setStringValue:[player password]];
   [playerConnectOnAppLaunchButton setState:
-    ([[[MUProfileRegistry sharedRegistry] profileForWorld:world
+    ([[[MUServices profileRegistry] profileForWorld:world
                                                    player:player] autoconnect]
      ? NSOnState : NSOffState)];
   
@@ -165,7 +164,7 @@ enum MUProfilesEditingReturnValues
   [worldURLField setStringValue:[world worldURL]];
   [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
   [worldConnectOnAppLaunchButton setState:
-    ([[[MUProfileRegistry sharedRegistry] profileForWorld:world] autoconnect]
+    ([[[MUServices profileRegistry] profileForWorld:world] autoconnect]
      ? NSOnState : NSOffState)];
   
   if (settings)
@@ -212,7 +211,7 @@ enum MUProfilesEditingReturnValues
 {
   MUPlayer *player = [self selectedPlayer];
   
-  [[MUProfileRegistry sharedRegistry] removeProfileForWorld:[player world]
+  [[MUServices profileRegistry] removeProfileForWorld:[player world]
                                                      player:player];
   
   [playersArrayController removeObject:player];
@@ -222,7 +221,7 @@ enum MUProfilesEditingReturnValues
 - (IBAction) removeWorld:(id)sender
 {
   MUWorld *world = [self selectedWorld];
-  [[MUProfileRegistry sharedRegistry] removeAllProfilesForWorld:world];
+  [[MUServices profileRegistry] removeAllProfilesForWorld:world];
   [worldsArrayController removeObject:world];
   [worldsArrayController rearrangeObjects];
 }
@@ -242,7 +241,7 @@ enum MUProfilesEditingReturnValues
                                                 password:[playerPasswordField stringValue]
                                                    world:selectedWorld];
     
-    [[[MUProfileRegistry sharedRegistry] profileForWorld:selectedWorld
+    [[[MUServices profileRegistry] profileForWorld:selectedWorld
                                                   player:newPlayer]
       setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
     
@@ -266,7 +265,7 @@ enum MUProfilesEditingReturnValues
                          player:selectedPlayer
                      withPlayer:newPlayer];
     
-    [[[MUProfileRegistry sharedRegistry] profileForWorld:selectedWorld
+    [[[MUServices profileRegistry] profileForWorld:selectedWorld
                                                   player:selectedPlayer]
       setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
 
@@ -285,7 +284,7 @@ enum MUProfilesEditingReturnValues
   {
     MUWorld *world = [self createWorldFromSheetWithPlayers:[NSArray array]];
     
-    [[[MUProfileRegistry sharedRegistry] profileForWorld:world]
+    [[[MUServices profileRegistry] profileForWorld:world]
       setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
 
     [worldsArrayController addObject:world];
@@ -305,7 +304,7 @@ enum MUProfilesEditingReturnValues
                        withWorld:newWorld];
     
     // This changes the setting on just the profile for the world itself
-    [[[MUProfileRegistry sharedRegistry] profileForWorld:selectedWorld]
+    [[[MUServices profileRegistry] profileForWorld:selectedWorld]
       setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
     
     [worldsArrayController removeObject:selectedWorld];
@@ -342,7 +341,7 @@ enum MUProfilesEditingReturnValues
 
 {
   MUProfile *profile = nil;
-  MUProfileRegistry *registry = [MUProfileRegistry sharedRegistry];
+  MUProfileRegistry *registry = [MUServices profileRegistry];
   NSArray *players = [world players];
   int i, count = [players count];
   
@@ -370,7 +369,7 @@ enum MUProfilesEditingReturnValues
                         player:(MUPlayer *)player 
                     withPlayer:(MUPlayer *)newPlayer
 {
-  MUProfileRegistry *registry = [MUProfileRegistry sharedRegistry];
+  MUProfileRegistry *registry = [MUServices profileRegistry];
   MUProfile *profile = [registry profileForWorld:world
                                           player:player];
   [profile retain];

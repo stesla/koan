@@ -10,8 +10,7 @@
 #import "MUPlayer.h"
 #import "MUProfilesController.h"
 #import "MUWorld.h"
-#import "MUWorldRegistry.h"
-#import "MUProfileRegistry.h"
+#import "MUServices.h"
 
 @interface MUApplicationController (Private)
 
@@ -54,8 +53,8 @@
 
 - (void) awakeFromNib
 {
-  [MUProfileRegistry sharedRegistry];
-  [MUWorldRegistry sharedRegistry];
+  [MUServices profileRegistry];
+  [MUServices worldRegistry];
   
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
@@ -187,8 +186,8 @@
   unreadCount = 0;
   [self updateApplicationBadge];
   
-  [[MUWorldRegistry sharedRegistry] saveWorlds];
-  [[MUProfileRegistry sharedRegistry] saveProfiles];
+  [[MUServices worldRegistry] saveWorlds];
+  [[MUServices profileRegistry] saveProfiles];
 }
 
 #pragma mark -
@@ -241,8 +240,8 @@
 
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
 {
-  MUWorldRegistry *registry = [MUWorldRegistry sharedRegistry];
-  MUProfileRegistry *profiles = [MUProfileRegistry sharedRegistry];
+  MUWorldRegistry *registry = [MUServices worldRegistry];
+  MUProfileRegistry *profiles = [MUServices profileRegistry];
   int i, worldsCount = [registry count], menuCount = [openConnectionMenu numberOfItems];
   
   for (i = menuCount - 1; i >= 0; i--)

@@ -34,10 +34,10 @@
 {
   MUProfileRegistry *registryOne, *registryTwo;
   
-  registryOne = [MUProfileRegistry sharedRegistry];
+  registryOne = [MUServices profileRegistry];
   [self assertNotNil:registryOne];
   
-  registryTwo = [MUProfileRegistry sharedRegistry];
+  registryTwo = [MUServices profileRegistry];
   [self assert:registryOne equals:registryTwo];
 }
 
