@@ -2,13 +2,19 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {changeGlobalFont = id; chooseNewFont = id; showPreferences = id; }; 
+            ACTIONS = {
+                changeGlobalFont = id; 
+                chooseNewFont = id; 
+                showPreferences = id; 
+                showProfiles = id; 
+            }; 
             CLASS = MUApplicationController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
                 openConnectionMenu = NSMenu; 
                 portColumn = NSTableColumn; 
-                preferencePanel = NSPanel; 
+                preferencesPanel = NSPanel; 
+                profilesPanel = NSPanel; 
             }; 
             SUPERCLASS = NSObject; 
         }, 

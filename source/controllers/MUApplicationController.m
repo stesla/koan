@@ -7,7 +7,7 @@
 #import "FontNameToDisplayNameTransformer.h"
 #import "MUApplicationController.h"
 #import "MUConnectionWindowController.h"
-#import "MUPortFormatter.h"
+#import "J3PortFormatter.h"
 
 @interface MUApplicationController (Private)
 
@@ -48,7 +48,7 @@
 {
   NSArray *prefsConnections = [[NSUserDefaults standardUserDefaults] objectForKey:MUPWorlds];
   NSMutableArray *array = [NSMutableArray array];
-  MUPortFormatter *formatter = [[[MUPortFormatter alloc] init] autorelease];
+  J3PortFormatter *formatter = [[[J3PortFormatter alloc] init] autorelease];
   int i, connectionsCount = [prefsConnections count];
   
   connectionWindowControllers = [[NSMutableArray alloc] init];
@@ -125,7 +125,12 @@
 
 - (IBAction) showPreferences:(id)sender
 {
-  [preferencePanel makeKeyAndOrderFront:self];
+  [preferencesPanel makeKeyAndOrderFront:self];
+}
+
+- (IBAction) showProfiles:(id)sender
+{
+  [profilesPanel makeKeyAndOrderFront:self];
 }
 
 // Delegate methods for NSApplication.

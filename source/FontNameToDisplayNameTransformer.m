@@ -42,19 +42,19 @@
 
 @implementation FontNameToDisplayNameTransformer
 
-+ (Class)transformedValueClass
++ (Class) transformedValueClass
 {
   return [NSString class];
 }
 
-+ (BOOL)allowsReverseTransformation
++ (BOOL) allowsReverseTransformation
 {
   return NO;
 }
 
-- (id)transformedValue:(id)aValue
+- (id) transformedValue:(id)value
 {
-  NSFont *font = [NSFont fontWithName:aValue size:12];
+  NSFont *font = [NSFont fontWithName:value size:12];
   return [font displayName];
 }
 

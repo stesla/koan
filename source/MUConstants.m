@@ -24,7 +24,7 @@ NSString *MULConnectionClosedByError = @"ConnectionClosedByError";
 
 // Alert panel localization constants.
 
-NSString *MULOkay = @"Okay";
+NSString *MULOkay = @"OK";
 NSString *MULCancel = @"Cancel";
 
 NSString *MULConfirmCloseTitle = @"ConfirmCloseTitle";
@@ -36,4 +36,5 @@ NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
 
 // Miscellaneous localization constants.
 
+NSString *MULUnnamedPlayer = @"UnnamedPlayer";
 NSString *MULUntitledWorld = @"UntitledWorld";

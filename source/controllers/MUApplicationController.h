@@ -8,7 +8,8 @@
 
 @interface MUApplicationController : NSObject
 {
-  IBOutlet NSPanel *preferencePanel;
+  IBOutlet NSPanel *preferencesPanel;
+  IBOutlet NSPanel *profilesPanel;
   IBOutlet NSMenu *openConnectionMenu;
   IBOutlet NSTableColumn *portColumn;
   
@@ -22,5 +23,6 @@
 - (IBAction) changeGlobalFont:(id)sender;
 - (IBAction) chooseNewFont:(id)sender;
 - (IBAction) showPreferences:(id)sender;
+- (IBAction) showProfiles:(id)sender;
 
 @end

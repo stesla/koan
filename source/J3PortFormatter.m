@@ -1,12 +1,14 @@
 //
-// MUPortFormatter.m
+// J3PortFormatter.m
 //
 // Copyright (C) 2004 3James Software
 //
+// This file is in the public domain.
+//
 
-#import "MUPortFormatter.h"
+#import "J3PortFormatter.h"
 
-@implementation MUPortFormatter
+@implementation J3PortFormatter
 
 - (NSString *) stringForObjectValue:(id)object
 {

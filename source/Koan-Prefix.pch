@@ -9,4 +9,6 @@
 #endif
 
 #import "MUConstants.h"
-#import "NSAttributedString (Allocating).h"
+#import "Categories/NSAttributedString (Allocating).h"
+#import "Categories/NSObject (BetterHashing).h"
+#import "Categories/NSObject (DeepMutableCopy).h"
