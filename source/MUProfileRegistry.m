@@ -37,7 +37,7 @@ static MUProfileRegistry * sharedRegistry = nil;
 
 - (MUProfile *) profileForWorld:(MUWorld *)world
 {
-  return [self profileForProfile:[MUProfile profileWithWorld:world]];
+  return [self profileForWorld:world player:nil];
 }
 
 - (MUProfile *) profileForWorld:(MUWorld *)world player:(MUPlayer *)player
@@ -48,7 +48,7 @@ static MUProfileRegistry * sharedRegistry = nil;
 
 - (MUProfile *) profileForProfile:(MUProfile *)profile
 {
-  MUProfile *rval = [profiles objectForKey:[profile uniqueIdentifier]];
+  MUProfile *rval = [self profileForUniqueIdentifier:[profile uniqueIdentifier]];
   if (!rval)
   {
     rval = profile;
@@ -60,6 +60,48 @@ static MUProfileRegistry * sharedRegistry = nil;
 - (MUProfile *) profileForUniqueIdentifier:(NSString *)identifier
 {
   return [profiles objectForKey:identifier];
+}
+
+- (BOOL) containsProfileForWorld:(MUWorld *)world
+{
+  return [self containsProfileForWorld:world player:nil];
+}
+
+- (BOOL) containsProfileForWorld:(MUWorld *)world player:(MUPlayer *)player
+{
+  MUProfile *profile = [MUProfile profileWithWorld:world player:player];
+  return [self containsProfile:profile];
+}
+
+- (BOOL) containsProfile:(MUProfile *)profile
+{
+  return [self containsProfileForUniqueIdentifier:[profile uniqueIdentifier]];
+}
+
+- (BOOL) containsProfileForUniqueIdentifier:(NSString *)identifier;
+{
+  return [self profileForUniqueIdentifier:identifier] != nil;  
+}
+
+- (void) removeProfile:(MUProfile *)profile
+{
+  [self removeProfileForUniqueIdentifier:[profile uniqueIdentifier]];
+}
+
+- (void) removeProfileForWorld:(MUWorld *)world
+{
+  [self removeProfileForWorld:world player:nil];
+}
+
+- (void) removeProfileForWorld:(MUWorld *)world player:(MUPlayer *)player
+{
+  MUProfile *profile = [self profileForWorld:world player:player];
+  [self removeProfile:profile];
+}
+
+- (void) removeProfileForUniqueIdentifier:(NSString *)identifier
+{
+  [profiles removeObjectForKey:identifier];  
 }
 
 @end

@@ -24,4 +24,14 @@
 - (MUProfile *) profileForWorld:(MUWorld *)world player:(MUPlayer *)player;
 - (MUProfile *) profileForUniqueIdentifier:(NSString *)identifier;
 
+- (BOOL) containsProfile:(MUProfile *)profile;
+- (BOOL) containsProfileForWorld:(MUWorld *)world;
+- (BOOL) containsProfileForWorld:(MUWorld *)world player:(MUPlayer *)player;
+- (BOOL) containsProfileForUniqueIdentifier:(NSString *)identifier;
+
+- (void) removeProfile:(MUProfile *)profile;
+- (void) removeProfileForWorld:(MUWorld *)world;
+- (void) removeProfileForWorld:(MUWorld *)world player:(MUPlayer *)player;
+- (void) removeProfileForUniqueIdentifier:(NSString *)identifier;
+
 @end

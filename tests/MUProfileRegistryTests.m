@@ -70,6 +70,34 @@
   [self assert:profileOne equals:profileTwo message:@"Second"];
 }
 
+- (void) testContains
+{
+  MUWorld *world = [self testWorld];
+  MUPlayer *player = [self testPlayerWithWorld:world];
+  
+  [self assertFalse:[registry containsProfileForWorld:world player:player]
+            message:@"Before adding"];
+  
+  [registry profileForWorld:world player:player];
+  
+  [self assertTrue:[registry containsProfileForWorld:world player:player]
+           message:@"After adding"];
+}
+
+- (void) testRemove
+{
+  MUWorld *world = [self testWorld];
+  MUPlayer *player = [self testPlayerWithWorld:world];
+
+  [registry profileForWorld:world player:player];
+  [self assertTrue:[registry containsProfileForWorld:world player:player]
+           message:@"Before removing"];  
+  
+  [registry removeProfileForWorld:world player:player];  
+  [self assertFalse:[registry containsProfileForWorld:world player:player]
+            message:@"After removing"];
+
+}
 @end
 
 @implementation MUProfileRegistryTests (Private)
