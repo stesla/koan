@@ -48,6 +48,8 @@ enum MUTelnetCommands
   NSMutableData *_readBuffer;
   NSOutputStream *_output;
   NSMutableData *_writeBuffer;
+  BOOL _canWrite;
+  BOOL _isConnected;
   BOOL _isInCommand;
   BOOL _discardNextByte;
   id _delegate;
@@ -63,7 +65,12 @@ enum MUTelnetCommands
 - (void) setDelegate:(id)delegate;
 - (id) delegate;
 
+// Connecting
+- (void) open;
+- (void) close;
+
 // State Flags
+- (BOOL) isConnected;
 - (BOOL) isInCommand;
 
 // IO

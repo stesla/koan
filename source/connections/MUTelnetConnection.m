@@ -30,6 +30,8 @@
 - (void) processByte:(uint8_t)byte withBuffer:(uint8_t *)buffer at:(int *)counter;
 - (void) appendBytesToBuffer:(const void *)bytes length:(int)length;
 - (void) writeToStream:(NSOutputStream *)stream;
+- (void) setInput:(NSInputStream *)input;
+- (void) setOutput:(NSOutputStream *)output;
 @end
 
 @interface MUTelnetConnection (DelegateMethods)
@@ -56,12 +58,11 @@
 {
   if (self = [super init])
   {
-    [input retain];
-    _input = input;
-    [output retain];
-    _output = output;
+    [self setInput:input];
+    [self setOutput:output];
     _readBuffer = [[NSMutableData alloc] init];
     _writeBuffer = [[NSMutableData alloc] init];
+    _isConnected = NO;
     _isInCommand = NO;
     _discardNextByte = NO;
   }
@@ -85,6 +86,10 @@
 
 - (void) dealloc
 {
+  if ([self isConnected])
+    [self close];
+  [_input release];
+  [_output release];
   [_readBuffer release];
   [_writeBuffer release];
   [super dealloc];
@@ -122,12 +127,38 @@
 - (void) writeData:(NSData *)data
 {
   [_writeBuffer appendData:data];
+  if (_canWrite)
+    [self writeToStream:_output];
 }
 
 - (void) writeString:(NSString *)string
 {
   NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
   [self writeData:data];
+}
+
+- (void) open
+{
+  if (![self isConnected])
+  {
+    [_input open];
+    [_output open];
+    _isConnected = YES;
+  }
+}
+
+- (void) close
+{
+  if ([self isConnected])
+  {
+    [_input close];
+    [_output close];
+  }
+}
+
+- (BOOL) isConnected
+{
+  return _isConnected;
 }
 
 - (BOOL) isInCommand
@@ -149,7 +180,13 @@
     case NSStreamEventErrorOccurred:
     case NSStreamEventHasSpaceAvailable:
     {
-      [self writeToStream:(NSOutputStream *)stream];
+      if ([_writeBuffer length] > 0)
+      {
+        [self writeToStream:(NSOutputStream *)stream];
+        _canWrite = NO;
+      }
+      else
+        _canWrite = YES;
       break;
     }
     case NSStreamEventOpenCompleted:
@@ -249,10 +286,30 @@
 - (void) writeToStream:(NSOutputStream *)stream
 {
   const uint8_t *buffer = [_writeBuffer bytes];
-  [stream write:buffer maxLength:[_writeBuffer length]];
+  int bytesWritten = [stream write:buffer 
+                         maxLength:[_writeBuffer length]];
   [_writeBuffer setData:[NSData data]];
 }
 
+- (void) setInput:(NSInputStream *)input
+{
+  [input retain];
+  [_input release];
+  _input = input;
+  [_input setDelegate:self];
+  [_input scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                    forMode:NSDefaultRunLoopMode];
+}
+
+- (void) setOutput:(NSOutputStream *)output
+{
+  [output retain];
+  [_output release];
+  _output = output;
+  [_output setDelegate:self];
+  [_output scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                     forMode:NSDefaultRunLoopMode];
+}
 @end
 
 @implementation MUTelnetConnection (TelnetCommands)
