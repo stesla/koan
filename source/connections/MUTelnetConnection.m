@@ -25,7 +25,15 @@
 @interface MUTelnetConnection (Private)
 - (BOOL) parseCommandMaybe:(uint8_t)current;
 - (void) readFromStream:(NSInputStream *)stream;
+// WARNING - Counter must be a valid offset from buffer.
+// The value of counter may change inside this routine.
+- (void) processByte:(uint8_t)byte withBuffer:(uint8_t *)buffer at:(int *)counter;
+- (void) appendBytesToBuffer:(const void *)bytes length:(int)length;
 - (void) writeToStream:(NSOutputStream *)stream;
+@end
+
+@interface MUTelnetConnection (DelegateMethods)
+- (void) didReadLine;
 @end
 
 @interface MUTelnetConnection (TelnetCommands)
@@ -54,6 +62,18 @@
   [_readBuffer release];
   [_writeBuffer release];
   [super dealloc];
+}
+
+- (id) delegate
+{
+  return _delegate;
+}
+
+- (void) setDelegate:(id)delegate
+{
+  [delegate retain];
+  [_delegate release];
+  _delegate = delegate;
 }
 
 - (NSString *) read
@@ -112,6 +132,12 @@
       return;
   }
 }
+
+- (NSString *) line
+{
+  return @"";
+}
+
 @end
 
 @implementation MUTelnetConnection (Private)
@@ -147,10 +173,12 @@
 {
   int i;
   uint8_t socketBuffer[MUTelnetBufferMax];
-  bzero(socketBuffer, MUTelnetBufferMax);
-  unsigned int bytesRead = [stream read:socketBuffer maxLength:MUTelnetBufferMax];
+  memset(socketBuffer, 0, MUTelnetBufferMax);
+  unsigned int bytesRead = [stream read:socketBuffer 
+                              maxLength:MUTelnetBufferMax];
+  
   uint8_t dataBuffer[bytesRead];
-  bzero(dataBuffer, bytesRead);
+  memset(dataBuffer, 0, bytesRead);
   int bytesWritten = 0;
   for (i = 0; i < bytesRead; i++)
   {
@@ -158,17 +186,37 @@
       _discardNextByte = NO;
     else
     {
-      if (![self parseCommandMaybe:socketBuffer[i]])
-      {
-        dataBuffer[bytesWritten] = socketBuffer[i];
-        bytesWritten++;
-      }
+      [self processByte:socketBuffer[i] 
+             withBuffer:dataBuffer
+                     at:&bytesWritten];
     }
   }
   
-  if (bytesRead)
+  [self appendBytesToBuffer:(const void *)dataBuffer length:bytesWritten];
+}
+
+- (void) processByte:(uint8_t)byte withBuffer:(uint8_t *)buffer at:(int *)counter
+{
+  if (![self parseCommandMaybe:byte])
   {
-    [_readBuffer appendBytes:(const void *)dataBuffer length:bytesWritten];
+    buffer[*counter] = byte;
+    (*counter)++;
+    if (byte == '\n')
+    {
+      [self appendBytesToBuffer:(const void *)buffer length:*counter];
+      [self didReadLine];
+      [_readBuffer setData:[NSData data]];
+      memset(buffer, 0, *counter);
+      *counter = 0;
+    }
+  }  
+}
+
+- (void) appendBytesToBuffer:(const void *)bytes length:(int)length
+{
+  if (length)
+  {
+    [_readBuffer appendBytes:bytes length:length];
   }
 }
 
@@ -231,3 +279,19 @@
 }
 
 @end
+
+@implementation MUTelnetConnection (DelegateMethods)
+
+- (void) didReadLine
+{
+  if ([_delegate respondsToSelector:@selector(telnetDidReadLine:)])
+    [_delegate telnetDidReadLine:self];
+  else
+  { 
+    NSLog(@"%@ delegate does not implement telnetDidReadLine:",
+          [self class]);
+  }
+}
+
+@end
+

@@ -14,6 +14,7 @@
 @interface MUTelnetConnectionTests : TestCase
 {
   MUTelnetConnection *_telnet;
+  NSString *_lineRead;
 }
 
 @end

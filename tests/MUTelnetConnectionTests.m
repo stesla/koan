@@ -11,8 +11,9 @@
 
 @interface MUTelnetConnectionTests (HelperMethods)
 - (void) negotiationCommand:(int)byteRead response:(int)byteWritten;
-- (NSInputStream *) openInputStreamWithBytes:(const void *)bytes length:(int)length;
+- (NSInputStream *) openInputStreamWithBytes:(const char *)bytes;
 - (NSOutputStream *)openOutputStreamWithBuffer:(void *)buffer maxLength:(int)maxLength;
+- (NSData *) dataWithCString:(const char *)cstring;
 @end
 
 @implementation MUTelnetConnectionTests (HelperMethods)
@@ -22,18 +23,19 @@
   cstring[0] = TEL_IAC;
   cstring[1] = byteRead;
   cstring[2] = 1; // This is the option code for ECHO
-  NSInputStream *input = [self openInputStreamWithBytes:(const void *)cstring length:3];
-  
+  cstring[3] = 0;
+  NSInputStream *input = [self openInputStreamWithBytes:cstring];
+
   uint8_t outputBuffer[MUTelnetBufferMax];
   NSOutputStream *output = [self openOutputStreamWithBuffer:outputBuffer
                                                   maxLength:MUTelnetBufferMax];
-  
+
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   [_telnet stream:output handleEvent:NSStreamEventHasSpaceAvailable];
   [self assertTrue:outputBuffer[0] == TEL_IAC message:@"First byte"];
   [self assertTrue:outputBuffer[1] == byteWritten message:@"Second byte"];
   NSString *telnetString = [_telnet read];
-  [self assert:telnetString equals:@""];  
+  [self assert:telnetString equals:@""];
 }
 
 - (NSOutputStream *)openOutputStreamWithBuffer:(void *)buffer maxLength:(int)maxLength
@@ -45,13 +47,20 @@
   return output;
 }
 
-- (NSInputStream *) openInputStreamWithBytes:(const void *)bytes length:(int)length
+- (NSInputStream *) openInputStreamWithBytes:(const char *)bytes
 {
-  NSData *data = [NSData dataWithBytes:(const void *)bytes length:length];
+  NSData *data = [self dataWithCString:bytes];
   NSInputStream *input = [NSInputStream inputStreamWithData:data];
   [input open];
   return input;
 }
+
+- (NSData *) dataWithCString:(const char *)cstring
+{
+  return [NSData dataWithBytes:(const void *)cstring 
+                        length:strlen(cstring)];
+}
+
 
 @end
 
@@ -60,6 +69,8 @@
 - (void) setUp
 {
   _telnet = [[MUTelnetConnection alloc] init];
+  _lineRead = @"";
+  [_telnet setDelegate:self];
 }
 
 - (void) tearDown
@@ -69,7 +80,7 @@
 
 - (void) testRead
 {
-  NSInputStream *input = [self openInputStreamWithBytes:(const void *)"Foo" length:3];
+  NSInputStream *input = [self openInputStreamWithBytes:"Foo"];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   NSString *telnetString = [_telnet read];
   [self assert:telnetString equals:@"Foo"];
@@ -77,44 +88,46 @@
 
 - (void) testConsecutiveReads
 {
-  NSInputStream *input = [self openInputStreamWithBytes:(const void *)"Foo" length:3];  
+  NSInputStream *input = [self openInputStreamWithBytes:"Foo"];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
-  input = [self openInputStreamWithBytes:(const void *)"Bar" length:3];
+  input = [self openInputStreamWithBytes:"Bar"];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   NSString *telnetString = [_telnet read];
   [self assert:telnetString equals:@"FooBar"];
   telnetString = [_telnet read];
   [self assert:telnetString equals:@""];
-  
+
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
-  input = [self openInputStreamWithBytes:(const void *)"Baz" length:3];
+  input = [self openInputStreamWithBytes:"Baz"];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
-  telnetString = [_telnet read];  
+  telnetString = [_telnet read];
   [self assert:telnetString equals:@"Baz"];
 }
 
 - (void) testIsInCommand
 {
-  char cstring[2];
+  char cstring[3];
   cstring[0] = 'a';
   cstring[1] = TEL_IAC;
+  cstring[2] = 0;
   NSData *data = [NSData dataWithBytes:(const void *)cstring length:2];
   NSInputStream *input = [NSInputStream inputStreamWithData:data];
   [input open];
-  
+
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   [self assertTrue:[_telnet isInCommand]];
 }
 
 - (void) testEmbeddedNOP
 {
-  char cstring[4];
+  char cstring[5];
   cstring[0] = 'a';
   cstring[1] = TEL_IAC;
   cstring[2] = TEL_NOP;
   cstring[3] = 'b';
-  NSInputStream *input = [self openInputStreamWithBytes:(const void *)cstring length:4];
-  
+  cstring[4] = 0;
+  NSInputStream *input = [self openInputStreamWithBytes:cstring];
+
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   NSString *telnetString = [_telnet read];
   [self assert:telnetString equals:@"ab"];
@@ -168,5 +181,36 @@
 {
   [self negotiationCommand:TEL_DONT response:TEL_WONT];
 }
+
+- (void) telnetDidReadLine:(MUTelnetConnection *)telnet
+{
+  _lineRead = [telnet read];
+}
+
+- (void) testDidReadLine
+{
+  NSData *data = [self dataWithCString:"Fo"];
+  NSInputStream *input = [NSInputStream inputStreamWithData:data];
+  [input open];
+
+  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  [self assert:_lineRead equals:@""];
+  
+  data = [self dataWithCString:"o\n"];
+  input = [NSInputStream inputStreamWithData:data];
+  [input open];
+  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  [self assert:_lineRead equals:@"Foo\n"];
+  [self assert:[_telnet read] equals:@""];
+  
+  
+  data = [self dataWithCString:"bar\n"];
+  input = [NSInputStream inputStreamWithData:data];
+  [input open];
+  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  [self assert:_lineRead equals:@"bar\n"];
+}
+
+
 
 @end

@@ -48,7 +48,12 @@ enum MUTelnetCommands
   NSMutableData *_writeBuffer;
   BOOL _isInCommand;
   BOOL _discardNextByte;
+  id _delegate;
 }
+
+// Setters/Getters
+- (void) setDelegate:(id)delegate;
+- (id) delegate;
 
 // State Flags
 - (BOOL) isInCommand;
@@ -60,5 +65,9 @@ enum MUTelnetCommands
 
 // NSStream delegate
 - (void) stream:(NSStream *)stream handleEvent:(NSStreamEvent)event;
+@end
 
+// Delegate Methods
+@interface NSObject (MUTelnetConnectionDelegate)
+- (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
 @end
