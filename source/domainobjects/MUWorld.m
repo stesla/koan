@@ -141,20 +141,33 @@
 
 - (void) setPlayers:(NSArray *)newPlayers
 {
-  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease];
-  NSMutableArray *copy = [[newPlayers sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDesc]] mutableCopy];
+  NSMutableArray *copy = [newPlayers mutableCopy];
   
   [players release];
   players = copy;
   [self postWorldsUpdatedNotification];
 }
 
+- (int) indexOfPlayer:(MUPlayer *)player
+{
+	unsigned i, playersCount = [players count];
+	
+	for (i = 0; i < playersCount; i++)
+	{
+		MUPlayer *iteratedPlayer = [players objectAtIndex:i];
+		
+		if (player == iteratedPlayer)
+		{
+			return (int) i;
+		}
+	}
+	
+	return -1;
+}
+
 - (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index
 {
-  NSSortDescriptor *sortDesc = [[[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES] autorelease];
-  
   [players insertObject:player atIndex:index];
-  [players sortUsingDescriptors:[NSArray arrayWithObject:sortDesc]];
   [self postWorldsUpdatedNotification];
 }
 

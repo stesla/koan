@@ -48,14 +48,15 @@
 - (J3ProxySettings *) proxySettings;
 - (void) setProxySettings:(J3ProxySettings *)newProxySettings;
 
-- (NSMutableArray *) players;
-- (void) setPlayers:(NSArray *)newPlayers;
-- (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index;
-- (void) removeObjectFromPlayersAtIndex:(unsigned)index;
 - (void) addPlayer:(MUPlayer *)player;
 - (BOOL) containsPlayer:(MUPlayer *)player;
+- (int) indexOfPlayer:(MUPlayer *)player;
+- (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index;
+- (NSMutableArray *) players;
+- (void) removeObjectFromPlayersAtIndex:(unsigned)index;
 - (void) removePlayer:(MUPlayer *)player;
 - (void) replacePlayer:(MUPlayer *)oldPlayer withPlayer:(MUPlayer *)newPlayer;
+- (void) setPlayers:(NSArray *)newPlayers;
 
 // Actions.
 - (J3TelnetConnection *) newTelnetConnection;

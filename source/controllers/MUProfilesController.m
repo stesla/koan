@@ -117,24 +117,60 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) addPlayer:(id)sender
 {
+	int selectedRow = [worldsAndPlayersOutlineView selectedRow];
+	MUWorld *insertionWorld;
+	int insertionIndex;
+	NSDictionary *contextDictionary;
+	
   [playerNameField setStringValue:@""];
   [playerPasswordField setStringValue:@""];
   [playerConnectOnAppLaunchButton setState:NSOffState];
   
   [playerEditorSheet makeFirstResponder:playerNameField];
   
+	if (selectedRow == -1)
+		return;
+	else
+	{
+		id selectedItem;
+		
+		selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
+		
+		if ([selectedItem isKindOfClass:[MUWorld class]])
+		{
+			insertionWorld = (MUWorld *) selectedItem;
+			insertionIndex = [[insertionWorld players] count];
+		}
+		else if ([selectedItem isKindOfClass:[MUPlayer class]])
+		{
+			MUPlayer *selectedPlayer = (MUPlayer *) selectedItem;
+			int index = [[selectedPlayer world] indexOfPlayer:selectedPlayer] + 1;
+			
+			if (index < 0)
+				return;
+			
+			insertionIndex = (unsigned) index;
+			insertionWorld = [selectedPlayer world];
+		}
+		else
+			return;
+	}
+	
+	contextDictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
+		[NSNumber numberWithUnsignedInt:insertionIndex], MUInsertionIndex,
+		insertionWorld, MUInsertionWorld,
+		NULL];
+	
   [NSApp beginSheet:playerEditorSheet
      modalForWindow:[self window]
       modalDelegate:self
      didEndSelector:@selector(playerSheetDidEndAdding:returnCode:contextInfo:)
-        contextInfo:nil];
+        contextInfo:contextDictionary];
 }
 
 - (IBAction) addWorld:(id)sender
 {
 	int selectedRow = [worldsAndPlayersOutlineView selectedRow];
-	id selectedItem;
-	MUWorld *selectedWorld;
 	int insertionIndex;
 	
   [worldNameField setStringValue:@""];
@@ -156,6 +192,9 @@ enum MUProfilesEditingReturnValues
 		insertionIndex = [[MUServices worldRegistry] count];
 	else
 	{
+		id selectedItem;
+		MUWorld *selectedWorld;
+		
 		selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
 		
 		if ([selectedItem isKindOfClass:[MUWorld class]])
@@ -170,7 +209,7 @@ enum MUProfilesEditingReturnValues
      modalForWindow:[self window]
       modalDelegate:self
      didEndSelector:@selector(worldSheetDidEndAdding:returnCode:contextInfo:)
-        contextInfo:[NSNumber numberWithUnsignedInt:insertionIndex]];
+        contextInfo:[[NSNumber alloc] initWithUnsignedInt:insertionIndex]];
 }
 
 - (IBAction) editClickedRow:(id)sender
@@ -390,23 +429,26 @@ enum MUProfilesEditingReturnValues
 
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	// FIXME.
-	
-	return;
-	
   if (returnCode == MUEditOkay)
-  {  
-    MUWorld *selectedWorld = [self selectedWorld];
+  {
+		NSDictionary *contextDictionary = (NSDictionary *) contextInfo;
+		unsigned insertionIndex = [(NSNumber *) [contextDictionary objectForKey:MUInsertionIndex] unsignedIntValue];
+		MUWorld *insertionWorld = (MUWorld *) [contextDictionary objectForKey:MUInsertionWorld];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
                                                 password:[playerPasswordField stringValue]
-                                                   world:selectedWorld];
+                                                   world:insertionWorld];
     
-    [[[MUServices profileRegistry] profileForWorld:selectedWorld
+    [[[MUServices profileRegistry] profileForWorld:insertionWorld
 																						player:newPlayer]
       setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
     
+		[insertionWorld insertObject:newPlayer inPlayersAtIndex:insertionIndex];
+		
     [newPlayer release];
+		[worldsAndPlayersOutlineView reloadData];
   }
+	
+	[(NSObject *) contextInfo release];
 }
 
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -513,6 +555,8 @@ enum MUProfilesEditingReturnValues
 		[worldsAndPlayersOutlineView reloadData];
 		[worldsAndPlayersOutlineView expandItem:newWorld];
   }
+	
+	[(NSObject *) contextInfo release];
 }
 
 - (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo

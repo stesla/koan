@@ -82,6 +82,11 @@ NSString *MULDisconnect = @"Disconnect";
 
 NSString *MULConnectWithoutLogin = @"ConnectWithoutLogin";
 
+// Miscellaneous other constants.
+
+NSString *MUInsertionIndex = @"MUInsertionIndex";
+NSString *MUInsertionWorld = @"MUInsertionWorld";
+
 // ANSI parsing constants
 
 NSString *J3ANSIForeColorAttributeName = @"J3ANSIForeColorAttributeName";

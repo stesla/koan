@@ -82,6 +82,11 @@ extern NSString *MULDisconnect;
 
 extern NSString *MULConnectWithoutLogin;
 
+// Miscellaneous other constants.
+
+extern NSString *MUInsertionIndex;
+extern NSString *MUInsertionWorld;
+
 // ANSI parsing constants
 
 extern NSString *J3ANSIForeColorAttributeName;
