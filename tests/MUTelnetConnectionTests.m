@@ -108,14 +108,16 @@
 }
 
 - (void) setUp
-{
+{  
+  NSInputStream *input = [NSInputStream inputStreamWithData:[NSData data]];
+  NSOutputStream *output = [NSOutputStream outputStreamToMemory];
   _lineRead = @"";
   _connectionConnecting = NO;
   _connectionConnected = NO;
   _connectionEnded = NO;
   _connectionError = nil;
   _messageCount = 0;
-  _telnet = [[MUTelnetConnection alloc] initWithInputStream:nil outputStream:nil];
+  _telnet = [[MUTelnetConnection alloc] initWithInputStream:input outputStream:output];
   [_telnet setDelegate:self];
 }
 
@@ -308,6 +310,18 @@
   [self assertTrue:_connectionConnected message:@"connectionConnected"];
   [self assertTrue:_connectionEnded message:@"connectionEnded"];
   [self assertNotNil:_connectionError];
+}
+
+- (void) testNilStreams
+{
+  NSInputStream *input = [NSInputStream inputStreamWithData:[NSData data]];
+  NSOutputStream *output = [NSOutputStream outputStreamToMemory];
+  [self assertNil:[[MUTelnetConnection alloc]
+    initWithInputStream:nil outputStream:output] message:@"input"];
+  [self assertNil:[[MUTelnetConnection alloc]
+    initWithInputStream:input outputStream:nil] message:@"output"];
+  [self assertNil:[[MUTelnetConnection alloc]
+    initWithInputStream:nil outputStream:nil] message:@"both"];
 }
 
 @end

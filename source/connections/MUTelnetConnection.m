@@ -64,7 +64,9 @@
 - (id) initWithInputStream:(NSInputStream *)input  
               outputStream:(NSOutputStream *)output
 {
-  if (self = [super init])
+  self = [super init];
+
+  if (self && input && output)
   {
     [self setInput:input];
     [self setOutput:output];
@@ -77,6 +79,8 @@
     _reasonClosed = MUConnectionClosedReasonNotClosed;
     _commandChar = TEL_NONE;
   }
+  else
+    self = nil;
   return self;
 }
 
