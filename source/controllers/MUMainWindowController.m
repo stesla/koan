@@ -79,6 +79,8 @@
 - (IBAction) disconnect:(id)sender
 {
   [_telnetConnection close];
+  [_telnetConnection release];
+  _telnetConnection = nil;
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
 }
@@ -168,9 +170,7 @@
         default:
           [self _displayString:NSLocalizedString (MULConnectionClosed, nil)];
       }
-      [telnet release];
-      [disconnectButton setEnabled:NO];
-      [connectButton setEnabled:YES];      
+	  [self disconnect:nil];
       break;
       
     default:
