@@ -20,6 +20,59 @@
 
 #import "MUTelnetConnection.h"
 
+#include <string.h>
+
 @implementation MUTelnetConnection
+
+- (id) init
+{
+  if (self = [super init])
+  {
+    _data = [[NSMutableData alloc] init];
+  }
+  return self;
+}
+
+- (void) dealloc
+{
+  [_data release];
+  [super dealloc];
+}
+
+- (NSString *) read
+{
+  return [[[NSString alloc] initWithBytes:_data
+                                   length:[_data length]
+                                 encoding:NSASCIIStringEncoding] autorelease];
+
+}
+
+// NSStream delegate
+- (void) stream:(NSStream *)stream handleEvent:(NSStreamEvent)event
+{
+  switch(event)
+  {
+    case NSStreamEventHasBytesAvailable: 
+    {      
+      uint8_t buffer[MUTelnetBufferMax];
+      bzero(buffer, MUTelnetBufferMax);
+      unsigned int length;
+      length = 0;
+      length = [(NSInputStream *)stream read:buffer maxLength:MUTelnetBufferMax];
+      if (length)
+      {
+        [_data appendBytes:buffer length:length];
+      }
+      break;
+    }
+    case NSStreamEventEndEncountered:
+    case NSStreamEventErrorOccurred:
+    case NSStreamEventHasSpaceAvailable:
+    case NSStreamEventOpenCompleted:
+    case NSStreamEventNone:
+    default:
+      return;
+  }
+}
 
 @end

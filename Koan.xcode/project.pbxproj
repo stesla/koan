@@ -47,7 +47,6 @@
 			children = (
 				8D1107320486CEB800E47090,
 				E62040FB06B054E400236608,
-				7E9F451706C4BE4B00686DF0,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -78,7 +77,6 @@
 			targets = (
 				8D1107260486CEB800E47090,
 				E62040FA06B054E400236608,
-				7E45F26D06C52CB10090E3FB,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -216,75 +214,6 @@
 //7E2
 //7E3
 //7E4
-		7E45F26B06C52CB10090E3FB = {
-			buildActionMask = 2147483647;
-			files = (
-			);
-			isa = PBXSourcesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7E45F26C06C52CB10090E3FB = {
-			buildActionMask = 2147483647;
-			files = (
-				7E45F33806C543BB0090E3FB,
-			);
-			isa = PBXFrameworksBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7E45F26D06C52CB10090E3FB = {
-			buildPhases = (
-				7E45F33F06C544320090E3FB,
-				7E45F26B06C52CB10090E3FB,
-				7E45F26C06C52CB10090E3FB,
-			);
-			buildRules = (
-			);
-			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INSTALL_PATH = /usr/local/bin;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "-framework Foundation -framework AppKit";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = socket;
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
-			};
-			comments = "This is a tool to exercise MUSocketConnection.  It is intended to connect to the simple TCP servers located in tests/socket";
-			dependencies = (
-				7E45F27106C52CC10090E3FB,
-			);
-			isa = PBXNativeTarget;
-			name = socket;
-			productName = socketnet;
-			productReference = 7E9F451706C4BE4B00686DF0;
-			productType = "com.apple.product-type.tool";
-		};
-		7E45F27006C52CC10090E3FB = {
-			containerPortal = 29B97313FDCFA39411CA2CEA;
-			isa = PBXContainerItemProxy;
-			proxyType = 1;
-			remoteGlobalIDString = 8D1107260486CEB800E47090;
-			remoteInfo = Koan;
-		};
-		7E45F27106C52CC10090E3FB = {
-			isa = PBXTargetDependency;
-			target = 8D1107260486CEB800E47090;
-			targetProxy = 7E45F27006C52CC10090E3FB;
-		};
-		7E45F33806C543BB0090E3FB = {
-			fileRef = 1058C7A1FEA54F0111CA2CBB;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E45F33F06C544320090E3FB = {
-			buildActionMask = 2147483647;
-			files = (
-			);
-			isa = PBXResourcesBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7E5E161806CC30E200518E61 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -325,13 +254,33 @@
 			settings = {
 			};
 		};
-		7E9F451706C4BE4B00686DF0 = {
-			explicitFileType = "compiled.mach-o.executable";
-			includeInIndex = 0;
+		7EA9674706FA80B700D57864 = {
+			fileEncoding = 4;
 			isa = PBXFileReference;
-			path = socket;
-			refType = 3;
-			sourceTree = BUILT_PRODUCTS_DIR;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUTelnetConnectionTests.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7EA9674806FA80B700D57864 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUTelnetConnectionTests.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7EA9674906FA80B700D57864 = {
+			fileRef = 7EA9674706FA80B700D57864;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7EA9674A06FA80B700D57864 = {
+			fileRef = 7EA9674806FA80B700D57864;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 //7E0
 //7E1
@@ -444,6 +393,7 @@
 			files = (
 				7E5E161A06CC30E200518E61,
 				E62041AA06B0566B00236608,
+				7EA9674906FA80B700D57864,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -453,6 +403,7 @@
 			files = (
 				E62041AB06B0566B00236608,
 				7E5E161B06CC30E200518E61,
+				7EA9674A06FA80B700D57864,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,6 +573,8 @@
 		};
 		E6B5E40A06A6F28400F53EBB = {
 			children = (
+				7EA9674706FA80B700D57864,
+				7EA9674806FA80B700D57864,
 				E62041A806B0566B00236608,
 				E62041A906B0566B00236608,
 				E648B8E906B03FBC0070F73E,
@@ -636,8 +589,8 @@
 			);
 			isa = PBXGroup;
 			path = Documentation;
-			refType = 4;
-			sourceTree = "<group>";
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		E6B5E46B06A700E400F53EBB = {
 			children = (

@@ -40,8 +40,16 @@ enum MUTelnetCommands
   TEL_IAC
 };
 
+#define MUTelnetBufferMax 1024
+
 @interface MUTelnetConnection : NSObject
 {
+  NSMutableData *_data;
 }
+
+- (NSString *) read;
+
+// NSStream delegate
+- (void) stream:(NSStream *)stream handleEvent:(NSStreamEvent)event;
 
 @end

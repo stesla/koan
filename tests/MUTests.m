@@ -34,7 +34,7 @@ main (int argc, const char *argv[])
   TestSuite *suite = [TestSuite suiteWithName:@"Koan Tests"];
   
   // Add tests here.
-  
+  [suite addTestSuite:[MUTelnetConnectionTests class]];
   return suite;
 }
 
