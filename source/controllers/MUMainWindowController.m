@@ -23,6 +23,12 @@
 #import "MUAnsiRemovingFilter.h"
 #import "MUTextLogFilter.h"
 
+@interface MUMainWindowController (Private)
+
+- (void) _displayString:(NSString *)string;
+
+@end
+
 @implementation MUMainWindowController
 
 - (void) awakeFromNib
@@ -61,13 +67,13 @@
 {
   NSString *name = [hostNameField stringValue];
   int portNumber = [portField intValue];
+  
   _telnetConnection = [[J3TelnetConnection alloc] initWithHostName:name
                                                             onPort:portNumber];
-  if(_telnetConnection)
+  if (_telnetConnection)
   {
     [_telnetConnection setDelegate:self];
     [_telnetConnection open];
-  
     [connectButton setEnabled:NO];
     [disconnectButton setEnabled:YES];
   }
@@ -105,23 +111,6 @@
   }
   
   [[self window] makeFirstResponder:inputField];
-}
-
-- (void) _displayString:(NSString *)string
-{
-  NSAttributedString *unfilteredString =
-    [NSAttributedString attributedStringWithString:string
-                                        attributes:[receivedTextView typingAttributes]];
-  NSAttributedString *filteredString = [_filterQueue processAttributedString:unfilteredString];
-
-  NSTextStorage *textStorage = [receivedTextView textStorage];
-  
-  [textStorage beginEditing];
-  [textStorage appendAttributedString:filteredString];
-  [textStorage endEditing];
-  
-  if ([[(NSScrollView *) [[receivedTextView superview] superview] verticalScroller] floatValue] == 1.0)
-    [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];  
 }
 
 - (IBAction) nextCommand:(id)sender
@@ -212,6 +201,28 @@
     }
   }
   return NO;
+}
+
+@end
+
+@implementation MUMainWindowController (Private)
+
+- (void) _displayString:(NSString *)string
+{
+  NSAttributedString *unfilteredString =
+    [NSAttributedString attributedStringWithString:string
+                                        attributes:[receivedTextView typingAttributes]];
+  NSAttributedString *filteredString = [_filterQueue processAttributedString:unfilteredString];
+  NSTextStorage *textStorage = [receivedTextView textStorage];
+  float scrollerPosition = [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
+  
+  [textStorage replaceCharactersInRange:NSMakeRange ([textStorage length], 0)
+                   withAttributedString:filteredString];
+  
+  [[receivedTextView window] invalidateCursorRectsForView:receivedTextView];
+  
+  if (scrollerPosition - 1.0 < 0.000001) // Avoiding inaccuracy of == for floats.
+    [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 0)];  
 }
 
 @end
