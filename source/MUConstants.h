@@ -13,6 +13,7 @@ extern NSString *MUPFontName;
 extern NSString *MUPFontSize;
 extern NSString *MUPTextColor;
 extern NSString *MUPWorlds;
+extern NSString *MUPProfiles;
 
 // Notification constants.
 

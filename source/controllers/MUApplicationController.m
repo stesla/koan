@@ -54,6 +54,9 @@
 
 - (void) awakeFromNib
 {
+  [MUProfileRegistry sharedRegistry];
+  [MUWorldRegistry sharedRegistry];
+  
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
   [self rebuildConnectionsMenuWithAutoconnect:YES];
@@ -185,6 +188,7 @@
   [self updateApplicationBadge];
   
   [[MUWorldRegistry sharedRegistry] saveWorlds];
+  [[MUProfileRegistry sharedRegistry] saveProfiles];
 }
 
 #pragma mark -
@@ -260,10 +264,12 @@
     
     [connectItem setTarget:self];
     [connectItem setRepresentedObject:profile];
-    
+
     if (autoconnect && [profile autoconnect])
     {
-      [self openConnection:connectItem];
+      [profile setWorld:world];
+      if ([profile autoconnect])
+        [self openConnection:connectItem];
     }
     
     for (j = 0; j < playersCount; j++)
@@ -277,9 +283,12 @@
       [playerItem setTarget:self];
       [playerItem setRepresentedObject:profile];
       
-      if (autoconnect && [profile autoconnect])
+      if (autoconnect)
       {
-        [self openConnection:playerItem];
+        [profile setWorld:world];
+        [profile setPlayer:player];
+        if ([profile autoconnect])
+          [self openConnection:playerItem];
       }
       
       [worldMenu addItem:playerItem];

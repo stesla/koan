@@ -17,6 +17,9 @@
 
 + (MUProfileRegistry *) sharedRegistry;
 
+- (NSDictionary *) profiles;
+- (void) setProfiles:(NSDictionary *)newProfiles;
+
 - (MUProfile *) profileForProfile:(MUProfile *)profile;
 - (MUProfile *) profileForWorld:(MUWorld *)world;
 - (MUProfile *) profileForWorld:(MUWorld *)world player:(MUPlayer *)player;
@@ -33,4 +36,5 @@
 - (void) removeProfileForUniqueIdentifier:(NSString *)identifier;
 - (void) removeAllProfilesForWorld:(MUWorld *)world;
 
+- (void) saveProfiles;
 @end

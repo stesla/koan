@@ -7,6 +7,8 @@
 #import "MUProfile.h"
 #import "J3TextLogger.h"
 
+static const int32_t currentVersion = 1;
+
 @implementation MUProfile
 
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld 
@@ -177,4 +179,20 @@
   return rval;
 }
 
+// NSCoding protocol
+- (void) encodeWithCoder:(NSCoder *)encoder
+{
+  [encoder encodeInt32:currentVersion forKey:@"version"];
+  [encoder encodeBool:[self autoconnect] forKey:@"autoconnect"];
+}
+
+- (id) initWithCoder:(NSCoder *)decoder
+{
+  // Actually assign this after we start caring
+  [decoder decodeInt32ForKey:@"version"];
+  
+  [self setAutoconnect:[decoder decodeBoolForKey:@"autoconnect"]];
+  
+  return self;
+}
 @end

@@ -242,6 +242,10 @@ enum MUProfilesEditingReturnValues
                                                 password:[playerPasswordField stringValue]
                                                    world:selectedWorld];
     
+    [[[MUProfileRegistry sharedRegistry] profileForWorld:selectedWorld
+                                                  player:newPlayer]
+      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
+    
     [playersArrayController addObject:newPlayer];
     [newPlayer release];
     [playersArrayController rearrangeObjects];
@@ -279,7 +283,12 @@ enum MUProfilesEditingReturnValues
 {
   if (returnCode == MUEditOkay)
   {
-    [worldsArrayController addObject:[self createWorldFromSheetWithPlayers:[NSArray array]]];
+    MUWorld *world = [self createWorldFromSheetWithPlayers:[NSArray array]];
+    
+    [[[MUProfileRegistry sharedRegistry] profileForWorld:world]
+      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
+
+    [worldsArrayController addObject:world];
     [worldsArrayController rearrangeObjects];
   }
 }

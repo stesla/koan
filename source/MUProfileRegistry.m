@@ -9,12 +9,20 @@
 
 static MUProfileRegistry * sharedRegistry = nil;
 
+@interface MUProfileRegistry (Private)
+- (void) readProfilesFromUserDefaults;
+- (void) writeProfilesToUserDefaults;
+@end
+
 @implementation MUProfileRegistry
 
 + (MUProfileRegistry *) sharedRegistry
 {
   if (!sharedRegistry)
+  {
     sharedRegistry = [[MUProfileRegistry alloc] init];
+    [sharedRegistry readProfilesFromUserDefaults];
+  }
   return sharedRegistry;
 }
 
@@ -115,4 +123,44 @@ static MUProfileRegistry * sharedRegistry = nil;
 
   [self removeProfileForWorld:world];
 }
+
+- (void) saveProfiles
+{
+  [self writeProfilesToUserDefaults];
+}
+
+- (NSDictionary *) profiles
+{
+  return profiles;
+}
+
+- (void) setProfiles:(NSDictionary *)newProfiles
+{
+  NSMutableDictionary *copy = [newProfiles mutableCopy];
+  [profiles release];
+  profiles = copy;
+}
+
 @end
+
+@implementation MUProfileRegistry (Private)
+- (void) readProfilesFromUserDefaults
+{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSData *profilesData = [defaults dataForKey:MUPProfiles];
+  
+  if (profilesData)
+  {
+    [self setProfiles:
+      [NSKeyedUnarchiver unarchiveObjectWithData:profilesData]];
+  }
+}
+
+- (void) writeProfilesToUserDefaults
+{
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:profiles];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  [defaults setObject:data forKey:MUPProfiles];  
+}
+@end
+

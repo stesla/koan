@@ -13,6 +13,7 @@ NSString *MUPFontName = @"MUPFontName";
 NSString *MUPFontSize = @"MUPFontSize";
 NSString *MUPTextColor = @"MUPTextColor";
 NSString *MUPWorlds = @"MUPWorlds";
+NSString *MUPProfiles = @"MUPProfiles";
 
 // Notification constants.
 
