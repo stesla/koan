@@ -12,6 +12,7 @@
 @interface MUApplicationController (Private)
 
 - (IBAction) openConnection:(id)sender;
+- (void) updateConnectionsMenu;
 
 @end
 
@@ -77,29 +78,11 @@
 
 - (void) setConnectionSpecs:(NSArray *)newConnectionSpecs
 {
-  int i, connectionsCount = [newConnectionSpecs count], menuCount = [openConnectionMenu numberOfItems];
   NSArray *copy = [newConnectionSpecs copy];
-  
   [connectionSpecs release];
   connectionSpecs = copy;
   
-  for (i = menuCount - 1; i >= 0; i--)
-  {
-    [openConnectionMenu removeItemAtIndex:i];
-  }
-  
-  for (i = 0; i < connectionsCount; i++)
-  {
-    MUConnectionSpec *connectionSpec = [connectionSpecs objectAtIndex:i];
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[connectionSpec name]
-                                                  action:@selector(openConnection:)
-                                           keyEquivalent:@""];
-    
-    [item setTarget:self];
-    [item setRepresentedObject:connectionSpec];
-    [openConnectionMenu addItem:item];
-    [item release];
-  }
+  [self updateConnectionsMenu];
 }
 
 // Actions.
@@ -194,6 +177,13 @@
   [[NSUserDefaults standardUserDefaults] setObject:array forKey:MUPConnections];
 }
 
+// Delegate methods for NSControl.
+
+- (void) controlTextDidEndEditing:(NSNotification *)notification
+{
+  [self updateConnectionsMenu];
+}
+
 @end
 
 @implementation MUApplicationController (Private)
@@ -207,6 +197,31 @@
   [controller showWindow:self];
   [controller connect:sender];
   [controller release];
+}
+
+- (void) updateConnectionsMenu
+{
+  int i, connectionsCount = [connectionSpecs count], menuCount = [openConnectionMenu numberOfItems];
+  
+  NSLog (@"Updating menu.");
+  
+  for (i = menuCount - 1; i >= 0; i--)
+  {
+    [openConnectionMenu removeItemAtIndex:i];
+  }
+  
+  for (i = 0; i < connectionsCount; i++)
+  {
+    MUConnectionSpec *connectionSpec = [connectionSpecs objectAtIndex:i];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[connectionSpec name]
+                                                  action:@selector(openConnection:)
+                                           keyEquivalent:@""];
+    
+    [item setTarget:self];
+    [item setRepresentedObject:connectionSpec];
+    [openConnectionMenu addItem:item];
+    [item release];
+  }
 }
 
 @end

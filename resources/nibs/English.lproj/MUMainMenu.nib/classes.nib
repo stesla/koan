@@ -2,7 +2,7 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {changeFont = id; chooseNewFont = id; showPreferences = id; }; 
+            ACTIONS = {changeGlobalFont = id; chooseNewFont = id; showPreferences = id; }; 
             CLASS = MUApplicationController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
