@@ -19,8 +19,9 @@
 
 + (MUProfileRegistry *) sharedRegistry;
 
+- (MUProfile *) profileForProfile:(MUProfile *)profile;
 - (MUProfile *) profileForWorld:(MUWorld *)world;
 - (MUProfile *) profileForWorld:(MUWorld *)world player:(MUPlayer *)player;
-- (MUProfile *) profileForUniqueIdentifier:(NSString *)worldName;
+- (MUProfile *) profileForUniqueIdentifier:(NSString *)identifier;
 
 @end

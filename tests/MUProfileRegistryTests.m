@@ -11,7 +11,26 @@
 #import "MUProfile.h"
 #import "MUWorld.h"
 
+@interface MUProfileRegistryTests (Private)
+- (void) assertProfile:(MUProfile *)profile
+                 world:(MUWorld *)world 
+                player:(MUPlayer *)player;
+
+- (MUWorld *) testWorld;
+- (MUPlayer *) testPlayerWithWorld:(MUWorld *)world;
+@end
+
 @implementation MUProfileRegistryTests
+
+- (void) setUp
+{
+  registry = [[MUProfileRegistry alloc] init];
+}
+
+- (void) tearDown
+{
+  [registry release];
+}
 
 - (void) testSharedRegistry
 {
@@ -24,38 +43,57 @@
   [self assert:registryOne equals:registryTwo];
 }
 
-- (void) testProfileRetrieval
+- (void) testProfileWithWorld
 {
-  MUProfile *profileOne = nil, *profileTwo = nil, *profileThree = nil;
-  MUWorld *world = nil;
-  MUPlayer *player = nil;
-  MUProfileRegistry *registry = [[MUProfileRegistry alloc] init];
-  
-  world = [[[MUWorld alloc] init] autorelease];
-  [world setWorldName:@"Test World"];
+  MUProfile *profileOne = nil, *profileTwo = nil;
+  MUWorld *world = [self testWorld];
   
   profileOne = [registry profileForWorld:world];
-  [self assertNotNil:profileOne];
-  [self assert:[profileOne world] equals:world];
-  [self assertNil:[profileOne player]];
-  
+  [self assertProfile:profileOne world:world player:nil];
   profileTwo = [registry profileForUniqueIdentifier:@"test.world"];
-  [self assertNotNil:profileTwo];
-  [self assert:profileTwo equals:profileOne];
-  
-  player = [[[MUPlayer alloc] initWithName:@"User"
-                                  password:@""
-                        connectOnAppLaunch:NO
-                                     world:world] autorelease];
-  
-  profileThree = [registry profileForWorld:world player:player];
-  [self assertNotNil:profileThree];
-  [self assert:[profileThree world] equals:world];
-  [self assert:[profileThree player] equals:player];
-  [self assertFalse:(profileThree == profileOne) message:@"New profile"];
+  [self assert:profileTwo equals:profileOne message:@"First"];
+  profileOne = [registry profileForWorld:world];
+  [self assert:profileOne equals:profileTwo message:@"Second"];
+}
 
+- (void) testProfileWithWorldAndPlayer
+{
+  MUProfile *profileOne = nil, *profileTwo = nil;
+  MUWorld *world = [self testWorld];
+  MUPlayer *player = [self testPlayerWithWorld:world];
+  
+  profileOne = [registry profileForWorld:world player:player];
+  [self assertProfile:profileOne world:world player:player];
   profileTwo = [registry profileForUniqueIdentifier:@"test.world.user"];
-  [self assertNotNil:profileTwo];
-  [self assert:profileTwo equals:profileThree];
+  [self assert:profileTwo equals:profileOne message:@"First"];
+  profileOne = [registry profileForWorld:world player:player];
+  [self assert:profileOne equals:profileTwo message:@"Second"];
+}
+
+@end
+
+@implementation MUProfileRegistryTests (Private)
+- (void) assertProfile:(MUProfile *)profile
+                 world:(MUWorld *)world 
+                player:(MUPlayer *)player
+{
+  [self assertNotNil:profile];
+  [self assert:[profile world] equals:world];
+  [self assert:[profile player] equals:player];
+}
+
+- (MUWorld *) testWorld
+{
+  MUWorld * world = [[[MUWorld alloc] init] autorelease];
+  [world setWorldName:@"Test World"];
+  return world;
+}
+
+- (MUPlayer *) testPlayerWithWorld:(MUWorld *)world
+{
+  return [[[MUPlayer alloc] initWithName:@"User"
+                                password:@""
+                      connectOnAppLaunch:NO
+                                   world:world] autorelease];
 }
 @end

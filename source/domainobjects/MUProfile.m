@@ -7,11 +7,6 @@
 #import "MUProfile.h"
 #import "J3TextLogger.h"
 
-@interface MUProfile (Private)
-- (void) setPlayer:(MUPlayer *)player;
-- (void) setWorld:(MUWorld *)world;
-@end
-
 @implementation MUProfile
 
 + (MUProfile *) profileWithWorld:(MUWorld *)aWorld player:(MUPlayer *)aPlayer
@@ -135,9 +130,7 @@
   }
   return rval;
 }
-@end
 
-@implementation MUProfile (Private)
 - (void) setWorld:(MUWorld *)newWorld
 {
   [newWorld retain];

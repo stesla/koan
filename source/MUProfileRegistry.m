@@ -37,17 +37,24 @@ static MUProfileRegistry * sharedRegistry = nil;
 
 - (MUProfile *) profileForWorld:(MUWorld *)world
 {
-  MUProfile * profile = [MUProfile profileWithWorld:world];
-  [profiles setObject:profile forKey:[profile uniqueIdentifier]];
-  return profile;
+  return [self profileForProfile:[MUProfile profileWithWorld:world]];
 }
 
 - (MUProfile *) profileForWorld:(MUWorld *)world player:(MUPlayer *)player
 {
-  MUProfile * profile = [MUProfile profileWithWorld:world
-                                             player:player];
-  [profiles setObject:profile forKey:[profile uniqueIdentifier]];
-  return profile;
+  return [self profileForProfile:[MUProfile profileWithWorld:world
+                                                      player:player]];
+}
+
+- (MUProfile *) profileForProfile:(MUProfile *)profile
+{
+  MUProfile *rval = [profiles objectForKey:[profile uniqueIdentifier]];
+  if (!rval)
+  {
+    rval = profile;
+    [profiles setObject:rval forKey:[rval uniqueIdentifier]];    
+  }
+  return rval;
 }
 
 - (MUProfile *) profileForUniqueIdentifier:(NSString *)identifier

@@ -37,5 +37,7 @@
 - (void) logoutWithConnection:(J3TelnetConnection *)connection;
 
 - (MUWorld *) world;
+- (void) setWorld:(MUWorld *)world;
 - (MUPlayer *) player;
+- (void) setPlayer:(MUPlayer *)player;
 @end
