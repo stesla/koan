@@ -51,6 +51,7 @@ enum MUProfilesEditingReturnValues
   [worldPortField setFormatter:worldPortFormatter];
   [worldProxyPortField setFormatter:proxyPortFormatter];
   
+	[worldsAndPlayersOutlineView setAutosaveExpandedItems:YES];
   [worldsAndPlayersOutlineView setTarget:self];
   [worldsAndPlayersOutlineView setDoubleAction:@selector(editClickedRow:)];
 
@@ -168,6 +169,16 @@ enum MUProfilesEditingReturnValues
 		return NO;
 }
 
+- (id) outlineView:(NSOutlineView *)outlineView itemForPersistentObject:(id)object
+{
+	if (object && [object isKindOfClass:[NSString class]])
+	{
+		return [[MUServices worldRegistry] worldForUniqueIdentifier:(NSString *) object];
+	}
+	
+	return nil;
+}
+
 - (int) outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if (item)
@@ -184,6 +195,14 @@ enum MUProfilesEditingReturnValues
 		return [(MUPlayer *) item name];
 	else
 		return item;
+}
+
+- (id) outlineView:(NSOutlineView *)outlineView persistentObjectForItem:(id)item
+{
+	if ([item isKindOfClass:[MUWorld class]])
+		return [(MUWorld *) item uniqueIdentifier];
+	else
+		return nil;
 }
 
 #pragma mark -
@@ -427,6 +446,7 @@ enum MUProfilesEditingReturnValues
   {
     MUWorld *oldWorld = (MUWorld *) contextInfo;
     MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[oldWorld players]];
+		BOOL isExpanded = [worldsAndPlayersOutlineView isItemExpanded:oldWorld];
 		
     // Update every profile that has this world.
     [self updateProfilesForWorld:oldWorld
@@ -440,7 +460,11 @@ enum MUProfilesEditingReturnValues
       setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
 		
 		[newWorld release];
+		
 		[worldsAndPlayersOutlineView reloadData];
+		
+		if (isExpanded)
+			[worldsAndPlayersOutlineView expandItem:newWorld];
   }
 }
 

@@ -121,6 +121,21 @@ static MUWorldRegistry *sharedRegistry = nil;
   return [worlds objectAtIndex:index];
 }
 
+- (MUProfile *) worldForUniqueIdentifier:(NSString *)identifier
+{
+	unsigned i, worldsCount = [worlds count];
+	
+	for (i = 0; i < worldsCount; i++)
+	{
+		MUPlayer *world = [worlds objectAtIndex:i];
+		
+		if ([identifier isEqualToString:[world uniqueIdentifier]])
+			return world;
+	}
+	
+	return nil;
+}
+
 @end
 
 #pragma mark -

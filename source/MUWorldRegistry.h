@@ -23,6 +23,7 @@
 
 - (unsigned) count;
 - (MUWorld *) worldAtIndex:(unsigned)index;
+- (MUProfile *) worldForUniqueIdentifier:(NSString *)identifier;
 
 - (void) removeWorld:(MUWorld *)world;
 - (void) replaceWorld:(MUWorld *)oldWorld withWorld:(MUWorld *)newWorld;
