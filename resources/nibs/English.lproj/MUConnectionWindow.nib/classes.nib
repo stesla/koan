@@ -1,0 +1,25 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = MUConnectionToolbarController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {window = NSWindow; windowController = NSWindowController; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
+                connect = id; 
+                disconnect = id; 
+                nextCommand = id; 
+                previousCommand = id; 
+                writeLine = id; 
+            }; 
+            CLASS = MUConnectionWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {inputView = NSTextView; receivedTextView = NSTextView; }; 
+            SUPERCLASS = NSWindowController; 
+        }
+    ); 
+    IBVersion = 1; 
+}

@@ -2,5 +2,5 @@
 
 CFBundleName = "Koan";
 CFBundleShortVersionString = "0.1";
-CFBundleGetInfoString = "Koan version 0.1, Copyright © 2004 Tyler Berry and Samuel Tesla";
-NSHumanReadableCopyright = "Copyright © 2004 Tyler Berry and Samuel Tesla";
+CFBundleGetInfoString = "Koan version 0.1, Copyright Â© 2004 3James Software";
+NSHumanReadableCopyright = "Copyright Â© 2004 3James Software";

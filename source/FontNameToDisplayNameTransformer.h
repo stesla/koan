@@ -33,29 +33,8 @@
  OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "FontNameToDisplayNameTransformer.h"
+#import <Foundation/Foundation.h>
 
-/*
- Takes as input the fontName of a font as stored in user defaults,
- returns the displayed font name of the font to show to the user.
- */
-
-@implementation FontNameToDisplayNameTransformer
-
-+ (Class) transformedValueClass
-{
-  return [NSString class];
-}
-
-+ (BOOL) allowsReverseTransformation
-{
-  return NO;
-}
-
-- (id) transformedValue:(id)value
-{
-  NSFont *font = [NSFont fontWithName:value size:12];
-  return [font displayName];
-}
+@interface FontNameToDisplayNameTransformer : NSValueTransformer
 
 @end

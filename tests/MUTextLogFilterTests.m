@@ -1,21 +1,7 @@
 //
 // MUTextLogFilterTests.m
 //
-// Copyright (C) 2004 Tyler Berry and Samuel Tesla
-//
-// Koan is free software; you can redistribute it and/or modify it under the
-// terms of the GNU General Public License as published by the Free Software
-// Foundation; either version 2 of the License, or (at your option) any later
-// version.
-//
-// Koan is distributed in the hope that it will be useful, but WITHOUT ANY
-// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-// details.
-//
-// You should have received a copy of the GNU General Public License along with
-// Koan; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
-// Suite 330, Boston, MA 02111-1307 USA
+// Copyright (C) 2004 3James Software
 //
 
 #import "MUTextLogFilterTests.h"
@@ -31,7 +17,7 @@
 
 - (void) assertFilter:(id)object
 {
-  [self assert:[_filter filter:object] equals:object message:nil];
+  [self assert:[filter filter:object] equals:object message:nil];
 }
 
 - (void) assertFilterString:(NSString *)string
@@ -41,7 +27,7 @@
 
 - (void) assertLoggedOutput:(NSString *)string
 {
-  NSString *outputString = [NSString stringWithCString:(const char *)_outputBuffer];
+  NSString *outputString = [NSString stringWithCString:(const char *)outputBuffer];
   
   [self assert:outputString equals:string];
 }
@@ -52,17 +38,23 @@
 
 - (void) setUp
 {
-  memset (_outputBuffer, 0, MUTextLogTestBufferMax);
-  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:_outputBuffer
+  memset (outputBuffer, 0, MUTextLogTestBufferMax);
+  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:outputBuffer
                                                        capacity:MUTextLogTestBufferMax];
   [output open];
   
-  _filter = [[MUTextLogFilter alloc] initWithOutputStream:output];
+  filter = [[MUTextLogFilter alloc] initWithOutputStream:output];
 }
 
 - (void) tearDown
 {
-  [_filter release];
+  [filter release];
+}
+
+- (void) testEmptyString
+{
+  [self assertFilterString:@""];
+  [self assertLoggedOutput:@""];
 }
 
 - (void) testSimpleString
@@ -101,11 +93,20 @@
   [self assertLoggedOutput:@"One Two"];
 }
 
-- (void) testComplexConcatenation
+- (void) testEmptyStringConcatenation
+{
+  [self assertFilterString:@"One"];
+  [self assertFilterString:@""];
+  [self assertFilterString:@"Two"];
+  [self assertLoggedOutput:@"OneTwo"];
+}
+
+- (void) testComplexEmptyStringConcatenation
 {
   NSMutableAttributedString *one = [NSMutableAttributedString attributedStringWithString:@"One"];
   NSMutableAttributedString *two = [NSMutableAttributedString attributedStringWithString:@"Two"];
-
+  NSMutableAttributedString *empty = [NSMutableAttributedString attributedStringWithString:@""];
+  
   [one addAttribute:NSForegroundColorAttributeName
               value:[NSColor redColor]
               range:NSMakeRange (0, [one length])];
@@ -114,10 +115,14 @@
               value:[NSFont fontWithName:@"Monaco" size:10.0]
               range:NSMakeRange (0, [two length])];
   
+  [empty addAttribute:NSForegroundColorAttributeName
+                value:[NSColor greenColor]
+                range:NSMakeRange (0, [empty length])];
+  
   [self assertFilter:one];
-  [self assertFilterString:@" "];
+  [self assertFilter:empty];
   [self assertFilter:two];
-  [self assertLoggedOutput:@"One Two"];
+  [self assertLoggedOutput:@"OneTwo"];
 }
 
 @end

@@ -9,7 +9,7 @@
 	<key>CFBundleIconFile</key>
 	<string>Koan.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>cc.arete.Koan</string>
+	<string>com.3james.Koan</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -21,7 +21,7 @@
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
 	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
+	<string>MUMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 </dict>

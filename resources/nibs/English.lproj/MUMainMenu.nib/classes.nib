@@ -2,9 +2,14 @@
     IBClasses = (
         {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
         {
-            ACTIONS = {showPreferences = id; }; 
+            ACTIONS = {changeFont = id; chooseNewFont = id; showPreferences = id; }; 
             CLASS = MUApplicationController; 
             LANGUAGE = ObjC; 
+            OUTLETS = {
+                openConnectionMenu = NSMenu; 
+                portColumn = NSTableColumn; 
+                preferencePanel = NSPanel; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {
@@ -29,6 +34,13 @@
                 window = NSWindow; 
                 windowController = NSWindowController; 
             }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {changePanes = id; orderFrontPrefsPanel = id; }; 
+            CLASS = UKPrefsPanel; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {tabView = NSTabView; }; 
             SUPERCLASS = NSObject; 
         }
     ); 

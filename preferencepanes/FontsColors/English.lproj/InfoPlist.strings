@@ -1,6 +1,0 @@
-/* Localized versions of Info.plist keys */
-
-CFBundleName = "Koan Fonts/Colors Preference Pane";
-CFBundleShortVersionString = "0.1";
-CFBundleGetInfoString = "Koan Fonts/Colors Preference Pane version 0.1, Copyright © 2004 Tyler Berry and Samuel Tesla";
-NSHumanReadableCopyright = "Copyright © 2004 Tyler Berry and Samuel Tesla";

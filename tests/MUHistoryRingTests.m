@@ -1,21 +1,7 @@
 //
 // MUHistoryRingTests.m
 //
-// Copyright (C) 2004 Tyler Berry and Samuel Tesla
-//
-// Koan is free software; you can redistribute it and/or modify it under the
-// terms of the GNU General Public License as published by the Free Software
-// Foundation; either version 2 of the License, or (at your option) any later
-// version.
-//
-// Koan is distributed in the hope that it will be useful, but WITHOUT ANY
-// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-// details.
-//
-// You should have received a copy of the GNU General Public License along with
-// Koan; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
-// Suite 330, Boston, MA 02111-1307 USA
+// Copyright (C) 2004 3James Software
 //
 
 #import "MUHistoryRingTests.h"
@@ -36,29 +22,29 @@ NSString *Third = @"Third";
 
 - (void) assertPrevious:(NSString *)expected
 {
-  [self assert:[_ring previousString] equals:expected];
+  [self assert:[ring previousString] equals:expected];
 }
 
 - (void) assertNext:(NSString *)expected
 {
-  [self assert:[_ring nextString] equals:expected];
+  [self assert:[ring nextString] equals:expected];
 }
 
 - (void) saveOne
 {
-  [_ring saveString:First];
+  [ring saveString:First];
 }
 
 - (void) saveTwo
 {
   [self saveOne];
-  [_ring saveString:Second];
+  [ring saveString:Second];
 }
 
 - (void) saveThree
 {
   [self saveTwo];
-  [_ring saveString:Third];
+  [ring saveString:Third];
 }
 
 @end
@@ -67,12 +53,12 @@ NSString *Third = @"Third";
 
 - (void) setUp
 {
-  _ring = [[MUHistoryRing alloc] init];
+  ring = [[MUHistoryRing alloc] init];
 }
 
 - (void) tearDown
 {
-  [_ring release];
+  [ring release];
 }
 
 - (void) testSinglePrevious
@@ -144,7 +130,7 @@ NSString *Third = @"Third";
   [self assertPrevious:Third];
   [self assertPrevious:Second];
   
-  [_ring updateString:@"Bar Two"];
+  [ring updateString:@"Bar Two"];
   
   [self assertPrevious:First];
   [self assertPrevious:@""];
@@ -159,7 +145,7 @@ NSString *Third = @"Third";
   [self assertNext:First];
   [self assertNext:Second];
   
-  [_ring saveString:@"Bar Two"];
+  [ring saveString:@"Bar Two"];
   
   [self assertNext:First];
   [self assertNext:Third];
@@ -175,13 +161,13 @@ NSString *Third = @"Third";
   [self assertNext:Second];
   [self assertNext:@""];
   
-  [_ring updateString:@"Temporary"];
+  [ring updateString:@"Temporary"];
   
   [self assertNext:First];
   [self assertNext:Second];
   [self assertNext:@"Temporary"];
   
-  [_ring saveString:@"Something entirely different"];
+  [ring saveString:@"Something entirely different"];
   
   [self assertPrevious:@"Something entirely different"];
   [self assertPrevious:Second];

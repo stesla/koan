@@ -1,56 +1,212 @@
 //
 // MUApplicationController.m
 //
-// Copyright (C) 2004 Tyler Berry and Samuel Tesla
-//
-// Koan is free software; you can redistribute it and/or modify it under the
-// terms of the GNU General Public License as published by the Free Software
-// Foundation; either version 2 of the License, or (at your option) any later
-// version.
-//
-// Koan is distributed in the hope that it will be useful, but WITHOUT ANY
-// WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-// FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
-// details.
-//
-// You should have received a copy of the GNU General Public License along with
-// Koan; if not, write to the Free Software Foundation, Inc., 59 Temple Place,
-// Suite 330, Boston, MA 02111-1307 USA
+// Copyright (C) 2004 3James Software
 //
 
+#import "FontNameToDisplayNameTransformer.h"
 #import "MUApplicationController.h"
+#import "MUConnectionWindowController.h"
+#import "MUPortFormatter.h"
+
+@interface MUApplicationController (Private)
+
+- (IBAction) openConnection:(id)sender;
+
+@end
 
 @implementation MUApplicationController
 
 + (void) initialize
 {
   NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
+  NSMutableDictionary *initialValues = [NSMutableDictionary dictionary];
+  NSValueTransformer *transformer = [[FontNameToDisplayNameTransformer alloc] init];
+
+  [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
+  
   NSData *archivedWhite = [NSArchiver archivedDataWithRootObject:[NSColor lightGrayColor]];
   NSData *archivedBlack = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
   NSFont *fixedFont = [NSFont userFixedPitchFontOfSize:[NSFont smallSystemFontSize]];
   
-  [defaults setObject:[fixedFont fontName] forKey:MUPFontName];
-  [defaults setObject:[NSNumber numberWithFloat:[fixedFont pointSize]] forKey:MUPFontSize];
-  [defaults setObject:archivedBlack forKey:MUPBackgroundColor];
-  [defaults setObject:archivedWhite forKey:MUPTextColor];
+  [defaults setObject:[NSArray array] forKey:MUPConnections];
   
-  [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defaults];
+  [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+  
+  [initialValues setObject:archivedBlack forKey:MUPBackgroundColor];
+  [initialValues setObject:[fixedFont fontName] forKey:MUPFontName];
+  [initialValues setObject:[NSNumber numberWithFloat:[fixedFont pointSize]] forKey:MUPFontSize];
+  [initialValues setObject:archivedWhite forKey:MUPTextColor];
+  
+  [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
+  
+  [[NSFontManager sharedFontManager] setAction:@selector(changeGlobalFont:)];
+}
+
+- (void) awakeFromNib
+{
+  NSArray *prefsConnections = [[NSUserDefaults standardUserDefaults] objectForKey:MUPConnections];
+  NSMutableArray *array = [NSMutableArray array];
+  MUPortFormatter *formatter = [[[MUPortFormatter alloc] init] autorelease];
+  int i, connectionsCount = [prefsConnections count];
+  
+  connectionWindowControllers = [[NSMutableArray alloc] init];
+  
+  for (i = 0; i < connectionsCount; i++)
+  {
+    [array addObject:[MUConnectionSpec connectionWithDictionary:[prefsConnections objectAtIndex:i]]];
+  }
+  
+  [[portColumn dataCell] setFormatter:formatter];
+  
+  [self setConnectionSpecs:array];
+}
+
+- (void) dealloc
+{
+  [connectionWindowControllers release];
+  [connectionSpecs release];
+}
+
+// Accessors.
+
+- (NSArray *) connectionSpecs
+{
+  return connectionSpecs;
+}
+
+- (void) setConnectionSpecs:(NSArray *)newConnectionSpecs
+{
+  int i, connectionsCount = [newConnectionSpecs count], menuCount = [openConnectionMenu numberOfItems];
+  NSArray *copy = [newConnectionSpecs copy];
+  
+  [connectionSpecs release];
+  connectionSpecs = copy;
+  
+  for (i = menuCount - 1; i >= 0; i--)
+  {
+    [openConnectionMenu removeItemAtIndex:i];
+  }
+  
+  for (i = 0; i < connectionsCount; i++)
+  {
+    MUConnectionSpec *connectionSpec = [connectionSpecs objectAtIndex:i];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[connectionSpec name]
+                                                  action:@selector(openConnection:)
+                                           keyEquivalent:@""];
+    
+    [item setTarget:self];
+    [item setRepresentedObject:connectionSpec];
+    [openConnectionMenu addItem:item];
+    [item release];
+  }
+}
+
+// Actions.
+
+- (IBAction) changeGlobalFont:(id)sender
+{
+  NSFontManager *fontManager = [NSFontManager sharedFontManager];
+  NSFont *selectedFont = [fontManager selectedFont];
+  NSFont *panelFont;
+  NSNumber *fontSize;
+  
+  if (selectedFont == nil)
+  {
+    selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+  }
+  panelFont = [fontManager convertFont:selectedFont];
+  
+  fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];	
+  
+  id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
+  [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
+  [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
+}
+
+- (IBAction) chooseNewFont:(id)sender
+{
+  NSDictionary *values = [[NSUserDefaultsController sharedUserDefaultsController] values];
+  NSString *fontName = [values valueForKey:MUPFontName];
+  int fontSize = [[values valueForKey:MUPFontSize] floatValue];
+  NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+  
+  if (font == nil)
+  {
+    font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+  }
+  [[NSFontManager sharedFontManager] setSelectedFont:font isMultiple:NO];
+  [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
 }
 
 - (IBAction) showPreferences:(id)sender
 {
-  if (!_prefsController)
-  {    
-    _prefsController = [[SSPrefsController alloc] init];
-    
-    [_prefsController setPanesOrder:[NSArray arrayWithObjects:
-      NSLocalizedString (MULPreferencePaneConnectionsName, nil),
-      NSLocalizedString (MULPreferencePaneFontsColorsName, nil),
-      NSLocalizedString (MULPreferencePaneLoggingName, nil),
-      nil]];
+  [preferencePanel makeKeyAndOrderFront:self];
+}
+
+// Delegate methods for NSApplication.
+
+- (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *)app
+{
+  unsigned count = [connectionWindowControllers count];
+  unsigned openConnections = 0;
+  
+  while (count--)
+  {
+    MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex:count];
+    if (controller && [controller isConnected])
+      openConnections++;
   }
   
-  [_prefsController showPreferencesWindow];
+  if (openConnections > 0)
+  {
+    NSAlert *alert;
+    int choice = NSAlertDefaultReturn;
+    
+    alert = [NSAlert alertWithMessageText:NSLocalizedString (MULConfirmQuitTitle, nil)
+                            defaultButton:NSLocalizedString (MULOkay, nil)
+                          alternateButton:NSLocalizedString (MULCancel, nil)
+                              otherButton:nil
+                informativeTextWithFormat:(openConnections == 1 ? NSLocalizedString (MULConfirmQuitMessageSingular, nil)
+                                                                : NSLocalizedString (MULConfirmQuitMessagePlural, nil)),
+      openConnections];
+    
+    choice = [alert runModal];
+      
+    if (choice == NSAlertAlternateReturn)
+      return NSTerminateCancel;
+  }
+  
+  return NSTerminateNow;
+}
+
+- (void) applicationWillTerminate:(NSNotification *)notification
+{
+  NSMutableArray *array = [NSMutableArray array];
+  int i, connectionsCount = [connectionSpecs count];
+  int controllerCount = [connectionWindowControllers count];
+  
+  for (i = 0; i < connectionsCount; i++)
+  {
+    [array addObject:[[connectionSpecs objectAtIndex:i] objectDictionary]];
+  }
+  
+  [[NSUserDefaults standardUserDefaults] setObject:array forKey:MUPConnections];
+}
+
+@end
+
+@implementation MUApplicationController (Private)
+
+- (IBAction) openConnection:(id)sender
+{
+  MUConnectionSpec *connectionSpec = [sender representedObject];
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithConnectionSpec:connectionSpec];
+  
+  [connectionWindowControllers addObject:controller];
+  [controller showWindow:self];
+  [controller connect:sender];
+  [controller release];
 }
 
 @end
