@@ -67,11 +67,14 @@
   [[self window] setTitle:[profile windowTitle]];
   [[self window] setFrameAutosaveName:[profile uniqueIdentifier]];
   [[self window] setFrameUsingName:[profile uniqueIdentifier]];
+  
+  baseAttributes = [[receivedTextView typingAttributes] copy];
 }
 
 - (void) dealloc
 {
   [self disconnect:nil];
+  [baseAttributes release];
   [filterQueue release];
   [historyRing release];
   [profile release];
@@ -393,7 +396,7 @@
 {
   NSAttributedString *unfilteredString =
   [NSAttributedString attributedStringWithString:string
-                                      attributes:[receivedTextView typingAttributes]];
+                                      attributes:baseAttributes];
   NSAttributedString *filteredString = [filterQueue processAttributedString:unfilteredString];
   NSTextStorage *textStorage = [receivedTextView textStorage];
   float scrollerPosition = 
