@@ -4,10 +4,12 @@
 // Copyright (C) 2004 3James Software
 //
 
+#import <J3Terminal/J3ProxySettings.h>
 #import "MUProfilesController.h"
 #import "J3PortFormatter.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"
+
 
 enum MUProfilesEditingReturnValues
 {
@@ -21,6 +23,8 @@ enum MUProfilesEditingReturnValues
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+
+- (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players;
 
 @end
 
@@ -214,22 +218,7 @@ enum MUProfilesEditingReturnValues
 {
   if (returnCode == MUEditOkay)
   {
-    MUWorld *newWorld = [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
-                                             worldHostname:[worldHostnameField stringValue]
-                                                 worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
-                                                  worldURL:[worldURLField stringValue]
-                                        connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
-                                                   usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
-                                                 usesProxy:([worldUsesProxyButton state] == NSOnState ? YES : NO)
-                                             proxyHostname:[worldProxyHostnameField stringValue]
-                                                 proxyPort:[NSNumber numberWithInt:[worldProxyPortField intValue]]
-                                              proxyVersion:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
-                                             proxyUsername:[worldProxyUsernameField stringValue]
-                                             proxyPassword:[worldProxyPasswordField stringValue]
-                                                   players:[NSArray array]];
-    
-    [worldsArrayController addObject:newWorld];
-    [newWorld release];
+    [worldsArrayController addObject:[self createWorldFromSheetWithPlayers:[NSArray array]]];
     [worldsArrayController rearrangeObjects];
   }
 }
@@ -239,25 +228,35 @@ enum MUProfilesEditingReturnValues
   if (returnCode == MUEditOkay)
   {
     MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
-    MUWorld *newWorld = [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
-                                             worldHostname:[worldHostnameField stringValue]
-                                                 worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
-                                                  worldURL:[worldURLField stringValue]
-                                        connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
-                                                   usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
-                                                 usesProxy:([worldUsesProxyButton state] == NSOnState ? YES : NO)
-                                             proxyHostname:[worldProxyHostnameField stringValue]
-                                                 proxyPort:[NSNumber numberWithInt:[worldProxyPortField intValue]]
-                                              proxyVersion:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
-                                             proxyUsername:[worldProxyUsernameField stringValue]
-                                             proxyPassword:[worldProxyPasswordField stringValue]
-                                                   players:[selectedWorld players]];
-    
     [worldsArrayController removeObject:selectedWorld];
-    [worldsArrayController addObject:newWorld];
-    [newWorld release];
+    [worldsArrayController addObject:
+      [self createWorldFromSheetWithPlayers:[selectedWorld players]]];
     [worldsArrayController rearrangeObjects];
   }
+}
+
+- (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
+{
+  J3ProxySettings *settings = nil;
+  
+  if ([worldUsesProxyButton state] == NSOnState)
+  {
+    settings = [J3ProxySettings 
+        settingsWithHostname:[worldProxyHostnameField stringValue]
+                        port:[worldProxyPortField intValue]
+                     version:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
+                    username:[worldProxyUsernameField stringValue]
+                    password:[worldProxyPasswordField stringValue]];
+  }
+  
+  return [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
+                              worldHostname:[worldHostnameField stringValue]
+                                  worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
+                                   worldURL:[worldURLField stringValue]
+                         connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
+                                    usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
+                              proxySettings:settings
+                                    players:players];
 }
 
 @end

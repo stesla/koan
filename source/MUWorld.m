@@ -28,12 +28,7 @@ static const int32_t currentVersion = 2;
                 worldURL:(NSString *)newWorldURL
       connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
                  usesSSL:(BOOL)newUsesSSL
-               usesProxy:(BOOL)newUsesProxy
-           proxyHostname:(NSString *)newProxyHostname
-               proxyPort:(NSNumber *)newProxyPort
-            proxyVersion:(int)newProxyVersion
-           proxyUsername:(NSString *)newProxyUsername
-           proxyPassword:(NSString *)newProxyPassword
+           proxySettings:(J3ProxySettings *)newProxySettings
                  players:(NSArray *)newPlayers
 {
   if (self = [super init])
@@ -44,15 +39,7 @@ static const int32_t currentVersion = 2;
     [self setWorldURL:newWorldURL];
     [self setConnectOnAppLaunch:newConnectOnAppLaunch];
     [self setUsesSSL:newUsesSSL];
-    
-    [self setProxySettings:
-      [[J3ProxySettings alloc]
-        initWithHostname:newProxyHostname
-                    port:[newProxyPort intValue]
-                 version:newProxyVersion
-                username:newProxyUsername
-                password:newProxyPassword]];
-
+    [self setProxySettings:newProxySettings];
     [self setPlayers:newPlayers];
   }
   return self;
@@ -66,12 +53,7 @@ static const int32_t currentVersion = 2;
                         worldURL:@""
               connectOnAppLaunch:NO
                          usesSSL:NO
-                       usesProxy:NO
-                   proxyHostname:@""
-                       proxyPort:[NSNumber numberWithInt:0]
-                    proxyVersion:5
-                   proxyUsername:@""
-                   proxyPassword:@""
+                   proxySettings:nil
                          players:[NSArray array]];
 }
 
@@ -393,14 +375,9 @@ static const int32_t currentVersion = 2;
                                            worldHostname:[self worldHostname]
                                                worldPort:[self worldPort]
                                                 worldURL:[self worldURL]
-                                        connectOnAppLaunch:[self connectOnAppLaunch]
+                                      connectOnAppLaunch:[self connectOnAppLaunch]
                                                  usesSSL:[self usesSSL]
-                                               usesProxy:[self usesProxy]
-                                           proxyHostname:[self proxyHostname]
-                                               proxyPort:[self proxyPort]
-                                            proxyVersion:[self proxyVersion]
-                                           proxyUsername:[self proxyUsername]
-                                           proxyPassword:[self proxyPassword]
+                                           proxySettings:[self proxySettings]
                                                  players:[self players]];
 }
 

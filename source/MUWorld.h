@@ -34,12 +34,7 @@
                 worldURL:(NSString *)newWorldURL
       connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
                  usesSSL:(BOOL)newUsesSSL
-               usesProxy:(BOOL)newUsesProxy
-           proxyHostname:(NSString *)newProxyHostname
-               proxyPort:(NSNumber *)newProxyPort
-            proxyVersion:(int)newProxyVersion
-           proxyUsername:(NSString *)newProxyUsername
-           proxyPassword:(NSString *)newProxyPassword
+           proxySettings:(J3ProxySettings *)newProxySettings
                  players:(NSArray *)newPlayers;
 
 // Accessors.
