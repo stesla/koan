@@ -9,7 +9,9 @@
 #import "MUAnsiRemovingFilter.h"
 
 @interface MUAnsiRemovingFilter (Private)
-- (void) extractCode:(NSMutableString *)editString;
+- (BOOL) extractCode:(NSMutableString *)editString;
+- (int) scanUpToCodeInString:(NSString *)string;
+- (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 @end
 
 @implementation MUAnsiRemovingFilter
@@ -22,7 +24,8 @@
 - (void) filter:(NSString *)string
 {
   NSMutableString *editString = [NSMutableString stringWithString:string];
-  [self extractCode:editString];
+  while ([self extractCode:editString])
+    ;
   [[self successor] filter:editString];
 }
 
@@ -30,27 +33,43 @@
 
 @implementation MUAnsiRemovingFilter (Private)
 
-- (void) extractCode:(NSMutableString *)editString
+- (BOOL) extractCode:(NSMutableString *)editString
+{
+  NSRange codeRange;
+  
+  codeRange.location = [self scanUpToCodeInString:editString];
+  codeRange.length = [self scanThruEndOfCodeAt:codeRange.location
+                                      inString:editString];
+  
+  if (codeRange.location < [editString length])
+  {
+    [editString deleteCharactersInRange:codeRange];
+    return YES;
+  }
+  else
+    return NO;
+}
+
+- (int) scanUpToCodeInString:(NSString *)string
 {
   NSCharacterSet *stopSet = 
     [NSCharacterSet characterSetWithCharactersInString:@"\033"];
-  
+  NSScanner *scanner = [NSScanner scannerWithString:string];
+  NSString *output = @"";
+  [scanner scanUpToCharactersFromSet:stopSet intoString:&output];
+  return [output length];
+}
+
+- (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string
+{
+  NSScanner *scanner = [NSScanner scannerWithString:
+    [string substringFromIndex:index]];
   NSCharacterSet *resumeSet = 
     [NSCharacterSet characterSetWithCharactersInString:
       @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-  
-  NSScanner *scanner = [NSScanner scannerWithString:editString];
-  NSString *output = @"";
   NSString *ansiCode = @"";
-  NSRange codeRange;
-  
-  [scanner scanUpToCharactersFromSet:stopSet intoString:&output];
-  codeRange.location = [output length];
   [scanner scanUpToCharactersFromSet:resumeSet intoString:&ansiCode]; 
-  codeRange.length = [ansiCode length] + 1;
-  
-  if (codeRange.location < [editString length])
-    [editString deleteCharactersInRange:codeRange];  
+  return [ansiCode length] + 1;
 }
 
 @end

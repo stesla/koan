@@ -30,4 +30,12 @@
   [queue release];
 }
 
+- (void) testTwoCodes
+{
+  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
+  [queue addFilter:[MUAnsiRemovingFilter filter]];
+  [self assert:[queue processString:@"F\033[36mo\033[3mo"] equals:@"Foo"];
+  [queue release];
+}
+
 @end
