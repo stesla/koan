@@ -35,6 +35,7 @@ main (int argc, const char *argv[])
   
   // Add tests here.
   [suite addTestSuite:[MUTelnetConnectionTests class]];
+  [suite addTestSuite:[MUInputFilterTests class]];
   return suite;
 }
 
