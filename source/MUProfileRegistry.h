@@ -33,5 +33,6 @@
 - (void) removeProfileForWorld:(MUWorld *)world;
 - (void) removeProfileForWorld:(MUWorld *)world player:(MUPlayer *)player;
 - (void) removeProfileForUniqueIdentifier:(NSString *)identifier;
+- (void) removeAllProfilesForWorld:(MUWorld *)world;
 
 @end

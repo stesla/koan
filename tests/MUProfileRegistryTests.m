@@ -98,6 +98,22 @@
             message:@"After removing"];
 
 }
+
+- (void) testRemoveWorld
+{
+  MUWorld *world = [self testWorld];
+  MUPlayer *player = [self testPlayerWithWorld:world];
+  [world addPlayer:player];
+  
+  [registry profileForWorld:world];
+  [registry profileForWorld:world player:player];
+  [registry removeAllProfilesForWorld:world];
+  [self assertFalse:[registry containsProfileForWorld:world]
+            message:@"World only"];
+  [self assertFalse:[registry containsProfileForWorld:world
+                                               player:player]
+            message:@"World and player"];
+}
 @end
 
 @implementation MUProfileRegistryTests (Private)
