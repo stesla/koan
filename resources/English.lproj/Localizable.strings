@@ -1,0 +1,6 @@
+// Preference Panes.
+
+"PreferencePaneConnectionsName" = "Connections";
+"PreferencePaneConnectionsToolTip" = "Server connection setup";
+"PreferencePaneLoggingName" = "Logs";
+"PreferencePaneLoggingToolTip" = "Keeping logs of sessions";
