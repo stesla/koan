@@ -78,12 +78,14 @@ NSString *Third = @"Third";
 - (void) testSinglePrevious
 {
   [self saveOne];
+  
   [self assertPrevious:First];
 }
 
 - (void) testMultiplePrevious
 {
   [self saveThree];
+  
   [self assertPrevious:Third];
   [self assertPrevious:Second];
   [self assertPrevious:First];
@@ -91,7 +93,7 @@ NSString *Third = @"Third";
 
 - (void) testFullCirclePrevious
 {
-  [_ring saveString:First];
+  [self saveOne];
   
   [self assertPrevious:First];
   [self assertPrevious:@""];
@@ -99,16 +101,14 @@ NSString *Third = @"Third";
 
 - (void) testSingleNext
 {
-  [_ring saveString:First];
+  [self saveOne];
   
   [self assertNext:First];
 }
 
 - (void) testMultipleNext
 {
-  [_ring saveString:First];
-  [_ring saveString:Second];
-  [_ring saveString:Third];
+  [self saveThree];
   
   [self assertNext:First];
   [self assertNext:Second];
@@ -117,7 +117,7 @@ NSString *Third = @"Third";
 
 - (void) testFullCircleNext
 {
-  [_ring saveString:First];
+  [self saveOne];
   
   [self assertNext:First];
   [self assertNext:@""];
@@ -125,9 +125,7 @@ NSString *Third = @"Third";
 
 - (void) testBothWays
 {
-  [_ring saveString:First];
-  [_ring saveString:Second];
-  [_ring saveString:Third];
+  [self saveThree];
   
   [self assertPrevious:Third];
   [self assertPrevious:Second];
@@ -141,10 +139,8 @@ NSString *Third = @"Third";
 
 - (void) testUpdateMiddle
 {
-  [_ring saveString:First];
-  [_ring saveString:Second];
-  [_ring saveString:Third];
-
+  [self saveThree];
+  
   [self assertPrevious:Third];
   [self assertPrevious:Second];
   
@@ -158,9 +154,7 @@ NSString *Third = @"Third";
 
 - (void) testSaveReordering
 {
-  [_ring saveString:First];
-  [_ring saveString:Second];
-  [_ring saveString:Third];
+  [self saveThree];
   
   [self assertNext:First];
   [self assertNext:Second];
@@ -175,8 +169,7 @@ NSString *Third = @"Third";
 
 - (void) testUpdateBuffer
 {
-  [_ring saveString:First];
-  [_ring saveString:Second];
+  [self saveTwo];
   
   [self assertNext:First];
   [self assertNext:Second];
