@@ -23,6 +23,7 @@
   
   BOOL autoLoggedIn;
   
+  NSTimer *pingTimer;
   J3FilterQueue *filterQueue;
   J3HistoryRing *historyRing;
 }

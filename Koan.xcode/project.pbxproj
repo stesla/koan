@@ -1268,7 +1268,6 @@
 				HEADER_SEARCH_PATHS = "./source ./filters";
 				INFOPLIST_FILE = "tests/Tests-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
@@ -1506,7 +1505,6 @@
 				E6967A17078F5C7A0033A4C8,
 			);
 			buildSettings = {
-				OPTIMIZATION_CFLAGS = "";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";

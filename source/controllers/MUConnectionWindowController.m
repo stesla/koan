@@ -11,8 +11,9 @@
 #import "J3TextLogger.h"
 
 @interface MUConnectionWindowController (Private)
-- (void) displayString:(NSString *)string;
 - (J3Filter *) createLogger;
+- (void) displayString:(NSString *)string;
+- (void) sendPeriodicPing:(NSTimer *)timer;
 @end
 
 #pragma mark -
@@ -70,8 +71,7 @@
 
 - (void) dealloc
 {
-  [telnetConnection close];
-  [telnetConnection release];
+  [self disconnect:nil];
   [filterQueue release];
   [historyRing release];
   [profile release];
@@ -134,9 +134,19 @@
 
 - (IBAction) connect:(id)sender
 {
-  telnetConnection = [profile openTelnetWithDelegate:self];
-  //TODO: if (!telnetConnection) { //ERROR! }
-  [[self window] makeFirstResponder:inputView];
+  if (![self isConnected])
+  {
+    telnetConnection = [profile openTelnetWithDelegate:self];
+    //TODO: if (!telnetConnection) { //ERROR! }
+    
+    pingTimer = [[NSTimer scheduledTimerWithTimeInterval:60.0
+                                                  target:self
+                                                selector:@selector(sendPeriodicPing:)
+                                                userInfo:nil
+                                                 repeats:YES] retain];
+    
+    [[self window] makeFirstResponder:inputView];
+  }
 }
 
 - (IBAction) connectOrDisconnect:(id)sender
@@ -149,10 +159,15 @@
 
 - (IBAction) disconnect:(id)sender
 {
-  [profile logoutWithConnection:telnetConnection];
-  [telnetConnection close];
-  [telnetConnection release];
-  telnetConnection = nil;
+  if ([self isConnected])
+  {
+    [pingTimer invalidate];
+    [pingTimer release];
+    
+    [profile logoutWithConnection:telnetConnection];
+    [telnetConnection close];
+    [telnetConnection release];
+  }
 }
 
 - (IBAction) sendInputText:(id)sender
@@ -349,9 +364,9 @@
     {
       return NO;
     }
+    
+    [self disconnect:sender];
   }
-  
-  [self disconnect:sender];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
                                                       object:self];
@@ -364,6 +379,14 @@
 #pragma mark -
 
 @implementation MUConnectionWindowController (Private)
+
+- (J3Filter *) createLogger
+{
+  if (profile)
+    return [profile logger];
+  else
+    return [J3TextLogger filter];
+}
 
 - (void) displayString:(NSString *)string
 {
@@ -387,12 +410,9 @@
                                                       object:self];
 }
 
-- (J3Filter *) createLogger
+- (void) sendPeriodicPing:(NSTimer *)timer
 {
-  if (profile)
-    return [profile logger];
-  else
-    return [J3TextLogger filter];
+  [telnetConnection sendLine:@"@pemit me="];
 }
 
 @end
