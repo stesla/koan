@@ -7,28 +7,29 @@
 #import <Cocoa/Cocoa.h>
 #import <J3Terminal/J3TelnetConnection.h>
 
-@interface MUWorld : NSObject <NSCopying>
+@interface MUWorld : NSObject <NSCoding, NSCopying>
 {
-  NSString *name;
-  NSString *hostname;
-  NSNumber *port;
+  NSString *worldName;
+  NSString *worldHostname;
+  NSNumber *worldPort;
+  
   NSDictionary *players;
 }
 
 + (id) connectionWithDictionary:(NSDictionary *)dictionary;
 
 // Designated initializer.
-- (id) initWithName:(NSString *)name hostname:(NSString *)hostname port:(NSNumber *)port;
+- (id) initWithWorldName:(NSString *)name worldHostname:(NSString *)hostname worldPort:(NSNumber *)port;
 
 - (id) initWithDictionary:(NSDictionary *)dictionary;
 - (NSDictionary *) objectDictionary;
 
-- (NSString *) name;
-- (void) setName:(NSString *)newName;
-- (NSString *) hostname;
-- (void) setHostname:(NSString *)newHostname;
-- (NSNumber *) port;
-- (void) setPort:(NSNumber *)newPort;
+- (NSString *) worldName;
+- (void) setWorldName:(NSString *)newWorldName;
+- (NSString *) worldHostname;
+- (void) setWorldHostname:(NSString *)newHostname;
+- (NSNumber *) worldPort;
+- (void) setWorldPort:(NSNumber *)newWorldPort;
 - (NSDictionary *) players;
 - (void) setPlayers:(NSDictionary *)newPlayers;
 

@@ -50,7 +50,7 @@
       withKeyPath:@"values.MUPTextColor"
           options:bindingOptions];
   
-  [[self window] setTitle:[world name]];
+  [[self window] setTitle:[world worldName]];
 }
 
 - (void) dealloc
@@ -283,7 +283,7 @@
 {
   if ([self isConnected])
   {
-    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), [world name]];
+    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), [world worldName]];
     NSAlert *alert;
     int choice;
     
@@ -292,7 +292,7 @@
                           alternateButton:NSLocalizedString (MULCancel, nil)
                               otherButton:nil
                 informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
-      [world hostname]];
+      [world worldHostname]];
     
     choice = [alert runModal];
     

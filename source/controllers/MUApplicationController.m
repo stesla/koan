@@ -230,7 +230,7 @@
   for (i = 0; i < worldsCount; i++)
   {
     MUWorld *world = [worlds objectAtIndex:i];
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[world name]
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:[world worldName]
                                                   action:@selector(openConnection:)
                                            keyEquivalent:@""];
     

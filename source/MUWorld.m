@@ -6,12 +6,14 @@
 
 #import "MUWorld.h"
 
+static const int32_t currentVersion = 0;
+
 @implementation MUWorld
 
 + (void) initialize
 {
-  [MUWorld setKeys:[NSArray arrayWithObjects:@"name", @"hostname", @"port", nil]
-    triggerChangeNotificationsForDependentKey:@"descript"];
+  [MUWorld setKeys:[NSArray arrayWithObjects:@"worldName", @"worldHostname", @"worldPort", nil]
+    triggerChangeNotificationsForDependentKey:@"description"];
 }
 
 + (id) connectionWithDictionary:(NSDictionary *)dictionary
@@ -19,82 +21,83 @@
   return [[[MUWorld alloc] initWithDictionary:dictionary] autorelease];
 }
 
-- (id) initWithName:(NSString *)newName
-           hostname:(NSString *)newHostname
-               port:(NSNumber *)newPort
+- (id) initWithWorldName:(NSString *)newWorldName
+           worldHostname:(NSString *)newWorldHostname
+               worldPort:(NSNumber *)newWorldPort
 {
   if (self = [super init])
   {
-    [self setName:[newName copy]];
-    [self setHostname:[newHostname copy]];
-    [self setPort:newPort];
+    [self setWorldName:newWorldName];
+    [self setWorldHostname:newWorldHostname];
+    [self setWorldPort:newWorldPort];
   }
   return self;
 }
 
 - (id) initWithDictionary:(NSDictionary *)dictionary
 {
-  return [self initWithName:[dictionary objectForKey:@"name"]
-                   hostname:[dictionary objectForKey:@"hostname"]
-                       port:[dictionary objectForKey:@"port"]];
+  return [self initWithWorldName:[dictionary objectForKey:@"worldName"]
+                   worldHostname:[dictionary objectForKey:@"worldHostname"]
+                       worldPort:[dictionary objectForKey:@"worldPort"]];
 }
 
 - (NSDictionary *) objectDictionary
 {
-  NSArray *keys = [NSArray arrayWithObjects:@"name", @"hostname", @"port", nil];
-  NSArray *objects = [NSArray arrayWithObjects:[self name], [self hostname], [self port], nil];
+  NSArray *keys = [NSArray arrayWithObjects:@"worldName", @"worldHostname", @"worldPort", nil];
+  NSArray *objects = [NSArray arrayWithObjects:[self worldName], [self worldHostname], [self worldPort], nil];
   
   return [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 }
 
 - (id) init
 {
-  return [self initWithName:NSLocalizedString (MULUntitledWorld, nil)
-                   hostname:@"" port:[NSNumber numberWithInt:0]];
+  return [self initWithWorldName:NSLocalizedString (MULUntitledWorld, nil)
+                   worldHostname:@""
+                       worldPort:[NSNumber numberWithInt:0]];
 }
 
 - (NSString *) description
 {
-  return [NSString stringWithFormat:@"%@ (%@ %@)", [self name], [self hostname], [self port]];
+  return [NSString stringWithFormat:@"%@ (%@ %@)", [self worldName], [self worldHostname], [self worldPort]];
 }
 
 #pragma mark -
 #pragma mark Accessors
 
-- (NSString *) name
+- (NSString *) worldName
 {
-  return name;
+  return worldName;
 }
 
-- (void) setName:(NSString *)newName
+- (void) setWorldName:(NSString *)newWorldName
 {
-  NSString *copy = [newName copy];
-  [name release];
-  name = copy;
+  NSString *copy = [newWorldName copy];
+  [worldName release];
+  worldName = copy;
 }
 
-- (NSString *) hostname
+- (NSString *) worldHostname
 {
-  return hostname;
+  return worldHostname;
 }
 
-- (void) setHostname:(NSString *)newHostname
+- (void) setWorldHostname:(NSString *)newWorldHostname
 {
-  NSString *copy = [newHostname copy];
-  [hostname release];
-  hostname = copy;
+  NSString *copy = [newWorldHostname copy];
+  [worldHostname release];
+  worldHostname = copy;
 }
 
-- (NSNumber *) port
+- (NSNumber *) worldPort
 {
-  return port;
+  return worldPort;
 }
 
-- (void) setPort:(NSNumber *)newPort
+- (void) setWorldPort:(NSNumber *)newWorldPort
 {
-  NSNumber *copy = [newPort copy];
-  [port release];
-  port = copy;
+  NSNumber *copy = [newWorldPort copy];
+  [worldPort release];
+  worldPort = copy;
 }
 
 
@@ -115,8 +118,33 @@
 
 - (J3TelnetConnection *) newTelnetConnection
 {
-  return [[J3TelnetConnection alloc] initWithHostName:hostname
-                                               onPort:[port intValue]];
+  return [[J3TelnetConnection alloc] initWithHostName:[self worldHostname]
+                                               onPort:[[self worldPort] intValue]];
+}
+
+#pragma mark -
+#pragma mark NSCoding protocol
+
+- (void) encodeWithCoder:(NSCoder *)encoder
+{
+  [encoder encodeInt32:currentVersion forKey:@"version"];
+  
+  [encoder encodeObject:[self worldName] forKey:@"worldName"];
+  [encoder encodeObject:[self worldHostname] forKey:@"worldHostname"];
+  [encoder encodeObject:[self worldPort] forKey:@"worldPort"];
+}
+
+- (id) initWithCoder:(NSCoder *)decoder
+{
+  if (self = [super init])
+  {
+    int32_t version = [decoder decodeInt32ForKey:@"version"];
+    
+    [self setWorldName:[decoder decodeObjectForKey:@"worldName"]];
+    [self setWorldHostname:[decoder decodeObjectForKey:@"worldHostname"]];
+    [self setWorldPort:[decoder decodeObjectForKey:@"worldPort"]];
+  }
+  return self;
 }
 
 #pragma mark -
@@ -124,9 +152,9 @@
 
 - (id) copyWithZone:(NSZone *)zone
 {
-  return [[MUWorld allocWithZone:zone] initWithName:name
-                                           hostname:hostname
-                                               port:port];
+  return [[MUWorld allocWithZone:zone] initWithWorldName:[self worldName]
+                                           worldHostname:[self worldHostname]
+                                               worldPort:[self worldPort]];
 }
 
 @end
