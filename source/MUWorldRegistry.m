@@ -6,8 +6,7 @@
 
 #import "MUProfileRegistry.h"
 #import "MUWorldRegistry.h"
-#import "MUPlayer.h"
-#import "MUWorld.h"
+#import "MUProfile.h"
 
 static NSString *defaultWorldsKey = @"MUPWorlds";
 static MUWorldRegistry *sharedRegistry = nil;
@@ -153,12 +152,19 @@ static MUWorldRegistry *sharedRegistry = nil;
     for (i = 0; i < worldsCount; i++)
     {
       MUWorld *world = [worlds objectAtIndex:i];
+      MUPlayer *player = nil;
+      MUProfile *profile = nil;
       NSArray *players = [world players];
       int j, playersCount = [players count];
-      
+    
+      profile = [profiles profileForWorld:world];
       for (j = 0; j < playersCount; j++)
       {
-        [[players objectAtIndex:j] setWorld:world];
+        player = [players objectAtIndex:i];
+        [player setWorld:world];
+        profile = [profiles profileForWorld:world player:player];
+        [profile setWorld:world];
+        [profile setPlayer:player];
       }
     }
   }

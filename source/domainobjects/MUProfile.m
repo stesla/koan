@@ -32,7 +32,7 @@
 
 - (id) initWithWorld:(MUWorld *)newWorld
 {
-  [self initWithWorld:newWorld player:nil];
+  return [self initWithWorld:newWorld player:nil];
 }
 
 - (void) dealloc
@@ -47,11 +47,24 @@
   return world;
 }
 
+- (void) setWorld:(MUWorld *)newWorld
+{
+  [newWorld retain];
+  [world release];
+  world = newWorld;
+}
+
 - (MUPlayer *) player
 {
   return player;
 }
 
+- (void) setPlayer:(MUPlayer *)newPlayer
+{
+  [newPlayer retain];
+  [player release];
+  player = newPlayer;
+}
 - (NSString *) frameName
 {
   if (player)
@@ -131,17 +144,4 @@
   return rval;
 }
 
-- (void) setWorld:(MUWorld *)newWorld
-{
-  [newWorld retain];
-  [world release];
-  world = newWorld;
-}
-
-- (void) setPlayer:(MUPlayer *)newPlayer
-{
-  [newPlayer retain];
-  [player release];
-  player = newPlayer;
-}
 @end

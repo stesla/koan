@@ -11,6 +11,7 @@
 #import "MUProfilesController.h"
 #import "MUWorld.h"
 #import "MUWorldRegistry.h"
+#import "MUProfileRegistry.h"
 
 @interface MUApplicationController (Private)
 
@@ -223,23 +224,7 @@
 - (IBAction) openConnection:(id)sender
 {
   MUConnectionWindowController *controller;
-  MUWorld *world = nil;
-  MUPlayer *player = nil;
-  MUProfile *profile = nil;
-  // TODO: This should end up being an MUProfile
-  id object = [sender representedObject];
-  
-  if ([object class] == [MUWorld class])
-  {
-    world = (MUWorld *) object;
-  }
-  else if ([object class] == [MUPlayer class])
-  {
-    player = (MUPlayer *) object;
-    world = [player world];
-  }
-  profile = [MUProfile profileWithWorld:world player:player];
-
+  MUProfile *profile = [sender representedObject];
   controller = [[MUConnectionWindowController alloc] initWithProfile:profile];
 
   [controller setDelegate:self];
@@ -253,6 +238,7 @@
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
 {
   MUWorldRegistry *registry = [MUWorldRegistry sharedRegistry];
+  MUProfileRegistry *profiles = [MUProfileRegistry sharedRegistry];
   int i, worldsCount = [registry count], menuCount = [openConnectionMenu numberOfItems];
   
   for (i = menuCount - 1; i >= 0; i--)
@@ -263,6 +249,7 @@
   for (i = 0; i < worldsCount; i++)
   {
     MUWorld *world = [registry worldAtIndex:i];
+    MUProfile *profile = [profiles profileForWorld:world];
     NSArray *players = [world players];
     NSMenuItem *worldItem = [[NSMenuItem alloc] init];
     NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world worldName]];
@@ -272,9 +259,9 @@
     int j, playersCount = [players count];
     
     [connectItem setTarget:self];
-    [connectItem setRepresentedObject:world];
+    [connectItem setRepresentedObject:profile];
     
-    if (autoconnect && [world connectOnAppLaunch])
+    if (autoconnect && [[profile world] connectOnAppLaunch])
     {
       [self openConnection:connectItem];
     }
@@ -282,13 +269,15 @@
     for (j = 0; j < playersCount; j++)
     {
       MUPlayer *player = [players objectAtIndex:j];
+      profile = [profiles profileForWorld:world player:player];
+    
       NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle:[player name]
                                                           action:@selector(openConnection:)
                                                    keyEquivalent:@""];
       [playerItem setTarget:self];
-      [playerItem setRepresentedObject:player];
+      [playerItem setRepresentedObject:profile];
       
-      if (autoconnect && [player connectOnAppLaunch])
+      if (autoconnect && [[profile player] connectOnAppLaunch])
       {
         [self openConnection:playerItem];
       }
