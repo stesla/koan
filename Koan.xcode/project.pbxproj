@@ -164,29 +164,16 @@
 			children = (
 				E6550EF307764C01002E81FF,
 				E670A81207420F8C00E2DAEB,
-				E6E7A6210749693A007005AC,
-				E64C9631076BF95E00D0D7C0,
-				E60DDB83076CE889009870E4,
+				E6E7BF6C0788FE180065EDD6,
+				E6E7BF500788FDA40065EDD6,
+				E6E7BF540788FDED0065EDD6,
 				E622A550074231A60069335B,
-				E6A231270772E166008EF744,
-				E677D20E0778041F00B417D2,
-				7E39EF9B0783938F0042A17A,
 				7E1FC01A0787A2220070AF39,
-				E6DA667007776D9900C46267,
 				E6F3A71D077A1B270011A461,
-				E6E79CEA07697FD100A8FB96,
-				E6E7A62707496940007005AC,
-				E64C9632076BF95E00D0D7C0,
-				E60DDB84076CE889009870E4,
 				29B97316FDCFA39411CA2CEA,
 				E622A551074231A60069335B,
-				E6A231280772E166008EF744,
-				E677D20F0778041F00B417D2,
-				7E39EF9C0783938F0042A17A,
 				7E1FC01B0787A2220070AF39,
-				E6DA667107776D9900C46267,
 				E6F3A71E077A1B270011A461,
-				E6E79CEB07697FD100A8FB96,
 				32CA4F630368D1EE00C91783,
 			);
 			isa = PBXGroup;
@@ -210,6 +197,8 @@
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
 				E62C909E07422669005662BC,
+				E63B5EB40785460C003FDA45,
+				E63B5EDB0785497C003FDA45,
 				E6B5E61106A73B0A00F53EBB,
 				E6C9D4E7077C0FA3007BB2C1,
 				E6C9D4E8077C0FA3007BB2C1,
@@ -221,6 +210,7 @@
 				E6C9D44B077BF6B5007BB2C1,
 				E6C9D44C077BF6B5007BB2C1,
 				E6C9D44D077BF6B5007BB2C1,
+				E6E7BF0D07867F080065EDD6,
 			);
 			isa = PBXGroup;
 			name = Resources;
@@ -680,6 +670,10 @@
 				E6C9D4ED077C0FA3007BB2C1,
 				E6C9D4EE077C0FA3007BB2C1,
 				7E39EF9D0783938F0042A17A,
+				E63B5E8207854008003FDA45,
+				E63B5EB60785460C003FDA45,
+				E63B5EDC0785497C003FDA45,
+				E6E7BF0E07867F080065EDD6,
 				7E1FC01C0787A2220070AF39,
 			);
 			isa = PBXResourcesBuildPhase;
@@ -711,6 +705,7 @@
 				E6F3A720077A1B270011A461,
 				E6C9D607077C2DC6007BB2C1,
 				7E39EF9E0783938F0042A17A,
+				E63B5E8107854008003FDA45,
 				7E1FC01D0787A2220070AF39,
 			);
 			isa = PBXSourcesBuildPhase;
@@ -1074,6 +1069,73 @@
 			settings = {
 			};
 		};
+		E63B5E7F07854008003FDA45 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = UKUpdateChecker.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63B5E8007854008003FDA45 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = UKUpdateChecker.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63B5E8107854008003FDA45 = {
+			fileRef = E63B5E7F07854008003FDA45;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E63B5E8207854008003FDA45 = {
+			fileRef = E63B5E8007854008003FDA45;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E63B5EB40785460C003FDA45 = {
+			children = (
+				E63B5EB50785460C003FDA45,
+			);
+			isa = PBXVariantGroup;
+			name = UKUpdateChecker.strings;
+			path = "";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63B5EB50785460C003FDA45 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
+			name = English;
+			path = English.lproj/UKUpdateChecker.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63B5EB60785460C003FDA45 = {
+			fileRef = E63B5EB40785460C003FDA45;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E63B5EDB0785497C003FDA45 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text;
+			path = MacPAD.url;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63B5EDC0785497C003FDA45 = {
+			fileRef = E63B5EDB0785497C003FDA45;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E63CC4E2077A06CD003A54AA = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -1107,10 +1169,9 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = J3PortFormatter.h;
-			path = source/J3PortFormatter.h;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
+			path = J3PortFormatter.h;
+			refType = 4;
+			sourceTree = "<group>";
 		};
 		E64C9632076BF95E00D0D7C0 = {
 			fileEncoding = 4;
@@ -1498,12 +1559,14 @@
 				E6E7A6CC074970FE007005AC,
 				E6505497077EA20E0016F30E,
 				E6E7A63D0749698F007005AC,
+				7E1FC010078798060070AF39,
 				E62041A806B0566B00236608,
 				7E20A8EB07486C2500D1A5BF,
 				7EFE43B20749CB16002C7D48,
 				E6E7A6CD074970FE007005AC,
 				E6505498077EA20E0016F30E,
 				E6E7A63E0749698F007005AC,
+				7E1FC011078798060070AF39,
 				E62041A906B0566B00236608,
 				7E1FC011078798060070AF39,
 				7E13FA5A0788C75F0071D30C,
@@ -1848,6 +1911,64 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		E6E7BF0D07867F080065EDD6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			path = "finger-cursor.png";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E7BF0E07867F080065EDD6 = {
+			fileRef = E6E7BF0D07867F080065EDD6;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6E7BF500788FDA40065EDD6 = {
+			children = (
+				E677D20E0778041F00B417D2,
+				7E39EF9B0783938F0042A17A,
+				E6DA667007776D9900C46267,
+				E677D20F0778041F00B417D2,
+				7E39EF9C0783938F0042A17A,
+				E6DA667107776D9900C46267,
+			);
+			isa = PBXGroup;
+			name = "Domain Objects";
+			path = domainobjects;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E7BF540788FDED0065EDD6 = {
+			children = (
+				E6E7A6210749693A007005AC,
+				E64C9631076BF95E00D0D7C0,
+				E6E7A62707496940007005AC,
+				E64C9632076BF95E00D0D7C0,
+			);
+			isa = PBXGroup;
+			name = Infrastructure;
+			path = infrastructure;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6E7BF6C0788FE180065EDD6 = {
+			children = (
+				E60DDB83076CE889009870E4,
+				E6A231270772E166008EF744,
+				E6E79CEA07697FD100A8FB96,
+				E63B5E8007854008003FDA45,
+				E60DDB84076CE889009870E4,
+				E6A231280772E166008EF744,
+				E6E79CEB07697FD100A8FB96,
+				E63B5E7F07854008003FDA45,
+			);
+			isa = PBXGroup;
+			name = Controls;
+			path = controls;
+			refType = 4;
+			sourceTree = "<group>";
 		};
 		E6EB62B207569CAC009F47D5 = {
 			isa = PBXFileReference;

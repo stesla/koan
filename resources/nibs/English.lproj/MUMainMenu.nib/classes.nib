@@ -49,6 +49,13 @@
             LANGUAGE = ObjC; 
             OUTLETS = {tabView = NSTabView; }; 
             SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {checkForUpdates = id; takeBoolFromObject = id; }; 
+            CLASS = UKUpdateChecker; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {prefsButton = NSButton; }; 
+            SUPERCLASS = NSObject; 
         }
     ); 
     IBVersion = 1; 
