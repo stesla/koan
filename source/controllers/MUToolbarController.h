@@ -1,5 +1,5 @@
 //
-// MUConnection.h
+// MUToolbarController.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,8 +18,17 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-@protocol MUConnection
+#import <Cocoa/Cocoa.h>
 
-- (void) foo:(int)bar;
+@interface MUToolbarController : NSObject
+{
+  NSToolbar *_toolbar;
+  NSMutableDictionary *items; // All items that are allowed to be in the toolbar.
+  
+  IBOutlet NSWindow *window;
+  IBOutlet NSWindowController *windowController;
+  
+  IBOutlet NSView *searchItemView;
+}
 
 @end

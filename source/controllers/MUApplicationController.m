@@ -1,5 +1,5 @@
 //
-// Koan-Prefix.pch
+// MUApplicationController.m
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,8 +18,23 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#ifdef __OBJC__
-  #import <Cocoa/Cocoa.h>
-#endif
+#import "MUApplicationController.h"
 
-#import "MUConstants.h"
+@implementation MUApplicationController
+
+- (IBAction) showPreferences:(id)sender
+{
+  if (!prefsController)
+  {
+    prefsController = [[SSPrefsController alloc] init];
+    
+    [prefsController setPanesOrder:[NSArray arrayWithObjects:
+      NSLocalizedString (MULPreferencePaneConnectionsName, nil),
+      NSLocalizedString (MULPreferencePaneLoggingName, nil),
+      nil]];
+  }
+  
+  [prefsController showPreferencesWindow];
+}
+
+@end

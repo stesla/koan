@@ -1,5 +1,5 @@
 //
-// Koan-Prefix.pch
+// MUConstants.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,8 +18,15 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#ifdef __OBJC__
-  #import <Cocoa/Cocoa.h>
-#endif
+#import <Cocoa/Cocoa.h>
 
-#import "MUConstants.h"
+// Preference pane constants.
+
+extern NSString *MULPreferencePaneConnectionsName;
+extern NSString *MULPreferencePaneConnectionsToolTip;
+extern NSString *MULPreferencePaneLoggingName;
+extern NSString *MULPreferencePaneLoggingToolTip;
+
+// Toolbar item constants.
+
+extern NSString *MUTSearchItemIdentifier;

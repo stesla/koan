@@ -47,6 +47,8 @@
 			children = (
 				8D1107320486CEB800E47090,
 				E62040FB06B054E400236608,
+				E61963020742288B008B6447,
+				E622A846074247E20069335B,
 			);
 			isa = PBXGroup;
 			name = Products;
@@ -77,11 +79,14 @@
 			targets = (
 				8D1107260486CEB800E47090,
 				E62040FA06B054E400236608,
+				E622A845074247E20069335B,
+				E61963010742288B008B6447,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
 			children = (
 				29B97315FDCFA39411CA2CEA,
+				E62C90BA074226DA005662BC,
 				29B97317FDCFA39411CA2CEA,
 				E6B5E40A06A6F28400F53EBB,
 				E6B5E42906A6F36300F53EBB,
@@ -98,9 +103,11 @@
 			children = (
 				E6E46D5806F8024D002809F0,
 				E6B5E46B06A700E400F53EBB,
-				E6BD29C706F580E10091A5E7,
+				E670A81207420F8C00E2DAEB,
 				32CA4F630368D1EE00C91783,
+				E622A550074231A60069335B,
 				29B97316FDCFA39411CA2CEA,
+				E622A551074231A60069335B,
 			);
 			isa = PBXGroup;
 			path = Source;
@@ -121,6 +128,7 @@
 				E6E46D7E06F803ED002809F0,
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
+				E62C909E07422669005662BC,
 				E6B5E61106A73B0A00F53EBB,
 			);
 			isa = PBXGroup;
@@ -242,12 +250,6 @@
 			settings = {
 			};
 		};
-		7E5E161C06CC30E200518E61 = {
-			fileRef = 7E5E161806CC30E200518E61;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		7E5E161D06CC30E200518E61 = {
 			fileRef = 7E5E161906CC30E200518E61;
 			isa = PBXBuildFile;
@@ -295,9 +297,9 @@
 		8D1107260486CEB800E47090 = {
 			buildPhases = (
 				8D1107290486CEB800E47090,
-				E6E46D6806F802BB002809F0,
 				8D11072C0486CEB800E47090,
 				8D11072E0486CEB800E47090,
+				E622A48707422DB90069335B,
 			);
 			buildRules = (
 			);
@@ -305,12 +307,15 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
+				HEADER_SEARCH_PATHS = ./source;
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Koan;
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
+				E622A879074248640069335B,
+				E622A49707422E0E0069335B,
 			);
 			isa = PBXNativeTarget;
 			name = Koan;
@@ -326,6 +331,7 @@
 				E6B5E3B906A6EEA600F53EBB,
 				E6B5E61206A73B0A00F53EBB,
 				E6E46D7F06F803ED002809F0,
+				E62C909F07422669005662BC,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +342,10 @@
 				8D11072D0486CEB800E47090,
 				7E5E161D06CC30E200518E61,
 				E6E46D6006F8026E002809F0,
+				E670A84207420FDF00E2DAEB,
+				E62C8FBE07421D83005662BC,
+				E62C905D07422595005662BC,
+				E622A553074231A60069335B,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -388,6 +398,116 @@
 //E62
 //E63
 //E64
+		E61962E50742283D008B6447 = {
+			children = (
+				E622A43307422CE60069335B,
+				E622A3D607422BA10069335B,
+				E622A3D707422BA10069335B,
+				E622A46707422D510069335B,
+				E61963030742288B008B6447,
+			);
+			isa = PBXGroup;
+			path = Logging;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E61962FE0742288B008B6447 = {
+			buildActionMask = 2147483647;
+			files = (
+				E622A43607422CE60069335B,
+				E622A47B07422D840069335B,
+				E622A6B2074235CD0069335B,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E61962FF0742288B008B6447 = {
+			buildActionMask = 2147483647;
+			files = (
+				E622A5DD074233590069335B,
+				E622A49207422DFC0069335B,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E61963000742288B008B6447 = {
+			buildActionMask = 2147483647;
+			files = (
+				E622A47F07422DA80069335B,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E61963010742288B008B6447 = {
+			buildPhases = (
+				E61962FE0742288B008B6447,
+				E61962FF0742288B008B6447,
+				E61963000742288B008B6447,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = ./source;
+				INFOPLIST_FILE = preferencepanes/Logging/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				LIBRARY_STYLE = BUNDLE;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-framework Foundation -framework AppKit";
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = Logging;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = preferencePane;
+			};
+			dependencies = (
+			);
+			isa = PBXNativeTarget;
+			name = "Logging Preference Pane";
+			productName = "Logging Preference Pane";
+			productReference = E61963020742288B008B6447;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Logging Preference Pane</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.yourcompany.Logging_Preference_Pane</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+</dict>
+</plist>
+";
+			productType = "com.apple.product-type.bundle";
+		};
+		E61963020742288B008B6447 = {
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = Logging.preferencePane;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E61963030742288B008B6447 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = Info.plist;
+			refType = 4;
+			sourceTree = "<group>";
+		};
 		E62040F606B054E400236608 = {
 			buildActionMask = 2147483647;
 			files = (
@@ -504,6 +624,454 @@
 			settings = {
 			};
 		};
+		E622A3CA07422B650069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
+			name = InfoPlist.strings;
+			path = English.lproj/InfoPlist.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A3D607422BA10069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MULoggingPaneController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A3D707422BA10069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MULoggingPaneController.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A42107422CD30069335B = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = MULoggingPane.nib;
+			path = English.lproj/MULoggingPane.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A43307422CE60069335B = {
+			children = (
+				E622A42107422CD30069335B,
+			);
+			isa = PBXVariantGroup;
+			name = MULoggingPane.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A43607422CE60069335B = {
+			fileRef = E622A43307422CE60069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A46707422D510069335B = {
+			children = (
+				E622A3CA07422B650069335B,
+			);
+			isa = PBXVariantGroup;
+			name = InfoPlist.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A47B07422D840069335B = {
+			fileRef = E622A46707422D510069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A47F07422DA80069335B = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A48707422DB90069335B = {
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				E622A87C074248820069335B,
+				E622A48807422DCF0069335B,
+				E622A915074249180069335B,
+			);
+			isa = PBXCopyFilesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E622A48807422DCF0069335B = {
+			fileRef = E61963020742288B008B6447;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A49207422DFC0069335B = {
+			fileRef = E622A3D707422BA10069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A49607422E0E0069335B = {
+			containerPortal = 29B97313FDCFA39411CA2CEA;
+			isa = PBXContainerItemProxy;
+			proxyType = 1;
+			remoteGlobalIDString = E61963010742288B008B6447;
+			remoteInfo = "Logging Preference Pane";
+		};
+		E622A49707422E0E0069335B = {
+			isa = PBXTargetDependency;
+			target = E61963010742288B008B6447;
+			targetProxy = E622A49607422E0E0069335B;
+		};
+		E622A550074231A60069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUConstants.h;
+			path = Source/MUConstants.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E622A551074231A60069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = MUConstants.m;
+			path = Source/MUConstants.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E622A553074231A60069335B = {
+			fileRef = E622A551074231A60069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A5DD074233590069335B = {
+			fileRef = E622A551074231A60069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A6B2074235CD0069335B = {
+			fileRef = E62C909E07422669005662BC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A839074247B50069335B = {
+			children = (
+				E622A99607424A200069335B,
+				E622A903074249180069335B,
+				E622A90C074249180069335B,
+				E622A8BD074248F40069335B,
+				E622A849074247E20069335B,
+			);
+			isa = PBXGroup;
+			path = Connections;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A842074247E20069335B = {
+			buildActionMask = 2147483647;
+			files = (
+				E622A99A07424A200069335B,
+				E622A940074249D10069335B,
+				E622A93D074249CC0069335B,
+			);
+			isa = PBXResourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E622A843074247E20069335B = {
+			buildActionMask = 2147483647;
+			files = (
+				E622A94D074249DC0069335B,
+				E622A950074249E50069335B,
+			);
+			isa = PBXSourcesBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E622A844074247E20069335B = {
+			buildActionMask = 2147483647;
+			files = (
+				E622A955074249EE0069335B,
+			);
+			isa = PBXFrameworksBuildPhase;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E622A845074247E20069335B = {
+			buildPhases = (
+				E622A842074247E20069335B,
+				E622A843074247E20069335B,
+				E622A844074247E20069335B,
+			);
+			buildRules = (
+			);
+			buildSettings = {
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				HEADER_SEARCH_PATHS = ./source;
+				INFOPLIST_FILE = preferencepanes/Connections/Info.plist;
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				LIBRARY_STYLE = BUNDLE;
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "-framework Foundation -framework AppKit";
+				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = Connections;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+				WRAPPER_EXTENSION = preferencePane;
+			};
+			dependencies = (
+			);
+			isa = PBXNativeTarget;
+			name = "Connections Preference Pane";
+			productName = Connections;
+			productReference = E622A846074247E20069335B;
+			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
+<plist version=\"1.0\">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleExecutable</key>
+	<string>Connections</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.yourcompany.Connections</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+</dict>
+</plist>
+";
+			productType = "com.apple.product-type.bundle";
+		};
+		E622A846074247E20069335B = {
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			isa = PBXFileReference;
+			path = Connections.preferencePane;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E622A849074247E20069335B = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = Info.plist;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A878074248640069335B = {
+			containerPortal = 29B97313FDCFA39411CA2CEA;
+			isa = PBXContainerItemProxy;
+			proxyType = 1;
+			remoteGlobalIDString = E622A845074247E20069335B;
+			remoteInfo = "Connections Preference Pane";
+		};
+		E622A879074248640069335B = {
+			isa = PBXTargetDependency;
+			target = E622A845074247E20069335B;
+			targetProxy = E622A878074248640069335B;
+		};
+		E622A87C074248820069335B = {
+			fileRef = E622A846074247E20069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A8AD074248E50069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
+			name = English;
+			path = preferencepanes/Connections/English.lproj/InfoPlist.strings;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E622A8BD074248F40069335B = {
+			children = (
+				E622A8AD074248E50069335B,
+			);
+			isa = PBXVariantGroup;
+			name = InfoPlist.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A903074249180069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUConnectionsPaneController.h;
+			path = preferencepanes/Connections/MUConnectionsPaneController.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E622A90C074249180069335B = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = MUConnectionsPaneController.m;
+			path = preferencepanes/Connections/MUConnectionsPaneController.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E622A915074249180069335B = {
+			fileRef = E622A903074249180069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A93D074249CC0069335B = {
+			fileRef = E62C909E07422669005662BC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A940074249D10069335B = {
+			fileRef = E622A8BD074248F40069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A94D074249DC0069335B = {
+			fileRef = E622A551074231A60069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A950074249E50069335B = {
+			fileRef = E622A90C074249180069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A955074249EE0069335B = {
+			fileRef = 1058C7A1FEA54F0111CA2CBB;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E622A97907424A100069335B = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = English;
+			path = preferencepanes/Connections/English.lproj/MUConnectionsPane.nib;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E622A99607424A200069335B = {
+			children = (
+				E622A97907424A100069335B,
+			);
+			isa = PBXVariantGroup;
+			name = MUConnectionsPane.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E622A99A07424A200069335B = {
+			fileRef = E622A99607424A200069335B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62C8FBB07421D83005662BC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUToolbarController.h;
+			path = source/controllers/MUToolbarController.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E62C8FBC07421D83005662BC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = MUToolbarController.m;
+			path = source/controllers/MUToolbarController.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E62C8FBE07421D83005662BC = {
+			fileRef = E62C8FBC07421D83005662BC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62C905A07422595005662BC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUApplicationController.h;
+			path = source/controllers/MUApplicationController.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E62C905B07422595005662BC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = MUApplicationController.m;
+			path = source/controllers/MUApplicationController.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E62C905D07422595005662BC = {
+			fileRef = E62C905B07422595005662BC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62C909A0742265F005662BC = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.plist.strings;
+			name = English;
+			path = Resources/English.lproj/Localizable.strings;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E62C909E07422669005662BC = {
+			children = (
+				E62C909A0742265F005662BC,
+			);
+			isa = PBXVariantGroup;
+			name = Localizable.strings;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E62C909F07422669005662BC = {
+			fileRef = E62C909E07422669005662BC;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E62C90BA074226DA005662BC = {
+			children = (
+				E622A839074247B50069335B,
+				E61962E50742283D008B6447,
+			);
+			isa = PBXGroup;
+			name = "Preference Panes";
+			path = preferencepanes;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
 		E648B8E906B03FBC0070F73E = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.xml;
@@ -511,6 +1079,45 @@
 			path = "tests/Tests-Info.plist";
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
+		};
+		E670A81207420F8C00E2DAEB = {
+			children = (
+				E62C905A07422595005662BC,
+				E62C8FBB07421D83005662BC,
+				E670A83F07420FDF00E2DAEB,
+				E62C905B07422595005662BC,
+				E62C8FBC07421D83005662BC,
+				E670A84007420FDF00E2DAEB,
+			);
+			isa = PBXGroup;
+			name = Controllers;
+			path = source/controllers;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E670A83F07420FDF00E2DAEB = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MUMainWindowController.h;
+			path = source/controllers/MUMainWindowController.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E670A84007420FDF00E2DAEB = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			name = MUMainWindowController.m;
+			path = source/controllers/MUMainWindowController.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E670A84207420FDF00E2DAEB = {
+			fileRef = E670A84007420FDF00E2DAEB;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 		E6B5E3AA06A6EE0C00F53EBB = {
 			children = (
@@ -595,20 +1202,11 @@
 		E6B5E46B06A700E400F53EBB = {
 			children = (
 				7E5E161806CC30E200518E61,
-				E6B5E46C06A7011100F53EBB,
 				7E5E161906CC30E200518E61,
 			);
 			isa = PBXGroup;
 			name = Connections;
 			path = connections;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E6B5E46C06A7011100F53EBB = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = MUConnection.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -626,39 +1224,6 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		E6BD29C706F580E10091A5E7 = {
-			children = (
-				E6BD29E606F581C40091A5E7,
-				E6BD29EA06F581D00091A5E7,
-			);
-			isa = PBXGroup;
-			name = Controls;
-			path = controls;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E6BD29E606F581C40091A5E7 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			path = SRTabView.h;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E6BD29E706F581C40091A5E7 = {
-			fileRef = E6BD29E606F581C40091A5E7;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6BD29EA06F581D00091A5E7 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.objc;
-			path = SRTabView.m;
-			refType = 4;
-			sourceTree = "<group>";
 		};
 		E6E46D5806F8024D002809F0 = {
 			children = (
@@ -695,34 +1260,11 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		E6E46D5E06F8026E002809F0 = {
-			fileRef = E6E46D5B06F8026E002809F0;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6E46D5F06F8026E002809F0 = {
-			fileRef = E6E46D5C06F8026E002809F0;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		E6E46D6006F8026E002809F0 = {
 			fileRef = E6E46D5D06F8026E002809F0;
 			isa = PBXBuildFile;
 			settings = {
 			};
-		};
-		E6E46D6806F802BB002809F0 = {
-			buildActionMask = 2147483647;
-			files = (
-				7E5E161C06CC30E200518E61,
-				E6BD29E706F581C40091A5E7,
-				E6E46D5E06F8026E002809F0,
-				E6E46D5F06F8026E002809F0,
-			);
-			isa = PBXHeadersBuildPhase;
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E6E46D7E06F803ED002809F0 = {
 			fileEncoding = 4;

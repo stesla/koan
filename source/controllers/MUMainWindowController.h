@@ -1,5 +1,5 @@
 //
-// Koan-Prefix.pch
+// MUMainWindowController.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,8 +18,25 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#ifdef __OBJC__
-  #import <Cocoa/Cocoa.h>
-#endif
+#import <Cocoa/Cocoa.h>
+#import "Connections/MUTelnetConnection.h"
 
-#import "MUConstants.h"
+@interface MUMainWindowController : NSWindowController
+{
+  IBOutlet NSTextField *hostNameField;
+  IBOutlet NSTextField *portField;
+  IBOutlet NSTextView *textView;
+  IBOutlet NSTextField *inputField;
+  IBOutlet NSButton *connectButton;
+  IBOutlet NSButton *disconnectButton;
+  
+  MUTelnetConnection *_telnetConnection;
+}
+
+- (IBAction) connect:(id)sender;
+- (IBAction) disconnect:(id)sender;
+- (IBAction) writeLine:(id)sender;
+
+- (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
+
+@end

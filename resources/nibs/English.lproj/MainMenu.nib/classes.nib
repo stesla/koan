@@ -1,4 +1,36 @@
 {
-    IBClasses = ({CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }); 
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {showPreferences = id; }; 
+            CLASS = MUApplicationController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {connect = id; disconnect = id; writeLine = id; }; 
+            CLASS = MUMainWindowController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                connectButton = NSButton; 
+                disconnectButton = NSButton; 
+                hostNameField = NSTextField; 
+                inputField = NSTextField; 
+                portField = NSTextField; 
+                textView = NSTextView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            CLASS = MUToolbarController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                searchItemView = NSView; 
+                window = NSWindow; 
+                windowController = NSWindowController; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
     IBVersion = 1; 
 }

@@ -1,5 +1,5 @@
 //
-// Koan-Prefix.pch
+// MUApplicationController.h
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -18,8 +18,14 @@
 // Suite 330, Boston, MA 02111-1307 USA
 //
 
-#ifdef __OBJC__
-  #import <Cocoa/Cocoa.h>
-#endif
+#import <Cocoa/Cocoa.h>
+#import "SSPrefsController/SSPrefsController.h"
 
-#import "MUConstants.h"
+@interface MUApplicationController : NSObject
+{
+  SSPrefsController *prefsController;
+}
+
+- (IBAction) showPreferences:(id)sender;
+
+@end

@@ -1,0 +1,19 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = MULoggingPaneController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                enableLoggingButton = NSButton; 
+                logDirectoryButton = NSPopUpButton; 
+                logFilenameTemplateField = NSTextField; 
+                paneView = NSView; 
+                sortLogsByConnectionButton = NSButton; 
+                sortLogsByDateButton = NSButton; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
