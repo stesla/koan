@@ -893,7 +893,7 @@
 				E62040F906B054E400236608,
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Users/samuel/wa/koan/build;
+				FRAMEWORK_SEARCH_PATHS = $BUILD_ROOT;
 				HEADER_SEARCH_PATHS = "./source ./filters";
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
