@@ -27,3 +27,23 @@
 }
 
 @end
+
+@implementation NSMutableAttributedString (Allocating)
+
++ (NSMutableAttributedString *) attributedStringWithAttributedString:(NSAttributedString *)attributedString
+{
+  return [[[NSMutableAttributedString alloc] initWithAttributedString:attributedString] autorelease];
+}
+
++ (NSMutableAttributedString *) attributedStringWithString:(NSString *)string
+{
+  return [[[NSMutableAttributedString alloc] initWithString:string] autorelease];
+}
+
++ (NSMutableAttributedString *) attributedStringWithString:(NSString *)string attributes:(NSDictionary *)dictionary
+{
+  return [[[NSMutableAttributedString alloc] initWithString:string
+                                          attributes:dictionary] autorelease];
+}
+
+@end

@@ -98,7 +98,7 @@
           hasOutput:@"Foo\n"];
 }
 
-- (void) testNewLineOnly
+- (void) testOnlyNewLine
 {
   [self assertInput:@"\n"
           hasOutput:@"\n"];

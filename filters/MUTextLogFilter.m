@@ -20,6 +20,10 @@
 
 #import "MUTextLogFilter.h"
 
+@interface MUTextLogFilter (Private)
+- (void) log:(NSAttributedString *)editString;
+@end
+
 @implementation MUTextLogFilter
 
 + (MUFilter *) filter
@@ -27,9 +31,48 @@
   return [[[MUTextLogFilter alloc] init] autorelease];
 }
 
+- (id) init
+{
+  return [self initWithOutputStream:[[NSOutputStream alloc] initToFileAtPath:[@"~/Koan.log" stringByExpandingTildeInPath]
+                                                                      append:YES]];
+}
+
+- (id) initWithOutputStream:(NSOutputStream *)stream
+{
+  if (self = [super init])
+  {
+    _output = [stream retain];
+    _writeBuffer = [[NSMutableData alloc] init];
+    _errorMessage = @"";
+    _isConnected = NO;
+    // _connectionStatus = MUConnectionStatusNotConnected;
+    // _reasonClosed = MUConnectionClosedReasonNotClosed;
+  }
+  return self;
+}
+
+- (void) dealloc
+{
+  [_output close];
+  [_output release];
+}
+
 - (NSAttributedString *) filter:(NSAttributedString *)string
 {
+  [self log:string];
+  
   return string;
+}
+
+@end
+
+@implementation MUTextLogFilter (Private)
+
+- (void) log:(NSAttributedString *)string
+{
+  const char *buffer = [[string string] UTF8String];
+  
+  [_output write:(uint8_t *) buffer maxLength:strlen (buffer)];
 }
 
 @end

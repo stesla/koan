@@ -15,3 +15,11 @@
 + (NSAttributedString *) attributedStringWithString:(NSString *)source attributes:(NSDictionary *)dictionary;
 
 @end
+
+@interface NSMutableAttributedString (Allocating)
+
++ (NSMutableAttributedString *) attributedStringWithAttributedString:(NSAttributedString *)source;
++ (NSMutableAttributedString *) attributedStringWithString:(NSString *)source;
++ (NSMutableAttributedString *) attributedStringWithString:(NSString *)source attributes:(NSDictionary *)dictionary;
+
+@end

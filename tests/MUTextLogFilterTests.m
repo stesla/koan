@@ -21,21 +21,103 @@
 #import "MUTextLogFilterTests.h"
 #import "MUTextLogFilter.h"
 
+@interface MUTextLogFilterTests (Private)
+- (void) assertFilter:(id)object;
+- (void) assertFilterString:(NSString *)string;
+- (void) assertLoggedOutput:(NSString *)string;
+@end
+
+@implementation MUTextLogFilterTests (Private)
+
+- (void) assertFilter:(id)object
+{
+  [self assert:[_filter filter:object] equals:object message:nil];
+}
+
+- (void) assertFilterString:(NSString *)string
+{
+  [self assertFilter:[NSAttributedString attributedStringWithString:string]];
+}
+
+- (void) assertLoggedOutput:(NSString *)string
+{
+  NSString *outputString = [NSString stringWithCString:(const char *)_outputBuffer];
+  
+  [self assert:outputString equals:string];
+}
+
+@end
+
 @implementation MUTextLogFilterTests
 
 - (void) setUp
 {
+  memset (_outputBuffer, 0, MUTextLogTestBufferMax);
+  NSOutputStream *output = [NSOutputStream outputStreamToBuffer:_outputBuffer
+                                                       capacity:MUTextLogTestBufferMax];
+  [output open];
   
+  _filter = [[MUTextLogFilter alloc] initWithOutputStream:output];
 }
 
 - (void) tearDown
 {
-  
+  [_filter release];
 }
 
-- (void) testNull
+- (void) testSimpleString
 {
-  [self assertNil:nil];
+  [self assertFilterString:@"Foo"];
+  [self assertLoggedOutput:@"Foo"];
+}
+
+- (void) testColorString
+{
+  NSMutableAttributedString *string = [NSMutableAttributedString attributedStringWithString:@"Foo"];
+  [string addAttribute:NSForegroundColorAttributeName
+                 value:[NSColor redColor]
+                 range:NSMakeRange (0, [string length])];
+  
+  [self assertFilter:string];
+  [self assertLoggedOutput:@"Foo"];
+}
+
+- (void) testFontString
+{
+  NSMutableAttributedString *string = [NSMutableAttributedString attributedStringWithString:@"Foo"];
+  [string addAttribute:NSFontAttributeName
+                 value:[NSFont fontWithName:@"Monaco" size:10.0]
+                 range:NSMakeRange (0, [string length])];
+  
+  [self assertFilter:string];
+  [self assertLoggedOutput:@"Foo"];
+}
+
+- (void) testSimpleConcatenation
+{
+  [self assertFilterString:@"One"];
+  [self assertFilterString:@" "];
+  [self assertFilterString:@"Two"];
+  [self assertLoggedOutput:@"One Two"];
+}
+
+- (void) testComplexConcatenation
+{
+  NSMutableAttributedString *one = [NSMutableAttributedString attributedStringWithString:@"One"];
+  NSMutableAttributedString *two = [NSMutableAttributedString attributedStringWithString:@"Two"];
+
+  [one addAttribute:NSForegroundColorAttributeName
+              value:[NSColor redColor]
+              range:NSMakeRange (0, [one length])];
+  
+  [two addAttribute:NSFontAttributeName
+              value:[NSFont fontWithName:@"Monaco" size:10.0]
+              range:NSMakeRange (0, [two length])];
+  
+  [self assertFilter:one];
+  [self assertFilterString:@" "];
+  [self assertFilter:two];
+  [self assertLoggedOutput:@"One Two"];
 }
 
 @end

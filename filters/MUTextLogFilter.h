@@ -23,7 +23,15 @@
 
 @interface MUTextLogFilter : MUFilter
 {
-
+  NSOutputStream *_output;
+  NSMutableData *_writeBuffer;
+  NSString *_errorMessage;
+  // MUConnectionStatus _connectionStatus;
+  // MUConnectionClosedReason _reasonClosed;
+  BOOL _canWrite;
+  BOOL _isConnected;
 }
+
+- (id) initWithOutputStream:(NSOutputStream *)stream;
 
 @end
