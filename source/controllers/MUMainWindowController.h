@@ -31,6 +31,9 @@
   IBOutlet NSButton *disconnectButton;
   
   MUTelnetConnection *_telnetConnection;
+  
+  NSMutableArray *_historyArray;
+  int _historyIndex;
 }
 
 - (IBAction) connect:(id)sender;

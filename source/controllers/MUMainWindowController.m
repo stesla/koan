@@ -63,6 +63,8 @@
   
   [connectButton setEnabled:NO];
   [disconnectButton setEnabled:YES];
+  
+  [[self window] makeFirstResponder:inputField];
 }
 
 - (IBAction) disconnect:(id)sender
@@ -74,12 +76,21 @@
 
 - (IBAction) writeLine:(id)sender
 {
-  NSString *input = [NSString stringWithFormat:@"%@\n", [inputField stringValue]];
+  NSString *input = [inputField stringValue];
+  NSString *inputToWrite;
+  
+  if ([input length] == 0)
+  {
+    [[self window] makeFirstResponder:inputField];
+    return;
+  }
+  
+  inputToWrite = [NSString stringWithFormat:@"%@\n", [inputField stringValue]];
   [inputField setStringValue:@""];
   
   if ([_telnetConnection isConnected])
   {
-    [_telnetConnection writeString:input];
+    [_telnetConnection writeString:inputToWrite];
   }
   
   [[self window] makeFirstResponder:inputField];
@@ -146,6 +157,32 @@
   [_telnetConnection release];
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
+}
+
+// Delegate methods for NSTextView.
+
+- (BOOL) control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+  if (commandSelector == @selector(moveUp:))
+  {
+    NSRange range;
+    NSRect rect;
+
+    rect = [[textView layoutManager] lineFragmentRectForGlyphAtIndex:selectedRange.location
+                                                      effectiveRange:&range];
+    if (range.location == 0)
+    {
+      
+      return YES;
+    }
+    else
+      return NO;
+  }
+  else if (commandSelector == @selector(moveDown:))
+  {
+
+  }
+  return NO;
 }
 
 @end
