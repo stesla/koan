@@ -98,32 +98,6 @@ static MUWorldRegistry *sharedRegistry = nil;
   return [worlds objectAtIndex:index];
 }
 
-- (void) addWorld:(MUWorld *)world
-{
-  if (![self containsWorld:world])
-    [worlds addObject:world];
-}
-
-- (BOOL) containsWorld:(MUWorld *)world
-{
-  [worlds containsObject:world];
-}
-
-- (void) removeWorld:(MUWorld *)world
-{
-  [worlds removeObject:world];
-}
-
-- (void) addPlayer:(MUPlayer *)player toWorld:(MUWorld *)world
-{
-  [self addWorld:world];
-  [world addPlayer:player];
-}
-
-- (void) removePlayer:(MUPlayer *)player fromWorld:(MUWorld *)world
-{
-  [world removePlayer:player];
-}
 @end
 
 #pragma mark -

@@ -16,6 +16,7 @@
   NSMutableArray *worlds;
 }
 
+// This is how you should get an MUWorldRegistry instance
 + (id) sharedRegistry;
 
 - (NSMutableArray *) worlds;
@@ -26,10 +27,4 @@
 - (unsigned) count;
 - (void) saveWorlds;
 - (MUWorld *) worldAtIndex:(unsigned)index;
-
-- (void) addWorld:(MUWorld *)world;
-- (BOOL) containsWorld:(MUWorld *)world;
-- (void) removeWorld:(MUWorld *)world;
-- (void) addPlayer:(MUPlayer *)player toWorld:(MUWorld *)world;
-- (void) removePlayer:(MUPlayer *)player fromWorld:(MUWorld *)world;
 @end
