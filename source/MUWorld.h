@@ -16,13 +16,8 @@
   NSDictionary *players;
 }
 
-+ (id) connectionWithDictionary:(NSDictionary *)dictionary;
-
 // Designated initializer.
 - (id) initWithWorldName:(NSString *)name worldHostname:(NSString *)hostname worldPort:(NSNumber *)port;
-
-- (id) initWithDictionary:(NSDictionary *)dictionary;
-- (NSDictionary *) objectDictionary;
 
 - (NSString *) worldName;
 - (void) setWorldName:(NSString *)newWorldName;

@@ -16,11 +16,6 @@ static const int32_t currentVersion = 0;
     triggerChangeNotificationsForDependentKey:@"description"];
 }
 
-+ (id) connectionWithDictionary:(NSDictionary *)dictionary
-{
-  return [[[MUWorld alloc] initWithDictionary:dictionary] autorelease];
-}
-
 - (id) initWithWorldName:(NSString *)newWorldName
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
@@ -32,21 +27,6 @@ static const int32_t currentVersion = 0;
     [self setWorldPort:newWorldPort];
   }
   return self;
-}
-
-- (id) initWithDictionary:(NSDictionary *)dictionary
-{
-  return [self initWithWorldName:[dictionary objectForKey:@"worldName"]
-                   worldHostname:[dictionary objectForKey:@"worldHostname"]
-                       worldPort:[dictionary objectForKey:@"worldPort"]];
-}
-
-- (NSDictionary *) objectDictionary
-{
-  NSArray *keys = [NSArray arrayWithObjects:@"worldName", @"worldHostname", @"worldPort", nil];
-  NSArray *objects = [NSArray arrayWithObjects:[self worldName], [self worldHostname], [self worldPort], nil];
-  
-  return [NSDictionary dictionaryWithObjects:objects forKeys:keys];
 }
 
 - (id) init

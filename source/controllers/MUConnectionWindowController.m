@@ -61,7 +61,8 @@
   [historyRing release];
 }
 
-// Accessors.
+#pragma mark -
+#pragma mark Accessors
 
 - (id) delegate
 {
@@ -78,7 +79,8 @@
   return [telnetConnection isConnected];
 }
 
-// Actions.
+#pragma mark -
+#pragma mark Actions
 
 - (IBAction) connect:(id)sender
 {
@@ -136,7 +138,8 @@
   [inputView setString:[historyRing previousString]];
 }
 
-// Delegate methods for J3TelnetConnection.
+#pragma mark -
+#pragma mark J3TelnetConnection delegate
 
 - (void) telnetDidReadLine:(J3TelnetConnection *)telnet
 {
@@ -185,7 +188,8 @@
   }
 }
 
-// Delegate methods for NSTextView.
+#pragma mark -
+#pragma mark NSTextView delegate
 
 - (BOOL) textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
 {
@@ -277,7 +281,8 @@
   return NO;
 }
 
-// Delegate methods for NSWindow.
+#pragma mark -
+#pragma mark NSWindow delegate
 
 - (BOOL) windowShouldClose:(id)sender
 {

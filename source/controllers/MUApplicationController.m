@@ -46,21 +46,12 @@
 
 - (void) awakeFromNib
 {
-  NSArray *prefsConnections = [[NSUserDefaults standardUserDefaults] objectForKey:MUPWorlds];
-  NSMutableArray *array = [NSMutableArray array];
   J3PortFormatter *formatter = [[[J3PortFormatter alloc] init] autorelease];
-  int i, connectionsCount = [prefsConnections count];
   
+  [self setWorlds:[NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:@"newworlds"]]];
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
-  for (i = 0; i < connectionsCount; i++)
-  {
-    [array addObject:[MUWorld connectionWithDictionary:[prefsConnections objectAtIndex:i]]];
-  }
-  
   [[portColumn dataCell] setFormatter:formatter];
-  
-  [self setWorlds:array];
 }
 
 - (void) dealloc
@@ -69,7 +60,8 @@
   [worlds release];
 }
 
-// Accessors.
+#pragma mark -
+#pragma mark Accessors
 
 - (NSArray *) worlds
 {
@@ -85,7 +77,8 @@
   [self updateConnectionsMenu];
 }
 
-// Actions.
+#pragma mark -
+#pragma mark Actions
 
 - (IBAction) changeGlobalFont:(id)sender
 {
@@ -133,7 +126,8 @@
   [profilesPanel makeKeyAndOrderFront:self];
 }
 
-// Delegate methods for NSApplication.
+#pragma mark -
+#pragma mark NSApplication delegate
 
 - (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *)app
 {
@@ -171,26 +165,19 @@
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
-  NSMutableArray *array = [NSMutableArray array];
-  int i, worldsCount = [worlds count];
-  int controllerCount = [connectionWindowControllers count];
-  
-  for (i = 0; i < worldsCount; i++)
-  {
-    [array addObject:[[worlds objectAtIndex:i] objectDictionary]];
-  }
-  
-  [[NSUserDefaults standardUserDefaults] setObject:array forKey:MUPWorlds];
+  [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:worlds] forKey:@"newworlds"];
 }
 
-// Delegate methods for NSControl.
+#pragma mark -
+#pragma mark NSControl delegate
 
 - (void) controlTextDidEndEditing:(NSNotification *)notification
 {
   [self updateConnectionsMenu];
 }
 
-// Delegate methods for MUConnectionWindowController.
+#pragma mark -
+#pragma mark MUConnectionWindowController delegate
 
 - (void) windowIsClosingForConnectionWindowController:(MUConnectionWindowController *)controller
 {
