@@ -38,7 +38,7 @@ static MUProfileRegistry * sharedRegistry = nil;
 - (MUProfile *) profileForWorld:(MUWorld *)world
 {
   MUProfile * profile = [MUProfile profileWithWorld:world];
-  [profiles setObject:profile forKey:[profile windowName]];
+  [profiles setObject:profile forKey:[world uniqueIdentifier]];
   return profile;
 }
 

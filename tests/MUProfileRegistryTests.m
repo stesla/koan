@@ -44,7 +44,7 @@
   [self assertNotNil:profileOne];
   [self assert:[profileOne world] equals:world];
   
-  profileTwo = [registry profileForUniqueIdentifier:@"Test World"];
+  profileTwo = [registry profileForUniqueIdentifier:@"test.world"];
   [self assertNotNil:profileTwo];
   [self assert:profileTwo equals:profileOne];
 }

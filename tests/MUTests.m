@@ -12,6 +12,7 @@
 #import "J3HistoryRingTests.h"
 #import "J3NaiveURLFilterTests.h"
 #import "MUProfileRegistryTests.h"
+#import "MUWorldTests.h"
 
 int
 main (int argc, const char *argv[])
@@ -34,6 +35,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[J3NaiveURLFilterTests class]];
   [suite addTestSuite:[J3TextLoggerTests class]];
   [suite addTestSuite:[MUProfileRegistryTests class]];
+  [suite addTestSuite:[MUWorldTests class]];
   return suite;
 }
 

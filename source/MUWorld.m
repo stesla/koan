@@ -182,6 +182,20 @@ static const int32_t currentVersion = 2;
   [self postWorldsUpdatedNotification];
 }
 
+- (NSString *) uniqueIdentifier
+{
+  NSArray *tokens = [worldName componentsSeparatedByString:@" "];
+  NSMutableString *result = [NSMutableString string];
+  if ([tokens count] > 0)
+  {
+    int i = 0;
+    [result appendFormat:@"%@", [[tokens objectAtIndex:i] lowercaseString]];
+    for (i = 1; i < [tokens count]; i++)
+      [result appendFormat:@".%@", [[tokens objectAtIndex:i] lowercaseString]];
+  }
+  return result;
+}
+
 #pragma mark -
 #pragma mark Actions
 

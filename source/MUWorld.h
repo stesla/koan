@@ -57,6 +57,7 @@
 - (void) setPlayers:(NSArray *)newPlayers;
 - (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index;
 - (void) removeObjectFromPlayersAtIndex:(unsigned)index;
+- (NSString *) uniqueIdentifier;
 
 // Actions.
 - (J3TelnetConnection *) newTelnetConnection;
