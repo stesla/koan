@@ -94,7 +94,7 @@ static const int32_t currentVersion = 1;
 
 - (NSString *) loginString
 {
-  return [NSString stringWithFormat:@"connect %@ %@", [self name], [self password]];
+  return [NSString stringWithFormat:@"connect \"%@\" \"%@\"", [self name], [self password]];
 }
 
 - (NSString *) windowName

@@ -14,6 +14,7 @@
 #import "MUProfileRegistryTests.h"
 #import "MUWorldTests.h"
 #import "MUProfileTests.h"
+#import "MUPlayerTests.h"
 
 int
 main (int argc, const char *argv[])
@@ -38,6 +39,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[MUProfileRegistryTests class]];
   [suite addTestSuite:[MUWorldTests class]];
   [suite addTestSuite:[MUProfileTests class]];
+  [suite addTestSuite:[MUPlayerTests class]];
   return suite;
 }
 
