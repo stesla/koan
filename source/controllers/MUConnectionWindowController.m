@@ -102,6 +102,19 @@
   [world release];
 }
 
+- (BOOL) validateMenuItem:(NSMenuItem *)menuItem
+{
+  if ([menuItem action] == @selector(connectOrDisconnect:))
+  {
+    if ([telnetConnection isConnected])
+      [menuItem setTitle:MULDisconnect];
+    else
+      [menuItem setTitle:MULConnect];
+    return YES;
+  }
+  return NO;
+}
+
 #pragma mark -
 #pragma mark Accessors
 
@@ -154,16 +167,11 @@
     
     if ([world usesProxy])
     {
-      NSDictionary *info;
-      
       [telnetConnection enableProxyWithHostname:[world proxyHostname]
                                          onPort:[[world proxyPort] intValue]
                                         version:[world proxyVersion]
                                        username:[world proxyUsername]
                                        password:[world proxyPassword]];
-      
-      info = [[telnetConnection output] propertyForKey:NSStreamSOCKSProxyConfigurationKey];
-      NSLog (@"Got it.");
     }
     
     [telnetConnection setDelegate:self];
@@ -175,11 +183,20 @@
   [[self window] makeFirstResponder:inputView];
 }
 
+- (IBAction) connectOrDisconnect:(id)sender
+{
+  if ([telnetConnection isConnected])
+    [self disconnect:sender];
+  else
+    [self connect:sender];
+}
+
 - (IBAction) disconnect:(id)sender
 {
   [telnetConnection close];
   [telnetConnection release];
   telnetConnection = nil;
+  autoLoggedIn = NO;
 }
 
 - (BOOL) sendString:(NSString *)string

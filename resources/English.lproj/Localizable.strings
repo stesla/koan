@@ -20,6 +20,7 @@
 
 // Miscellaneous messages.
 
+"Connect" = "Connect";
+"Disconnect" = "Disconnect";
+
 "ConnectWithoutLogin" = "Connect Without Login";
-"UnnamedPlayer" = "Unnamed Player";
-"UntitledWorld" = "Untitled World";

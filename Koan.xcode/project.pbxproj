@@ -7,7 +7,9 @@
 	objects = {
 		1058C7A0FEA54F0111CA2CBB = {
 			children = (
+				E6505A31078203FC0016F30E,
 				16D5FA06075434E4007C5F34,
+				E6505D4507836DD00016F30E,
 				1058C7A1FEA54F0111CA2CBB,
 				E620410A06B0551D00236608,
 			);
@@ -63,7 +65,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E6505DB007836EFD0016F30E,
 				16D5FA0B07543500007C5F34,
+				E6505DB107836F000016F30E,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,14 +84,16 @@
 			);
 			inputPaths = (
 				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework.tar.gz",
+				"$(SOURCE_ROOT)/frameworks/AGRegex.framework.tar.gz",
 			);
 			isa = PBXShellScriptBuildPhase;
 			outputPaths = (
 				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework",
+				"$(SOURCE_ROOT)/frameworks/AGRegex.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SOURCE_ROOT}/frameworks\n# Add more frameworks below\ntar zxvf J3Terminal.framework.tar.gz";
+			shellScript = "cd ${SOURCE_ROOT}/frameworks\n# Add more frameworks below\ntar zxvf AGRegex.framework.tar.gz\ntar zxvf J3Terminal.framework.tar.gz\ntar zxvf RBSplitView.framework.tar.gz\n";
 		};
 //160
 //161
@@ -448,7 +454,7 @@
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = ./frameworks;
+				FRAMEWORK_SEARCH_PATHS = "./frameworks /Users/loki/Projects/Koan/frameworks";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
@@ -534,7 +540,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090,
+				E6505D4C07836DDC0016F30E,
 				16D5FA07075434E4007C5F34,
+				E6505D4607836DD00016F30E,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -986,6 +994,51 @@
 			settings = {
 			};
 		};
+		E6505A31078203FC0016F30E = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			path = AGRegex.framework;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6505ABF07820CC00016F30E = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.rtf;
+			path = "User Stories.rtf";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6505D4507836DD00016F30E = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			path = RBSplitView.framework;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6505D4607836DD00016F30E = {
+			fileRef = E6505D4507836DD00016F30E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6505D4C07836DDC0016F30E = {
+			fileRef = E6505A31078203FC0016F30E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6505DB007836EFD0016F30E = {
+			fileRef = E6505A31078203FC0016F30E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6505DB107836F000016F30E = {
+			fileRef = E6505D4507836DD00016F30E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E6550DF807763B57002E81FF = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -1256,8 +1309,9 @@
 		};
 		E6B5E42906A6F36300F53EBB = {
 			children = (
-				E65055A9077EBA820016F30E,
 				E650559A077EB6080016F30E,
+				E65055A9077EBA820016F30E,
+				E6505ABF07820CC00016F30E,
 			);
 			isa = PBXGroup;
 			name = Documentation;

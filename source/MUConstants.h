@@ -42,4 +42,7 @@ extern NSString *MULConfirmQuitMessagePlural;
 
 // Miscellaneous localization constants.
 
+extern NSString *MULConnect;
+extern NSString *MULDisconnect;
+
 extern NSString *MULConnectWithoutLogin;

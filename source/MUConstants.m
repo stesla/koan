@@ -42,4 +42,7 @@ NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
 
 // Miscellaneous localization constants.
 
+NSString *MULConnect = @"Connect";
+NSString *MULDisconnect = @"Disconnect";
+
 NSString *MULConnectWithoutLogin = @"ConnectWithoutLogin";
