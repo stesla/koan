@@ -25,7 +25,10 @@ enum MUProfilesEditingReturnValues
 - (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players;
-
+- (void) updateProfilesForWorld:(MUWorld *)world withWorld:(MUWorld *)newWorld;
+- (void) updateProfileForWorld:(MUWorld *)world 
+                        player:(MUPlayer *)player 
+                    withPlayer:(MUPlayer *)newPlayer;
 @end
 
 #pragma mark -
@@ -242,8 +245,6 @@ enum MUProfilesEditingReturnValues
 {
   if (returnCode == MUEditOkay)
   {
-    MUProfile *profile = nil;
-    MUProfileRegistry *registry = [MUProfileRegistry sharedRegistry];
     MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
     MUPlayer *selectedPlayer = [[playersArrayController selectedObjects] objectAtIndex:0];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
@@ -251,12 +252,9 @@ enum MUProfilesEditingReturnValues
                                       connectOnAppLaunch:([playerConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    world:selectedWorld];
           
-    // Update the player reference in the profile  
-    profile = [registry profileForWorld:selectedWorld
-                                 player:selectedPlayer];
-    [registry removeProfile:profile];
-    [profile setPlayer:newPlayer];
-    [registry profileForProfile:profile];
+    [self updateProfileForWorld:selectedWorld
+                         player:selectedPlayer
+                     withPlayer:newPlayer];
     
     [playersArrayController removeObject:selectedPlayer];
     [playersArrayController addObject:newPlayer];
@@ -279,9 +277,13 @@ enum MUProfilesEditingReturnValues
   if (returnCode == MUEditOkay)
   {
     MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
+    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[selectedWorld players]];
+
+    [self updateProfilesForWorld:selectedWorld
+                       withWorld:newWorld];
+    
     [worldsArrayController removeObject:selectedWorld];
-    [worldsArrayController addObject:
-      [self createWorldFromSheetWithPlayers:[selectedWorld players]]];
+    [worldsArrayController addObject:newWorld];
     [worldsArrayController rearrangeObjects];
   }
 }
@@ -309,5 +311,48 @@ enum MUProfilesEditingReturnValues
                               proxySettings:settings
                                     players:players];
 }
+
+- (void) updateProfilesForWorld:(MUWorld *)world withWorld:(MUWorld *)newWorld
+{
+  MUProfile *profile = nil;
+  MUProfileRegistry *registry = [MUProfileRegistry sharedRegistry];
+  NSArray *players = [world players];
+  int i, count = [players count];
+  
+  for (i = 0; i < count; i++)
+  {
+    MUPlayer *player = [players objectAtIndex:i];
+    profile = [registry profileForWorld:world
+                                 player:player];
+    [profile retain];
+    [registry removeProfile:profile];
+    [profile setWorld:newWorld];
+    [player setWorld:newWorld];
+    [registry profileForProfile:profile];
+    [profile release];
+  }
+  profile = [registry profileForWorld:world];
+  [profile retain];
+  [registry removeProfile:profile];
+  [profile setWorld:newWorld];
+  [registry profileForProfile:profile];
+  [profile release];
+}
+
+- (void) updateProfileForWorld:(MUWorld *)world 
+                        player:(MUPlayer *)player 
+                    withPlayer:(MUPlayer *)newPlayer
+{
+  MUProfileRegistry *registry = [MUProfileRegistry sharedRegistry];
+  MUProfile *profile = [registry profileForWorld:world
+                                          player:player];
+  [profile retain];
+  [registry removeProfile:profile];
+  [profile setPlayer:newPlayer];
+  [registry profileForProfile:profile];
+  [profile release];
+}
+
+
 
 @end
