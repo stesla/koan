@@ -1,18 +1,20 @@
 //
-// MUTextLoggerTests.m
+// J3TextLoggerTests.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUTextLoggerTests.h"
+#import "J3TextLoggerTests.h"
 
-@interface MUTextLoggerTests (Private)
+@interface J3TextLoggerTests (Private)
 - (void) assertFilter:(id)object;
 - (void) assertFilterString:(NSString *)string;
 - (void) assertLoggedOutput:(NSString *)string;
 @end
 
-@implementation MUTextLoggerTests (Private)
+#pragma mark -
+
+@implementation J3TextLoggerTests (Private)
 
 - (void) assertFilter:(id)object
 {
@@ -33,16 +35,18 @@
 
 @end
 
-@implementation MUTextLoggerTests
+#pragma mark -
+
+@implementation J3TextLoggerTests
 
 - (void) setUp
 {
-  memset (outputBuffer, 0, MUTextLogTestBufferMax);
+  memset (outputBuffer, 0, J3TextLogTestBufferMax);
   NSOutputStream *output = [NSOutputStream outputStreamToBuffer:outputBuffer
-                                                       capacity:MUTextLogTestBufferMax];
+                                                       capacity:J3TextLogTestBufferMax];
   [output open];
   
-  filter = [[MUTextLogger alloc] initWithOutputStream:output];
+  filter = [[J3TextLogger alloc] initWithOutputStream:output];
 }
 
 - (void) tearDown

@@ -6,10 +6,11 @@
 
 #import "MUTests.h"
 
-#import "MUFilterTests.h"
-#import "MUAnsiRemovingFilterTests.h"
-#import "MUTextLoggerTests.h"
-#import "MUHistoryRingTests.h"
+#import "J3FilterTests.h"
+#import "J3ANSIRemovingFilterTests.h"
+#import "J3TextLoggerTests.h"
+#import "J3HistoryRingTests.h"
+#import "J3URLLinkFilterTests.h"
 
 int
 main (int argc, const char *argv[])
@@ -25,11 +26,12 @@ main (int argc, const char *argv[])
   TestSuite *suite = [TestSuite suiteWithName:@"Koan Tests"];
   
   // Add tests here.
-  [suite addTestSuite:[MUFilterTests class]];
-  [suite addTestSuite:[MUFilterQueueTests class]];
-  [suite addTestSuite:[MUAnsiRemovingFilterTests class]];
-  [suite addTestSuite:[MUHistoryRingTests class]];
-  [suite addTestSuite:[MUTextLoggerTests class]];
+  [suite addTestSuite:[J3FilterTests class]];
+  [suite addTestSuite:[J3FilterQueueTests class]];
+  [suite addTestSuite:[J3ANSIRemovingFilterTests class]];
+  [suite addTestSuite:[J3HistoryRingTests class]];
+  [suite addTestSuite:[J3TextLoggerTests class]];
+  [suite addTestSuite:[J3URLLinkFilterTests class]];
   return suite;
 }
 

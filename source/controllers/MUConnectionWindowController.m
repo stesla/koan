@@ -6,8 +6,9 @@
 
 #import "MUConnectionWindowController.h"
 
-#import "MUAnsiRemovingFilter.h"
-#import "MUTextLogger.h"
+#import "J3AnsiRemovingFilter.h"
+#import "J3TextLogger.h"
+#import "J3URLLinkFilter.h"
 
 @interface MUConnectionWindowController (Private)
 
@@ -28,25 +29,26 @@
     
     autoLoggedIn = NO;
     
-    historyRing = [[MUHistoryRing alloc] init];
+    historyRing = [[J3HistoryRing alloc] init];
     
-    filterQueue = [[MUFilterQueue alloc] init];
-    [filterQueue addFilter:[MUAnsiRemovingFilter filter]];
+    filterQueue = [[J3FilterQueue alloc] init];
+    [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
+    //[filterQueue addFilter:[J3URLLinkFilter filter]];
     
     if (world)
     {
       if (player)
       {
-        [filterQueue addFilter:[MUTextLogger filterWithWorld:world player:player]];
+        [filterQueue addFilter:[J3TextLogger filterWithWorld:world player:player]];
       }
       else
       {
-        [filterQueue addFilter:[MUTextLogger filterWithWorld:world]];
+        [filterQueue addFilter:[J3TextLogger filterWithWorld:world]];
       }
     }
     else
     {
-      [filterQueue addFilter:[MUTextLogger filter]];
+      [filterQueue addFilter:[J3TextLogger filter]];
     }
   }
   return self;

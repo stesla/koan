@@ -1,5 +1,5 @@
 //
-// MUHistoryRingTests.h
+// J3HistoryRingTests.h
 //
 // Copyright (C) 2004 3James Software
 //
@@ -7,11 +7,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
-#import "MUHistoryRing.h"
+#import "J3HistoryRing.h"
 
-@interface MUHistoryRingTests : TestCase
+@interface J3HistoryRingTests : TestCase
 {
-  MUHistoryRing *ring;
+  J3HistoryRing *ring;
 }
 
 @end

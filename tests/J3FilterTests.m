@@ -1,16 +1,16 @@
 //
-// MUFilterTests.m
+// J3FilterTests.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUFilterTests.h"
+#import "J3FilterTests.h"
 
-@implementation MUFilterTests
+@implementation J3FilterTests
 
 - (void) testFilter
 {
-  MUFilter *filter = [MUFilter filter];
+  J3Filter *filter = [J3Filter filter];
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
 
   NSAttributedString *output = [filter filter:input];
@@ -20,7 +20,9 @@
 
 @end
 
-@implementation MUUpperCaseFilter
+#pragma mark -
+
+@implementation J3UpperCaseFilter
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
 {
@@ -30,11 +32,13 @@
 
 @end
 
-@implementation MUFilterQueueTests
+#pragma mark -
+
+@implementation J3FilterQueueTests
 
 - (void) testFilter
 {
-  MUFilterQueue *queue = [[MUFilterQueue alloc] init];
+  J3FilterQueue *queue = [[J3FilterQueue alloc] init];
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
   NSAttributedString *output = [queue processAttributedString:input];
   [self assert:output equals:input];
@@ -42,8 +46,8 @@
 
 - (void) testQueue
 {
-  MUFilterQueue *queue = [[MUFilterQueue alloc] init];
-  MUUpperCaseFilter *filter = [[MUUpperCaseFilter alloc] init];
+  J3FilterQueue *queue = [[J3FilterQueue alloc] init];
+  J3UpperCaseFilter *filter = [[J3UpperCaseFilter alloc] init];
   [queue addFilter:filter];
   
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];

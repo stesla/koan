@@ -1,16 +1,16 @@
 //
-// MUHistoryRingTests.m
+// J3HistoryRingTests.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUHistoryRingTests.h"
+#import "J3HistoryRingTests.h"
 
 NSString *First = @"First";
 NSString *Second = @"Second";
 NSString *Third = @"Third";
 
-@interface MUHistoryRingTests (Private)
+@interface J3HistoryRingTests (Private)
 - (void) assertPrevious:(NSString *)expected;
 - (void) assertNext:(NSString *)expected;
 - (void) saveOne;
@@ -18,7 +18,9 @@ NSString *Third = @"Third";
 - (void) saveThree;
 @end
 
-@implementation MUHistoryRingTests (Private)
+#pragma mark -
+
+@implementation J3HistoryRingTests (Private)
 
 - (void) assertPrevious:(NSString *)expected
 {
@@ -49,11 +51,13 @@ NSString *Third = @"Third";
 
 @end
 
-@implementation MUHistoryRingTests
+#pragma mark -
+
+@implementation J3HistoryRingTests
 
 - (void) setUp
 {
-  ring = [[MUHistoryRing alloc] init];
+  ring = [[J3HistoryRing alloc] init];
 }
 
 - (void) tearDown

@@ -1,12 +1,12 @@
 //
-// MUHistoryRing.m
+// J3HistoryRing.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUHistoryRing.h"
+#import "J3HistoryRing.h"
 
-@implementation MUHistoryRing
+@implementation J3HistoryRing
 
 - (id) init
 {

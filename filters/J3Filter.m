@@ -1,16 +1,16 @@
 //
-// MUFilter.m
+// J3Filter.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUFilter.h"
+#import "J3Filter.h"
 
-@implementation MUFilter
+@implementation J3Filter
 
-+ (MUFilter *) filter
++ (J3Filter *) filter
 {
-  return [[[MUFilter alloc] init] autorelease];
+  return [[[J3Filter alloc] init] autorelease];
 }
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation MUFilterQueue
+@implementation J3FilterQueue
 
 - (id) init
 {
@@ -40,17 +40,17 @@
 {
   NSAttributedString *returnString = string;
   
-  id <MUFiltering> filter = nil;
+  id <J3Filtering> filter = nil;
   int i;
   for (i = 0; i < [filters count]; i++)
   {
-    filter = (id <MUFiltering>) [filters objectAtIndex:i];
+    filter = (id <J3Filtering>) [filters objectAtIndex:i];
     returnString = [filter filter:returnString];
   }
   return returnString;
 }
 
-- (void) addFilter:(id <MUFiltering>)filter
+- (void) addFilter:(id <J3Filtering>)filter
 {
   [filters addObject:filter];
 }

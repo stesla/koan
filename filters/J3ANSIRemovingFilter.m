@@ -1,22 +1,22 @@
 //
-// MUAnsiRemovingFilter.m
+// J3ANSIRemovingFilter.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUAnsiRemovingFilter.h"
+#import "J3ANSIRemovingFilter.h"
 
-@interface MUAnsiRemovingFilter (Private)
+@interface J3ANSIRemovingFilter (Private)
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 @end
 
-@implementation MUAnsiRemovingFilter
+@implementation J3ANSIRemovingFilter
 
-+ (MUFilter *) filter
++ (J3Filter *) filter
 {
-  return [[[MUAnsiRemovingFilter alloc] init] autorelease];
+  return [[[J3ANSIRemovingFilter alloc] init] autorelease];
 }
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation MUAnsiRemovingFilter (Private)
+@implementation J3ANSIRemovingFilter (Private)
 
 - (BOOL) extractCode:(NSMutableAttributedString *)editString
 {

@@ -1,29 +1,29 @@
 //
-// MUFilter.h
+// J3Filter.h
 //
 // Copyright (C) 2004 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 
-@protocol MUFiltering
+@protocol J3Filtering
 
 - (NSAttributedString *) filter:(NSAttributedString *)string;
 
 @end
 
-@interface MUFilter : NSObject <MUFiltering> 
+@interface J3Filter : NSObject <J3Filtering> 
 
-+ (MUFilter *) filter;
++ (J3Filter *) filter;
 
 @end
 
-@interface MUFilterQueue : NSObject
+@interface J3FilterQueue : NSObject
 {
   NSMutableArray *filters;
 }
 
 - (NSAttributedString *) processAttributedString:(NSAttributedString *)string;
-- (void) addFilter:(id <MUFiltering>)filter;
+- (void) addFilter:(id <J3Filtering>)filter;
 
 @end

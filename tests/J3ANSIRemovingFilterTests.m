@@ -1,20 +1,22 @@
 //
-// MUAnsiRemovingFilterTests.m
+// J3ANSIRemovingFilterTests.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "MUAnsiRemovingFilterTests.h"
-#import "MUAnsiRemovingFilter.h"
+#import "J3ANSIRemovingFilterTests.h"
+#import "J3ANSIRemovingFilter.h"
 
-@interface MUAnsiRemovingFilterTests (Private)
+@interface J3ANSIRemovingFilterTests (Private)
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message;
 - (void) assertFinalCharacter:(unsigned char)finalChar;
 @end
 
-@implementation MUAnsiRemovingFilterTests (Private)
+#pragma mark -
+
+@implementation J3ANSIRemovingFilterTests (Private)
 
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
 {
@@ -41,12 +43,14 @@
 }
 @end
 
-@implementation MUAnsiRemovingFilterTests
+#pragma mark -
+
+@implementation J3ANSIRemovingFilterTests
 
 - (void) setUp
 {
-  queue = [[MUFilterQueue alloc] init];
-  [queue addFilter:[MUAnsiRemovingFilter filter]];
+  queue = [[J3FilterQueue alloc] init];
+  [queue addFilter:[J3ANSIRemovingFilter filter]];
 }
 
 - (void) tearDown

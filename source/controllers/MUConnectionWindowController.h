@@ -7,14 +7,15 @@
 #import <Cocoa/Cocoa.h>
 #import <J3Terminal/J3TelnetConnection.h>
 
-#import "MUFilter.h"
-#import "MUHistoryRing.h"
+#import "J3Filter.h"
+#import "MUForwardingTextView.h"
+#import "J3HistoryRing.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"
 
 @interface MUConnectionWindowController : NSWindowController
 {
-  IBOutlet NSTextView *receivedTextView;
+  IBOutlet MUForwardingTextView *receivedTextView;
   IBOutlet NSTextView *inputView;
   IBOutlet id delegate;
   
@@ -24,8 +25,8 @@
   
   BOOL autoLoggedIn;
   
-  MUFilterQueue *filterQueue;
-  MUHistoryRing *historyRing;
+  J3FilterQueue *filterQueue;
+  J3HistoryRing *historyRing;
 }
 
 // Designated initializer.

@@ -1,12 +1,12 @@
 //
-// MUHistoryRing.h
+// J3HistoryRing.h
 //
 // Copyright (C) 2004 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 
-@interface MUHistoryRing : NSObject
+@interface J3HistoryRing : NSObject
 {
   NSString *buffer;
   NSMutableArray *ring;
