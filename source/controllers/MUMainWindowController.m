@@ -62,11 +62,35 @@
   {
     [_telnetConnection writeString:input];
   }
+  
+  [[self window] makeFirstResponder:inputField];
+}
+
+- (void) telnetConnectionDidEnd:(MUTelnetConnection *)telnet
+{
+  [_telnetConnection release];
+  [disconnectButton setEnabled:NO];
+  [connectButton setEnabled:YES];
 }
 
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet
 {
   NSAttributedString *string = [[NSAttributedString alloc] initWithString:[telnet read] attributes:[textView typingAttributes]];
+  NSTextStorage *textStorage = [textView textStorage];
+  
+  [textStorage beginEditing];
+  [textStorage appendAttributedString:string];
+  [textStorage endEditing];
+  [string release];
+  
+  if ([[(NSScrollView *) [[textView superview] superview] verticalScroller] floatValue] == 1.0)
+    [textView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];
+}
+
+- (void) telnet:(MUTelnetConnection *)telnet statusMessage:(NSString *)message
+{
+  NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n", message]
+                                                               attributes:[textView typingAttributes]];
   NSTextStorage *textStorage = [textView textStorage];
   
   [textStorage beginEditing];

@@ -79,7 +79,7 @@
 
 - (void) setUp
 {
-  _telnet = [[MUTelnetConnection alloc] init];
+  _telnet = [[MUTelnetConnection alloc] initWithInputStream:nil outputStream:nil];
   _lineRead = @"";
   [_telnet setDelegate:self];
 }

@@ -35,7 +35,9 @@
 @end
 
 @interface MUTelnetConnection (DelegateMethods)
+- (void) connectionDidEnd;
 - (void) didReadLine;
+- (void) statusMessage:(NSString *)message;
 @end
 
 @interface MUTelnetConnection (TelnetCommands)
@@ -49,8 +51,7 @@
 
 - (id) init
 {
-  return [self initWithInputStream:nil 
-                      outputStream:nil];
+  return nil;
 }
 
 - (id) initWithInputStream:(NSInputStream *)input  
@@ -70,14 +71,14 @@
 }
 
 - (id) initWithHostName:(NSString *)hostName
-             onPort:(int)port;
+                 onPort:(int)port;
 {
   NSInputStream *input;
   NSOutputStream *output;
   NSHost *host = [NSHost hostWithName:hostName];
   [NSStream getStreamsToHost:host
                         port:port
-                 inputStream:&input 
+                 inputStream:&input
                 outputStream:&output];
   
   return [self initWithInputStream:input
@@ -102,8 +103,15 @@
 
 - (void) setDelegate:(id)delegate
 {
-  [delegate retain];
-  [_delegate release];
+  if (delegate && ![delegate respondsToSelector:@selector(telnetDidReadLine:)])
+    NSLog (@"Warning: setting delegate to object '%@', which does not respond to delegate method telnetDidReadLine:.", delegate);
+  
+  if (delegate && ![delegate respondsToSelector:@selector(telnetConnectionDidEnd:)])
+    NSLog (@"Warning: setting delegate to object '%@', which does not respond to delegate method telnetConnectionDidEnd:.", delegate);
+  
+  // Removed retain and release here, to avoid retain cycles. The standard Cocoa
+  // library doesn't retain delegates, dataSources, or targets, and I'm
+  // following its lead. - T
   _delegate = delegate;
 }
 
@@ -141,9 +149,20 @@
 {
   if (![self isConnected])
   {
+    [self statusMessage:@"Trying to open connection..."];
     [_input open];
     [_output open];
     _isConnected = YES;
+  }
+}
+
+- (void) _close
+{
+  if ([self isConnected])
+  {    
+    [_input close];
+    [_output close];
+    _isConnected = NO;
   }
 }
 
@@ -151,8 +170,8 @@
 {
   if ([self isConnected])
   {
-    [_input close];
-    [_output close];
+    [self _close];
+    [self statusMessage:@"Connection closed."];
   }
 }
 
@@ -171,15 +190,11 @@
 {
   switch(event)
   {
-    case NSStreamEventHasBytesAvailable: 
-    {      
+    case NSStreamEventHasBytesAvailable:
       [self readFromStream:(NSInputStream *)stream];
       break;
-    }
-    case NSStreamEventEndEncountered:
-    case NSStreamEventErrorOccurred:
+      
     case NSStreamEventHasSpaceAvailable:
-    {
       if ([_writeBuffer length] > 0)
       {
         [self writeToStream:(NSOutputStream *)stream];
@@ -188,8 +203,34 @@
       else
         _canWrite = YES;
       break;
-    }
+      
     case NSStreamEventOpenCompleted:
+      // Without checking to see if the stream which has successfully opened is
+      // the input stream, two 'Connected' messages are signalled to the
+      // delegate. I chose the input stream because it is guaranteed to open
+      // before any data is read, so the connection will be noted before any
+      // reads occur, placing all the various messages in the right order.
+      //
+      // Checking if both streams were successfully opened still printed both
+      // 'Connected' messages; apparently they both finish quickly enough that
+      // they beat out the event. - T
+      if (stream == _input)
+        [self statusMessage:@"Connected."];
+      break;
+      
+    case NSStreamEventEndEncountered:
+      [self _close];
+      [self statusMessage:@"Connection closed by server."];
+      [self connectionDidEnd];
+      break;
+
+    case NSStreamEventErrorOccurred:
+      [self _close];
+      [self statusMessage:[NSString stringWithFormat:@"Connection closed on error: %@",
+                                      [[stream streamError] localizedDescription]]];
+      [self connectionDidEnd];
+      break;
+      
     case NSStreamEventNone:
     default:
       return;
@@ -365,16 +406,22 @@
 
 @implementation MUTelnetConnection (DelegateMethods)
 
+- (void) connectionDidEnd
+{
+  if ([_delegate respondsToSelector:@selector(telnetConnectionDidEnd:)])
+    [_delegate telnetConnectionDidEnd:self];  
+}
+
 - (void) didReadLine
 {
   if ([_delegate respondsToSelector:@selector(telnetDidReadLine:)])
     [_delegate telnetDidReadLine:self];
-  else
-  { 
-    NSLog(@"%@ delegate does not implement telnetDidReadLine:",
-          [self class]);
-  }
+}
+
+- (void) statusMessage:(NSString *)message
+{
+  if ([_delegate respondsToSelector:@selector(telnet:statusMessage:)])
+    [_delegate telnet:self statusMessage:message];
 }
 
 @end
-

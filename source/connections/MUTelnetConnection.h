@@ -57,7 +57,8 @@ enum MUTelnetCommands
 
 // Designated initializer
 - (id) initWithInputStream:(NSInputStream *)input  
-              outputStream:(NSOutputStream *)output; 
+              outputStream:(NSOutputStream *)output;
+
 - (id) initWithHostName:(NSString *)hostName 
              onPort:(int)port;
 
@@ -84,5 +85,7 @@ enum MUTelnetCommands
 
 // Delegate Methods
 @interface NSObject (MUTelnetConnectionDelegate)
+- (void) telnetConnectionDidEnd:(MUTelnetConnection *)telnet;
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
+- (void) telnet:(MUTelnetConnection *)telnet statusMessage:(NSString *)message;
 @end
