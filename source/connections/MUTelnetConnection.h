@@ -20,6 +20,26 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern NSString *MUConnectionConnecting;
+extern NSString *MUConnectionConnected;
+extern NSString *MUConnectionClosed;
+
+typedef enum _MUConnectionStatus
+{
+  MUConnectionStatusNotConnected,
+  MUConnectionStatusConnecting,
+  MUConnectionStatusConnected,
+  MUConnectionStatusClosed,
+} MUConnectionStatus;
+
+typedef enum _MUConnectionClosedReason
+{
+  MUConnectionClosedReasonNotClosed,
+  MUConnectionClosedReasonClient,
+  MUConnectionClosedReasonServer,
+  MUConnectionClosedReasonError
+} MUConnectionClosedReason;
+
 enum MUTelnetCommands
 {
   TEL_SE   = 240,
@@ -49,6 +69,9 @@ enum MUTelnetCommands
   NSMutableData *_readBuffer;
   NSOutputStream *_output;
   NSMutableData *_writeBuffer;
+  NSString *_errorMessage;
+  MUConnectionStatus _connectionStatus;
+  MUConnectionClosedReason _reasonClosed;
   BOOL _canWrite;
   BOOL _isConnected;
   BOOL _isInCommand;
@@ -66,6 +89,7 @@ enum MUTelnetCommands
 // Getters
 - (id) delegate;
 - (NSInputStream *) input;
+- (NSString *) errorMessage;
 - (NSOutputStream *) output;
 
 // Setters
@@ -79,7 +103,11 @@ enum MUTelnetCommands
 
 // State Flags
 - (BOOL) isConnected;
+- (BOOL) isError;
 - (BOOL) isInCommand;
+
+- (MUConnectionStatus) connectionStatus;
+- (MUConnectionClosedReason) reasonClosed;
 
 // IO
 - (NSString *) read;
@@ -92,7 +120,5 @@ enum MUTelnetCommands
 
 // Delegate Methods
 @interface NSObject (MUTelnetConnectionDelegate)
-- (void) telnetConnectionDidEnd:(MUTelnetConnection *)telnet;
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
-- (void) telnet:(MUTelnetConnection *)telnet statusMessage:(NSString *)message;
 @end

@@ -83,27 +83,60 @@
   _lineRead = [telnet read];
 }
 
-- (void) telnetConnectionDidEnd:(MUTelnetConnection *)telnet
+- (void) handleConnectionConnecting:(NSNotification *)note
 {
-  _connectionEnded = true;
+  _connectionConnecting = YES;
 }
 
-- (void) telnet:(MUTelnetConnection *)telnet statusMessage:(NSString *)message
+- (void) handleConnectionConnected:(NSNotification *)note
 {
-  _messageCount++;
+  _connectionConnected = YES;
+}
+
+- (void) handleConnectionClosed:(NSNotification *)note
+{
+  _connectionEnded = YES;
+  MUTelnetConnection *telnet = [note object];
+  if ([telnet reasonClosed] == MUConnectionClosedReasonError)
+    _connectionError = [telnet errorMessage];
 }
 
 - (void) setUp
 {
   _lineRead = @"";
-  _connectionEnded = false;
+  _connectionConnecting = NO;
+  _connectionConnected = NO;
+  _connectionEnded = NO;
+  _connectionError = nil;
   _messageCount = 0;
   _telnet = [[MUTelnetConnection alloc] initWithInputStream:nil outputStream:nil];
   [_telnet setDelegate:self];
+  
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
+  
+  [notificationCenter addObserver:self 
+                         selector:@selector(handleConnectionConnecting:) 
+                             name:MUConnectionConnecting
+                           object:_telnet];
+  
+  [notificationCenter addObserver:self 
+                         selector:@selector(handleConnectionConnected:) 
+                             name:MUConnectionConnected
+                           object:_telnet];
+  
+  [notificationCenter addObserver:self 
+                         selector:@selector(handleConnectionClosed:)
+                             name:MUConnectionClosed
+                           object:_telnet];
 }
 
 - (void) tearDown
 {
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
+  [notificationCenter removeObserver:self];
+  
   [_telnet release];
 }
 
@@ -235,36 +268,63 @@
   [self assert:_lineRead equals:@"bar\n"];
 }
 
-- (void) testStatusMessagesNormalEnd
+- (void) registerNotifications
 {
-  NSInputStream *input; 
-  input = [self openInputStreamWithBytes:"Foo\n"];
-  [_telnet setInput:input];
-  [_telnet open];
-  [_telnet stream:input handleEvent:NSStreamEventOpenCompleted];
-  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
-  [_telnet stream:input handleEvent:NSStreamEventEndEncountered];
-  
-  [self assertFalse:[_telnet isConnected]];
-  [self assert:_lineRead equals:@"Foo\n"];
-  [self assertTrue:_connectionEnded];
-  [self assertInt:_messageCount equals:3];
+
 }
 
-- (void) testStatusMessagesErrorEnd
+- (void) testClientDisconnect
+{
+  [_telnet open];
+  [_telnet close];
+  [self assertTrue:[_telnet connectionStatus] == MUConnectionStatusClosed
+           message:@"closed"];
+  [self assertTrue:[_telnet reasonClosed] == MUConnectionClosedReasonClient
+           message:@"reason: client"];  
+}
+
+- (void) testServerDisconnect
+{
+  NSInputStream *input = [self openInputStreamWithBytes:"Foo\n"];
+  [_telnet setInput:input];
+  [_telnet open];
+  [_telnet stream:input handleEvent:NSStreamEventEndEncountered];
+  [self assertTrue:[_telnet connectionStatus] == MUConnectionStatusClosed
+           message:@"closed"];
+  [self assertTrue:[_telnet reasonClosed] == MUConnectionClosedReasonServer
+           message:@"reason: server"];
+  [self assertNil:_connectionError];
+}
+
+- (void) testStatusesWithErrorClose
 {
   NSInputStream *input; 
   input = [self openInputStreamWithBytes:"Bar\n"];
   [_telnet setInput:input];
+  [self assertTrue:[_telnet connectionStatus] == MUConnectionStatusNotConnected
+           message:@"not connected"];
   [_telnet open];
+  [self assertTrue:[_telnet connectionStatus] == MUConnectionStatusConnecting
+           message:@"connecting"];
   [_telnet stream:input handleEvent:NSStreamEventOpenCompleted];
+  [self assertTrue:[_telnet connectionStatus] == MUConnectionStatusConnected
+           message:@"connected"];
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  [self assertTrue:[_telnet reasonClosed] == MUConnectionClosedReasonNotClosed
+           message:@"reason: not closed"];
   [_telnet stream:input handleEvent:NSStreamEventErrorOccurred];
+  [self assertTrue:[_telnet connectionStatus] == MUConnectionStatusClosed
+           message:@"closed"];
+  [self assertTrue:[_telnet reasonClosed] == MUConnectionClosedReasonError
+           message:@"reason: error"];
   
-  [self assertFalse:[_telnet isConnected]];
+  [self assertFalse:[_telnet isConnected] message:@"isConnected"];
   [self assert:_lineRead equals:@"Bar\n"];
-  [self assertTrue:_connectionEnded];
-  [self assertInt:_messageCount equals:3];
+  [self assertTrue:_connectionConnecting message:@"connectionConnecting"];
+  [self assertTrue:_connectionConnected message:@"connectionConnected"];
+  [self assertTrue:_connectionEnded message:@"connectionEnded"];
+  [self assertNotNil:_connectionError];
 }
+
 
 @end

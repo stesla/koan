@@ -39,4 +39,5 @@
 
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet;
 
+- (void) displayString:(NSString *)string;
 @end

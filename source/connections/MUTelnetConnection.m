@@ -22,6 +22,10 @@
 
 #include <string.h>
 
+NSString *MUConnectionConnecting = @"MUConnectionConnecting";
+NSString *MUConnectionConnected = @"MUConnectionConnected";
+NSString *MUConnectionClosed = @"MUConnectionClosed";
+
 @interface MUTelnetConnection (Private)
 - (void) readFromStream:(NSInputStream *)stream;
 - (void) appendByteToBuffer:(uint8_t)byte;
@@ -30,13 +34,18 @@
 - (void) processOptionChar:(uint8_t)byte;
 - (void) appendBytesToBuffer:(const void *)bytes length:(int)length;
 - (void) writeToStream:(NSOutputStream *)stream;
-- (void) closeWithMessage:(NSString *)message;
+- (void) setErrorMessage:(NSString *)message;
+- (void) closeWithReason:(MUConnectionClosedReason)reason;
+@end
+
+@interface MUTelnetConnection (StatusChangeMethods)
+- (void) connectionClosed;
+- (void) connectionConnecting;
+- (void) connectionConnected;
 @end
 
 @interface MUTelnetConnection (DelegateMethods)
-- (void) connectionDidEnd;
 - (void) didReadLine;
-- (void) statusMessage:(NSString *)message;
 @end
 
 @interface MUTelnetConnection (TelnetCommands)
@@ -64,8 +73,11 @@
     [self setOutput:output];
     _readBuffer = [[NSMutableData alloc] init];
     _writeBuffer = [[NSMutableData alloc] init];
+    _errorMessage = @"";
     _isConnected = NO;
     _isInCommand = NO;
+    _connectionStatus = MUConnectionStatusNotConnected;
+    _reasonClosed = MUConnectionClosedReasonNotClosed;
     _commandChar = TEL_NONE;
   }
   return self;
@@ -90,6 +102,7 @@
 {
   if ([self isConnected])
     [self close];
+  [_errorMessage release];
   [_input release];
   [_output release];
   [_readBuffer release];
@@ -109,12 +122,12 @@
            "which does not respond to delegate method "
            "telnetDidReadLine:.", delegate);
   
-  if (delegate && ![delegate respondsToSelector:@selector(telnetConnectionDidEnd:)])
-    NSLog (@"Warning: setting delegate to object '%@',"
-           "which does not respond to delegate method "
-           "telnetConnectionDidEnd:.", delegate);
-  
   _delegate = delegate;
+}
+
+- (NSString *) errorMessage
+{
+  return _errorMessage;
 }
 
 - (NSInputStream *) input
@@ -181,7 +194,7 @@
 {
   if (![self isConnected])
   {
-    [self statusMessage:@"Trying to open connection..."];
+    [self connectionConnecting];
     [_input open];
     [_output open];
     _isConnected = YES;
@@ -190,7 +203,7 @@
 
 - (void) close
 {
-  [self closeWithMessage:@"Connection closed."];
+  [self closeWithReason:MUConnectionClosedReasonClient];
 }
 
 - (BOOL) isConnected
@@ -198,9 +211,24 @@
   return _isConnected;
 }
 
+- (BOOL) isError
+{
+  return [_errorMessage length];
+}
+
 - (BOOL) isInCommand
 {
   return _isInCommand;
+}
+
+- (MUConnectionStatus) connectionStatus
+{
+  return _connectionStatus;
+}
+
+- (MUConnectionClosedReason) reasonClosed
+{
+  return _reasonClosed;
 }
 
 // NSStream delegate
@@ -233,19 +261,17 @@
       // 'Connected' messages; apparently they both finish quickly enough that
       // they beat out the event. - T
       if (stream == _input)
-        [self statusMessage:@"Connected."];
+        [self connectionConnected];
       break;
       
     case NSStreamEventEndEncountered:
-      [self closeWithMessage:@"Connection closed by server."];
-      [self connectionDidEnd];
+      [self closeWithReason:MUConnectionClosedReasonServer];
       break;
 
     case NSStreamEventErrorOccurred:
-      [self closeWithMessage:
-        [NSString stringWithFormat:@"Connection closed on error: %@", 
-          [[stream streamError] localizedDescription]]];
-      [self connectionDidEnd];
+      [self setErrorMessage:
+        [[stream streamError] localizedDescription]];
+      [self closeWithReason:MUConnectionClosedReasonError];
       break;
       
     case NSStreamEventNone:
@@ -365,15 +391,23 @@
   [_writeBuffer setData:[NSData data]];
 }
 
-- (void) closeWithMessage:(NSString *)message
+- (void) setErrorMessage:(NSString *)message
+{
+  [message retain];
+  [_errorMessage release];
+  _errorMessage = message;
+}
+
+- (void) closeWithReason:(MUConnectionClosedReason)reason
 {
   if ([self isConnected])
   {
     [_input close];
     [_output close];
     _isConnected = NO;
-    [self statusMessage:message];
-  }  
+    _reasonClosed = reason;
+    [self connectionClosed];
+  }
 }
 
 @end
@@ -424,24 +458,46 @@
 
 @end
 
-@implementation MUTelnetConnection (DelegateMethods)
+@implementation MUTelnetConnection (StatusChangeMethods)
 
-- (void) connectionDidEnd
+- (void) connectionClosed
 {
-  if ([_delegate respondsToSelector:@selector(telnetConnectionDidEnd:)])
-    [_delegate telnetConnectionDidEnd:self];  
+  _connectionStatus = MUConnectionStatusClosed;
+  
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
+  [notificationCenter postNotificationName:MUConnectionClosed
+                                    object:self];
 }
+
+- (void) connectionConnecting
+{
+  _connectionStatus = MUConnectionStatusConnecting;
+  
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
+  [notificationCenter postNotificationName:MUConnectionConnecting
+                                    object:self];  
+}
+
+- (void) connectionConnected
+{
+  _connectionStatus = MUConnectionStatusConnected;
+  
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
+  [notificationCenter postNotificationName:MUConnectionConnected
+                                    object:self];  
+}
+
+@end
+
+@implementation MUTelnetConnection (DelegateMethods)
 
 - (void) didReadLine
 {
   if ([_delegate respondsToSelector:@selector(telnetDidReadLine:)])
     [_delegate telnetDidReadLine:self];
-}
-
-- (void) statusMessage:(NSString *)message
-{
-  if ([_delegate respondsToSelector:@selector(telnet:statusMessage:)])
-    [_delegate telnet:self statusMessage:message];
 }
 
 @end

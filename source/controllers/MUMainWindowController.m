@@ -39,16 +39,35 @@
   int portNumber = [portField intValue];
   _telnetConnection = [[MUTelnetConnection alloc] initWithHostName:name
                                                             onPort:portNumber];
+  
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
+  
+  [notificationCenter addObserver:self 
+                         selector:@selector(handleConnectionConnecting:) 
+                             name:MUConnectionConnecting
+                           object:_telnetConnection];
+  
+  [notificationCenter addObserver:self 
+                         selector:@selector(handleConnectionConnected:) 
+                             name:MUConnectionConnected
+                           object:_telnetConnection];
+  
+  [notificationCenter addObserver:self 
+                         selector:@selector(handleConnectionClosed:)
+                             name:MUConnectionClosed
+                           object:_telnetConnection];
+  
   [_telnetConnection setDelegate:self];
   [_telnetConnection open];
+  
   [connectButton setEnabled:NO];
   [disconnectButton setEnabled:YES];
 }
 
 - (IBAction) disconnect:(id)sender
 {
-  [_telnetConnection close];
-  [_telnetConnection release];
+  [_telnetConnection close];  
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
 }
@@ -66,40 +85,67 @@
   [[self window] makeFirstResponder:inputField];
 }
 
-- (void) telnetConnectionDidEnd:(MUTelnetConnection *)telnet
+- (void) displayString:(NSString *)string
 {
-  [_telnetConnection release];
-  [disconnectButton setEnabled:NO];
-  [connectButton setEnabled:YES];
+  NSAttributedString *attributedString;
+  attributedString = [[NSAttributedString alloc] initWithString:string 
+                                                     attributes:[textView typingAttributes]];
+  NSTextStorage *textStorage = [textView textStorage];
+  
+  [textStorage beginEditing];
+  [textStorage appendAttributedString:attributedString];
+  [textStorage endEditing];
+  [string release];
+  
+  if ([[(NSScrollView *) [[textView superview] superview] verticalScroller] floatValue] == 1.0)
+    [textView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];  
 }
 
 - (void) telnetDidReadLine:(MUTelnetConnection *)telnet
 {
-  NSAttributedString *string = [[NSAttributedString alloc] initWithString:[telnet read] attributes:[textView typingAttributes]];
-  NSTextStorage *textStorage = [textView textStorage];
-  
-  [textStorage beginEditing];
-  [textStorage appendAttributedString:string];
-  [textStorage endEditing];
-  [string release];
-  
-  if ([[(NSScrollView *) [[textView superview] superview] verticalScroller] floatValue] == 1.0)
-    [textView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];
+  [self displayString:[telnet read]];
 }
 
 - (void) telnet:(MUTelnetConnection *)telnet statusMessage:(NSString *)message
 {
-  NSAttributedString *string = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n", message]
-                                                               attributes:[textView typingAttributes]];
-  NSTextStorage *textStorage = [textView textStorage];
+  [self displayString:[NSString stringWithFormat:@"%@\n", message]];
+}
+
+- (void) handleConnectionConnecting:(NSNotification *)note
+{
+  [self displayString:@"Trying to open connection...\n"];
+}
+
+- (void) handleConnectionConnected:(NSNotification *)note
+{
+  [self displayString:@"Connected.\n"];
+}
+
+- (void) handleConnectionClosed:(NSNotification *)note
+{
+  MUTelnetConnection *telnet = [note object];
+  switch([telnet reasonClosed])
+  {
+    case MUConnectionClosedReasonServer:
+      [self displayString:@"Connection closed by server.\n"];
+      break;
+
+    case MUConnectionClosedReasonError:
+      [self displayString:[NSString stringWithFormat:@"Connection closed with error: %@\n", 
+        [telnet errorMessage]]];
+      break;
+
+    default:
+      [self displayString:@"Connection closed.\n"];
+  }
   
-  [textStorage beginEditing];
-  [textStorage appendAttributedString:string];
-  [textStorage endEditing];
-  [string release];
+  NSNotificationCenter *notificationCenter;
+  notificationCenter = [NSNotificationCenter defaultCenter];
+  [notificationCenter removeObserver:self];
   
-  if ([[(NSScrollView *) [[textView superview] superview] verticalScroller] floatValue] == 1.0)
-    [textView scrollRangeToVisible:NSMakeRange ([textStorage length], 1)];
+  [_telnetConnection release];
+  [disconnectButton setEnabled:NO];
+  [connectButton setEnabled:YES];
 }
 
 @end
