@@ -47,3 +47,7 @@ NSString *MULConnect = @"Connect";
 NSString *MULDisconnect = @"Disconnect";
 
 NSString *MULConnectWithoutLogin = @"ConnectWithoutLogin";
+
+// ANSI parsing constants
+
+NSString *J3ANSIForeColorAttributeName = @"J3ANSIForeColorAttributeName";

@@ -6,8 +6,6 @@
 
 #import "MUTests.h"
 
-#import "TestCase (NSAttributedStringAssertions).h"
-
 #import "J3FilterTests.h"
 #import "J3ANSIRemovingFilterTests.h"
 #import "J3TextLoggerTests.h"

@@ -47,3 +47,7 @@ extern NSString *MULConnect;
 extern NSString *MULDisconnect;
 
 extern NSString *MULConnectWithoutLogin;
+
+// ANSI parsing constants
+
+extern NSString *J3ANSIForeColorAttributeName;

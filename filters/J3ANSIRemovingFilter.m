@@ -14,11 +14,6 @@
 
 @implementation J3ANSIRemovingFilter
 
-+ (J3Filter *) filter
-{
-  return [[[J3ANSIRemovingFilter alloc] init] autorelease];
-}
-
 - (NSAttributedString *) filter:(NSAttributedString *)string
 {
   NSMutableAttributedString *editString = [[NSMutableAttributedString alloc] initWithAttributedString:string];
