@@ -133,6 +133,7 @@
 			targets = (
 				8D1107260486CEB800E47090,
 				E62040FA06B054E400236608,
+				E659F6D00770D4DA00534D1B,
 			);
 		};
 		29B97314FDCFA39411CA2CEA = {
@@ -445,6 +446,7 @@
 				WRAPPER_EXTENSION = app;
 			};
 			dependencies = (
+				E659F6DF0770D52800534D1B,
 			);
 			isa = PBXNativeTarget;
 			name = Koan;
@@ -851,6 +853,52 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		E659F6CF0770D4DA00534D1B = {
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				$SOURCE_ROOT/resources/Info.plist,
+			);
+			isa = PBXShellScriptBuildPhase;
+			outputPaths = (
+				$SOURCE_ROOT/resources/Info.plist,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# shell script goes here\n\nPATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\nexport PATH\n\nset +x\n\ncd $SOURCE_ROOT/resources/\n\npwd\n./update-svnversion.plx < Info.plist > Info.temp\nmv Info.temp Info.plist\n\nexit $?";
+		};
+		E659F6D00770D4DA00534D1B = {
+			buildPhases = (
+				E659F6CF0770D4DA00534D1B,
+			);
+			buildSettings = {
+				OPTIMIZATION_CFLAGS = "";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = "Update plist";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			dependencies = (
+			);
+			isa = PBXAggregateTarget;
+			name = "Update plist";
+			productName = "Update plist";
+		};
+		E659F6DE0770D52800534D1B = {
+			containerPortal = 29B97313FDCFA39411CA2CEA;
+			isa = PBXContainerItemProxy;
+			proxyType = 1;
+			remoteGlobalIDString = E659F6D00770D4DA00534D1B;
+			remoteInfo = "Update plist";
+		};
+		E659F6DF0770D52800534D1B = {
+			isa = PBXTargetDependency;
+			target = E659F6D00770D4DA00534D1B;
+			targetProxy = E659F6DE0770D52800534D1B;
 		};
 		E65CE071075438F9003A796A = {
 			isa = PBXFileReference;
