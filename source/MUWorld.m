@@ -8,7 +8,7 @@
 
 #import <J3Terminal/J3TelnetConnection.h>
 
-static const int32_t currentVersion = 0;
+static const int32_t currentVersion = 1;
 
 @interface MUWorld (Private)
 
@@ -23,6 +23,8 @@ static const int32_t currentVersion = 0;
 - (id) initWithWorldName:(NSString *)newWorldName
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
+                worldURL:(NSString *)newWorldURL
+        connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
                  players:(NSArray *)newPlayers
 {
   if (self = [super init])
@@ -30,6 +32,8 @@ static const int32_t currentVersion = 0;
     [self setWorldName:newWorldName];
     [self setWorldHostname:newWorldHostname];
     [self setWorldPort:newWorldPort];
+    [self setWorldURL:newWorldURL];
+    [self setConnectOnAppLaunch:newConnectOnAppLaunch];
     [self setPlayers:newPlayers];
   }
   return self;
@@ -37,9 +41,11 @@ static const int32_t currentVersion = 0;
 
 - (id) init
 {
-  return [self initWithWorldName:NSLocalizedString (MULUntitledWorld, nil)
+  return [self initWithWorldName:@""
                    worldHostname:@""
                        worldPort:[NSNumber numberWithInt:0]
+                        worldURL:@""
+                connectOnAppLaunch:NO
                          players:[NSArray array]];
 }
 
@@ -48,6 +54,7 @@ static const int32_t currentVersion = 0;
   [worldName release];
   [worldHostname release];
   [worldPort release];
+  [worldURL release];
   [players release];
   [super dealloc];
 }
@@ -89,6 +96,28 @@ static const int32_t currentVersion = 0;
   NSNumber *copy = [newWorldPort copy];
   [worldPort release];
   worldPort = copy;
+}
+
+- (NSString *) worldURL
+{
+  return worldURL;
+}
+
+- (void) setWorldURL:(NSString *)newWorldURL
+{
+  NSString *copy = [newWorldURL copy];
+  [worldURL release];
+  worldURL = copy;
+}
+
+- (BOOL) connectOnAppLaunch
+{
+  return connectOnAppLaunch;
+}
+
+- (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch
+{
+  connectOnAppLaunch = newConnectOnAppLaunch;
 }
 
 - (NSMutableArray *) players
@@ -151,6 +180,9 @@ static const int32_t currentVersion = 0;
   [encoder encodeObject:[self worldHostname] forKey:@"worldHostname"];
   [encoder encodeObject:[self worldPort] forKey:@"worldPort"];
   [encoder encodeObject:[self players] forKey:@"players"];
+  
+  [encoder encodeObject:[self worldURL] forKey:@"worldURL"];
+  [encoder encodeBool:[self connectOnAppLaunch] forKey:@"connectOnAppLaunch"];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
@@ -163,6 +195,17 @@ static const int32_t currentVersion = 0;
     [self setWorldHostname:[decoder decodeObjectForKey:@"worldHostname"]];
     [self setWorldPort:[decoder decodeObjectForKey:@"worldPort"]];
     [self setPlayers:[decoder decodeObjectForKey:@"players"]];
+    
+    if (version >= 1)
+    {
+      [self setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
+      [self setConnectOnAppLaunch:[decoder decodeBoolForKey:@"connectOnAppLaunch"]];
+    }
+    else
+    {
+      [self setWorldURL:@""];
+      [self setConnectOnAppLaunch:NO];
+    }
   }
   return self;
 }
@@ -175,6 +218,8 @@ static const int32_t currentVersion = 0;
   return [[MUWorld allocWithZone:zone] initWithWorldName:[self worldName]
                                            worldHostname:[self worldHostname]
                                                worldPort:[self worldPort]
+                                                worldURL:[self worldURL]
+                                        connectOnAppLaunch:[self connectOnAppLaunch]
                                                  players:[self players]];
 }
 

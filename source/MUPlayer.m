@@ -6,16 +6,20 @@
 
 #import "MUPlayer.h"
 
-static const int32_t currentVersion = 0;
+static const int32_t currentVersion = 1;
 
 @implementation MUPlayer
 
-- (id) initWithName:(NSString *)newName password:(NSString *)newPassword world:(MUWorld *)newWorld
+- (id) initWithName:(NSString *)newName
+           password:(NSString *)newPassword
+ connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
+              world:(MUWorld *)newWorld
 {
   if (self = [super init])
   {
     [self setName:newName];
     [self setPassword:newPassword];
+    [self setConnectOnAppLaunch:newConnectOnAppLaunch];
     [self setWorld:newWorld];
   }
   return self;
@@ -23,7 +27,7 @@ static const int32_t currentVersion = 0;
 
 - (id) init
 {
-  return [self initWithName:NSLocalizedString (MULUnnamedPlayer, nil) password:@"" world:nil];
+  return [self initWithName:@"" password:@"" connectOnAppLaunch:NO world:nil];
 }
 
 - (void) dealloc
@@ -58,6 +62,16 @@ static const int32_t currentVersion = 0;
   NSString *copy = [newPassword copy];
   [password release];
   password = copy;
+}
+
+- (BOOL) connectOnAppLaunch
+{
+  return connectOnAppLaunch;
+}
+
+- (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch
+{
+  connectOnAppLaunch = newConnectOnAppLaunch;
 }
 
 - (MUWorld *) world
@@ -97,6 +111,8 @@ static const int32_t currentVersion = 0;
   
   [encoder encodeObject:[self name] forKey:@"name"];
   [encoder encodeObject:[self password] forKey:@"password"];
+  
+  [encoder encodeBool:[self connectOnAppLaunch] forKey:@"connectOnAppLaunch"];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
@@ -107,6 +123,15 @@ static const int32_t currentVersion = 0;
     
     [self setName:[decoder decodeObjectForKey:@"name"]];
     [self setPassword:[decoder decodeObjectForKey:@"password"]];
+    
+    if (version >= 1)
+    {
+      [self setConnectOnAppLaunch:[decoder decodeBoolForKey:@"connectOnAppLaunch"]];
+    }
+    else
+    {
+      [self setConnectOnAppLaunch:NO];
+    }
   }
   return self;
 }
@@ -118,6 +143,7 @@ static const int32_t currentVersion = 0;
 {
   return [[MUPlayer allocWithZone:zone] initWithName:[self name]
                                             password:[self password]
+                                  connectOnAppLaunch:[self connectOnAppLaunch]
                                                world:[self world]];
 }
 

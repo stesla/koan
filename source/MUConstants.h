@@ -41,5 +41,3 @@ extern NSString *MULConfirmQuitMessagePlural;
 // Miscellaneous localization constants.
 
 extern NSString *MULConnectWithoutLogin;
-extern NSString *MULUnnamedPlayer;
-extern NSString *MULUntitledWorld;

@@ -13,12 +13,14 @@
             CLASS = MUProfilesController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
+                playerConnectOnAppLaunchButton = NSButton; 
                 playerEditorSheet = NSWindow; 
                 playerNameField = NSTextField; 
                 playerPasswordField = NSSecureTextField; 
                 playerSaveButton = NSButton; 
                 playersArrayController = NSArrayController; 
                 playersTable = NSTableView; 
+                worldConnectOnAppLaunchButton = NSButton; 
                 worldEditorSheet = NSWindow; 
                 worldHostnameField = NSTextField; 
                 worldNameField = NSTextField; 

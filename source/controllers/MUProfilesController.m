@@ -60,6 +60,7 @@ enum MUProfilesEditingReturnValues
 {
   [playerNameField setStringValue:@""];
   [playerPasswordField setStringValue:@""];
+  [playerConnectOnAppLaunchButton setState:NSOffState];
   
   [playerEditorSheet makeFirstResponder:playerNameField];
   
@@ -76,6 +77,7 @@ enum MUProfilesEditingReturnValues
   [worldHostnameField setStringValue:@""];
   [worldPortField setStringValue:@""];
   [worldURLField setStringValue:@""];
+  [worldConnectOnAppLaunchButton setState:NSOffState];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   
@@ -93,6 +95,7 @@ enum MUProfilesEditingReturnValues
   
   [playerNameField setStringValue:[playersArrayController valueForKeyPath:@"selection.name"]];
   [playerPasswordField setStringValue:[playersArrayController valueForKeyPath:@"selection.password"]];
+  [playerConnectOnAppLaunchButton setState:([[playersArrayController valueForKeyPath:@"selection.connectOnAppLaunch"] boolValue] ? NSOnState : NSOffState)];
   
   [playerEditorSheet makeFirstResponder:playerNameField];
   
@@ -114,7 +117,8 @@ enum MUProfilesEditingReturnValues
   [worldNameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldName"]];
   [worldHostnameField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldHostname"]];
   [worldPortField setObjectValue:[worldsArrayController valueForKeyPath:@"selection.worldPort"]];
-  [worldURLField setStringValue:@""];
+  [worldURLField setStringValue:[worldsArrayController valueForKeyPath:@"selection.worldURL"]];
+  [worldConnectOnAppLaunchButton setState:([[worldsArrayController valueForKeyPath:@"selection.connectOnAppLaunch"] boolValue] ? NSOnState : NSOffState)];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   
@@ -153,6 +157,7 @@ enum MUProfilesEditingReturnValues
     MUWorld *selectedWorld = [[worldsArrayController selectedObjects] objectAtIndex:0];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
                                                 password:[playerPasswordField stringValue]
+                                      connectOnAppLaunch:([playerConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    world:selectedWorld];
     
     [playersArrayController addObject:newPlayer];
@@ -169,6 +174,7 @@ enum MUProfilesEditingReturnValues
     MUWorld *selectedPlayer = [[playersArrayController selectedObjects] objectAtIndex:0];
     MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
                                                 password:[playerPasswordField stringValue]
+                                      connectOnAppLaunch:([playerConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    world:selectedWorld];
     
     [playersArrayController removeObject:selectedPlayer];
@@ -185,6 +191,8 @@ enum MUProfilesEditingReturnValues
     MUWorld *newWorld = [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
                                              worldHostname:[worldHostnameField stringValue]
                                                  worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
+                                                  worldURL:[worldURLField stringValue]
+                                        connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    players:[NSArray array]];
     
     [worldsArrayController addObject:newWorld];
@@ -201,6 +209,8 @@ enum MUProfilesEditingReturnValues
     MUWorld *newWorld = [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
                                              worldHostname:[worldHostnameField stringValue]
                                                  worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
+                                                  worldURL:[worldURLField stringValue]
+                                        connectOnAppLaunch:([worldConnectOnAppLaunchButton state] == NSOnState ? YES : NO)
                                                    players:[selectedWorld players]];
     
     [worldsArrayController removeObject:selectedWorld];

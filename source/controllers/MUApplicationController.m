@@ -15,7 +15,8 @@
 @interface MUApplicationController (Private)
 
 - (IBAction) openConnection:(id)sender;
-- (void) updateConnectionsMenu:(NSNotification *)notification;
+- (void) handleWorldsUpdatedNotification:(NSNotification *)notification;
+- (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
 
 @end
 
@@ -53,10 +54,10 @@
 {
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
-  [self updateConnectionsMenu:nil];
+  [self rebuildConnectionsMenuWithAutoconnect:YES];
   
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(updateConnectionsMenu:)
+                                           selector:@selector(handleWorldsUpdatedNotification:)
                                                name:MUWorldsUpdatedNotification
                                              object:nil];
 }
@@ -214,7 +215,12 @@
   [controller release];
 }
 
-- (void) updateConnectionsMenu:(NSNotification *)notification
+- (void) handleWorldsUpdatedNotification:(NSNotification *)notification
+{
+  [self rebuildConnectionsMenuWithAutoconnect:NO];
+}
+
+- (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
 {
   MUWorldRegistry *registry = [MUWorldRegistry sharedRegistry];
   int i, worldsCount = [registry count], menuCount = [openConnectionMenu numberOfItems];
@@ -235,6 +241,14 @@
                                                   keyEquivalent:@""];
     int j, playersCount = [players count];
     
+    [connectItem setTarget:self];
+    [connectItem setRepresentedObject:world];
+    
+    if (autoconnect && [world connectOnAppLaunch])
+    {
+      [self openConnection:connectItem];
+    }
+    
     for (j = 0; j < playersCount; j++)
     {
       MUPlayer *player = [players objectAtIndex:j];
@@ -243,6 +257,12 @@
                                                     keyEquivalent:@""];
       [playerItem setTarget:self];
       [playerItem setRepresentedObject:player];
+      
+      if (autoconnect && [player connectOnAppLaunch])
+      {
+        [self openConnection:playerItem];
+      }
+      
       [worldMenu addItem:playerItem];
       [playerItem release];
     }
@@ -252,8 +272,6 @@
       [worldMenu addItem:[NSMenuItem separatorItem]];
     }
     
-    [connectItem setTarget:self];
-    [connectItem setRepresentedObject:world];
     [worldMenu addItem:connectItem];
     [worldItem setTitle:[world worldName]];
     [worldItem setSubmenu:worldMenu];

@@ -12,15 +12,22 @@
   NSString *name;
   NSString *password;
   MUWorld *world;
+  
+  BOOL connectOnAppLaunch;
 }
 
 // Designated initializer.
-- (id) initWithName:(NSString *)newName password:(NSString *)newPassword world:(MUWorld *)world;
+- (id) initWithName:(NSString *)newName
+           password:(NSString *)newPassword
+ connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
+              world:(MUWorld *)world;
 
 - (NSString *) name;
 - (void) setName:(NSString *)newName;
 - (NSString *) password;
 - (void) setPassword:(NSString *)newPassword;
+- (BOOL) connectOnAppLaunch;
+- (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch;
 - (MUWorld *) world;
 - (void) setWorld:(MUWorld *)newWorld;
 

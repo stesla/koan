@@ -14,22 +14,31 @@
   NSString *worldName;
   NSString *worldHostname;
   NSNumber *worldPort;
+  NSString *worldURL;
+  
+  BOOL connectOnAppLaunch;
   
   NSMutableArray *players;
 }
 
 // Designated initializer.
-- (id) initWithWorldName:(NSString *)name
-           worldHostname:(NSString *)hostname
-               worldPort:(NSNumber *)port
+- (id) initWithWorldName:(NSString *)newWorldName
+           worldHostname:(NSString *)newWorldHostname
+               worldPort:(NSNumber *)newWorldPort
+                worldURL:(NSString *)newWorldURL
+        connectOnAppLaunch:(BOOL)newConnectOnAppLaunch
                  players:(NSArray *)newPlayers;
 
 - (NSString *) worldName;
 - (void) setWorldName:(NSString *)newWorldName;
 - (NSString *) worldHostname;
-- (void) setWorldHostname:(NSString *)newHostname;
+- (void) setWorldHostname:(NSString *)newWorldHostname;
 - (NSNumber *) worldPort;
 - (void) setWorldPort:(NSNumber *)newWorldPort;
+- (NSString *) worldURL;
+- (void) setWorldURL:(NSString *)newWorldURL;
+- (BOOL) connectOnAppLaunch;
+- (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch;
 - (NSMutableArray *) players;
 - (void) setPlayers:(NSArray *)newPlayers;
 - (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index;

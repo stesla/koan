@@ -41,5 +41,3 @@ NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
 // Miscellaneous localization constants.
 
 NSString *MULConnectWithoutLogin = @"ConnectWithoutLogin";
-NSString *MULUnnamedPlayer = @"UnnamedPlayer";
-NSString *MULUntitledWorld = @"UntitledWorld";
