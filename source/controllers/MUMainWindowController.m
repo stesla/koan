@@ -54,12 +54,16 @@
   int portNumber = [portField intValue];
   _telnetConnection = [[MUTelnetConnection alloc] initWithHostName:name
                                                             onPort:portNumber];
-  [_telnetConnection setDelegate:self];
-  [_telnetConnection open];
+  if(_telnetConnection)
+  {
+    [_telnetConnection setDelegate:self];
+    [_telnetConnection open];
   
-  [connectButton setEnabled:NO];
-  [disconnectButton setEnabled:YES];
-  
+    [connectButton setEnabled:NO];
+    [disconnectButton setEnabled:YES];
+  }
+  //else
+  //TODO: Error messaging goes here
   [[self window] makeFirstResponder:inputField];
 }
 
