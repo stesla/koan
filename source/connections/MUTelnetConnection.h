@@ -20,8 +20,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "MUSocketConnection.h"
-
 enum MUTelnetCommands
 {
   TEL_SE  = 240,
@@ -44,7 +42,6 @@ enum MUTelnetCommands
 
 @interface MUTelnetConnection : NSObject
 {
-  MUSocketConnection* _socket;
 }
 
 @end
