@@ -16,6 +16,8 @@ NSString *MUPWorlds = @"MUPWorlds";
 
 // Notification constants.
 
+NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";
+NSString *MUConnectionWindowControllerDidReceiveTextNotification = @"MUConnectionWindowControllerDidReceiveTextNotification";
 NSString *MUWorldsUpdatedNotification = @"MUWorldsUpdatedNotification";
 
 // Status message localization constants.

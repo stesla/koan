@@ -17,6 +17,7 @@
 - (IBAction) openConnection:(id)sender;
 - (void) handleWorldsUpdatedNotification:(NSNotification *)notification;
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
+- (void) updateApplicationBadge;
 
 @end
 
@@ -29,7 +30,7 @@
   NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
   NSMutableDictionary *initialValues = [NSMutableDictionary dictionary];
   NSValueTransformer *transformer = [[FontNameToDisplayNameTransformer alloc] init];
-
+  
   [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
   
   NSData *archivedLightGray = [NSArchiver archivedDataWithRootObject:[NSColor lightGrayColor]];
@@ -60,10 +61,14 @@
                                            selector:@selector(handleWorldsUpdatedNotification:)
                                                name:MUWorldsUpdatedNotification
                                              object:nil];
+  
+  unreadCount = 0;
+  [self updateApplicationBadge];
 }
 
 - (void) dealloc
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
   [connectionWindowControllers release];
   [profilesController release];
 }
@@ -159,7 +164,7 @@
       openConnections];
     
     choice = [alert runModal];
-      
+    
     if (choice == NSAlertAlternateReturn)
       return NSTerminateCancel;
   }
@@ -167,19 +172,41 @@
   return NSTerminateNow;
 }
 
+- (void) applicationWillBecomeActive:(NSNotification *)notification
+{
+  unreadCount = 0;
+  [self updateApplicationBadge];
+}
+
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
+  unreadCount = 0;
+  [self updateApplicationBadge];
+  
   [[MUWorldRegistry sharedRegistry] saveWorlds];
 }
 
 #pragma mark -
 #pragma mark MUConnectionWindowController delegate
 
-- (void) windowIsClosingForConnectionWindowController:(MUConnectionWindowController *)controller
+- (void) connectionWindowControllerWillClose:(NSNotification *)notification
 {
+  MUConnectionWindowController *controller = [notification object];
+  
   [controller retain];
   [connectionWindowControllers removeObject:controller];
   [controller autorelease];
+}
+
+- (void) connectionWindowControllerDidReceiveText:(NSNotification *)notification
+{
+  if (![NSApp isActive])
+  {
+    [NSApp requestUserAttention:NSInformationalRequest];
+    
+    unreadCount++;
+    [self updateApplicationBadge];
+  }
 }
 
 @end
@@ -187,6 +214,11 @@
 #pragma mark -
 
 @implementation MUApplicationController (Private)
+
+- (void) handleWorldsUpdatedNotification:(NSNotification *)notification
+{
+  [self rebuildConnectionsMenuWithAutoconnect:NO];
+}
 
 - (IBAction) openConnection:(id)sender
 {
@@ -213,11 +245,6 @@
   [controller showWindow:self];
   [controller connect:sender];
   [controller release];
-}
-
-- (void) handleWorldsUpdatedNotification:(NSNotification *)notification
-{
-  [self rebuildConnectionsMenuWithAutoconnect:NO];
 }
 
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
@@ -253,8 +280,8 @@
     {
       MUPlayer *player = [players objectAtIndex:j];
       NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle:[player name]
-                                                           action:@selector(openConnection:)
-                                                    keyEquivalent:@""];
+                                                          action:@selector(openConnection:)
+                                                   keyEquivalent:@""];
       [playerItem setTarget:self];
       [playerItem setRepresentedObject:player];
       
@@ -280,6 +307,89 @@
     [worldMenu release];
     [connectItem release];
   }
+}
+
+- (void) updateApplicationBadge
+{
+  NSDictionary *attributeDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+    [NSColor whiteColor], NSForegroundColorAttributeName,
+    [NSFont fontWithName:@"Helvetica Bold" size:25.0], NSFontAttributeName,
+    nil];
+  NSAttributedString *unreadCountString =
+    [NSAttributedString attributedStringWithString:[NSString stringWithFormat:@"%@", [NSNumber numberWithUnsignedInt:unreadCount]]
+                                        attributes:attributeDictionary];
+  NSImage *appImage, *newAppImage, *badgeImage;
+  NSSize newAppImageSize, badgeImageSize;
+  NSPoint unreadCountStringLocationPoint;
+  
+  appImage = [NSImage imageNamed:@"NSApplicationIcon"];
+  
+  newAppImage = [[NSImage alloc] initWithSize:[appImage size]];
+  newAppImageSize = [newAppImage size];
+  
+  [newAppImage lockFocus];
+  
+  [appImage drawInRect:NSMakeRect (0, 0, newAppImageSize.width, newAppImageSize.height)
+              fromRect:NSMakeRect (0, 0, [appImage size].width, [appImage size].height)
+             operation:NSCompositeCopy
+              fraction:1.0];
+  
+  if (unreadCount > 0)
+  {
+    if (unreadCount < 100)
+      badgeImage = [NSImage imageNamed:@"badge-1-2"];
+    else if (unreadCount < 1000)
+      badgeImage = [NSImage imageNamed:@"badge-3"];
+    else if (unreadCount < 10000)
+      badgeImage = [NSImage imageNamed:@"badge-4"];
+    else
+      badgeImage = [NSImage imageNamed:@"badge-5"];
+    
+    
+    badgeImageSize = [badgeImage size];
+    
+    [badgeImage drawInRect:NSMakeRect (newAppImageSize.width - badgeImageSize.width,
+                                       newAppImageSize.height - badgeImageSize.height,
+                                       badgeImageSize.width,
+                                       badgeImageSize.height)
+                  fromRect:NSMakeRect (0, 0, badgeImageSize.width, badgeImageSize.height)
+                 operation:NSCompositeSourceOver
+                  fraction:1.0];
+    
+    if (unreadCount < 10)
+    {
+      unreadCountStringLocationPoint = NSMakePoint (newAppImageSize.width - badgeImageSize.width + 19.0,
+                                                    newAppImageSize.height - badgeImageSize.height + 12.0);
+    }
+    else if (unreadCount < 100)
+    {
+      unreadCountStringLocationPoint = NSMakePoint (newAppImageSize.width - badgeImageSize.width + 12.0,
+                                                    newAppImageSize.height - badgeImageSize.height + 12.0);
+    }
+    else if (unreadCount < 1000)
+    {
+      unreadCountStringLocationPoint = NSMakePoint (newAppImageSize.width - badgeImageSize.width + 14.0,
+                                                    newAppImageSize.height - badgeImageSize.height + 12.0);
+    }
+    else if (unreadCount < 10000)
+    {
+      unreadCountStringLocationPoint = NSMakePoint (newAppImageSize.width - badgeImageSize.width + 12.0,
+                                                    newAppImageSize.height - badgeImageSize.height + 12.0);
+    }
+    else
+    {
+      unreadCountStringLocationPoint = NSMakePoint (newAppImageSize.width - badgeImageSize.width + 10.0,
+                                                    newAppImageSize.height - badgeImageSize.height + 12.0);
+    }
+    
+    
+    [unreadCountString drawAtPoint:unreadCountStringLocationPoint];
+  }
+  
+  [newAppImage unlockFocus];
+  
+  [NSApp setApplicationIconImage:newAppImage];
+  [newAppImage release];
 }
 
 @end

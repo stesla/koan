@@ -110,7 +110,27 @@
 
 - (void) setDelegate:(id)newDelegate
 {
+  [[NSNotificationCenter defaultCenter] removeObserver:delegate
+                                                  name:nil
+                                                object:self];
+  
   delegate = newDelegate;
+  
+  if ([delegate respondsToSelector:@selector(connectionWindowControllerWillClose:)])
+  {
+    [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                             selector:@selector(connectionWindowControllerWillClose:)
+                                                 name:MUConnectionWindowControllerWillCloseNotification
+                                               object:self];
+  }
+  
+  if ([delegate respondsToSelector:@selector(connectionWindowControllerDidReceiveText:)])
+  {
+    [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                             selector:@selector(connectionWindowControllerDidReceiveText:)
+                                                 name:MUConnectionWindowControllerDidReceiveTextNotification
+                                               object:self];
+  }
 }
 
 - (BOOL) isConnected
@@ -377,10 +397,10 @@
   
   [sender autorelease];
   [self disconnect:sender];
-  if ([[self delegate] respondsToSelector:@selector(windowIsClosingForConnectionWindowController:)])
-  {
-    [[self delegate] windowIsClosingForConnectionWindowController:self];
-  }
+  
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
+                                                      object:self];
+  
   return YES;
 }
 
@@ -407,11 +427,9 @@
   
   if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
     [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 0)];
-  
-  if (![NSApp isActive])
-  {
-    [NSApp requestUserAttention:NSInformationalRequest];
-  }
+
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerDidReceiveTextNotification
+                                                      object:self];
 }
 
 @end

@@ -16,6 +16,8 @@ extern NSString *MUPWorlds;
 
 // Notification constants.
 
+extern NSString *MUConnectionWindowControllerWillCloseNotification;
+extern NSString *MUConnectionWindowControllerDidReceiveTextNotification;
 extern NSString *MUWorldsUpdatedNotification;
 
 // Status message localization constants.

@@ -13,6 +13,8 @@
   IBOutlet NSPanel *preferencesPanel;
   IBOutlet NSMenu *openConnectionMenu;
   
+  unsigned unreadCount;
+  
   NSMutableArray *connectionWindowControllers;
   MUProfilesController *profilesController;
 }

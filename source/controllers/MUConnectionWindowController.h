@@ -50,6 +50,7 @@
 
 @interface NSObject (MUConnectionWindowControllerDelegate)
 
-- (void) windowIsClosingForConnectionWindowController:(MUConnectionWindowController *)controller;
+- (void) connectionWindowControllerWillClose:(NSNotification *)notification;
+- (void) connectionWindowControllerDidReceiveText:(NSNotification *)notification;
 
 @end
