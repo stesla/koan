@@ -47,7 +47,7 @@
 
 - (void) setUp
 {
-  _queue = [[MUInputFilterQueue alloc] init];
+  _queue = [[MUFilterQueue alloc] init];
   [_queue addFilter:[MUAnsiRemovingFilter filter]];
 }
 

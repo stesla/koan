@@ -33,7 +33,7 @@
   
   _historyRing = [[MUHistoryRing alloc] init];
   
-  _filterQueue = [[MUInputFilterQueue alloc] init];
+  _filterQueue = [[MUFilterQueue alloc] init];
   [_filterQueue addFilter:[MUAnsiRemovingFilter filter]];
   
   [disconnectButton setEnabled:NO];

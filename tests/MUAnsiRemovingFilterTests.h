@@ -21,11 +21,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
-#import "MUInputFilter.h"
+#import "MUFilter.h"
 
 @interface MUAnsiRemovingFilterTests : TestCase
 {
-  MUInputFilterQueue *_queue;
+  MUFilterQueue *_queue;
 }
 
 @end

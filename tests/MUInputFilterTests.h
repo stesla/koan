@@ -21,8 +21,7 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
-#import "MUInputFilter.h"
-#import "MUFiltering.h"
+#import "MUFilter.h"
 
 @interface MUInputFilterTests : TestCase
 
@@ -32,6 +31,6 @@
 
 @end
 
-@interface MUUpperInputFilter : MUInputFilter
+@interface MUUpperInputFilter : MUFilter
 
 @end

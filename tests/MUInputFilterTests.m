@@ -19,13 +19,13 @@
 //
 
 #import "MUInputFilterTests.h"
-#import "MUInputFilter.h"
+#import "MUFilter.h"
 
 @implementation MUInputFilterTests
 
 - (void) testFilter
 {
-  MUInputFilter *filter = [MUInputFilter filter];
+  MUFilter *filter = [MUFilter filter];
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
 
   NSAttributedString *output = [filter filter:input];
@@ -49,7 +49,7 @@
 
 - (void) testFilter
 {
-  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
+  MUFilterQueue *queue = [[MUFilterQueue alloc] init];
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
   NSAttributedString *output = [queue processAttributedString:input];
   [self assert:output equals:input];
@@ -57,7 +57,7 @@
 
 - (void) testQueue
 {
-  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
+  MUFilterQueue *queue = [[MUFilterQueue alloc] init];
   MUUpperInputFilter *filter = [[MUUpperInputFilter alloc] init];
   [queue addFilter:filter];
   
