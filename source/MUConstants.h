@@ -89,5 +89,5 @@ extern NSString *MUInsertionWorld;
 
 // ANSI parsing constants
 
-extern NSString *J3ANSIForeColorAttributeName;
+extern NSString *J3ANSIForegroundColorAttributeName;
 extern NSString *J3ANSIBackColorAttributeName;

@@ -17,7 +17,7 @@
 - (void) assertANSICode:(J3ANSICode)code 
           setsAttribute:(NSString *)aName 
                 toValue:(id)aValue;
-- (void) assertANSICode:(J3ANSICode)code setsForeColor:(NSColor *)color;
+- (void) assertANSICode:(J3ANSICode)code setsForegroundColor:(NSColor *)color;
 - (void) assertANSICode:(J3ANSICode)code setsBackColor:(NSColor *)color;
 @end
 
@@ -47,16 +47,16 @@
                   equalsString:[input string]];
 }
 
-- (void) testSetsSpecificForeColor
+- (void) testSetsSpecificForegroundColor
 {
-  [self assertANSICode:J3ANSIForeBlack setsForeColor:[NSColor blackColor]];
-  [self assertANSICode:J3ANSIForeRed setsForeColor:[NSColor redColor]];
-  [self assertANSICode:J3ANSIForeGreen setsForeColor:[NSColor greenColor]];
-  [self assertANSICode:J3ANSIForeYellow setsForeColor:[NSColor yellowColor]];
-  [self assertANSICode:J3ANSIForeBlue setsForeColor:[NSColor blueColor]];
-  [self assertANSICode:J3ANSIForeMagenta setsForeColor:[NSColor magentaColor]];
-  [self assertANSICode:J3ANSIForeCyan setsForeColor:[NSColor cyanColor]];
-  [self assertANSICode:J3ANSIForeWhite setsForeColor:[NSColor whiteColor]];
+  [self assertANSICode:J3ANSIForegroundBlack setsForegroundColor:[NSColor blackColor]];
+  [self assertANSICode:J3ANSIForegroundRed setsForegroundColor:[NSColor redColor]];
+  [self assertANSICode:J3ANSIForegroundGreen setsForegroundColor:[NSColor greenColor]];
+  [self assertANSICode:J3ANSIForegroundYellow setsForegroundColor:[NSColor yellowColor]];
+  [self assertANSICode:J3ANSIForegroundBlue setsForegroundColor:[NSColor blueColor]];
+  [self assertANSICode:J3ANSIForegroundMagenta setsForegroundColor:[NSColor magentaColor]];
+  [self assertANSICode:J3ANSIForegroundCyan setsForegroundColor:[NSColor cyanColor]];
+  [self assertANSICode:J3ANSIForegroundWhite setsForegroundColor:[NSColor whiteColor]];
 }
 
 - (void) testSetsSpecificBackColor
@@ -72,12 +72,12 @@
 }
 
 /*
-- (void) testDefaultFore
+- (void) testDefaultForeground
 {
   NSRange range;
   NSAttributedString *input =
     [self makeString:[NSString stringWithFormat:
-      @"F\x1B[%dmo\x1B[%dmo", J3ANSIForeRed, J3ANSIForeDefault]];
+      @"F\x1B[%dmo\x1B[%dmo", J3ANSIForegroundRed, J3ANSIForegroundDefault]];
   NSColor *color =
     [input attribute:NSForegroundColorAttributeName
              atIndex:[input length] - 1
@@ -88,7 +88,7 @@
   range.location = 2;
   range.length = 1;
   
-  [self assertAttribute:J3ANSIForeColorAttributeName
+  [self assertAttribute:J3ANSIForegroundColorAttributeName
                  equals:color
                inString:output
                 atIndex:[output length] -1];
@@ -121,10 +121,10 @@
               withRange:range];  
 }
 
-- (void) assertANSICode:(J3ANSICode)code setsForeColor:(NSColor *)color
+- (void) assertANSICode:(J3ANSICode)code setsForegroundColor:(NSColor *)color
 {
   [self assertANSICode:code
-         setsAttribute:J3ANSIForeColorAttributeName
+         setsAttribute:J3ANSIForegroundColorAttributeName
                toValue:color];
 }
 

@@ -5,10 +5,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <Growl/GrowlApplicationBridge.h>
 
-@interface MUGrowlService : NSObject
+@interface MUGrowlService : NSObject <GrowlApplicationBridgeDelegate>
 
-+ (void) initializeGrowl;
++ (MUGrowlService *) growlService;
 
 + (void) connectionClosedByErrorForTitle:(NSString *)title error:(NSString *)error;
 + (void) connectionClosedByServerForTitle:(NSString *)title;

@@ -5,17 +5,15 @@
 //
 
 #import "MUGrowlService.h"
-#import <GrowlAppBridge/GrowlApplicationBridge.h>
-#import <GrowlAppBridge/GrowlDefines.h>
 
-static BOOL growlAvailable = NO;
+static BOOL growlIsReady = NO;
+static MUGrowlService *growlService;
 
 @interface MUGrowlService (Private)
 
-+ (void) postGrowlNotificationWithName:(NSString *)name
-                                 title:(NSString *)title
-                           description:(NSString *)description;
-- (void) registerGrowl:(void *)context;
+- (void) notifyWithName:(NSString *)name
+									title:(NSString *)title
+						description:(NSString *)description;
 
 @end
 
@@ -23,21 +21,22 @@ static BOOL growlAvailable = NO;
 
 @implementation MUGrowlService
 
-+ (void) initializeGrowl
++ (MUGrowlService *) growlService
 {
-  MUGrowlService *temporaryInstance = [[MUGrowlService alloc] init];
-  Class growlAppBridge = NSClassFromString (@"GrowlAppBridge");
-  
-  if (growlAppBridge && [growlAppBridge launchGrowlIfInstalledNotifyingTarget:temporaryInstance
-                                                                     selector:@selector(registerGrowl:)
-                                                                      context:nil])
+  if (!growlService)
   {
-    growlAvailable = YES;
+    growlService = [[MUGrowlService alloc] init];
   }
-  else
-  {
-    [temporaryInstance release];
-  }
+  return growlService;
+}
+
+- (id) init
+{
+	if (self = [super init])
+	{
+		[GrowlApplicationBridge setGrowlDelegate:self];
+	}
+	return self;
 }
 
 + (void) connectionClosedByErrorForTitle:(NSString *)title error:(NSString *)error
@@ -45,30 +44,69 @@ static BOOL growlAvailable = NO;
   NSString *description = [NSString stringWithFormat:NSLocalizedString (MUGConnectionClosedByErrorDescription, nil),
     error];
   
-  [self postGrowlNotificationWithName:NSLocalizedString (MUGConnectionClosedByErrorName, nil)
-                                title:title
-                          description:description];
+  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionClosedByErrorName, nil)
+																					title:title
+																		description:description];
 }
 
 + (void) connectionClosedByServerForTitle:(NSString *)title
 {
-  [self postGrowlNotificationWithName:NSLocalizedString (MUGConnectionClosedByServerName, nil)
-                                title:title
-                          description:NSLocalizedString (MUGConnectionClosedByServerDescription, nil)];
+  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionClosedByServerName, nil)
+																					title:title
+																		description:NSLocalizedString (MUGConnectionClosedByServerDescription, nil)];
 }
 
 + (void) connectionClosedForTitle:(NSString *)title
 {
-  [self postGrowlNotificationWithName:NSLocalizedString (MUGConnectionClosedName, nil)
-                                title:title
-                          description:NSLocalizedString (MUGConnectionClosedDescription, nil)];
+  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionClosedName, nil)
+																					title:title
+																		description:NSLocalizedString (MUGConnectionClosedDescription, nil)];
 }
 
 + (void) connectionOpenedForTitle:(NSString *)title
 {
-  [self postGrowlNotificationWithName:NSLocalizedString (MUGConnectionOpenedName, nil)
-                                title:title
-                          description:NSLocalizedString (MUGConnectionOpenedDescription, nil)];
+  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionOpenedName, nil)
+																					title:title
+																		description:NSLocalizedString (MUGConnectionOpenedDescription, nil)];
+}
+
+#pragma mark -
+#pragma mark GrowlApplicationBridge delegate
+
+- (NSData *) applicationIconDataForGrowl
+{
+	return [[NSImage imageNamed:@"NSApplicationIcon"] TIFFRepresentation];
+}
+
+- (NSString *) applicationNameForGrowl
+{
+	return MUApplicationName;
+}
+
+- (void) growlIsReady
+{
+	growlIsReady = YES;
+}
+
+- (NSDictionary *) registrationDictionaryForGrowl
+{
+	NSArray *allNotifications = [NSArray arrayWithObjects:
+		NSLocalizedString (MUGConnectionOpenedName, nil),
+		NSLocalizedString (MUGConnectionClosedName, nil),
+		NSLocalizedString (MUGConnectionClosedByServerName, nil),
+		NSLocalizedString (MUGConnectionClosedByErrorName, nil),
+		nil];
+	NSArray *defaultNotifications = [NSArray arrayWithObjects:
+		NSLocalizedString (MUGConnectionOpenedName, nil),
+		NSLocalizedString (MUGConnectionClosedName, nil),
+		NSLocalizedString (MUGConnectionClosedByServerName, nil),
+		NSLocalizedString (MUGConnectionClosedByErrorName, nil),
+		nil];
+	
+	return [NSDictionary dictionaryWithObjectsAndKeys:
+		allNotifications, GROWL_NOTIFICATIONS_ALL,
+		defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT,
+		nil];
 }
 
 @end
@@ -77,57 +115,20 @@ static BOOL growlAvailable = NO;
 
 @implementation MUGrowlService (Private)
 
-+ (void) postGrowlNotificationWithName:(NSString *)name
-                                 title:(NSString *)title
-                           description:(NSString *)description
+- (void) notifyWithName:(NSString *)name
+									title:(NSString *)title
+						description:(NSString *)description
 {
-  if (growlAvailable)
+  if (growlIsReady)
   {
-    NSDictionary *growlNotification = [NSDictionary dictionaryWithObjectsAndKeys: 
-      MUApplicationName, GROWL_APP_NAME, 
-      name, GROWL_NOTIFICATION_NAME, 
-      title, GROWL_NOTIFICATION_TITLE, 
-      description, GROWL_NOTIFICATION_DESCRIPTION, 
-      [[NSApp applicationIconImage] TIFFRepresentation], GROWL_NOTIFICATION_ICON,
-      nil]; 
-    
-    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:GROWL_NOTIFICATION
-                                                                   object:GROWL_NOTIFICATION 
-                                                                 userInfo:growlNotification
-                                                       deliverImmediately:YES];
+		[GrowlApplicationBridge notifyWithTitle:title
+																description:description
+													 notificationName:name
+																	 iconData:nil
+																	 priority:0.0
+																	 isSticky:NO
+															 clickContext:nil];
   }
-}
-
-- (void) registerGrowl:(void *)context
-{
-  if (growlAvailable)
-  {
-    NSArray *allNotifications = [NSArray arrayWithObjects:
-      NSLocalizedString (MUGConnectionOpenedName, nil),
-      NSLocalizedString (MUGConnectionClosedName, nil),
-      NSLocalizedString (MUGConnectionClosedByServerName, nil),
-      NSLocalizedString (MUGConnectionClosedByErrorName, nil),
-      nil];
-    NSArray *defaultNotifications = [NSArray arrayWithObjects:
-      NSLocalizedString (MUGConnectionOpenedName, nil),
-      NSLocalizedString (MUGConnectionClosedName, nil),
-      NSLocalizedString (MUGConnectionClosedByServerName, nil),
-      NSLocalizedString (MUGConnectionClosedByErrorName, nil),
-      nil];
-    
-    NSDictionary *growlRegistration = [NSDictionary dictionaryWithObjectsAndKeys:
-      MUApplicationName, GROWL_APP_NAME,
-      [[NSApp applicationIconImage] TIFFRepresentation], GROWL_APP_ICON,
-      allNotifications, GROWL_NOTIFICATIONS_ALL,
-      defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT,
-      nil];
-    
-    [[NSDistributedNotificationCenter defaultCenter] postNotificationName:GROWL_APP_REGISTRATION
-                                                                   object:nil
-                                                                 userInfo:growlRegistration];    
-  }
-  
-  [self autorelease];
 }
 
 @end

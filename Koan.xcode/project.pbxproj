@@ -8,6 +8,7 @@
 		1058C7A0FEA54F0111CA2CBB = {
 			children = (
 				E61C3C6C07B7312B00519A89,
+				E615A3C607D3B2FE00FC7F6B,
 				E61C3C6D07B7312B00519A89,
 				E61C3C6E07B7312B00519A89,
 				1058C7A1FEA54F0111CA2CBB,
@@ -52,6 +53,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				E61C3C9A07B7314E00519A89,
+				E615A40607D3B38C00FC7F6B,
 				E61C3C9B07B7314E00519A89,
 				E61C3C9C07B7314E00519A89,
 			);
@@ -635,7 +637,7 @@
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
 				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
-				OTHER_LDFLAGS = "-weak_framework GrowlAppBridge";
+				OTHER_LDFLAGS = "";
 				PREBINDING = YES;
 				PRODUCT_NAME = Koan;
 				WRAPPER_EXTENSION = app;
@@ -731,6 +733,7 @@
 			files = (
 				8D11072F0486CEB800E47090,
 				E61C3C6F07B7312B00519A89,
+				E615A3C707D3B2FE00FC7F6B,
 				E61C3C7007B7312B00519A89,
 				E61C3C7107B7312B00519A89,
 			);
@@ -823,6 +826,25 @@
 		};
 		E60DDB86076CE889009870E4 = {
 			fileRef = E60DDB84076CE889009870E4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E615A3C607D3B2FE00FC7F6B = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			path = Growl.framework;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E615A3C707D3B2FE00FC7F6B = {
+			fileRef = E615A3C607D3B2FE00FC7F6B;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E615A40607D3B38C00FC7F6B = {
+			fileRef = E615A3C607D3B2FE00FC7F6B;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1281,6 +1303,7 @@
 			);
 			isa = PBXShellScriptBuildPhase;
 			outputPaths = (
+				$BUILD_ROOT/Koan.build/Koan.build/Info.plist,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1739,16 +1762,16 @@
 			);
 			inputPaths = (
 				"$(SOURCE_ROOT)/frameworks/AGRegex.framework.tar.gz",
-				"$(SOURCE_ROOT)/frameworks/GrowlAppBridge.framework.tar.gz",
+				"$(SOURCE_ROOT)/frameworks/Growl.framework.tar.gz",
 				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework.tar.gz",
 				"$(SOURCE_ROOT)/frameworks/RBSplitView.framework.tar.gz",
 			);
 			isa = PBXShellScriptBuildPhase;
 			outputPaths = (
-				"$(SOURCE_ROOT)/build/AGRegex.framework",
-				"$(SOURCE_ROOT)/build/GrowlAppBridge.framework",
-				"$(SOURCE_ROOT)/build/J3Terminal.framework",
-				"$(SOURCE_ROOT)/build/RBSplitView.framework",
+				"$(BUILD_ROOT)/AGRegex.framework",
+				"$(BUILD_ROOT)/Growl.framework",
+				"$(BUILD_ROOT)/J3Terminal.framework",
+				"$(BUILD_ROOT)/RBSplitView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

@@ -51,11 +51,11 @@
   
   [[NSFontManager sharedFontManager] setAction:@selector(changeGlobalFont:)];
   
-  [MUGrowlService initializeGrowl];
+  [MUGrowlService growlService];
   
   // Launching the Growl service causes Koan to be polite and not activate
   // so we have to tell it that, no, really, it can go ahead.
-  [NSApp activateIgnoringOtherApps:YES];
+  // [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (void) awakeFromNib

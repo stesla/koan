@@ -89,5 +89,5 @@ NSString *MUInsertionWorld = @"MUInsertionWorld";
 
 // ANSI parsing constants
 
-NSString *J3ANSIForeColorAttributeName = @"J3ANSIForeColorAttributeName";
+NSString *J3ANSIForegroundColorAttributeName = @"J3ANSIForegroundColorAttributeName";
 NSString *J3ANSIBackColorAttributeName = @"J3ANSIBackColorAttributeName";

@@ -13,7 +13,7 @@
 - (int) getNumber:(int *)num atIndex:(int)index inString:(NSString *)string;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
-- (void) setForeColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict;
+- (void) setForegroundColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict;
 - (void) setBackColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict;
 - (void) setAttributeInString:(NSMutableAttributedString *)editString
                       atIndex:(int)index
@@ -117,9 +117,9 @@
   return [scanner scanLocation];
 }
 
-- (void) setForeColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict
+- (void) setForegroundColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict
 {
-  [dict setValue:color forKey:J3ANSIForeColorAttributeName];
+  [dict setValue:color forKey:J3ANSIForegroundColorAttributeName];
 }
 
 - (void) setBackColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict
@@ -147,36 +147,36 @@
   
   switch (code)
   {
-    case J3ANSIForeBlack:
-      [self setForeColor:[NSColor blackColor] inDictionary:attrs];
+    case J3ANSIForegroundBlack:
+      [self setForegroundColor:[NSColor blackColor] inDictionary:attrs];
       break;
 
-    case J3ANSIForeRed:
-      [self setForeColor:[NSColor redColor] inDictionary:attrs];
+    case J3ANSIForegroundRed:
+      [self setForegroundColor:[NSColor redColor] inDictionary:attrs];
       break;
 
-    case J3ANSIForeGreen:
-      [self setForeColor:[NSColor greenColor] inDictionary:attrs];
+    case J3ANSIForegroundGreen:
+      [self setForegroundColor:[NSColor greenColor] inDictionary:attrs];
       break;
       
-    case J3ANSIForeYellow:
-      [self setForeColor:[NSColor yellowColor] inDictionary:attrs];
+    case J3ANSIForegroundYellow:
+      [self setForegroundColor:[NSColor yellowColor] inDictionary:attrs];
       break;
       
-    case J3ANSIForeBlue:
-      [self setForeColor:[NSColor blueColor] inDictionary:attrs];
+    case J3ANSIForegroundBlue:
+      [self setForegroundColor:[NSColor blueColor] inDictionary:attrs];
       break;
       
-    case J3ANSIForeMagenta:
-      [self setForeColor:[NSColor magentaColor] inDictionary:attrs];
+    case J3ANSIForegroundMagenta:
+      [self setForegroundColor:[NSColor magentaColor] inDictionary:attrs];
       break;
       
-    case J3ANSIForeCyan:
-      [self setForeColor:[NSColor cyanColor] inDictionary:attrs];
+    case J3ANSIForegroundCyan:
+      [self setForegroundColor:[NSColor cyanColor] inDictionary:attrs];
       break;
       
-    case J3ANSIForeWhite:
-      [self setForeColor:[NSColor whiteColor] inDictionary:attrs];
+    case J3ANSIForegroundWhite:
+      [self setForegroundColor:[NSColor whiteColor] inDictionary:attrs];
       break;
       
     case J3ANSIBackBlack:
