@@ -12,15 +12,20 @@
 
 @implementation J3AttributedStringTransformerTests
 
+- (void) setUp
+{
+  transformer = [J3AttributedStringTransformer transformer];
+  input = [NSAttributedString attributedStringWithString:@"Quux"];
+  output = nil;
+  
+  // set these to Bad Numbers to make it obvious 
+  // when we haven't initialized them
+  range.location = -1;
+  range.length = -1;
+}
+
 - (void) testSetsAttributeToEndOfString
 {
-  J3AttributedStringTransformer *transformer = 
-    [J3AttributedStringTransformer transformer];
-  NSAttributedString *input = 
-    [NSAttributedString attributedStringWithString:@"Quux"];
-  NSAttributedString *output;
-  NSRange range;
-
   range.location = 1;
   range.length = [input length] - range.location;
 
@@ -31,6 +36,49 @@
   
   [self assertAttribute:@"Foo"
                  equals:@"Bar"
+               inString:output
+              withRange:range];
+}
+
+- (void) testSetsThreeAttributes
+{
+  [transformer changeAttributeWithName:@"Foo" 
+                               toValue:@"Bar"
+                            atLocation:1];
+  [transformer changeAttributeWithName:@"Foo" 
+                               toValue:@"Baz"
+                            atLocation:2];
+  [transformer changeAttributeWithName:@"Foo" 
+                               toValue:@"Quux"
+                            atLocation:3];
+  output = [transformer transform:input];
+
+  range.length = 1;
+  range.location = 1;
+  [self assertAttribute:@"Foo"
+                 equals:@"Bar"
+               inString:output
+              withRange:range];
+  range.location = 2;
+  [self assertAttribute:@"Foo"
+                 equals:@"Baz"
+               inString:output
+              withRange:range];
+  range.location = 3;
+  [self assertAttribute:@"Foo"
+                 equals:@"Quux"
+               inString:output
+              withRange:range];
+}
+
+- (void) testTransformLocationBeyondEndOfString
+{
+  [transformer changeAttributeWithName:@"Foo" toValue:@"Bar" atLocation:20];
+  output = [transformer transform:input];
+  range.location = 1;
+  range.length = [input length] - range.location;
+  [self assertAttribute:@"Foo"
+                 equals:nil
                inString:output
               withRange:range];
 }

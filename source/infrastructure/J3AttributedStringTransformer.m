@@ -8,7 +8,7 @@
 
 #import "J3AttributedStringTransformer.h"
 
-@interface J3AttributedStringTransform : NSObject
+@interface J3AttributedStringTransform : NSObject<J3AttributedStringTransforming>
 {
   NSString *name;
   id value;
@@ -21,6 +21,7 @@
 
 - (NSAttributedString *) transform:(NSAttributedString *)string 
                       upToLocation:(int)aLocation;
+- (int) location;
 @end
 
 @implementation J3AttributedStringTransform
@@ -47,6 +48,11 @@
   [name release];
   [value release];
   [super dealloc];
+}
+
+- (int) location
+{
+  return location;
 }
 
 - (NSAttributedString *) transform:(NSAttributedString *)string 
@@ -102,8 +108,31 @@
 
 - (NSAttributedString *) transform:(NSAttributedString *)aString
 {
-  return [[transforms objectAtIndex:0] transform:aString
-                                    upToLocation:[aString length]];
+  NSAttributedString *resultString = [[aString copy] autorelease];
+  id<J3AttributedStringTransforming> transform;
+  int i, location, count = [transforms count], length = [aString length];
+  
+  for (i = 0; i < count; i++)
+  {
+    transform = [transforms objectAtIndex:i];
+    
+    if ([transform location] >= length)
+      break;
+    
+    if (i == (count - 1))
+    {
+      location = length;
+    }
+    else
+    {
+      location = [(id<J3AttributedStringTransforming>)
+        [transforms objectAtIndex:i+1] location];
+    }
+    
+    resultString = [transform transform:resultString
+                           upToLocation:location];
+  }
+  return resultString;
 }
 
 @end

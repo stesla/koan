@@ -8,6 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol J3AttributedStringTransforming
+- (NSAttributedString *) transform:(NSAttributedString *)string 
+                      upToLocation:(int)aLocation;
+- (int) location;
+@end
+
 @interface J3AttributedStringTransformer : NSObject 
 {
   NSMutableArray *transforms;
@@ -18,6 +24,7 @@
 - (void) changeAttributeWithName:(NSString *)aName 
                          toValue:(id)aValue
                       atLocation:(int)aLocation;
-- (NSAttributedString *) transform:(NSAttributedString *)aString;
 
+
+- (NSAttributedString *) transform:(NSAttributedString *)aString;
 @end
