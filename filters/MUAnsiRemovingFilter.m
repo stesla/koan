@@ -72,7 +72,7 @@
 - (int) scanUpToCodeInString:(NSString *)string
 {
   NSCharacterSet *stopSet = 
-    [NSCharacterSet characterSetWithCharactersInString:@"\033"];
+    [NSCharacterSet characterSetWithCharactersInString:@"\x1B"];
   NSRange stopRange = [string rangeOfCharacterFromSet:stopSet];
   NSScanner *scanner = [NSScanner scannerWithString:string];
   [scanner setCharactersToBeSkipped:

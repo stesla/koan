@@ -25,6 +25,7 @@
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message;
+- (void) assertFinalCharacter:(unsigned char)finalChar;
 @end
 
 @implementation MUAnsiRemovingFilterTests (Private)
@@ -46,6 +47,12 @@
        message:message];  
 }
 
+- (void) assertFinalCharacter:(unsigned char)finalChar
+{
+  [self assertInput:[NSString stringWithFormat:@"F\x1B[%coo", finalChar]
+          hasOutput:@"Foo"
+            message:[NSString stringWithFormat:@"[%X]", finalChar]];
+}
 @end
 
 @implementation MUAnsiRemovingFilterTests
@@ -75,20 +82,20 @@
 
 - (void) testBasicCode
 {
-  [self assertInput:@"F\033[moo"
+  [self assertInput:@"F\x1B[moo"
           hasOutput:@"Foo"
             message:@"One"];
-  [self assertInput:@"F\033[3moo"
+  [self assertInput:@"F\x1B[3moo"
           hasOutput:@"Foo"
             message:@"Two"];
-  [self assertInput:@"F\033[36moo"
+  [self assertInput:@"F\x1B[36moo"
           hasOutput:@"Foo"
             message:@"Three"];
 }
 
 - (void) testTwoCodes
 {
-  [self assertInput:@"F\033[36moa\033[3mob"
+  [self assertInput:@"F\x1B[36moa\x1B[3mob"
           hasOutput:@"Foaob"];
 }
 
@@ -106,19 +113,19 @@
 
 - (void) testCodeAtEndOfLine
 {
-  [self assertInput:@"Foo\033[36m\n"
+  [self assertInput:@"Foo\x1B[36m\n"
           hasOutput:@"Foo\n"];
 }
 
 - (void) testCodeAtBeginningOfString
 {
-  [self assertInput:@"\033[36mFoo"
+  [self assertInput:@"\x1B[36mFoo"
           hasOutput:@"Foo"];
 }
 
 - (void) testCodeAtEndOfString
 {
-  [self assertInput:@"Foo\033[36m"
+  [self assertInput:@"Foo\x1B[36m"
           hasOutput:@"Foo"];
 }
 
@@ -130,7 +137,7 @@
 
 - (void) testOnlyCode
 {
-  [self assertInput:@"\033[36m"
+  [self assertInput:@"\x1B[36m"
           hasOutput:@""];
 }
 
@@ -144,7 +151,7 @@
 
 - (void) testOnlyWhitespaceBeforeCode
 {
-  [self assertInput:@" \033[1m"
+  [self assertInput:@" \x1B[1m"
           hasOutput:@" "];
 }
 
