@@ -189,6 +189,7 @@
 			children = (
 				E6B5E3AA06A6EE0C00F53EBB,
 				E6E46D7E06F803ED002809F0,
+				E65CE071075438F9003A796A,
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
 				E62C909E07422669005662BC,
@@ -466,6 +467,7 @@
 				E6B5E61206A73B0A00F53EBB,
 				E6E46D7F06F803ED002809F0,
 				E62C909F07422669005662BC,
+				E65CE072075438F9003A796A,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1481,6 +1483,20 @@
 			path = "tests/Tests-Info.plist";
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
+		};
+		E65CE071075438F9003A796A = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.icns;
+			name = Koan.icns;
+			path = resources/Koan.icns;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E65CE072075438F9003A796A = {
+			fileRef = E65CE071075438F9003A796A;
+			isa = PBXBuildFile;
+			settings = {
+			};
 		};
 		E670A81207420F8C00E2DAEB = {
 			children = (

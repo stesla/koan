@@ -21,6 +21,7 @@
 #import "MUMainWindowController.h"
 
 #import "MUAnsiRemovingFilter.h"
+#import "MUTextLogFilter.h"
 
 @implementation MUMainWindowController
 
@@ -42,6 +43,7 @@
   
   _filterQueue = [[MUFilterQueue alloc] init];
   [_filterQueue addFilter:[MUAnsiRemovingFilter filter]];
+  [_filterQueue addFilter:[MUTextLogFilter filter]];
   
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];
