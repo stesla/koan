@@ -75,8 +75,7 @@
   [filterQueue release];
   [historyRing release];
   [profile release];
-  //TODO: Why do we blow up if this is uncommented?
-  //[super dealloc];
+  [super dealloc];
 }
 
 - (BOOL) validateMenuItem:(NSMenuItem *)menuItem
@@ -352,7 +351,6 @@
     }
   }
   
-  [sender autorelease];
   [self disconnect:sender];
   
   [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
