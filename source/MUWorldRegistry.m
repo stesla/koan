@@ -94,6 +94,23 @@ static MUWorldRegistry *sharedRegistry = nil;
 	[self postWorldsUpdatedNotification];
 }
 
+- (void) replaceWorld:(MUWorld *)oldWorld withWorld:(MUWorld *)newWorld
+{
+	unsigned i, worldsCount = [worlds count];
+	
+	for (i = 0; i < worldsCount; i++)
+	{
+		MUPlayer *world = [worlds objectAtIndex:i];
+		
+		if (world == oldWorld)
+		{
+			[worlds replaceObjectAtIndex:i withObject:newWorld];
+			[self postWorldsUpdatedNotification];
+			break;
+		}
+	}
+}
+
 - (void) saveWorlds
 {
   [self writeWorldsToUserDefaults];

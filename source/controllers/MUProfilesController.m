@@ -295,7 +295,7 @@ enum MUProfilesEditingReturnValues
      modalForWindow:[self window]
       modalDelegate:self
      didEndSelector:@selector(worldSheetDidEndEditing:returnCode:contextInfo:)
-        contextInfo:nil];
+        contextInfo:world];
 }
 
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -329,19 +329,19 @@ enum MUProfilesEditingReturnValues
 																			password:[playerPasswordField stringValue]
 																				 world:oldWorld];
 		
-    // This updates the profile for the player with the new objects.
+    // Updates the profile for the player/world with the new player object.
     [self updateProfileForWorld:oldWorld
                          player:oldPlayer
                      withPlayer:newPlayer];
 		
+		// Actually replace the old player with the new one.
 		[oldWorld replacePlayer:oldPlayer withPlayer:newPlayer];
     
-    [[[MUServices profileRegistry] profileForWorld:oldWorld
-																						player:newPlayer]
+		// Change the autoconnect setting on the corresponding profile.
+    [[[MUServices profileRegistry] profileForWorld:oldWorld player:newPlayer]
       setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
 		
     [newPlayer release];
-		
 		[worldsAndPlayersOutlineView reloadData];
   }
 }
@@ -423,22 +423,24 @@ enum MUProfilesEditingReturnValues
 
 - (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
-	// FIXME.
-	
-	return;
-	
   if (returnCode == MUEditOkay)
   {
-    MUWorld *selectedWorld = [self selectedWorld];
-    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[selectedWorld players]];
+    MUWorld *oldWorld = (MUWorld *) contextInfo;
+    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[oldWorld players]];
 		
-    // This updates the world for every profile that has this world.
-    [self updateProfilesForWorld:selectedWorld
+    // Update every profile that has this world.
+    [self updateProfilesForWorld:oldWorld
                        withWorld:newWorld];
+		
+		// Actually replace the old world with the new one.
+		[[MUServices worldRegistry] replaceWorld:oldWorld withWorld:newWorld];
     
-    // This changes the setting on just the profile for the world itself.
-    [[[MUServices profileRegistry] profileForWorld:selectedWorld]
+    // Change the autoconnect setting on the profile for the world alone.
+    [[[MUServices profileRegistry] profileForWorld:oldWorld]
       setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
+		
+		[newWorld release];
+		[worldsAndPlayersOutlineView reloadData];
   }
 }
 

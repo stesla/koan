@@ -25,6 +25,7 @@
 - (MUWorld *) worldAtIndex:(unsigned)index;
 
 - (void) removeWorld:(MUWorld *)world;
+- (void) replaceWorld:(MUWorld *)oldWorld withWorld:(MUWorld *)newWorld;
 
 - (void) saveWorlds;
 
