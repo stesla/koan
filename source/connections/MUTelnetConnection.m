@@ -24,9 +24,10 @@
 
 @interface MUTelnetConnection (Private)
 - (void) readFromStream:(NSInputStream *)stream;
-// WARNING - Counter must be a valid offset from buffer.
-// The value of counter may change inside this routine.
-- (void) processByte:(uint8_t)byte withBuffer:(uint8_t *)buffer at:(int *)counter;
+- (void) appendByteToBuffer:(uint8_t)byte;
+- (void) processByte:(uint8_t)byte;
+- (void) processCommandChar:(uint8_t)byte;
+- (void) processOptionChar:(uint8_t)byte;
 - (void) appendBytesToBuffer:(const void *)bytes length:(int)length;
 - (void) writeToStream:(NSOutputStream *)stream;
 - (void) closeWithMessage:(NSString *)message;
@@ -265,84 +266,88 @@
   unsigned int bytesRead = [stream read:socketBuffer 
                               maxLength:MUTelnetBufferMax];
   
-  uint8_t dataBuffer[bytesRead];
-  memset(dataBuffer, 0, bytesRead);
-  int bytesWritten = 0;
   for (i = 0; i < bytesRead; i++)
   {
-    [self processByte:socketBuffer[i] 
-           withBuffer:dataBuffer
-                   at:&bytesWritten];
+    if ([self isInCommand])
+    {
+      if (_commandChar == TEL_NONE)
+        [self processCommandChar:socketBuffer[i]];
+      else
+        // The only time that we will still be in the command state
+        // and also have a _commandChar other than TEL_NONE is during
+        // option negotiation (WILL, WONT, DO, DONT) - ST
+        [self processOptionChar:socketBuffer[i]];
+    }
+    else
+    {
+      if (socketBuffer[i] == TEL_IAC)
+      {
+        _isInCommand = true;
+        _commandChar = TEL_NONE;
+      }
+      else
+      {
+        [self processByte:socketBuffer[i]];
+      }
+    }
   }
-  
-  [self appendBytesToBuffer:(const void *)dataBuffer length:bytesWritten];
 }
 
-- (void) processByte:(uint8_t)byte withBuffer:(uint8_t *)buffer at:(int *)counter
+- (void) processCommandChar:(uint8_t)byte
 {
-  if ([self isInCommand])
+  _commandChar = byte;
+  switch (_commandChar)
   {
-    if (_commandChar == TEL_NONE)
-    {
-      _commandChar = byte;
-      switch (_commandChar)
-      {
-        case TEL_IAC:
-          buffer[*counter] = _commandChar;
-          (*counter)++;
-          _isInCommand = false;
-          break;
-          
-        case TEL_NOP:
-          _isInCommand = false;
-          break;
-      }
-    }
-    else
-    {
-      switch(_commandChar)
-      {
-        case TEL_DO:
-          [self doDo:byte];
-          break;
-        
-        case TEL_DONT:
-          [self doDont:byte];
-          break;
-          
-        case TEL_WILL:
-          [self doWill:byte];
-          break;
-          
-        case TEL_WONT:
-          [self doWont:byte];
-          break;
-      }
+    case TEL_IAC:
+      [self appendByteToBuffer:TEL_IAC];
+      _isInCommand = false;
+      break;
       
-      _isInCommand = false;      
-    }
+    case TEL_NOP:
+      _isInCommand = false;
+      break;
   }
-  else
+}
+
+- (void) processOptionChar:(uint8_t)byte
+{
+  switch(_commandChar)
   {
-    if (byte == TEL_IAC)
-    {
-      _isInCommand = true;
-      _commandChar = TEL_NONE;
-    }
-    else
-    {
-      buffer[*counter] = byte;
-      (*counter)++;
-      if (byte == '\n')
-      {
-        [self appendBytesToBuffer:(const void *)buffer length:*counter];
-        [self didReadLine];
-        [_readBuffer setData:[NSData data]];
-        memset(buffer, 0, *counter);
-        *counter = 0;
-      }
-    }
+    case TEL_DO:
+      [self doDo:byte];
+      break;
+      
+    case TEL_DONT:
+      [self doDont:byte];
+      break;
+      
+    case TEL_WILL:
+      [self doWill:byte];
+      break;
+      
+    case TEL_WONT:
+      [self doWont:byte];
+      break;
   }
+  
+  _isInCommand = false; 
+}
+
+- (void) processByte:(uint8_t)byte
+{
+  [self appendByteToBuffer:byte];
+  if (byte == '\n')
+  {
+    [self didReadLine];
+    [_readBuffer setData:[NSData data]];
+  }
+}
+
+- (void) appendByteToBuffer:(uint8_t)byte
+{
+  uint8_t bytes[1];
+  bytes[0] = byte;
+  [self appendBytesToBuffer:bytes length:1];
 }
 
 - (void) appendBytesToBuffer:(const void *)bytes length:(int)length
