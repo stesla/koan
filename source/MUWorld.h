@@ -7,6 +7,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class J3TelnetConnection;
+@class J3ProxySettings;
 @class MUPlayer;
 
 @interface MUWorld : NSObject <NSCoding, NSCopying>
@@ -20,12 +21,8 @@
   
   BOOL usesSSL;
   BOOL usesProxy;
-  
-  NSString *proxyHostname;
-  NSNumber *proxyPort;
-  int proxyVersion;
-  NSString *proxyUsername;
-  NSString *proxyPassword;
+    
+  J3ProxySettings * proxySettings;
   
   NSMutableArray *players;
 }
@@ -58,6 +55,7 @@
 - (void) setConnectOnAppLaunch:(BOOL)newConnectOnAppLaunch;
 - (BOOL) usesSSL;
 - (void) setUsesSSL:(BOOL)newUsesSSL;
+
 - (BOOL) usesProxy;
 - (void) setUsesProxy:(BOOL)newUsesProxy;
 - (NSString *) proxyHostname;
@@ -70,6 +68,9 @@
 - (void) setProxyUsername:(NSString *)newProxyUsername;
 - (NSString *) proxyPassword;
 - (void) setProxyPassword:(NSString *)newProxyPassword;
+
+- (J3ProxySettings *) proxySettings;
+- (void) setProxySettings:(J3ProxySettings *)newProxySettings;
 
 - (NSMutableArray *) players;
 - (void) setPlayers:(NSArray *)newPlayers;

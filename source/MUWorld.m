@@ -44,12 +44,15 @@ static const int32_t currentVersion = 2;
     [self setWorldURL:newWorldURL];
     [self setConnectOnAppLaunch:newConnectOnAppLaunch];
     [self setUsesSSL:newUsesSSL];
-    [self setUsesProxy:newUsesProxy];
-    [self setProxyHostname:newProxyHostname];
-    [self setProxyPort:newProxyPort];
-    [self setProxyVersion:newProxyVersion];
-    [self setProxyUsername:newProxyUsername];
-    [self setProxyPassword:newProxyPassword];
+    
+    [self setProxySettings:
+      [[J3ProxySettings alloc]
+        initWithHostname:newProxyHostname
+                    port:[newProxyPort intValue]
+                 version:newProxyVersion
+                username:newProxyUsername
+                password:newProxyPassword]];
+
     [self setPlayers:newPlayers];
   }
   return self;
@@ -78,10 +81,7 @@ static const int32_t currentVersion = 2;
   [worldHostname release];
   [worldPort release];
   [worldURL release];
-  [proxyHostname release];
-  [proxyPort release];
-  [proxyUsername release];
-  [proxyPassword release];
+  [proxySettings release];
   [players release];
   [super dealloc];
 }
@@ -159,70 +159,103 @@ static const int32_t currentVersion = 2;
 
 - (BOOL) usesProxy
 {
-  return usesProxy;
+  return (proxySettings != nil);
 }
 
 - (void) setUsesProxy:(BOOL)newUsesProxy
 {
-  usesProxy = newUsesProxy;
+  //do nothing
 }
 
 - (NSString *) proxyHostname
 {
-  return proxyHostname;
+  return [proxySettings hostname];
 }
 
 - (void) setProxyHostname:(NSString *)newProxyHostname
 {
-  NSString *copy = [newProxyHostname copy];
-  [proxyHostname release];
-  proxyHostname = copy;
+  J3ProxySettings * settings;
+  settings = [J3ProxySettings settingsWithHostname:newProxyHostname ? newProxyHostname : @""
+                                              port:[proxySettings port]
+                                           version:[proxySettings version]
+                                          username:[proxySettings username]
+                                          password:[proxySettings password]];
+  [self setProxySettings:settings];
 }
 
 - (NSNumber *) proxyPort
 {
-  return proxyPort;
+  return [NSNumber numberWithInt:[proxySettings port]];
 }
 
 - (void) setProxyPort:(NSNumber *)newProxyPort
 {
-  NSNumber *copy = [newProxyPort copy];
-  [proxyPort release];
-  proxyPort = copy;
+  J3ProxySettings * settings;
+  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
+                                              port:[newProxyPort intValue]
+                                           version:[proxySettings version]
+                                          username:[proxySettings username]
+                                          password:[proxySettings password]];
+  [self setProxySettings:settings];
 }
 
 - (int) proxyVersion
 {
-  return proxyVersion;
+  return [proxySettings version];
 }
 
 - (void) setProxyVersion:(int)newProxyVersion
 {
-  proxyVersion = newProxyVersion;
-}
+  J3ProxySettings * settings;
+  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
+                                              port:[proxySettings port]
+                                           version:newProxyVersion
+                                          username:[proxySettings username]
+                                          password:[proxySettings password]];
+  [self setProxySettings:settings];}
 
 - (NSString *) proxyUsername
 {
-  return proxyUsername;
+  return [proxySettings username];
 }
 
 - (void) setProxyUsername:(NSString *)newProxyUsername
 {
-  NSString *copy = [newProxyUsername copy];
-  [proxyUsername release];
-  proxyUsername = copy;
+  J3ProxySettings * settings;
+  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
+                                              port:[proxySettings port]
+                                           version:[proxySettings version]
+                                          username:newProxyUsername ? newProxyUsername : @"" 
+                                          password:[proxySettings password]];
+  [self setProxySettings:settings];
 }
 
 - (NSString *) proxyPassword
 {
-  return proxyPassword;
+  return [proxySettings password];
 }
 
 - (void) setProxyPassword:(NSString *)newProxyPassword
 {
-  NSString *copy = [newProxyPassword copy];
-  [proxyPassword release];
-  proxyPassword = copy;
+  J3ProxySettings * settings;
+  settings = [J3ProxySettings settingsWithHostname:[proxySettings hostname]
+                                              port:[proxySettings port]
+                                           version:[proxySettings version]
+                                          username:[proxySettings username]
+                                          password:newProxyPassword ? newProxyPassword : @""];
+  [self setProxySettings:settings];
+}
+
+- (J3ProxySettings *) proxySettings
+{
+  return proxySettings;
+}
+
+- (void) setProxySettings:(J3ProxySettings *)newProxySettings
+{
+  [newProxySettings retain];
+  [proxySettings release];
+  proxySettings = newProxySettings;
 }
 
 - (NSMutableArray *) players
@@ -270,14 +303,14 @@ static const int32_t currentVersion = 2;
   
   if ([self usesProxy])
   {
-    J3ProxySettings * proxySettings;
-    proxySettings = [J3ProxySettings settingsWithHostname:[self proxyHostname]
+    J3ProxySettings * settings;
+    settings = [J3ProxySettings settingsWithHostname:[self proxyHostname]
                                                      port:[[self proxyPort] intValue]
                                                   version:[self proxyVersion]
                                                  username:[self proxyUsername]
                                                  password:[self proxyPassword]];
     
-    [telnet enableProxyWithSettings:proxySettings];
+    [telnet enableProxyWithSettings:settings];
   }
   
   return telnet;
@@ -403,10 +436,12 @@ static const int32_t currentVersion = 2;
     password = [decoder decodeObjectForKey:@"proxyPassword"];
   }
   
-  [self setProxyHostname:hostname];
-  [self setProxyPort:port];
-  [self setProxyVersion:newProxyVersion];
-  [self setProxyUsername:username];
-  [self setProxyPassword:password];
+  [self setProxySettings:
+    [[J3ProxySettings alloc]
+        initWithHostname:hostname
+                    port:[port intValue]
+                 version:newProxyVersion
+                username:username
+                password:password]];
 }
 @end
