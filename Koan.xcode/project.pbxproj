@@ -236,8 +236,8 @@
 			);
 			isa = PBXGroup;
 			path = J3Terminal;
-			refType = 4;
-			sourceTree = "<group>";
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		7E0147A7074DCA2400913653 = {
 			children = (
@@ -246,9 +246,9 @@
 			);
 			isa = PBXGroup;
 			name = Connections;
-			path = source/connections;
-			refType = 4;
-			sourceTree = "<group>";
+			path = j3terminal/connections;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		7E0147A8074DCA2400913653 = {
 			fileEncoding = 30;
