@@ -7,10 +7,9 @@
 	objects = {
 		1058C7A0FEA54F0111CA2CBB = {
 			children = (
-				E6505A31078203FC0016F30E,
-				E6F199FF07AF0FD2007E9BA9,
-				16D5FA06075434E4007C5F34,
-				E6505D4507836DD00016F30E,
+				E61C3C6C07B7312B00519A89,
+				E61C3C6D07B7312B00519A89,
+				E61C3C6E07B7312B00519A89,
 				1058C7A1FEA54F0111CA2CBB,
 				E620410A06B0551D00236608,
 			);
@@ -47,38 +46,17 @@
 //162
 //163
 //164
-		16D5FA06075434E4007C5F34 = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = J3Terminal.framework;
-			path = build/J3Terminal.framework;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
-		};
-		16D5FA07075434E4007C5F34 = {
-			fileRef = 16D5FA06075434E4007C5F34;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		16D5FA0A075434F9007C5F34 = {
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E6505DB007836EFD0016F30E,
-				E6F19A0B07AF1022007E9BA9,
-				16D5FA0B07543500007C5F34,
-				E6505DB107836F000016F30E,
+				E61C3C9A07B7314E00519A89,
+				E61C3C9B07B7314E00519A89,
+				E61C3C9C07B7314E00519A89,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
-		};
-		16D5FA0B07543500007C5F34 = {
-			fileRef = 16D5FA06075434E4007C5F34;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 //160
 //161
@@ -268,7 +246,7 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				ZERO_LINK = YES;
+				ZERO_LINK = NO;
 			};
 			isa = PBXBuildStyle;
 			name = Development;
@@ -648,7 +626,7 @@
 			buildRules = (
 			);
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = /Volumes/Iori/Users/loki/Projects/Koan/build;
+				FRAMEWORK_SEARCH_PATHS = /Volumes/Iori/Builds;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
@@ -657,7 +635,7 @@
 				INSTALL_PATH = "$(USER_APPS_DIR)";
 				MACOSX_DEPLOYMENT_TARGET = 10.3;
 				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-weak_framework Growl";
 				PREBINDING = YES;
 				PRODUCT_NAME = Koan;
 				WRAPPER_EXTENSION = app;
@@ -750,10 +728,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090,
-				E6505D4C07836DDC0016F30E,
-				E6F19A0007AF0FD2007E9BA9,
-				16D5FA07075434E4007C5F34,
-				E6505D4607836DD00016F30E,
+				E61C3C6F07B7312B00519A89,
+				E61C3C7007B7312B00519A89,
+				E61C3C7107B7312B00519A89,
 			);
 			isa = PBXFrameworksBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -844,6 +821,63 @@
 		};
 		E60DDB86076CE889009870E4 = {
 			fileRef = E60DDB84076CE889009870E4;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E61C3C6C07B7312B00519A89 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			path = AGRegex.framework;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E61C3C6D07B7312B00519A89 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			path = J3Terminal.framework;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E61C3C6E07B7312B00519A89 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			path = RBSplitView.framework;
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E61C3C6F07B7312B00519A89 = {
+			fileRef = E61C3C6C07B7312B00519A89;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E61C3C7007B7312B00519A89 = {
+			fileRef = E61C3C6D07B7312B00519A89;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E61C3C7107B7312B00519A89 = {
+			fileRef = E61C3C6E07B7312B00519A89;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E61C3C9A07B7314E00519A89 = {
+			fileRef = E61C3C6C07B7312B00519A89;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E61C3C9B07B7314E00519A89 = {
+			fileRef = E61C3C6D07B7312B00519A89;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E61C3C9C07B7314E00519A89 = {
+			fileRef = E61C3C6E07B7312B00519A89;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -1104,52 +1138,12 @@
 			refType = 4;
 			sourceTree = "<group>";
 		};
-		E6505A31078203FC0016F30E = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = AGRegex.framework;
-			path = build/AGRegex.framework;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
-		};
 		E6505ABF07820CC00016F30E = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.rtf;
 			path = "User Stories.rtf";
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E6505D4507836DD00016F30E = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = RBSplitView.framework;
-			path = build/RBSplitView.framework;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
-		};
-		E6505D4607836DD00016F30E = {
-			fileRef = E6505D4507836DD00016F30E;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6505D4C07836DDC0016F30E = {
-			fileRef = E6505A31078203FC0016F30E;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6505DB007836EFD0016F30E = {
-			fileRef = E6505A31078203FC0016F30E;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6505DB107836F000016F30E = {
-			fileRef = E6505D4507836DD00016F30E;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E653A7CF07AEFAB900023476 = {
 			fileEncoding = 4;
@@ -1239,7 +1233,7 @@
 			sourceTree = "<group>";
 		};
 		E659F6CF0770D4DA00534D1B = {
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -1248,7 +1242,7 @@
 			isa = PBXShellScriptBuildPhase;
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# shell script goes here\n\nPATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\nexport PATH\n\nset +x\n\ncd $SOURCE_ROOT/resources/\n\npwd\n$okay=`./update-svnversion.plx < Info.plist > Info.plist~`\nmv Info.plist~ Info.plist\ncp Info.plist $SOURCE_ROOT/build/Koan.build/Koan.build/Info.plist\n\nexit $okay";
 		};
@@ -1458,7 +1452,6 @@
 		E6967992078F59B60033A4C8 = {
 			buildActionMask = 2147483647;
 			files = (
-				E69679D2078F59DF0033A4C8,
 				E69679D3078F59DF0033A4C8,
 				E69679D4078F59DF0033A4C8,
 			);
@@ -1674,12 +1667,6 @@
 			settings = {
 			};
 		};
-		E69679D2078F59DF0033A4C8 = {
-			fileRef = 16D5FA06075434E4007C5F34;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
 		E69679D3078F59DF0033A4C8 = {
 			fileRef = 1058C7A1FEA54F0111CA2CBB;
 			isa = PBXBuildFile;
@@ -1711,7 +1698,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SOURCE_ROOT}/build\nfor name in `ls ${SOURCE_ROOT}/frameworks`; do\n\ttar zxvf ${SOURCE_ROOT}/frameworks/${name}\ndone\n";
+			shellScript = "cd ${BUILD_ROOT}\nfor name in `ls ${SOURCE_ROOT}/frameworks`; do\n\ttar zxvf ${SOURCE_ROOT}/frameworks/${name}\ndone\n";
 		};
 		E6967A18078F5C7A0033A4C8 = {
 			buildPhases = (
@@ -2271,26 +2258,6 @@
 		};
 		E6EB62C107569D33009F47D5 = {
 			fileRef = E6EB62C007569D33009F47D5;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6F199FF07AF0FD2007E9BA9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = wrapper.framework;
-			name = GrowlAppBridge.framework;
-			path = build/GrowlAppBridge.framework;
-			refType = 2;
-			sourceTree = SOURCE_ROOT;
-		};
-		E6F19A0007AF0FD2007E9BA9 = {
-			fileRef = E6F199FF07AF0FD2007E9BA9;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6F19A0B07AF1022007E9BA9 = {
-			fileRef = E6F199FF07AF0FD2007E9BA9;
 			isa = PBXBuildFile;
 			settings = {
 			};

@@ -24,7 +24,8 @@
   [super dealloc];
 }
 
-// Implementation of NSToolbar delegate methods.
+#pragma mark -
+#pragma mark NSToolbar delegate
 
 - (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
