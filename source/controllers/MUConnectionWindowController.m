@@ -154,11 +154,16 @@
     
     if ([world usesProxy])
     {
+      NSDictionary *info;
+      
       [telnetConnection enableProxyWithHostname:[world proxyHostname]
                                          onPort:[[world proxyPort] intValue]
                                         version:[world proxyVersion]
                                        username:[world proxyUsername]
                                        password:[world proxyPassword]];
+      
+      info = [[telnetConnection output] propertyForKey:NSStreamSOCKSProxyConfigurationKey];
+      NSLog (@"Got it.");
     }
     
     [telnetConnection setDelegate:self];

@@ -6,6 +6,7 @@
 
 #import "J3URLLinkFilterTests.h"
 #import "J3URLLinkFilter.h"
+#import "Categories/NSURL (Allocating).h"
 
 @interface J3URLLinkFilterTests (Private)
 
@@ -37,9 +38,15 @@
   
   foundLink = [attributes objectForKey:NSLinkAttributeName];
   
-  [self assert:foundLink
-        equals:link
-       message:@"Links don't match."];
+  [self assert:[foundLink scheme]
+        equals:[link scheme]
+       message:@"Schemes don't match."];
+  [self assert:[foundLink host]
+        equals:[link host]
+       message:@"Hosts don't match."];
+  [self assert:[foundLink path]
+        equals:[link path]
+       message:@"Paths don't match."];
   
   if (foundLink)
   {
@@ -82,8 +89,89 @@
   NSString *input = @"http://www.google.com/";
   
   [self assertInput:input
-       producesLink:[NSURL URLWithString:@"http://www.google.com/"]
+       producesLink:[NSURL URLWithScheme:@"http" host:@"www.google.com" path:@"/"]
            forRange:[input rangeOfString:@"http://www.google.com/"]];
+}
+
+- (void) testSlashlessLink
+{
+  NSString *input = @"http://www.google.com";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithScheme:@"http" host:@"www.google.com" path:@"/"]
+           forRange:[input rangeOfString:@"http://www.google.com"]];
+}
+
+- (void) testInformalLink
+{
+  NSString *input = @"www.google.com";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithScheme:@"http" host:@"www.google.com" path:@"/"]
+           forRange:[input rangeOfString:@"www.google.com"]];
+}
+
+- (void) testNonexistentLink
+{
+  NSString *input = @"www.thissitecertainlydoesnotexist.com";
+  
+  [self assertInput:input
+       producesLink:nil
+           forRange:NSMakeRange (NSNotFound, 0)];
+}
+
+- (void) testUnusualToplevelLink
+{
+  NSString *input = @"www.arete.cc";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithScheme:@"http" host:@"www.arete.cc" path:@"/"]
+           forRange:[input rangeOfString:@"www.arete.cc"]];
+}
+
+- (void) testLinkAtStart
+{
+  NSString *input = @"www.3james.com is the link";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithScheme:@"http" host:@"www.3james.com" path:@"/"]
+           forRange:[input rangeOfString:@"www.3james.com"]];
+}
+
+- (void) testLinkAtEnd
+{
+  NSString *input = @"The link is www.3james.com";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithScheme:@"http" host:@"www.3james.com" path:@"/"]
+           forRange:[input rangeOfString:@"www.3james.com"]];
+}
+
+- (void) testLinkInMiddle
+{
+  NSString *input = @"I heard that www.3james.com is the link";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithScheme:@"http" host:@"www.3james.com" path:@"/"]
+           forRange:[input rangeOfString:@"www.3james.com"]];
+}
+
+- (void) testCanonicalEmail
+{
+  NSString *input = @"mailto:tyler@3james.com";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithString:@"mailto:tyler@3james.com"]
+           forRange:[input rangeOfString:@"mailto:tyler@3james.com"]];
+}
+
+- (void) testInformalEmail
+{
+  NSString *input = @"tyler@3james.com";
+  
+  [self assertInput:input
+       producesLink:[NSURL URLWithString:@"mailto:tyler@3james.com"]
+           forRange:[input rangeOfString:@"tyler@3james.com"]];
 }
 
 @end

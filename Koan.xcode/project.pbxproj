@@ -194,7 +194,6 @@
 		29B97317FDCFA39411CA2CEA = {
 			children = (
 				E6B5E3AA06A6EE0C00F53EBB,
-				E6E46D7E06F803ED002809F0,
 				E65CE071075438F9003A796A,
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
@@ -475,7 +474,6 @@
 			files = (
 				E6B5E3B906A6EEA600F53EBB,
 				E6B5E61206A73B0A00F53EBB,
-				E6E46D7F06F803ED002809F0,
 				E62C909F07422669005662BC,
 				E65CE072075438F9003A796A,
 				E6EB62C107569D33009F47D5,
@@ -639,6 +637,7 @@
 				7E20A8EA07486C1300D1A5BF,
 				7EFE43840749C7CE002C7D48,
 				7EFE43B30749CB16002C7D48,
+				E650567B077ECE760016F30E,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,6 +645,7 @@
 		E62040F706B054E400236608 = {
 			buildActionMask = 2147483647;
 			files = (
+				E650567C077ECE760016F30E,
 				E6505527077EA94A0016F30E,
 				E6505517077EA9110016F30E,
 				E6F60DED0778A6C900E0EBB4,
@@ -943,6 +943,49 @@
 			settings = {
 			};
 		};
+		E650559A077EB6080016F30E = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = text.html.documentation;
+			path = Koan.graffle;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E65055A9077EBA820016F30E = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.rtf;
+			path = Credits.rtf;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6505679077ECE760016F30E = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = "NSURL (Allocating).h";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E650567A077ECE760016F30E = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = "NSURL (Allocating).m";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E650567B077ECE760016F30E = {
+			fileRef = E6505679077ECE760016F30E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E650567C077ECE760016F30E = {
+			fileRef = E650567A077ECE760016F30E;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E6550DF807763B57002E81FF = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -993,10 +1036,12 @@
 				E6F60DAB0778A3C600E0EBB4,
 				E6550DFE07763B72002E81FF,
 				E6550DF807763B57002E81FF,
+				E6505679077ECE760016F30E,
 				E6055F7D07492729007A13BD,
 				E6F60DAC0778A3C600E0EBB4,
 				E6550DFF07763B72002E81FF,
 				E6550DF907763B57002E81FF,
+				E650567A077ECE760016F30E,
 			);
 			isa = PBXGroup;
 			name = Categories;
@@ -1211,6 +1256,8 @@
 		};
 		E6B5E42906A6F36300F53EBB = {
 			children = (
+				E65055A9077EBA820016F30E,
+				E650559A077EB6080016F30E,
 			);
 			isa = PBXGroup;
 			name = Documentation;
@@ -1419,20 +1466,6 @@
 		};
 		E6DA667307776D9900C46267 = {
 			fileRef = E6DA667107776D9900C46267;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		E6E46D7E06F803ED002809F0 = {
-			fileEncoding = 4;
-			isa = PBXFileReference;
-			lastKnownFileType = text.html;
-			path = Credits.html;
-			refType = 4;
-			sourceTree = "<group>";
-		};
-		E6E46D7F06F803ED002809F0 = {
-			fileRef = E6E46D7E06F803ED002809F0;
 			isa = PBXBuildFile;
 			settings = {
 			};

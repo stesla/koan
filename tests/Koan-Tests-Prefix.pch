@@ -8,4 +8,4 @@
 #import <Foundation/Foundation.h>
 #endif
 
-#import "NSAttributedString (Allocating).h"
+#import "Categories/NSAttributedString (Allocating).h"
