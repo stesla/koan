@@ -30,8 +30,8 @@
   
   [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
   [_telnet stream:output handleEvent:NSStreamEventHasSpaceAvailable];
-  [self assertTrue:outputBuffer[0] == TEL_IAC message:@"First isn't IAC"];
-  [self assertTrue:outputBuffer[1] == byteWritten message:@"Second isn't WONT"];
+  [self assertTrue:outputBuffer[0] == TEL_IAC message:@"First byte"];
+  [self assertTrue:outputBuffer[1] == byteWritten message:@"Second byte"];
   NSString *telnetString = [_telnet read];
   [self assert:telnetString equals:@""];  
 }
@@ -149,24 +149,24 @@
   [self assert:outputString equals:@"FooBar"];
 }
 
-- (void) testWillWont
+- (void) testWillDont
 {
-  [self negotiationCommand:TEL_WILL response:TEL_WONT];
+  [self negotiationCommand:TEL_WILL response:TEL_DONT];
 }
 
-- (void) testWontWont
+- (void) testWontDont
 {
-  [self negotiationCommand:TEL_WONT response:TEL_WONT];
+  [self negotiationCommand:TEL_WONT response:TEL_DONT];
 }
 
-- (void) testDoDont
+- (void) testDoWont
 {
-  [self negotiationCommand:TEL_DO response:TEL_DONT];
+  [self negotiationCommand:TEL_DO response:TEL_WONT];
 }
 
-- (void) testDontDont
+- (void) testDontWont
 {
-  [self negotiationCommand:TEL_DONT response:TEL_DONT];
+  [self negotiationCommand:TEL_DONT response:TEL_WONT];
 }
 
 @end

@@ -208,7 +208,7 @@
   {
     char command[2];
     command[0] = TEL_IAC;
-    command[1] = TEL_WONT;
+    command[1] = TEL_DONT;
     NSData *data = [NSData dataWithBytes:(const void *)command length:2];
     [self writeData:data];
     _discardNextByte = YES;
@@ -222,7 +222,7 @@
   {
     char command[2];
     command[0] = TEL_IAC;
-    command[1] = TEL_DONT;
+    command[1] = TEL_WONT;
     NSData *data = [NSData dataWithBytes:(const void *)command length:2];
     [self writeData:data];
     _discardNextByte = YES;    
