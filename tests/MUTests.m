@@ -10,6 +10,7 @@
 #import "J3ANSIRemovingFilterTests.h"
 #import "J3TextLoggerTests.h"
 #import "J3HistoryRingTests.h"
+#import "J3NaiveANSIFilterTests.h"
 #import "J3NaiveURLFilterTests.h"
 #import "MUProfileRegistryTests.h"
 #import "MUWorldTests.h"
@@ -42,6 +43,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[MUWorldTests class]];
   [suite addTestSuite:[MUProfileTests class]];
   [suite addTestSuite:[MUPlayerTests class]];
+  [suite addTestSuite:[J3NaiveANSIFilterTests class]];
   return suite;
 }
 

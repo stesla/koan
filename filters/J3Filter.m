@@ -10,7 +10,7 @@
 
 + (J3Filter *) filter
 {
-  return [[[J3Filter alloc] init] autorelease];
+  return [[[self alloc] init] autorelease];
 }
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
