@@ -24,10 +24,7 @@
 #import "MUInputFilter.h"
 #import "MUFiltering.h"
 
-@interface MUInputFilterTests : TestCase <MUFiltering> 
-{
-  NSAttributedString *_output;
-}
+@interface MUInputFilterTests : TestCase
 
 @end
 

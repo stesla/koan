@@ -32,21 +32,6 @@
   return string;
 }
 
-- (id <MUFilterChaining>) chaining
-{
-  return self;
-}
-
-- (void) setSuccessor:(id <MUFiltering>)successor;
-{
-  _successor = successor;
-}
-
-- (id <MUFiltering>) successor
-{
-  return _successor;
-}
-
 @end
 
 @implementation MUInputFilterQueue
@@ -55,58 +40,33 @@
 {
   if (self = [super init])
   {
-    _head = [[MUInputFilter alloc] init];
-    _tail = _head;
-    [_tail setSuccessor:self];
-    _outputString = nil;
+    _filters = [[NSMutableArray alloc] init];
   }
   return self;
 }
 
 - (void) dealloc
 {
-  id <MUFilterChaining> curr = _head;
-  id <MUFiltering> next = nil; 
-  do
-  {
-    next = [curr successor];
-    [(id) curr release];
-    curr = [next chaining];
-  }
-  while (curr);
+  [_filters release];
 }
 
 - (NSAttributedString *) processAttributedString:(NSAttributedString *)string
 {
   NSAttributedString *returnString = string;
   
-  id <MUFiltering> curr = _head;
-  id <MUFilterChaining> chain = nil;
-  while (chain = [curr chaining])
+  id <MUFiltering> filter = nil;
+  int i;
+  for (i = 0; i < [_filters count]; i++)
   {
-    returnString = [curr filter:returnString];
-    curr = [chain successor];
+    filter = (id <MUFiltering>) [_filters objectAtIndex:i];
+    returnString = [filter filter:returnString];
   }
-
   return returnString;
 }
 
-- (void) addFilter:(id <MUFiltering, MUFilterChaining>)filter
+- (void) addFilter:(id <MUFiltering>)filter
 {
-  [(id) filter retain];
-  [_tail setSuccessor:filter];
-  _tail = filter;
-  [_tail setSuccessor:self];
-}
-
-- (NSAttributedString *) filter:(NSAttributedString *)string
-{
-  return string;
-}
-
-- (id <MUFilterChaining>) chaining
-{
-  return nil;
+  [_filters addObject:filter];
 }
 
 @end

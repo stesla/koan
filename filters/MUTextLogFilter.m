@@ -27,9 +27,9 @@
   return [[[MUTextLogFilter alloc] init] autorelease];
 }
 
-- (void) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter:(NSAttributedString *)string
 {
-  [[self successor] filter:string];
+  return string;
 }
 
 @end

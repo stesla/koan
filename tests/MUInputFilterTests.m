@@ -23,27 +23,14 @@
 
 @implementation MUInputFilterTests
 
-- (NSAttributedString *) filter:(NSAttributedString *)string
-{
-  return string;
-}
-
-- (id <MUFilterChaining>) chaining
-{
-  return nil;
-}
-
 - (void) testFilter
 {
-  MUInputFilter *filter = [[MUInputFilter alloc] init];
-  [filter setSuccessor:self];
-  
+  MUInputFilter *filter = [MUInputFilter filter];
   NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
 
-  _output = [filter filter:input];
+  NSAttributedString *output = [filter filter:input];
   
-  [self assert:_output equals:input];
-  [filter release];
+  [self assert:output equals:input];
 }
 
 @end

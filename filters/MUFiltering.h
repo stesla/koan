@@ -24,10 +24,4 @@
 
 @protocol MUFiltering
 - (NSAttributedString *) filter:(NSAttributedString *)string;
-- (id <MUFilterChaining>) chaining;
-@end
-
-@protocol MUFilterChaining
-- (void) setSuccessor:(id <MUFiltering>)successor;
-- (id <MUFiltering>) successor;
 @end

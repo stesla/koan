@@ -21,23 +21,18 @@
 #import <Cocoa/Cocoa.h>
 #import "MUFiltering.h"
 
-@interface MUInputFilter : NSObject <MUFiltering, MUFilterChaining> 
-{
-  id <MUFiltering> _successor;
-}
+@interface MUInputFilter : NSObject <MUFiltering> 
 
 + (MUInputFilter *) filter;
 
 @end
 
-@interface MUInputFilterQueue : NSObject <MUFiltering>
+@interface MUInputFilterQueue : NSObject
 {
-  NSAttributedString *_outputString;
-  id <MUFiltering, MUFilterChaining> _head;
-  id <MUFiltering, MUFilterChaining> _tail;
+  NSMutableArray *_filters;
 }
 
 - (NSAttributedString *) processAttributedString:(NSAttributedString *)string;
-- (void) addFilter:(id <MUFiltering, MUFilterChaining>)filter;
+- (void) addFilter:(id <MUFiltering>)filter;
 
 @end
