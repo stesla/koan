@@ -31,15 +31,15 @@ typedef enum _J3ANSICode
   J3ANSIForeCyan = 36,
   J3ANSIForeWhite = 37,
   J3ANSIForeDefault = 39,
-  J4ANSIBackBlack = 40,
-  J4ANSIBackRed = 41,
-  J4ANSIBackGreen = 42,
-  J4ANSIBackYellow = 43,
-  J4ANSIBackBlue = 44,
-  J4ANSIBackMagenta = 45,
-  J4ANSIBackCyan = 46,
-  J4ANSIBackWhite = 47,
-  J4ANSIBackDefault = 49
+  J3ANSIBackBlack = 40,
+  J3ANSIBackRed = 41,
+  J3ANSIBackGreen = 42,
+  J3ANSIBackYellow = 43,
+  J3ANSIBackBlue = 44,
+  J3ANSIBackMagenta = 45,
+  J3ANSIBackCyan = 46,
+  J3ANSIBackWhite = 47,
+  J3ANSIBackDefault = 49
 } J3ANSICode;
 
 @interface J3NaiveANSIFilter : J3Filter 

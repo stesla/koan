@@ -14,6 +14,7 @@
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 - (void) setForeColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict;
+- (void) setBackColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict;
 - (void) setAttributeInString:(NSMutableAttributedString *)editString
                       atIndex:(int)index
                       forCode:(J3ANSICode)code;
@@ -121,6 +122,11 @@
   [dict setValue:color forKey:J3ANSIForeColorAttributeName];
 }
 
+- (void) setBackColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict
+{
+  [dict setValue:color forKey:J3ANSIBackColorAttributeName];
+}
+
 - (void) setAttributeInString:(NSMutableAttributedString *)editString
                       atIndex:(int)index
                       forCode:(J3ANSICode)code
@@ -164,6 +170,38 @@
       
     case J3ANSIForeWhite:
       [self setForeColor:[NSColor whiteColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackBlack:
+      [self setBackColor:[NSColor blackColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackRed:
+      [self setBackColor:[NSColor redColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackGreen:
+      [self setBackColor:[NSColor greenColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackYellow:
+      [self setBackColor:[NSColor yellowColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackBlue:
+      [self setBackColor:[NSColor blueColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackMagenta:
+      [self setBackColor:[NSColor magentaColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackCyan:
+      [self setBackColor:[NSColor cyanColor] inDictionary:attrs];
+      break;
+      
+    case J3ANSIBackWhite:
+      [self setBackColor:[NSColor whiteColor] inDictionary:attrs];
       break;
 
     default:

@@ -14,7 +14,11 @@
 @interface J3NaiveANSIFilterTests (Private)
 - (NSAttributedString *) makeString:(NSString *)string;
 
+- (void) assertANSICode:(J3ANSICode)code 
+          setsAttribute:(NSString *)aName 
+                toValue:(id)aValue;
 - (void) assertANSICode:(J3ANSICode)code setsForeColor:(NSColor *)color;
+- (void) assertANSICode:(J3ANSICode)code setsBackColor:(NSColor *)color;
 @end
 
 @implementation J3NaiveANSIFilterTests
@@ -55,6 +59,18 @@
   [self assertANSICode:J3ANSIForeWhite setsForeColor:[NSColor whiteColor]];
 }
 
+- (void) testSetsSpecificBackColor
+{
+  [self assertANSICode:J3ANSIBackBlack setsBackColor:[NSColor blackColor]];
+  [self assertANSICode:J3ANSIBackRed setsBackColor:[NSColor redColor]];
+  [self assertANSICode:J3ANSIBackGreen setsBackColor:[NSColor greenColor]];
+  [self assertANSICode:J3ANSIBackYellow setsBackColor:[NSColor yellowColor]];
+  [self assertANSICode:J3ANSIBackBlue setsBackColor:[NSColor blueColor]];
+  [self assertANSICode:J3ANSIBackMagenta setsBackColor:[NSColor magentaColor]];
+  [self assertANSICode:J3ANSIBackCyan setsBackColor:[NSColor cyanColor]];
+  [self assertANSICode:J3ANSIBackWhite setsBackColor:[NSColor whiteColor]];
+}
+
 @end
 
 @implementation J3NaiveANSIFilterTests (Private)
@@ -64,18 +80,34 @@
   return [NSAttributedString attributedStringWithString:string];
 }
 
-- (void) assertANSICode:(J3ANSICode)code setsForeColor:(NSColor *)color
+- (void) assertANSICode:(J3ANSICode)code 
+          setsAttribute:(NSString *)aName 
+                toValue:(id)aValue
 {
   NSAttributedString *input =
   [self makeString:[NSString stringWithFormat:@"F\x1B[%dmoo", code]];
   NSRange range;
   
   range.location = 1;
-  range.location = 2; // "oo"
+  range.length = 2; // "oo"
   
-  [self assertAttribute:J3ANSIForeColorAttributeName
-                 equals:color
+  [self assertAttribute:aName
+                 equals:aValue
                inString:[filter filter:input]
-              withRange:range];
+              withRange:range];  
+}
+
+- (void) assertANSICode:(J3ANSICode)code setsForeColor:(NSColor *)color
+{
+  [self assertANSICode:code
+         setsAttribute:J3ANSIForeColorAttributeName
+               toValue:color];
+}
+
+- (void) assertANSICode:(J3ANSICode)code setsBackColor:(NSColor *)color
+{
+  [self assertANSICode:code
+         setsAttribute:J3ANSIBackColorAttributeName
+               toValue:color];
 }
 @end
