@@ -11,12 +11,7 @@
             }; 
             CLASS = MUApplicationController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {
-                openConnectionMenu = NSMenu; 
-                portColumn = NSTableColumn; 
-                preferencesPanel = NSPanel; 
-                profilesPanel = NSPanel; 
-            }; 
+            OUTLETS = {openConnectionMenu = NSMenu; preferencesPanel = NSPanel; }; 
             SUPERCLASS = NSObject; 
         }, 
         {

@@ -6,19 +6,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MUProfilesController;
+
 @interface MUApplicationController : NSObject
 {
   IBOutlet NSPanel *preferencesPanel;
-  IBOutlet NSPanel *profilesPanel;
   IBOutlet NSMenu *openConnectionMenu;
-  IBOutlet NSTableColumn *portColumn;
   
   NSMutableArray *connectionWindowControllers;
-  NSArray *worlds;
+  MUProfilesController *profilesController;
 }
-
-- (NSArray *) worlds;
-- (void) setWorlds:(NSArray *)newWorlds;
 
 - (IBAction) changeGlobalFont:(id)sender;
 - (IBAction) chooseNewFont:(id)sender;

@@ -4,7 +4,7 @@
 "ConnectionOpen" = "Connection open.";
 "ConnectionClosed" = "Connection closed.";
 "ConnectionClosedByServer" = "Connection closed by server.";
-"ConnectionClosedByError" = "Connection closed with error: %@";
+"ConnectionClosedByError" = "Connection closed by %@";
 
 // Alert panel messages.
 

@@ -14,6 +14,10 @@ extern NSString *MUPFontSize;
 extern NSString *MUPTextColor;
 extern NSString *MUPWorlds;
 
+// Notification constants.
+
+extern NSString *MUWorldsUpdatedNotification;
+
 // Status message localization constants.
 
 extern NSString *MULConnectionOpening;

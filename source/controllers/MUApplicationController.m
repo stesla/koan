@@ -5,15 +5,17 @@
 //
 
 #import "FontNameToDisplayNameTransformer.h"
-#import "J3PortFormatter.h"
 #import "MUApplicationController.h"
 #import "MUConnectionWindowController.h"
 #import "MUPlayer.h"
+#import "MUProfilesController.h"
+#import "MUWorld.h"
+#import "MUWorldRegistry.h"
 
 @interface MUApplicationController (Private)
 
 - (IBAction) openConnection:(id)sender;
-- (void) updateConnectionsMenu;
+- (void) updateConnectionsMenu:(NSNotification *)notification;
 
 @end
 
@@ -49,60 +51,20 @@
 
 - (void) awakeFromNib
 {
-  J3PortFormatter *formatter = [[[J3PortFormatter alloc] init] autorelease];
-  NSData *worldsData = [[NSUserDefaults standardUserDefaults] dataForKey:MUPWorlds];
-  
-  if (worldsData)
-  {
-    int i, worldsCount;
-    
-    [self setWorlds:[NSKeyedUnarchiver unarchiveObjectWithData:worldsData]];
-    
-    worldsCount = [[self worlds] count];
-    
-    for (i = 0; i < worldsCount; i++)
-    {
-      MUWorld *world = [worlds objectAtIndex:i];
-      NSArray *players = [world players];
-      int j, playersCount = [players count];
-      
-      for (j = 0; j < playersCount; j++)
-      {
-        [[players objectAtIndex:j] setWorld:world];
-      }
-    }
-  }
-  else
-  {
-    [self setWorlds:[NSArray array]];
-  }
-
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
-  [[portColumn dataCell] setFormatter:formatter];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(updateConnectionsMenu:)
+                                               name:MUWorldsUpdatedNotification
+                                             object:[MUWorldRegistry sharedRegistry]];
+  
+  [self updateConnectionsMenu:nil];
 }
 
 - (void) dealloc
 {
   [connectionWindowControllers release];
-  [worlds release];
-}
-
-#pragma mark -
-#pragma mark Accessors
-
-- (NSArray *) worlds
-{
-  return worlds;
-}
-
-- (void) setWorlds:(NSArray *)newWorlds
-{
-  NSArray *copy = [newWorlds copy];
-  [worlds release];
-  worlds = copy;
-  
-  [self updateConnectionsMenu];
+  [profilesController release];
 }
 
 #pragma mark -
@@ -156,7 +118,15 @@
 
 - (IBAction) showProfiles:(id)sender
 {
-  [profilesPanel makeKeyAndOrderFront:self];
+  if (!profilesController)
+  {
+    profilesController = [[MUProfilesController alloc] init];
+  }
+  
+  if (profilesController)
+  {
+    [profilesController showWindow:self];
+  }
 }
 
 #pragma mark -
@@ -198,15 +168,7 @@
 
 - (void) applicationWillTerminate:(NSNotification *)notification
 {
-  [[NSUserDefaults standardUserDefaults] setObject:[NSKeyedArchiver archivedDataWithRootObject:worlds] forKey:MUPWorlds];
-}
-
-#pragma mark -
-#pragma mark NSControl delegate
-
-- (void) controlTextDidEndEditing:(NSNotification *)notification
-{
-  [self updateConnectionsMenu];
+  [[MUWorldRegistry sharedRegistry] saveWorlds];
 }
 
 #pragma mark -
@@ -252,9 +214,10 @@
   [controller release];
 }
 
-- (void) updateConnectionsMenu
+- (void) updateConnectionsMenu:(NSNotification *)notification
 {
-  int i, worldsCount = [worlds count], menuCount = [openConnectionMenu numberOfItems];
+  MUWorldRegistry *registry = [MUWorldRegistry sharedRegistry];
+  int i, worldsCount = [registry count], menuCount = [openConnectionMenu numberOfItems];
   
   for (i = menuCount - 1; i >= 0; i--)
   {
@@ -263,7 +226,7 @@
   
   for (i = 0; i < worldsCount; i++)
   {
-    MUWorld *world = [worlds objectAtIndex:i];
+    MUWorld *world = [registry worldAtIndex:i];
     NSArray *players = [world players];
     NSMenuItem *worldItem = [[NSMenuItem alloc] init];
     NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world worldName]];

@@ -1,0 +1,32 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {
+                addPlayer = id; 
+                addWorld = id; 
+                editPlayer = id; 
+                editWorld = id; 
+                endEditingPlayer = id; 
+                endEditingWorld = id; 
+            }; 
+            CLASS = MUProfilesController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                playerEditorSheet = NSWindow; 
+                playerNameField = NSTextField; 
+                playerPasswordField = NSSecureTextField; 
+                playerSaveButton = NSButton; 
+                worldEditorSheet = NSWindow; 
+                worldHostnameField = NSTextField; 
+                worldNameField = NSTextField; 
+                worldPortField = NSTextField; 
+                worldSaveButton = NSButton; 
+                worldURLField = NSTextField; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = MUWorldRegistry; LANGUAGE = ObjC; SUPERCLASS = NSObject; }
+    ); 
+    IBVersion = 1; 
+}

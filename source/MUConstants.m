@@ -14,6 +14,10 @@ NSString *MUPFontSize = @"MUPFontSize";
 NSString *MUPTextColor = @"MUPTextColor";
 NSString *MUPWorlds = @"MUPWorlds";
 
+// Notification constants.
+
+NSString *MUWorldsUpdatedNotification = @"MUWorldsUpdatedNotification";
+
 // Status message localization constants.
 
 NSString *MULConnectionOpening = @"ConnectionOpening";

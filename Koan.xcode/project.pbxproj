@@ -163,6 +163,7 @@
 				E6E7A6210749693A007005AC,
 				E677D20E0778041F00B417D2,
 				E6DA667007776D9900C46267,
+				E6F3A71D077A1B270011A461,
 				E6E79CEA07697FD100A8FB96,
 				E64C9632076BF95E00D0D7C0,
 				E60DDB84076CE889009870E4,
@@ -172,6 +173,7 @@
 				E6E7A62707496940007005AC,
 				E677D20F0778041F00B417D2,
 				E6DA667107776D9900C46267,
+				E6F3A71E077A1B270011A461,
 				E6E79CEB07697FD100A8FB96,
 				32CA4F630368D1EE00C91783,
 			);
@@ -468,7 +470,7 @@
 				E65CE072075438F9003A796A,
 				E6EB62C107569D33009F47D5,
 				E6EB62BF07569D2E009F47D5,
-				E6F60DAD0778A3C600E0EBB4,
+				E6F3A714077A1ABD0011A461,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,6 +497,8 @@
 				E6DA667307776D9900C46267,
 				E677D2110778041F00B417D2,
 				E6F60DAE0778A3C600E0EBB4,
+				E63CC4E5077A06CD003A54AA,
+				E6F3A720077A1B270011A461,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -836,6 +840,28 @@
 			settings = {
 			};
 		};
+		E63CC4E2077A06CD003A54AA = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUProfilesController.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63CC4E3077A06CD003A54AA = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUProfilesController.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63CC4E5077A06CD003A54AA = {
+			fileRef = E63CC4E3077A06CD003A54AA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E648B8E906B03FBC0070F73E = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.xml;
@@ -989,9 +1015,11 @@
 				E62C905A07422595005662BC,
 				E62C8FBB07421D83005662BC,
 				E670A83F07420FDF00E2DAEB,
+				E63CC4E2077A06CD003A54AA,
 				E62C905B07422595005662BC,
 				E62C8FBC07421D83005662BC,
 				E670A84007420FDF00E2DAEB,
+				E63CC4E3077A06CD003A54AA,
 			);
 			isa = PBXGroup;
 			name = Controllers;
@@ -1075,6 +1103,7 @@
 			children = (
 				E6EB62C007569D33009F47D5,
 				E6EB62BE07569D2E009F47D5,
+				E6F3A713077A1ABD0011A461,
 			);
 			isa = PBXGroup;
 			path = Nibs;
@@ -1363,6 +1392,51 @@
 			settings = {
 			};
 		};
+		E6F3A711077A1AAC0011A461 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.nib;
+			name = English;
+			path = resources/nibs/English.lproj/MUProfiles.nib;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6F3A713077A1ABD0011A461 = {
+			children = (
+				E6F3A711077A1AAC0011A461,
+			);
+			isa = PBXVariantGroup;
+			name = MUProfiles.nib;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6F3A714077A1ABD0011A461 = {
+			fileRef = E6F3A713077A1ABD0011A461;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E6F3A71D077A1B270011A461 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUWorldRegistry.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6F3A71E077A1B270011A461 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUWorldRegistry.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E6F3A720077A1B270011A461 = {
+			fileRef = E6F3A71E077A1B270011A461;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E6F60DAB0778A3C600E0EBB4 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -1378,12 +1452,6 @@
 			path = "NSFileManager (Recursive).m";
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E6F60DAD0778A3C600E0EBB4 = {
-			fileRef = E6F60DAB0778A3C600E0EBB4;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E6F60DAE0778A3C600E0EBB4 = {
 			fileRef = E6F60DAC0778A3C600E0EBB4;
