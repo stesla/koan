@@ -274,28 +274,19 @@
     {
       return NO;
     }
-    else if (commandSelector == @selector(insertNewline:))
+    else if (commandSelector == @selector(insertNewline:) ||
+             commandSelector == @selector(insertTab:) ||
+             commandSelector == @selector(insertBacktab:))
     {
-      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
-      [[self window] makeFirstResponder:inputView];
-      return YES;
-    }
-    else if (commandSelector == @selector(insertTab:))
-    {
-      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
-      [[self window] makeFirstResponder:inputView];
-      return YES;
-    }
-    else if (commandSelector == @selector(insertBacktab:))
-    {
-      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      [receivedTextView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      [inputView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
       [[self window] makeFirstResponder:inputView];
       return YES;
     }
     else
     {
       [inputView doCommandBySelector:commandSelector];
-      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      [receivedTextView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
       [[self window] makeFirstResponder:inputView];
       return YES;
     }
@@ -306,8 +297,22 @@
     {
       return NO;
     }
-    else if (commandSelector == @selector(insertTab:) ||
-             commandSelector == @selector(insertBacktab:))
+    if (commandSelector == @selector(insertTab:))
+    {
+      NSString *currentPrefix = [[[inputView string] copy] autorelease];
+      NSString *foundString = [historyRing searchBackwardForStringPrefix:currentPrefix];
+      
+      if (foundString)
+      {
+        [inputView setString:foundString];
+        [inputView setSelectedRange:NSMakeRange ([currentPrefix length], [[textView textStorage] length] - [currentPrefix length])];
+      }
+      else
+        [inputView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      
+      return YES;
+    }
+    else if (commandSelector == @selector(insertBacktab:))
     {
       return YES;
     }
