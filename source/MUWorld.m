@@ -11,9 +11,11 @@
 static const int32_t currentVersion = 2;
 
 @interface MUWorld (Private)
-
 - (void) postWorldsUpdatedNotification;
+@end
 
+@interface MUWorld (CodingHelpers)
+- (void) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version;
 @end
 
 #pragma mark -
@@ -301,9 +303,11 @@ static const int32_t currentVersion = 2;
   [encoder encodeObject:[self players] forKey:@"players"];
   
   [encoder encodeObject:[self worldURL] forKey:@"worldURL"];
+  
   [encoder encodeBool:[self connectOnAppLaunch] forKey:@"connectOnAppLaunch"];
   
   [encoder encodeBool:[self usesSSL] forKey:@"usesSSL"];
+  
   [encoder encodeBool:[self usesProxy] forKey:@"usesProxy"];
   [encoder encodeObject:[self proxyHostname] forKey:@"proxyHostname"];
   [encoder encodeObject:[self proxyPort] forKey:@"proxyPort"];
@@ -335,25 +339,11 @@ static const int32_t currentVersion = 2;
     }
     
     if (version >= 2)
-    {
       [self setUsesSSL:[decoder decodeBoolForKey:@"usesSSL"]];
-      [self setUsesProxy:[decoder decodeBoolForKey:@"usesProxy"]];
-      [self setProxyHostname:[decoder decodeObjectForKey:@"proxyHostname"]];
-      [self setProxyPort:[decoder decodeObjectForKey:@"proxyPort"]];
-      [self setProxyVersion:[decoder decodeIntForKey:@"proxyVersion"]];
-      [self setProxyUsername:[decoder decodeObjectForKey:@"proxyUsername"]];
-      [self setProxyPassword:[decoder decodeObjectForKey:@"proxyPassword"]];
-    }
     else
-    {
       [self setUsesSSL:NO];
-      [self setUsesProxy:NO];
-      [self setProxyHostname:@""];
-      [self setProxyPort:[NSNumber numberWithInt:0]];
-      [self setProxyVersion:5];
-      [self setProxyUsername:@""];
-      [self setProxyPassword:@""];
-    }
+    
+    [self decodeProxySettingsWithCoder:decoder version:version];
   }
   return self;
 }
@@ -390,4 +380,30 @@ static const int32_t currentVersion = 2;
                                                       object:self];
 }
 
+@end
+
+@implementation MUWorld (CodingHelpers)
+- (void) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version
+{
+  NSString *hostname = @"", *username = @"", *password = @"";
+  NSNumber *port = [NSNumber numberWithInt:0];
+  int newProxyVersion = 5;
+  
+  if (version == 2)
+  {
+    [self setUsesProxy:[decoder decodeBoolForKey:@"usesProxy"]];
+
+    hostname = [decoder decodeObjectForKey:@"proxyHostname"];
+    port = [decoder decodeObjectForKey:@"proxyPort"];
+    newProxyVersion = [decoder decodeIntForKey:@"proxyVersion"];
+    username = [decoder decodeObjectForKey:@"proxyUsername"];
+    password = [decoder decodeObjectForKey:@"proxyPassword"];
+  }
+  
+  [self setProxyHostname:hostname];
+  [self setProxyPort:port];
+  [self setProxyVersion:newProxyVersion];
+  [self setProxyUsername:username];
+  [self setProxyPassword:password];
+}
 @end
