@@ -160,7 +160,7 @@ static MUWorldRegistry *sharedRegistry = nil;
       profile = [profiles profileForWorld:world];
       for (j = 0; j < playersCount; j++)
       {
-        player = [players objectAtIndex:i];
+        player = [players objectAtIndex:j];
         [player setWorld:world];
         profile = [profiles profileForWorld:world player:player];
         [profile setWorld:world];

@@ -321,21 +321,21 @@ static const int32_t currentVersion = 2;
   
   if (version == 2)
   {
-    [decoder decodeBoolForKey:@"usesProxy"]; // Throw value away
-
     hostname = [decoder decodeObjectForKey:@"proxyHostname"];
     port = [decoder decodeObjectForKey:@"proxyPort"];
     newProxyVersion = [decoder decodeIntForKey:@"proxyVersion"];
     username = [decoder decodeObjectForKey:@"proxyUsername"];
     password = [decoder decodeObjectForKey:@"proxyPassword"];
   }
-  
-  [self setProxySettings:
-    [[J3ProxySettings alloc]
+
+  if (hostname && port && username && password)
+  {
+    [self setProxySettings:[[J3ProxySettings alloc]
         initWithHostname:hostname
                     port:[port intValue]
                  version:newProxyVersion
                 username:username
                 password:password]];
+  }
 }
 @end
