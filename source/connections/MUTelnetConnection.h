@@ -22,22 +22,22 @@
 
 enum MUTelnetCommands
 {
-  TEL_SE  = 240,
-  TEL_NOP,
-  TEL_DM,
-  TEL_BRK,
-  TEL_IP,
-  TEL_AO,
-  TEL_AYT,
-  TEL_EC,
-  TEL_EL,
-  TEL_GA,
-  TEL_SB,
-  TEL_WILL,
-  TEL_WONT,
-  TEL_DO,
-  TEL_DONT,
-  TEL_IAC
+  TEL_SE   = 240,
+  TEL_NOP  = 241,
+  TEL_DM   = 242,
+  TEL_BRK  = 243,
+  TEL_IP   = 244,
+  TEL_AO   = 245,
+  TEL_AYT  = 246,
+  TEL_EC   = 247,
+  TEL_EL   = 248,
+  TEL_GA   = 249,
+  TEL_SB   = 250,
+  TEL_WILL = 251,
+  TEL_WONT = 252,
+  TEL_DO   = 253,
+  TEL_DONT = 254,
+  TEL_IAC  = 255
 };
 
 #define MUTelnetBufferMax 1024

@@ -69,4 +69,20 @@
   [self assertTrue:[_telnet isInCommand]];
 }
 
+- (void) testEmbeddedNOP
+{
+  char cstring[4];
+  cstring[0] = 'a';
+  cstring[1] = TEL_IAC;
+  cstring[2] = TEL_NOP;
+  cstring[3] = 'b';
+  NSData *data = [NSData dataWithBytes:(const void *)cstring length:4];
+  NSInputStream *input = [NSInputStream inputStreamWithData:data];
+  [input open];
+  
+  [_telnet stream:input handleEvent:NSStreamEventHasBytesAvailable];
+  NSString *telnetString = [_telnet read];
+  [self assert:telnetString equals:@"ab"];
+}
+
 @end

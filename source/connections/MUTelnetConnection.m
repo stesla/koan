@@ -22,6 +22,16 @@
 
 #include <string.h>
 
+@interface MUTelnetConnection (Private)
+- (BOOL) parseCommandMaybe:(uint8_t)current;
+- (void) readFromStream:(NSInputStream *)stream;
+@end
+
+@interface MUTelnetConnection (TelnetCommands)
+- (BOOL) doInterpretAsCommand;
+- (BOOL) doNoOperation;
+@end
+
 @implementation MUTelnetConnection
 
 - (id) init
@@ -69,23 +79,7 @@
   {
     case NSStreamEventHasBytesAvailable: 
     {      
-      int i;
-      uint8_t buffer[MUTelnetBufferMax];
-      bzero(buffer, MUTelnetBufferMax);
-      unsigned int bytesRead = [(NSInputStream *)stream read:buffer maxLength:MUTelnetBufferMax];
-      for (i = 0; i < bytesRead; i++)
-      {
-        if (buffer[i] == TEL_IAC)
-        {
-          _isInCommand = true;
-        }
-      }
-      
-      if (bytesRead)
-      {
-        [_data appendBytes:(const void *)buffer length:bytesRead];
-      }
-      
+      [self readFromStream:(NSInputStream *)stream];
       break;
     }
     case NSStreamEventEndEncountered:
@@ -96,6 +90,75 @@
     default:
       return;
   }
+}
+@end
+
+@implementation MUTelnetConnection (Private)
+// Returns true if this was a command character
+- (BOOL) parseCommandMaybe:(uint8_t)current
+{
+  if (current >= TEL_SE) // I don't need the high end, because 255 is the highest value it could be
+  {
+    switch (current)
+    {
+      case TEL_IAC:
+        return [self doInterpretAsCommand];
+        
+      case TEL_NOP:
+        return [self doNoOperation];
+        
+      default:
+        return true;
+    }
+  }
+  return false;
+}
+
+- (void) readFromStream:(NSInputStream *)stream
+{
+  int i;
+  uint8_t socketBuffer[MUTelnetBufferMax];
+  bzero(socketBuffer, MUTelnetBufferMax);
+  unsigned int bytesRead = [stream read:socketBuffer maxLength:MUTelnetBufferMax];
+  uint8_t dataBuffer[bytesRead];
+  bzero(dataBuffer, bytesRead);
+  int bytesWritten = 0;
+  for (i = 0; i < bytesRead; i++)
+  {
+    if (![self parseCommandMaybe:socketBuffer[i]])
+    {
+      dataBuffer[bytesWritten] = socketBuffer[i];
+      bytesWritten++;
+    }
+  }
+  
+  if (bytesRead)
+  {
+    [_data appendBytes:(const void *)dataBuffer length:bytesWritten];
+  }
+}
+
+@end
+
+@implementation MUTelnetConnection (TelnetCommands)
+- (BOOL) doInterpretAsCommand
+{
+  if ([self isInCommand])
+    return false;
+  else
+  {
+    _isInCommand = true;
+    return true;
+  }
+  
+}
+
+- (BOOL) doNoOperation
+{
+  if ([self isInCommand])
+    return true;
+  else
+    return false;
 }
 
 @end
