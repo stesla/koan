@@ -12,6 +12,7 @@
 #import "J3HistoryRing.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"
+#import "MUProfile.h"
 
 @interface MUConnectionWindowController : NSWindowController
 {
@@ -19,8 +20,7 @@
   IBOutlet NSTextView *inputView;
   IBOutlet id delegate;
   
-  MUWorld *world;
-  MUPlayer *player;
+  MUProfile *profile;
   J3TelnetConnection *telnetConnection;
   
   BOOL autoLoggedIn;

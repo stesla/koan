@@ -12,12 +12,24 @@
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player
 {
   self = [super init];
-  if (self)
+  if (self && world)
   {
     [self setWorld:world];
     [self setPlayer:player];
   }
   return self;
+}
+
+- (id) initWithWorld:(MUWorld *)world
+{
+  [self initWithWorld:world player:nil];
+}
+
+- (void) dealloc
+{
+  [profilePlayer release];
+  [profileWorld release];
+  [super dealloc];
 }
 
 - (MUWorld *) world

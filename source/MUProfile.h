@@ -14,7 +14,9 @@
   MUPlayer  * profilePlayer;
 }
 
+// designated initializer
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player;
+- (id) initWithWorld:(MUWorld *)world;
 
 - (MUWorld *) world;
 - (void) setWorld:(MUWorld *)world;

@@ -11,9 +11,12 @@
 #import "J3TextLogger.h"
 
 @interface MUConnectionWindowController (Private)
-
 - (void) displayString:(NSString *)string;
+- (J3Filter *) createLogger;
+@end
 
+@interface MUConnectionWindowController (SelfEncapsulation)
+- (MUPlayer *) player;
 @end
 
 #pragma mark -
@@ -24,8 +27,7 @@
 {
   if (self = [super initWithWindowNibName:@"MUConnectionWindow"])
   {
-    world = [newWorld retain];
-    player = [newPlayer retain];
+    profile = [[MUProfile alloc] initWithWorld:newWorld player:newPlayer];
     
     autoLoggedIn = NO;
     
@@ -34,22 +36,7 @@
     filterQueue = [[J3FilterQueue alloc] init];
     [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
     [filterQueue addFilter:[J3NaiveURLFilter filter]];
-    
-    if (world)
-    {
-      if (player)
-      {
-        [filterQueue addFilter:[J3TextLogger filterWithWorld:world player:player]];
-      }
-      else
-      {
-        [filterQueue addFilter:[J3TextLogger filterWithWorld:world]];
-      }
-    }
-    else
-    {
-      [filterQueue addFilter:[J3TextLogger filter]];
-    }
+    [filterQueue addFilter:[self createLogger]];
   }
   return self;
 }
@@ -79,17 +66,17 @@
       withKeyPath:@"values.MUPTextColor"
           options:bindingOptions];
   
-  if (player)
+  if ([profile player])
   {
-    [[self window] setTitle:[player windowName]];
-    [[self window] setFrameAutosaveName:[player frameName]];
-    [[self window] setFrameUsingName:[player frameName]];
+    [[self window] setTitle:[[profile player] windowName]];
+    [[self window] setFrameAutosaveName:[[profile player] frameName]];
+    [[self window] setFrameUsingName:[[profile player] frameName]];
   }
   else
   {
-    [[self window] setTitle:[world windowName]];
-    [[self window] setFrameAutosaveName:[world frameName]];
-    [[self window] setFrameUsingName:[world frameName]];
+    [[self window] setTitle:[[profile world] windowName]];
+    [[self window] setFrameAutosaveName:[[profile world] frameName]];
+    [[self window] setFrameUsingName:[[profile world] frameName]];
   }
 }
 
@@ -99,7 +86,8 @@
   [telnetConnection release];
   [filterQueue release];
   [historyRing release];
-  [world release];
+  [profile release];
+  [super dealloc];
 }
 
 - (BOOL) validateMenuItem:(NSMenuItem *)menuItem
@@ -158,22 +146,10 @@
 
 - (IBAction) connect:(id)sender
 {
-  telnetConnection = [world newTelnetConnection];
+  telnetConnection = [[profile world] newTelnetConnection];
   
   if (telnetConnection)
   {
-    if ([world usesSSL])
-      [telnetConnection setSecurityLevel:NSStreamSocketSecurityLevelNegotiatedSSL];
-    
-    if ([world usesProxy])
-    {
-      [telnetConnection enableProxyWithHostname:[world proxyHostname]
-                                         onPort:[[world proxyPort] intValue]
-                                        version:[world proxyVersion]
-                                       username:[world proxyUsername]
-                                       password:[world proxyPassword]];
-    }
-    
     [telnetConnection setDelegate:self];
     [telnetConnection open];
   }
@@ -264,9 +240,9 @@
         break;
         
       case J3ConnectionStatusConnected:
-        if (!autoLoggedIn && player)
+        if (!autoLoggedIn && [profile player])
         {
-          [self sendString:[player loginString]];
+          [self sendString:[[profile player] loginString]];
           autoLoggedIn = YES;
         }
         [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
@@ -399,8 +375,9 @@
 {
   if ([self isConnected])
   {
-    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), player ? [player windowName]
-                                                                                                       : [world windowName]];
+    NSString *title = [NSString stringWithFormat:
+      NSLocalizedString (MULConfirmCloseTitle, nil), 
+      [profile player] ? [[profile player] windowName] : [[profile world] windowName]];
     NSAlert *alert;
     int choice;
     
@@ -409,7 +386,7 @@
                           alternateButton:NSLocalizedString (MULCancel, nil)
                               otherButton:nil
                 informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
-      [world worldHostname]];
+      [[profile world] worldHostname]];
     
     choice = [alert runModal];
     
@@ -456,4 +433,24 @@
                                                       object:self];
 }
 
+- (J3Filter *) createLogger
+{
+  if (profile)
+  {
+    if ([profile player])
+      return [J3TextLogger filterWithWorld:[profile world] player:[profile player]];
+    else
+      return [J3TextLogger filterWithWorld:[profile world]];
+  }
+  else
+    return [J3TextLogger filter];
+}
+
+@end
+
+@implementation MUConnectionWindowController (SelfEncapsulation)
+- (MUPlayer *) player
+{
+  return [profile player];
+}
 @end

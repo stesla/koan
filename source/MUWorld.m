@@ -258,8 +258,24 @@ static const int32_t currentVersion = 2;
 
 - (J3TelnetConnection *) newTelnetConnection
 {
-  return [[J3TelnetConnection alloc] initWithHostName:[self worldHostname]
-                                               onPort:[[self worldPort] intValue]];
+  J3TelnetConnection * telnet;
+  telnet = [[J3TelnetConnection alloc] 
+    initWithHostName:[self worldHostname]
+              onPort:[[self worldPort] intValue]]; //TODO: Autorelease?
+
+  if ([self usesSSL])
+    [telnet setSecurityLevel:NSStreamSocketSecurityLevelNegotiatedSSL];
+  
+  if ([self usesProxy])
+  {
+    [telnet enableProxyWithHostname:[self proxyHostname]
+                             onPort:[[self proxyPort] intValue]
+                            version:[self proxyVersion]
+                           username:[self proxyUsername]
+                           password:[self proxyPassword]];
+  }
+  
+  return telnet;
 }
 
 - (NSString *) frameName
