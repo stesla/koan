@@ -58,6 +58,7 @@
     _head = [[MUInputFilter alloc] init];
     _tail = _head;
     [_tail setSuccessor:self];
+    _outputString = nil;
   }
   return self;
 }
@@ -78,8 +79,6 @@
 - (NSString *) processString:(NSString *)string
 {
   [_head filter:string];
-  // We retained this in -filter:
-  [_outputString autorelease];
   return _outputString;
 }
 
@@ -93,9 +92,8 @@
 
 - (void) filter:(NSString *)string
 {
-  // This gets autoreleased in -processString:
-  [string retain];
-  _outputString = string;
+  _outputString = [string copy];
+  [_outputString retain];
 }
 
 - (id <MUFilterChaining>) chaining

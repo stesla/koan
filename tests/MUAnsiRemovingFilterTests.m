@@ -7,35 +7,93 @@
 //
 
 #import "MUAnsiRemovingFilterTests.h"
-#import "MUInputFilter.h"
 #import "MUAnsiRemovingFilter.h"
+
+@interface MUAnsiRemovingFilterTests (Private)
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
+             message:(NSString *)message;
+@end
+
+@implementation MUAnsiRemovingFilterTests (Private)
+
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
+{
+  [self assert:[_queue processString:input] equals:output];
+}
+
+- (void) assertInput:(NSString *)input hasOutput:(NSString *)output
+             message:(NSString *)message
+{
+  [self assert:[_queue processString:input] equals:output
+       message:message];
+}
+
+@end
 
 @implementation MUAnsiRemovingFilterTests
 
-- (void) testNoCode
+- (void) setUp
 {
-  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
-  [queue addFilter:[MUAnsiRemovingFilter filter]];
-  [self assert:[queue processString:@"Foo"] equals:@"Foo"];
-  [queue release];
+  _queue = [[MUInputFilterQueue alloc] init];
+  [_queue addFilter:[MUAnsiRemovingFilter filter]];
 }
 
-- (void) testBasicCodeCode
+- (void) tearDown
 {
-  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
-  [queue addFilter:[MUAnsiRemovingFilter filter]];
-  [self assert:[queue processString:@"F\033[moo"] equals:@"Foo"];
-  [self assert:[queue processString:@"F\033[3moo"] equals:@"Foo"];
-  [self assert:[queue processString:@"F\033[36moo"] equals:@"Foo"];
-  [queue release];
+  [_queue release];
+}
+
+- (void) testNoCode
+{
+  [self assertInput:@"Foo" hasOutput:@"Foo"];
+}
+
+- (void) testBasicCode
+{
+  [self assertInput:@"F\033[moo" hasOutput:@"Foo"
+            message:@"One"];
+  [self assertInput:@"F\033[3moo" hasOutput:@"Foo"
+            message:@"Two"];
+  [self assertInput:@"F\033[36moo" hasOutput:@"Foo"
+            message:@"Three"];
 }
 
 - (void) testTwoCodes
 {
-  MUInputFilterQueue *queue = [[MUInputFilterQueue alloc] init];
-  [queue addFilter:[MUAnsiRemovingFilter filter]];
-  [self assert:[queue processString:@"F\033[36mo\033[3mo"] equals:@"Foo"];
-  [queue release];
+  [self assertInput:@"F\033[36moa\033[3mob" hasOutput:@"Foaob"];
+}
+
+- (void) testNewLine
+{
+  [self assertInput:@"Foo\n" hasOutput:@"Foo\n"];
+}
+
+- (void) testCodeAtEndOfLine
+{
+  [self assertInput:@"Foo\033[36m\n" hasOutput:@"Foo\n"];
+}
+
+- (void) testCodeAtEndOfString
+{
+  [self assertInput:@"Foo\033[36m" hasOutput:@"Foo"];
+}
+
+- (void) testEmptyString
+{
+  [self assertInput:@"" hasOutput:@""];
+}
+
+- (void) testOnlyCode
+{
+  [self assertInput:@"\033[36m" hasOutput:@""];
+}
+
+- (void) testLongString
+{
+  NSString *longString = 
+    @"        #@@N         (@@)     (@@@)        J@@@@F      @@@@@@@L";
+  [self assertInput:longString hasOutput:longString];
 }
 
 @end

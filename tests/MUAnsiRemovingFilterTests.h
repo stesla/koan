@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
 
+#import "MUInputFilter.h"
+
 @interface MUAnsiRemovingFilterTests : TestCase
 {
+  MUInputFilterQueue *_queue;
 }
 
 @end

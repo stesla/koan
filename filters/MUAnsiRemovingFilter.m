@@ -23,10 +23,12 @@
 
 - (void) filter:(NSString *)string
 {
-  NSMutableString *editString = [NSMutableString stringWithString:string];
+  NSMutableString *editString = 
+    [[NSMutableString alloc] initWithString:string];
   while ([self extractCode:editString])
     ;
   [[self successor] filter:editString];
+  [editString release];
 }
 
 @end
@@ -55,20 +57,23 @@
   NSCharacterSet *stopSet = 
     [NSCharacterSet characterSetWithCharactersInString:@"\033"];
   NSScanner *scanner = [NSScanner scannerWithString:string];
-  NSString *output = @"";
-  [scanner scanUpToCharactersFromSet:stopSet intoString:&output];
-  return [output length];
+  while([scanner scanUpToCharactersFromSet:stopSet intoString:nil])
+    ;
+  return [scanner scanLocation];
 }
 
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string
 {
-  NSScanner *scanner = [NSScanner scannerWithString:
-    [string substringFromIndex:index]];
+  NSScanner *scanner = [NSScanner scannerWithString:string];
+  [scanner setScanLocation:index];
   NSCharacterSet *resumeSet = 
     [NSCharacterSet characterSetWithCharactersInString:
       @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+
+  //TODO: Figure out how to do this with a nil intoString: parameter
+  //like I do above with scanUpToCodeInString:
   NSString *ansiCode = @"";
-  [scanner scanUpToCharactersFromSet:resumeSet intoString:&ansiCode]; 
+  [scanner scanUpToCharactersFromSet:resumeSet intoString:&ansiCode];
   return [ansiCode length] + 1;
 }
 

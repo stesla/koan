@@ -19,6 +19,7 @@
 //
 
 #import "MUMainWindowController.h"
+#import "MUAnsiRemovingFilter.h"
 
 @implementation MUMainWindowController
 
@@ -33,6 +34,7 @@
   _historyArray = [[NSMutableArray alloc] init];
   
   _filterQueue = [[MUInputFilterQueue alloc] init];
+  //[_filterQueue addFilter:[MUAnsiRemovingFilter filter]];
   
   [disconnectButton setEnabled:NO];
   [connectButton setEnabled:YES];

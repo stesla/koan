@@ -263,42 +263,32 @@
 			settings = {
 			};
 		};
-		7E20A8B10748482000D1A5BF = {
-			fileEncoding = 4;
+		7E20A8E907486C1300D1A5BF = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = MUAnsiRemovingFilterTests.h;
-			refType = 4;
-			sourceTree = "<group>";
+			name = MUAnsiRemovingFilterTests.h;
+			path = tests/MUAnsiRemovingFilterTests.h;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
-		7E20A8B20748482000D1A5BF = {
-			fileEncoding = 4;
+		7E20A8EA07486C1300D1A5BF = {
+			fileRef = 7E20A8E907486C1300D1A5BF;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7E20A8EB07486C2500D1A5BF = {
+			fileEncoding = 30;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
-			path = MUAnsiRemovingFilterTests.m;
-			refType = 4;
-			sourceTree = "<group>";
+			name = MUAnsiRemovingFilterTests.m;
+			path = tests/MUAnsiRemovingFilterTests.m;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
-		7E20A8B30748482000D1A5BF = {
-			fileRef = 7E20A8B10748482000D1A5BF;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E20A8B40748482000D1A5BF = {
-			fileRef = 7E20A8B20748482000D1A5BF;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E20A8B50748482000D1A5BF = {
-			fileRef = 7E20A8B10748482000D1A5BF;
-			isa = PBXBuildFile;
-			settings = {
-			};
-		};
-		7E20A8B60748482000D1A5BF = {
-			fileRef = 7E20A8B20748482000D1A5BF;
+		7E20A8EC07486C2500D1A5BF = {
+			fileRef = 7E20A8EB07486C2500D1A5BF;
 			isa = PBXBuildFile;
 			settings = {
 			};
@@ -479,6 +469,7 @@
 				HEADER_SEARCH_PATHS = "./source ./filters";
 				INFOPLIST_FILE = resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
+				PREBINDING = YES;
 				PRODUCT_NAME = Koan;
 				WRAPPER_EXTENSION = app;
 			};
@@ -504,7 +495,6 @@
 				7E4A5E530745677400926969,
 				7E4A5E730745703E00926969,
 				7E20A8AA0748474E00D1A5BF,
-				7E20A8B50748482000D1A5BF,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -521,7 +511,6 @@
 				E622A553074231A60069335B,
 				7E4A5E540745677400926969,
 				7E20A8AB0748474E00D1A5BF,
-				7E20A8B60748482000D1A5BF,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -694,7 +683,7 @@
 				7E4A5E510745677400926969,
 				7E4A5E740745703E00926969,
 				7E20A8A80748474E00D1A5BF,
-				7E20A8B30748482000D1A5BF,
+				7E20A8EA07486C1300D1A5BF,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -708,7 +697,7 @@
 				7E4A5E420745659300926969,
 				7E4A5E520745677400926969,
 				7E20A8A90748474E00D1A5BF,
-				7E20A8B40748482000D1A5BF,
+				7E20A8EC07486C2500D1A5BF,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -741,6 +730,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "";
 				OTHER_REZFLAGS = "";
+				PREBINDING = NO;
 				PRODUCT_NAME = "Test Suite";
 				REZ_EXECUTABLE = YES;
 				SECTORDER_FLAGS = "";
@@ -1365,8 +1355,8 @@
 		};
 		E6B5E40A06A6F28400F53EBB = {
 			children = (
-				7E20A8B10748482000D1A5BF,
-				7E20A8B20748482000D1A5BF,
+				7E20A8E907486C1300D1A5BF,
+				7E20A8EB07486C2500D1A5BF,
 				7E4A5E3F0745659300926969,
 				7E4A5E400745659300926969,
 				7EA9674706FA80B700D57864,
