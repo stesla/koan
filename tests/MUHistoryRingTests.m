@@ -20,9 +20,16 @@
 
 #import "MUHistoryRingTests.h"
 
+NSString *First = @"First";
+NSString *Second = @"Second";
+NSString *Third = @"Third";
+
 @interface MUHistoryRingTests (Private)
 - (void) assertPrevious:(NSString *)expected;
 - (void) assertNext:(NSString *)expected;
+- (void) saveOne;
+- (void) saveTwo;
+- (void) saveThree;
 @end
 
 @implementation MUHistoryRingTests (Private)
@@ -35,6 +42,23 @@
 - (void) assertNext:(NSString *)expected
 {
   [self assert:[_ring nextString] equals:expected];
+}
+
+- (void) saveOne
+{
+  [_ring saveString:First];
+}
+
+- (void) saveTwo
+{
+  [self saveOne];
+  [_ring saveString:Second];
+}
+
+- (void) saveThree
+{
+  [self saveTwo];
+  [_ring saveString:Third];
 }
 
 @end
@@ -53,126 +77,122 @@
 
 - (void) testSinglePrevious
 {
-  [_ring saveString:@"Foo"];
-  
-  [self assertPrevious:@"Foo"];
+  [self saveOne];
+  [self assertPrevious:First];
 }
 
 - (void) testMultiplePrevious
 {
-  [_ring saveString:@"Foo"];
-  [_ring saveString:@"Bar"];
-  [_ring saveString:@"Baz"];
-
-  [self assertPrevious:@"Baz"];
-  [self assertPrevious:@"Bar"];
-  [self assertPrevious:@"Foo"];
+  [self saveThree];
+  [self assertPrevious:Third];
+  [self assertPrevious:Second];
+  [self assertPrevious:First];
 }
 
 - (void) testFullCirclePrevious
 {
-  [_ring saveString:@"Foo"];
+  [_ring saveString:First];
   
-  [self assertPrevious:@"Foo"];
+  [self assertPrevious:First];
   [self assertPrevious:@""];
 }
 
 - (void) testSingleNext
 {
-  [_ring saveString:@"Foo"];
+  [_ring saveString:First];
   
-  [self assertNext:@"Foo"];
+  [self assertNext:First];
 }
 
 - (void) testMultipleNext
 {
-  [_ring saveString:@"Foo"];
-  [_ring saveString:@"Bar"];
-  [_ring saveString:@"Baz"];
+  [_ring saveString:First];
+  [_ring saveString:Second];
+  [_ring saveString:Third];
   
-  [self assertNext:@"Foo"];
-  [self assertNext:@"Bar"];
-  [self assertNext:@"Baz"];
+  [self assertNext:First];
+  [self assertNext:Second];
+  [self assertNext:Third];
 }
 
 - (void) testFullCircleNext
 {
-  [_ring saveString:@"Foo"];
+  [_ring saveString:First];
   
-  [self assertNext:@"Foo"];
+  [self assertNext:First];
   [self assertNext:@""];
 }
 
 - (void) testBothWays
 {
-  [_ring saveString:@"Foo"];
-  [_ring saveString:@"Bar"];
-  [_ring saveString:@"Baz"];
+  [_ring saveString:First];
+  [_ring saveString:Second];
+  [_ring saveString:Third];
   
-  [self assertPrevious:@"Baz"];
-  [self assertPrevious:@"Bar"];
-  [self assertNext:@"Baz"];
+  [self assertPrevious:Third];
+  [self assertPrevious:Second];
+  [self assertNext:Third];
   [self assertNext:@""];
-  [self assertNext:@"Foo"];
-  [self assertNext:@"Bar"];
-  [self assertPrevious:@"Foo"];
+  [self assertNext:First];
+  [self assertNext:Second];
+  [self assertPrevious:First];
   [self assertPrevious:@""];
 }
 
 - (void) testUpdateMiddle
 {
-  [_ring saveString:@"Foo"];
-  [_ring saveString:@"Bar"];
-  [_ring saveString:@"Baz"];
+  [_ring saveString:First];
+  [_ring saveString:Second];
+  [_ring saveString:Third];
 
-  [self assertPrevious:@"Baz"];
-  [self assertPrevious:@"Bar"];
+  [self assertPrevious:Third];
+  [self assertPrevious:Second];
   
   [_ring updateString:@"Bar Two"];
   
-  [self assertPrevious:@"Foo"];
+  [self assertPrevious:First];
   [self assertPrevious:@""];
-  [self assertPrevious:@"Baz"];
+  [self assertPrevious:Third];
   [self assertPrevious:@"Bar Two"];
 }
 
 - (void) testSaveReordering
 {
-  [_ring saveString:@"Foo"];
-  [_ring saveString:@"Bar"];
-  [_ring saveString:@"Baz"];
+  [_ring saveString:First];
+  [_ring saveString:Second];
+  [_ring saveString:Third];
   
-  [self assertNext:@"Foo"];
-  [self assertNext:@"Bar"];
+  [self assertNext:First];
+  [self assertNext:Second];
   
   [_ring saveString:@"Bar Two"];
   
-  [self assertNext:@"Foo"];
-  [self assertNext:@"Baz"];
+  [self assertNext:First];
+  [self assertNext:Third];
   [self assertNext:@"Bar Two"];
   [self assertNext:@""];
 }
 
 - (void) testUpdateBuffer
 {
-  [_ring saveString:@"Foo"];
-  [_ring saveString:@"Bar"];
+  [_ring saveString:First];
+  [_ring saveString:Second];
   
-  [self assertNext:@"Foo"];
-  [self assertNext:@"Bar"];
+  [self assertNext:First];
+  [self assertNext:Second];
   [self assertNext:@""];
   
   [_ring updateString:@"Temporary"];
   
-  [self assertNext:@"Foo"];
-  [self assertNext:@"Bar"];
+  [self assertNext:First];
+  [self assertNext:Second];
   [self assertNext:@"Temporary"];
   
   [_ring saveString:@"Something entirely different"];
   
   [self assertPrevious:@"Something entirely different"];
-  [self assertPrevious:@"Bar"];
-  [self assertPrevious:@"Foo"];
+  [self assertPrevious:Second];
+  [self assertPrevious:First];
   [self assertPrevious:@""];
 }
 
