@@ -8,11 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MUWorld;
+@class MUProfile;
 
 @interface MUProfileRegistry : NSObject 
 {
+  NSMutableDictionary *profiles;
 }
 
 + (MUProfileRegistry *) sharedRegistry;
 
+- (MUProfile *) profileForWorld:(MUWorld *)world;
+- (MUProfile *) profileForUniqueIdentifier:(NSString *)worldName;
 @end

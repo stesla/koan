@@ -5,6 +5,7 @@
 //
 
 #import "MUWorld.h"
+#import "MUConstants.h"
 
 #import <J3Terminal/J3TelnetConnection.h>
 

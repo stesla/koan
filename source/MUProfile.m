@@ -19,7 +19,7 @@
   return [[[self alloc] initWithWorld:aWorld player:aPlayer] autorelease];
 }
 
-+ (MUProfile *) profileWithWorlD:(MUWorld *)aWorld
++ (MUProfile *) profileWithWorld:(MUWorld *)aWorld
 {
   return [[[self alloc] initWithWorld:aWorld] autorelease];
 }
