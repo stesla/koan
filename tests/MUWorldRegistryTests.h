@@ -1,8 +1,8 @@
 //
-//  MUWorldTests.h
+//  MUWorldRegistryTests.h
 //  Koan
 //
-//  Created by Samuel on 1/2/05.
+//  Created by Samuel on 1/6/05.
 //  Copyright 2005 __MyCompanyName__. All rights reserved.
 //
 
@@ -10,12 +10,12 @@
 #import <ObjcUnit/ObjcUnit.h>
 
 @class MUWorld;
-@class MUPlayer;
+@class MUWorldRegistry;
 
-@interface MUWorldTests : TestCase
+@interface MUWorldRegistryTests : TestCase
 {
+  MUWorldRegistry *registry;
   MUWorld *world;
-  MUPlayer *player;
 }
 
 @end

@@ -6,6 +6,7 @@
 
 #import "MUWorld.h"
 #import "MUConstants.h"
+#import "MUPlayer.h"
 
 #import <J3Terminal/J3TelnetConnection.h>
 
@@ -180,6 +181,25 @@ static const int32_t currentVersion = 2;
 {
   [players removeObjectAtIndex:index];
   [self postWorldsUpdatedNotification];
+}
+
+- (void) addPlayer:(MUPlayer *)player
+{
+  if (![self containsPlayer:player])
+  {
+    [players addObject:player];
+    [player setWorld:self];
+  }
+}
+
+- (BOOL) containsPlayer:(MUPlayer *)player
+{
+  [players containsObject:player];
+}
+
+- (void) removePlayer:(MUPlayer *)player
+{
+  [players removeObject:player];
 }
 
 - (NSString *) uniqueIdentifier

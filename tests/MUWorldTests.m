@@ -8,21 +8,55 @@
 
 #import "MUWorldTests.h"
 #import "MUWorld.h"
+#import "MUPlayer.h"
 
 @implementation MUWorldTests
 
+- (void) setUp
+{
+  world = [[MUWorld alloc] init];
+  player = [[MUPlayer alloc] init];
+}
+
+- (void) tearDown
+{
+  [player release];
+  [world release];
+}
+
 - (void) testUniqueIdentifier
 {
-  MUWorld * world = [[MUWorld alloc]
-    initWithWorldName:@"Test World"
-        worldHostname:@""
-            worldPort:[NSNumber numberWithInt:5678]
-             worldURL:@""
-   connectOnAppLaunch:NO
-              usesSSL:NO
-        proxySettings:nil
-              players:[NSArray array]];
+  [world setWorldName:@"Test World"];
   [self assert:[world uniqueIdentifier] equals:@"test.world"]; 
+}
+
+- (void) testAddPlayer
+{
+  [world addPlayer:player];
+  [self assert:[[world players] objectAtIndex:0]
+        equals:player];
+  [self assert:[player world]
+        equals:world];
+}
+
+- (void) testContainsPlayer
+{
+  [world addPlayer:player];
+  [self assertTrue:[world containsPlayer:player]];
+}
+
+- (void) testNoDuplicatePlayers
+{
+  [world addPlayer:player];
+  [world addPlayer:player];
+  [self assertInt:[[world players] count] equals:1];
+}
+
+- (void) testRemovePlayer
+{
+  [world addPlayer:player];
+  [world removePlayer:player];
+  [self assertFalse:[world containsPlayer:player]];
 }
 
 @end

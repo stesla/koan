@@ -57,6 +57,12 @@
 - (void) setPlayers:(NSArray *)newPlayers;
 - (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index;
 - (void) removeObjectFromPlayersAtIndex:(unsigned)index;
+- (void) addPlayer:(MUPlayer *)player;
+- (BOOL) containsPlayer:(MUPlayer *)player;
+- (void) removePlayer:(MUPlayer *)player;
+
+
+
 - (NSString *) uniqueIdentifier;
 
 // Actions.

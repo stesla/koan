@@ -7,6 +7,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class MUWorld;
+@class MUPlayer;
 
 // MUWorldRegistry is a Singleton.
 
@@ -26,4 +27,8 @@
 - (void) saveWorlds;
 - (MUWorld *) worldAtIndex:(unsigned)index;
 
+- (void) addWorld:(MUWorld *)world;
+- (BOOL) containsWorld:(MUWorld *)world;
+- (void) removeWorld:(MUWorld *)world;
+- (void) addPlayer:(MUPlayer *)player toWorld:(MUWorld *)world;
 @end
