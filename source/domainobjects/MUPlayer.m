@@ -95,26 +95,36 @@ static const int32_t currentVersion = 2;
 
 - (void) encodeWithCoder:(NSCoder *)encoder
 {
-  [encoder encodeInt32:currentVersion forKey:@"version"];
-  
-  [encoder encodeObject:[self name] forKey:@"name"];
-  [encoder encodeObject:[self password] forKey:@"password"];
+  [MUPlayer encodePlayer:self withCoder:encoder];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
 {
-  if (self = [super init])
-  {
-    int32_t version = [decoder decodeInt32ForKey:@"version"];
-    
-    [self setName:[decoder decodeObjectForKey:@"name"]];
-    [self setPassword:[decoder decodeObjectForKey:@"password"]];
-    
-    if (version == 1)
-      [decoder decodeBoolForKey:@"connectOnAppLaunch"];
-  }
+  self = [super init];
+  if (self)
+    [MUPlayer decodePlayer:self withCoder:decoder];
   return self;
 }
+
++ (void) encodePlayer:(MUPlayer *)player withCoder:(NSCoder *)encoder
+{
+  [encoder encodeInt32:currentVersion forKey:@"version"];
+  
+  [encoder encodeObject:[player name] forKey:@"name"];
+  [encoder encodeObject:[player password] forKey:@"password"];  
+}
+
++ (void) decodePlayer:(MUPlayer *)player withCoder:(NSCoder *)decoder
+{
+  int32_t version = [decoder decodeInt32ForKey:@"version"];
+  
+  [player setName:[decoder decodeObjectForKey:@"name"]];
+  [player setPassword:[decoder decodeObjectForKey:@"password"]];
+  
+  if (version == 1)
+    [decoder decodeBoolForKey:@"connectOnAppLaunch"];
+}
+
 
 #pragma mark -
 #pragma mark NSCopying protocol

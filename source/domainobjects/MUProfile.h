@@ -50,4 +50,8 @@
 - (void) loginWithConnection:(J3TelnetConnection *)connection;
 - (void) logoutWithConnection:(J3TelnetConnection *)connection;
 
+// Coding
++ (void) encodeProfile:(MUProfile *)profile withCoder:(NSCoder *)encoder;
++ (void) decodeProfile:(MUProfile *)profile withCoder:(NSCoder *)decoder;
+
 @end

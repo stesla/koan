@@ -179,17 +179,26 @@ static const int32_t currentVersion = 1;
 
 - (void) encodeWithCoder:(NSCoder *)encoder
 {
-  [encoder encodeInt32:currentVersion forKey:@"version"];
-  [encoder encodeBool:[self autoconnect] forKey:@"autoconnect"];
+  [MUProfile encodeProfile:self withCoder:encoder];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
 {
-  // Actually assign this after we start caring
-  [decoder decodeInt32ForKey:@"version"];
-  
-  [self setAutoconnect:[decoder decodeBoolForKey:@"autoconnect"]];
-  
+  [MUProfile decodeProfile:self withCoder:decoder];
   return self;
 }
+
++ (void) encodeProfile:(MUProfile *)profile withCoder:(NSCoder *)encoder
+{
+  [encoder encodeInt32:currentVersion forKey:@"version"];
+  [encoder encodeBool:[profile autoconnect] forKey:@"autoconnect"];  
+}
+
++ (void) decodeProfile:(MUProfile *)profile withCoder:(NSCoder *)decoder
+{
+  // Actually assign this after we start caring
+  [decoder decodeInt32ForKey:@"version"];
+  [profile setAutoconnect:[decoder decodeBoolForKey:@"autoconnect"]];
+}
+
 @end

@@ -17,7 +17,8 @@ static const int32_t currentVersion = 3;
 @end
 
 @interface MUWorld (CodingHelpers)
-- (void) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version;
++ (J3ProxySettings *) decodeProxySettingsWithCoder:(NSCoder *)decoder
+                                           version:(int)version;
 @end
 
 #pragma mark -
@@ -233,53 +234,63 @@ static const int32_t currentVersion = 3;
 
 - (void) encodeWithCoder:(NSCoder *)encoder
 {
-  [encoder encodeInt32:currentVersion forKey:@"version"];
-  
-  [encoder encodeObject:[self worldName] forKey:@"worldName"];
-  [encoder encodeObject:[self worldHostname] forKey:@"worldHostname"];
-  [encoder encodeObject:[self worldPort] forKey:@"worldPort"];
-  [encoder encodeObject:[self players] forKey:@"players"];
-  [encoder encodeObject:[self worldURL] forKey:@"worldURL"];
-  [encoder encodeBool:[self usesSSL] forKey:@"usesSSL"];
-  [encoder encodeBool:(proxySettings == nil) forKey:@"usesProxy"];
-  [encoder encodeObject:[proxySettings hostname] forKey:@"proxyHostname"];
-  [encoder encodeObject:[NSNumber numberWithInt:[proxySettings port]] forKey:@"proxyPort"];
-  [encoder encodeInt:[proxySettings version] forKey:@"proxyVersion"];
-  [encoder encodeObject:[proxySettings username] forKey:@"proxyUsername"];
-  [encoder encodeObject:[proxySettings password] forKey:@"proxyPassword"];  
+  [MUWorld encodeWorld:self withCoder:encoder];
 }
 
 - (id) initWithCoder:(NSCoder *)decoder
 {
   if (self = [super init])
-  {
-    int32_t version = [decoder decodeInt32ForKey:@"version"];
-    
-    [self setWorldName:[decoder decodeObjectForKey:@"worldName"]];
-    [self setWorldHostname:[decoder decodeObjectForKey:@"worldHostname"]];
-    [self setWorldPort:[decoder decodeObjectForKey:@"worldPort"]];
-    [self setPlayers:[decoder decodeObjectForKey:@"players"]];
-    
-    if (version >= 1)
-    {
-      [self setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
-      if (version < 3)
-        [decoder decodeBoolForKey:@"connectOnAppLaunch"];
-    }
-    else
-    {
-      [self setWorldURL:@""];
-    }
-    
-    if (version >= 2)
-      [self setUsesSSL:[decoder decodeBoolForKey:@"usesSSL"]];
-    else
-      [self setUsesSSL:NO];
-    
-    [self decodeProxySettingsWithCoder:decoder version:version];
-  }
+    [MUWorld decodeWorld:self withCoder:decoder];
   return self;
 }
+
++ (void) encodeWorld:(MUWorld *)world withCoder:(NSCoder *)encoder
+{
+  J3ProxySettings *theProxySettings = [world proxySettings];
+  [encoder encodeInt32:currentVersion forKey:@"version"];
+  
+  [encoder encodeObject:[world worldName] forKey:@"worldName"];
+  [encoder encodeObject:[world worldHostname] forKey:@"worldHostname"];
+  [encoder encodeObject:[world worldPort] forKey:@"worldPort"];
+  [encoder encodeObject:[world players] forKey:@"players"];
+  [encoder encodeObject:[world worldURL] forKey:@"worldURL"];
+  [encoder encodeBool:[world usesSSL] forKey:@"usesSSL"];
+  [encoder encodeObject:[theProxySettings hostname] forKey:@"proxyHostname"];
+  [encoder encodeObject:[NSNumber numberWithInt:[theProxySettings port]] forKey:@"proxyPort"];
+  [encoder encodeInt:[theProxySettings version] forKey:@"proxyVersion"];
+  [encoder encodeObject:[theProxySettings username] forKey:@"proxyUsername"];
+  [encoder encodeObject:[theProxySettings password] forKey:@"proxyPassword"];   
+}
+
++ (void) decodeWorld:(MUWorld *)world withCoder:(NSCoder *)decoder
+{
+  int32_t version = [decoder decodeInt32ForKey:@"version"];
+  
+  [world setWorldName:[decoder decodeObjectForKey:@"worldName"]];
+  [world setWorldHostname:[decoder decodeObjectForKey:@"worldHostname"]];
+  [world setWorldPort:[decoder decodeObjectForKey:@"worldPort"]];
+  [world setPlayers:[decoder decodeObjectForKey:@"players"]];
+  
+  if (version >= 1)
+  {
+    [world setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
+    if (version < 3)
+      [decoder decodeBoolForKey:@"connectOnAppLaunch"];
+  }
+  else
+  {
+    [world setWorldURL:@""];
+  }
+  
+  if (version >= 2)
+    [world setUsesSSL:[decoder decodeBoolForKey:@"usesSSL"]];
+  else
+    [world setUsesSSL:NO];
+  
+  [world setProxySettings:[self decodeProxySettingsWithCoder:decoder 
+                                                     version:version]];  
+}
+
 
 #pragma mark -
 #pragma mark NSCopying protocol
@@ -310,15 +321,16 @@ static const int32_t currentVersion = 3;
 @end
 
 @implementation MUWorld (CodingHelpers)
-- (void) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version
++ (J3ProxySettings *) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version
 {
   NSString *hostname = nil, *username = nil, *password = nil;
   NSNumber *port = [NSNumber numberWithInt:0];
   int newProxyVersion = 5;
   
-  if (version == 2)
+  if (version >= 2)
   {
-    [decoder decodeBoolForKey:@"usesProxy"];
+    if (version == 2)
+      [decoder decodeBoolForKey:@"usesProxy"];
     hostname = [decoder decodeObjectForKey:@"proxyHostname"];
     port = [decoder decodeObjectForKey:@"proxyPort"];
     newProxyVersion = [decoder decodeIntForKey:@"proxyVersion"];
@@ -328,13 +340,13 @@ static const int32_t currentVersion = 3;
 
   // If this came out nil, then something isn't kosher
   if (!port)
-    return;
+    return nil;
     
-  [self setProxySettings:[[J3ProxySettings alloc]
-      initWithHostname:hostname
-                  port:[port intValue]
-               version:newProxyVersion
-              username:username
-              password:password]];
+  return [[[J3ProxySettings alloc]
+          initWithHostname:hostname
+                      port:[port intValue]
+                   version:newProxyVersion
+                  username:username
+                  password:password] autorelease];
 }
 @end
