@@ -1284,7 +1284,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# shell script goes here\n\nexport PATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\n\ncd $SOURCE_ROOT/resources/\n\nokay=`./update-svnversion.plx < Info.plist > Info.plist~`\nmv Info.plist~ Info.plist\ncp Info.plist $BUILD_ROOT/Koan.build/Koan.build/Info.plist\n\nexit $okay";
+			shellScript = "# shell script goes here\n\nexport PATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\n\ncd $SOURCE_ROOT/resources/\n\nokay=`./update-svnversion.plx < Info.plist > Info.plist~`\ncp Info.plist~ $BUILD_ROOT/Koan.build/Koan.build/Info.plist\n\nexit $okay";
 		};
 		E659F6D00770D4DA00534D1B = {
 			buildPhases = (
