@@ -488,6 +488,28 @@
 			settings = {
 			};
 		};
+		7EA5BB1E07A76A98002336EE = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = "TestCase (NSAttributedStringAssertions).h";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7EA5BB1F07A76A98002336EE = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = "TestCase (NSAttributedStringAssertions).m";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7EA5BB2007A76A98002336EE = {
+			fileRef = 7EA5BB1F07A76A98002336EE;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		7EC112E8078B763E00CFA562 = {
 			fileEncoding = 4;
 			isa = PBXFileReference;
@@ -1313,6 +1335,7 @@
 				E69679B2078F59D30033A4C8,
 				7EA5BA4807A7221A002336EE,
 				7EA5BA5307A733F9002336EE,
+				7EA5BB2007A76A98002336EE,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1675,6 +1698,7 @@
 		};
 		E6B5E40A06A6F28400F53EBB = {
 			children = (
+				7EA5BB1E07A76A98002336EE,
 				7E20A8E907486C1300D1A5BF,
 				7EFE43B10749CB16002C7D48,
 				E6E7A6CC074970FE007005AC,
@@ -1686,6 +1710,7 @@
 				7EDD3E3F078A4AFB00138CD1,
 				E62041A806B0566B00236608,
 				7E13FA590788C75F0071D30C,
+				7EA5BB1F07A76A98002336EE,
 				7E20A8EB07486C2500D1A5BF,
 				7EFE43B20749CB16002C7D48,
 				E6E7A6CD074970FE007005AC,

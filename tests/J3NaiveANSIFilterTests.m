@@ -12,11 +12,6 @@
 
 @interface J3NaiveANSIFilterTests (Private)
 - (NSAttributedString *) makeString:(NSString *)string;
-- (void) assertAttributedString:(NSAttributedString *)actual 
-                   stringEquals:(NSString *)expected;
-- (void) assertAttributedString:(NSAttributedString *)actual 
-                   stringEquals:(NSString *)expected
-                        message:(NSString *)message;
 @end
 
 @implementation J3NaiveANSIFilterTests
@@ -39,16 +34,6 @@
   return [NSAttributedString attributedStringWithString:string];
 }
 
-- (void) assertAttributedString:(NSAttributedString *)actual 
-                   stringEquals:(NSString *)expected
-                        message:(NSString *)message
-{
-  [self assert:[actual string] equals:expected message:message];  
-}
 
-- (void) assertAttributedString:(NSAttributedString *)actual 
-                   stringEquals:(NSString *)expected
-{
-  [self assertAttributedString:actual stringEquals:expected message:nil];
-}
+
 @end
