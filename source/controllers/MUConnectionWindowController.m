@@ -274,9 +274,19 @@
     {
       return NO;
     }
-    else if (commandSelector == @selector(insertNewline:) ||
-             commandSelector == @selector(insertTab:) ||
-             commandSelector == @selector(insertBacktab:))
+    else if (commandSelector == @selector(insertNewline:))
+    {
+      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      [[self window] makeFirstResponder:inputView];
+      return YES;
+    }
+    else if (commandSelector == @selector(insertTab:))
+    {
+      [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
+      [[self window] makeFirstResponder:inputView];
+      return YES;
+    }
+    else if (commandSelector == @selector(insertBacktab:))
     {
       [textView setSelectedRange:NSMakeRange ([[textView textStorage] length], 0)];
       [[self window] makeFirstResponder:inputView];
