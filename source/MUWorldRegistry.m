@@ -44,6 +44,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 - (void) dealloc
 {
   [worlds release];
+  [super dealloc];
 }
 
 #pragma mark -

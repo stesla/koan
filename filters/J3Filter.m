@@ -34,6 +34,7 @@
 - (void) dealloc
 {
   [filters release];
+  [super dealloc];
 }
 
 - (NSAttributedString *) processAttributedString:(NSAttributedString *)string

@@ -74,6 +74,7 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
   [connectionWindowControllers release];
   [profilesController release];
+  [super dealloc];
 }
 
 #pragma mark -

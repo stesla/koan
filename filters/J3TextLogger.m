@@ -99,6 +99,7 @@
 {
   [output close];
   [output release];
+  [super dealloc];
 }
 
 - (NSAttributedString *) filter:(NSAttributedString *)string

@@ -566,7 +566,6 @@
 				E6C9D4ED077C0FA3007BB2C1,
 				E6C9D4EE077C0FA3007BB2C1,
 				E6E7BF0E07867F080065EDD6,
-				E62E831F07A1D10400BF15E9,
 			);
 			isa = PBXResourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -875,12 +874,6 @@
 			path = MUTextView.m;
 			refType = 4;
 			sourceTree = "<group>";
-		};
-		E62E831F07A1D10400BF15E9 = {
-			fileRef = E62E831D07A1D10400BF15E9;
-			isa = PBXBuildFile;
-			settings = {
-			};
 		};
 		E62E832007A1D10400BF15E9 = {
 			fileRef = E62E831E07A1D10400BF15E9;

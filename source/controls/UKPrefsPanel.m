@@ -60,6 +60,7 @@
 	[itemsList release];
 	[baseWindowName release];
 	[autosaveName release];
+    [super dealloc];
 }
 
 
