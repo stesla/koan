@@ -5,6 +5,7 @@
             ACTIONS = {
                 changeGlobalFont = id; 
                 chooseNewFont = id; 
+                openBugsWebPage = id; 
                 showPreferences = id; 
                 showProfiles = id; 
             }; 

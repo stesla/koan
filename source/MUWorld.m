@@ -104,6 +104,16 @@ static const int32_t currentVersion = 0;
                                                onPort:[[self worldPort] intValue]];
 }
 
+- (NSString *) frameName
+{
+  return [NSString stringWithFormat:@"%@.%@", [self worldHostname], [self worldPort]];
+}
+
+- (NSString *) windowName
+{
+  return [NSString stringWithFormat:@"%@", [self worldName]];
+}
+
 #pragma mark -
 #pragma mark NSCoding protocol
 

@@ -33,5 +33,7 @@
 - (void) setPlayers:(NSArray *)newPlayers;
 
 - (J3TelnetConnection *) newTelnetConnection;
+- (NSString *) frameName;
+- (NSString *) windowName;
 
 @end

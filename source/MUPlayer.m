@@ -73,9 +73,19 @@ static const int32_t currentVersion = 0;
 #pragma mark -
 #pragma mark Actions
 
+- (NSString *) frameName
+{
+  return [NSString stringWithFormat:@"%@.%@.%@", [world worldHostname], [world worldPort], [self name]];
+}
+
 - (NSString *) loginString
 {
   return [NSString stringWithFormat:@"connect %@ %@", [self name], [self password]];
+}
+
+- (NSString *) windowName
+{
+  return [NSString stringWithFormat:@"%@ @ %@", [self name], [world worldName]];
 }
 
 #pragma mark -

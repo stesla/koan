@@ -144,6 +144,11 @@
   [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
 }
 
+- (IBAction) openBugsWebPage:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://bugs.3james.com/"]];
+}
+
 - (IBAction) showPreferences:(id)sender
 {
   [preferencesPanel makeKeyAndOrderFront:self];

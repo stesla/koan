@@ -22,6 +22,7 @@
 
 - (IBAction) changeGlobalFont:(id)sender;
 - (IBAction) chooseNewFont:(id)sender;
+- (IBAction) openBugsWebPage:(id)sender;
 - (IBAction) showPreferences:(id)sender;
 - (IBAction) showProfiles:(id)sender;
 

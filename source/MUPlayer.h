@@ -24,6 +24,8 @@
 - (MUWorld *) world;
 - (void) setWorld:(MUWorld *)newWorld;
 
+- (NSString *) frameName;
 - (NSString *) loginString;
+- (NSString *) windowName;
 
 @end

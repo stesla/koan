@@ -76,23 +76,19 @@
          toObject:[NSUserDefaultsController sharedUserDefaultsController]
       withKeyPath:@"values.MUPTextColor"
           options:bindingOptions];
-
-  if ([world worldName])
-    windowName = [world worldName];
-  else if ([world worldHostname] && [world worldPort])
-    windowName = [NSString stringWithFormat:@"%@:%@", [world worldHostname], [world worldPort]];
+  
+  if (player)
+  {
+    [[self window] setTitle:[player windowName]];
+    [[self window] setFrameAutosaveName:[player frameName]];
+    [[self window] setFrameUsingName:[player frameName]];
+  }
   else
-    windowName = @"Koan";
-  
-  [[self window] setTitle:windowName];
-  
-  if (!player)
-    frameName = [NSString stringWithFormat:@"%@.%@", [world worldHostname], [world worldPort]];
-  else
-    frameName = [NSString stringWithFormat:@"%@.%@.%@", [world worldHostname], [world worldPort], [player name]];
-  
-  [[self window] setFrameAutosaveName:frameName];
-  [[self window] setFrameUsingName:frameName];
+  {
+    [[self window] setTitle:[world windowName]];
+    [[self window] setFrameAutosaveName:[world frameName]];
+    [[self window] setFrameUsingName:[world frameName]];
+  }
 }
 
 - (void) dealloc
@@ -347,7 +343,8 @@
 {
   if ([self isConnected])
   {
-    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), [world worldName]];
+    NSString *title = [NSString stringWithFormat:NSLocalizedString (MULConfirmCloseTitle, nil), player ? [player windowName]
+                                                                                                       : [world windowName]];
     NSAlert *alert;
     int choice;
     
@@ -384,8 +381,8 @@
 - (void) displayString:(NSString *)string
 {
   NSAttributedString *unfilteredString =
-    [NSAttributedString attributedStringWithString:string
-                                        attributes:[receivedTextView typingAttributes]];
+  [NSAttributedString attributedStringWithString:string
+                                      attributes:[receivedTextView typingAttributes]];
   NSAttributedString *filteredString = [filterQueue processAttributedString:unfilteredString];
   NSTextStorage *textStorage = [receivedTextView textStorage];
   float scrollerPosition = 
