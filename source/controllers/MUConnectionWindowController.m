@@ -167,6 +167,7 @@
     [profile logoutWithConnection:telnetConnection];
     [telnetConnection close];
     [telnetConnection release];
+    telnetConnection = nil;
   }
 }
 
