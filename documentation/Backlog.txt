@@ -1,0 +1,29 @@
+The following features/problems are blocking Beta 1:
+
+* The 3James Web site, at least a little one.
+* Credits and third-party licenses.
+* Reworking Profiles to use an NSOutlineView.
+
+The following features/problems are blocking 1.0:
+
+* Bug 32. (Koan forgets proxy settings.)
+* Bug 16. (Activate SSL/SOCKS before connect.)
+* Adding support for viewing/editing MUProfiles.
+* Profile-local fonts and colors.
+* Other profile-local settings. (Autoping, etc.)
+* Activate the colors from the naive ANSI color filter.
+* Growl 0.6 support.
+* Update support via MacPAD.
+* Sounds.
+
+The following features are currently unscheduled.
+
+* Bug 33. (Page up and down in buffer.)
+* Tabs.
+* IRC.
+* Keybinding.
+* Macros/custom commands.
+* Regex input filter.
+* Plugins.
+* Filter manager.
+* Help book.
