@@ -1,5 +1,5 @@
 //
-// main.m - Main entrypoint for the application
+// Main.m
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -20,7 +20,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-int main (int argc, char *argv[])
+int
+main (int argc, char *argv[])
 {
   return NSApplicationMain (argc, (const char **) argv);
 }

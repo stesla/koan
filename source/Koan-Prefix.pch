@@ -1,5 +1,5 @@
 //
-// Koan-Prefix.pch - Precompiled header for Koan on Xcode
+// Koan-Prefix.pch
 //
 // Copyright (C) 2004 Tyler Berry and Samuel Tesla
 //
@@ -19,5 +19,5 @@
 //
 
 #ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
+  #import <Cocoa/Cocoa.h>
 #endif
