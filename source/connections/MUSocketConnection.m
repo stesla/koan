@@ -74,6 +74,18 @@ _mu_malloc (int count)
 	return _delegate;
 }
 
+- (void) didReadData:(NSData *)data
+{
+  if ([[self delegate] respondsToSelector:@selector(socket:didReadData:)])
+  {
+    [[self delegate] socket:self didReadData:data];
+  }
+  else
+  {
+    NSLog(@"MUSocketConnection delegate did not respond to socket:didReadData:");
+  }
+}
+
 - (NSString *) host
 {
   return _host;
@@ -196,6 +208,11 @@ _mu_malloc (int count)
 
 - (void) setDelegate:(id)delegate
 {
+  if (![delegate respondsToSelector:@selector(socket:didReadData:)])
+  {
+    NSLog(@"MUSocketConnection delegate does not respond to socket:didReadData:");
+  }
+  
 	_delegate = delegate;
 }
 
@@ -213,7 +230,7 @@ _mu_malloc (int count)
 
 - (int) writeData:(NSData *)data
 {
-  int bytesWritten;
+  int bytesWritten = 0;
   if([self isConnected])
   {
     errno = 0;

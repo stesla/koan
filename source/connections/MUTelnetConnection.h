@@ -32,7 +32,7 @@ enum MUTelnetCommands
 
 @interface MUTelnetConnection : NSObject
 {
-  MUSocketConnection *socket;
+  MUSocketConnection* _socket;
 }
 
 @end

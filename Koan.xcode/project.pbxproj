@@ -431,6 +431,46 @@
 			settings = {
 			};
 		};
+		7EE6EF1E06CC74BE00C6DC32 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = MUMockSocketConnection.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7EE6EF1F06CC74BE00C6DC32 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = MUMockSocketConnection.m;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		7EE6EF2006CC74BE00C6DC32 = {
+			fileRef = 7EE6EF1E06CC74BE00C6DC32;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7EE6EF2106CC74BE00C6DC32 = {
+			fileRef = 7EE6EF1F06CC74BE00C6DC32;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7EE6EF6206CC898500C6DC32 = {
+			fileRef = 7E27F94B06C52291006D46AA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7EE6EF6306CC89A200C6DC32 = {
+			fileRef = 7E27F94C06C52291006D46AA;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 //7E0
 //7E1
 //7E2
@@ -540,8 +580,10 @@
 		E62040F606B054E400236608 = {
 			buildActionMask = 2147483647;
 			files = (
-				E62041AA06B0566B00236608,
+				7EE6EF2006CC74BE00C6DC32,
+				7EE6EF6206CC898500C6DC32,
 				7E5E161A06CC30E200518E61,
+				E62041AA06B0566B00236608,
 			);
 			isa = PBXHeadersBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -550,6 +592,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E62041AB06B0566B00236608,
+				7EE6EF2106CC74BE00C6DC32,
+				7EE6EF6306CC89A200C6DC32,
 				7E5E161B06CC30E200518E61,
 			);
 			isa = PBXSourcesBuildPhase;
@@ -720,6 +764,8 @@
 		};
 		E6B5E40A06A6F28400F53EBB = {
 			children = (
+				7EE6EF1E06CC74BE00C6DC32,
+				7EE6EF1F06CC74BE00C6DC32,
 				7E45F28906C52E710090E3FB,
 				E62041A806B0566B00236608,
 				E62041A906B0566B00236608,

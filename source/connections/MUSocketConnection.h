@@ -47,6 +47,7 @@
 - (int) bufferSize;
 - (void) close;
 - (id) delegate;
+- (void) didReadData:(NSData *)data;
 - (NSString *) host;
 - (BOOL) isConnected;
 - (short) port;
