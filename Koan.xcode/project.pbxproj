@@ -50,7 +50,7 @@
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = J3Terminal.framework;
-			path = frameworks/J3Terminal.framework;
+			path = build/J3Terminal.framework;
 			refType = 2;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -85,15 +85,17 @@
 			inputPaths = (
 				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework.tar.gz",
 				"$(SOURCE_ROOT)/frameworks/AGRegex.framework.tar.gz",
+				"$(SOURCE_ROOT)/frameworks/RBSplitView.framework.tar.gz",
 			);
 			isa = PBXShellScriptBuildPhase;
 			outputPaths = (
-				"$(SOURCE_ROOT)/frameworks/J3Terminal.framework",
-				"$(SOURCE_ROOT)/frameworks/AGRegex.framework",
+				"$(SOURCE_ROOT)/build/J3Terminal.framework",
+				"$(SOURCE_ROOT)/build/AGRegex.framework",
+				"$(SOURCE_ROOT)/build/RBSplitView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SOURCE_ROOT}/frameworks\n# Add more frameworks below\ntar zxvf AGRegex.framework.tar.gz\ntar zxvf J3Terminal.framework.tar.gz\ntar zxvf RBSplitView.framework.tar.gz\n";
+			shellScript = "cd ${SOURCE_ROOT}/build\nfor name in `ls ${SOURCE_ROOT}/frameworks`; do\n\ttar zxvf ${SOURCE_ROOT}/frameworks/${name}\ndone\n";
 		};
 //160
 //161
@@ -1029,9 +1031,10 @@
 		E6505A31078203FC0016F30E = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
-			path = AGRegex.framework;
-			refType = 4;
-			sourceTree = "<group>";
+			name = AGRegex.framework;
+			path = build/AGRegex.framework;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		E6505ABF07820CC00016F30E = {
 			isa = PBXFileReference;
@@ -1043,9 +1046,10 @@
 		E6505D4507836DD00016F30E = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
-			path = RBSplitView.framework;
-			refType = 4;
-			sourceTree = "<group>";
+			name = RBSplitView.framework;
+			path = build/RBSplitView.framework;
+			refType = 2;
+			sourceTree = SOURCE_ROOT;
 		};
 		E6505D4607836DD00016F30E = {
 			fileRef = E6505D4507836DD00016F30E;
