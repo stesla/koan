@@ -30,6 +30,8 @@
 - (NSString *) hostname;
 - (NSString *) loginString;
 - (J3Filter *) logger;
+- (NSString *) uniqueIdentifier;
+
 - (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate;
 - (void) loginWithConnection:(J3TelnetConnection *)connection;
 - (void) logoutWithConnection:(J3TelnetConnection *)connection;

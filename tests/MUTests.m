@@ -13,6 +13,7 @@
 #import "J3NaiveURLFilterTests.h"
 #import "MUProfileRegistryTests.h"
 #import "MUWorldTests.h"
+#import "MUProfileTests.h"
 
 int
 main (int argc, const char *argv[])
@@ -36,6 +37,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[J3TextLoggerTests class]];
   [suite addTestSuite:[MUProfileRegistryTests class]];
   [suite addTestSuite:[MUWorldTests class]];
+  [suite addTestSuite:[MUProfileTests class]];
   return suite;
 }
 

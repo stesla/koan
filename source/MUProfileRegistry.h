@@ -10,6 +10,7 @@
 
 @class MUWorld;
 @class MUProfile;
+@class MUPlayer;
 
 @interface MUProfileRegistry : NSObject 
 {
@@ -19,5 +20,7 @@
 + (MUProfileRegistry *) sharedRegistry;
 
 - (MUProfile *) profileForWorld:(MUWorld *)world;
+- (MUProfile *) profileForWorld:(MUWorld *)world player:(MUPlayer *)player;
 - (MUProfile *) profileForUniqueIdentifier:(NSString *)worldName;
+
 @end
