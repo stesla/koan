@@ -1,5 +1,5 @@
 //
-// J3URLLinkFilterTests.h
+// J3NaiveURLFilterTests.h
 //
 // Copyright (C) 2004 3James Software
 //
@@ -9,7 +9,7 @@
 
 #import "J3Filter.h"
 
-@interface J3URLLinkFilterTests : TestCase
+@interface J3NaiveURLFilterTests : TestCase
 {
   J3FilterQueue *queue;
 }

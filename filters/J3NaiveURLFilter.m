@@ -1,24 +1,24 @@
 //
-// J3URLLinkFilter.m
+// J3NaiveURLFilter.m
 //
 // Copyright (C) 2004 3James Software
 //
 
-#import "J3URLLinkFilter.h"
+#import "J3NaiveURLFilter.h"
 #import "Categories/NSURL (Allocating).h"
 
-@interface J3URLLinkFilter (Private)
+@interface J3NaiveURLFilter (Private)
 
 - (void) linkifyURLs:(NSMutableAttributedString *)editString;
 - (NSURL *) normalizedURLForString:(NSString *)string;
 
 @end
 
-@implementation J3URLLinkFilter
+@implementation J3NaiveURLFilter
 
 + (J3Filter *) filter
 {
-  return [[[J3URLLinkFilter alloc] init] autorelease];
+  return [[[J3NaiveURLFilter alloc] init] autorelease];
 }
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
@@ -32,7 +32,7 @@
 
 @end
 
-@implementation J3URLLinkFilter (Private)
+@implementation J3NaiveURLFilter (Private)
 
 - (void) linkifyURLs:(NSMutableAttributedString *)editString
 {
@@ -49,8 +49,19 @@
     NSURL *foundURL;
     NSDictionary *linkAttributes;
     unsigned index, length;
-
-    [scanner scanUpToCharactersFromSet:nonwhitespace intoString:NULL];
+    int skipScanLocation = [scanner scanLocation];
+    
+    while (skipScanLocation < [sourceString length])
+    {
+      if (![nonwhitespace characterIsMember:[sourceString characterAtIndex:skipScanLocation]])
+        skipScanLocation++;
+      else
+        break;
+    }
+    
+    if (skipScanLocation > [scanner scanLocation])
+      [scanner setScanLocation:skipScanLocation];
+    
     scannedRange.location = [scanner scanLocation];
     [scanner scanUpToCharactersFromSet:whitespace intoString:&scannedString];
     scannedRange.length = [scanner scanLocation] - scannedRange.location;
@@ -78,8 +89,6 @@
     
     if (foundURL = [self normalizedURLForString:scannedString])
     {
-      foundURL = [foundURL standardizedURL];
-      // Apply underline style and link color
       linkAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
         foundURL, NSLinkAttributeName,
         [NSNumber numberWithInt:NSSingleUnderlineStyle], NSUnderlineStyleAttributeName,
@@ -91,57 +100,39 @@
 
 - (NSURL *) normalizedURLForString:(NSString *)string
 {
-  NSURL *url;
+  if ([string hasPrefix:@"http:"])
+    return [NSURL URLWithString:string];
   
-  if (([string rangeOfString:@"://"]).length != 0)
+  if ([string hasPrefix:@"https:"])
+    return [NSURL URLWithString:string];
+  
+  if ([string hasPrefix:@"ftp:"])
+    return [NSURL URLWithString:string];
+  
+  if ([string hasPrefix:@"mailto:"])
+    return [NSURL URLWithString:string];
+  
+  if ([string hasPrefix:@"www."])
+    return [NSURL URLWithString:[@"http://" stringByAppendingString:string]];
+  
+  if ([string hasPrefix:@"ftp."])
+    return [NSURL URLWithString:[@"ftp://" stringByAppendingString:string]];
+  
+  if ([string hasSuffix:@".com"] ||
+      [string hasSuffix:@".net"] ||
+      [string hasSuffix:@".org"] ||
+      [string hasSuffix:@".edu"] ||
+      [string hasSuffix:@".de"] ||
+      [string hasSuffix:@".uk"] ||
+      [string hasSuffix:@".cc"])
   {
-    NSString *path;
-    
-    url = [NSURL URLWithString:string];
-
-    if (![NSHost hostWithName:[url host]])
-      return nil;
-    
-    path = [url path];
-    if ([path length] == 0) path = @"/";
-    
-    return [NSURL URLWithScheme:[url scheme] host:[url host] path:path];
-  }
-  else if (([string rangeOfString:@"@"]).length != 0)
-  {
-    if ([string hasPrefix:@"mailto:"])
-      url = [NSURL URLWithString:string];
+    if ([string rangeOfString:@"@"].length != 0)
+      return [NSURL URLWithString:[@"mailto:" stringByAppendingString:string]];
     else
-      url = [NSURL URLWithString:[@"mailto:" stringByAppendingString:string]];
-    
-    return url;
+      return [NSURL URLWithString:[@"http://" stringByAppendingString:string]];
   }
-  else if ([string hasPrefix:@"ftp."])
-  {
-    NSString *path;
-    
-    url = [NSURL URLWithString:[@"ftp://" stringByAppendingString:string]];
-    if (![NSHost hostWithName:[url host]])
-      return nil;
-    
-    path = [url path];
-    if ([path length] == 0) path = @"/";
-    
-    return [NSURL URLWithScheme:@"ftp" host:[url host] path:path];
-  }
-  else
-  {
-    NSString *path;
-    
-    url = [NSURL URLWithString:[@"http://" stringByAppendingString:string]];
-    if (![NSHost hostWithName:[url host]])
-      return nil;
-    
-    path = [url path];
-    if ([path length] == 0) path = @"/";
-    
-    return [NSURL URLWithScheme:@"http" host:[url host] path:path];
-  }
+  
+  return nil;
 }
 
 @end

@@ -10,7 +10,7 @@
 #import "J3ANSIRemovingFilterTests.h"
 #import "J3TextLoggerTests.h"
 #import "J3HistoryRingTests.h"
-#import "J3URLLinkFilterTests.h"
+#import "J3NaiveURLFilterTests.h"
 
 int
 main (int argc, const char *argv[])
@@ -30,8 +30,8 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[J3FilterQueueTests class]];
   [suite addTestSuite:[J3ANSIRemovingFilterTests class]];
   [suite addTestSuite:[J3HistoryRingTests class]];
+  [suite addTestSuite:[J3NaiveURLFilterTests class]];
   [suite addTestSuite:[J3TextLoggerTests class]];
-  [suite addTestSuite:[J3URLLinkFilterTests class]];
   return suite;
 }
 

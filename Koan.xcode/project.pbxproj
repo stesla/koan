@@ -919,7 +919,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = J3URLLinkFilterTests.h;
+			path = J3NaiveURLFilterTests.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -927,7 +927,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
-			path = J3URLLinkFilterTests.m;
+			path = J3NaiveURLFilterTests.m;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1236,14 +1236,14 @@
 				7E20A8E907486C1300D1A5BF,
 				7EFE43B10749CB16002C7D48,
 				E6E7A6CC074970FE007005AC,
-				E6E7A63D0749698F007005AC,
 				E6505497077EA20E0016F30E,
+				E6E7A63D0749698F007005AC,
 				E62041A806B0566B00236608,
 				7E20A8EB07486C2500D1A5BF,
 				7EFE43B20749CB16002C7D48,
 				E6E7A6CD074970FE007005AC,
-				E6E7A63E0749698F007005AC,
 				E6505498077EA20E0016F30E,
+				E6E7A63E0749698F007005AC,
 				E62041A906B0566B00236608,
 				E6055FB6074929F3007A13BD,
 				E648B8E906B03FBC0070F73E,
@@ -1413,7 +1413,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			path = J3URLLinkFilter.h;
+			path = J3NaiveURLFilter.h;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1421,7 +1421,7 @@
 			fileEncoding = 4;
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.objc;
-			path = J3URLLinkFilter.m;
+			path = J3NaiveURLFilter.m;
 			refType = 4;
 			sourceTree = "<group>";
 		};
@@ -1435,12 +1435,12 @@
 			children = (
 				7E20A8A60748474E00D1A5BF,
 				7EFE43820749C7CE002C7D48,
-				E6E7A62E07496971007005AC,
 				E6C9D604077C2DC6007BB2C1,
+				E6E7A62E07496971007005AC,
 				7E20A8A70748474E00D1A5BF,
 				7EFE43830749C7CE002C7D48,
-				E6E7A6340749697C007005AC,
 				E6C9D605077C2DC6007BB2C1,
+				E6E7A6340749697C007005AC,
 			);
 			isa = PBXGroup;
 			name = Filters;

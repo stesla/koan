@@ -7,8 +7,8 @@
 #import "MUConnectionWindowController.h"
 
 #import "J3AnsiRemovingFilter.h"
+#import "J3NaiveURLFilter.h"
 #import "J3TextLogger.h"
-#import "J3URLLinkFilter.h"
 
 @interface MUConnectionWindowController (Private)
 
@@ -33,7 +33,7 @@
     
     filterQueue = [[J3FilterQueue alloc] init];
     [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
-    //[filterQueue addFilter:[J3URLLinkFilter filter]];
+    [filterQueue addFilter:[J3NaiveURLFilter filter]];
     
     if (world)
     {
