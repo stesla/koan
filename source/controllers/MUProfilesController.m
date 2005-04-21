@@ -145,7 +145,6 @@ enum MUProfilesEditingReturnValues
 	
   [playerNameField setStringValue:@""];
   [playerPasswordField setStringValue:@""];
-  [playerConnectOnAppLaunchButton setState:NSOffState];
   
   [playerEditorSheet makeFirstResponder:playerNameField];
   
@@ -198,7 +197,6 @@ enum MUProfilesEditingReturnValues
   [worldHostnameField setStringValue:@""];
   [worldPortField setStringValue:@""];
   [worldURLField setStringValue:@""];
-  [worldConnectOnAppLaunchButton setState:NSOffState];
   [worldUsesSSLButton setState:NSOffState];
   [worldUsesProxyButton setState:NSOffState];
   [worldProxyHostnameField setStringValue:@""];
@@ -568,10 +566,6 @@ enum MUProfilesEditingReturnValues
   
   [playerNameField setStringValue:[player name]];
   [playerPasswordField setStringValue:[player password]];
-  [playerConnectOnAppLaunchButton setState:
-    ([[[MUServices profileRegistry] profileForWorld:world
-																						 player:player] autoconnect]
-     ? NSOnState : NSOffState)];
   
   [playerEditorSheet makeFirstResponder:playerNameField];
   
@@ -614,9 +608,6 @@ enum MUProfilesEditingReturnValues
   [worldPortField setObjectValue:[world worldPort]];
   [worldURLField setStringValue:[world worldURL]];
   [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
-  [worldConnectOnAppLaunchButton setState:
-    ([[[MUServices profileRegistry] profileForWorld:world] autoconnect]
-     ? NSOnState : NSOffState)];
   
   if (settings)
   {
@@ -716,10 +707,6 @@ enum MUProfilesEditingReturnValues
                                                 password:[playerPasswordField stringValue]
                                                    world:insertionWorld];
     
-    [[[MUServices profileRegistry] profileForWorld:insertionWorld
-																						player:newPlayer]
-      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
-    
 		[insertionWorld insertObject:newPlayer inPlayersAtIndex:insertionIndex];
 		
     [newPlayer release];
@@ -746,10 +733,6 @@ enum MUProfilesEditingReturnValues
 		
 		// Actually replace the old player with the new one.
 		[oldWorld replacePlayer:oldPlayer withPlayer:newPlayer];
-    
-		// Change the autoconnect setting on the corresponding profile.
-    [[[MUServices profileRegistry] profileForWorld:oldWorld player:newPlayer]
-      setAutoconnect:([playerConnectOnAppLaunchButton state] == NSOnState)];
 		
     [newPlayer release];
 		[worldsAndPlayersOutlineView reloadData];
@@ -898,9 +881,6 @@ enum MUProfilesEditingReturnValues
   {
     MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[NSArray array]];
 		unsigned insertionIndex = [(NSNumber *) contextInfo unsignedIntValue];
-    
-    [[[MUServices profileRegistry] profileForWorld:newWorld]
-      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
 		
 		[[MUServices worldRegistry] insertObject:newWorld inWorldsAtIndex:insertionIndex];
 		
@@ -927,10 +907,6 @@ enum MUProfilesEditingReturnValues
 		
 		// Actually replace the old world with the new one.
 		[[MUServices worldRegistry] replaceWorld:oldWorld withWorld:newWorld];
-    
-    // Change the autoconnect setting on the profile for the world alone.
-    [[[MUServices profileRegistry] profileForWorld:oldWorld]
-      setAutoconnect:([worldConnectOnAppLaunchButton state] == NSOnState)];
 		
 		[newWorld release];
 		

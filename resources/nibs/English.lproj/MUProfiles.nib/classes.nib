@@ -22,7 +22,6 @@
             CLASS = MUProfilesController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                playerConnectOnAppLaunchButton = NSButton; 
                 playerEditorSheet = NSWindow; 
                 playerNameField = NSTextField; 
                 playerPasswordField = NSSecureTextField; 
@@ -40,7 +39,6 @@
                 profileTextColorWell = NSColorWell; 
                 profileVisitedLinkColorUseGlobalButton = NSButton; 
                 profileVisitedLinkColorWell = NSColorWell; 
-                worldConnectOnAppLaunchButton = NSButton; 
                 worldEditorSheet = NSWindow; 
                 worldHostnameField = NSTextField; 
                 worldNameField = NSTextField; 

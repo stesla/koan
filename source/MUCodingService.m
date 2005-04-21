@@ -37,9 +37,6 @@ static const int32_t currentWorldVersion = 3;
   
   [player setName:[decoder decodeObjectForKey:@"name"]];
   [player setPassword:[decoder decodeObjectForKey:@"password"]];
-  
-  if (version == 1)
-    [decoder decodeBoolForKey:@"connectOnAppLaunch"];
 }
 
 + (void) encodeProfile:(MUProfile *)profile withCoder:(NSCoder *)encoder
@@ -101,8 +98,6 @@ static const int32_t currentWorldVersion = 3;
   if (version >= 1)
   {
     [world setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
-    if (version < 3)
-      [decoder decodeBoolForKey:@"connectOnAppLaunch"];
   }
   else
   {
