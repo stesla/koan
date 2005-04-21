@@ -4,7 +4,7 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import "Categories/NSFileManager (Recursive).h"
+#import "categories/NSFileManager (Recursive).h"
 #import "J3TextLogger.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"

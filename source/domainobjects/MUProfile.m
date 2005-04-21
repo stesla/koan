@@ -246,6 +246,18 @@
 #pragma mark -
 #pragma mark Accessors for bindings
 
+- (NSData *) effectiveBackgroundColor
+{
+	if (backgroundColor)
+		return [NSArchiver archivedDataWithRootObject:backgroundColor];
+	else
+	{
+		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+		
+		return [[defaults values] valueForKey:MUPBackgroundColor];
+	}
+}
+
 - (NSFont *) effectiveFont
 {
 	if (font)
@@ -264,7 +276,7 @@
 {
 	if (font)
 	{
-		return [NSString stringWithFormat:@"%@ - %@pt", [font displayName], [NSNumber numberWithFloat:[font pointSize]]];
+		return [font fullDisplayName];
 	}
 	else
 	{
@@ -272,31 +284,7 @@
 		NSString *fontName = [[defaults values] valueForKey:MUPFontName];
 		NSNumber *fontSize = [[defaults values] valueForKey:MUPFontSize];
 		
-		return [NSString stringWithFormat:@"%@ - %@pt", [[NSFont fontWithName:fontName size:10.0] displayName], fontSize];
-	}
-}
-
-- (NSData *) effectiveTextColor
-{
-	if (textColor)
-		return [NSArchiver archivedDataWithRootObject:textColor];
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		
-		return [[defaults values] valueForKey:MUPTextColor];
-	}
-}
-
-- (NSData *) effectiveBackgroundColor
-{
-	if (backgroundColor)
-		return [NSArchiver archivedDataWithRootObject:backgroundColor];
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		
-		return [[defaults values] valueForKey:MUPBackgroundColor];
+		return [[NSFont fontWithName:fontName size:[fontSize floatValue]] fullDisplayName];
 	}
 }
 
@@ -304,6 +292,18 @@
 {
 	if (linkColor)
 		return [NSArchiver archivedDataWithRootObject:linkColor];
+	else
+	{
+		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+		
+		return [[defaults values] valueForKey:MUPLinkColor];
+	}
+}
+
+- (NSData *) effectiveTextColor
+{
+	if (textColor)
+		return [NSArchiver archivedDataWithRootObject:textColor];
 	else
 	{
 		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
@@ -320,7 +320,7 @@
 	{
 		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
 		
-		return [[defaults values] valueForKey:MUPTextColor];
+		return [[defaults values] valueForKey:MUPVisitedLinkColor];
 	}
 }
 

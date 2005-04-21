@@ -56,6 +56,7 @@
 				E615A40607D3B38C00FC7F6B,
 				E61C3C9B07B7314E00519A89,
 				E61C3C9C07B7314E00519A89,
+				E63F31BF0815B5C1006C4704,
 			);
 			isa = PBXCopyFilesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -717,6 +718,7 @@
 				E62F2AEA07CD3B5100DC8C1B,
 				E62F2AEB07CD3B5100DC8C1B,
 				E67CBF3207D03FEE004BB3DB,
+				E63F31C00815B5C1006C4704,
 			);
 			isa = PBXSourcesBuildPhase;
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1133,6 +1135,34 @@
 			settings = {
 			};
 		};
+		E63F31BD0815B5C1006C4704 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = "NSFont (FullDisplayName).h";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63F31BE0815B5C1006C4704 = {
+			fileEncoding = 4;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.objc;
+			path = "NSFont (FullDisplayName).m";
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		E63F31BF0815B5C1006C4704 = {
+			fileRef = E63F31BD0815B5C1006C4704;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		E63F31C00815B5C1006C4704 = {
+			fileRef = E63F31BE0815B5C1006C4704;
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
 		E648B8E906B03FBC0070F73E = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.xml;
@@ -1287,12 +1317,14 @@
 				E6055F7C07492729007A13BD,
 				E62E7FA007A1AB5400BF15E9,
 				E6F60DAB0778A3C600E0EBB4,
+				E63F31BD0815B5C1006C4704,
 				E6550DFE07763B72002E81FF,
 				E6550DF807763B57002E81FF,
 				E6505679077ECE760016F30E,
 				E6055F7D07492729007A13BD,
 				E62E7FA107A1AB5400BF15E9,
 				E6F60DAC0778A3C600E0EBB4,
+				E63F31BE0815B5C1006C4704,
 				E6550DFF07763B72002E81FF,
 				E6550DF907763B57002E81FF,
 				E650567A077ECE760016F30E,
@@ -1315,7 +1347,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# shell script goes here\n\nexport PATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\n\ncd $SOURCE_ROOT/resources/\n\nokay=`./update-svnversion.plx < Info.plist > Info.plist~`\nmv Info.plist~ $BUILD_ROOT/Koan.build/Koan.build/Info.plist\n\nexit $okay";
+			shellScript = "# shell script goes here\n\nexport PATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\n\ncd \"$SOURCE_ROOT/resources/\"\n\nokay=`./update-svnversion.plx < Info.plist > Info.plist~`\nmv Info.plist~ \"$TEMP_ROOT/Koan.build/Koan.build/Info.plist\"\n\nexit $okay";
 		};
 		E659F6D00770D4DA00534D1B = {
 			buildPhases = (
@@ -1783,7 +1815,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${BUILD_ROOT}\nfor name in `ls ${SOURCE_ROOT}/frameworks`; do\n\ttar zxvf ${SOURCE_ROOT}/frameworks/${name}\ndone\n";
+			shellScript = "cd \"${BUILD_ROOT}\"\nfor name in `ls \"${SOURCE_ROOT}/frameworks\"`; do\n\ttar zxvf \"${SOURCE_ROOT}/frameworks/${name}\"\ndone\n";
 		};
 		E6967A18078F5C7A0033A4C8 = {
 			buildPhases = (
@@ -1856,7 +1888,8 @@
 				E6F3A713077A1ABD0011A461,
 			);
 			isa = PBXGroup;
-			path = Nibs;
+			name = Nibs;
+			path = nibs;
 			refType = 4;
 			sourceTree = "<group>";
 		};

@@ -16,9 +16,11 @@ extern NSString *MUUpdateURL;
 extern NSString *MUPBackgroundColor;
 extern NSString *MUPFontName;
 extern NSString *MUPFontSize;
+extern NSString *MUPLinkColor;
 extern NSString *MUPTextColor;
 extern NSString *MUPWorlds;
 extern NSString *MUPProfiles;
+extern NSString *MUPVisitedLinkColor;
 
 // Notification constants.
 

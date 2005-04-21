@@ -18,13 +18,21 @@ enum MUProfilesEditingReturnValues
 
 @interface MUProfilesController (Private)
 
+- (IBAction) changeFont:(id)sender;
+- (void) colorPanelColorDidChange:(NSNotification *)notification;
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players;
 - (IBAction) editPlayer:(MUPlayer *)player;
 - (IBAction) editProfile:(MUProfile *)player;
 - (IBAction) editWorld:(MUWorld *)world;
+- (void) globalBackgroundColorDidChange:(NSNotification *)notification;
+- (void) globalFontDidChange:(NSNotification *)notification;
+- (void) globalLinkColorDidChange:(NSNotification *)notification;
+- (void) globalTextColorDidChange:(NSNotification *)notification;
+- (void) globalVisitedLinkColorDidChange:(NSNotification *)notification;
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) profileSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void) registerForNotifications;
 - (IBAction) removePlayer:(MUPlayer *)player;
 - (IBAction) removeWorld:(MUWorld *)world;
 - (void) updateProfilesForWorld:(MUWorld *)world withWorld:(MUWorld *)newWorld;
@@ -56,9 +64,18 @@ enum MUProfilesEditingReturnValues
 	[worldsAndPlayersOutlineView setAutosaveExpandedItems:YES];
   [worldsAndPlayersOutlineView setTarget:self];
   [worldsAndPlayersOutlineView setDoubleAction:@selector(editClickedRow:)];
+	
+	editingFont = nil;
+  
+  backgroundColorActive = NO;
+  linkColorActive = NO;
+  textColorActive = NO;
+  visitedLinkColorActive = NO;
+  
+  [self registerForNotifications];
 }
 
-- (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
+- (BOOL) validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
 	SEL toolbarItemAction = [toolbarItem action];
 	
@@ -216,6 +233,22 @@ enum MUProfilesEditingReturnValues
         contextInfo:[[NSNumber alloc] initWithUnsignedInt:insertionIndex]];
 }
 
+- (IBAction) chooseNewFont:(id)sender
+{
+  NSDictionary *values = [[NSUserDefaultsController sharedUserDefaultsController] values];
+  NSString *fontName = [values valueForKey:MUPFontName];
+  int fontSize = [[values valueForKey:MUPFontSize] floatValue];
+  NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+  
+  if (font == nil)
+  {
+    font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+  }
+  
+  [[NSFontManager sharedFontManager] setSelectedFont:font isMultiple:NO];
+  [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
+}
+
 - (IBAction) editClickedRow:(id)sender
 {
   NSEvent *event = [NSApp currentEvent];
@@ -301,6 +334,65 @@ enum MUProfilesEditingReturnValues
 		[self removePlayer:selectedItem];
 }
 
+- (IBAction) useGlobalBackgroundColor:(id)sender
+{
+  if ([sender state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[defaults values] valueForKey:MUPBackgroundColor]];
+    
+    [profileBackgroundColorWell setColor:color];
+  }
+}
+
+- (IBAction) useGlobalFont:(id)sender
+{
+  if ([sender state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+		NSString *fontName = [[defaults values] valueForKey:MUPFontName];
+		NSNumber *fontSize = [[defaults values] valueForKey:MUPFontSize];
+    
+    [editingFont release];
+    editingFont = nil;
+		
+		[profileFontField setStringValue:[[NSFont fontWithName:fontName size:[fontSize floatValue]] fullDisplayName]];
+  }
+}
+
+- (IBAction) useGlobalLinkColor:(id)sender
+{
+  if ([sender state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[defaults values] valueForKey:MUPLinkColor]];
+    
+    [profileLinkColorWell setColor:color];
+  }
+}
+
+- (IBAction) useGlobalTextColor:(id)sender
+{
+  if ([sender state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[defaults values] valueForKey:MUPTextColor]];
+    
+    [profileTextColorWell setColor:color];
+  }
+}
+
+- (IBAction) useGlobalVisitedLinkColor:(id)sender
+{
+  if ([sender state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[[defaults values] valueForKey:MUPVisitedLinkColor]];
+    
+    [profileVisitedLinkColorWell setColor:color];
+  }
+}
+
 #pragma mark -
 #pragma mark NSOutlineView data source
 
@@ -370,7 +462,7 @@ enum MUProfilesEditingReturnValues
 
 @implementation MUProfilesController (Private)
 
-- (IBAction) changeConnectionFont:(id)sender
+- (IBAction) changeFont:(id)sender
 {
   NSFontManager *fontManager = [NSFontManager sharedFontManager];
   NSFont *selectedFont = [fontManager selectedFont];
@@ -383,8 +475,68 @@ enum MUProfilesEditingReturnValues
 	
   panelFont = [fontManager convertFont:selectedFont];
   
-  [editingProfile setValue:[panelFont fontName] forKey:@"fontName"];
-  [editingProfile setValue:[NSNumber numberWithFloat:[panelFont pointSize]] forKey:@"fontSize"];
+  [profileFontUseGlobalButton setState:NSOffState];
+  [profileFontField setStringValue:[panelFont fullDisplayName]];
+	editingFont = [panelFont copy];
+}
+
+- (void) colorPanelColorDidChange:(NSNotification *)notification
+{
+	if ([profileBackgroundColorWell isActive])
+  {
+    if (backgroundColorActive)
+      [profileBackgroundColorUseGlobalButton setState:NSOffState];
+    else
+    {
+      backgroundColorActive = YES;
+      linkColorActive = NO;
+      textColorActive = NO;
+      visitedLinkColorActive = NO;
+    }
+  }
+	else if ([profileLinkColorWell isActive])
+  {
+    if (linkColorActive)
+      [profileLinkColorUseGlobalButton setState:NSOffState];
+    else
+    {
+      backgroundColorActive = NO;
+      linkColorActive = YES;
+      textColorActive = NO;
+      visitedLinkColorActive = NO;
+    }
+  }
+  else if ([profileTextColorWell isActive])
+  {
+    if (textColorActive)
+      [profileTextColorUseGlobalButton setState:NSOffState];
+    else
+    {
+      backgroundColorActive = NO;
+      linkColorActive = NO;
+      textColorActive = YES;
+      visitedLinkColorActive = NO;
+    }
+  }
+	else if ([profileVisitedLinkColorWell isActive])
+  {
+    if (visitedLinkColorActive)
+      [profileVisitedLinkColorUseGlobalButton setState:NSOffState];
+    else
+    {
+      backgroundColorActive = NO;
+      linkColorActive = NO;
+      textColorActive = NO;
+      visitedLinkColorActive = YES;
+    }
+  }
+  else
+  {
+    backgroundColorActive = NO;
+    linkColorActive = NO;
+    textColorActive = NO;
+    visitedLinkColorActive = NO;
+  }
 }
 
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
@@ -450,7 +602,7 @@ enum MUProfilesEditingReturnValues
      modalForWindow:[self window]
       modalDelegate:self
      didEndSelector:@selector(profileSheetDidEndEditing:returnCode:contextInfo:)
-        contextInfo:profile];
+        contextInfo:nil];
 }
 
 - (IBAction) editWorld:(MUWorld *)world
@@ -492,6 +644,65 @@ enum MUProfilesEditingReturnValues
       modalDelegate:self
      didEndSelector:@selector(worldSheetDidEndEditing:returnCode:contextInfo:)
         contextInfo:world];
+}
+
+- (void) globalBackgroundColorDidChange:(NSNotification *)notification
+{
+  if (editingProfile && [profileBackgroundColorUseGlobalButton state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSData *colorData = [[defaults values] valueForKey:MUPBackgroundColor];
+    
+    [profileBackgroundColorWell setColor:[NSUnarchiver unarchiveObjectWithData:colorData]];
+  }
+}
+
+- (void) globalFontDidChange:(NSNotification *)notification
+{
+  if (editingProfile && [profileFontUseGlobalButton state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+		NSString *fontName = [[defaults values] valueForKey:MUPFontName];
+		NSNumber *fontSize = [[defaults values] valueForKey:MUPFontSize];
+    
+    [editingFont release];
+    editingFont = nil;
+    
+		[profileFontField setStringValue:[[NSFont fontWithName:fontName size:[fontSize floatValue]] fullDisplayName]];
+  }
+}
+
+- (void) globalLinkColorDidChange:(NSNotification *)notification
+{
+  if (editingProfile && [profileBackgroundColorUseGlobalButton state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSData *colorData = [[defaults values] valueForKey:MUPLinkColor];
+    
+    [profileLinkColorWell setColor:[NSUnarchiver unarchiveObjectWithData:colorData]];
+  }
+}
+
+- (void) globalTextColorDidChange:(NSNotification *)notification
+{
+  if (editingProfile && [profileTextColorUseGlobalButton state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSData *colorData = [[defaults values] valueForKey:MUPTextColor];
+    
+    [profileTextColorWell setColor:[NSUnarchiver unarchiveObjectWithData:colorData]];
+  }
+}
+
+- (void) globalVisitedLinkColorDidChange:(NSNotification *)notification
+{
+  if (editingProfile && [profileBackgroundColorUseGlobalButton state] == NSOnState)
+  {
+    NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+    NSData *colorData = [[defaults values] valueForKey:MUPVisitedLinkColor];
+    
+    [profileVisitedLinkColorWell setColor:[NSUnarchiver unarchiveObjectWithData:colorData]];
+  }
 }
 
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
@@ -546,14 +757,79 @@ enum MUProfilesEditingReturnValues
 }
 
 - (void) profileSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
-{
-	[editingProfile release];
-	editingProfile = nil;
-	
+{	
   if (returnCode == MUEditOkay)
   {
-		MUProfile *oldProfile = (MUProfile *) contextInfo;
+    [editingProfile setAutoconnect:([profileAutoconnectButton state] == NSOnState ? YES : NO)];
+    
+    if ([profileBackgroundColorUseGlobalButton state] == NSOnState)
+      [editingProfile setValue:nil forKey:@"backgroundColor"];
+    else
+      [editingProfile setValue:[profileBackgroundColorWell color]
+                        forKey:@"backgroundColor"];
+    
+    if ([profileFontUseGlobalButton state] == NSOnState)
+      [editingProfile setValue:nil forKey:@"font"];
+    else
+      [editingProfile setValue:editingFont forKey:@"font"];
+    
+    if ([profileLinkColorUseGlobalButton state] == NSOnState)
+      [editingProfile setValue:nil forKey:@"linkColor"];
+    else
+      [editingProfile setValue:[profileLinkColorWell color]
+                        forKey:@"linkColor"];
+    
+    if ([profileTextColorUseGlobalButton state] == NSOnState)
+      [editingProfile setValue:nil forKey:@"textColor"];
+    else
+      [editingProfile setValue:[profileTextColorWell color]
+                        forKey:@"textColor"];
+    
+    if ([profileVisitedLinkColorUseGlobalButton state] == NSOnState)
+      [editingProfile setValue:nil forKey:@"visitedLinkColor"];
+    else
+      [editingProfile setValue:[profileVisitedLinkColorWell color]
+                        forKey:@"visitedLinkColor"];
   }
+  
+  [editingProfile release];
+	editingProfile = nil;
+	
+	[editingFont release];
+	editingFont = nil;
+}
+
+- (void) registerForNotifications
+{
+  [[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(colorPanelColorDidChange:)
+                                               name:NSColorPanelColorDidChangeNotification
+                                             object:nil];
+  
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(globalBackgroundColorDidChange:)
+																							 name:MUGlobalBackgroundColorDidChangeNotification
+																						 object:nil];
+		
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(globalFontDidChange:)
+																							 name:MUGlobalFontDidChangeNotification
+																						 object:nil];
+		
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(globalLinkColorDidChange:)
+																							 name:MUGlobalLinkColorDidChangeNotification
+																						 object:nil];
+		
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(globalTextColorDidChange:)
+																							 name:MUGlobalTextColorDidChangeNotification
+																						 object:nil];
+		
+	[[NSNotificationCenter defaultCenter] addObserver:self
+																					 selector:@selector(globalVisitedLinkColorDidChange:)
+																							 name:MUGlobalVisitedLinkColorDidChangeNotification
+																						 object:nil];
 }
 
 - (IBAction) removePlayer:(MUPlayer *)player

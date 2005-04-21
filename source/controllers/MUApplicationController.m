@@ -16,13 +16,15 @@
 
 @interface MUApplicationController (Private)
 
-- (IBAction) changeConnectionFont:(id)sender;
+- (IBAction) changeFont:(id)sender;
 - (void) colorPanelColorDidChange:(NSNotification *)notification;
 - (IBAction) openConnection:(id)sender;
 - (void) openConnectionWithController:(MUConnectionWindowController *)controller;
 - (void) postGlobalBackgroundColorDidChangeNotification;
 - (void) postGlobalFontDidChangeNotification;
+- (void) postGlobalLinkColorDidChangeNotification;
 - (void) postGlobalTextColorDidChangeNotification;
+- (void) postGlobalVisitedLinkColorDidChangeNotification;
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
 - (void) updateApplicationBadge;
 - (void) worldsDidChange:(NSNotification *)notification;
@@ -38,12 +40,13 @@
   NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
   NSMutableDictionary *initialValues = [NSMutableDictionary dictionary];
   NSValueTransformer *transformer = [[FontNameToDisplayNameTransformer alloc] init];
-  
-  [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
-  
   NSData *archivedLightGray = [NSArchiver archivedDataWithRootObject:[NSColor lightGrayColor]];
   NSData *archivedBlack = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
+  NSData *archivedBlue = [NSArchiver archivedDataWithRootObject:[NSColor blueColor]];
+  NSData *archivedPurple = [NSArchiver archivedDataWithRootObject:[NSColor purpleColor]];
   NSFont *fixedFont = [NSFont userFixedPitchFontOfSize:[NSFont smallSystemFontSize]];
+  
+  [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
   
   [defaults setObject:[NSArray array] forKey:MUPWorlds];
   
@@ -52,11 +55,11 @@
   [initialValues setObject:archivedBlack forKey:MUPBackgroundColor];
   [initialValues setObject:[fixedFont fontName] forKey:MUPFontName];
   [initialValues setObject:[NSNumber numberWithFloat:[fixedFont pointSize]] forKey:MUPFontSize];
+  [initialValues setObject:archivedBlue forKey:MUPLinkColor];
   [initialValues setObject:archivedLightGray forKey:MUPTextColor];
+  [initialValues setObject:archivedPurple forKey:MUPVisitedLinkColor];
   
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
-  
-  [[NSFontManager sharedFontManager] setAction:@selector(changeConnectionFont:)];
   
   [MUGrowlService growlService];
   
@@ -259,7 +262,7 @@
 
 @implementation MUApplicationController (Private)
 
-- (IBAction) changeConnectionFont:(id)sender
+- (IBAction) changeFont:(id)sender
 {
   NSFontManager *fontManager = [NSFontManager sharedFontManager];
   NSFont *selectedFont = [fontManager selectedFont];
@@ -287,6 +290,10 @@
 		[self postGlobalTextColorDidChangeNotification];
 	else if ([globalBackgroundColorWell isActive])
 		[self postGlobalBackgroundColorDidChangeNotification];
+	else if ([globalLinkColorWell isActive])
+		[self postGlobalLinkColorDidChangeNotification];
+	else if ([globalVisitedLinkColorWell isActive])
+		[self postGlobalVisitedLinkColorDidChangeNotification];
 }
 
 - (IBAction) openConnection:(id)sender
@@ -321,9 +328,21 @@
 																											object:self];
 }
 
+- (void) postGlobalLinkColorDidChangeNotification
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalLinkColorDidChangeNotification
+																											object:self];
+}
+
 - (void) postGlobalTextColorDidChangeNotification
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
+																											object:self];
+}
+
+- (void) postGlobalVisitedLinkColorDidChangeNotification
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalVisitedLinkColorDidChangeNotification
 																											object:self];
 }
 

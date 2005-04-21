@@ -27,6 +27,11 @@
 	IBOutlet NSButton *profileVisitedLinkColorUseGlobalButton;
   IBOutlet NSButton *profileSaveButton;
 	
+  BOOL backgroundColorActive;
+  BOOL linkColorActive;
+  BOOL textColorActive;
+  BOOL visitedLinkColorActive;
+  
 	MUProfile *editingProfile;
 	NSFont *editingFont;
 	
@@ -54,6 +59,7 @@
 
 - (IBAction) addPlayer:(id)sender;
 - (IBAction) addWorld:(id)sender;
+- (IBAction) chooseNewFont:(id)sender;
 - (IBAction) editClickedRow:(id)sender;
 - (IBAction) editProfileForSelectedRow:(id)sender;
 - (IBAction) editSelectedRow:(id)sender;
@@ -61,5 +67,10 @@
 - (IBAction) endEditingProfile:(id)sender;
 - (IBAction) endEditingWorld:(id)sender;
 - (IBAction) removeSelectedRow:(id)sender;
+- (IBAction) useGlobalBackgroundColor:(id)sender;
+- (IBAction) useGlobalFont:(id)sender;
+- (IBAction) useGlobalLinkColor:(id)sender;
+- (IBAction) useGlobalTextColor:(id)sender;
+- (IBAction) useGlobalVisitedLinkColor:(id)sender;
 
 @end

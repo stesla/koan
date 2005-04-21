@@ -5,7 +5,7 @@
 //
 
 #import "J3NaiveURLFilter.h"
-#import "Categories/NSURL (Allocating).h"
+#import "categories/NSURL (Allocating).h"
 
 @interface J3NaiveURLFilter (Private)
 

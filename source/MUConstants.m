@@ -16,9 +16,11 @@ NSString *MUUpdateURL = @"http://www.3james.com/updates/com.3james.Koan.plist";
 NSString *MUPBackgroundColor = @"MUPBackgroundColor";
 NSString *MUPFontName = @"MUPFontName";
 NSString *MUPFontSize = @"MUPFontSize";
+NSString *MUPLinkColor = @"MUPLinkColor";
 NSString *MUPTextColor = @"MUPTextColor";
 NSString *MUPWorlds = @"MUPWorlds";
 NSString *MUPProfiles = @"MUPProfiles";
+NSString *MUPVisitedLinkColor = @"MUPVisitedLinkColor";
 
 // Notification constants.
 

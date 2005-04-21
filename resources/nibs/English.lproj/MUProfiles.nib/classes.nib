@@ -5,6 +5,7 @@
             ACTIONS = {
                 addPlayer = id; 
                 addWorld = id; 
+                chooseNewFont = id; 
                 editClickedRow = id; 
                 editProfileForSelectedRow = id; 
                 editSelectedRow = id; 
@@ -12,6 +13,11 @@
                 endEditingProfile = id; 
                 endEditingWorld = id; 
                 removeSelectedRow = id; 
+                useGlobalBackgroundColor = id; 
+                useGlobalFont = id; 
+                useGlobalLinkColor = id; 
+                useGlobalTextColor = id; 
+                useGlobalVisitedLinkColor = id; 
             }; 
             CLASS = MUProfilesController; 
             LANGUAGE = ObjC; 
