@@ -164,6 +164,7 @@
 			children = (
 				E6B5E3AA06A6EE0C00F53EBB,
 				E65CE071075438F9003A796A,
+				E60F8DC6080E0801009A2C58,
 				8D1107310486CEB800E47090,
 				E6B5E3B706A6EEA600F53EBB,
 				E62C909E07422669005662BC,
@@ -829,6 +830,14 @@
 			isa = PBXBuildFile;
 			settings = {
 			};
+		};
+		E60F8DC6080E0801009A2C58 = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = com.3james.Koan.plist;
+			refType = 4;
+			sourceTree = "<group>";
 		};
 		E615A3C607D3B2FE00FC7F6B = {
 			isa = PBXFileReference;

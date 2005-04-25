@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>companyAddress</key>
+	<string></string>
+	<key>companyCountry</key>
+	<string>USA</string>
+	<key>companyEmail</key>
+	<string>koan-support@3james.com</string>
+	<key>companyFax</key>
+	<string></string>
+	<key>companyName</key>
+	<string>3James Software</string>
+	<key>companyPhone</key>
+	<string></string>
+	<key>companyWebSite</key>
+	<string>http://www.3james.com/</string>
+	<key>fileBundleID</key>
+	<string>com.3james.Koan</string>
+	<key>fileCreator</key>
+	<string>3jKO</string>
+	<key>fileReleaseDateD</key>
+	<string>13</string>
+	<key>fileReleaseDateM</key>
+	<string>04</string>
+	<key>fileReleaseDateY</key>
+	<string>2005</string>
+	<key>fileType</key>
+	<string>APPL</string>
+	<key>padVersion</key>
+	<string>1</string>
+	<key>productDescLong</key>
+	<string>Koan is a simple, intuitive MU* client for Mac OS X - configurable to your tastes, but usable straight out of the box. Notable features include automatic connections, so that logging on happens right away, and automatic logging which stays out of your way, but ensures that you'll never miss or forget a thing.</string>
+	<key>productDescShort</key>
+	<string>Client for MUDs, MUSHes, MUXes, etc.</string>
+	<key>productDownloadURL</key>
+	<array>
+		<string>http://www.3james.com/koan/download/Koan-1.0a1.dmg</string>
+	</array>
+	<key>productFileSize</key>
+	<string>1.7MB</string>
+	<key>productKeywords</key>
+	<array>
+		<string>mud</string>
+		<string>mush</string>
+		<string>mux</string>
+		<string>game</string>
+		<string>gaming</string>
+	</array>
+	<key>productLanguages</key>
+	<array>
+		<string>English</string>
+	</array>
+	<key>productLicense</key>
+	<string>Beta</string>
+	<key>productName</key>
+	<string>Koan</string>
+	<key>productOS</key>
+	<array>
+		<string>10.3</string>
+		<string>10.4</string>
+	</array>
+	<key>productPageURL</key>
+	<string>http://www.3james.com/koan/</string>
+	<key>productPrice</key>
+	<string></string>
+	<key>productReleaseNotes</key>
+	<string>1.0 Alpha 1: First public release. MacPAD update support added to the client.</string>
+	<key>productRequirements</key>
+	<string>Mac OS 10.3 or later</string>
+	<key>productVersion</key>
+	<string>1.0a1</string>
+</dict>
+</plist>
