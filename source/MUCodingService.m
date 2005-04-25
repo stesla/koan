@@ -8,7 +8,7 @@
 #import "MUCodingService.h"
 #import "MUProfile.h"
 
-static const int32_t currentProfileVersion = 1;
+static const int32_t currentProfileVersion = 2;
 static const int32_t currentPlayerVersion = 2;
 static const int32_t currentWorldVersion = 3;
 
@@ -45,14 +45,30 @@ static const int32_t currentWorldVersion = 3;
 + (void) encodeProfile:(MUProfile *)profile withCoder:(NSCoder *)encoder
 {
   [encoder encodeInt32:currentProfileVersion forKey:@"version"];
-  [encoder encodeBool:[profile autoconnect] forKey:@"autoconnect"];  
+  [encoder encodeBool:[profile autoconnect] forKey:@"autoconnect"];
+	[encoder encodeObject:[[profile font] fontName] forKey:@"fontName"];
+	[encoder encodeFloat:[[profile font] pointSize] forKey:@"fontSize"];
+	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile textColor]] forKey:@"textColor"];
+	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile backgroundColor]] forKey:@"backgroundColor"];
+	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile linkColor]] forKey:@"linkColor"];
+	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile visitedLinkColor]] forKey:@"visitedLinkColor"];
 }
 
 + (void) decodeProfile:(MUProfile *)profile withCoder:(NSCoder *)decoder
 {
-  // Actually assign this after we start caring
-  [decoder decodeInt32ForKey:@"version"];
+  int32_t version = [decoder decodeInt32ForKey:@"version"];
+	
   [profile setAutoconnect:[decoder decodeBoolForKey:@"autoconnect"]];
+	
+	if (version > 1)
+	{
+		[profile setFont:[NSFont fontWithName:[decoder decodeObjectForKey:@"fontName"]
+																		 size:[decoder decodeFloatForKey:@"fontSize"]]];
+		[profile setTextColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"textColor"]]];
+		[profile setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"backgroundColor"]]];
+		[profile setLinkColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"linkColor"]]];
+		[profile setVisitedLinkColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"visitedLinkColor"]]];
+	}
 }
 
 + (void) encodeWorld:(MUWorld *)world withCoder:(NSCoder *)encoder

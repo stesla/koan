@@ -79,7 +79,7 @@
   NSString *format;
   NSRange whitespaceRange;
     
-  whitespaceRange = [[self name] rangeOfCharacterFromSet: [NSCharacterSet whitespaceCharacterSet]];
+  whitespaceRange = [[self name] rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
   if (whitespaceRange.location == NSNotFound)
     format = @"connect %@ %@";
   else

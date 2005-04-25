@@ -13,7 +13,7 @@ if ($_) {
     # Change it
     my $version = `svnversion ..`;
     chomp $version;
-    s#<string>.*</string>#<string>$version</string>#;
+    s#<string>VERSION</string>#<string>$version</string>#;
 
     # Print it out
     print;

@@ -21,7 +21,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 @implementation MUWorldRegistry
 
-+ (id) sharedRegistry
++ (MUWorldRegistry *) sharedRegistry
 {
   if (!sharedRegistry)
   {
@@ -156,7 +156,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 - (void) postWorldsUpdatedNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUWorldsUpdatedNotification
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUWorldsDidChangeNotification
                                                       object:self];
 }
 

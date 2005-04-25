@@ -24,7 +24,12 @@ NSString *MUPProfiles = @"MUPProfiles";
 
 NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";
 NSString *MUConnectionWindowControllerDidReceiveTextNotification = @"MUConnectionWindowControllerDidReceiveTextNotification";
-NSString *MUWorldsUpdatedNotification = @"MUWorldsUpdatedNotification";
+NSString *MUGlobalBackgroundColorDidChangeNotification = @"MUGlobalBackgroundColorDidChangeNotification";
+NSString *MUGlobalFontDidChangeNotification = @"MUGlobalFontDidChangeNotification";
+NSString *MUGlobalLinkColorDidChangeNotification = @"MUGlobalLinkColorDidChangeNotification";
+NSString *MUGlobalTextColorDidChangeNotification = @"MUGlobalTextColorDidChangeNotification";
+NSString *MUGlobalVisitedLinkColorDidChangeNotification = @"MUGlobalVisitedLinkColorDidChangeNotification";
+NSString *MUWorldsDidChangeNotification = @"MUWorldsDidChangeNotification";
 
 // Toolbar item constants.
 
@@ -32,6 +37,7 @@ NSString *MUAddWorldToolbarItem = @"MUAddWorldToolbarItem";
 NSString *MUAddPlayerToolbarItem = @"MUAddPlayerToolbarItem";
 NSString *MUEditSelectedRowToolbarItem = @"MUEditSelectedRowToolbarItem";
 NSString *MURemoveSelectedRowToolbarItem = @"MURemoveSelectedRowToolbarItem";
+NSString *MUEditProfileForSelectedRowToolbarItem = @"MUEditProfileForSelectedRowToolbarItem";
 
 // Toolbar item localization constants.
 
@@ -43,6 +49,7 @@ NSString *MULEditPlayer = @"EditPlayer";
 NSString *MULRemoveItem = @"RemoveItem";
 NSString *MULRemoveWorld = @"RemoveWorld";
 NSString *MULRemovePlayer = @"RemovePlayer";
+NSString *MULEditProfile = @"EditProfile";
 
 // Growl localization constants.
 

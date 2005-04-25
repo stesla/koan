@@ -10,8 +10,18 @@
 
 @interface MUApplicationController : NSObject
 {
-  IBOutlet NSPanel *preferencesPanel;
   IBOutlet NSMenu *openConnectionMenu;
+	
+  IBOutlet NSPanel *preferencesPanel;
+	IBOutlet NSColorWell *globalTextColorWell;
+	IBOutlet NSColorWell *globalBackgroundColorWell;
+	IBOutlet NSColorWell *globalLinkColorWell;
+	IBOutlet NSColorWell *globalVisitedLinkColorWell;
+	
+	IBOutlet NSPanel *newConnectionPanel;
+	IBOutlet NSTextField *newConnectionHostnameField;
+	IBOutlet NSTextField *newConnectionPortField;
+	IBOutlet NSButton *newConnectionSaveWorldButton;
   
   unsigned unreadCount;
   
@@ -21,8 +31,10 @@
 
 - (IBAction) changeGlobalFont:(id)sender;
 - (IBAction) chooseNewFont:(id)sender;
+- (IBAction) connectUsingPanelInformation:(id)sender;
 - (IBAction) openBugsWebPage:(id)sender;
-- (IBAction) showPreferences:(id)sender;
-- (IBAction) showProfiles:(id)sender;
+- (IBAction) openNewConnectionPanel:(id)sender;
+- (IBAction) showPreferencesPanel:(id)sender;
+- (IBAction) showProfilesPanel:(id)sender;
 
 @end

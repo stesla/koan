@@ -25,14 +25,13 @@
   
   BOOL currentlySearching;
   
-  NSDictionary *baseAttributes;
   NSTimer *pingTimer;
   J3FilterQueue *filterQueue;
   J3HistoryRing *historyRing;
 }
 
 // Designated initializer.
-- (id) initWithProfile:(MUProfile*)newProfile;
+- (id) initWithProfile:(MUProfile *)newProfile;
 
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 - (id) initWithWorld:(MUWorld *)newWorld;

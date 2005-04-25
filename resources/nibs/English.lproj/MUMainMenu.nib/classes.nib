@@ -1,7 +1,7 @@
 {
     IBClasses = (
         {
-            ACTIONS = {connectOrDisconnect = id; }; 
+            ACTIONS = {clearWindow = id; connectOrDisconnect = id; }; 
             CLASS = FirstResponder; 
             LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
@@ -10,13 +10,26 @@
             ACTIONS = {
                 changeGlobalFont = id; 
                 chooseNewFont = id; 
+                connectUsingPanelInformation = id; 
                 openBugsWebPage = id; 
-                showPreferences = id; 
-                showProfiles = id; 
+                openNewConnectionPanel = id; 
+                showPreferencesPanel = id; 
+                showProfilesPanel = id; 
             }; 
             CLASS = MUApplicationController; 
             LANGUAGE = ObjC; 
-            OUTLETS = {openConnectionMenu = NSMenu; preferencesPanel = NSPanel; }; 
+            OUTLETS = {
+                globalBackgroundColorWell = NSColorWell; 
+                globalLinkColorWell = NSColorWell; 
+                globalTextColorWell = NSColorWell; 
+                globalVisitedLinkColorWell = NSColorWell; 
+                newConnectionHostnameField = NSTextField; 
+                newConnectionPanel = NSPanel; 
+                newConnectionPortField = NSTextField; 
+                newConnectionSaveWorldButton = NSButton; 
+                openConnectionMenu = NSMenu; 
+                preferencesPanel = NSPanel; 
+            }; 
             SUPERCLASS = NSObject; 
         }, 
         {

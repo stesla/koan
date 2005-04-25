@@ -10,24 +10,12 @@
 
 @implementation J3PortFormatter
 
-- (NSString *) stringForObjectValue:(id)object
-{
-  NSNumber *number = (NSNumber *) object;
-  int value = [number intValue];
-  
-  if (value == 0 || number == nil)
-    return nil;
-  
-  else return [number description];
-}
-
 - (BOOL) getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error
 {
   int intResult;
   NSScanner *scanner;
   
-  if ([string compare:@""] == NSOrderedSame ||
-      string == nil)
+  if ([string compare:@""] == NSOrderedSame || string == nil)
   {
     if (object)
       *object = [NSNumber numberWithInt:0];
@@ -47,6 +35,50 @@
   //  *error = NSLocalizedString (GBLErrorConverting, nil);
   
   return NO;
+}
+
+- (BOOL) isPartialStringValid:(NSString *)partialString newEditingString:(NSString **)newString errorDescription:(NSString **)error
+{
+  int intResult;
+  NSScanner *scanner;
+	
+	if ([partialString compare:@""] == NSOrderedSame || partialString == nil)
+  {
+		return YES;
+	}
+	
+  scanner = [NSScanner scannerWithString:partialString];
+	
+  if (!([scanner scanInt:&intResult] && [scanner isAtEnd]))
+  {
+    *newString = nil;
+    return NO;
+  }
+	
+	if (intResult > 65535)
+	{
+		*newString = @"65535";
+		return NO;
+	}
+	
+	if (intResult < 0)
+	{
+    *newString = nil;
+    return NO;
+	}
+  
+  return YES;
+}
+
+- (NSString *) stringForObjectValue:(id)object
+{
+  NSNumber *number = (NSNumber *) object;
+  int value = [number intValue];
+  
+  if (value == 0 || number == nil)
+    return nil;
+  
+  else return [number description];
 }
 
 @end

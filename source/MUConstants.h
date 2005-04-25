@@ -24,7 +24,12 @@ extern NSString *MUPProfiles;
 
 extern NSString *MUConnectionWindowControllerWillCloseNotification;
 extern NSString *MUConnectionWindowControllerDidReceiveTextNotification;
-extern NSString *MUWorldsUpdatedNotification;
+extern NSString *MUGlobalBackgroundColorDidChangeNotification;
+extern NSString *MUGlobalFontDidChangeNotification;
+extern NSString *MUGlobalLinkColorDidChangeNotification;
+extern NSString *MUGlobalTextColorDidChangeNotification;
+extern NSString *MUGlobalVisitedLinkColorDidChangeNotification;
+extern NSString *MUWorldsDidChangeNotification;
 
 // Toolbar item constants.
 
@@ -32,6 +37,7 @@ extern NSString *MUAddWorldToolbarItem;
 extern NSString *MUAddPlayerToolbarItem;
 extern NSString *MUEditSelectedRowToolbarItem;
 extern NSString *MURemoveSelectedRowToolbarItem;
+extern NSString *MUEditProfileForSelectedRowToolbarItem;
 
 // Toolbar item localization constants.
 
@@ -43,6 +49,7 @@ extern NSString *MULEditPlayer;
 extern NSString *MULRemoveItem;
 extern NSString *MULRemoveWorld;
 extern NSString *MULRemovePlayer;
+extern NSString *MULEditProfile;
 
 // Growl constants.
 

@@ -11,7 +11,9 @@
 #import "MUCodingService.h"
 
 @interface MUWorld (Private)
-- (void) postWorldsUpdatedNotification;
+
+- (void) postWorldsDidChangeNotification;
+
 @end
 
 #pragma mark -
@@ -145,7 +147,7 @@
   
   [players release];
   players = copy;
-  [self postWorldsUpdatedNotification];
+  [self postWorldsDidChangeNotification];
 }
 
 - (int) indexOfPlayer:(MUPlayer *)player
@@ -168,13 +170,13 @@
 - (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index
 {
   [players insertObject:player atIndex:index];
-  [self postWorldsUpdatedNotification];
+  [self postWorldsDidChangeNotification];
 }
 
 - (void) removeObjectFromPlayersAtIndex:(unsigned)index
 {
   [players removeObjectAtIndex:index];
-  [self postWorldsUpdatedNotification];
+  [self postWorldsDidChangeNotification];
 }
 
 - (void) addPlayer:(MUPlayer *)player
@@ -183,7 +185,7 @@
   {
     [players addObject:player];
     [player setWorld:self];
-		[self postWorldsUpdatedNotification];
+		[self postWorldsDidChangeNotification];
   }
 }
 
@@ -196,7 +198,7 @@
 {
   [player setWorld:nil];
   [players removeObject:player];
-	[self postWorldsUpdatedNotification];
+	[self postWorldsDidChangeNotification];
 }
 
 - (void) replacePlayer:(MUPlayer *)oldPlayer withPlayer:(MUPlayer *)newPlayer
@@ -210,7 +212,7 @@
 		if (player == oldPlayer)
 		{
 			[players replaceObjectAtIndex:i withObject:newPlayer];
-			[self postWorldsUpdatedNotification];
+			[self postWorldsDidChangeNotification];
 			break;
 		}
 	}
@@ -291,9 +293,9 @@
 
 @implementation MUWorld (Private)
 
-- (void) postWorldsUpdatedNotification
+- (void) postWorldsDidChangeNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUWorldsUpdatedNotification
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUWorldsDidChangeNotification
                                                       object:self];
 }
 

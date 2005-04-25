@@ -14,8 +14,15 @@
 {
   MUWorld *world;
   MUPlayer *player;
+	
   BOOL loggedIn;
   BOOL autoconnect;
+	
+	NSFont *font;
+	NSColor *textColor;
+	NSColor *backgroundColor;
+	NSColor *linkColor;
+	NSColor *visitedLinkColor;
 }
 
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld 
@@ -26,8 +33,17 @@
 
 // Designated initializer.
 - (id) initWithWorld:(MUWorld *)newWorld 
-              player:(MUPlayer *)newPlayenewAutoconnectr
-         autoconnect:(BOOL)autoconnect;
+              player:(MUPlayer *)newPlayer
+         autoconnect:(BOOL)newAutoconnect
+								font:(NSFont *)newFont
+					 textColor:(NSColor *)newTextColor
+		 backgroundColor:(NSColor *)newBackgroundColor
+					 linkColor:(NSColor *)newLinkColor
+		visitedLinkColor:(NSColor *)newVisitedLinkColor;
+
+- (id) initWithWorld:(MUWorld *)newWorld 
+              player:(MUPlayer *)newPlayer
+         autoconnect:(BOOL)newAutoconnect;
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 - (id) initWithWorld:(MUWorld *)newWorld;
 
@@ -38,6 +54,16 @@
 - (void) setPlayer:(MUPlayer *)newPlayer;
 - (BOOL) autoconnect;
 - (void) setAutoconnect:(BOOL)newAutoconnect;
+- (NSFont *) font;
+- (void) setFont:(NSFont *)newFont;
+- (NSColor *) textColor;
+- (void) setTextColor:(NSColor *)newTextColor;
+- (NSColor *) backgroundColor;
+- (void) setBackgroundColor:(NSColor *)newBackgroundColor;
+- (NSColor *) linkColor;
+- (void) setLinkColor:(NSColor *)newLinkColor;
+- (NSColor *) visitedLinkColor;
+- (void) setVisitedLinkColor:(NSColor *)newVisitedLinkColor;
 
 // Actions.
 - (NSString *) hostname;

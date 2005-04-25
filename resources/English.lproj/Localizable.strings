@@ -16,6 +16,7 @@
 "RemoveItem" = "Remove Item";
 "RemoveWorld" = "Remove World";
 "RemovePlayer" = "Remove Player";
+"EditProfile" = "Edit Profile";
 
 // Growl messages.
 

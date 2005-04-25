@@ -12,6 +12,9 @@
 {
   IBOutlet NSOutlineView *worldsAndPlayersOutlineView;
 	
+	IBOutlet NSWindow *profileEditorSheet;
+  IBOutlet NSButton *profileSaveButton;
+	
   IBOutlet NSWindow *worldEditorSheet;
   IBOutlet NSTextField *worldNameField;
   IBOutlet NSTextField *worldHostnameField;
@@ -37,8 +40,10 @@
 - (IBAction) addPlayer:(id)sender;
 - (IBAction) addWorld:(id)sender;
 - (IBAction) editClickedRow:(id)sender;
+- (IBAction) editProfileForSelectedRow:(id)sender;
 - (IBAction) editSelectedRow:(id)sender;
 - (IBAction) endEditingPlayer:(id)sender;
+- (IBAction) endEditingProfile:(id)sender;
 - (IBAction) endEditingWorld:(id)sender;
 - (IBAction) removeSelectedRow:(id)sender;
 

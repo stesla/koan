@@ -5,6 +5,7 @@
 //
 
 #import "FontNameToDisplayNameTransformer.h"
+#import "J3PortFormatter.h"
 #import "MUApplicationController.h"
 #import "MUConnectionWindowController.h"
 #import "MUGrowlService.h"
@@ -15,10 +16,12 @@
 
 @interface MUApplicationController (Private)
 
+- (void) colorPanelColorDidChange:(NSNotification *)notification;
 - (IBAction) openConnection:(id)sender;
-- (void) handleWorldsUpdatedNotification:(NSNotification *)notification;
+- (void) openConnectionWithController:(MUConnectionWindowController *)controller;
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
 - (void) updateApplicationBadge;
+- (void) worldsDidChange:(NSNotification *)notification;
 
 @end
 
@@ -55,11 +58,16 @@
   
   // Launching the Growl service causes Koan to be polite and not activate
   // so we have to tell it that, no, really, it can go ahead.
+	//
+	// Commented out by Tyler in the belief that Growl 0.6 fixes this behavior.
+	//
   // [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (void) awakeFromNib
 {
+	J3PortFormatter *newConnectionPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
+	
   [MUServices profileRegistry];
   [MUServices worldRegistry];
   
@@ -67,9 +75,16 @@
   
   [self rebuildConnectionsMenuWithAutoconnect:YES];
   
+  [newConnectionPortField setFormatter:newConnectionPortFormatter];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+                                           selector:@selector(colorPanelColorDidChange:)
+                                               name:NSColorPanelColorDidChangeNotification
+                                             object:nil];
+  
   [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(handleWorldsUpdatedNotification:)
-                                               name:MUWorldsUpdatedNotification
+                                           selector:@selector(worldsDidChange:)
+                                               name:MUWorldsDidChangeNotification
                                              object:nil];
   
   unreadCount = 0;
@@ -93,18 +108,21 @@
   NSFont *selectedFont = [fontManager selectedFont];
   NSFont *panelFont;
   NSNumber *fontSize;
+	id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
   
   if (selectedFont == nil)
   {
     selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
   }
+	
   panelFont = [fontManager convertFont:selectedFont];
-  
   fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];	
   
-  id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
   [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
   [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalFontDidChangeNotification
+																											object:self];
 }
 
 - (IBAction) chooseNewFont:(id)sender
@@ -123,17 +141,50 @@
   [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
 }
 
+- (IBAction) connectUsingPanelInformation:(id)sender
+{
+	MUConnectionWindowController *controller;
+	MUWorld *world = [[MUWorld alloc] initWithWorldName:[newConnectionHostnameField stringValue]
+																				worldHostname:[newConnectionHostnameField stringValue]
+																						worldPort:[NSNumber numberWithInt:[newConnectionPortField intValue]]
+																						 worldURL:@""
+																							usesSSL:NO
+																				proxySettings:nil
+																							players:nil];
+  controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+	
+	if ([newConnectionSaveWorldButton state] == NSOnState)
+	{
+		// FIXME : save a new world and profile here.
+	}
+	
+	[self openConnectionWithController:controller];
+	[newConnectionPanel close];
+	
+	[world release];
+  [controller release];
+}
+
 - (IBAction) openBugsWebPage:(id)sender
 {
   [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://bugs.3james.com/"]];
 }
 
-- (IBAction) showPreferences:(id)sender
+- (IBAction) openNewConnectionPanel:(id)sender
+{
+	[newConnectionHostnameField setObjectValue:nil];
+	[newConnectionPortField setObjectValue:nil];
+	[newConnectionSaveWorldButton setState:NSOffState];
+	[newConnectionPanel makeFirstResponder:newConnectionHostnameField];
+  [newConnectionPanel makeKeyAndOrderFront:self];
+}
+
+- (IBAction) showPreferencesPanel:(id)sender
 {
   [preferencesPanel makeKeyAndOrderFront:self];
 }
 
-- (IBAction) showProfiles:(id)sender
+- (IBAction) showProfilesPanel:(id)sender
 {
   if (!profilesController)
   {
@@ -227,23 +278,38 @@
 
 @implementation MUApplicationController (Private)
 
-- (void) handleWorldsUpdatedNotification:(NSNotification *)notification
+- (void) colorPanelColorDidChange:(NSNotification *)notification
 {
-  [self rebuildConnectionsMenuWithAutoconnect:NO];
+	if ([globalTextColorWell isActive])
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
+																												object:self];
+	}
+	else if ([globalBackgroundColorWell isActive])
+	{
+		[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalBackgroundColorDidChangeNotification
+																												object:self];
+	}
 }
 
 - (IBAction) openConnection:(id)sender
 {
-  MUConnectionWindowController *controller;
+	MUConnectionWindowController *controller;
   MUProfile *profile = [sender representedObject];
   controller = [[MUConnectionWindowController alloc] initWithProfile:profile];
+	
+	[self openConnectionWithController:controller];
+	
+  [controller release];
+}
 
+- (void) openConnectionWithController:(MUConnectionWindowController *)controller
+{
   [controller setDelegate:self];
   
   [connectionWindowControllers addObject:controller];
   [controller showWindow:self];
-  [controller connect:sender];
-  [controller release];
+  [controller connect:nil];
 }
 
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
@@ -398,6 +464,11 @@
   
   [NSApp setApplicationIconImage:newAppImage];
   [newAppImage release];
+}
+
+- (void) worldsDidChange:(NSNotification *)notification
+{
+  [self rebuildConnectionsMenuWithAutoconnect:NO];
 }
 
 @end

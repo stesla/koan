@@ -58,6 +58,14 @@
 		[item setTarget:windowController];
 		[item setAction:@selector(removeSelectedRow:)];
 	}
+	else if ([itemIdentifier isEqualToString:MUEditProfileForSelectedRowToolbarItem])
+	{
+		[item setLabel:NSLocalizedString (MULEditProfile, nil)];
+		[item setPaletteLabel:NSLocalizedString (MULEditProfile, nil)];
+		[item setImage:nil];
+		[item setTarget:windowController];
+		[item setAction:@selector(editProfileForSelectedRow:)];
+	}
 	
   return [item autorelease];
 }
@@ -71,6 +79,7 @@
 		MURemoveSelectedRowToolbarItem,
     NSToolbarFlexibleSpaceItemIdentifier,
     NSToolbarCustomizeToolbarItemIdentifier,
+		MUEditProfileForSelectedRowToolbarItem,
     nil];
 }
 
@@ -85,6 +94,7 @@
 		MUAddPlayerToolbarItem,
 		MUEditSelectedRowToolbarItem,
 		MURemoveSelectedRowToolbarItem,
+		MUEditProfileForSelectedRowToolbarItem,
     nil];
 }
 

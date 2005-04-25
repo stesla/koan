@@ -20,9 +20,11 @@ enum MUProfilesEditingReturnValues
 
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players;
 - (IBAction) editPlayer:(MUPlayer *)player;
+- (IBAction) editProfile:(MUProfile *)player;
 - (IBAction) editWorld:(MUWorld *)world;
 - (void) playerSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) playerSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void) profileSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (IBAction) removePlayer:(MUPlayer *)player;
 - (IBAction) removeWorld:(MUWorld *)world;
 - (void) updateProfilesForWorld:(MUWorld *)world withWorld:(MUWorld *)newWorld;
@@ -64,7 +66,8 @@ enum MUProfilesEditingReturnValues
 	{
 		return YES;
 	}
-	else if (toolbarItemAction == @selector(addPlayer:))
+	else if (toolbarItemAction == @selector(addPlayer:) ||
+					 toolbarItemAction == @selector(editProfileForSelectedRow:))
 	{
 		if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
 			return NO;
@@ -109,6 +112,7 @@ enum MUProfilesEditingReturnValues
 			return YES;
 		}
 	}
+	
 	return NO;
 }
 
@@ -230,16 +234,21 @@ enum MUProfilesEditingReturnValues
 		[self editPlayer:clickedItem];
 }
 
-- (IBAction) endEditingPlayer:(id)sender
+- (IBAction) editProfileForSelectedRow:(id)sender
 {
-  [playerEditorSheet orderOut:sender];
-  [NSApp endSheet:playerEditorSheet returnCode:(sender == playerSaveButton ? MUEditOkay : MUEditCancel)];
-}
-
-- (IBAction) endEditingWorld:(id)sender
-{
-  [worldEditorSheet orderOut:sender];
-  [NSApp endSheet:worldEditorSheet returnCode:(sender == worldSaveButton ? MUEditOkay : MUEditCancel)];
+	int selectedRow = [worldsAndPlayersOutlineView selectedRow];
+	id selectedItem;
+	
+	if (selectedRow == -1)
+		return;
+	
+	selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
+	
+	if ([selectedItem isKindOfClass:[MUWorld class]])
+		[self editProfile:[[MUProfileRegistry sharedRegistry] profileForWorld:selectedItem]];
+	else if ([selectedItem isKindOfClass:[MUPlayer class]])
+		[self editProfile:[[MUProfileRegistry sharedRegistry] profileForWorld:[(MUPlayer *) selectedItem world]
+																																	 player:selectedItem]];
 }
 
 - (IBAction) editSelectedRow:(id)sender
@@ -256,6 +265,24 @@ enum MUProfilesEditingReturnValues
 		[self editWorld:selectedItem];
 	else if ([selectedItem isKindOfClass:[MUPlayer class]])
 		[self editPlayer:selectedItem];
+}
+
+- (IBAction) endEditingPlayer:(id)sender
+{
+  [playerEditorSheet orderOut:sender];
+  [NSApp endSheet:playerEditorSheet returnCode:(sender == playerSaveButton ? MUEditOkay : MUEditCancel)];
+}
+
+- (IBAction) endEditingProfile:(id)sender
+{
+  [profileEditorSheet orderOut:sender];
+  [NSApp endSheet:profileEditorSheet returnCode:(sender == profileSaveButton ? MUEditOkay : MUEditCancel)];
+}
+
+- (IBAction) endEditingWorld:(id)sender
+{
+  [worldEditorSheet orderOut:sender];
+  [NSApp endSheet:worldEditorSheet returnCode:(sender == worldSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
 - (IBAction) removeSelectedRow:(id)sender
@@ -386,6 +413,15 @@ enum MUProfilesEditingReturnValues
         contextInfo:player];
 }
 
+- (IBAction) editProfile:(MUProfile *)profile
+{
+	[NSApp beginSheet:profileEditorSheet
+     modalForWindow:[self window]
+      modalDelegate:self
+     didEndSelector:@selector(profileSheetDidEndEditing:returnCode:contextInfo:)
+        contextInfo:profile];
+}
+
 - (IBAction) editWorld:(MUWorld *)world
 {
   J3ProxySettings *settings = [world proxySettings];
@@ -475,6 +511,14 @@ enum MUProfilesEditingReturnValues
 		
     [newPlayer release];
 		[worldsAndPlayersOutlineView reloadData];
+  }
+}
+
+- (void) profileSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+  if (returnCode == MUEditOkay)
+  {
+		MUProfile *oldProfile = (MUProfile *) contextInfo;
   }
 }
 

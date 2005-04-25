@@ -23,6 +23,7 @@ enum MUSearchDirections
 - (void) displayString:(NSString *)string;
 - (void) endCompletion;
 - (void) sendPeriodicPing:(NSTimer *)timer;
+- (NSString *) splitViewAutosaveName;
 - (void) tabCompleteWithDirection:(enum MUSearchDirections)direction;
 @end
 
@@ -39,7 +40,7 @@ enum MUSearchDirections
     historyRing = [[J3HistoryRing alloc] init];
     
     filterQueue = [[J3FilterQueue alloc] init];
-//    [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
+//  [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
     [filterQueue addFilter:[J3NaiveURLFilter filter]];
     [filterQueue addFilter:[J3NaiveANSIFilter filter]];
     [filterQueue addFilter:[self createLogger]];
@@ -61,30 +62,47 @@ enum MUSearchDirections
 {
   NSDictionary *bindingOptions = [NSDictionary dictionaryWithObject:NSUnarchiveFromDataTransformerName
                                                              forKey:@"NSValueTransformerName"];
-  
-  [receivedTextView bind:@"backgroundColor"
-                toObject:[NSUserDefaultsController sharedUserDefaultsController]
-             withKeyPath:@"values.MUPBackgroundColor"
+	
+	[receivedTextView bind:@"font"
+                toObject:profile
+             withKeyPath:@"effectiveFont"
+                 options:nil];
+  [inputView bind:@"font"
+         toObject:profile
+      withKeyPath:@"effectiveFont"
+          options:nil];
+	
+	[receivedTextView bind:@"textColor"
+                toObject:profile
+             withKeyPath:@"effectiveTextColor"
+                 options:bindingOptions];
+  [inputView bind:@"textColor"
+         toObject:profile
+      withKeyPath:@"effectiveTextColor"
+          options:bindingOptions];
+	
+	[receivedTextView bind:@"backgroundColor"
+                toObject:profile
+             withKeyPath:@"effectiveBackgroundColor"
                  options:bindingOptions];
   [inputView bind:@"backgroundColor"
-         toObject:[NSUserDefaultsController sharedUserDefaultsController]
-      withKeyPath:@"values.MUPBackgroundColor"
+         toObject:profile
+      withKeyPath:@"effectiveBackgroundColor"
           options:bindingOptions];
+	
   [inputView bind:@"insertionPointColor"
-         toObject:[NSUserDefaultsController sharedUserDefaultsController]
-      withKeyPath:@"values.MUPTextColor"
+         toObject:profile
+      withKeyPath:@"effectiveTextColor"
           options:bindingOptions];
   
   [[self window] setTitle:[profile windowTitle]];
   [[self window] setFrameAutosaveName:[profile uniqueIdentifier]];
   [[self window] setFrameUsingName:[profile uniqueIdentifier]];
 
-  [splitView setAutosaveName:[NSString stringWithFormat:@"%@.split", [profile uniqueIdentifier]]
+  [splitView setAutosaveName:[self splitViewAutosaveName]
                  recursively:YES];
   [splitView restoreState:YES];
   [splitView adjustSubviews];
-  
-  baseAttributes = [[receivedTextView typingAttributes] copy];
   
   currentlySearching = NO;
 }
@@ -92,7 +110,6 @@ enum MUSearchDirections
 - (void) dealloc
 {
   [self disconnect:nil];
-  [baseAttributes release];
   [filterQueue release];
   [historyRing release];
   [profile release];
@@ -109,6 +126,10 @@ enum MUSearchDirections
       [menuItem setTitle:MULConnect];
     return YES;
   }
+	else if ([menuItem action] == @selector(clearWindow:))
+	{
+		return YES;
+	}
   return NO;
 }
 
@@ -152,6 +173,11 @@ enum MUSearchDirections
 
 #pragma mark -
 #pragma mark Actions
+
+- (IBAction) clearWindow:(id)sender
+{
+	[receivedTextView setString:@""];
+}
 
 - (IBAction) connect:(id)sender
 {
@@ -454,7 +480,7 @@ enum MUSearchDirections
 {
   NSAttributedString *unfilteredString =
   [NSAttributedString attributedStringWithString:string
-                                      attributes:baseAttributes];
+                                      attributes:[receivedTextView typingAttributes]];
   NSAttributedString *filteredString = [filterQueue processAttributedString:unfilteredString];
   NSTextStorage *textStorage = [receivedTextView textStorage];
   float scrollerPosition = 
@@ -481,6 +507,11 @@ enum MUSearchDirections
 - (void) sendPeriodicPing:(NSTimer *)timer
 {
   [telnetConnection sendLine:@"@pemit me="];
+}
+
+- (NSString *) splitViewAutosaveName
+{
+	return [NSString stringWithFormat:@"%@.split", [profile uniqueIdentifier]];
 }
 
 - (void) tabCompleteWithDirection:(enum MUSearchDirections)direction

@@ -6,8 +6,10 @@
                 addPlayer = id; 
                 addWorld = id; 
                 editClickedRow = id; 
+                editProfileForSelectedRow = id; 
                 editSelectedRow = id; 
                 endEditingPlayer = id; 
+                endEditingProfile = id; 
                 endEditingWorld = id; 
                 removeSelectedRow = id; 
             }; 
@@ -19,6 +21,8 @@
                 playerNameField = NSTextField; 
                 playerPasswordField = NSSecureTextField; 
                 playerSaveButton = NSButton; 
+                profileEditorSheet = NSWindow; 
+                profileSaveButton = NSButton; 
                 worldConnectOnAppLaunchButton = NSButton; 
                 worldEditorSheet = NSWindow; 
                 worldHostnameField = NSTextField; 

@@ -7,12 +7,16 @@
 #import "MUProfileRegistry.h"
 #import "MUProfile.h"
 
-static MUProfileRegistry * sharedRegistry = nil;
+static MUProfileRegistry *sharedRegistry = nil;
 
 @interface MUProfileRegistry (Private)
+
 - (void) readProfilesFromUserDefaults;
 - (void) writeProfilesToUserDefaults;
+
 @end
+
+#pragma mark -
 
 @implementation MUProfileRegistry
 
@@ -144,7 +148,10 @@ static MUProfileRegistry * sharedRegistry = nil;
 
 @end
 
+#pragma mark -
+
 @implementation MUProfileRegistry (Private)
+
 - (void) readProfilesFromUserDefaults
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -161,7 +168,7 @@ static MUProfileRegistry * sharedRegistry = nil;
 {
   NSData *data = [NSKeyedArchiver archivedDataWithRootObject:profiles];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:data forKey:MUPProfiles];  
+  [defaults setObject:data forKey:MUPProfiles];
 }
-@end
 
+@end
