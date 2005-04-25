@@ -60,19 +60,19 @@ static MUWorldRegistry *sharedRegistry = nil;
   NSMutableArray *copy = [newWorlds mutableCopy];
   [worlds release];
   worlds = copy;
-  [self postWorldsUpdatedNotification];
+  [self postWorldsDidChangeNotification];
 }
 
 - (void) insertObject:(MUWorld *)world inWorldsAtIndex:(unsigned)index
 {
   [worlds insertObject:world atIndex:index];
-  [self postWorldsUpdatedNotification];
+  [self postWorldsDidChangeNotification];
 }
 
 - (void) removeObjectFromWorldsAtIndex:(unsigned)index
 {
   [worlds removeObjectAtIndex:index];
-  [self postWorldsUpdatedNotification];
+  [self postWorldsDidChangeNotification];
 }
 
 #pragma mark -
@@ -103,7 +103,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 - (void) removeWorld:(MUWorld *)world
 {
 	[worlds removeObject:world];
-	[self postWorldsUpdatedNotification];
+	[self postWorldsDidChangeNotification];
 }
 
 - (void) replaceWorld:(MUWorld *)oldWorld withWorld:(MUWorld *)newWorld
@@ -117,7 +117,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 		if (world == oldWorld)
 		{
 			[worlds replaceObjectAtIndex:i withObject:newWorld];
-			[self postWorldsUpdatedNotification];
+			[self postWorldsDidChangeNotification];
 			break;
 		}
 	}

@@ -16,6 +16,7 @@
 
 @interface MUApplicationController (Private)
 
+- (IBAction) changeConnectionFont:(id)sender;
 - (void) colorPanelColorDidChange:(NSNotification *)notification;
 - (IBAction) openConnection:(id)sender;
 - (void) openConnectionWithController:(MUConnectionWindowController *)controller;
@@ -55,7 +56,7 @@
   
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
   
-  [[NSFontManager sharedFontManager] setAction:@selector(changeGlobalFont:)];
+  [[NSFontManager sharedFontManager] setAction:@selector(changeConnectionFont:)];
   
   [MUGrowlService growlService];
   
@@ -104,28 +105,6 @@
 
 #pragma mark -
 #pragma mark Actions
-
-- (IBAction) changeGlobalFont:(id)sender
-{
-  NSFontManager *fontManager = [NSFontManager sharedFontManager];
-  NSFont *selectedFont = [fontManager selectedFont];
-  NSFont *panelFont;
-  NSNumber *fontSize;
-	id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
-  
-  if (selectedFont == nil)
-  {
-    selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-  }
-	
-  panelFont = [fontManager convertFont:selectedFont];
-  fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];	
-  
-  [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
-  [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
-	
-	[self postGlobalFontDidChangeNotification];
-}
 
 - (IBAction) chooseNewFont:(id)sender
 {
@@ -279,6 +258,28 @@
 #pragma mark -
 
 @implementation MUApplicationController (Private)
+
+- (IBAction) changeConnectionFont:(id)sender
+{
+  NSFontManager *fontManager = [NSFontManager sharedFontManager];
+  NSFont *selectedFont = [fontManager selectedFont];
+  NSFont *panelFont;
+  NSNumber *fontSize;
+	id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
+  
+  if (selectedFont == nil)
+  {
+    selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+  }
+	
+  panelFont = [fontManager convertFont:selectedFont];
+  fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];	
+  
+  [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
+  [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
+	
+	[self postGlobalFontDidChangeNotification];
+}
 
 - (void) colorPanelColorDidChange:(NSNotification *)notification
 {

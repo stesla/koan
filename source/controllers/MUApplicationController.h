@@ -29,7 +29,6 @@
   MUProfilesController *profilesController;
 }
 
-- (IBAction) changeGlobalFont:(id)sender;
 - (IBAction) chooseNewFont:(id)sender;
 - (IBAction) connectUsingPanelInformation:(id)sender;
 - (IBAction) openBugsWebPage:(id)sender;

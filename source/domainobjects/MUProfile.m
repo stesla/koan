@@ -29,6 +29,7 @@
 	{
 		keyArray = [NSArray arrayWithObjects:
 			@"effectiveFont",
+			@"effectiveFontDisplayName",
 			@"effectiveTextColor",
 			@"effectiveBackgroundColor",
 			@"effectiveLinkColor",
@@ -170,9 +171,11 @@
 	if (![font isEqual:newFont])
 	{
 		[self willChangeValueForKey:@"effectiveFont"];
+		[self willChangeValueForKey:@"effectiveFontDisplayName"];
 		[font release];
 		font = [newFont copy];
 		[self didChangeValueForKey:@"effectiveFont"];
+		[self didChangeValueForKey:@"effectiveFontDisplayName"];
 	}
 }
 
@@ -257,10 +260,26 @@
 	}
 }
 
-- (NSColor *) effectiveTextColor
+- (NSString *) effectiveFontDisplayName
+{
+	if (font)
+	{
+		return [NSString stringWithFormat:@"%@ - %@pt", [font displayName], [NSNumber numberWithFloat:[font pointSize]]];
+	}
+	else
+	{
+		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+		NSString *fontName = [[defaults values] valueForKey:MUPFontName];
+		NSNumber *fontSize = [[defaults values] valueForKey:MUPFontSize];
+		
+		return [NSString stringWithFormat:@"%@ - %@pt", [[NSFont fontWithName:fontName size:10.0] displayName], fontSize];
+	}
+}
+
+- (NSData *) effectiveTextColor
 {
 	if (textColor)
-		return textColor;
+		return [NSArchiver archivedDataWithRootObject:textColor];
 	else
 	{
 		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
@@ -269,10 +288,10 @@
 	}
 }
 
-- (NSColor *) effectiveBackgroundColor
+- (NSData *) effectiveBackgroundColor
 {
 	if (backgroundColor)
-		return backgroundColor;
+		return [NSArchiver archivedDataWithRootObject:backgroundColor];
 	else
 	{
 		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
@@ -281,10 +300,10 @@
 	}
 }
 
-- (NSColor *) effectiveLinkColor
+- (NSData *) effectiveLinkColor
 {
 	if (linkColor)
-		return linkColor;
+		return [NSArchiver archivedDataWithRootObject:linkColor];
 	else
 	{
 		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
@@ -293,10 +312,10 @@
 	}
 }
 
-- (NSColor *) effectiveVisitedLinkColor
+- (NSData *) effectiveVisitedLinkColor
 {
 	if (visitedLinkColor)
-		return visitedLinkColor;
+		return [NSArchiver archivedDataWithRootObject:visitedLinkColor];
 	else
 	{
 		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
@@ -414,7 +433,9 @@
 	if (!font)
 	{
 		[self willChangeValueForKey:@"effectiveFont"];
+		[self willChangeValueForKey:@"effectiveFontDisplayName"];
 		[self didChangeValueForKey:@"effectiveFont"];
+		[self didChangeValueForKey:@"effectiveFontDisplayName"];
 	}
 }
 

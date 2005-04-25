@@ -370,6 +370,23 @@ enum MUProfilesEditingReturnValues
 
 @implementation MUProfilesController (Private)
 
+- (IBAction) changeConnectionFont:(id)sender
+{
+  NSFontManager *fontManager = [NSFontManager sharedFontManager];
+  NSFont *selectedFont = [fontManager selectedFont];
+  NSFont *panelFont;
+  
+  if (selectedFont == nil)
+  {
+    selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+  }
+	
+  panelFont = [fontManager convertFont:selectedFont];
+  
+  [editingProfile setValue:[panelFont fontName] forKey:@"fontName"];
+  [editingProfile setValue:[NSNumber numberWithFloat:[panelFont pointSize]] forKey:@"fontSize"];
+}
+
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
 {
   J3ProxySettings *settings = nil;
@@ -415,6 +432,20 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editProfile:(MUProfile *)profile
 {
+	editingProfile = [profile retain];
+	
+	[profileAutoconnectButton setState:([profile autoconnect] ? NSOnState : NSOffState)];
+	[profileFontField setStringValue:[profile effectiveFontDisplayName]];
+	[profileFontUseGlobalButton setState:([profile font] == nil ? NSOnState : NSOffState)];
+	[profileTextColorWell setColor:[NSUnarchiver unarchiveObjectWithData:[profile effectiveTextColor]]];
+	[profileTextColorUseGlobalButton setState:([profile textColor] == nil ? NSOnState : NSOffState)];
+	[profileBackgroundColorWell setColor:[NSUnarchiver unarchiveObjectWithData:[profile effectiveBackgroundColor]]];
+	[profileBackgroundColorUseGlobalButton setState:([profile backgroundColor] == nil ? NSOnState : NSOffState)];
+	[profileLinkColorWell setColor:[NSUnarchiver unarchiveObjectWithData:[profile effectiveLinkColor]]];
+	[profileLinkColorUseGlobalButton setState:([profile linkColor] == nil ? NSOnState : NSOffState)];
+	[profileVisitedLinkColorWell setColor:[NSUnarchiver unarchiveObjectWithData:[profile effectiveVisitedLinkColor]]];
+	[profileVisitedLinkColorUseGlobalButton setState:([profile visitedLinkColor] == nil ? NSOnState : NSOffState)];
+	
 	[NSApp beginSheet:profileEditorSheet
      modalForWindow:[self window]
       modalDelegate:self
@@ -516,6 +547,9 @@ enum MUProfilesEditingReturnValues
 
 - (void) profileSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
+	[editingProfile release];
+	editingProfile = nil;
+	
   if (returnCode == MUEditOkay)
   {
 		MUProfile *oldProfile = (MUProfile *) contextInfo;

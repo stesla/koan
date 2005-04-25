@@ -6,6 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MUProfile;
 @class MUWorldRegistry;
 
 @interface MUProfilesController : NSWindowController
@@ -13,7 +14,21 @@
   IBOutlet NSOutlineView *worldsAndPlayersOutlineView;
 	
 	IBOutlet NSWindow *profileEditorSheet;
+	IBOutlet NSButton *profileAutoconnectButton;
+	IBOutlet NSTextField *profileFontField;
+	IBOutlet NSButton *profileFontUseGlobalButton;
+	IBOutlet NSColorWell *profileTextColorWell;
+	IBOutlet NSButton *profileTextColorUseGlobalButton;
+	IBOutlet NSColorWell *profileBackgroundColorWell;
+	IBOutlet NSButton *profileBackgroundColorUseGlobalButton;
+	IBOutlet NSColorWell *profileLinkColorWell;
+	IBOutlet NSButton *profileLinkColorUseGlobalButton;
+	IBOutlet NSColorWell *profileVisitedLinkColorWell;
+	IBOutlet NSButton *profileVisitedLinkColorUseGlobalButton;
   IBOutlet NSButton *profileSaveButton;
+	
+	MUProfile *editingProfile;
+	NSFont *editingFont;
 	
   IBOutlet NSWindow *worldEditorSheet;
   IBOutlet NSTextField *worldNameField;

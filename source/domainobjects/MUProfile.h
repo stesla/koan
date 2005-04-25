@@ -65,6 +65,14 @@
 - (NSColor *) visitedLinkColor;
 - (void) setVisitedLinkColor:(NSColor *)newVisitedLinkColor;
 
+// Derived bindings.
+- (NSFont *) effectiveFont;
+- (NSString *) effectiveFontDisplayName;
+- (NSData *) effectiveTextColor;
+- (NSData *) effectiveBackgroundColor;
+- (NSData *) effectiveLinkColor;
+- (NSData *) effectiveVisitedLinkColor;
+
 // Actions.
 - (NSString *) hostname;
 - (J3Filter *) logger;
