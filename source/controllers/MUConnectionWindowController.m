@@ -19,12 +19,16 @@ enum MUSearchDirections
 };
 
 @interface MUConnectionWindowController (Private)
+
 - (J3Filter *) createLogger;
 - (void) displayString:(NSString *)string;
 - (void) endCompletion;
+- (void) postConnectionWindowControllerDidReceiveTextNotification;
+- (void) postConnectionWindowControllerWillCloseNotification;
 - (void) sendPeriodicPing:(NSTimer *)timer;
 - (NSString *) splitViewAutosaveName;
 - (void) tabCompleteWithDirection:(enum MUSearchDirections)direction;
+
 @end
 
 #pragma mark -
@@ -456,8 +460,7 @@ enum MUSearchDirections
   
   [splitView saveState:YES];
   
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
-                                                      object:self];
+  [self postConnectionWindowControllerWillCloseNotification];
   
   return YES;
 }
@@ -494,14 +497,25 @@ enum MUSearchDirections
   if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
     [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 0)];
 
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerDidReceiveTextNotification
-                                                      object:self];
+	[self postConnectionWindowControllerDidReceiveTextNotification];
 }
 
 - (void) endCompletion
 {
   currentlySearching = NO;
   [historyRing resetSearchCursor];
+}
+
+- (void) postConnectionWindowControllerDidReceiveTextNotification
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerDidReceiveTextNotification
+																											object:self];
+}
+
+- (void) postConnectionWindowControllerWillCloseNotification
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
+                                                      object:self];
 }
 
 - (void) sendPeriodicPing:(NSTimer *)timer

@@ -11,7 +11,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 @interface MUWorldRegistry (Private)
 
-- (void) postWorldsUpdatedNotification;
+- (void) postWorldsDidChangeNotification;
 - (void) readWorldsFromUserDefaults;
 - (void) writeWorldsToUserDefaults;
 
@@ -154,7 +154,7 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 @implementation MUWorldRegistry (Private)
 
-- (void) postWorldsUpdatedNotification
+- (void) postWorldsDidChangeNotification
 {
   [[NSNotificationCenter defaultCenter] postNotificationName:MUWorldsDidChangeNotification
                                                       object:self];

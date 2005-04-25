@@ -19,6 +19,9 @@
 - (void) colorPanelColorDidChange:(NSNotification *)notification;
 - (IBAction) openConnection:(id)sender;
 - (void) openConnectionWithController:(MUConnectionWindowController *)controller;
+- (void) postGlobalBackgroundColorDidChangeNotification;
+- (void) postGlobalFontDidChangeNotification;
+- (void) postGlobalTextColorDidChangeNotification;
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
 - (void) updateApplicationBadge;
 - (void) worldsDidChange:(NSNotification *)notification;
@@ -121,8 +124,7 @@
   [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
   [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
 	
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalFontDidChangeNotification
-																											object:self];
+	[self postGlobalFontDidChangeNotification];
 }
 
 - (IBAction) chooseNewFont:(id)sender
@@ -281,15 +283,9 @@
 - (void) colorPanelColorDidChange:(NSNotification *)notification
 {
 	if ([globalTextColorWell isActive])
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
-																												object:self];
-	}
+		[self postGlobalTextColorDidChangeNotification];
 	else if ([globalBackgroundColorWell isActive])
-	{
-		[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalBackgroundColorDidChangeNotification
-																												object:self];
-	}
+		[self postGlobalBackgroundColorDidChangeNotification];
 }
 
 - (IBAction) openConnection:(id)sender
@@ -310,6 +306,24 @@
   [connectionWindowControllers addObject:controller];
   [controller showWindow:self];
   [controller connect:nil];
+}
+
+- (void) postGlobalBackgroundColorDidChangeNotification
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalBackgroundColorDidChangeNotification
+																											object:self];
+}
+
+- (void) postGlobalFontDidChangeNotification
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalFontDidChangeNotification
+																											object:self];
+}
+
+- (void) postGlobalTextColorDidChangeNotification
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
+																											object:self];
 }
 
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
