@@ -124,7 +124,7 @@
 
 - (void) setBackColor:(NSColor *)color inDictionary:(NSMutableDictionary *)dict
 {
-  [dict setValue:color forKey:J3ANSIBackColorAttributeName];
+  [dict setValue:color forKey:J3ANSIBackgroundColorAttributeName];
 }
 
 /*

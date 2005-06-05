@@ -137,6 +137,21 @@ enum MUSearchDirections
   return NO;
 }
 
+- (BOOL) validateToolbarItem:(NSToolbarItem *)toolbarItem
+{
+	SEL toolbarItemAction = [toolbarItem action];
+	
+	if (toolbarItemAction == @selector(goToWorldURL:))
+  {
+    NSString *url = [[profile world] worldURL];
+    
+    return (url && ![url isEqualToString:@""]);
+  }
+	
+	return NO;
+}
+
+
 #pragma mark -
 #pragma mark Accessors
 
@@ -225,6 +240,11 @@ enum MUSearchDirections
     [telnetConnection release];
     telnetConnection = nil;
   }
+}
+
+- (IBAction) goToWorldURL:(id)sender
+{
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[profile world] worldURL]]];
 }
 
 - (IBAction) sendInputText:(id)sender

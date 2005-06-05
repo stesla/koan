@@ -104,8 +104,9 @@ enum MUProfilesEditingReturnValues
 			
 			if ([item isKindOfClass:[MUWorld class]])
 				[toolbarItem setLabel:NSLocalizedString (MULEditWorld, nil)];
-			else
+			else if ([item isKindOfClass:[MUPlayer class]])
 				[toolbarItem setLabel:NSLocalizedString (MULEditPlayer, nil)];
+      else return NO;
 			
 			return YES;
 		}
@@ -123,12 +124,36 @@ enum MUProfilesEditingReturnValues
 			
 			if ([item isKindOfClass:[MUWorld class]])
 				[toolbarItem setLabel:NSLocalizedString (MULRemoveWorld, nil)];
-			else
+			else if ([item isKindOfClass:[MUPlayer class]])
 				[toolbarItem setLabel:NSLocalizedString (MULRemovePlayer, nil)];
+      else return NO;
 			
 			return YES;
 		}
 	}
+  else if (toolbarItemAction == @selector(goToWorldURL:))
+  {
+    if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
+		{
+			return NO;
+		}
+		else
+		{
+			id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
+			NSString *url = nil;
+      
+			if ([item isKindOfClass:[MUWorld class]])
+      {
+        url = [(MUWorld *) item worldURL];
+      }
+			else if ([item isKindOfClass:[MUPlayer class]])
+			{
+        url = [[(MUPlayer *) item world] worldURL];
+      }
+      
+      return (url && ![url isEqualToString:@""]);
+		}
+  }
 	
 	return NO;
 }
@@ -314,6 +339,22 @@ enum MUProfilesEditingReturnValues
 {
   [worldEditorSheet orderOut:sender];
   [NSApp endSheet:worldEditorSheet returnCode:(sender == worldSaveButton ? MUEditOkay : MUEditCancel)];
+}
+
+- (IBAction) goToWorldURL:(id)sender
+{
+  int selectedRow = [worldsAndPlayersOutlineView selectedRow];
+	id selectedItem;
+	
+	if (selectedRow == -1)
+		return;
+	
+	selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
+	
+	if ([selectedItem isKindOfClass:[MUWorld class]])
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[(MUWorld *) selectedItem worldURL]]];
+	else if ([selectedItem isKindOfClass:[MUPlayer class]])
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[(MUPlayer *) selectedItem world] worldURL]]];
 }
 
 - (IBAction) removeSelectedRow:(id)sender

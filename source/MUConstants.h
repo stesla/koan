@@ -6,12 +6,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-// Application constants.
+#pragma mark Application constants.
 
 extern NSString *MUApplicationName;
 extern NSString *MUUpdateURL;
 
-// User defaults constants.
+#pragma mark User defaults constants.
 
 extern NSString *MUPBackgroundColor;
 extern NSString *MUPFontName;
@@ -22,7 +22,7 @@ extern NSString *MUPWorlds;
 extern NSString *MUPProfiles;
 extern NSString *MUPVisitedLinkColor;
 
-// Notification constants.
+#pragma mark Notification constants.
 
 extern NSString *MUConnectionWindowControllerWillCloseNotification;
 extern NSString *MUConnectionWindowControllerDidReceiveTextNotification;
@@ -33,27 +33,29 @@ extern NSString *MUGlobalTextColorDidChangeNotification;
 extern NSString *MUGlobalVisitedLinkColorDidChangeNotification;
 extern NSString *MUWorldsDidChangeNotification;
 
-// Toolbar item constants.
+#pragma mark Toolbar item constants.
 
 extern NSString *MUAddWorldToolbarItem;
 extern NSString *MUAddPlayerToolbarItem;
 extern NSString *MUEditSelectedRowToolbarItem;
 extern NSString *MURemoveSelectedRowToolbarItem;
 extern NSString *MUEditProfileForSelectedRowToolbarItem;
+extern NSString *MUGoToURLToolbarItem;
 
-// Toolbar item localization constants.
+#pragma mark Toolbar item localization constants.
 
 extern NSString *MULAddWorld;
 extern NSString *MULAddPlayer;
 extern NSString *MULEditItem;
 extern NSString *MULEditWorld;
 extern NSString *MULEditPlayer;
+extern NSString *MULGoToURL;
 extern NSString *MULRemoveItem;
 extern NSString *MULRemoveWorld;
 extern NSString *MULRemovePlayer;
 extern NSString *MULEditProfile;
 
-// Growl constants.
+#pragma mark Growl constants.
 
 extern NSString *MUGConnectionClosedByErrorName;
 extern NSString *MUGConnectionClosedByErrorDescription;
@@ -64,7 +66,7 @@ extern NSString *MUGConnectionClosedDescription;
 extern NSString *MUGConnectionOpenedName;
 extern NSString *MUGConnectionOpenedDescription;
 
-// Status message localization constants.
+#pragma mark Status message localization constants.
 
 extern NSString *MULConnectionOpening;
 extern NSString *MULConnectionOpen;
@@ -72,7 +74,7 @@ extern NSString *MULConnectionClosed;
 extern NSString *MULConnectionClosedByServer;
 extern NSString *MULConnectionClosedByError;
 
-// Alert panel localization constants.
+#pragma mark Alert panel localization constants.
 
 extern NSString *MULOkay;
 extern NSString *MULCancel;
@@ -84,19 +86,22 @@ extern NSString *MULConfirmQuitTitle;
 extern NSString *MULConfirmQuitMessageSingular;
 extern NSString *MULConfirmQuitMessagePlural;
 
-// Miscellaneous localization constants.
+extern NSString *MULErrorCheckingForUpdatesTitle;
+extern NSString *MULErrorCheckingForUpdatesMessage;
+
+#pragma mark Miscellaneous localization constants.
 
 extern NSString *MULConnect;
 extern NSString *MULDisconnect;
 
 extern NSString *MULConnectWithoutLogin;
 
-// Miscellaneous other constants.
+#pragma mark Miscellaneous other constants.
 
 extern NSString *MUInsertionIndex;
 extern NSString *MUInsertionWorld;
 
-// ANSI parsing constants
+#pragma mark ANSI parsing constants
 
 extern NSString *J3ANSIForegroundColorAttributeName;
-extern NSString *J3ANSIBackColorAttributeName;
+extern NSString *J3ANSIBackgroundColorAttributeName;

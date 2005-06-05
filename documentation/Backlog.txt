@@ -1,21 +1,20 @@
 The following features/problems are blocking 1.0 Beta 1:
 
-* Adding support for viewing/editing MUProfiles.
-* Profile-local fonts and colors.
 * The 3James Web site, at least a little one.
 * Credits and third-party licenses.
+* Update support via MacPAD.
+* Autoping as a world-local setting.
 
 The following features/problems are blocking 1.0:
 
 * Bug 32. (Koan forgets proxy settings.)
 * Bug 16. (Activate SSL/SOCKS before connect.)
-* Other profile-local settings. (Autoping, etc.)
+* Other profile-local settings.
 * Activate the colors from the naive ANSI color filter.
-* Update support via MacPAD.
 * Sounds.
 * Store passwords in the Keychain.
 
-(Disable toolbar if not done.)
+(Disable toolbar if not done yet.)
 
 The following features are currently unscheduled.
 

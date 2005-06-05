@@ -13,6 +13,7 @@
 "EditItem" = "Edit Item";
 "EditWorld" = "Edit World";
 "EditPlayer" = "Edit Player";
+"GoToURL" = "Go To URL";
 "RemoveItem" = "Remove Item";
 "RemoveWorld" = "Remove World";
 "RemovePlayer" = "Remove Player";

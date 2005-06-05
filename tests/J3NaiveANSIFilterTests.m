@@ -131,7 +131,7 @@
 - (void) assertANSICode:(J3ANSICode)code setsBackColor:(NSColor *)color
 {
   [self assertANSICode:code
-         setsAttribute:J3ANSIBackColorAttributeName
+         setsAttribute:J3ANSIBackgroundColorAttributeName
                toValue:color];
 }
 

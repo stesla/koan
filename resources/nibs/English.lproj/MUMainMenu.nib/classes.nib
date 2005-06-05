@@ -57,17 +57,27 @@
             SUPERCLASS = NSObject; 
         }, 
         {
+            ACTIONS = {checkForUpdates = id; }; 
+            CLASS = MUUpdateController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                codeText = NSTextField; 
+                downloadURLText = NSTextField; 
+                msgText = NSTextField; 
+                productURLText = NSTextField; 
+                progressIndicator = NSProgressIndicator; 
+                releaseNotesText = NSTextView; 
+                urlField = NSTextField; 
+                versionField = NSTextField; 
+                versionText = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
             ACTIONS = {changePanes = id; orderFrontPrefsPanel = id; }; 
             CLASS = UKPrefsPanel; 
             LANGUAGE = ObjC; 
             OUTLETS = {tabView = NSTabView; }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {checkForUpdates = id; takeBoolFromObject = id; }; 
-            CLASS = UKUpdateChecker; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {prefsButton = NSButton; }; 
             SUPERCLASS = NSObject; 
         }
     ); 

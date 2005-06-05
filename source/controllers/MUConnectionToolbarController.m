@@ -26,6 +26,15 @@
 {
   NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
   
+  if ([itemIdentifier isEqualToString:MUGoToURLToolbarItem])
+  {
+    [item setLabel:NSLocalizedString (MULGoToURL, nil)];
+    [item setPaletteLabel:NSLocalizedString (MULGoToURL, nil)];
+    [item setImage:nil];
+    [item setTarget:windowController];
+    [item setAction:@selector(goToWorldURL:)];
+  }
+  
   return [item autorelease];
 }
 
@@ -47,6 +56,7 @@
     NSToolbarShowColorsItemIdentifier,
     NSToolbarShowFontsItemIdentifier,
     NSToolbarPrintItemIdentifier,
+    MUGoToURLToolbarItem,
     nil];
 }
 

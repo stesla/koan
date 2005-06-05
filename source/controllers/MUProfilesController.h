@@ -64,6 +64,7 @@
 - (IBAction) endEditingPlayer:(id)sender;
 - (IBAction) endEditingProfile:(id)sender;
 - (IBAction) endEditingWorld:(id)sender;
+- (IBAction) goToWorldURL:(id)sender;
 - (IBAction) removeSelectedRow:(id)sender;
 - (IBAction) useGlobalBackgroundColor:(id)sender;
 - (IBAction) useGlobalFont:(id)sender;

@@ -66,6 +66,14 @@
 		[item setTarget:windowController];
 		[item setAction:@selector(editProfileForSelectedRow:)];
 	}
+  else if ([itemIdentifier isEqualToString:MUGoToURLToolbarItem])
+  {
+    [item setLabel:NSLocalizedString (MULGoToURL, nil)];
+    [item setPaletteLabel:NSLocalizedString (MULGoToURL, nil)];
+    [item setImage:nil];
+    [item setTarget:windowController];
+    [item setAction:@selector(goToWorldURL:)];
+  }
 	
   return [item autorelease];
 }
@@ -95,6 +103,7 @@
 		MUEditSelectedRowToolbarItem,
 		MURemoveSelectedRowToolbarItem,
 		MUEditProfileForSelectedRowToolbarItem,
+    MUGoToURLToolbarItem,
     nil];
 }
 

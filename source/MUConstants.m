@@ -6,12 +6,12 @@
 
 #import "MUConstants.h"
 
-// Application constants.
+#pragma mark Application constants.
 
 NSString *MUApplicationName = @"Koan";
 NSString *MUUpdateURL = @"http://www.3james.com/updates/com.3james.Koan.plist";
 
-// User defaults constants.
+#pragma mark User defaults constants.
 
 NSString *MUPBackgroundColor = @"MUPBackgroundColor";
 NSString *MUPFontName = @"MUPFontName";
@@ -22,7 +22,7 @@ NSString *MUPWorlds = @"MUPWorlds";
 NSString *MUPProfiles = @"MUPProfiles";
 NSString *MUPVisitedLinkColor = @"MUPVisitedLinkColor";
 
-// Notification constants.
+#pragma mark Notification constants.
 
 NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";
 NSString *MUConnectionWindowControllerDidReceiveTextNotification = @"MUConnectionWindowControllerDidReceiveTextNotification";
@@ -33,27 +33,29 @@ NSString *MUGlobalTextColorDidChangeNotification = @"MUGlobalTextColorDidChangeN
 NSString *MUGlobalVisitedLinkColorDidChangeNotification = @"MUGlobalVisitedLinkColorDidChangeNotification";
 NSString *MUWorldsDidChangeNotification = @"MUWorldsDidChangeNotification";
 
-// Toolbar item constants.
+#pragma mark Toolbar item constants.
 
 NSString *MUAddWorldToolbarItem = @"MUAddWorldToolbarItem";
 NSString *MUAddPlayerToolbarItem = @"MUAddPlayerToolbarItem";
 NSString *MUEditSelectedRowToolbarItem = @"MUEditSelectedRowToolbarItem";
 NSString *MURemoveSelectedRowToolbarItem = @"MURemoveSelectedRowToolbarItem";
 NSString *MUEditProfileForSelectedRowToolbarItem = @"MUEditProfileForSelectedRowToolbarItem";
+NSString *MUGoToURLToolbarItem = @"MUGoToURLToolbarItem";
 
-// Toolbar item localization constants.
+#pragma mark Toolbar item localization constants.
 
 NSString *MULAddWorld = @"AddWorld";
 NSString *MULAddPlayer = @"AddPlayer";
 NSString *MULEditItem = @"EditItem";
 NSString *MULEditWorld = @"EditWorld";
 NSString *MULEditPlayer = @"EditPlayer";
+NSString *MULGoToURL = @"GoToURL";
 NSString *MULRemoveItem = @"RemoveItem";
 NSString *MULRemoveWorld = @"RemoveWorld";
 NSString *MULRemovePlayer = @"RemovePlayer";
 NSString *MULEditProfile = @"EditProfile";
 
-// Growl localization constants.
+#pragma mark Growl localization constants.
 
 NSString *MUGConnectionClosedByErrorName = @"GrowlConnectionClosedByErrorName";
 NSString *MUGConnectionClosedByErrorDescription = @"GrowlConnectionClosedByErrorDescription";
@@ -64,7 +66,7 @@ NSString *MUGConnectionClosedDescription = @"GrowlConnectionClosedDescription";
 NSString *MUGConnectionOpenedName = @"GrowlConnectionOpenedName";
 NSString *MUGConnectionOpenedDescription = @"GrowlConnectionOpenedDescription";
 
-// Status message localization constants.
+#pragma mark Status message localization constants.
 
 NSString *MULConnectionOpening = @"ConnectionOpening";
 NSString *MULConnectionOpen = @"ConnectionOpen";
@@ -72,7 +74,7 @@ NSString *MULConnectionClosed = @"ConnectionClosed";
 NSString *MULConnectionClosedByServer = @"ConnectionClosedByServer";
 NSString *MULConnectionClosedByError = @"ConnectionClosedByError";
 
-// Alert panel localization constants.
+#pragma mark Alert panel localization constants.
 
 NSString *MULOkay = @"OK";
 NSString *MULCancel = @"Cancel";
@@ -84,19 +86,22 @@ NSString *MULConfirmQuitTitle = @"ConfirmQuitTitle";
 NSString *MULConfirmQuitMessageSingular = @"ConfirmQuitMessageSingular";
 NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
 
-// Miscellaneous localization constants.
+NSString *MULErrorCheckingForUpdatesTitle = @"ErrorCheckingForUpdatesTitle";
+NSString *MULErrorCheckingForUpdatesMessage = @"ErrorCheckingForUpdatesMessage";
+
+#pragma mark Miscellaneous localization constants.
 
 NSString *MULConnect = @"Connect";
 NSString *MULDisconnect = @"Disconnect";
 
 NSString *MULConnectWithoutLogin = @"ConnectWithoutLogin";
 
-// Miscellaneous other constants.
+#pragma mark Miscellaneous other constants.
 
 NSString *MUInsertionIndex = @"MUInsertionIndex";
 NSString *MUInsertionWorld = @"MUInsertionWorld";
 
-// ANSI parsing constants
+#pragma mark ANSI parsing constants.
 
 NSString *J3ANSIForegroundColorAttributeName = @"J3ANSIForegroundColorAttributeName";
-NSString *J3ANSIBackColorAttributeName = @"J3ANSIBackColorAttributeName";
+NSString *J3ANSIBackgroundColorAttributeName = @"J3ANSIBackgroundColorAttributeName";

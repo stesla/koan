@@ -26,10 +26,7 @@
 
 - (void) dealloc
 {
-  if (macPAD)
-  {
-    [macPAD release];
-  }
+  [macPAD release];
   [super dealloc];
 }
 
@@ -50,7 +47,18 @@
 
 - (void) macPADErrorOccurred:(NSNotification *)notification
 {
+  NSAlert *alert;
+  int choice;
+  
   [self updateDisplayForSocket:[notification object] userinfo:[notification userInfo]];
+  
+  alert = [NSAlert alertWithMessageText:NSLocalizedString (MULErrorCheckingForUpdatesTitle, nil)
+                          defaultButton:NSLocalizedString (MULOkay, nil)
+                        alternateButton:nil
+                            otherButton:nil
+              informativeTextWithFormat:NSLocalizedString (MULErrorCheckingForUpdatesMessage, nil)];
+  
+  choice = [alert runModal];
 }
 
 - (void) macPADCheckFinished:(NSNotification *)notification

@@ -43,6 +43,7 @@
 
 - (IBAction) connect:(id)sender;
 - (IBAction) disconnect:(id)sender;
+- (IBAction) goToWorldURL:(id)sender;
 - (IBAction) sendInputText:(id)sender;
 
 - (IBAction) nextCommand:(id)sender;
