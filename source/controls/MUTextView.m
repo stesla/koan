@@ -19,4 +19,14 @@
     [super insertText:string];
 }
 
+- (IBAction) paste:(id)sender
+{
+  [self pasteAsPlainText:sender];
+}
+
+- (IBAction) pasteAsRichText:(id)sender
+{
+  [self pasteAsPlainText:sender];
+}
+
 @end
