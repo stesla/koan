@@ -9,7 +9,7 @@
 #import "MUProfile.h"
 
 static const int32_t currentProfileVersion = 2;
-static const int32_t currentPlayerVersion = 2;
+static const int32_t currentPlayerVersion = 1;
 static const int32_t currentWorldVersion = 3;
 
 @interface MUCodingService (Private)
@@ -33,7 +33,7 @@ static const int32_t currentWorldVersion = 3;
 
 + (void) decodePlayer:(MUPlayer *)player withCoder:(NSCoder *)decoder
 {
-  int32_t version = [decoder decodeInt32ForKey:@"version"];
+  // int32_t version = [decoder decodeInt32ForKey:@"version"];
   
   [player setName:[decoder decodeObjectForKey:@"name"]];
   [player setPassword:[decoder decodeObjectForKey:@"password"]];
@@ -57,7 +57,7 @@ static const int32_t currentWorldVersion = 3;
 	
   [profile setAutoconnect:[decoder decodeBoolForKey:@"autoconnect"]];
 	
-	if (version > 1)
+	if (version >= 2)
 	{
 		[profile setFont:[NSFont fontWithName:[decoder decodeObjectForKey:@"fontName"]
 																		 size:[decoder decodeFloatForKey:@"fontSize"]]];
@@ -96,13 +96,9 @@ static const int32_t currentWorldVersion = 3;
   [world setPlayers:[decoder decodeObjectForKey:@"players"]];
   
   if (version >= 1)
-  {
     [world setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
-  }
   else
-  {
     [world setWorldURL:@""];
-  }
   
   if (version >= 2)
     [world setUsesSSL:[decoder decodeBoolForKey:@"usesSSL"]];
@@ -110,7 +106,14 @@ static const int32_t currentWorldVersion = 3;
     [world setUsesSSL:NO];
   
   [world setProxySettings:[self decodeProxySettingsWithCoder:decoder 
-                                                     version:version]];  
+                                                     version:version]];
+  
+  if (version >= 3)
+    [world setUsesProxy:[decoder decodeBoolForKey:@"usesProxy"]];
+  else if ([world proxySettings])
+    [world setUsesProxy:YES];
+  else
+    [world setUsesProxy:NO];
 }
 
 @end

@@ -1,12 +1,13 @@
 //
 // Koan-Tests-Prefix.pch
 //
-// Copyright (c) 2004 3James Software
+// Copyright (c) 2004, 2005 3James Software
 //
 
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
 #endif
 
-#import "Categories/NSAttributedString (Allocating).h"
+#import "categories/NSAttributedString (Allocating).h"
+#import "categories/NSFont (FullDisplayName).h"
 #import "MUConstants.h"

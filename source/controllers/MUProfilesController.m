@@ -580,23 +580,18 @@ enum MUProfilesEditingReturnValues
 
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
 {
-  J3ProxySettings *settings = nil;
-  
-  if ([worldUsesProxyButton state] == NSOnState)
-  {
-    settings = [J3ProxySettings 
-        settingsWithHostname:[worldProxyHostnameField stringValue]
-                        port:[worldProxyPortField intValue]
-                     version:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
-                    username:[worldProxyUsernameField stringValue]
-                    password:[worldProxyPasswordField stringValue]];
-  }
+  J3ProxySettings *settings = [J3ProxySettings settingsWithHostname:[worldProxyHostnameField stringValue]
+                                                               port:[worldProxyPortField intValue]
+                                                            version:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
+                                                           username:[worldProxyUsernameField stringValue]
+                                                           password:[worldProxyPasswordField stringValue]];
   
   return [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
                               worldHostname:[worldHostnameField stringValue]
                                   worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
                                    worldURL:[worldURLField stringValue]
                                     usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
+                                  usesProxy:([worldUsesProxyButton state] == NSOnState ? YES : NO)
                               proxySettings:settings
                                     players:players];
 }
@@ -649,10 +644,10 @@ enum MUProfilesEditingReturnValues
   [worldPortField setObjectValue:[world worldPort]];
   [worldURLField setStringValue:[world worldURL]];
   [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
+  [worldUsesProxyButton setState:([world usesProxy] ? NSOnState : NSOffState)];
   
   if (settings)
   {
-    [worldUsesProxyButton setState:NSOnState];
     [worldProxyHostnameField setStringValue:[settings hostname]];
     [worldProxyPortField setIntValue:[settings port]];
     [worldProxyVersionButton selectItemAtIndex:([settings version] == 4 ? 0 : 1)];
@@ -661,7 +656,6 @@ enum MUProfilesEditingReturnValues
   }
   else
   {
-    [worldUsesProxyButton setState:NSOffState];
     [worldProxyHostnameField setStringValue:@""];
     [worldProxyPortField setStringValue:@""];
     [worldProxyVersionButton selectItemAtIndex:1];

@@ -25,6 +25,7 @@
                worldPort:(NSNumber *)newWorldPort
                 worldURL:(NSString *)newWorldURL
                  usesSSL:(BOOL)newUsesSSL
+               usesProxy:(BOOL)newUsesProxy
            proxySettings:(J3ProxySettings *)newProxySettings
                  players:(NSArray *)newPlayers
 {
@@ -35,6 +36,7 @@
     [self setWorldPort:newWorldPort];
     [self setWorldURL:newWorldURL];
     [self setUsesSSL:newUsesSSL];
+    [self setUsesProxy:newUsesProxy];
     [self setProxySettings:newProxySettings];
     [self setPlayers:newPlayers];
   }
@@ -48,6 +50,7 @@
                        worldPort:[NSNumber numberWithInt:0]
                         worldURL:@""
                          usesSSL:NO
+                       usesProxy:NO
                    proxySettings:nil
                          players:[NSArray array]];
 }
@@ -122,6 +125,16 @@
 - (void) setUsesSSL:(BOOL)newUsesSSL
 {
   usesSSL = newUsesSSL;
+}
+
+- (BOOL) usesProxy
+{
+  return usesProxy;
+}
+
+- (void) setUsesProxy:(BOOL)newUsesProxy
+{
+  usesProxy = newUsesProxy;
 }
 
 - (J3ProxySettings *) proxySettings
@@ -271,8 +284,6 @@
   return self;
 }
 
-
-
 #pragma mark -
 #pragma mark NSCopying protocol
 
@@ -283,6 +294,7 @@
                                                worldPort:[self worldPort]
                                                 worldURL:[self worldURL]
                                                  usesSSL:[self usesSSL]
+                                               usesProxy:[self usesProxy]
                                            proxySettings:[self proxySettings]
                                                  players:[self players]];
 }

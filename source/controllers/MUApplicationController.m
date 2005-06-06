@@ -133,6 +133,7 @@
 																						worldPort:[NSNumber numberWithInt:[newConnectionPortField intValue]]
 																						 worldURL:@""
 																							usesSSL:NO
+                                            usesProxy:NO
 																				proxySettings:nil
 																							players:nil];
   controller = [[MUConnectionWindowController alloc] initWithWorld:world];
