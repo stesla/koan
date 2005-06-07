@@ -63,6 +63,7 @@
 		7E20A8AB0748474E00D1A5BF /* J3ANSIRemovingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E20A8A70748474E00D1A5BF /* J3ANSIRemovingFilter.m */; };
 		7E230FFE079A0FE500E7CBA6 /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
 		7E23103C079A374B00E7CBA6 /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
+		7E2B44710855626200769ED6 /* J3Terminal.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E61C3C6D07B7312B00519A89 /* J3Terminal.framework */; };
 		7E39EF9E0783938F0042A17A /* MUProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E39EF9C0783938F0042A17A /* MUProfile.m */; };
 		7EA5BA4807A7221A002336EE /* J3NaiveANSIFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA4707A7221A002336EE /* J3NaiveANSIFilterTests.m */; };
 		7EA5BA5307A733F9002336EE /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
@@ -216,6 +217,16 @@
 				E61C3C9B07B7314E00519A89 /* J3Terminal.framework in CopyFiles */,
 				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */,
 				E63F31BF0815B5C1006C4704 /* NSFont (FullDisplayName).h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E2B446D0855624D00769ED6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7E2B44710855626200769ED6 /* J3Terminal.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -705,6 +716,7 @@
 			buildPhases = (
 				E6967991078F59B60033A4C8 /* Sources */,
 				E6967992078F59B60033A4C8 /* Frameworks */,
+				7E2B446D0855624D00769ED6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1281,24 +1293,24 @@
 		E69E22390854FB100055BCF5 /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				OBJROOT = "/Volumes/Vault 1/Builds/Intermediate Products";
-				SYMROOT = "/Volumes/Vault 1/Builds";
+				OBJROOT = "$(SYMROOT)";
+				SYMROOT = build;
 			};
 			name = Development;
 		};
 		E69E223A0854FB100055BCF5 /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				OBJROOT = "/Volumes/Vault 1/Builds/Intermediate Products";
-				SYMROOT = "/Volumes/Vault 1/Builds";
+				OBJROOT = "$(SYMROOT)";
+				SYMROOT = build;
 			};
 			name = Deployment;
 		};
 		E69E223B0854FB100055BCF5 /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				OBJROOT = "/Volumes/Vault 1/Builds/Intermediate Products";
-				SYMROOT = "/Volumes/Vault 1/Builds";
+				OBJROOT = "$(SYMROOT)";
+				SYMROOT = build;
 			};
 			name = Default;
 		};
