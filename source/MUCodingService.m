@@ -4,7 +4,7 @@
 // Copyright (c) 2005 3James Software
 //
 
-#import <J3Terminal/J3ProxySettings.h>
+#import "J3Terminal/J3ProxySettings.h"
 #import "MUCodingService.h"
 #import "MUProfile.h"
 

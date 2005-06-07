@@ -5,9 +5,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <J3Terminal/J3TelnetConnection.h>
 #import <RBSplitView/RBSplitView.h>
 
+#import "J3Terminal/J3TelnetConnection.h"
 #import "J3Filter.h"
 #import "MUDisplayTextView.h"
 #import "J3HistoryRing.h"

@@ -4,7 +4,7 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import <J3Terminal/J3TelnetConnection.h>
+#import "J3Terminal/J3TelnetConnection.h"
 #import "MUWorld.h"
 #import "MUConstants.h"
 #import "MUPlayer.h"
