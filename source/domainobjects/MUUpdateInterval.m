@@ -17,7 +17,7 @@
 {
   if (self = [super init])
   {
-    
+    type = newType;
   }
   return self;
 }
@@ -25,14 +25,27 @@
 #pragma mark -
 #pragma mark Actions
 
-- (BOOL) shouldUpdateForCandidateDate:(NSDate *)candidateDate baseDate:(NSDate *)baseDate
+- (BOOL) shouldUpdateForBaseDate:(NSDate *)baseDate candidateDate:(NSDate *)candidateDate
 {
+  if (type == MUDailyUpdateType)
+  {
+    NSCalendarDate *baseCalendarDate = [NSCalendarDate dateWithTimeIntervalSinceReferenceDate:[baseDate timeIntervalSinceReferenceDate]];
+    NSCalendarDate *adjustedDate = [baseCalendarDate dateByAddingYears:0
+                                                                months:0
+                                                                  days:1
+                                                                 hours:0
+                                                               minutes:0
+                                                               seconds:0];
+    
+    return ([adjustedDate compare:candidateDate] == NSOrderedDescending ? NO : YES);
+  }
+  
   return NO;
 }
 
 - (BOOL) shouldUpdateForBaseDate:(NSDate *)baseDate
 {
-  return [self shouldUpdateForCandidateDate:[NSDate date] baseDate:baseDate];
+  return [self shouldUpdateForBaseDate:baseDate candidateDate:[NSDate date]];
 }
 
 @end

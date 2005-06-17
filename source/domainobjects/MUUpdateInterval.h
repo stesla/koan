@@ -16,6 +16,7 @@ enum MUUpdateIntervalTypes
 
 @interface MUUpdateInterval : NSObject
 {
+  enum MUUpdateIntervalTypes type;
 }
 
 + (MUUpdateInterval *) intervalWithType:(enum MUUpdateIntervalTypes)newType;
@@ -23,7 +24,7 @@ enum MUUpdateIntervalTypes
 // Designated initializer.
 - (id) initWithType:(enum MUUpdateIntervalTypes)newType;
 
-- (BOOL) shouldUpdateForCandidateDate:(NSDate *)candidateDate baseDate:(NSDate *)baseDate;
+- (BOOL) shouldUpdateForBaseDate:(NSDate *)baseDate candidateDate:(NSDate *)candidateDate;
 - (BOOL) shouldUpdateForBaseDate:(NSDate *)baseDate;
 
 @end
