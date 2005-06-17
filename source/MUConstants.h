@@ -22,6 +22,12 @@ extern NSString *MUPWorlds;
 extern NSString *MUPProfiles;
 extern NSString *MUPVisitedLinkColor;
 
+extern NSString *MUPCheckForUpdatesAutomatically;
+extern NSString *MUPCheckForUpdatesInterval;
+extern NSString *MUPMostRecentVersion;
+extern NSString *MUPMostRecentVersionCheckTime;
+extern NSString *MUPMostRecentVersionURL;
+
 #pragma mark Notification constants.
 
 extern NSString *MUConnectionWindowControllerWillCloseNotification;
@@ -78,6 +84,10 @@ extern NSString *MULConnectionClosedByError;
 
 extern NSString *MULOkay;
 extern NSString *MULCancel;
+extern NSString *MULNone;
+extern NSString *MULNever;
+extern NSString *MULYes;
+extern NSString *MULNo;
 
 extern NSString *MULConfirmCloseTitle;
 extern NSString *MULConfirmCloseMessage;
@@ -88,6 +98,9 @@ extern NSString *MULConfirmQuitMessagePlural;
 
 extern NSString *MULErrorCheckingForUpdatesTitle;
 extern NSString *MULErrorCheckingForUpdatesMessage;
+
+extern NSString *MULShouldCheckAutomaticallyForUpdatesTitle;
+extern NSString *MULShouldCheckAutomaticallyForUpdatesMessage;
 
 #pragma mark Miscellaneous localization constants.
 

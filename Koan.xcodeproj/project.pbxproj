@@ -137,6 +137,9 @@
 		E6A2312A0772E166008EF744 /* MUDisplayTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A231280772E166008EF744 /* MUDisplayTextView.m */; };
 		E6B5E3B906A6EEA600F53EBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6B5E3B706A6EEA600F53EBB /* InfoPlist.strings */; };
 		E6B5E61206A73B0A00F53EBB /* version.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6B5E61106A73B0A00F53EBB /* version.plist */; };
+		E6BFD8CE086258290060412C /* MUUpdateInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8CC086258290060412C /* MUUpdateInterval.m */; };
+		E6BFD8EB086258830060412C /* MUUpdateIntervalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8EA086258830060412C /* MUUpdateIntervalTests.m */; };
+		E6BFD9B0086260390060412C /* MUUpdateInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8CC086258290060412C /* MUUpdateInterval.m */; };
 		E6C9D44E077BF6B5007BB2C1 /* add-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D448077BF6B5007BB2C1 /* add-pressed.png */; };
 		E6C9D44F077BF6B5007BB2C1 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D449077BF6B5007BB2C1 /* add.png */; };
 		E6C9D450077BF6B5007BB2C1 /* edit-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */; };
@@ -334,6 +337,10 @@
 		E6A231280772E166008EF744 /* MUDisplayTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUDisplayTextView.m; sourceTree = "<group>"; };
 		E6B5E3B806A6EEA600F53EBB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6B5E61106A73B0A00F53EBB /* version.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = version.plist; sourceTree = "<group>"; };
+		E6BFD8CB086258290060412C /* MUUpdateInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUUpdateInterval.h; sourceTree = "<group>"; };
+		E6BFD8CC086258290060412C /* MUUpdateInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUUpdateInterval.m; sourceTree = "<group>"; };
+		E6BFD8E9086258830060412C /* MUUpdateIntervalTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUUpdateIntervalTests.h; sourceTree = "<group>"; };
+		E6BFD8EA086258830060412C /* MUUpdateIntervalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUUpdateIntervalTests.m; sourceTree = "<group>"; };
 		E6C9D448077BF6B5007BB2C1 /* add-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-pressed.png"; sourceTree = "<group>"; };
 		E6C9D449077BF6B5007BB2C1 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-pressed.png"; sourceTree = "<group>"; };
@@ -425,7 +432,7 @@
 		29B97314FDCFA39411CA2CEA /* Koan */ = {
 			isa = PBXGroup;
 			children = (
-				7E2B447D0855639900769ED6 /* externals */,
+				7E2B447D0855639900769ED6 /* Externals */,
 				29B97315FDCFA39411CA2CEA /* Source */,
 				E6D0A56C0745518A002DA041 /* Filters */,
 				E6B5E40A06A6F28400F53EBB /* Tests */,
@@ -500,11 +507,12 @@
 			path = frameworks;
 			sourceTree = SOURCE_ROOT;
 		};
-		7E2B447D0855639900769ED6 /* externals */ = {
+		7E2B447D0855639900769ED6 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
 				7E2B447E0855639900769ED6 /* J3Terminal */,
 			);
+			name = Externals;
 			path = externals;
 			sourceTree = "<group>";
 		};
@@ -591,6 +599,7 @@
 				E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */,
 				7EDD3E3F078A4AFB00138CD1 /* MUProfileTests.h */,
 				E62041A806B0566B00236608 /* MUTests.h */,
+				E6BFD8E9086258830060412C /* MUUpdateIntervalTests.h */,
 				7E13FA590788C75F0071D30C /* MUWorldTests.h */,
 				7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */,
 				7E20A8EB07486C2500D1A5BF /* J3ANSIRemovingFilterTests.m */,
@@ -604,6 +613,7 @@
 				E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */,
 				7EDD3E40078A4AFB00138CD1 /* MUProfileTests.m */,
 				E62041A906B0566B00236608 /* MUTests.m */,
+				E6BFD8EA086258830060412C /* MUUpdateIntervalTests.m */,
 				7E13FA5A0788C75F0071D30C /* MUWorldTests.m */,
 				7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */,
 				E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */,
@@ -648,9 +658,11 @@
 			children = (
 				E677D20E0778041F00B417D2 /* MUPlayer.h */,
 				7E39EF9B0783938F0042A17A /* MUProfile.h */,
+				E6BFD8CB086258290060412C /* MUUpdateInterval.h */,
 				E6DA667007776D9900C46267 /* MUWorld.h */,
 				E677D20F0778041F00B417D2 /* MUPlayer.m */,
 				7E39EF9C0783938F0042A17A /* MUProfile.m */,
+				E6BFD8CC086258290060412C /* MUUpdateInterval.m */,
 				E6DA667107776D9900C46267 /* MUWorld.m */,
 			);
 			name = "Domain Objects";
@@ -900,8 +912,8 @@
 				7EFE43870749C7CE002C7D48 /* J3Filter.m in Sources */,
 				7E20A8AB0748474E00D1A5BF /* J3ANSIRemovingFilter.m in Sources */,
 				E6E7A6350749697C007005AC /* J3TextLogger.m in Sources */,
-				E6E79CED07697FD100A8FB96 /* UKPrefsPanel.m in Sources */,
 				E64C9634076BF95E00D0D7C0 /* J3PortFormatter.m in Sources */,
+				E6E79CED07697FD100A8FB96 /* UKPrefsPanel.m in Sources */,
 				E60DDB86076CE889009870E4 /* FontNameToDisplayNameTransformer.m in Sources */,
 				E6A2312A0772E166008EF744 /* MUDisplayTextView.m in Sources */,
 				E6550DFB07763B57002E81FF /* NSObject (DeepMutableCopy).m in Sources */,
@@ -929,6 +941,7 @@
 				7E2B448F0855639A00769ED6 /* J3ProxySettings.m in Sources */,
 				7E2B44910855639A00769ED6 /* J3Stream.m in Sources */,
 				7E2B44930855639A00769ED6 /* J3TelnetConnection.m in Sources */,
+				E6BFD8CE086258290060412C /* MUUpdateInterval.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,6 +984,8 @@
 				7E2B44890855639A00769ED6 /* J3ProxySettings.m in Sources */,
 				7E2B448A0855639A00769ED6 /* J3Stream.m in Sources */,
 				7E2B448B0855639A00769ED6 /* J3TelnetConnection.m in Sources */,
+				E6BFD9B0086260390060412C /* MUUpdateInterval.m in Sources */,
+				E6BFD8EB086258830060412C /* MUUpdateIntervalTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

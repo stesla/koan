@@ -22,6 +22,12 @@ NSString *MUPWorlds = @"MUPWorlds";
 NSString *MUPProfiles = @"MUPProfiles";
 NSString *MUPVisitedLinkColor = @"MUPVisitedLinkColor";
 
+NSString *MUPCheckForUpdatesAutomatically = @"MUPCheckForUpdatesAutomatically";
+NSString *MUPCheckForUpdatesInterval = @"MUPCheckForUpdatesInterval";
+NSString *MUPMostRecentVersion = @"MUPMostRecentVersion";
+NSString *MUPMostRecentVersionCheckTime = @"MUPMostRecentVersionCheckTime";
+NSString *MUPMostRecentVersionURL = @"MUPMostRecentVersionURL";
+
 #pragma mark Notification constants.
 
 NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";
@@ -78,6 +84,10 @@ NSString *MULConnectionClosedByError = @"ConnectionClosedByError";
 
 NSString *MULOkay = @"OK";
 NSString *MULCancel = @"Cancel";
+NSString *MULNone = @"None";
+NSString *MULNever = @"Never";
+NSString *MULYes = @"Yes";
+NSString *MULNo = @"No";
 
 NSString *MULConfirmCloseTitle = @"ConfirmCloseTitle";
 NSString *MULConfirmCloseMessage = @"ConfirmCloseMessage";
@@ -88,6 +98,9 @@ NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
 
 NSString *MULErrorCheckingForUpdatesTitle = @"ErrorCheckingForUpdatesTitle";
 NSString *MULErrorCheckingForUpdatesMessage = @"ErrorCheckingForUpdatesMessage";
+
+NSString *MULShouldCheckAutomaticallyForUpdatesTitle = @"ShouldCheckAutomaticallyForUpdatesTitle";
+NSString *MULShouldCheckAutomaticallyForUpdatesMessage = @"ShouldCheckAutomaticallyForUpdatesMessage";
 
 #pragma mark Miscellaneous localization constants.
 

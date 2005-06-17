@@ -49,6 +49,7 @@
   [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
   
   [defaults setObject:[NSArray array] forKey:MUPWorlds];
+  [defaults setObject:[NSNumber numberWithInt:0] forKey:MUPCheckForUpdatesInterval];
   
   [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
   
@@ -191,7 +192,30 @@
   [self updateApplicationBadge];
 }
 
-- (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *)app
+- (void) applicationDidFinishLaunching:(NSNotification *)notification
+{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  id checkAutomatically = [defaults objectForKey:MUPCheckForUpdatesAutomatically];
+  
+  if (!checkAutomatically)
+  {
+    int choice;
+    NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesTitle, nil)
+                                     defaultButton:NSLocalizedString (MULYes, nil)
+                                   alternateButton:NSLocalizedString (MULNo, nil)
+                                       otherButton:nil
+                         informativeTextWithFormat:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesMessage, nil)];
+    
+    choice = [alert runModal];
+    
+    if (choice == NSAlertDefaultReturn)
+      [defaults setBool:YES forKey:MUPCheckForUpdatesAutomatically];
+    else if (choice == NSAlertAlternateReturn)
+      [defaults setBool:NO forKey:MUPCheckForUpdatesAutomatically];
+  }
+}
+
+- (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *)application
 {
   unsigned count = [connectionWindowControllers count];
   unsigned openConnections = 0;

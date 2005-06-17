@@ -122,7 +122,9 @@ enum MUSearchDirections
 
 - (BOOL) validateMenuItem:(NSMenuItem *)menuItem
 {
-  if ([menuItem action] == @selector(connectOrDisconnect:))
+  SEL menuItemAction = [menuItem action];
+  
+  if (menuItemAction == @selector(connectOrDisconnect:))
   {
     if ([telnetConnection isConnected])
       [menuItem setTitle:MULDisconnect];
@@ -130,7 +132,7 @@ enum MUSearchDirections
       [menuItem setTitle:MULConnect];
     return YES;
   }
-	else if ([menuItem action] == @selector(clearWindow:))
+	else if (menuItemAction == @selector(clearWindow:))
 	{
 		return YES;
 	}

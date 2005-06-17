@@ -17,6 +17,7 @@
 #import "MUWorldTests.h"
 #import "MUProfileTests.h"
 #import "MUPlayerTests.h"
+#import "MUUpdateIntervalTests.h"
 
 int
 main (int argc, const char *argv[])
@@ -46,6 +47,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[MUProfileTests class]];
   [suite addTestSuite:[MUPlayerTests class]];
   [suite addTestSuite:[J3NaiveANSIFilterTests class]];
+  [suite addTestSuite:[MUUpdateIntervalTests class]];
   return suite;
 }
 

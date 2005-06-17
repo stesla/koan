@@ -34,6 +34,10 @@
 
 "Okay" = "OK";
 "Cancel" = "Cancel";
+"None" = "None";
+"Never" = "Never";
+"Yes" = "Yes";
+"No" = "No";
 
 "ConfirmCloseTitle" = "Are you sure you want to close %@?";
 "ConfirmCloseMessage" = "The currently open connection to %@ will be closed.";

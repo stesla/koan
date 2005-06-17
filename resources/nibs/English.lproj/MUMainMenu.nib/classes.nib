@@ -57,19 +57,23 @@
             SUPERCLASS = NSObject; 
         }, 
         {
-            ACTIONS = {checkForUpdates = id; }; 
+            ACTIONS = {
+                checkForUpdates = id; 
+                checkForUpdatesWithDialog = id; 
+                download = id; 
+                toggleAutomaticChecking = id; 
+            }; 
             CLASS = MUUpdateController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                codeText = NSTextField; 
-                downloadURLText = NSTextField; 
-                msgText = NSTextField; 
-                productURLText = NSTextField; 
+                checkAutomaticallyButton = NSButton; 
+                checkAutomaticallyIntervalButton = NSPopUpButton; 
+                checkNowButton = NSButton; 
+                currentVersionField = NSTextField; 
+                downloadButton = NSButton; 
+                lastCheckedField = NSTextField; 
+                newestVersionField = NSTextField; 
                 progressIndicator = NSProgressIndicator; 
-                releaseNotesText = NSTextView; 
-                urlField = NSTextField; 
-                versionField = NSTextField; 
-                versionText = NSTextField; 
             }; 
             SUPERCLASS = NSObject; 
         }, 
