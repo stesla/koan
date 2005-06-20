@@ -24,6 +24,7 @@ extern NSString *MUPVisitedLinkColor;
 
 extern NSString *MUPCheckForUpdatesAutomatically;
 extern NSString *MUPCheckForUpdatesInterval;
+extern NSString *MUPNewestVersionToIgnore;
 extern NSString *MUPMostRecentVersion;
 extern NSString *MUPMostRecentVersionCheckTime;
 extern NSString *MUPMostRecentVersionURL;
@@ -88,6 +89,9 @@ extern NSString *MULNone;
 extern NSString *MULNever;
 extern NSString *MULYes;
 extern NSString *MULNo;
+extern NSString *MULDownload;
+extern NSString *MULRemindLater;
+extern NSString *MULDontRemind;
 
 extern NSString *MULConfirmCloseTitle;
 extern NSString *MULConfirmCloseMessage;
@@ -97,7 +101,15 @@ extern NSString *MULConfirmQuitMessageSingular;
 extern NSString *MULConfirmQuitMessagePlural;
 
 extern NSString *MULErrorCheckingForUpdatesTitle;
-extern NSString *MULErrorCheckingForUpdatesMessage;
+
+extern NSString *MULNewVersionAvailableTitle;
+extern NSString *MULNewVersionAvailableMessage;
+
+extern NSString *MULHasMostRecentVersionTitle;
+extern NSString *MULHasMostRecentVersionMessage;
+
+extern NSString *MULHasUnreleasedVersionTitle;
+extern NSString *MULHasUnreleasedVersionMessage;
 
 extern NSString *MULShouldCheckAutomaticallyForUpdatesTitle;
 extern NSString *MULShouldCheckAutomaticallyForUpdatesMessage;

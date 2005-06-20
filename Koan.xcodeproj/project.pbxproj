@@ -280,7 +280,7 @@
 		E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Tests-Prefix.pch"; sourceTree = "<group>"; };
 		E60DDB83076CE889009870E4 /* FontNameToDisplayNameTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontNameToDisplayNameTransformer.h; sourceTree = "<group>"; };
 		E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontNameToDisplayNameTransformer.m; sourceTree = "<group>"; };
-		E60F8DC6080E0801009A2C58 /* com.3james.Koan.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = com.3james.Koan.plist; sourceTree = "<group>"; };
+		E60F8DC6080E0801009A2C58 /* com.3james.Koan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = com.3james.Koan.plist; sourceTree = "<group>"; };
 		E615A3C607D3B2FE00FC7F6B /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../Growl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61C3C6C07B7312B00519A89 /* AGRegex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGRegex.framework; path = ../AGRegex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61C3C6E07B7312B00519A89 /* RBSplitView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RBSplitView.framework; path = ../RBSplitView.framework; sourceTree = BUILT_PRODUCTS_DIR; };

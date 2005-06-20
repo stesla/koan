@@ -7,6 +7,8 @@
 #import "MUUpdateController.h"
 #import "MacPADSocket.h"
 
+#import "MUUpdateInterval.h"
+
 enum MUUpdateIntervals
 {
   MUUpdateAtLaunch = 0,
@@ -19,8 +21,9 @@ enum MUUpdateIntervals
 
 - (void) checkForUpdatesAndShowDialogIfUpdateIsAvailable:(BOOL)isAvailable
                         showDialogIfUpdateIsNotAvailable:(BOOL)isNotAvailable
-                                     showDialogForErrors:(BOOL)forErrors;
-- (void) checkForUpdatesAutomatically:(NSTimer *)timer;
+                                     showDialogForErrors:(BOOL)forErrors
+                           overrideExistingIgnoreRequest:(BOOL)overrideIgnore;
+- (void) checkForUpdatesAtIntervals:(NSTimer *)timer;
 - (void) updateDisplayForSocket:(MacPADSocket *)socket
                        userinfo:(NSDictionary *)userinfo;
 
@@ -32,9 +35,11 @@ enum MUUpdateIntervals
 
 - (void) awakeFromNib
 {
+  NSMenuItem *menuItem;
+  
   automaticCheckTimer = [NSTimer scheduledTimerWithTimeInterval:60.0
                                                          target:self
-                                                       selector:@selector(checkForUpdatesAutomatically:)
+                                                       selector:@selector(checkForUpdatesAtIntervals:)
                                                        userInfo:nil
                                                         repeats:YES];
   
@@ -57,7 +62,10 @@ enum MUUpdateIntervals
   {
     return updateLock ? NO : YES;
   }
-  return NO;
+  else if (menuItemAction == @selector(selectAutomaticCheckInterval:))
+    return YES;
+  else
+    return NO;
 }
 
 #pragma mark -
@@ -65,16 +73,27 @@ enum MUUpdateIntervals
 
 - (IBAction) checkForUpdates:(id)sender
 {
+  [progressIndicator startAnimation:self];
   [self checkForUpdatesAndShowDialogIfUpdateIsAvailable:NO
                        showDialogIfUpdateIsNotAvailable:NO
-                                    showDialogForErrors:YES];
+                                    showDialogForErrors:YES
+                          overrideExistingIgnoreRequest:NO];
+}
+
+- (IBAction) checkForUpdatesAutomatically
+{
+  [self checkForUpdatesAndShowDialogIfUpdateIsAvailable:YES
+                       showDialogIfUpdateIsNotAvailable:NO
+                                    showDialogForErrors:NO
+                          overrideExistingIgnoreRequest:NO];
 }
 
 - (IBAction) checkForUpdatesWithDialog:(id)sender
 {
   [self checkForUpdatesAndShowDialogIfUpdateIsAvailable:YES
                        showDialogIfUpdateIsNotAvailable:YES
-                                    showDialogForErrors:YES];
+                                    showDialogForErrors:YES
+                          overrideExistingIgnoreRequest:YES];
 }
 
 - (IBAction) download:(id)sender
@@ -84,7 +103,8 @@ enum MUUpdateIntervals
 
 - (IBAction) selectAutomaticCheckInterval:(id)sender
 {
-  [[NSUserDefaults standardUserDefaults] setInteger:[[(NSPopUpButton *) sender selectedItem] tag] forKey:MUPCheckForUpdatesInterval];
+  [[NSUserDefaults standardUserDefaults] setInteger:[[(NSPopUpButton *) sender selectedItem] tag]
+                                             forKey:MUPCheckForUpdatesInterval];
 }
 
 - (IBAction) toggleAutomaticChecking:(id)sender
@@ -108,13 +128,15 @@ enum MUUpdateIntervals
 
 - (void) macPADErrorOccurred:(NSNotification *)notification
 {
+  NSDictionary *userInfo = [notification userInfo];
+  
   if (showDialogForErrors)
   {
     NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString (MULErrorCheckingForUpdatesTitle, nil)
                                      defaultButton:NSLocalizedString (MULOkay, nil)
                                    alternateButton:nil
                                        otherButton:nil
-                         informativeTextWithFormat:NSLocalizedString (MULErrorCheckingForUpdatesMessage, nil)];
+                         informativeTextWithFormat:[userInfo objectForKey:MacPADErrorMessage]];
     
     [alert runModal];
   }
@@ -126,10 +148,8 @@ enum MUUpdateIntervals
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSString *currentVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+  NSString *ignoredVersionString = [defaults objectForKey:MUPNewestVersionToIgnore];
   id newestVersionString;
-  id blarg = [macPADSocket productDownloadURL];
-  
-  NSLog (@"%@", blarg);
   
   if ([[macPADSocket newVersion] isEqualToString:@""])
     [defaults removeObjectForKey:MUPMostRecentVersion];
@@ -141,7 +161,7 @@ enum MUUpdateIntervals
   else
     [defaults setObject:[macPADSocket productDownloadURL] forKey:MUPMostRecentVersionURL];
   
-  [defaults setObject:[NSCalendarDate date] forKey:MUPMostRecentVersionCheckTime];
+  [defaults setObject:[NSDate date] forKey:MUPMostRecentVersionCheckTime];
   
   newestVersionString = [defaults objectForKey:MUPMostRecentVersion];
   
@@ -150,20 +170,54 @@ enum MUUpdateIntervals
   {
     if ([macPADSocket compareVersion:(NSString *) newestVersionString toVersion:currentVersionString] == NSOrderedAscending)
     {
-      if (showDialogIfUpdateIsAvailable)
+      if (showDialogIfUpdateIsAvailable &&
+          (overrideExistingIgnoreRequest ||
+           [macPADSocket compareVersion:(NSString *) newestVersionString toVersion:ignoredVersionString] == NSOrderedAscending))
       {
+        int choice;
+        NSAlert *alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString (MULNewVersionAvailableTitle, nil), newestVersionString, MUApplicationName]
+                                         defaultButton:NSLocalizedString (MULDownload, nil)
+                                       alternateButton:NSLocalizedString (MULDontRemind, nil)
+                                           otherButton:NSLocalizedString (MULRemindLater, nil)
+                             informativeTextWithFormat:NSLocalizedString (MULNewVersionAvailableMessage, nil)];
         
+        choice = [alert runModal];
+        
+        if (choice == NSAlertDefaultReturn)
+        {
+          [self download:nil];
+        }
+        else if (choice == NSAlertAlternateReturn)
+        {
+          [defaults setObject:newestVersionString forKey:MUPNewestVersionToIgnore];
+        }
+        else if (choice == NSAlertOtherReturn)
+        {
+          [defaults removeObjectForKey:MUPNewestVersionToIgnore];
+        }
       }
     }
     else if (showDialogIfUpdateIsNotAvailable)
     {
       if ([macPADSocket compareVersion:(NSString *) newestVersionString toVersion:currentVersionString] == NSOrderedDescending)
       {
+        NSAlert *alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString (MULHasUnreleasedVersionTitle, nil), MUApplicationName]
+                                         defaultButton:NSLocalizedString (MULOkay, nil)
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:NSLocalizedString (MULHasUnreleasedVersionMessage, nil)];
         
+        [alert runModal];
       }
       else
       {
+        NSAlert *alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString (MULHasMostRecentVersionTitle, nil), MUApplicationName]
+                                         defaultButton:NSLocalizedString (MULOkay, nil)
+                                       alternateButton:nil
+                                           otherButton:nil
+                             informativeTextWithFormat:NSLocalizedString (MULHasMostRecentVersionMessage, nil)];
         
+        [alert runModal];
       }
     }
   }
@@ -228,25 +282,7 @@ enum MUUpdateIntervals
     [checkAutomaticallyIntervalButton setEnabled:NO];
   }
   
-  switch ([defaults integerForKey:MUPCheckForUpdatesInterval])
-  {
-    case MUUpdateDaily:
-      [checkAutomaticallyIntervalButton selectItemAtIndex:1];
-      break;
-      
-    case MUUpdateWeekly:
-      [checkAutomaticallyIntervalButton selectItemAtIndex:2];
-      break;
-      
-    case MUUpdateMonthly:
-      [checkAutomaticallyIntervalButton selectItemAtIndex:3];
-      break;
-      
-    case MUUpdateAtLaunch:
-    default:
-      [checkAutomaticallyIntervalButton selectItemAtIndex:0];
-      break;
-  }
+  [checkAutomaticallyIntervalButton selectItemWithTag:[defaults integerForKey:MUPCheckForUpdatesInterval]];
   
   [checkNowButton setEnabled:YES];
   
@@ -267,6 +303,7 @@ enum MUUpdateIntervals
 - (void) checkForUpdatesAndShowDialogIfUpdateIsAvailable:(BOOL)isAvailable
                         showDialogIfUpdateIsNotAvailable:(BOOL)isNotAvailable
                                      showDialogForErrors:(BOOL)forErrors
+                           overrideExistingIgnoreRequest:(BOOL)overrideIgnore
 {
   if (!updateLock)
     updateLock = [[NSLock alloc] init];
@@ -278,7 +315,7 @@ enum MUUpdateIntervals
     showDialogIfUpdateIsAvailable = isAvailable;
     showDialogIfUpdateIsNotAvailable = isNotAvailable;
     showDialogForErrors = forErrors;
-    [progressIndicator startAnimation:self];
+    overrideExistingIgnoreRequest = overrideIgnore;
     macPADSocket = [[MacPADSocket alloc] init];
     [macPADSocket setDelegate:self];
     [macPADSocket performCheck:[NSURL URLWithString:MUUpdateURL]
@@ -286,13 +323,14 @@ enum MUUpdateIntervals
   }
 }
 
-- (void) checkForUpdatesAutomatically:(NSTimer *)timer
+- (void) checkForUpdatesAtIntervals:(NSTimer *)timer
 {
-  if (NO)
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:[defaults integerForKey:MUPCheckForUpdatesInterval]];
+  
+  if ([interval shouldUpdateForBaseDate:[defaults objectForKey:MUPMostRecentVersionCheckTime]])
   {
-    [self checkForUpdatesAndShowDialogIfUpdateIsAvailable:YES
-                         showDialogIfUpdateIsNotAvailable:NO
-                                      showDialogForErrors:NO];
+    [self checkForUpdatesAutomatically];
   }
 }
 

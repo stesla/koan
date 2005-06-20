@@ -38,13 +38,30 @@
 "Never" = "Never";
 "Yes" = "Yes";
 "No" = "No";
+"Download" = "Download";
+"RemindLater" = "Remind Me Later";
+"DontRemind" = "Don't Remind Me Again";
 
 "ConfirmCloseTitle" = "Are you sure you want to close %@?";
 "ConfirmCloseMessage" = "The currently open connection to %@ will be closed.";
 
-"ConfirmQuitTitle" = "Are you sure you want to quit Koan?";
+"ConfirmQuitTitle" = "Are you sure you want to quit %@?";
 "ConfirmQuitMessageSingular" = "%d connection is still open and will be disconnected.";
 "ConfirmQuitMessagePlural" = "%d connections are still open and will be disconnected.";
+
+"ErrorCheckingForUpdatesTitle" = "An error occured while checking for updates.";
+
+"NewVersionAvailableTitle" = "Version %@ of %@ is now available.";
+"NewVersionAvailableMessage" = "Would you like to download the new version?";
+
+"HasMostRecentVersionTitle" = "You are using the most recent version of %@.";
+"HasMostRecentVersionMessage" = "There is no need to update at this time.";
+
+"HasUnreleasedVersionTitle" = "You are using a prerelease version of %@.";
+"HasUnreleasedVersionMessage" = "There is no need to update at this time.";
+
+"ShouldCheckAutomaticallyForUpdatesTitle" = "Should %@ automatically check for updated versions?";
+"ShouldCheckAutomaticallyForUpdatesMessage" = "By default, a check will be performed once each time %@ is launched; this behavior can be customized in the Updates tab of the Preferences panel.";
 
 // Miscellaneous messages.
 

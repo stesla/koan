@@ -12,6 +12,7 @@
 #import "MUPlayer.h"
 #import "MUProfilesController.h"
 #import "MUServices.h"
+#import "MUUpdateController.h"
 #import "MUWorld.h"
 
 @interface MUApplicationController (Private)
@@ -200,11 +201,11 @@
   if (!checkAutomatically)
   {
     int choice;
-    NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesTitle, nil)
+    NSAlert *alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesTitle, nil), MUApplicationName]
                                      defaultButton:NSLocalizedString (MULYes, nil)
                                    alternateButton:NSLocalizedString (MULNo, nil)
                                        otherButton:nil
-                         informativeTextWithFormat:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesMessage, nil)];
+                         informativeTextWithFormat:[NSString stringWithFormat:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesMessage, nil), MUApplicationName]];
     
     choice = [alert runModal];
     
@@ -212,6 +213,11 @@
       [defaults setBool:YES forKey:MUPCheckForUpdatesAutomatically];
     else if (choice == NSAlertAlternateReturn)
       [defaults setBool:NO forKey:MUPCheckForUpdatesAutomatically];
+  }
+  
+  if ([defaults boolForKey:MUPCheckForUpdatesAutomatically])
+  {
+    [updateController checkForUpdatesAutomatically];
   }
 }
 
@@ -232,7 +238,7 @@
     NSAlert *alert;
     int choice;
     
-    alert = [NSAlert alertWithMessageText:NSLocalizedString (MULConfirmQuitTitle, nil)
+    alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString (MULConfirmQuitTitle, nil), MUApplicationName]
                             defaultButton:NSLocalizedString (MULOkay, nil)
                           alternateButton:NSLocalizedString (MULCancel, nil)
                               otherButton:nil

@@ -7,6 +7,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class MUProfilesController;
+@class MUUpdateController;
 
 @interface MUApplicationController : NSObject
 {
@@ -22,6 +23,8 @@
 	IBOutlet NSTextField *newConnectionHostnameField;
 	IBOutlet NSTextField *newConnectionPortField;
 	IBOutlet NSButton *newConnectionSaveWorldButton;
+  
+  IBOutlet MUUpdateController *updateController;
   
   unsigned unreadCount;
   

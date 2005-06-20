@@ -26,11 +26,14 @@
   BOOL showDialogIfUpdateIsAvailable;
   BOOL showDialogIfUpdateIsNotAvailable;
   BOOL showDialogForErrors;
+  BOOL overrideExistingIgnoreRequest;
 }
 
 - (IBAction) checkForUpdates:(id)sender;
+- (IBAction) checkForUpdatesAutomatically;
 - (IBAction) checkForUpdatesWithDialog:(id)sender;
 - (IBAction) download:(id)sender;
+- (IBAction) selectAutomaticCheckInterval:(id)sender;
 - (IBAction) toggleAutomaticChecking:(id)sender;
 
 @end

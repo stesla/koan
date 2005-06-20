@@ -9,6 +9,18 @@
 
 @implementation MUUpdateIntervalTests
 
+- (void) testNilInput
+{
+  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:MUOnLaunchUpdateType];
+  
+  [self assertFalse:[interval shouldUpdateForBaseDate:nil]];
+  [self assertFalse:[interval shouldUpdateForBaseDate:nil candidateDate:nil]];
+  [self assertFalse:[interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
+                                        candidateDate:nil]];
+  [self assertFalse:[interval shouldUpdateForBaseDate:nil
+                                        candidateDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]]];
+}
+
 - (void) testOnLaunchInterval
 {
   MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:MUOnLaunchUpdateType];
@@ -16,19 +28,19 @@
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"5:00 p.m. January 1, 2001"]]
-            message:@"On Launch incorrectly updated for a 4 hour difference."];
+            message:@"On Launch updated for a 4 hour difference."];
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 2, 2001"]]
-            message:@"On Launch incorrectly updated for a 1 day difference."];
+            message:@"On Launch updated for a 1 day difference."];
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 8, 2001"]]
-            message:@"On Launch incorrectly updated for a 1 week difference."];
+            message:@"On Launch updated for a 1 week difference."];
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. February 1, 2001"]]
-            message:@"On Launch incorrectly updated for a 1 month difference."];
+            message:@"On Launch updated for a 1 month difference."];
 }
 
 - (void) testDailyInterval
@@ -38,19 +50,19 @@
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"5:00 p.m. January 1, 2001"]]
-            message:@"Daily incorrectly updated for a 4 hour difference."];
+            message:@"Daily updated for a 4 hour difference."];
   [self assertTrue:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 2, 2001"]]
-           message:@"Daily incorrectly did not update for a 1 day difference."];
+           message:@"Daily did not update for a 1 day difference."];
   [self assertTrue:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 8, 2001"]]
-           message:@"Daily incorrectly did not update for a 1 week difference."];
+           message:@"Daily did not update for a 1 week difference."];
   [self assertTrue:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. February 1, 2001"]]
-           message:@"Daily incorrectly did not update for a 1 month difference."];
+           message:@"Daily did not update for a 1 month difference."];
 }
 
 - (void) testWeeklyInterval
@@ -60,19 +72,19 @@
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"5:00 p.m. January 1, 2001"]]
-            message:@"Weekly incorrectly updated for a 4 hour difference."];
+            message:@"Weekly updated for a 4 hour difference."];
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 2, 2001"]]
-           message:@"Weekly incorrectly updated for a 1 day difference."];
+           message:@"Weekly updated for a 1 day difference."];
   [self assertTrue:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 8, 2001"]]
-           message:@"Weekly incorrectly did not update for a 1 week difference."];
+           message:@"Weekly did not update for a 1 week difference."];
   [self assertTrue:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. February 1, 2001"]]
-           message:@"Weekly incorrectly did not update for a 1 month difference."];
+           message:@"Weekly did not update for a 1 month difference."];
 }
 
 - (void) testMonthlyInterval
@@ -82,27 +94,27 @@
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"5:00 p.m. January 1, 2001"]]
-            message:@"Monthly incorrectly updated for a 4 hour difference."];
+            message:@"Monthly updated for a 4 hour difference."];
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 2, 2001"]]
-            message:@"Monthly incorrectly updated for a 1 day difference."];
+            message:@"Monthly updated for a 1 day difference."];
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 8, 2001"]]
-            message:@"Monthly incorrectly updated for a 1 week difference."];
+            message:@"Monthly updated for a 1 week difference."];
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. January 29, 2001"]]
-            message:@"Monthly incorrectly updated for a 28 day difference."];
+            message:@"Monthly updated for a 28 day difference."];
   [self assertTrue:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. February 1, 2001"]]
-           message:@"Monthly incorrectly did not update for a 1 month difference (Jan-Feb)."];
+           message:@"Monthly did not update for a 1 month difference (Jan-Feb)."];
   [self assertTrue:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. February 1, 2001"]
                         candidateDate:[NSDate dateWithNaturalLanguageString:@"2:00 p.m. March 1, 2001"]]
-           message:@"Monthly incorrectly did not update for a 1 month difference (Feb-Mar)."];
+           message:@"Monthly did not update for a 1 month difference (Feb-Mar)."];
 }
 
 @end

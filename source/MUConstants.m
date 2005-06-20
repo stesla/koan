@@ -25,6 +25,7 @@ NSString *MUPVisitedLinkColor = @"MUPVisitedLinkColor";
 NSString *MUPCheckForUpdatesAutomatically = @"MUPCheckForUpdatesAutomatically";
 NSString *MUPCheckForUpdatesInterval = @"MUPCheckForUpdatesInterval";
 NSString *MUPMostRecentVersion = @"MUPMostRecentVersion";
+NSString *MUPNewestVersionToIgnore = @"MUPNewestVersionToIgnore";
 NSString *MUPMostRecentVersionCheckTime = @"MUPMostRecentVersionCheckTime";
 NSString *MUPMostRecentVersionURL = @"MUPMostRecentVersionURL";
 
@@ -88,6 +89,9 @@ NSString *MULNone = @"None";
 NSString *MULNever = @"Never";
 NSString *MULYes = @"Yes";
 NSString *MULNo = @"No";
+NSString *MULDownload = @"Download";
+NSString *MULRemindLater = @"RemindLater";
+NSString *MULDontRemind = @"DontRemind";
 
 NSString *MULConfirmCloseTitle = @"ConfirmCloseTitle";
 NSString *MULConfirmCloseMessage = @"ConfirmCloseMessage";
@@ -97,7 +101,15 @@ NSString *MULConfirmQuitMessageSingular = @"ConfirmQuitMessageSingular";
 NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
 
 NSString *MULErrorCheckingForUpdatesTitle = @"ErrorCheckingForUpdatesTitle";
-NSString *MULErrorCheckingForUpdatesMessage = @"ErrorCheckingForUpdatesMessage";
+
+NSString *MULNewVersionAvailableTitle = @"NewVersionAvailableTitle";
+NSString *MULNewVersionAvailableMessage = @"NewVersionAvailableMessage";
+
+NSString *MULHasMostRecentVersionTitle = @"HasMostRecentVersionTitle";
+NSString *MULHasMostRecentVersionMessage = @"HasMostRecentVersionMessage";
+
+NSString *MULHasUnreleasedVersionTitle = @"HasUnreleasedVersionTitle";
+NSString *MULHasUnreleasedVersionMessage = @"HasUnreleasedVersionMessage";
 
 NSString *MULShouldCheckAutomaticallyForUpdatesTitle = @"ShouldCheckAutomaticallyForUpdatesTitle";
 NSString *MULShouldCheckAutomaticallyForUpdatesMessage = @"ShouldCheckAutomaticallyForUpdatesMessage";

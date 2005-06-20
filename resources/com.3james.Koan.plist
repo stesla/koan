@@ -21,25 +21,27 @@
 	<key>fileCreator</key>
 	<string>3jKO</string>
 	<key>fileReleaseDateD</key>
-	<string>13</string>
+	<string>20</string>
 	<key>fileReleaseDateM</key>
-	<string>04</string>
+	<string>05</string>
 	<key>fileReleaseDateY</key>
 	<string>2005</string>
 	<key>fileType</key>
 	<string>APPL</string>
 	<key>padVersion</key>
-	<string>1</string>
+	<string>3</string>
 	<key>productDescLong</key>
 	<string>Koan is a simple, intuitive MU* client for Mac OS X - configurable to your tastes, but usable straight out of the box. Notable features include automatic connections, so that logging on happens right away, and automatic logging which stays out of your way, but ensures that you'll never miss or forget a thing.</string>
 	<key>productDescShort</key>
 	<string>Client for MUDs, MUSHes, MUXes, etc.</string>
 	<key>productDownloadURL</key>
 	<array>
-		<string>http://www.3james.com/koan/download/Koan-1.0a2.dmg</string>
+		<string>http://www.3james.com/koan/downloads/Koan-1.0a2.dmg</string>
 	</array>
 	<key>productFileSize</key>
 	<string>1.7MB</string>
+	<key>productIconURL</key>
+	<string>http://www.3james.com/koan/koan.png</string>
 	<key>productKeywords</key>
 	<array>
 		<string>mud</string>
@@ -66,10 +68,15 @@
 	<key>productPrice</key>
 	<string></string>
 	<key>productReleaseNotes</key>
-	<string>1.0 alpha 2: First public release. MacPAD update support added to the client.</string>
+	<string>First public beta version of Koan.
+MacPAD update support added to the client.</string>
 	<key>productRequirements</key>
 	<string>Mac OS 10.3 or later</string>
+	<key>productReviews</key>
+	<string></string>
 	<key>productVersion</key>
 	<string>1.0a2</string>
+	<key>productWebStore</key>
+	<string></string>
 </dict>
 </plist>
