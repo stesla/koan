@@ -36,10 +36,10 @@
 	<string>Client for MUDs, MUSHes, MUXes, etc.</string>
 	<key>productDownloadURL</key>
 	<array>
-		<string>http://www.3james.com/koan/downloads/Koan-1.0a2.dmg</string>
+		<string>http://www.3james.com/koan/downloads/Koan-1.0a3.dmg</string>
 	</array>
 	<key>productFileSize</key>
-	<string>1.7MB</string>
+	<string>389KB</string>
 	<key>productIconURL</key>
 	<string>http://www.3james.com/koan/koan.png</string>
 	<key>productKeywords</key>
@@ -68,14 +68,13 @@
 	<key>productPrice</key>
 	<string></string>
 	<key>productReleaseNotes</key>
-	<string>First public beta version of Koan.
-MacPAD update support added to the client.</string>
+	<string>Test of the update machinery.</string>
 	<key>productRequirements</key>
 	<string>Mac OS 10.3 or later</string>
 	<key>productReviews</key>
 	<string></string>
 	<key>productVersion</key>
-	<string>1.0a2</string>
+	<string>1.0a3</string>
 	<key>productWebStore</key>
 	<string></string>
 </dict>
