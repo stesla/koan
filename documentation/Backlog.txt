@@ -1,8 +1,7 @@
-The following features/problems are blocking 1.0 Beta 1:
+The following features/problems are blocking 1.0b1:
 
 * The 3James Web site, at least a little one.
 * Credits and third-party licenses.
-* Update support via MacPAD.
 * Autoping as a world-local setting.
 
 The following features/problems are blocking 1.0:
