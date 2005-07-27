@@ -85,9 +85,9 @@
 		MUAddPlayerToolbarItem,
 		MUEditSelectedRowToolbarItem,
 		MURemoveSelectedRowToolbarItem,
+		MUEditProfileForSelectedRowToolbarItem,
     NSToolbarFlexibleSpaceItemIdentifier,
     NSToolbarCustomizeToolbarItemIdentifier,
-		MUEditProfileForSelectedRowToolbarItem,
     nil];
 }
 

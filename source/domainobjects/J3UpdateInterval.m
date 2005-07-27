@@ -1,19 +1,19 @@
 //
-// MUUpdateInterval.m
+// J3UpdateInterval.m
 //
 // Copyright (c) 2005 3James Software
 //
 
-#import "MUUpdateInterval.h"
+#import "J3UpdateInterval.h"
 
-@implementation MUUpdateInterval
+@implementation J3UpdateInterval
 
-+ (MUUpdateInterval *) intervalWithType:(enum MUUpdateIntervalTypes)newType
++ (J3UpdateInterval *) intervalWithType:(enum J3UpdateIntervalTypes)newType
 {
-  return [[[MUUpdateInterval alloc] initWithType:newType] autorelease];
+  return [[[J3UpdateInterval alloc] initWithType:newType] autorelease];
 }
 
-- (id) initWithType:(enum MUUpdateIntervalTypes)newType
+- (id) initWithType:(enum J3UpdateIntervalTypes)newType
 {
   if (self = [super init])
   {
@@ -27,7 +27,7 @@
 
 - (BOOL) shouldUpdateForBaseDate:(NSDate *)baseDate candidateDate:(NSDate *)candidateDate
 {
-  if (type == MUOnLaunchUpdateType)
+  if (type == J3OnLaunchUpdateType)
     return NO;
   else
   {
@@ -36,11 +36,11 @@
     int days = 0;
     NSCalendarDate *adjustedDate;
 
-    if (type == MUMonthlyUpdateType)
+    if (type == J3MonthlyUpdateType)
       months = 1;
-    if (type == MUWeeklyUpdateType)
+    if (type == J3WeeklyUpdateType)
       days = 7;
-    if (type == MUDailyUpdateType)
+    if (type == J3DailyUpdateType)
       days = 1;
     
     adjustedDate = [baseCalendarDate dateByAddingYears:0

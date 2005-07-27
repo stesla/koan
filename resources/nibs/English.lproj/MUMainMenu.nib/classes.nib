@@ -8,6 +8,28 @@
         }, 
         {
             ACTIONS = {
+                checkForUpdates = id; 
+                checkForUpdatesWithDialog = id; 
+                download = id; 
+                selectAutomaticCheckInterval = id; 
+                toggleAutomaticChecking = id; 
+            }; 
+            CLASS = J3UpdateController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                checkAutomaticallyButton = NSButton; 
+                checkAutomaticallyIntervalButton = NSPopUpButton; 
+                checkNowButton = NSButton; 
+                currentVersionField = NSTextField; 
+                downloadButton = NSButton; 
+                lastCheckedField = NSTextField; 
+                newestVersionField = NSTextField; 
+                progressIndicator = NSProgressIndicator; 
+            }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {
                 chooseNewFont = id; 
                 connectUsingPanelInformation = id; 
                 openBugsWebPage = id; 
@@ -53,28 +75,6 @@
                 searchItemView = NSView; 
                 window = NSWindow; 
                 windowController = NSWindowController; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {
-                checkForUpdates = id; 
-                checkForUpdatesWithDialog = id; 
-                download = id; 
-                selectAutomaticCheckInterval = id; 
-                toggleAutomaticChecking = id; 
-            }; 
-            CLASS = MUUpdateController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                checkAutomaticallyButton = NSButton; 
-                checkAutomaticallyIntervalButton = NSPopUpButton; 
-                checkNowButton = NSButton; 
-                currentVersionField = NSTextField; 
-                downloadButton = NSButton; 
-                lastCheckedField = NSTextField; 
-                newestVersionField = NSTextField; 
-                progressIndicator = NSProgressIndicator; 
             }; 
             SUPERCLASS = NSObject; 
         }, 

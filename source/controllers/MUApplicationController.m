@@ -12,7 +12,7 @@
 #import "MUPlayer.h"
 #import "MUProfilesController.h"
 #import "MUServices.h"
-#import "MUUpdateController.h"
+#import "J3UpdateController.h"
 #import "MUWorld.h"
 
 @interface MUApplicationController (Private)
@@ -142,7 +142,7 @@
 	
 	if ([newConnectionSaveWorldButton state] == NSOnState)
 	{
-		// FIXME : save a new world and profile here.
+		[[MUServices worldRegistry] insertObject:world inWorldsAtIndex:[[MUServices worldRegistry] count]];
 	}
 	
 	[self openConnectionWithController:controller];

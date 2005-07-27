@@ -1,17 +1,17 @@
 //
-// MUProfileTests.m
+// J3UpdateIntervalTests.m
 //
 // Copyright (c) 2005 3James Software
 //
 
-#import "MUUpdateIntervalTests.h"
-#import "MUUpdateInterval.h"
+#import "J3UpdateIntervalTests.h"
+#import "J3UpdateInterval.h"
 
-@implementation MUUpdateIntervalTests
+@implementation J3UpdateIntervalTests
 
 - (void) testNilInput
 {
-  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:MUOnLaunchUpdateType];
+  J3UpdateInterval *interval = [J3UpdateInterval intervalWithType:J3OnLaunchUpdateType];
   
   [self assertFalse:[interval shouldUpdateForBaseDate:nil]];
   [self assertFalse:[interval shouldUpdateForBaseDate:nil candidateDate:nil]];
@@ -23,7 +23,7 @@
 
 - (void) testOnLaunchInterval
 {
-  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:MUOnLaunchUpdateType];
+  J3UpdateInterval *interval = [J3UpdateInterval intervalWithType:J3OnLaunchUpdateType];
   
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
@@ -45,7 +45,7 @@
 
 - (void) testDailyInterval
 {
-  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:MUDailyUpdateType];
+  J3UpdateInterval *interval = [J3UpdateInterval intervalWithType:J3DailyUpdateType];
   
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
@@ -67,7 +67,7 @@
 
 - (void) testWeeklyInterval
 {
-  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:MUWeeklyUpdateType];
+  J3UpdateInterval *interval = [J3UpdateInterval intervalWithType:J3WeeklyUpdateType];
   
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]
@@ -89,7 +89,7 @@
 
 - (void) testMonthlyInterval
 {
-  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:MUMonthlyUpdateType];
+  J3UpdateInterval *interval = [J3UpdateInterval intervalWithType:J3MonthlyUpdateType];
   
   [self assertFalse:
     [interval shouldUpdateForBaseDate:[NSDate dateWithNaturalLanguageString:@"1:00 p.m. January 1, 2001"]

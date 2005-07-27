@@ -1,5 +1,5 @@
 //
-// MUUpdateController.h
+// J3UpdateController.h
 //
 // Copyright (c) 2005 3James Software
 //
@@ -8,7 +8,7 @@
 
 @class MacPADSocket;
 
-@interface MUUpdateController : NSObject
+@interface J3UpdateController : NSObject
 {
   IBOutlet NSTextField *currentVersionField;
   IBOutlet NSTextField *newestVersionField;

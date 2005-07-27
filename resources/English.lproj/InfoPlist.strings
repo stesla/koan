@@ -1,6 +1,6 @@
 /* Localized versions of Info.plist keys */
 
 CFBundleName = "Koan";
-CFBundleShortVersionString = "1.0a2";
-CFBundleGetInfoString = "Koan version 1.0 alpha 2, Copyright © 2005 3James Software";
+CFBundleShortVersionString = "1.0a3";
+CFBundleGetInfoString = "Koan version 1.0 alpha 3, Copyright © 2005 3James Software";
 NSHumanReadableCopyright = "Copyright © 2005 3James Software";

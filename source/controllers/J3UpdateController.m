@@ -1,23 +1,23 @@
 //
-// MUUpdateController.m
+// J3UpdateController.m
 //
 // Copyright (c) 2005 3James Software
 //
 
-#import "MUUpdateController.h"
+#import "J3UpdateController.h"
 #import "MacPADSocket.h"
 
-#import "MUUpdateInterval.h"
+#import "J3UpdateInterval.h"
 
-enum MUUpdateIntervals
+enum J3UpdateIntervals
 {
-  MUUpdateAtLaunch = 0,
-  MUUpdateDaily = 1,
-  MUUpdateWeekly = 2,
-  MUUpdateMonthly = 3
+  J3UpdateAtLaunch = 0,
+  J3UpdateDaily = 1,
+  J3UpdateWeekly = 2,
+  J3UpdateMonthly = 3
 };
 
-@interface MUUpdateController (Private)
+@interface J3UpdateController (Private)
 
 - (void) checkForUpdatesAndShowDialogIfUpdateIsAvailable:(BOOL)isAvailable
                         showDialogIfUpdateIsNotAvailable:(BOOL)isNotAvailable
@@ -31,7 +31,7 @@ enum MUUpdateIntervals
 
 #pragma mark -
 
-@implementation MUUpdateController
+@implementation J3UpdateController
 
 - (void) awakeFromNib
 {
@@ -298,7 +298,7 @@ enum MUUpdateIntervals
 
 #pragma mark -
 
-@implementation MUUpdateController (Private)
+@implementation J3UpdateController (Private)
 
 - (void) checkForUpdatesAndShowDialogIfUpdateIsAvailable:(BOOL)isAvailable
                         showDialogIfUpdateIsNotAvailable:(BOOL)isNotAvailable
@@ -326,7 +326,7 @@ enum MUUpdateIntervals
 - (void) checkForUpdatesAtIntervals:(NSTimer *)timer
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  MUUpdateInterval *interval = [MUUpdateInterval intervalWithType:[defaults integerForKey:MUPCheckForUpdatesInterval]];
+  J3UpdateInterval *interval = [J3UpdateInterval intervalWithType:[defaults integerForKey:MUPCheckForUpdatesInterval]];
   
   if ([interval shouldUpdateForBaseDate:[defaults objectForKey:MUPMostRecentVersionCheckTime]])
   {

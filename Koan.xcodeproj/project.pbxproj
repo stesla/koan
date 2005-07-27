@@ -94,7 +94,7 @@
 		E62C909F07422669005662BC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E62C909E07422669005662BC /* Localizable.strings */; };
 		E62E7FA307A1AB5400BF15E9 /* NSCursor (Finger).m in Sources */ = {isa = PBXBuildFile; fileRef = E62E7FA107A1AB5400BF15E9 /* NSCursor (Finger).m */; };
 		E62E832007A1D10400BF15E9 /* MUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E831E07A1D10400BF15E9 /* MUTextView.m */; };
-		E62F2AEA07CD3B5100DC8C1B /* MUUpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6824F8B07B177A5002C9507 /* MUUpdateController.m */; };
+		E62F2AEA07CD3B5100DC8C1B /* J3UpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6824F8B07B177A5002C9507 /* J3UpdateController.m */; };
 		E62F2AEB07CD3B5100DC8C1B /* MacPADSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E6824F5207B174DF002C9507 /* MacPADSocket.m */; };
 		E62F2B1207CD3DB700DC8C1B /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
 		E62F2BA007CD4EC500DC8C1B /* Backlog.txt in Resources */ = {isa = PBXBuildFile; fileRef = E62F2B9F07CD4EC400DC8C1B /* Backlog.txt */; };
@@ -137,9 +137,9 @@
 		E6A2312A0772E166008EF744 /* MUDisplayTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A231280772E166008EF744 /* MUDisplayTextView.m */; };
 		E6B5E3B906A6EEA600F53EBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6B5E3B706A6EEA600F53EBB /* InfoPlist.strings */; };
 		E6B5E61206A73B0A00F53EBB /* version.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6B5E61106A73B0A00F53EBB /* version.plist */; };
-		E6BFD8CE086258290060412C /* MUUpdateInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8CC086258290060412C /* MUUpdateInterval.m */; };
-		E6BFD8EB086258830060412C /* MUUpdateIntervalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8EA086258830060412C /* MUUpdateIntervalTests.m */; };
-		E6BFD9B0086260390060412C /* MUUpdateInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8CC086258290060412C /* MUUpdateInterval.m */; };
+		E6BFD8CE086258290060412C /* J3UpdateInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8CC086258290060412C /* J3UpdateInterval.m */; };
+		E6BFD8EB086258830060412C /* J3UpdateIntervalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */; };
+		E6BFD9B0086260390060412C /* J3UpdateInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8CC086258290060412C /* J3UpdateInterval.m */; };
 		E6C9D44E077BF6B5007BB2C1 /* add-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D448077BF6B5007BB2C1 /* add-pressed.png */; };
 		E6C9D44F077BF6B5007BB2C1 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D449077BF6B5007BB2C1 /* add.png */; };
 		E6C9D450077BF6B5007BB2C1 /* edit-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */; };
@@ -328,8 +328,8 @@
 		E67CBF3107D03FEE004BB3DB /* MUProfilesToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUProfilesToolbarController.h; sourceTree = "<group>"; };
 		E6824F5107B174DF002C9507 /* MacPADSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacPADSocket.h; sourceTree = "<group>"; };
 		E6824F5207B174DF002C9507 /* MacPADSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacPADSocket.m; sourceTree = "<group>"; };
-		E6824F8A07B177A5002C9507 /* MUUpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUUpdateController.h; sourceTree = "<group>"; };
-		E6824F8B07B177A5002C9507 /* MUUpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUUpdateController.m; sourceTree = "<group>"; };
+		E6824F8A07B177A5002C9507 /* J3UpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3UpdateController.h; sourceTree = "<group>"; };
+		E6824F8B07B177A5002C9507 /* J3UpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3UpdateController.m; sourceTree = "<group>"; };
 		E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUProfileRegistryTests.h; sourceTree = "<group>"; };
 		E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUProfileRegistryTests.m; sourceTree = "<group>"; };
 		E6967994078F59B60033A4C8 /* Koan Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Koan Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -337,10 +337,10 @@
 		E6A231280772E166008EF744 /* MUDisplayTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUDisplayTextView.m; sourceTree = "<group>"; };
 		E6B5E3B806A6EEA600F53EBB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6B5E61106A73B0A00F53EBB /* version.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = version.plist; sourceTree = "<group>"; };
-		E6BFD8CB086258290060412C /* MUUpdateInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUUpdateInterval.h; sourceTree = "<group>"; };
-		E6BFD8CC086258290060412C /* MUUpdateInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUUpdateInterval.m; sourceTree = "<group>"; };
-		E6BFD8E9086258830060412C /* MUUpdateIntervalTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUUpdateIntervalTests.h; sourceTree = "<group>"; };
-		E6BFD8EA086258830060412C /* MUUpdateIntervalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUUpdateIntervalTests.m; sourceTree = "<group>"; };
+		E6BFD8CB086258290060412C /* J3UpdateInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3UpdateInterval.h; sourceTree = "<group>"; };
+		E6BFD8CC086258290060412C /* J3UpdateInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3UpdateInterval.m; sourceTree = "<group>"; };
+		E6BFD8E9086258830060412C /* J3UpdateIntervalTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3UpdateIntervalTests.h; sourceTree = "<group>"; };
+		E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3UpdateIntervalTests.m; sourceTree = "<group>"; };
 		E6C9D448077BF6B5007BB2C1 /* add-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-pressed.png"; sourceTree = "<group>"; };
 		E6C9D449077BF6B5007BB2C1 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-pressed.png"; sourceTree = "<group>"; };
@@ -557,18 +557,18 @@
 		E670A81207420F8C00E2DAEB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E6824F8A07B177A5002C9507 /* J3UpdateController.h */,
 				E62C905A07422595005662BC /* MUApplicationController.h */,
 				E62C8FBB07421D83005662BC /* MUConnectionToolbarController.h */,
 				E670A83F07420FDF00E2DAEB /* MUConnectionWindowController.h */,
 				E63CC4E2077A06CD003A54AA /* MUProfilesController.h */,
 				E67CBF3107D03FEE004BB3DB /* MUProfilesToolbarController.h */,
-				E6824F8A07B177A5002C9507 /* MUUpdateController.h */,
+				E6824F8B07B177A5002C9507 /* J3UpdateController.m */,
 				E62C905B07422595005662BC /* MUApplicationController.m */,
 				E62C8FBC07421D83005662BC /* MUConnectionToolbarController.m */,
 				E670A84007420FDF00E2DAEB /* MUConnectionWindowController.m */,
 				E63CC4E3077A06CD003A54AA /* MUProfilesController.m */,
 				E67CBF3007D03FEE004BB3DB /* MUProfilesToolbarController.m */,
-				E6824F8B07B177A5002C9507 /* MUUpdateController.m */,
 			);
 			name = Controllers;
 			path = controllers;
@@ -595,11 +595,11 @@
 				7EA5BA4607A7221A002336EE /* J3NaiveANSIFilterTests.h */,
 				E6505497077EA20E0016F30E /* J3NaiveURLFilterTests.h */,
 				E6E7A63D0749698F007005AC /* J3TextLoggerTests.h */,
+				E6BFD8E9086258830060412C /* J3UpdateIntervalTests.h */,
 				7EC112E8078B763E00CFA562 /* MUPlayerTests.h */,
 				E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */,
 				7EDD3E3F078A4AFB00138CD1 /* MUProfileTests.h */,
 				E62041A806B0566B00236608 /* MUTests.h */,
-				E6BFD8E9086258830060412C /* MUUpdateIntervalTests.h */,
 				7E13FA590788C75F0071D30C /* MUWorldTests.h */,
 				7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */,
 				7E20A8EB07486C2500D1A5BF /* J3ANSIRemovingFilterTests.m */,
@@ -609,11 +609,11 @@
 				7EA5BA4707A7221A002336EE /* J3NaiveANSIFilterTests.m */,
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
 				E6E7A63E0749698F007005AC /* J3TextLoggerTests.m */,
+				E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */,
 				7EC112E9078B763E00CFA562 /* MUPlayerTests.m */,
 				E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */,
 				7EDD3E40078A4AFB00138CD1 /* MUProfileTests.m */,
 				E62041A906B0566B00236608 /* MUTests.m */,
-				E6BFD8EA086258830060412C /* MUUpdateIntervalTests.m */,
 				7E13FA5A0788C75F0071D30C /* MUWorldTests.m */,
 				7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */,
 				E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */,
@@ -656,13 +656,13 @@
 		E6E7BF500788FDA40065EDD6 /* Domain Objects */ = {
 			isa = PBXGroup;
 			children = (
+				E6BFD8CB086258290060412C /* J3UpdateInterval.h */,
 				E677D20E0778041F00B417D2 /* MUPlayer.h */,
 				7E39EF9B0783938F0042A17A /* MUProfile.h */,
-				E6BFD8CB086258290060412C /* MUUpdateInterval.h */,
 				E6DA667007776D9900C46267 /* MUWorld.h */,
+				E6BFD8CC086258290060412C /* J3UpdateInterval.m */,
 				E677D20F0778041F00B417D2 /* MUPlayer.m */,
 				7E39EF9C0783938F0042A17A /* MUProfile.m */,
-				E6BFD8CC086258290060412C /* MUUpdateInterval.m */,
 				E6DA667107776D9900C46267 /* MUWorld.m */,
 			);
 			name = "Domain Objects";
@@ -933,7 +933,7 @@
 				7EA5BA5507A733F9002336EE /* J3NaiveANSIFilter.m in Sources */,
 				E653A7D207AEFAB900023476 /* MUGrowlService.m in Sources */,
 				7E05F00C07B080D700B2D3BC /* J3AttributedStringTransformer.m in Sources */,
-				E62F2AEA07CD3B5100DC8C1B /* MUUpdateController.m in Sources */,
+				E62F2AEA07CD3B5100DC8C1B /* J3UpdateController.m in Sources */,
 				E62F2AEB07CD3B5100DC8C1B /* MacPADSocket.m in Sources */,
 				E67CBF3207D03FEE004BB3DB /* MUProfilesToolbarController.m in Sources */,
 				E63F31C00815B5C1006C4704 /* NSFont (FullDisplayName).m in Sources */,
@@ -941,7 +941,7 @@
 				7E2B448F0855639A00769ED6 /* J3ProxySettings.m in Sources */,
 				7E2B44910855639A00769ED6 /* J3Stream.m in Sources */,
 				7E2B44930855639A00769ED6 /* J3TelnetConnection.m in Sources */,
-				E6BFD8CE086258290060412C /* MUUpdateInterval.m in Sources */,
+				E6BFD8CE086258290060412C /* J3UpdateInterval.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -984,8 +984,8 @@
 				7E2B44890855639A00769ED6 /* J3ProxySettings.m in Sources */,
 				7E2B448A0855639A00769ED6 /* J3Stream.m in Sources */,
 				7E2B448B0855639A00769ED6 /* J3TelnetConnection.m in Sources */,
-				E6BFD9B0086260390060412C /* MUUpdateInterval.m in Sources */,
-				E6BFD8EB086258830060412C /* MUUpdateIntervalTests.m in Sources */,
+				E6BFD9B0086260390060412C /* J3UpdateInterval.m in Sources */,
+				E6BFD8EB086258830060412C /* J3UpdateIntervalTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
