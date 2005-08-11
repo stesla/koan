@@ -6,7 +6,6 @@ The following features/problems are blocking 1.0b1:
 
 The following features/problems are blocking 1.0:
 
-* Bug 32. (Koan forgets proxy settings.)
 * Bug 16. (Activate SSL/SOCKS before connect.)
 * Other profile-local settings.
 * Activate the colors from the naive ANSI color filter.
