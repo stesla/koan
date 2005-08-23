@@ -127,11 +127,11 @@ static const int32_t currentWorldVersion = 3;
   NSString *hostname = nil, *username = nil, *password = nil;
   NSNumber *port = [NSNumber numberWithInt:0];
   int newProxyVersion = 5;
+  bool usesProxy = NO;
   
   if (version >= 2)
   {
-    if (version == 2)
-      [decoder decodeBoolForKey:@"usesProxy"];
+    usesProxy = [decoder decodeBoolForKey:@"usesProxy"];
     hostname = [decoder decodeObjectForKey:@"proxyHostname"];
     port = [decoder decodeObjectForKey:@"proxyPort"];
     newProxyVersion = [decoder decodeIntForKey:@"proxyVersion"];
@@ -143,12 +143,7 @@ static const int32_t currentWorldVersion = 3;
   if (!port)
     return nil;
   
-  return [[[J3ProxySettings alloc]
-          initWithHostname:hostname
-                      port:[port intValue]
-                   version:newProxyVersion
-                  username:username
-                  password:password] autorelease];
+  return [J3ProxySettings settingsWithHostname:hostname port:[port intValue] version:newProxyVersion username:username password:password useProxy:usesProxy];
 }
 
 @end

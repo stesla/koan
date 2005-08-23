@@ -584,7 +584,8 @@ enum MUProfilesEditingReturnValues
                                                                port:[worldProxyPortField intValue]
                                                             version:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
                                                            username:[worldProxyUsernameField stringValue]
-                                                           password:[worldProxyPasswordField stringValue]];
+                                                           password:[worldProxyPasswordField stringValue]
+                                                           useProxy:([worldUsesProxyButton state] == NSOnState)];
   
   return [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
                               worldHostname:[worldHostnameField stringValue]
