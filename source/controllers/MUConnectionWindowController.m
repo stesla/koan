@@ -503,10 +503,18 @@ enum MUSearchDirections
 
 - (void) displayString:(NSString *)string
 {
-  NSAttributedString *unfilteredString =
-  [NSAttributedString attributedStringWithString:string
-                                      attributes:[receivedTextView typingAttributes]];
-  NSAttributedString *filteredString = [filterQueue processAttributedString:unfilteredString];
+  NSMutableDictionary *typingAttributes =
+    [NSMutableDictionary dictionaryWithDictionary:[receivedTextView typingAttributes]];
+  NSAttributedString *unfilteredString;
+  NSAttributedString *filteredString;
+  
+  [typingAttributes removeObjectForKey:NSLinkAttributeName];
+  
+  unfilteredString =
+    [NSAttributedString attributedStringWithString:string
+                                        attributes:typingAttributes];  
+  
+  filteredString = [filterQueue processAttributedString:unfilteredString];
   NSTextStorage *textStorage = [receivedTextView textStorage];
   float scrollerPosition = 
     [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];

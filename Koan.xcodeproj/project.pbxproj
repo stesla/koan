@@ -97,7 +97,6 @@
 		E62F2AEA07CD3B5100DC8C1B /* J3UpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = E6824F8B07B177A5002C9507 /* J3UpdateController.m */; };
 		E62F2AEB07CD3B5100DC8C1B /* MacPADSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E6824F5207B174DF002C9507 /* MacPADSocket.m */; };
 		E62F2B1207CD3DB700DC8C1B /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
-		E62F2BA007CD4EC500DC8C1B /* Backlog.txt in Resources */ = {isa = PBXBuildFile; fileRef = E62F2B9F07CD4EC400DC8C1B /* Backlog.txt */; };
 		E63CC4E5077A06CD003A54AA /* MUProfilesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E63CC4E3077A06CD003A54AA /* MUProfilesController.m */; };
 		E63F31C00815B5C1006C4704 /* NSFont (FullDisplayName).m in Sources */ = {isa = PBXBuildFile; fileRef = E63F31BE0815B5C1006C4704 /* NSFont (FullDisplayName).m */; };
 		E64C9634076BF95E00D0D7C0 /* J3PortFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E64C9632076BF95E00D0D7C0 /* J3PortFormatter.m */; };
@@ -855,7 +854,6 @@
 				E6C9D4ED077C0FA3007BB2C1 /* badge-4.png in Resources */,
 				E6C9D4EE077C0FA3007BB2C1 /* badge-5.png in Resources */,
 				E6E7BF0E07867F080065EDD6 /* finger-cursor.png in Resources */,
-				E62F2BA007CD4EC500DC8C1B /* Backlog.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
