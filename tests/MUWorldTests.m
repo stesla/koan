@@ -27,6 +27,7 @@
   [world setWorldName:@"Test World"];
   [self assert:[world uniqueIdentifier] equals:@"test.world"]; 
 }
+
 - (void) testAddPlayer
 {
   [world addPlayer:player];
@@ -55,6 +56,20 @@
   [world removePlayer:player];
   [self assertFalse:[world containsPlayer:player]];
   [self assertNil:[player world]];
+}
+
+- (void) testNilPlayers
+{
+  MUWorld * thisWorld = [[MUWorld alloc] initWithWorldName:@"" worldHostname:@"" worldPort:0 worldURL:@"" usesSSL:NO usesProxy:NO proxySettings:nil players:nil];
+  @try
+  {
+    [thisWorld addPlayer:player];
+    [self assertInt:[[thisWorld players] count] equals:1];
+  }
+  @finally
+  {
+    [thisWorld release];
+  }
 }
 
 @end

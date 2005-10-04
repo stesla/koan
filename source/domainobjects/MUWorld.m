@@ -29,17 +29,18 @@
            proxySettings:(J3ProxySettings *)newProxySettings
                  players:(NSArray *)newPlayers
 {
-  if (self = [super init])
-  {
-    [self setWorldName:newWorldName];
-    [self setWorldHostname:newWorldHostname];
-    [self setWorldPort:newWorldPort];
-    [self setWorldURL:newWorldURL];
-    [self setUsesSSL:newUsesSSL];
-    [self setUsesProxy:newUsesProxy];
-    [self setProxySettings:newProxySettings];
-    [self setPlayers:newPlayers];
-  }
+  if (![super init])
+    return nil;
+  [self setWorldName:newWorldName];
+  [self setWorldHostname:newWorldHostname];
+  [self setWorldPort:newWorldPort];
+  [self setWorldURL:newWorldURL];
+  [self setUsesSSL:newUsesSSL];
+  [self setUsesProxy:newUsesProxy];
+  [self setProxySettings:newProxySettings];
+  [self setPlayers:newPlayers];
+  if (![self players])
+    [self setPlayers:[NSArray array]];
   return self;
 }
 
