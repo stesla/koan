@@ -1,5 +1,5 @@
 //
-//  J3SocketWriteBuffer.h
+//  J3WriteBuffer.h
 //  Koan
 //
 //  Created by Samuel Tesla on 11/15/05.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "J3Buffer.h"
 
-@interface J3SocketWriteBuffer : J3Buffer 
+@interface J3WriteBuffer : J3Buffer 
 {
 }
 - (void) write;
