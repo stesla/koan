@@ -31,7 +31,7 @@
 
 - (void) clear;
 {
-  buffer = [NSMutableData data];
+  [self setBuffer:[NSData data]];
 }
 
 - (NSData *) dataValue;
@@ -45,6 +45,13 @@
     return nil;
   [self clear];
   return self;
+}
+
+- (void) setBuffer:(NSData *)newBuffer;
+{
+  NSMutableData * copy = [[NSMutableData alloc] initWithData:newBuffer];
+  [buffer release];
+  buffer = copy;
 }
 
 - (NSString *) stringValue;

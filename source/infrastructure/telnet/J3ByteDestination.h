@@ -7,5 +7,5 @@
 //
 
 @protocol J3ByteDestination
-
+- (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
 @end

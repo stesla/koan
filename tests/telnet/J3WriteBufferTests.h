@@ -7,8 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "J3ByteDestination.h"
 
-@interface J3WriteBufferTests : TestCase
+@class J3WriteBuffer;
+
+@interface J3WriteBufferTests : TestCase <J3ByteDestination>
 {
+  J3WriteBuffer * buffer;
+  unsigned int lengthWritten;
+  NSMutableData * output;
 }
 @end

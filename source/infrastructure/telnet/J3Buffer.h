@@ -21,4 +21,5 @@
   NSMutableData * buffer;
 }
 + (id) buffer;
+- (void) setBuffer:(NSData *)buffer;
 @end
