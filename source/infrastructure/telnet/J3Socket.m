@@ -21,6 +21,7 @@ NSString * J3SocketError = @"J3SocketError";
 - (void) configureSocket;
 - (void) connectSocket;
 - (void) initializeDescriptorSet:(fd_set *)set;
+- (void) setStatus:(J3SocketStatus)newStatus;
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
 @end
 
@@ -35,11 +36,6 @@ NSString * J3SocketError = @"J3SocketError";
   return hasDataAvailable; 
 }
 
-- (BOOL) hasError;
-{
-  return hasError; 
-}
-
 - (BOOL) hasSpaceAvailable;
 {
   return hasSpaceAvailable; 
@@ -52,63 +48,82 @@ NSString * J3SocketError = @"J3SocketError";
     return nil;
   hostname = [aHostname retain];
   port = aPort;
+  [self setStatus:J3SocketStatusNotConnected];
   return self;
+}
+
+- (BOOL) isClosed;
+{
+  return status == J3SocketStatusClosed;
+}
+
+- (BOOL) isConnected;
+{
+  return status == J3SocketStatusConnected;
 }
 
 - (void) open;
 {  
+  if ([self isConnected] || [self isClosed])
+    return; //TODO: @throw here?
+  [self setStatus:J3SocketStatusConnecting];
   [self resolveHostname];
   [self createSocket];
   [self configureSocket];
   [self connectSocket];
+  [self setStatus:J3SocketStatusConnected];
 }
 
 - (void) close;
 {
+  if (![self isConnected])
+    return; //TODO: @throw here?
   close(socketfd);
+  [self setStatus:J3SocketStatusClosed];    
 }
 
-- (int) read:(uint8_t *)buffer maxLength:(unsigned int)length;
+- (unsigned int) read:(uint8_t *)bytes maxLength:(unsigned int)length;
 {
-  return read(socketfd, buffer, length);
+  //TODO: Handle error condition (returns -1)
+  return read(socketfd, bytes, length);
 }
 
-- (int) write:(const uint8_t *)buffer maxLength:(unsigned int)length;
+- (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
 {
-  return write(socketfd, buffer, length);
+  //TODO: Handle error condition (returns -1)
+  return write(socketfd, bytes, length);
 }
 
 - (void) poll;
 {
-  fd_set error_set;
   fd_set read_set;
   fd_set write_set;
   struct timeval tv;
   int result;
 
-  [self initializeDescriptorSet:&error_set];  
   [self initializeDescriptorSet:&read_set];
   [self initializeDescriptorSet:&write_set];
   memset(&tv, 0, sizeof(struct timeval));
   errno = 0;
-  result = select(socketfd + 1, &read_set, &write_set, &error_set, &tv);  
+  result = select(socketfd + 1, &read_set, &write_set, NULL, &tv);  
   
   if (result < 0)
     return; //TODO: error, should probably do something more drastic...
   
-  if (FD_ISSET(socketfd, &error_set))
-    hasError = YES;
   if (FD_ISSET(socketfd, &read_set))
     hasDataAvailable = YES;
   if (FD_ISSET(socketfd, &write_set))
     hasSpaceAvailable = YES;
 }
 
-- (void) setDelegate:(id)object;
+- (void) setDelegate:(id <NSObject, J3SocketDelegate>)object;
 {
-  [object retain];
-  [delegate release];
-  delegate = object;
+  [self at:&delegate put:object];
+}
+
+- (J3SocketStatus) status;
+{
+  return status;
 }
 @end
 
@@ -150,6 +165,13 @@ NSString * J3SocketError = @"J3SocketError";
 {
   FD_ZERO(set);
   FD_SET(socketfd, set);
+}
+
+- (void) setStatus:(J3SocketStatus)newStatus;
+{
+  status = newStatus;
+  if (delegate)
+    [delegate socketDidChangeStatus:self];
 }
 
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;

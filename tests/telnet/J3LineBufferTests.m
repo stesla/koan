@@ -7,14 +7,17 @@
 //
 
 #import "J3LineBufferTests.h"
-#import "J3LineBuffer.h"
 
 @interface J3LineBufferTests (Private)
 - (void) bufferString:(NSString *)string;
-- (void) lineBufferHasReadLine:(J3LineBuffer *)buffer;
 @end
 
 @implementation J3LineBufferTests
+- (void) lineBufferHasReadLine:(J3LineBuffer *)aBuffer;
+{
+  line = [aBuffer readLine];
+}
+
 - (void) setUp;
 {
   buffer = [[J3LineBuffer alloc] init];  
@@ -45,10 +48,5 @@
 - (void) bufferString:(NSString *)string;
 {
   [buffer appendString:string];
-}
-
-- (void) lineBufferHasReadLine:(J3LineBuffer *)aBuffer;
-{
-  line = [aBuffer readLine];
 }
 @end

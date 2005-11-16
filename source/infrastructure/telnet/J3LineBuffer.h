@@ -9,14 +9,17 @@
 #import <Cocoa/Cocoa.h>
 #import "J3Buffer.h"
 
-@interface J3LineBuffer : J3Buffer 
-{
-  id delegate;
-}
-- (NSString *) readLine;
-- (void) setDelegate:(id)object;
-@end
+@class J3LineBuffer;
 
-@interface NSObject (J3LineBufferDelegate)
+@protocol J3LineBufferDelegate
 - (void) lineBufferHasReadLine:(J3LineBuffer *)buffer;
 @end
+
+@interface J3LineBuffer : J3Buffer 
+{
+  id <NSObject, J3LineBufferDelegate> delegate;
+}
+- (NSString *) readLine;
+- (void) setDelegate:(id <NSObject, J3LineBufferDelegate>)object;
+@end
+

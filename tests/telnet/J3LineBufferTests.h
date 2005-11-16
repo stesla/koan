@@ -8,10 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <ObjcUnit/ObjcUnit.h>
+#import "J3LineBuffer.h"
 
-@class J3LineBuffer;
-
-@interface J3LineBufferTests : TestCase
+@interface J3LineBufferTests : TestCase <J3LineBufferDelegate>
 {
   NSString * line;
   J3LineBuffer * buffer;
