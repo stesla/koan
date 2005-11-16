@@ -10,6 +10,7 @@
 
 @protocol J3Buffer
 - (void) append:(uint8_t)byte;
+- (void) appendString:(NSString *)string;
 - (void) clear;
 - (NSData *) dataValue;
 - (NSString *) stringValue;

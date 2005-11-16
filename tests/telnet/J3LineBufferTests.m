@@ -44,9 +44,7 @@
 @implementation J3LineBufferTests (Private)
 - (void) bufferString:(NSString *)string;
 {
-  unsigned int i;
-  for (i = 0; i < [string length]; i++)
-    [buffer append:[string characterAtIndex:i]];
+  [buffer appendString:string];
 }
 
 - (void) lineBufferHasReadLine:(J3LineBuffer *)aBuffer;

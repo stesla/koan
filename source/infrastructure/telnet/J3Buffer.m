@@ -20,6 +20,15 @@
   [buffer appendBytes:bytes length:1];
 }
 
+- (void) appendString:(NSString *)string;
+{
+  const char * bytes = [string cStringUsingEncoding:NSASCIIStringEncoding];
+  unsigned int length = strlen(bytes);
+  unsigned int i;
+  for (i = 0; i < length; i++)
+    [self append:bytes[i]];
+}
+
 - (void) clear;
 {
   buffer = [NSMutableData data];

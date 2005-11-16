@@ -13,6 +13,7 @@
 #import "J3LineBufferTests.h"
 #import "J3NaiveANSIFilterTests.h"
 #import "J3NaiveURLFilterTests.h"
+#import "J3SocketWriteBufferTests.h"
 #import "J3TelnetStateMachineTests.h"
 #import "J3TextLoggerTests.h"
 #import "J3UpdateIntervalTests.h"
@@ -52,6 +53,7 @@ main (int argc, const char *argv[])
   [suite addTestSuite:[J3UpdateIntervalTests class]];
   [suite addTestSuite:[J3LineBufferTests class]];
   [suite addTestSuite:[J3TelnetStateMachineTests class]];
+  [suite addTestSuite:[J3SocketWriteBufferTests class]];
   return suite;
 }
 
