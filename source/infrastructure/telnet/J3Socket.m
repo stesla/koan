@@ -11,6 +11,7 @@
 #import <sys/socket.h>
 #import <errno.h>
 #import <netdb.h>
+#import <unistd.h>
 
 NSString * J3SocketError = @"J3SocketError";
 
@@ -64,7 +65,6 @@ NSString * J3SocketError = @"J3SocketError";
 
 - (void) close;
 {
-  [self removeFromRunLoop];
   close(socketfd);
 }
 
