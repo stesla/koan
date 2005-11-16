@@ -1,5 +1,5 @@
 //
-//  J3SocketWriteBufferTests.h
+//  J3WriteBufferTests.h
 //  Koan
 //
 //  Created by Samuel Tesla on 11/15/05.
@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface J3SocketWriteBufferTests : TestCase
+@interface J3WriteBufferTests : TestCase
 {
 }
 @end
