@@ -4,6 +4,7 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
+#import "J3NewTelnetConnection.h"
 #import "J3Terminal/J3TelnetConnection.h"
 #import "MUWorld.h"
 #import "MUConstants.h"
@@ -249,6 +250,11 @@
     [telnet enableProxyWithSettings:proxySettings];
   
   return telnet;
+}
+
+- (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
+{
+  return [J3NewTelnetConnection lineAtATimeTelnetWithHostname:[self worldHostname] port:[[self worldPort] intValue] delegate:object];
 }
 
 - (NSString *) uniqueIdentifier

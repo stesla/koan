@@ -14,6 +14,13 @@
 @end
 
 @implementation J3NewTelnetConnection
++ (id) lineAtATimeTelnetWithHostname:(NSString *)hostname port:(int)port delegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)delegate;
+{
+  J3LineBuffer * buffer = [J3LineBuffer buffer];
+  [buffer setDelegate:delegate];
+  return [self telnetWithHostname:hostname port:port inputBuffer:buffer socketDelegate:delegate];
+}
+
 + (id) telnetWithHostname:(NSString *)hostname port:(int)port inputBuffer:(id <NSObject, J3Buffer>)buffer socketDelegate:(id <NSObject, J3SocketDelegate>)delegate;
 {
   J3Socket * socket = [J3Socket socketWithHostname:hostname port:port];
@@ -71,6 +78,11 @@
 {
   NSTimer * timer = [timers objectForKey:mode];
   [timer invalidate];
+}
+
+- (void) writeLine:(NSString *)line;
+{
+  [outputBuffer appendLine:line];
 }
 
 - (void) writeString:(NSString *)string;

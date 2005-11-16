@@ -380,6 +380,14 @@
   return telnet;
 }
 
+- (J3NewTelnetConnection *) openNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
+{
+  J3NewTelnetConnection * telnet = [world newTelnetConnectionWithDelegate:object];
+  if (telnet)
+    [telnet open];
+  return telnet;
+}
+
 - (void) loginWithConnection:(J3TelnetConnection *)connection
 {
   if (!loggedIn && player)

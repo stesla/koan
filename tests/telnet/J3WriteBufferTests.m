@@ -57,6 +57,12 @@
   [self assertOutputIsString:@"123456" lengthWritten:3];
 }
 
+- (void) testWriteLine
+{
+  [buffer appendLine:@"foo"];
+  [self assertOutputIsString:@"foo\n"];
+}
+
 - (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
 {
   unsigned int lengthToWrite = lengthWritten < length ? lengthWritten : length;

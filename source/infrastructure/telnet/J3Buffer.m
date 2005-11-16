@@ -20,6 +20,12 @@
   [buffer appendBytes:bytes length:1];
 }
 
+- (void) appendLine:(NSString *)line;
+{
+  [self appendString:line];
+  [self append:'\n'];
+}
+
 - (void) appendString:(NSString *)string;
 {
   const char * bytes = [string cStringUsingEncoding:NSASCIIStringEncoding];

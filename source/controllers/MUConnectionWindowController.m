@@ -126,7 +126,7 @@ enum MUSearchDirections
   
   if (menuItemAction == @selector(connectOrDisconnect:))
   {
-    if ([telnetConnection isConnected])
+    if ([self isConnected])
       [menuItem setTitle:MULDisconnect];
     else
       [menuItem setTitle:MULConnect];
@@ -219,7 +219,7 @@ enum MUSearchDirections
 
 - (IBAction) connectOrDisconnect:(id)sender
 {
-  if ([telnetConnection isConnected])
+  if ([self isConnected])
     [self disconnect:sender];
   else
     [self connect:sender];
