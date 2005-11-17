@@ -21,7 +21,9 @@ NSString * J3SocketError = @"J3SocketError";
 - (void) configureSocket;
 - (void) connectSocket;
 - (void) initializeDescriptorSet:(fd_set *)set;
-- (void) setStatus:(J3SocketStatus)newStatus;
+- (void) setStatusConnecting;
+- (void) setStatusConnected;
+- (void) setStatusClosed;
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
 @end
 
@@ -48,7 +50,7 @@ NSString * J3SocketError = @"J3SocketError";
     return nil;
   hostname = [aHostname retain];
   port = aPort;
-  [self setStatus:J3SocketStatusNotConnected];
+  status = J3SocketStatusNotConnected;
   return self;
 }
 
@@ -66,12 +68,12 @@ NSString * J3SocketError = @"J3SocketError";
 {  
   if ([self isConnected] || [self isClosed])
     return; //TODO: @throw here?
-  [self setStatus:J3SocketStatusConnecting];
+  [self setStatusConnecting];
   [self resolveHostname];
   [self createSocket];
   [self configureSocket];
   [self connectSocket];
-  [self setStatus:J3SocketStatusConnected];
+  [self setStatusConnected];
 }
 
 - (void) close;
@@ -79,7 +81,7 @@ NSString * J3SocketError = @"J3SocketError";
   if (![self isConnected])
     return; //TODO: @throw here?
   close(socketfd);
-  [self setStatus:J3SocketStatusClosed];    
+  [self setStatusClosed];    
 }
 
 - (unsigned int) read:(uint8_t *)bytes maxLength:(unsigned int)length;
@@ -100,7 +102,10 @@ NSString * J3SocketError = @"J3SocketError";
   fd_set write_set;
   struct timeval tv;
   int result;
-
+  
+  hasDataAvailable = NO;
+  hasSpaceAvailable = NO;
+  
   [self initializeDescriptorSet:&read_set];
   [self initializeDescriptorSet:&write_set];
   memset(&tv, 0, sizeof(struct timeval));
@@ -167,11 +172,25 @@ NSString * J3SocketError = @"J3SocketError";
   FD_SET(socketfd, set);
 }
 
-- (void) setStatus:(J3SocketStatus)newStatus;
+- (void) setStatusConnecting;
 {
-  status = newStatus;
+  status = J3SocketStatusConnecting;
   if (delegate)
-    [delegate socketDidChangeStatus:self];
+    [delegate socketIsConnecting:self];
+}
+
+- (void) setStatusConnected;
+{
+  status = J3SocketStatusConnected;
+  if (delegate)
+    [delegate socketIsConnected:self];
+}
+
+- (void) setStatusClosed;
+{
+  status = J3SocketStatusClosed;
+  if (delegate)
+    [delegate socketIsClosed:self];
 }
 
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;

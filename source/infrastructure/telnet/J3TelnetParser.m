@@ -35,7 +35,7 @@
 
 - (void) parse:(uint8_t)byte;
 {
-  state = [state parse:byte forParser:self];
+  [self at:&state put:[state parse:byte forParser:self]];
 }
 
 - (void) parse:(uint8_t *)bytes count:(int)count;

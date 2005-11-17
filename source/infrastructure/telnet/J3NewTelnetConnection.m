@@ -57,6 +57,11 @@
   return self;
 }
 
+- (BOOL) isConnected;
+{
+  return [socket isConnected];
+}
+
 - (void) open;
 {
   [socket open];

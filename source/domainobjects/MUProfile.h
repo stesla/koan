@@ -82,7 +82,7 @@
 
 - (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate;
 - (J3NewTelnetConnection *) openNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
-- (void) loginWithConnection:(J3TelnetConnection *)connection;
-- (void) logoutWithConnection:(J3TelnetConnection *)connection;
+- (void) loginWithConnection:(J3NewTelnetConnection *)connection;
+- (void) logoutWithConnection:(J3NewTelnetConnection *)connection;
 
 @end

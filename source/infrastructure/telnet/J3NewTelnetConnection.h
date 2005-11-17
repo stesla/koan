@@ -27,6 +27,7 @@
 - (id) initWithSocket:(J3Socket *)aSocket parser:(J3TelnetParser *)aParser;
 
 - (void) close;
+- (BOOL) isConnected;
 - (void) open;
 - (void) scheduleInRunLoop:(NSRunLoop *)aRunLoop forMode:(NSString *)mode;
 - (void) removeFromRunLoop:(NSRunLoop *)aRunLoop forMode:(NSString *)mode;

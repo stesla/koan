@@ -384,20 +384,23 @@
 {
   J3NewTelnetConnection * telnet = [world newTelnetConnectionWithDelegate:object];
   if (telnet)
+  {
+    [telnet scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [telnet open];
+  }
   return telnet;
 }
 
-- (void) loginWithConnection:(J3TelnetConnection *)connection
+- (void) loginWithConnection:(J3NewTelnetConnection *)connection
 {
   if (!loggedIn && player)
   {
-    [connection sendLine:[player loginString]];
+    [connection writeLine:[player loginString]];
     loggedIn = YES;
   }
 }
 
-- (void) logoutWithConnection:(J3TelnetConnection *)connection
+- (void) logoutWithConnection:(J3NewTelnetConnection *)connection
 {
   // We don't do anything with the connection at this point, but we could.
   // I put it there for parallelism with -loginWithConnection: and to make it

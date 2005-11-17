@@ -10,10 +10,24 @@
 
 @class J3TelnetParser;
 
+static NSMutableDictionary * states;
+
 @implementation J3TelnetState
 + (id) state;
 {
-  return [[[self alloc] init] autorelease];
+  J3TelnetState * result;
+  if (!states)
+    states = [[NSMutableDictionary alloc] init];
+  if (![states objectForKey:self])
+  {
+    result = [[[self alloc] init] autorelease];
+    [states setObject:result forKey:self];
+  }
+  else
+  {
+    result = [states objectForKey:self];
+  }
+  return result;
 }
 
 - (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetParser *)parser;

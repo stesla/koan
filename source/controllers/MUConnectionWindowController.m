@@ -204,7 +204,7 @@ enum MUSearchDirections
 {
   if (![self isConnected])
   {
-    telnetConnection = [profile openTelnetWithDelegate:self];
+    telnetConnection = [profile openNewTelnetConnectionWithDelegate:self];
     //TODO: if (!telnetConnection) { //ERROR! }
     
     pingTimer = [[NSTimer scheduledTimerWithTimeInterval:60.0
@@ -253,11 +253,9 @@ enum MUSearchDirections
 {
   NSString *input = [inputView string];
   
-  if ([telnetConnection sendLine:input])
-  {
-    [historyRing saveString:input];
-    [inputView setString:@""];
-  }
+  [telnetConnection writeLine:input];
+  [historyRing saveString:input];
+  [inputView setString:@""];
   
   [[self window] makeFirstResponder:inputView];
 }
@@ -275,50 +273,83 @@ enum MUSearchDirections
 }
 
 #pragma mark -
+#pragma mark J3LineBuffer delegate
+
+- (void) lineBufferHasReadLine:(J3LineBuffer *)buffer;
+{
+  //TODO: check to see if it's the buffer for our connection  
+  [self displayString:[buffer readLine]];
+}
+
+#pragma mark -
+#pragma mark J3Socket delegate
+
+- (void) socketIsConnecting:(J3Socket *)socket;
+{
+  //TODO: check to see if it's the socket for our connection
+  [self displayString:NSLocalizedString (MULConnectionOpening, nil)];  
+  [self displayString:@"\n"];  
+}
+
+- (void) socketIsConnected:(J3Socket *)socket;
+{
+  //TODO: check to see if it's the socket for our connection  
+  [profile loginWithConnection:telnetConnection];  
+  [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
+  [MUGrowlService connectionOpenedForTitle:[profile windowTitle]];
+  [self displayString:@"\n"];  
+}
+
+- (void) socketIsClosed:(J3Socket *)socket;
+{
+  //TODO: check to see if it's the socket for our connection
+/*  switch ([telnet reasonClosed])
+  {
+    case J3ConnectionClosedReasonServer:
+      [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
+      [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
+      break;
+      
+    case J3ConnectionClosedReasonError:
+      [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
+        [telnet errorMessage]]];
+      [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:[telnet errorMessage]];
+      break;
+      
+    default:
+      [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
+      [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
+      break;
+  }*/
+  [self disconnect:nil];
+  [self displayString:@"\n"];  
+}
+
+#pragma mark -
 #pragma mark J3TelnetConnection delegate
 
 - (void) telnetDidReadLine:(J3TelnetConnection *)telnet
 {
+  /*
   if (telnet == telnetConnection)
     [self displayString:[telnet read]];
+   */
 }
 
 - (void) telnetDidChangeStatus:(J3TelnetConnection *)telnet
 {
+  /*
   if (telnet == telnetConnection)
   {
     switch ([telnet connectionStatus])
     {
       case J3ConnectionStatusConnecting:
-        [self displayString:NSLocalizedString (MULConnectionOpening, nil)];
         break;
         
       case J3ConnectionStatusConnected:
-        [profile loginWithConnection:telnetConnection];  
-        [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
-        [MUGrowlService connectionOpenedForTitle:[profile windowTitle]];
         break;
         
       case J3ConnectionStatusClosed:
-        switch ([telnet reasonClosed])
-        {
-          case J3ConnectionClosedReasonServer:
-            [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
-            [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
-            break;
-            
-          case J3ConnectionClosedReasonError:
-            [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
-              [telnet errorMessage]]];
-            [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:[telnet errorMessage]];
-            break;
-            
-          default:
-            [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
-            [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
-            break;
-        }
-        [self disconnect:nil];
         break;
         
       default:
@@ -326,8 +357,8 @@ enum MUSearchDirections
         break;
     }
     
-    [self displayString:@"\n"];    
   }
+   */
 }
 
 #pragma mark -
@@ -550,7 +581,7 @@ enum MUSearchDirections
 
 - (void) sendPeriodicPing:(NSTimer *)timer
 {
-  [telnetConnection sendLine:@"@pemit me="];
+  [telnetConnection writeLine:@"@pemit me="];
 }
 
 - (NSString *) splitViewAutosaveName

@@ -23,7 +23,9 @@ typedef enum J3SocketStatus
 @class J3Socket;
 
 @protocol J3SocketDelegate
-- (void) socketDidChangeStatus:(J3Socket *)socket;
+- (void) socketIsConnecting:(J3Socket *)socket;
+- (void) socketIsConnected:(J3Socket *)socket;
+- (void) socketIsClosed:(J3Socket *)socket;
 @end
 
 @interface J3Socket : NSObject <J3ByteDestination>
