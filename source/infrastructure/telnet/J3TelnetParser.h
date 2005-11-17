@@ -22,7 +22,7 @@
 - (void) bufferInputByte:(uint8_t)byte;
 - (void) bufferOutputByte:(uint8_t)byte;
 - (void) parse:(uint8_t)byte;
-- (void) parse:(uint8_t *)bytes count:(int)count;
+- (void) parse:(uint8_t *)bytes length:(int)count;
 
 - (void) setInputBuffer:(id <NSObject, J3Buffer>)buffer;
 - (void) setOuptutBuffer:(id <NSObject, J3Buffer>)buffer;

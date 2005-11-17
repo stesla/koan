@@ -8,6 +8,8 @@
 
 #import "J3NewTelnetConnection.h"
 
+#define TELNET_READ_BUFFER_SIZE 512
+
 @interface J3NewTelnetConnection (Private)
 - (void) poll;
 - (void) removeAllTimers;
@@ -100,13 +102,13 @@
 @implementation J3NewTelnetConnection (Private)
 - (void) poll;
 {
-  uint8_t bytes[1];
+  uint8_t bytes[TELNET_READ_BUFFER_SIZE];
   
   [socket poll];
   if ([socket hasDataAvailable])
   {
-    [socket read:bytes maxLength:1];
-    [parser parse:bytes[0]];
+    [socket read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
+    [parser parse:bytes length:TELNET_READ_BUFFER_SIZE];
   }
   if ([socket hasSpaceAvailable])
     [outputBuffer write];
