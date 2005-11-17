@@ -326,42 +326,6 @@ enum MUSearchDirections
 }
 
 #pragma mark -
-#pragma mark J3TelnetConnection delegate
-
-- (void) telnetDidReadLine:(J3TelnetConnection *)telnet
-{
-  /*
-  if (telnet == telnetConnection)
-    [self displayString:[telnet read]];
-   */
-}
-
-- (void) telnetDidChangeStatus:(J3TelnetConnection *)telnet
-{
-  /*
-  if (telnet == telnetConnection)
-  {
-    switch ([telnet connectionStatus])
-    {
-      case J3ConnectionStatusConnecting:
-        break;
-        
-      case J3ConnectionStatusConnected:
-        break;
-        
-      case J3ConnectionStatusClosed:
-        break;
-        
-      default:
-        // Do nothing.
-        break;
-    }
-    
-  }
-   */
-}
-
-#pragma mark -
 #pragma mark NSTextView delegate
 
 - (BOOL) textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector

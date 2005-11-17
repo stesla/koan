@@ -5,10 +5,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "J3Terminal/J3TelnetConnection.h"
 #import "MUWorld.h"
 #import "MUPlayer.h"
 #import "J3Filter.h"
+#import "J3NewTelnetConnection.h"
 
 @interface MUProfile : NSObject 
 {
@@ -80,7 +80,6 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate;
 - (J3NewTelnetConnection *) openNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
 - (void) loginWithConnection:(J3NewTelnetConnection *)connection;
 - (void) logoutWithConnection:(J3NewTelnetConnection *)connection;

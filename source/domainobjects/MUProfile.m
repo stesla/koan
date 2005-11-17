@@ -367,19 +367,6 @@
   return (player ? [player windowTitle] : [world windowTitle]);
 }
 
-- (J3TelnetConnection *) openTelnetWithDelegate:(id)delegate
-{
-  J3TelnetConnection *telnet = [world newTelnetConnection];
-  
-  if (telnet)
-  {
-    [telnet setDelegate:delegate];
-    [telnet open];
-  }  
-  
-  return telnet;
-}
-
 - (J3NewTelnetConnection *) openNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
 {
   J3NewTelnetConnection * telnet = [world newTelnetConnectionWithDelegate:object];

@@ -7,7 +7,6 @@
 #import <Cocoa/Cocoa.h>
 #import <RBSplitView/RBSplitView.h>
 
-#import "J3Terminal/J3TelnetConnection.h"
 #import "J3LineBuffer.h"
 #import "J3Socket.h"
 #import "J3Filter.h"

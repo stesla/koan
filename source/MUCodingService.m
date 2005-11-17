@@ -4,20 +4,12 @@
 // Copyright (c) 2005 3James Software
 //
 
-#import "J3Terminal/J3ProxySettings.h"
 #import "MUCodingService.h"
 #import "MUProfile.h"
 
 static const int32_t currentProfileVersion = 2;
 static const int32_t currentPlayerVersion = 1;
-static const int32_t currentWorldVersion = 3;
-
-@interface MUCodingService (Private)
-
-+ (J3ProxySettings *) decodeProxySettingsWithCoder:(NSCoder *)decoder
-                                           version:(int)version;
-
-@end
+static const int32_t currentWorldVersion = 4;
 
 #pragma mark -
 
@@ -70,7 +62,6 @@ static const int32_t currentWorldVersion = 3;
 
 + (void) encodeWorld:(MUWorld *)world withCoder:(NSCoder *)encoder
 {
-  J3ProxySettings *theProxySettings = [world proxySettings];
   [encoder encodeInt32:currentWorldVersion forKey:@"version"];
   
   [encoder encodeObject:[world worldName] forKey:@"worldName"];
@@ -78,12 +69,6 @@ static const int32_t currentWorldVersion = 3;
   [encoder encodeObject:[world worldPort] forKey:@"worldPort"];
   [encoder encodeObject:[world players] forKey:@"players"];
   [encoder encodeObject:[world worldURL] forKey:@"worldURL"];
-  [encoder encodeBool:[world usesSSL] forKey:@"usesSSL"];
-  [encoder encodeObject:[theProxySettings hostname] forKey:@"proxyHostname"];
-  [encoder encodeObject:[NSNumber numberWithInt:[theProxySettings port]] forKey:@"proxyPort"];
-  [encoder encodeInt:[theProxySettings version] forKey:@"proxyVersion"];
-  [encoder encodeObject:[theProxySettings username] forKey:@"proxyUsername"];
-  [encoder encodeObject:[theProxySettings password] forKey:@"proxyPassword"];   
 }
 
 + (void) decodeWorld:(MUWorld *)world withCoder:(NSCoder *)decoder
@@ -99,51 +84,6 @@ static const int32_t currentWorldVersion = 3;
     [world setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
   else
     [world setWorldURL:@""];
-  
-  if (version >= 2)
-    [world setUsesSSL:[decoder decodeBoolForKey:@"usesSSL"]];
-  else
-    [world setUsesSSL:NO];
-  
-  [world setProxySettings:[self decodeProxySettingsWithCoder:decoder 
-                                                     version:version]];
-  
-  if (version >= 3)
-    [world setUsesProxy:[decoder decodeBoolForKey:@"usesProxy"]];
-  else if ([world proxySettings])
-    [world setUsesProxy:YES];
-  else
-    [world setUsesProxy:NO];
-}
-
-@end
-
-#pragma mark -
-
-@implementation MUCodingService (Private)
-
-+ (J3ProxySettings *) decodeProxySettingsWithCoder:(NSCoder *)decoder version:(int)version
-{
-  NSString *hostname = nil, *username = nil, *password = nil;
-  NSNumber *port = [NSNumber numberWithInt:0];
-  int newProxyVersion = 5;
-  bool usesProxy = NO;
-  
-  if (version >= 2)
-  {
-    usesProxy = [decoder decodeBoolForKey:@"usesProxy"];
-    hostname = [decoder decodeObjectForKey:@"proxyHostname"];
-    port = [decoder decodeObjectForKey:@"proxyPort"];
-    newProxyVersion = [decoder decodeIntForKey:@"proxyVersion"];
-    username = [decoder decodeObjectForKey:@"proxyUsername"];
-    password = [decoder decodeObjectForKey:@"proxyPassword"];
-  }
-  
-  // If this came out nil, then something isn't kosher.
-  if (!port)
-    return nil;
-  
-  return [J3ProxySettings settingsWithHostname:hostname port:[port intValue] version:newProxyVersion username:username password:password useProxy:usesProxy];
 }
 
 @end

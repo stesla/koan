@@ -4,7 +4,6 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import "J3Terminal/J3ProxySettings.h"
 #import "MUProfilesController.h"
 #import "J3PortFormatter.h"
 #import "MUProfile.h"
@@ -580,20 +579,13 @@ enum MUProfilesEditingReturnValues
 
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
 {
-  J3ProxySettings *settings = [J3ProxySettings settingsWithHostname:[worldProxyHostnameField stringValue]
-                                                               port:[worldProxyPortField intValue]
-                                                            version:([worldProxyVersionButton indexOfSelectedItem] == 0 ? 4 : 5)
-                                                           username:[worldProxyUsernameField stringValue]
-                                                           password:[worldProxyPasswordField stringValue]
-                                                           useProxy:([worldUsesProxyButton state] == NSOnState)];
-  
   return [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
                               worldHostname:[worldHostnameField stringValue]
                                   worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
                                    worldURL:[worldURLField stringValue]
                                     usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
                                   usesProxy:([worldUsesProxyButton state] == NSOnState ? YES : NO)
-                              proxySettings:settings
+                              proxySettings:nil
                                     players:players];
 }
 
@@ -638,31 +630,18 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editWorld:(MUWorld *)world
 {
-  J3ProxySettings *settings = [world proxySettings];
-	
   [worldNameField setStringValue:[world worldName]];
   [worldHostnameField setStringValue:[world worldHostname]];
   [worldPortField setObjectValue:[world worldPort]];
   [worldURLField setStringValue:[world worldURL]];
   [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
   [worldUsesProxyButton setState:([world usesProxy] ? NSOnState : NSOffState)];
-  
-  if (settings)
-  {
-    [worldProxyHostnameField setStringValue:[settings hostname]];
-    [worldProxyPortField setIntValue:[settings port]];
-    [worldProxyVersionButton selectItemAtIndex:([settings version] == 4 ? 0 : 1)];
-    [worldProxyUsernameField setStringValue:[settings username]];
-    [worldProxyPasswordField setStringValue:[settings password]];
-  }
-  else
-  {
-    [worldProxyHostnameField setStringValue:@""];
-    [worldProxyPortField setStringValue:@""];
-    [worldProxyVersionButton selectItemAtIndex:1];
-    [worldProxyUsernameField setStringValue:@""];
-    [worldProxyPasswordField setStringValue:@""];
-  }
+
+  [worldProxyHostnameField setStringValue:@""];
+  [worldProxyPortField setStringValue:@""];
+  [worldProxyVersionButton selectItemAtIndex:1];
+  [worldProxyUsernameField setStringValue:@""];
+  [worldProxyPasswordField setStringValue:@""];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   

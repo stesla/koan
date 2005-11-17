@@ -5,7 +5,6 @@
 //
 
 #import "J3NewTelnetConnection.h"
-#import "J3Terminal/J3TelnetConnection.h"
 #import "MUWorld.h"
 #import "MUConstants.h"
 #import "MUPlayer.h"
@@ -235,22 +234,6 @@
 
 #pragma mark -
 #pragma mark Actions
-
-- (J3TelnetConnection *) newTelnetConnection
-{
-  J3TelnetConnection * telnet;
-  telnet = [[J3TelnetConnection alloc] 
-    initWithHostName:[self worldHostname]
-              onPort:[[self worldPort] intValue]]; //TODO: Autorelease?
-
-  if ([self usesSSL])
-    [telnet setSecurityLevel:NSStreamSocketSecurityLevelNegotiatedSSL];
-  
-  if (proxySettings)
-    [telnet enableProxyWithSettings:proxySettings];
-  
-  return telnet;
-}
 
 - (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
 {
