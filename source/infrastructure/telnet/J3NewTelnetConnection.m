@@ -11,6 +11,7 @@
 @interface J3NewTelnetConnection (Private)
 - (void) poll;
 - (void) removeAllTimers;
+- (NSString *)timerKeyWithRunLoop:(NSRunLoop *)aRunLoop andMode:(NSString *)mode;
 @end
 
 @implementation J3NewTelnetConnection
@@ -32,12 +33,12 @@
 
 - (void) close;
 {
+  [self removeAllTimers];
   [socket close];
 }
 
 - (void) dealloc;
 {
-  [self removeAllTimers];
   [parser release];
   [outputBuffer release];
   [socket release];
@@ -76,12 +77,12 @@
 {
   NSTimer * timer = [NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerFire:) userInfo:nil repeats:YES];
   [aRunLoop addTimer:timer forMode:mode];
-  [timers setObject:timer forKey:mode];
+  [timers setObject:timer forKey:[self timerKeyWithRunLoop:aRunLoop andMode:mode]];
 }
 
 - (void) removeFromRunLoop:(NSRunLoop *)aRunLoop forMode:(NSString *)mode;
 {
-  NSTimer * timer = [timers objectForKey:mode];
+  NSTimer * timer = [timers objectForKey:[self timerKeyWithRunLoop:aRunLoop andMode:mode]];
   [timer invalidate];
 }
 
@@ -117,5 +118,10 @@
   NSTimer * timer;
   while (timer = [keys nextObject])
     [timer invalidate];
+}
+
+- (NSString *)timerKeyWithRunLoop:(NSRunLoop *)aRunLoop andMode:(NSString *)mode;
+{
+  return [NSString stringWithFormat:@"%@%@", aRunLoop, mode];
 }
 @end

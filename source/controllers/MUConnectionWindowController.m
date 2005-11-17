@@ -204,7 +204,7 @@ enum MUSearchDirections
 {
   if (![self isConnected])
   {
-    telnetConnection = [profile openNewTelnetConnectionWithDelegate:self];
+    telnetConnection = [[profile openNewTelnetConnectionWithDelegate:self] retain];
     //TODO: if (!telnetConnection) { //ERROR! }
     
     pingTimer = [[NSTimer scheduledTimerWithTimeInterval:60.0
@@ -322,7 +322,7 @@ enum MUSearchDirections
       break;
   }*/
   [self disconnect:nil];
-  [self displayString:@"\n"];  
+  [self displayString:@"Disconnected\n"];  
 }
 
 #pragma mark -
