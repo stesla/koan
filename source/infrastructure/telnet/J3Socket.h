@@ -21,11 +21,14 @@ typedef enum J3SocketStatus
 } J3SocketStatus;
 
 @class J3Socket;
+@class J3SocketClosedReason;
 
 @protocol J3SocketDelegate
 - (void) socketIsConnecting:(J3Socket *)socket;
 - (void) socketIsConnected:(J3Socket *)socket;
-- (void) socketIsClosed:(J3Socket *)socket;
+- (void) socketIsClosedByClient:(J3Socket *)socket;
+- (void) socketIsClosedByServer:(J3Socket *)socket;
+- (void) socketIsClosed:(J3Socket *)socket withError:(NSString *)errorMessage;
 @end
 
 @interface J3Socket : NSObject <J3ByteDestination>

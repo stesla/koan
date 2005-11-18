@@ -300,29 +300,31 @@ enum MUSearchDirections
   [self displayString:@"\n"];  
 }
 
-- (void) socketIsClosed:(J3Socket *)socket;
+- (void) socketIsClosedByClient:(J3Socket *)socket;
 {
   //TODO: check to see if it's the socket for our connection
-/*  switch ([telnet reasonClosed])
-  {
-    case J3ConnectionClosedReasonServer:
-      [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
-      [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
-      break;
-      
-    case J3ConnectionClosedReasonError:
-      [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), 
-        [telnet errorMessage]]];
-      [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:[telnet errorMessage]];
-      break;
-      
-    default:
-      [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
-      [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
-      break;
-  }*/
+  [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
+  [MUGrowlService connectionClosedForTitle:[profile windowTitle]];  
   [self disconnect:nil];
-  [self displayString:@"Disconnected\n"];  
+  [self displayString:@"\n"];  
+}
+
+- (void) socketIsClosedByServer:(J3Socket *)socket;
+{
+  //TODO: check to see if it's the socket for our connection
+  [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
+  [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];  
+  [self disconnect:nil];
+  [self displayString:@"\n"];  
+}
+
+- (void) socketIsClosed:(J3Socket *)socket withError:(NSString *)errorMessage;
+{
+  //TODO: check to see if it's the socket for our connection
+  [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), errorMessage]];
+  [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:errorMessage];  
+  [self disconnect:nil];
+  [self displayString:@"\n"];  
 }
 
 #pragma mark -
