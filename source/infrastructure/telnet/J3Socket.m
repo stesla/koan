@@ -15,6 +15,7 @@
 #import <unistd.h>
 
 @interface J3Socket (Private)
+
 - (void) resolveHostname;
 - (void) checkRemoteConnection;
 - (void) createSocket;
@@ -28,12 +29,19 @@
 - (void) setStatusClosedWithError:(NSString *)error;
 - (void) socketError:(NSString *)errorMessage;
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
+
 @end
+
+#pragma mark -
 
 @implementation J3SocketException
+
 @end
 
+#pragma mark -
+
 @implementation J3Socket
+
 + (id) socketWithHostname:(NSString *)hostname port:(int)port;
 {
   return [[[self alloc] initWithHostname:hostname port:port] autorelease];
@@ -49,13 +57,12 @@
   return hasSpaceAvailable; 
 }
 
-
-- (id) initWithHostname:(NSString *)aHostname port:(int)aPort;
+- (id) initWithHostname:(NSString *)newHostname port:(int)newPort;
 {
   if (![super init])
     return nil;
-  hostname = [aHostname retain];
-  port = aPort;
+  hostname = [newHostname retain];
+  port = newPort;
   status = J3SocketStatusNotConnected;
   return self;
 }
@@ -83,7 +90,7 @@
     [self connectSocket];
     [self setStatusConnected];    
   }
-  @catch(J3SocketException * socketException)
+  @catch(J3SocketException *socketException)
   {
     [self setStatusClosedWithError:[socketException reason]];
   }
@@ -100,13 +107,13 @@
 - (unsigned int) read:(uint8_t *)bytes maxLength:(unsigned int)length;
 {
   //TODO: Handle error condition (returns -1)
-  return read(socketfd, bytes, length);
+  return read (socketfd, bytes, length);
 }
 
 - (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
 {
   //TODO: Handle error condition (returns -1)
-  return write(socketfd, bytes, length);
+  return write (socketfd, bytes, length);
 }
 
 - (void) poll;
@@ -121,19 +128,20 @@
   
   [self initializeDescriptorSet:&read_set];
   [self initializeDescriptorSet:&write_set];
-  memset(&tv, 0, sizeof(struct timeval));
+  memset (&tv, 0, sizeof (struct timeval));
   errno = 0;
-  result = select(socketfd + 1, &read_set, &write_set, NULL, &tv);  
+  
+  result = select (socketfd + 1, &read_set, &write_set, NULL, &tv);  
   
   if (result < 0)
-    return; //TODO: error, should probably do something more drastic...
+    return; // TODO: error, should probably do something more drastic...
   
-  if (FD_ISSET(socketfd, &read_set))
+  if (FD_ISSET (socketfd, &read_set))
   {
     [self checkRemoteConnection];
     hasDataAvailable = YES;    
   }
-  if (FD_ISSET(socketfd, &write_set))
+  if (FD_ISSET (socketfd, &write_set))
     hasSpaceAvailable = YES;    
 }
 
@@ -146,17 +154,21 @@
 {
   return status;
 }
+
 @end
 
+#pragma mark -
+
 @implementation J3Socket (Private)
+
 - (void) resolveHostname;
 {
   h_errno = 0;
-  const char * error;
-	server = gethostbyname([hostname cString]);
+  const char *error;
+	server = gethostbyname ([hostname cString]);
   if (!server)
   {
-    error = hstrerror(h_errno);
+    error = hstrerror (h_errno);
     [self socketError:[NSString stringWithFormat:@"%s", error]];
   }
 }
@@ -164,20 +176,21 @@
 - (void) createSocket;
 {  
   errno = 0;
-  socketfd = socket(AF_INET, SOCK_STREAM, 0);
+  socketfd = socket (AF_INET, SOCK_STREAM, 0);
   if (socketfd < 0)
-    [self socketErrorFormat:@"%s" arguments:strerror(errno)];
+    [self socketErrorFormat:@"%s" arguments:strerror (errno)];
 }
 
 - (void) checkRemoteConnection;
 {
-  char * nread;
-  int result = ioctl(socketfd, FIONREAD, &nread);
+  char *nread;
+  int result = ioctl (socketfd, FIONREAD, &nread);
+  
   if (result < 0)
     ; //TODO: handle error
-  if (!nread)    
+  if (!nread)
   {
-    close(socketfd);
+    close (socketfd);
     [self setStatusClosedByServer];
   }
 }
@@ -185,23 +198,23 @@
 - (void) configureSocket;
 {
   server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(port);
-	memcpy(&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);    
+	server_addr.sin_port = htons (port);
+	memcpy (&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);    
 }
 
 - (void) connectSocket;
 {
   int result;
   errno = 0;
-  result = connect(socketfd, (struct sockaddr *)&server_addr, sizeof(struct sockaddr));
+  result = connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr));
   if (result < 0)
-    [self socketErrorFormat:@"%s" arguments:strerror(errno)];
+    [self socketErrorFormat:@"%s" arguments:strerror (errno)];
 }
 
 - (void) initializeDescriptorSet:(fd_set *)set;
 {
-  FD_ZERO(set);
-  FD_SET(socketfd, set);
+  FD_ZERO (set);
+  FD_SET (socketfd, set);
 }
 
 - (void) setStatusConnecting;
@@ -246,7 +259,7 @@
 
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
 {
-  NSString * message = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
+  NSString *message = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
   [self socketError:message];
 }
 @end

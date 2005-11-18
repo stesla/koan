@@ -9,9 +9,13 @@
 #import "J3WriteBuffer.h"
 
 @implementation J3WriteBufferException
+
 @end
 
+#pragma mark -
+
 @implementation J3WriteBuffer
+
 - (void) setByteDestination:(id <NSObject, J3ByteDestination>)object;
 {
   [object retain];
@@ -40,4 +44,5 @@
     return;
   [self write];
 }
+
 @end

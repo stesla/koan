@@ -11,12 +11,17 @@
 #define TELNET_READ_BUFFER_SIZE 512
 
 @interface J3NewTelnetConnection (Private)
+
 - (void) poll;
 - (void) removeAllTimers;
-- (NSString *)timerKeyWithRunLoop:(NSRunLoop *)aRunLoop andMode:(NSString *)mode;
+- (NSString *)timerKeyWithRunLoop:(NSRunLoop *)runLoop andMode:(NSString *)mode;
+
 @end
 
+#pragma mark -
+
 @implementation J3NewTelnetConnection
+
 + (id) lineAtATimeTelnetWithHostname:(NSString *)hostname port:(int)port delegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)delegate;
 {
   J3LineBuffer * buffer = [J3LineBuffer buffer];
@@ -75,16 +80,16 @@
   [self poll];
 }
 
-- (void) scheduleInRunLoop:(NSRunLoop *)aRunLoop forMode:(NSString *)mode;
+- (void) scheduleInRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
 {
-  NSTimer * timer = [NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerFire:) userInfo:nil repeats:YES];
-  [aRunLoop addTimer:timer forMode:mode];
-  [timers setObject:timer forKey:[self timerKeyWithRunLoop:aRunLoop andMode:mode]];
+  NSTimer *timer = [NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerFire:) userInfo:nil repeats:YES];
+  [runLoop addTimer:timer forMode:mode];
+  [timers setObject:timer forKey:[self timerKeyWithRunLoop:runLoop andMode:mode]];
 }
 
-- (void) removeFromRunLoop:(NSRunLoop *)aRunLoop forMode:(NSString *)mode;
+- (void) removeFromRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
 {
-  NSTimer * timer = [timers objectForKey:[self timerKeyWithRunLoop:aRunLoop andMode:mode]];
+  NSTimer *timer = [timers objectForKey:[self timerKeyWithRunLoop:runLoop andMode:mode]];
   [timer invalidate];
 }
 
@@ -97,9 +102,13 @@
 {
   [outputBuffer appendString:string];
 }
+
 @end
 
+#pragma mark -
+
 @implementation J3NewTelnetConnection (Private)
+
 - (void) poll;
 {
   uint8_t bytes[TELNET_READ_BUFFER_SIZE];
@@ -117,14 +126,14 @@
 
 - (void) removeAllTimers;
 {
-  NSEnumerator * keys = [timers objectEnumerator];
-  NSTimer * timer;
+  NSEnumerator *keys = [timers objectEnumerator];
+  NSTimer *timer;
   while (timer = [keys nextObject])
     [timer invalidate];
 }
 
-- (NSString *)timerKeyWithRunLoop:(NSRunLoop *)aRunLoop andMode:(NSString *)mode;
+- (NSString *) timerKeyWithRunLoop:(NSRunLoop *)runLoop andMode:(NSString *)mode;
 {
-  return [NSString stringWithFormat:@"%@%@", aRunLoop, mode];
+  return [NSString stringWithFormat:@"%@%@", runLoop, mode];
 }
 @end

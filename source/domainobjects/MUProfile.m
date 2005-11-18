@@ -367,13 +367,13 @@
   return (player ? [player windowTitle] : [world windowTitle]);
 }
 
-- (J3NewTelnetConnection *) openNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
+- (J3NewTelnetConnection *) createNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
 {
-  J3NewTelnetConnection * telnet = [world newTelnetConnectionWithDelegate:object];
+  J3NewTelnetConnection *telnet = [world newTelnetConnectionWithDelegate:object];
+  
   if (telnet)
   {
     [telnet scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    [telnet open];
   }
   return telnet;
 }
@@ -382,7 +382,9 @@
 {
   if (!loggedIn && player)
   {
-    [connection writeLine:[player loginString]];
+    NSString *loginString = [player loginString];
+    
+    [connection writeLine:loginString];
     loggedIn = YES;
   }
 }

@@ -204,8 +204,10 @@ enum MUSearchDirections
 {
   if (![self isConnected])
   {
-    telnetConnection = [[profile openNewTelnetConnectionWithDelegate:self] retain];
+    telnetConnection = [[profile createNewTelnetConnectionWithDelegate:self] retain];
     //TODO: if (!telnetConnection) { //ERROR! }
+    
+    [telnetConnection open];
     
     pingTimer = [[NSTimer scheduledTimerWithTimeInterval:60.0
                                                   target:self
@@ -296,35 +298,35 @@ enum MUSearchDirections
   //TODO: check to see if it's the socket for our connection  
   [profile loginWithConnection:telnetConnection];  
   [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
+  [self displayString:@"\n"];
   [MUGrowlService connectionOpenedForTitle:[profile windowTitle]];
-  [self displayString:@"\n"];  
 }
 
 - (void) socketIsClosedByClient:(J3Socket *)socket;
 {
   //TODO: check to see if it's the socket for our connection
   [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
-  [MUGrowlService connectionClosedForTitle:[profile windowTitle]];  
   [self disconnect:nil];
-  [self displayString:@"\n"];  
+  [self displayString:@"\n"];
+  [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
 }
 
 - (void) socketIsClosedByServer:(J3Socket *)socket;
 {
   //TODO: check to see if it's the socket for our connection
   [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
-  [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];  
   [self disconnect:nil];
-  [self displayString:@"\n"];  
+  [self displayString:@"\n"];
+  [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
 }
 
 - (void) socketIsClosed:(J3Socket *)socket withError:(NSString *)errorMessage;
 {
   //TODO: check to see if it's the socket for our connection
   [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), errorMessage]];
-  [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:errorMessage];  
   [self disconnect:nil];
-  [self displayString:@"\n"];  
+  [self displayString:@"\n"];
+  [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:errorMessage];
 }
 
 #pragma mark -
