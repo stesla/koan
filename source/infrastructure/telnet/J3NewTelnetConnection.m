@@ -103,12 +103,13 @@
 - (void) poll;
 {
   uint8_t bytes[TELNET_READ_BUFFER_SIZE];
+  unsigned int bytesRead = 0;
   
   [socket poll];
   if ([socket hasDataAvailable])
   {
-    [socket read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
-    [parser parse:bytes length:TELNET_READ_BUFFER_SIZE];
+    bytesRead = [socket read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
+    [parser parse:bytes length:bytesRead];
   }
   if ([socket hasSpaceAvailable])
     [outputBuffer write];
