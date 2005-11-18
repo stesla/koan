@@ -8,6 +8,7 @@
 
 #import "J3Socket.h"
 
+#import <sys/ioctl.h>
 #import <sys/socket.h>
 #import <errno.h>
 #import <netdb.h>
@@ -17,6 +18,7 @@ NSString * J3SocketError = @"J3SocketError";
 
 @interface J3Socket (Private)
 - (void) resolveHostname;
+- (void) checkRemoteConnection;
 - (void) createSocket;
 - (void) configureSocket;
 - (void) connectSocket;
@@ -116,9 +118,12 @@ NSString * J3SocketError = @"J3SocketError";
     return; //TODO: error, should probably do something more drastic...
   
   if (FD_ISSET(socketfd, &read_set))
-    hasDataAvailable = YES;
+  {
+    [self checkRemoteConnection];
+    hasDataAvailable = YES;    
+  }
   if (FD_ISSET(socketfd, &write_set))
-    hasSpaceAvailable = YES;
+    hasSpaceAvailable = YES;    
 }
 
 - (void) setDelegate:(id <NSObject, J3SocketDelegate>)object;
@@ -148,6 +153,16 @@ NSString * J3SocketError = @"J3SocketError";
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
   if (socketfd < 0)
     [self socketErrorFormat:@"Error creating socket: %s" arguments:strerror(errno)];
+}
+
+- (void) checkRemoteConnection;
+{
+  char * nread;
+  int result = ioctl(socketfd, FIONREAD, &nread);
+  if (result < 0)
+    ; //TODO: handle error
+  if (!nread)    
+    [self close];    
 }
 
 - (void) configureSocket;
