@@ -1,22 +1,23 @@
 //
-//  J3WriteBufferTests.m
-//  Koan
+// J3WriteBufferTests.m
 //
-//  Created by Samuel Tesla on 11/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3WriteBufferTests.h"
 #import "J3WriteBuffer.h"
 
 @interface J3WriteBufferTests (Private)
+
 - (NSString *) output;
-- (void) setLengthWritten:(unsigned int)length;
+- (void) setLengthWritten:(unsigned)length;
 - (void) assertOutputIsString:(NSString *)string;
-- (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned int)length;
+- (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned)length;
+
 @end
 
 @implementation J3WriteBufferTests
+
 - (void) setUp
 {
   buffer = [[J3WriteBuffer buffer] retain];
@@ -63,34 +64,39 @@
   [self assertOutputIsString:@"foo\n"];
 }
 
-- (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
+- (unsigned) write:(const uint8_t *)bytes length:(unsigned)length;
 {
-  unsigned int lengthToWrite = lengthWritten < length ? lengthWritten : length;
+  unsigned lengthToWrite = lengthWritten < length ? lengthWritten : length;
   [output appendBytes:bytes length:lengthToWrite];
   return lengthToWrite;
 }
+
 @end
 
+#pragma mark -
+
 @implementation J3WriteBufferTests (Private)
-- (void) assertOutputIsString:(NSString *)string;
+
+- (void) assertOutputIsString:(NSString *)string
 {
   [self assertOutputIsString:string lengthWritten:[string length]];
 }
 
-- (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned int)length;
+- (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned)length
 {
   [self setLengthWritten:length];
   [buffer writeUnlessEmpty];
-  [self assert:[self output] equals:string];  
+  [self assert:[self output] equals:string];
 }
 
-- (void) setLengthWritten:(unsigned int)length;
+- (void) setLengthWritten:(unsigned)length
 {
   lengthWritten = length;
 }
 
-- (NSString *) output;
+- (NSString *) output
 {
   return [[[NSString alloc] initWithData:output encoding:NSASCIIStringEncoding] autorelease];
 }
+
 @end

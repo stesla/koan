@@ -1,9 +1,7 @@
 //
-//  J3NewTelnetConnection.m
-//  Koan
+// J3NewTelnetConnection.m
 //
-//  Created by Samuel Tesla on 11/16/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3NewTelnetConnection.h"
@@ -12,9 +10,10 @@
 
 @interface J3NewTelnetConnection (Private)
 
+- (void) fireTimer:(NSTimer *)timer;
 - (void) poll;
 - (void) removeAllTimers;
-- (NSString *)timerKeyWithRunLoop:(NSRunLoop *)runLoop andMode:(NSString *)mode;
+- (NSString *)timerKeyWithRunLoop:(NSRunLoop *)runLoop mode:(NSString *)mode;
 
 @end
 
@@ -22,42 +21,37 @@
 
 @implementation J3NewTelnetConnection
 
-+ (id) lineAtATimeTelnetWithHostname:(NSString *)hostname port:(int)port delegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)delegate;
++ (id) lineAtATimeTelnetWithHostname:(NSString *)hostname
+                                port:(int)port
+                            delegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)delegate
 {
-  J3LineBuffer * buffer = [J3LineBuffer buffer];
+  J3LineBuffer *buffer = [J3LineBuffer buffer];
+  
   [buffer setDelegate:delegate];
+  
   return [self telnetWithHostname:hostname port:port inputBuffer:buffer socketDelegate:delegate];
 }
 
-+ (id) telnetWithHostname:(NSString *)hostname port:(int)port inputBuffer:(id <NSObject, J3Buffer>)buffer socketDelegate:(id <NSObject, J3SocketDelegate>)delegate;
++ (id) telnetWithHostname:(NSString *)hostname
+                     port:(int)port
+              inputBuffer:(id <NSObject, J3Buffer>)buffer
+           socketDelegate:(id <NSObject, J3SocketDelegate>)delegate
 {
-  J3Socket * socket = [J3Socket socketWithHostname:hostname port:port];
-  J3TelnetParser * parser = [J3TelnetParser parser];
-  [socket setDelegate:delegate];
-  [parser setInputBuffer:buffer];
-  return [[[self alloc] initWithSocket:socket parser:parser] autorelease];
+  J3Socket *newSocket = [J3Socket socketWithHostname:hostname port:port];
+  J3TelnetParser *newParser = [J3TelnetParser parser];
+  
+  [newSocket setDelegate:delegate];
+  [newParser setInputBuffer:buffer];
+  
+  return [[[self alloc] initWithSocket:newSocket parser:newParser] autorelease];
 }
 
-- (void) close;
-{
-  [self removeAllTimers];
-  [socket close];
-}
-
-- (void) dealloc;
-{
-  [parser release];
-  [outputBuffer release];
-  [socket release];
-  [super dealloc];
-}
-
-- (id) initWithSocket:(J3Socket *)aSocket parser:(J3TelnetParser *)aParser;
+- (id) initWithSocket:(J3Socket *)newSocket parser:(J3TelnetParser *)newParser
 {
   if (![super init])
     return nil;
-  [self at:&socket put:aSocket];
-  [self at:&parser put:aParser];
+  [self at:&socket put:newSocket];
+  [self at:&parser put:newParser];
   [self at:&outputBuffer put:[J3WriteBuffer buffer]];
   [self at:&timers put:[NSMutableDictionary dictionary]];
   [outputBuffer setByteDestination:socket];
@@ -65,40 +59,51 @@
   return self;
 }
 
-- (BOOL) isConnected;
+- (void) dealloc
+{
+  if ([self isConnected])
+    [self close];
+  [parser release];
+  [outputBuffer release];
+  [socket release];
+  [super dealloc];
+}
+
+- (void) close
+{
+  [self removeAllTimers];
+  [socket close];
+}
+
+- (BOOL) isConnected
 {
   return [socket isConnected];
 }
 
-- (void) open;
+- (void) open
 {
   [socket open];
 }
 
-- (void) timerFire:(NSTimer*)aTimer;
+- (void) removeFromRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode
 {
-  [self poll];
-}
-
-- (void) scheduleInRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
-{
-  NSTimer *timer = [NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(timerFire:) userInfo:nil repeats:YES];
-  [runLoop addTimer:timer forMode:mode];
-  [timers setObject:timer forKey:[self timerKeyWithRunLoop:runLoop andMode:mode]];
-}
-
-- (void) removeFromRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
-{
-  NSTimer *timer = [timers objectForKey:[self timerKeyWithRunLoop:runLoop andMode:mode]];
+  NSTimer *timer = [timers objectForKey:[self timerKeyWithRunLoop:runLoop mode:mode]];
   [timer invalidate];
 }
 
-- (void) writeLine:(NSString *)line;
+- (void) scheduleInRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode
+{
+  NSTimer *timer = [NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(fireTimer:) userInfo:nil repeats:YES];
+  [runLoop addTimer:timer forMode:mode];
+  [timers setObject:timer forKey:[self timerKeyWithRunLoop:runLoop mode:mode]];
+}
+
+- (void) writeLine:(NSString *)line
 {
   [outputBuffer appendLine:line];
 }
 
-- (void) writeString:(NSString *)string;
+- (void) writeString:(NSString *)string
 {
   [outputBuffer appendString:string];
 }
@@ -109,10 +114,15 @@
 
 @implementation J3NewTelnetConnection (Private)
 
-- (void) poll;
+- (void) fireTimer:(NSTimer *)timer
+{
+  [self poll];
+}
+
+- (void) poll
 {
   uint8_t bytes[TELNET_READ_BUFFER_SIZE];
-  unsigned int bytesRead = 0;
+  unsigned bytesRead = 0;
   
   [socket poll];
   if ([socket hasDataAvailable])
@@ -124,7 +134,7 @@
     [outputBuffer writeUnlessEmpty];
 }
 
-- (void) removeAllTimers;
+- (void) removeAllTimers
 {
   NSEnumerator *keys = [timers objectEnumerator];
   NSTimer *timer;
@@ -132,8 +142,9 @@
     [timer invalidate];
 }
 
-- (NSString *) timerKeyWithRunLoop:(NSRunLoop *)runLoop andMode:(NSString *)mode;
+- (NSString *) timerKeyWithRunLoop:(NSRunLoop *)runLoop mode:(NSString *)mode
 {
   return [NSString stringWithFormat:@"%@%@", runLoop, mode];
 }
+
 @end

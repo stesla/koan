@@ -1,43 +1,53 @@
 //
-//  J3LineBuffer.m
-//  NewTelnet
+// J3LineBuffer.m
 //
-//  Created by Samuel Tesla on 11/10/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3LineBuffer.h"
 
 @interface J3LineBuffer (Private)
+
 - (void) hasReadLine;
+
 @end
 
-@implementation J3LineBuffer
-- (void) append:(uint8_t)byte
-{
-  [super append:byte];
-  if (byte == '\n')
-    [self hasReadLine];
-}
+#pragma mark -
 
-- (NSString *) readLine;
+@implementation J3LineBuffer
+
+- (NSString *) readLine
 {
-  NSString * result = [self stringValue];
+  NSString *result = [self stringValue];
   [self clear];
   return result;
 }
 
-- (void) setDelegate:(id <NSObject, J3LineBufferDelegate>)object;
+- (void) setDelegate:(id <NSObject, J3LineBufferDelegate>)object
 {
   [self at:&delegate put:object];
 }
+
+#pragma mark -
+#pragma mark Overrides
+
+- (void) append:(uint8_t)byte
+{
+  [super append:byte];
+  if (byte == (uint8_t) '\n')
+    [self hasReadLine];
+}
+
 @end
 
+#pragma mark -
+
 @implementation J3LineBuffer (Private)
-- (void) hasReadLine;
+
+- (void) hasReadLine
 {
-  if (!delegate || ![delegate respondsToSelector:@selector(lineBufferHasReadLine:)])
-    return;
-  [delegate lineBufferHasReadLine:self];
+  if ([delegate respondsToSelector:@selector(lineBufferHasReadLine:)])
+    [delegate lineBufferHasReadLine:self];
 }
+
 @end

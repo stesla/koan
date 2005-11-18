@@ -1,28 +1,34 @@
 //
-//  J3Buffer.h
-//  NewTelnet
+// J3Buffer.h
 //
-//  Created by Samuel Tesla on 11/10/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 
 @protocol J3Buffer
+
 - (void) append:(uint8_t)byte;
 - (void) appendLine:(NSString *)line;
 - (void) appendString:(NSString *)string;
+- (const void *)bytes;
 - (void) clear;
 - (BOOL) isEmpty;
-- (unsigned int) length;
+- (unsigned) length;
 - (NSData *) dataValue;
 - (NSString *) stringValue;
+
 @end
 
-@interface J3Buffer : NSObject<J3Buffer>
+#pragma mark -
+
+@interface J3Buffer : NSObject <J3Buffer>
 {
-  NSMutableData * buffer;
+  NSMutableData *data;
 }
+
 + (id) buffer;
-- (void) setBuffer:(NSData *)buffer;
+
+- (void) setDataValue:(NSData *)newDataValue;
+
 @end

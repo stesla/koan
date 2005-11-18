@@ -1,9 +1,7 @@
 //
-//  J3NewTelnetConnection.h
-//  Koan
+// J3NewTelnetConnection.h
 //
-//  Created by Samuel Tesla on 11/16/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -16,21 +14,29 @@
 
 @interface J3NewTelnetConnection : NSObject 
 {
-  J3Socket * socket;
-  J3WriteBuffer * outputBuffer;
-  J3TelnetParser * parser;
-  NSMutableDictionary * timers;
+  J3Socket *socket;
+  J3WriteBuffer *outputBuffer;
+  J3TelnetParser *parser;
+  NSMutableDictionary *timers;
 }
 
-+ (id) lineAtATimeTelnetWithHostname:(NSString *)hostname port:(int)port delegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)delegate;
-+ (id) telnetWithHostname:(NSString *)hostname port:(int)port inputBuffer:(id <NSObject, J3Buffer>)buffer socketDelegate:(id <NSObject, J3SocketDelegate>)delegate;
-- (id) initWithSocket:(J3Socket *)aSocket parser:(J3TelnetParser *)aParser;
++ (id) lineAtATimeTelnetWithHostname:(NSString *)hostname
+                                port:(int)port
+                            delegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)delegate;
+
++ (id) telnetWithHostname:(NSString *)hostname
+                     port:(int)port
+              inputBuffer:(id <NSObject, J3Buffer>)buffer
+           socketDelegate:(id <NSObject, J3SocketDelegate>)delegate;
+
+- (id) initWithSocket:(J3Socket *)newSocket parser:(J3TelnetParser *)newParser;
 
 - (void) close;
 - (BOOL) isConnected;
 - (void) open;
-- (void) scheduleInRunLoop:(NSRunLoop *)aRunLoop forMode:(NSString *)mode;
-- (void) removeFromRunLoop:(NSRunLoop *)aRunLoop forMode:(NSString *)mode;
+- (void) removeFromRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
+- (void) scheduleInRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
 - (void) writeLine:(NSString *)line;
 - (void) writeString:(NSString *)string;
+
 @end

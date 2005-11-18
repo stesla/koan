@@ -1,9 +1,7 @@
 //
-//  J3NaiveANSIFilterTests.h
-//  Koan
+// J3NaiveANSIFilterTests.h
 //
-//  Created by Samuel on 1/25/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>

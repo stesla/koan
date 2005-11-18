@@ -1,9 +1,7 @@
 //
-//  J3LineBufferTests.h
-//  NewTelnet
+// J3LineBufferTests.h
 //
-//  Created by Samuel Tesla on 11/10/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -12,8 +10,8 @@
 
 @interface J3LineBufferTests : TestCase <J3LineBufferDelegate>
 {
-  NSString * line;
-  J3LineBuffer * buffer;
+  NSString *line;
+  J3LineBuffer *buffer;
 }
 
 @end

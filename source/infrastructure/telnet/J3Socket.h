@@ -1,16 +1,14 @@
 //
-//  J3Socket.h
-//  NewTelnet
+// J3Socket.h
 //
-//  Created by Samuel Tesla on 11/10/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 #import <netinet/in.h>
 #import "J3ByteDestination.h"
 
-NSString * J3SocketError;
+NSString *J3SocketError;
 
 typedef enum J3SocketStatus
 {
@@ -20,26 +18,35 @@ typedef enum J3SocketStatus
   J3SocketStatusClosed,
 } J3SocketStatus;
 
+#pragma mark -
+
 @class J3Socket;
 @class J3SocketClosedReason;
 
 @protocol J3SocketDelegate
+
 - (void) socketIsConnecting:(J3Socket *)socket;
 - (void) socketIsConnected:(J3Socket *)socket;
 - (void) socketIsClosedByClient:(J3Socket *)socket;
 - (void) socketIsClosedByServer:(J3Socket *)socket;
 - (void) socketIsClosed:(J3Socket *)socket withError:(NSString *)errorMessage;
+
 @end
 
+#pragma mark -
+
 @interface J3SocketException : NSException
+
 @end
+
+#pragma mark -
 
 @interface J3Socket : NSObject <J3ByteDestination>
 {
-  NSString * hostname;
+  NSString *hostname;
   int port;
   int socketfd;
-  struct hostent * server;
+  struct hostent *server;
 	struct sockaddr_in server_addr;
   BOOL hasDataAvailable;
   BOOL hasError;
@@ -58,8 +65,8 @@ typedef enum J3SocketStatus
 - (BOOL) isConnected;
 - (void) open;
 - (void) poll;
+- (unsigned) read:(uint8_t *)buffer maxLength:(unsigned)length;
 - (void) setDelegate:(id <NSObject, J3SocketDelegate>)object;
 - (J3SocketStatus) status;
-- (unsigned int) read:(uint8_t *)buffer maxLength:(unsigned int)length;
-- (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
+
 @end

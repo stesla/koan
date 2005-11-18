@@ -1,9 +1,7 @@
 //
-//  J3TelnetInterpretAsCommandState.m
-//  NewTelnet
+// J3TelnetInterpretAsCommandState.m
 //
-//  Created by Samuel Tesla on 11/9/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3TelnetConstants.h"
@@ -17,7 +15,8 @@
 #import "J3TelnetWontState.h"
 
 @implementation J3TelnetInterpretAsCommandState
-- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetParser *)parser;
+
+- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetParser *)parser
 {
   switch (byte)
   {
@@ -43,4 +42,5 @@
       return [J3TelnetTextState state];
   }
 }
+
 @end

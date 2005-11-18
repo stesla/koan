@@ -1,9 +1,7 @@
 //
-//  J3WriteBufferTests.h
-//  Koan
+// J3WriteBufferTests.h
 //
-//  Created by Samuel Tesla on 11/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -13,8 +11,9 @@
 
 @interface J3WriteBufferTests : TestCase <J3ByteDestination>
 {
-  J3WriteBuffer * buffer;
-  unsigned int lengthWritten;
-  NSMutableData * output;
+  J3WriteBuffer *buffer;
+  unsigned lengthWritten;
+  NSMutableData *output;
 }
+
 @end

@@ -1,9 +1,7 @@
 //
-//  J3WriteBuffer.m
-//  Koan
+// J3WriteBuffer.m
 //
-//  Created by Samuel Tesla on 11/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3WriteBuffer.h"
@@ -16,29 +14,28 @@
 
 @implementation J3WriteBuffer
 
-- (void) setByteDestination:(id <NSObject, J3ByteDestination>)object;
+- (void) setByteDestination:(id <NSObject, J3ByteDestination>)object
 {
   [object retain];
   [destination release];
   destination = object;
 }
 
-- (void) write;
+- (void) write
 {
-  const uint8_t * bytes;
-  unsigned int bytesWritten; 
+  unsigned bytesWritten; 
   NSRange range;
   
   if (!destination)
     @throw [J3WriteBufferException exceptionWithName:@"" reason:@"Must provide destination" userInfo:nil];
-  bytes = [buffer bytes];
-  bytesWritten = [destination writeBytes:bytes length:[buffer length]];
+  
+  bytesWritten = [destination write:(uint8_t *) [self bytes] length:[self length]];
   range.location = bytesWritten;
-  range.length = [buffer length] - bytesWritten;
-  [self setBuffer:[buffer subdataWithRange:range]];
+  range.length = [self length] - bytesWritten;
+  [self setDataValue:[[self dataValue] subdataWithRange:range]];
 }
 
-- (void) writeUnlessEmpty;
+- (void) writeUnlessEmpty
 {
   if ([self isEmpty])
     return;

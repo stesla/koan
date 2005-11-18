@@ -1,11 +1,11 @@
 //
-//  J3ByteDestination.h
-//  Koan
+// J3ByteDestination.h
 //
-//  Created by Samuel Tesla on 11/15/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 @protocol J3ByteDestination
-- (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
+
+- (unsigned) write:(const uint8_t *)bytes length:(unsigned)length;
+
 @end

@@ -1,9 +1,7 @@
 //
-//  StateMachineTests.m
-//  NewTelnet
+// J3TelnetStateMachineTests.m
 //
-//  Created by Samuel Tesla on 11/9/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3TelnetStateMachineTests.h"
@@ -23,17 +21,52 @@
   uint8_t lastByteInput;
   uint8_t lastByteOutput;
 }
+
 - (uint8_t) lastByteInput;
 - (uint8_t) lastByteOutput;
+
 @end
 
+#pragma mark -
+
+@implementation J3MockTelnetParser
+
+- (uint8_t) lastByteInput;
+{
+  return lastByteInput;
+}
+
+- (uint8_t) lastByteOutput;
+{
+  return lastByteOutput;
+}
+
+- (void) bufferInputByte:(uint8_t)byte;
+{
+  lastByteInput = byte;
+}
+
+- (void) bufferOutputByte:(uint8_t)byte;
+{
+  lastByteOutput = byte;
+}
+
+@end
+
+#pragma mark -
+
 @interface J3TelnetStateMachineTests (Private)
+
 - (void) assertState:(Class)stateClass givenByte:(uint8_t)byte producesState:(Class)nextStateClass;
 - (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte inputsByte:(uint8_t)inputsByte;
 - (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsByte:(uint8_t)outputsByte;
+
 @end
 
+#pragma mark -
+
 @implementation J3TelnetStateMachineTests
+
 - (void) testTextStateTransitions
 {
   [self assertState:C(J3TelnetTextState) givenByte:'a' producesState:C(J3TelnetTextState)];
@@ -73,15 +106,18 @@
 }
 @end
 
+#pragma mark -
+
 @implementation J3TelnetStateMachineTests (Private)
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)byte producesState:(Class)nextStateClass;
+
+- (void) assertState:(Class)stateClass givenByte:(uint8_t)byte producesState:(Class)nextStateClass
 {
   J3TelnetState * state = [[[stateClass alloc] init] autorelease];
   J3TelnetState * nextState = [state parse:byte forParser:nil];
   [self assert:[nextState class] equals:nextStateClass];  
 }
 
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte inputsByte:(uint8_t)inputsByte;
+- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte inputsByte:(uint8_t)inputsByte
 {
   J3TelnetState * state = [[[stateClass alloc] init] autorelease];
   J3MockTelnetParser * parser = [J3MockTelnetParser parser];
@@ -89,7 +125,7 @@
   [self assertInt:[parser lastByteInput] equals:inputsByte];
 }
 
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsByte:(uint8_t)outputsByte;
+- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsByte:(uint8_t)outputsByte
 {
   J3TelnetState * state = [[[stateClass alloc] init] autorelease];
   J3MockTelnetParser * parser = [J3MockTelnetParser parser];
@@ -97,26 +133,3 @@
   [self assertInt:[parser lastByteOutput] equals:outputsByte];
 }
 @end
-
-@implementation J3MockTelnetParser
-- (uint8_t) lastByteInput;
-{
-  return lastByteInput;
-}
-
-- (uint8_t) lastByteOutput;
-{
-  return lastByteOutput;
-}
-
-- (void) bufferInputByte:(uint8_t)byte;
-{
-  lastByteInput = byte;
-}
-
-- (void) bufferOutputByte:(uint8_t)byte;
-{
-  lastByteOutput = byte;
-}
-@end
-

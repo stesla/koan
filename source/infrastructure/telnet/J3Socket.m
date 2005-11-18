@@ -1,9 +1,7 @@
 //
-//  J3Socket.m
-//  NewTelnet
+// J3Socket.m
 //
-//  Created by Samuel Tesla on 11/10/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3Socket.h"
@@ -16,14 +14,14 @@
 
 @interface J3Socket (Private)
 
-- (void) resolveHostname;
 - (void) checkRemoteConnection;
-- (void) createSocket;
 - (void) configureSocket;
 - (void) connectSocket;
+- (void) createSocket;
 - (void) initializeDescriptorSet:(fd_set *)set;
-- (void) setStatusConnecting;
+- (void) resolveHostname;
 - (void) setStatusConnected;
+- (void) setStatusConnecting;
 - (void) setStatusClosedByClient;
 - (void) setStatusClosedByServer;
 - (void) setStatusClosedWithError:(NSString *)error;
@@ -42,22 +40,12 @@
 
 @implementation J3Socket
 
-+ (id) socketWithHostname:(NSString *)hostname port:(int)port;
++ (id) socketWithHostname:(NSString *)hostname port:(int)port
 {
   return [[[self alloc] initWithHostname:hostname port:port] autorelease];
 }
 
-- (BOOL) hasDataAvailable;
-{
-  return hasDataAvailable; 
-}
-
-- (BOOL) hasSpaceAvailable;
-{
-  return hasSpaceAvailable; 
-}
-
-- (id) initWithHostname:(NSString *)newHostname port:(int)newPort;
+- (id) initWithHostname:(NSString *)newHostname port:(int)newPort
 {
   if (![super init])
     return nil;
@@ -67,17 +55,41 @@
   return self;
 }
 
-- (BOOL) isClosed;
+- (void) dealloc
+{
+  [hostname release];
+  [super dealloc];
+}
+
+- (void) close
+{
+  if (![self isConnected])
+    return; //TODO: @throw here?
+  close(socketfd);
+  [self setStatusClosedByClient];    
+}
+
+- (BOOL) hasDataAvailable
+{
+  return hasDataAvailable; 
+}
+
+- (BOOL) hasSpaceAvailable
+{
+  return hasSpaceAvailable; 
+}
+
+- (BOOL) isClosed
 {
   return status == J3SocketStatusClosed;
 }
 
-- (BOOL) isConnected;
+- (BOOL) isConnected
 {
   return status == J3SocketStatusConnected;
 }
 
-- (void) open;
+- (void) open
 {  
   if ([self isConnected] || [self isClosed])
     return; //TODO: @throw here?
@@ -96,27 +108,7 @@
   }
 }
 
-- (void) close;
-{
-  if (![self isConnected])
-    return; //TODO: @throw here?
-  close(socketfd);
-  [self setStatusClosedByClient];    
-}
-
-- (unsigned int) read:(uint8_t *)bytes maxLength:(unsigned int)length;
-{
-  //TODO: Handle error condition (returns -1)
-  return read (socketfd, bytes, length);
-}
-
-- (unsigned int) writeBytes:(const uint8_t *)bytes length:(unsigned int)length;
-{
-  //TODO: Handle error condition (returns -1)
-  return write (socketfd, bytes, length);
-}
-
-- (void) poll;
+- (void) poll
 {
   fd_set read_set;
   fd_set write_set;
@@ -145,14 +137,29 @@
     hasSpaceAvailable = YES;    
 }
 
-- (void) setDelegate:(id <NSObject, J3SocketDelegate>)object;
+- (unsigned) read:(uint8_t *)bytes maxLength:(unsigned)length
+{
+  //TODO: Handle error condition (returns -1)
+  return read (socketfd, bytes, length);
+}
+
+- (void) setDelegate:(id <NSObject, J3SocketDelegate>)object
 {
   [self at:&delegate put:object];
 }
 
-- (J3SocketStatus) status;
+- (J3SocketStatus) status
 {
   return status;
+}
+
+#pragma mark -
+#pragma mark J3ByteDestination protocol
+
+- (unsigned) write:(const uint8_t *)bytes length:(unsigned)length
+{
+  //TODO: Handle error condition (returns -1)
+  return write (socketfd, bytes, length);
 }
 
 @end
@@ -161,27 +168,7 @@
 
 @implementation J3Socket (Private)
 
-- (void) resolveHostname;
-{
-  h_errno = 0;
-  const char *error;
-	server = gethostbyname ([hostname cString]);
-  if (!server)
-  {
-    error = hstrerror (h_errno);
-    [self socketError:[NSString stringWithFormat:@"%s", error]];
-  }
-}
-
-- (void) createSocket;
-{  
-  errno = 0;
-  socketfd = socket (AF_INET, SOCK_STREAM, 0);
-  if (socketfd < 0)
-    [self socketErrorFormat:@"%s" arguments:strerror (errno)];
-}
-
-- (void) checkRemoteConnection;
+- (void) checkRemoteConnection
 {
   char *nread;
   int result = ioctl (socketfd, FIONREAD, &nread);
@@ -195,14 +182,14 @@
   }
 }
 
-- (void) configureSocket;
+- (void) configureSocket
 {
   server_addr.sin_family = AF_INET;
 	server_addr.sin_port = htons (port);
 	memcpy (&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);    
 }
 
-- (void) connectSocket;
+- (void) connectSocket
 {
   int result;
   errno = 0;
@@ -211,55 +198,76 @@
     [self socketErrorFormat:@"%s" arguments:strerror (errno)];
 }
 
-- (void) initializeDescriptorSet:(fd_set *)set;
+- (void) createSocket
+{  
+  errno = 0;
+  socketfd = socket (AF_INET, SOCK_STREAM, 0);
+  if (socketfd < 0)
+    [self socketErrorFormat:@"%s" arguments:strerror (errno)];
+}
+
+- (void) initializeDescriptorSet:(fd_set *)set
 {
   FD_ZERO (set);
   FD_SET (socketfd, set);
 }
 
-- (void) setStatusConnecting;
+- (void) resolveHostname
 {
-  status = J3SocketStatusConnecting;
-  if (delegate)
-    [delegate socketIsConnecting:self];
+  h_errno = 0;
+  const char *error;
+	server = gethostbyname ([hostname cString]);
+  if (!server)
+  {
+    error = hstrerror (h_errno);
+    [self socketError:[NSString stringWithFormat:@"%s", error]];
+  }
 }
 
-- (void) setStatusConnected;
+- (void) setStatusConnected
 {
   status = J3SocketStatusConnected;
   if (delegate)
     [delegate socketIsConnected:self];
 }
 
-- (void) setStatusClosedByClient;
+- (void) setStatusConnecting
+{
+  status = J3SocketStatusConnecting;
+  if (delegate)
+    [delegate socketIsConnecting:self];
+}
+
+- (void) setStatusClosedByClient
 {
   status = J3SocketStatusClosed;
   if (delegate)
     [delegate socketIsClosedByClient:self];
 }
 
-- (void) setStatusClosedByServer;
+- (void) setStatusClosedByServer
 {
   status = J3SocketStatusClosed;
   if (delegate)
     [delegate socketIsClosedByServer:self];
 }
 
-- (void) setStatusClosedWithError:(NSString *)error;
+- (void) setStatusClosedWithError:(NSString *)error
 {
   status = J3SocketStatusClosed;
   if (delegate)
     [delegate socketIsClosed:self withError:error];
 }
 
-- (void) socketError:(NSString *)errorMessage;
+- (void) socketError:(NSString *)errorMessage
 {
   @throw [J3SocketException exceptionWithName:@"" reason:errorMessage userInfo:nil];
 }
 
-- (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
+- (void) socketErrorFormat:(NSString *)format arguments:(va_list)args
 {
   NSString *message = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
   [self socketError:message];
 }
+
 @end

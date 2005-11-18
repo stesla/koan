@@ -1,17 +1,15 @@
 //
-//  J3NaiveANSIFilterTests.m
-//  Koan
+// J3NaiveANSIFilterTests.m
 //
-//  Created by Samuel on 1/25/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3NaiveANSIFilterTests.h"
-
 #import "J3NaiveANSIFilter.h"
 #import "TestCase (NSAttributedStringAssertions).h"
 
 @interface J3NaiveANSIFilterTests (Private)
+
 - (NSAttributedString *) makeString:(NSString *)string;
 
 - (void) assertANSICode:(J3ANSICode)code 
@@ -19,7 +17,10 @@
                 toValue:(id)aValue;
 - (void) assertANSICode:(J3ANSICode)code setsForegroundColor:(NSColor *)color;
 - (void) assertANSICode:(J3ANSICode)code setsBackColor:(NSColor *)color;
+
 @end
+
+#pragma mark -
 
 @implementation J3NaiveANSIFilterTests
 
@@ -96,6 +97,8 @@
 */
 
 @end
+
+#pragma mark -
 
 @implementation J3NaiveANSIFilterTests (Private)
 

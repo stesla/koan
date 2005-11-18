@@ -1,16 +1,15 @@
 //
-//  J3TelnetParser.m
-//  NewTelnet
+// J3TelnetParser.m
 //
-//  Created by Samuel Tesla on 11/9/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3TelnetParser.h"
 #import "J3TelnetTextState.h"
 
 @implementation J3TelnetParser
-+ (id) parser;
+
++ (id) parser
 {
   return [[[self alloc] init] autorelease];
 }
@@ -23,36 +22,36 @@
   return self;
 }
 
-- (void) bufferInputByte:(uint8_t)byte;
+- (void) bufferInputByte:(uint8_t)byte
 {
   [inputBuffer append:byte];
 }
 
-- (void) bufferOutputByte:(uint8_t)byte;
+- (void) bufferOutputByte:(uint8_t)byte
 {
   [outputBuffer append:byte];
 }
 
-- (void) parse:(uint8_t)byte;
+- (void) parse:(uint8_t)byte
 {
   [self at:&state put:[state parse:byte forParser:self]];
 }
 
-- (void) parse:(uint8_t *)bytes length:(int)count;
+- (void) parse:(uint8_t *)bytes length:(int)count
 {
   int i;
   for (i = 0; i < count; i++)
     [self parse:bytes[i]];
 }
 
-- (void) setInputBuffer:(id <NSObject, J3Buffer>)buffer;
+- (void) setInputBuffer:(id <NSObject, J3Buffer>)buffer
 {
   [buffer retain];
   [inputBuffer release];
   inputBuffer = buffer;
 }
 
-- (void) setOuptutBuffer:(id <NSObject, J3Buffer>)buffer;
+- (void) setOuptutBuffer:(id <NSObject, J3Buffer>)buffer
 {
   [buffer retain];
   [outputBuffer release];

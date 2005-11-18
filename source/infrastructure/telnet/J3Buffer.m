@@ -1,51 +1,19 @@
 //
-//  J3Buffer.m
-//  NewTelnet
+// J3Buffer.m
 //
-//  Created by Samuel Tesla on 11/10/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3Buffer.h"
 
 @implementation J3Buffer
-+ (id) buffer;
+
++ (id) buffer
 {
   return [[[self alloc] init] autorelease];
 }
 
-- (void) append:(uint8_t)byte;
-{
-  char bytes[1] = {byte};
-  [buffer appendBytes:bytes length:1];
-}
-
-- (void) appendLine:(NSString *)line;
-{
-  [self appendString:line];
-  [self append:'\n'];
-}
-
-- (void) appendString:(NSString *)string;
-{
-  const char * bytes = [string cStringUsingEncoding:NSASCIIStringEncoding];
-  unsigned int length = strlen(bytes);
-  unsigned int i;
-  for (i = 0; i < length; i++)
-    [self append:bytes[i]];
-}
-
-- (void) clear;
-{
-  [self setBuffer:[NSData data]];
-}
-
-- (NSData *) dataValue;
-{
-  return [NSData dataWithData:buffer];
-}
-
-- (id) init;
+- (id) init
 {
   if (![super init])
     return nil;
@@ -53,26 +21,66 @@
   return self;
 }
 
-- (BOOL) isEmpty;
+- (void) setDataValue:(NSData *)newDataValue
+{
+  NSMutableData *copy = [[NSMutableData alloc] initWithData:newDataValue];
+  [data release];
+  data = copy;
+}
+
+#pragma mark -
+#pragma mark J3Buffer protocol
+
+- (void) append:(uint8_t)byte
+{
+  char bytes[1] = {byte};
+  [data appendBytes:bytes length:1];
+}
+
+- (void) appendLine:(NSString *)line
+{
+  [self appendString:line];
+  [self append:'\n'];
+}
+
+- (void) appendString:(NSString *)string
+{
+  const char *bytes = [string cStringUsingEncoding:NSASCIIStringEncoding];
+  unsigned length = strlen (bytes);
+  unsigned i;
+  
+  for (i = 0; i < length; i++)
+    [self append:bytes[i]];
+}
+
+- (const void *)bytes
+{
+  return [data bytes];
+}
+
+- (void) clear
+{
+  [self setDataValue:[NSData data]];
+}
+
+- (NSData *) dataValue
+{
+  return [NSData dataWithData:data];
+}
+
+- (BOOL) isEmpty
 {
   return [self length] == 0;
 }
 
-- (unsigned int) length;
+- (unsigned) length
 {
-  return [buffer length];
+  return [data length];
 }
 
-- (void) setBuffer:(NSData *)newBuffer;
+- (NSString *) stringValue
 {
-  NSMutableData * copy = [[NSMutableData alloc] initWithData:newBuffer];
-  [buffer release];
-  buffer = copy;
-}
-
-- (NSString *) stringValue;
-{
-  return [[[NSString alloc] initWithData:buffer encoding:NSASCIIStringEncoding] autorelease];
+  return [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
 }
 
 @end

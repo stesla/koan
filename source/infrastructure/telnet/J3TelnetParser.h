@@ -1,9 +1,7 @@
 //
-//  J3TelnetParser.h
-//  NewTelnet
+// J3TelnetParser.h
 //
-//  Created by Samuel Tesla on 11/9/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -15,8 +13,9 @@
 {
   id <NSObject, J3Buffer> inputBuffer;
   id <NSObject, J3Buffer> outputBuffer;
-  J3TelnetState * state;
+  J3TelnetState *state;
 }
+
 + (id) parser;
 
 - (void) bufferInputByte:(uint8_t)byte;
@@ -26,4 +25,5 @@
 
 - (void) setInputBuffer:(id <NSObject, J3Buffer>)buffer;
 - (void) setOuptutBuffer:(id <NSObject, J3Buffer>)buffer;
+
 @end
