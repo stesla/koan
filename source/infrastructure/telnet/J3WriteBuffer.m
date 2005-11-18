@@ -33,4 +33,11 @@
   range.length = [buffer length] - bytesWritten;
   [self setBuffer:[buffer subdataWithRange:range]];
 }
+
+- (void) writeUnlessEmpty;
+{
+  if ([self isEmpty])
+    return;
+  [self write];
+}
 @end

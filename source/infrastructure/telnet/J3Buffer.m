@@ -53,6 +53,16 @@
   return self;
 }
 
+- (BOOL) isEmpty;
+{
+  return [self length] == 0;
+}
+
+- (unsigned int) length;
+{
+  return [buffer length];
+}
+
 - (void) setBuffer:(NSData *)newBuffer;
 {
   NSMutableData * copy = [[NSMutableData alloc] initWithData:newBuffer];

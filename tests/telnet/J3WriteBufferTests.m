@@ -80,7 +80,7 @@
 - (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned int)length;
 {
   [self setLengthWritten:length];
-  [buffer write];
+  [buffer writeUnlessEmpty];
   [self assert:[self output] equals:string];  
 }
 

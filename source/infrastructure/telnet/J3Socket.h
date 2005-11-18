@@ -31,6 +31,9 @@ typedef enum J3SocketStatus
 - (void) socketIsClosed:(J3Socket *)socket withError:(NSString *)errorMessage;
 @end
 
+@interface J3SocketException : NSException
+@end
+
 @interface J3Socket : NSObject <J3ByteDestination>
 {
   NSString * hostname;

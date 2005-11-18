@@ -112,7 +112,7 @@
     [parser parse:bytes length:bytesRead];
   }
   if ([socket hasSpaceAvailable])
-    [outputBuffer write];
+    [outputBuffer writeUnlessEmpty];
 }
 
 - (void) removeAllTimers;

@@ -13,6 +13,8 @@
 - (void) appendLine:(NSString *)line;
 - (void) appendString:(NSString *)string;
 - (void) clear;
+- (BOOL) isEmpty;
+- (unsigned int) length;
 - (NSData *) dataValue;
 - (NSString *) stringValue;
 @end

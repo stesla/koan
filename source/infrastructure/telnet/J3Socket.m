@@ -14,8 +14,6 @@
 #import <netdb.h>
 #import <unistd.h>
 
-NSString * J3SocketError = @"J3SocketError";
-
 @interface J3Socket (Private)
 - (void) resolveHostname;
 - (void) checkRemoteConnection;
@@ -28,7 +26,11 @@ NSString * J3SocketError = @"J3SocketError";
 - (void) setStatusClosedByClient;
 - (void) setStatusClosedByServer;
 - (void) setStatusClosedWithError:(NSString *)error;
+- (void) socketError:(NSString *)errorMessage;
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
+@end
+
+@implementation J3SocketException
 @end
 
 @implementation J3Socket
@@ -72,12 +74,19 @@ NSString * J3SocketError = @"J3SocketError";
 {  
   if ([self isConnected] || [self isClosed])
     return; //TODO: @throw here?
-  [self setStatusConnecting];
-  [self resolveHostname];
-  [self createSocket];
-  [self configureSocket];
-  [self connectSocket];
-  [self setStatusConnected];
+  @try
+  {
+    [self setStatusConnecting];
+    [self resolveHostname];
+    [self createSocket];
+    [self configureSocket];
+    [self connectSocket];
+    [self setStatusConnected];    
+  }
+  @catch(J3SocketException * socketException)
+  {
+    [self setStatusClosedWithError:[socketException reason]];
+  }
 }
 
 - (void) close;
@@ -143,10 +152,13 @@ NSString * J3SocketError = @"J3SocketError";
 - (void) resolveHostname;
 {
   h_errno = 0;
+  const char * error;
 	server = gethostbyname([hostname cString]);
   if (!server)
-    // I cast here because GCC complains about discarding the const-ness
-    [self socketErrorFormat:@"Error resolving hostname: %s" arguments:(char *) hstrerror(h_errno)];
+  {
+    error = hstrerror(h_errno);
+    [self socketError:[NSString stringWithFormat:@"%s", error]];
+  }
 }
 
 - (void) createSocket;
@@ -154,7 +166,7 @@ NSString * J3SocketError = @"J3SocketError";
   errno = 0;
   socketfd = socket(AF_INET, SOCK_STREAM, 0);
   if (socketfd < 0)
-    [self socketErrorFormat:@"Error creating socket: %s" arguments:strerror(errno)];
+    [self socketErrorFormat:@"%s" arguments:strerror(errno)];
 }
 
 - (void) checkRemoteConnection;
@@ -183,7 +195,7 @@ NSString * J3SocketError = @"J3SocketError";
   errno = 0;
   result = connect(socketfd, (struct sockaddr *)&server_addr, sizeof(struct sockaddr));
   if (result < 0)
-    [self socketErrorFormat:@"Error connecting to socket: %s" arguments:strerror(errno)];
+    [self socketErrorFormat:@"%s" arguments:strerror(errno)];
 }
 
 - (void) initializeDescriptorSet:(fd_set *)set;
@@ -227,9 +239,14 @@ NSString * J3SocketError = @"J3SocketError";
     [delegate socketIsClosed:self withError:error];
 }
 
+- (void) socketError:(NSString *)errorMessage;
+{
+  @throw [J3SocketException exceptionWithName:@"" reason:errorMessage userInfo:nil];
+}
+
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
 {
   NSString * message = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
-  @throw [NSException exceptionWithName:J3SocketError reason:message userInfo:nil];
+  [self socketError:message];
 }
 @end
