@@ -29,6 +29,9 @@ extern NSString *MUPMostRecentVersion;
 extern NSString *MUPMostRecentVersionCheckTime;
 extern NSString *MUPMostRecentVersionURL;
 
+extern NSString *MUPPlaySounds;
+extern NSString *MUPSilentWhenActive;
+
 #pragma mark Notification constants.
 
 extern NSString *MUConnectionWindowControllerWillCloseNotification;

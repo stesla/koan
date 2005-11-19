@@ -10,6 +10,7 @@
 #import "MUConnectionWindowController.h"
 #import "MUGrowlService.h"
 #import "MUPlayer.h"
+#import "MUPreferencesController.h"
 #import "MUProfilesController.h"
 #import "MUServices.h"
 #import "J3UpdateController.h"
@@ -21,11 +22,6 @@
 - (void) colorPanelColorDidChange:(NSNotification *)notification;
 - (IBAction) openConnection:(id)sender;
 - (void) openConnectionWithController:(MUConnectionWindowController *)controller;
-- (void) postGlobalBackgroundColorDidChangeNotification;
-- (void) postGlobalFontDidChangeNotification;
-- (void) postGlobalLinkColorDidChangeNotification;
-- (void) postGlobalTextColorDidChangeNotification;
-- (void) postGlobalVisitedLinkColorDidChangeNotification;
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
 - (void) updateApplicationBadge;
 - (void) worldsDidChange:(NSNotification *)notification;
@@ -60,17 +56,12 @@
   [initialValues setObject:archivedBlue forKey:MUPLinkColor];
   [initialValues setObject:archivedLightGray forKey:MUPTextColor];
   [initialValues setObject:archivedPurple forKey:MUPVisitedLinkColor];
+  [initialValues setObject:[NSNumber numberWithBool:YES] forKey:MUPPlaySounds];
+  [initialValues setObject:[NSNumber numberWithBool:YES] forKey:MUPSilentWhenActive];
   
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
   
   [MUGrowlService growlService];
-  
-  // Launching the Growl service causes Koan to be polite and not activate
-  // so we have to tell it that, no, really, it can go ahead.
-	//
-	// Commented out by Tyler in the belief that Growl 0.6 fixes this behavior.
-	//
-  // [NSApp activateIgnoringOtherApps:YES];
 }
 
 - (void) awakeFromNib
@@ -127,6 +118,30 @@
   [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
 }
 
+- (IBAction) connectToURL:(NSURL *)url
+{
+	MUConnectionWindowController *controller;
+	MUWorld *world;
+  
+  if (![[url scheme] isEqualToString:@"telnet"])
+    return;
+  
+  world = [[MUWorld alloc] initWithWorldName:[url host]
+                               worldHostname:[url host]
+                                   worldPort:[url port]
+                                    worldURL:@""
+                                     usesSSL:NO
+                                   usesProxy:NO
+                               proxySettings:nil
+                                     players:nil];
+  controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+	
+	[self openConnectionWithController:controller];
+	
+	[world release];
+  [controller release];
+}
+
 - (IBAction) connectUsingPanelInformation:(id)sender
 {
 	MUConnectionWindowController *controller;
@@ -165,7 +180,7 @@
 
 - (IBAction) showPreferencesPanel:(id)sender
 {
-  [preferencesPanel makeKeyAndOrderFront:self];
+  [preferencesController showPreferencesPanel:sender];
 }
 
 - (IBAction) showProfilesPanel:(id)sender
@@ -277,8 +292,10 @@
 {
   if (![NSApp isActive])
   {
+    NSSound *blow = [NSSound soundNamed:@"Blow"];
     [NSApp requestUserAttention:NSInformationalRequest];
     
+    [blow play];
     unreadCount++;
     [self updateApplicationBadge];
   }
@@ -292,36 +309,12 @@
 
 - (IBAction) changeFont:(id)sender
 {
-  NSFontManager *fontManager = [NSFontManager sharedFontManager];
-  NSFont *selectedFont = [fontManager selectedFont];
-  NSFont *panelFont;
-  NSNumber *fontSize;
-	id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
-  
-  if (selectedFont == nil)
-  {
-    selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-  }
-	
-  panelFont = [fontManager convertFont:selectedFont];
-  fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];	
-  
-  [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
-  [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
-	
-	[self postGlobalFontDidChangeNotification];
+  [preferencesController changeFont];
 }
 
 - (void) colorPanelColorDidChange:(NSNotification *)notification
 {
-	if ([globalTextColorWell isActive])
-		[self postGlobalTextColorDidChangeNotification];
-	else if ([globalBackgroundColorWell isActive])
-		[self postGlobalBackgroundColorDidChangeNotification];
-	else if ([globalLinkColorWell isActive])
-		[self postGlobalLinkColorDidChangeNotification];
-	else if ([globalVisitedLinkColorWell isActive])
-		[self postGlobalVisitedLinkColorDidChangeNotification];
+	[preferencesController colorPanelColorDidChange];
 }
 
 - (IBAction) openConnection:(id)sender
@@ -342,36 +335,6 @@
   [connectionWindowControllers addObject:controller];
   [controller showWindow:self];
   [controller connect:nil];
-}
-
-- (void) postGlobalBackgroundColorDidChangeNotification
-{
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalBackgroundColorDidChangeNotification
-																											object:self];
-}
-
-- (void) postGlobalFontDidChangeNotification
-{
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalFontDidChangeNotification
-																											object:self];
-}
-
-- (void) postGlobalLinkColorDidChangeNotification
-{
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalLinkColorDidChangeNotification
-																											object:self];
-}
-
-- (void) postGlobalTextColorDidChangeNotification
-{
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
-																											object:self];
-}
-
-- (void) postGlobalVisitedLinkColorDidChangeNotification
-{
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalVisitedLinkColorDidChangeNotification
-																											object:self];
 }
 
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect

@@ -6,25 +6,21 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class MUPreferencesController;
 @class MUProfilesController;
 @class MUUpdateController;
 
 @interface MUApplicationController : NSObject
 {
   IBOutlet NSMenu *openConnectionMenu;
-	
-  IBOutlet NSPanel *preferencesPanel;
-	IBOutlet NSColorWell *globalTextColorWell;
-	IBOutlet NSColorWell *globalBackgroundColorWell;
-	IBOutlet NSColorWell *globalLinkColorWell;
-	IBOutlet NSColorWell *globalVisitedLinkColorWell;
-	
+  
 	IBOutlet NSPanel *newConnectionPanel;
 	IBOutlet NSTextField *newConnectionHostnameField;
 	IBOutlet NSTextField *newConnectionPortField;
 	IBOutlet NSButton *newConnectionSaveWorldButton;
   
   IBOutlet MUUpdateController *updateController;
+  IBOutlet MUPreferencesController *preferencesController;
   
   unsigned unreadCount;
   
@@ -33,6 +29,7 @@
 }
 
 - (IBAction) chooseNewFont:(id)sender;
+- (IBAction) connectToURL:(NSURL *)url;
 - (IBAction) connectUsingPanelInformation:(id)sender;
 - (IBAction) openBugsWebPage:(id)sender;
 - (IBAction) openNewConnectionPanel:(id)sender;

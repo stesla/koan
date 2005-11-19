@@ -153,6 +153,38 @@ enum MUSearchDirections
 	return NO;
 }
 
+- (BOOL) windowShouldClose:(id)sender
+{
+  if ([self isConnected])
+  {
+    NSString *title = [NSString stringWithFormat:
+      NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowTitle]];
+    NSAlert *alert;
+    int choice;
+    
+    alert = [NSAlert alertWithMessageText:title
+                            defaultButton:NSLocalizedString (MULOkay, nil)
+                          alternateButton:NSLocalizedString (MULCancel, nil)
+                              otherButton:nil
+                informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
+      [profile hostname]];
+    
+    choice = [alert runModal];
+    
+    if (choice == NSAlertAlternateReturn)
+    {
+      return NO;
+    }
+    
+    [self disconnect:sender];
+  }
+  
+  [splitView saveState:YES];
+  
+  [self postConnectionWindowControllerWillCloseNotification];
+  
+  return YES;
+}
 
 #pragma mark -
 #pragma mark Accessors
@@ -454,42 +486,6 @@ enum MUSearchDirections
     return NO;
   }
   return NO;
-}
-
-#pragma mark -
-#pragma mark NSWindow delegate
-
-- (BOOL) windowShouldClose:(id)sender
-{
-  if ([self isConnected])
-  {
-    NSString *title = [NSString stringWithFormat:
-      NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowTitle]];
-    NSAlert *alert;
-    int choice;
-    
-    alert = [NSAlert alertWithMessageText:title
-                            defaultButton:NSLocalizedString (MULOkay, nil)
-                          alternateButton:NSLocalizedString (MULCancel, nil)
-                              otherButton:nil
-                informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
-      [profile hostname]];
-    
-    choice = [alert runModal];
-    
-    if (choice == NSAlertAlternateReturn)
-    {
-      return NO;
-    }
-    
-    [self disconnect:sender];
-  }
-  
-  [splitView saveState:YES];
-  
-  [self postConnectionWindowControllerWillCloseNotification];
-  
-  return YES;
 }
 
 @end

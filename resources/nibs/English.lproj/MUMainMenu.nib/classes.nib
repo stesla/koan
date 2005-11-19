@@ -31,6 +31,7 @@
         {
             ACTIONS = {
                 chooseNewFont = id; 
+                connectToURL = id; 
                 connectUsingPanelInformation = id; 
                 openBugsWebPage = id; 
                 openNewConnectionPanel = id; 
@@ -40,16 +41,12 @@
             CLASS = MUApplicationController; 
             LANGUAGE = ObjC; 
             OUTLETS = {
-                globalBackgroundColorWell = NSColorWell; 
-                globalLinkColorWell = NSColorWell; 
-                globalTextColorWell = NSColorWell; 
-                globalVisitedLinkColorWell = NSColorWell; 
                 newConnectionHostnameField = NSTextField; 
                 newConnectionPanel = NSPanel; 
                 newConnectionPortField = NSTextField; 
                 newConnectionSaveWorldButton = NSButton; 
                 openConnectionMenu = NSMenu; 
-                preferencesPanel = NSPanel; 
+                preferencesController = MUPreferencesController; 
                 updateController = MUUpdateController; 
             }; 
             SUPERCLASS = NSObject; 
@@ -67,6 +64,23 @@
                 receivedTextView = NSTextView; 
             }; 
             SUPERCLASS = NSWindowController; 
+        }, 
+        {
+            ACTIONS = {showPreferencesPanel = id; }; 
+            CLASS = MUPreferencesController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                globalBackgroundColorWell = NSColorWell; 
+                globalLinkColorWell = NSColorWell; 
+                globalTextColorWell = NSColorWell; 
+                globalVisitedLinkColorWell = NSColorWell; 
+                playSoundsButton = NSButton; 
+                preferencesPanel = NSPanel; 
+                silentWhenActiveButton = NSButton; 
+                soundChoiceButton = NSPopUpButton; 
+                soundChoiceString = NSTextField; 
+            }; 
+            SUPERCLASS = NSObject; 
         }, 
         {
             CLASS = MUToolbarController; 

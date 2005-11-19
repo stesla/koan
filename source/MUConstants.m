@@ -29,6 +29,9 @@ NSString *MUPNewestVersionToIgnore = @"MUPNewestVersionToIgnore";
 NSString *MUPMostRecentVersionCheckTime = @"MUPMostRecentVersionCheckTime";
 NSString *MUPMostRecentVersionURL = @"MUPMostRecentVersionURL";
 
+NSString *MUPPlaySounds = @"MUPPlaySounds";
+NSString *MUPSilentWhenActive = @"MUPSilentWhenActive";
+
 #pragma mark Notification constants.
 
 NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";

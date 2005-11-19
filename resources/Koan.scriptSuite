@@ -1,0 +1,14 @@
+// Koan.scriptSuite
+
+{
+  Name = URLHandler;
+  AppleEventCode = "UrHD";
+
+  Commands = {
+    "GetURL" = {
+      CommandClass = MUURLHandlerCommand;
+      AppleEventCode = GURL;
+      AppleEventClassCode = GURL;
+    };
+  };
+}

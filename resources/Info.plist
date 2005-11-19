@@ -20,6 +20,15 @@
 	<string>VERSION</string>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
+  <key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>telnet</string>
+			</array>
+		</dict>
+	</array>
 	<key>NSMainNibFile</key>
 	<string>MUMainMenu</string>
 	<key>NSPrincipalClass</key>

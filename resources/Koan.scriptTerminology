@@ -1,0 +1,13 @@
+// Koan.scriptTerminology
+
+{
+  Name = "Koan commands";
+  Description = "Commands to handle a URL";
+
+  Commands = {
+    "GetURL" = {
+      "Name" = "open URL";
+      "Description" = "Open a URL";
+    };
+  };
+}
