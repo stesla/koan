@@ -8,6 +8,8 @@
 #import <Foundation/Foundation.h>
 #endif
 
+#import <ObjcUnit/ObjcUnit.h>
 #import "categories/NSAttributedString (Allocating).h"
 #import "categories/NSFont (FullDisplayName).h"
+#import "categories/NSObject (Accessing).h"
 #import "MUConstants.h"

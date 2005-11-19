@@ -4,7 +4,7 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import "J3Terminal/J3TelnetConnection.h"
+#import "J3Telnet.h"
 #import "MUWorld.h"
 #import "MUConstants.h"
 #import "MUPlayer.h"
@@ -235,20 +235,9 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3TelnetConnection *) newTelnetConnection
+- (J3Telnet *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
 {
-  J3TelnetConnection * telnet;
-  telnet = [[J3TelnetConnection alloc] 
-    initWithHostName:[self worldHostname]
-              onPort:[[self worldPort] intValue]]; //TODO: Autorelease?
-
-  if ([self usesSSL])
-    [telnet setSecurityLevel:NSStreamSocketSecurityLevelNegotiatedSSL];
-  
-  if (proxySettings)
-    [telnet enableProxyWithSettings:proxySettings];
-  
-  return telnet;
+  return [J3Telnet lineAtATimeTelnetWithHostname:[self worldHostname] port:[[self worldPort] intValue] delegate:object];
 }
 
 - (NSString *) uniqueIdentifier

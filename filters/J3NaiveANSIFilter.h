@@ -1,15 +1,13 @@
 //
-//  J3NaiveANSIFilter.h
-//  Koan
+// J3NaiveANSIFilter.h
 //
-//  Created by Samuel on 1/25/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 #import "J3Filter.h"
 
-typedef enum _J3ANSICode
+typedef enum J3ANSICode
 {
   J3ANSIReset = 0,
   J3ANSIBoldOn = 1,
@@ -42,10 +40,11 @@ typedef enum _J3ANSICode
   J3ANSIBackDefault = 49
 } J3ANSICode;
 
+#pragma mark -
+
 @interface J3NaiveANSIFilter : J3Filter 
 {
   NSColor *defaultForeground;
 }
-
 
 @end

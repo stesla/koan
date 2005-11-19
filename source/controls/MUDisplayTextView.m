@@ -88,7 +88,7 @@
     {
       NSCursor *cursor;
       NSRectArray rects;
-      unsigned int rectCount, rectIndex;
+      unsigned rectCount, rectIndex;
       NSRect oneRect;
       
       cursor = [self cursorForLink:linkObject atIndex:attrsRange.location];

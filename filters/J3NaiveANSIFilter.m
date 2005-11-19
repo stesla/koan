@@ -1,14 +1,13 @@
 //
-//  J3NaiveANSIFilter.m
-//  Koan
+// J3NaiveANSIFilter.m
 //
-//  Created by Samuel on 1/25/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3NaiveANSIFilter.h"
 
 @interface J3NaiveANSIFilter (Private)
+
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
 - (int) getNumber:(int *)num atIndex:(int)index inString:(NSString *)string;
 - (int) scanUpToCodeInString:(NSString *)string;
@@ -19,6 +18,8 @@
                       atIndex:(int)index
                       forCode:(J3ANSICode)code;
 @end
+
+#pragma mark -
 
 @implementation J3NaiveANSIFilter
 
@@ -35,7 +36,10 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3NaiveANSIFilter (Private)
+
 - (BOOL) extractCode:(NSMutableAttributedString *)editString
 {
   NSRange codeRange;

@@ -7,13 +7,14 @@
 #import <Cocoa/Cocoa.h>
 #import <RBSplitView/RBSplitView.h>
 
-#import "J3Terminal/J3TelnetConnection.h"
+#import "J3LineBuffer.h"
+#import "J3Connection.h"
 #import "J3Filter.h"
 #import "MUDisplayTextView.h"
 #import "J3HistoryRing.h"
 #import "MUProfile.h"
 
-@interface MUConnectionWindowController : NSWindowController
+@interface MUConnectionWindowController : NSWindowController <J3LineBufferDelegate, J3ConnectionDelegate>
 {
   IBOutlet MUDisplayTextView *receivedTextView;
   IBOutlet NSTextView *inputView;
@@ -21,8 +22,8 @@
   IBOutlet id delegate;
   
   MUProfile *profile;
-  J3TelnetConnection *telnetConnection;
-  
+  J3Telnet *telnetConnection;
+    
   BOOL currentlySearching;
   
   NSTimer *pingTimer;
