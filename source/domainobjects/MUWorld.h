@@ -9,7 +9,6 @@
 @protocol J3LineBufferDelegate;
 @protocol J3ConnectionDelegate;
 @class J3Telnet;
-@class J3ProxySettings;
 @class MUPlayer;
 
 @interface MUWorld : NSObject <NSCoding, NSCopying>
@@ -18,12 +17,6 @@
   NSString *worldHostname;
   NSNumber *worldPort;
   NSString *worldURL;
-
-  BOOL usesSSL;
-  BOOL usesProxy;
-    
-  J3ProxySettings * proxySettings;
-  
   NSMutableArray *players;
 }
 
@@ -32,9 +25,6 @@
            worldHostname:(NSString *)newWorldHostname
                worldPort:(NSNumber *)newWorldPort
                 worldURL:(NSString *)newWorldURL
-                 usesSSL:(BOOL)newUsesSSL
-               usesProxy:(BOOL)newUsesProxy
-           proxySettings:(J3ProxySettings *)newProxySettings
                  players:(NSArray *)newPlayers;
 
 // Accessors.
@@ -46,12 +36,6 @@
 - (void) setWorldPort:(NSNumber *)newWorldPort;
 - (NSString *) worldURL;
 - (void) setWorldURL:(NSString *)newWorldURL;
-- (BOOL) usesSSL;
-- (void) setUsesSSL:(BOOL)newUsesSSL;
-- (BOOL) usesProxy;
-- (void) setUsesProxy:(BOOL)newUsesProxy;
-- (J3ProxySettings *) proxySettings;
-- (void) setProxySettings:(J3ProxySettings *)newProxySettings;
 
 - (void) addPlayer:(MUPlayer *)player;
 - (BOOL) containsPlayer:(MUPlayer *)player;

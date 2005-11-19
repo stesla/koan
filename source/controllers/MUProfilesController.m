@@ -55,10 +55,8 @@ enum MUProfilesEditingReturnValues
 - (void) awakeFromNib
 {
   J3PortFormatter *worldPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
-  J3PortFormatter *proxyPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
   
   [worldPortField setFormatter:worldPortFormatter];
-  [worldProxyPortField setFormatter:proxyPortFormatter];
   
 	[worldsAndPlayersOutlineView setAutosaveExpandedItems:YES];
   [worldsAndPlayersOutlineView setTarget:self];
@@ -221,13 +219,6 @@ enum MUProfilesEditingReturnValues
   [worldHostnameField setStringValue:@""];
   [worldPortField setStringValue:@""];
   [worldURLField setStringValue:@""];
-  [worldUsesSSLButton setState:NSOffState];
-  [worldUsesProxyButton setState:NSOffState];
-  [worldProxyHostnameField setStringValue:@""];
-  [worldProxyPortField setStringValue:@""];
-  [worldProxyVersionButton selectItemAtIndex:1];
-  [worldProxyUsernameField setStringValue:@""];
-  [worldProxyPasswordField setStringValue:@""];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   
@@ -583,9 +574,6 @@ enum MUProfilesEditingReturnValues
                               worldHostname:[worldHostnameField stringValue]
                                   worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
                                    worldURL:[worldURLField stringValue]
-                                    usesSSL:([worldUsesSSLButton state] == NSOnState ? YES : NO)
-                                  usesProxy:([worldUsesProxyButton state] == NSOnState ? YES : NO)
-                              proxySettings:nil
                                     players:players];
 }
 
@@ -634,14 +622,6 @@ enum MUProfilesEditingReturnValues
   [worldHostnameField setStringValue:[world worldHostname]];
   [worldPortField setObjectValue:[world worldPort]];
   [worldURLField setStringValue:[world worldURL]];
-  [worldUsesSSLButton setState:([world usesSSL] ? NSOnState : NSOffState)];
-  [worldUsesProxyButton setState:([world usesProxy] ? NSOnState : NSOffState)];
-
-  [worldProxyHostnameField setStringValue:@""];
-  [worldProxyPortField setStringValue:@""];
-  [worldProxyVersionButton selectItemAtIndex:1];
-  [worldProxyUsernameField setStringValue:@""];
-  [worldProxyPasswordField setStringValue:@""];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   

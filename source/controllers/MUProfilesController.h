@@ -40,13 +40,6 @@
   IBOutlet NSTextField *worldHostnameField;
   IBOutlet NSTextField *worldPortField;
   IBOutlet NSTextField *worldURLField;
-  IBOutlet NSButton *worldUsesSSLButton;
-  IBOutlet NSButton *worldUsesProxyButton;
-  IBOutlet NSTextField *worldProxyHostnameField;
-  IBOutlet NSTextField *worldProxyPortField;
-  IBOutlet NSPopUpButton *worldProxyVersionButton;
-  IBOutlet NSTextField *worldProxyUsernameField;
-  IBOutlet NSSecureTextField *worldProxyPasswordField;
   IBOutlet NSButton *worldSaveButton;
   
   IBOutlet NSWindow *playerEditorSheet;
