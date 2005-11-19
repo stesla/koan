@@ -22,7 +22,7 @@
   IBOutlet id delegate;
   
   MUProfile *profile;
-  J3NewTelnetConnection *telnetConnection;
+  J3Telnet *telnetConnection;
     
   BOOL currentlySearching;
   

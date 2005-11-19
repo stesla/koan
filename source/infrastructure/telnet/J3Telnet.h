@@ -1,5 +1,5 @@
 //
-// J3NewTelnetConnection.h
+// J3Telnet.h
 //
 // Copyright (c) 2005 3James Software
 //
@@ -15,7 +15,7 @@
 #import "J3WriteBuffer.h"
 #import "J3TelnetParser.h"
 
-@interface J3NewTelnetConnection : NSObject 
+@interface J3Telnet : NSObject 
 {
   id <NSObject, J3ByteDestination, J3ByteSource, J3Connection> socket;
   J3WriteBuffer *outputBuffer;

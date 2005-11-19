@@ -4,7 +4,7 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import "J3NewTelnetConnection.h"
+#import "J3Telnet.h"
 #import "MUWorld.h"
 #import "MUConstants.h"
 #import "MUPlayer.h"
@@ -235,9 +235,9 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
+- (J3Telnet *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
 {
-  return [J3NewTelnetConnection lineAtATimeTelnetWithHostname:[self worldHostname] port:[[self worldPort] intValue] delegate:object];
+  return [J3Telnet lineAtATimeTelnetWithHostname:[self worldHostname] port:[[self worldPort] intValue] delegate:object];
 }
 
 - (NSString *) uniqueIdentifier

@@ -1,14 +1,14 @@
 //
-// J3NewTelnetConnection.m
+// J3Telnet.m
 //
 // Copyright (c) 2005 3James Software
 //
 
-#import "J3NewTelnetConnection.h"
+#import "J3Telnet.h"
 
 #define TELNET_READ_BUFFER_SIZE 512
 
-@interface J3NewTelnetConnection (Private)
+@interface J3Telnet (Private)
 
 - (void) fireTimer:(NSTimer *)timer;
 - (void) poll;
@@ -19,7 +19,7 @@
 
 #pragma mark -
 
-@implementation J3NewTelnetConnection
+@implementation J3Telnet
 
 + (id) lineAtATimeTelnetWithHostname:(NSString *)hostname
                                 port:(int)port
@@ -112,7 +112,7 @@
 
 #pragma mark -
 
-@implementation J3NewTelnetConnection (Private)
+@implementation J3Telnet (Private)
 
 - (void) fireTimer:(NSTimer *)timer
 {

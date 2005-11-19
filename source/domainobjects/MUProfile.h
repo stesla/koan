@@ -8,7 +8,7 @@
 #import "MUWorld.h"
 #import "MUPlayer.h"
 #import "J3Filter.h"
-#import "J3NewTelnetConnection.h"
+#import "J3Telnet.h"
 
 @interface MUProfile : NSObject 
 {
@@ -80,8 +80,8 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3NewTelnetConnection *) createNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
-- (void) loginWithConnection:(J3NewTelnetConnection *)connection;
-- (void) logoutWithConnection:(J3NewTelnetConnection *)connection;
+- (J3Telnet *) createNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
+- (void) loginWithConnection:(J3Telnet *)connection;
+- (void) logoutWithConnection:(J3Telnet *)connection;
 
 @end

@@ -8,7 +8,7 @@
 
 @protocol J3LineBufferDelegate;
 @protocol J3ConnectionDelegate;
-@class J3NewTelnetConnection;
+@class J3Telnet;
 @class J3ProxySettings;
 @class MUPlayer;
 
@@ -64,7 +64,7 @@
 - (void) setPlayers:(NSArray *)newPlayers;
 
 // Actions.
-- (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
+- (J3Telnet *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
