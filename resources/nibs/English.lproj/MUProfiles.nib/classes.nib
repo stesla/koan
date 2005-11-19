@@ -12,6 +12,7 @@
                 endEditingPlayer = id; 
                 endEditingProfile = id; 
                 endEditingWorld = id; 
+                goToWorldURL = id; 
                 removeSelectedRow = id; 
                 useGlobalBackgroundColor = id; 
                 useGlobalFont = id; 
@@ -43,15 +44,8 @@
                 worldHostnameField = NSTextField; 
                 worldNameField = NSTextField; 
                 worldPortField = NSTextField; 
-                worldProxyHostnameField = NSTextField; 
-                worldProxyPasswordField = NSSecureTextField; 
-                worldProxyPortField = NSTextField; 
-                worldProxyUsernameField = NSTextField; 
-                worldProxyVersionButton = NSPopUpButton; 
                 worldSaveButton = NSButton; 
                 worldURLField = NSTextField; 
-                worldUsesProxyButton = NSButton; 
-                worldUsesSSLButton = NSButton; 
                 worldsAndPlayersOutlineView = NSOutlineView; 
             }; 
             SUPERCLASS = NSWindowController; 
