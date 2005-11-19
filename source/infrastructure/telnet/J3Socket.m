@@ -18,6 +18,7 @@
 - (void) configureSocket;
 - (void) connectSocket;
 - (void) createSocket;
+- (void) handleReadWriteError;
 - (void) initializeDescriptorSet:(fd_set *)set;
 - (void) resolveHostname;
 - (void) setStatusConnected;
@@ -27,6 +28,7 @@
 - (void) setStatusClosedWithError:(NSString *)error;
 - (void) socketError:(NSString *)errorMessage;
 - (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
+- (void) socketErrorWithErrno;
 
 @end
 
@@ -139,8 +141,12 @@
 
 - (unsigned) read:(uint8_t *)bytes maxLength:(unsigned)length
 {
-  //TODO: Handle error condition (returns -1)
-  return read (socketfd, bytes, length);
+  int result;
+  errno = 0;
+  result = read (socketfd, bytes, length);
+  if (result < 0)
+    [self handleReadWriteError];
+  return result;
 }
 
 - (void) setDelegate:(id <NSObject, J3SocketDelegate>)object
@@ -158,8 +164,12 @@
 
 - (unsigned) write:(const uint8_t *)bytes length:(unsigned)length
 {
-  //TODO: Handle error condition (returns -1)
-  return write (socketfd, bytes, length);
+  int result;
+  errno = 0;
+  result = write (socketfd, bytes, length);
+  if (result < 0)
+    [self handleReadWriteError];
+  return result;
 }
 
 @end
@@ -195,7 +205,7 @@
   errno = 0;
   result = connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr));
   if (result < 0)
-    [self socketErrorFormat:@"%s" arguments:strerror (errno)];
+    [self socketErrorWithErrno];
 }
 
 - (void) createSocket
@@ -203,7 +213,16 @@
   errno = 0;
   socketfd = socket (AF_INET, SOCK_STREAM, 0);
   if (socketfd < 0)
-    [self socketErrorFormat:@"%s" arguments:strerror (errno)];
+    [self socketErrorWithErrno];
+}
+
+- (void) handleReadWriteError;
+{
+  if (![self isConnected])
+    return;
+  if ((errno == EBADF) || (errno == EPIPE))
+    [self setStatusClosedByServer];
+  [self socketErrorWithErrno];
 }
 
 - (void) initializeDescriptorSet:(fd_set *)set
@@ -270,4 +289,8 @@
   [self socketError:message];
 }
 
+- (void) socketErrorWithErrno;
+{
+  [self socketError:[NSString stringWithCString:strerror (errno)]];
+}
 @end

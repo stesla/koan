@@ -7,6 +7,7 @@
 #import <Cocoa/Cocoa.h>
 #import <netinet/in.h>
 #import "J3ByteDestination.h"
+#import "J3ByteSource.h"
 
 NSString *J3SocketError;
 
@@ -21,7 +22,6 @@ typedef enum J3SocketStatus
 #pragma mark -
 
 @class J3Socket;
-@class J3SocketClosedReason;
 
 @protocol J3SocketDelegate
 
@@ -41,7 +41,7 @@ typedef enum J3SocketStatus
 
 #pragma mark -
 
-@interface J3Socket : NSObject <J3ByteDestination>
+@interface J3Socket : NSObject <J3ByteDestination, J3ByteSource>
 {
   NSString *hostname;
   int port;
@@ -65,7 +65,6 @@ typedef enum J3SocketStatus
 - (BOOL) isConnected;
 - (void) open;
 - (void) poll;
-- (unsigned) read:(uint8_t *)buffer maxLength:(unsigned)length;
 - (void) setDelegate:(id <NSObject, J3SocketDelegate>)object;
 - (J3SocketStatus) status;
 

@@ -124,6 +124,9 @@
   uint8_t bytes[TELNET_READ_BUFFER_SIZE];
   unsigned bytesRead = 0;
   
+  if (![socket isConnected])
+    return;
+  
   [socket poll];
   if ([socket hasDataAvailable])
   {
