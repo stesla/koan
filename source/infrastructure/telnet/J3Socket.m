@@ -149,7 +149,7 @@
   return result;
 }
 
-- (void) setDelegate:(id <NSObject, J3SocketDelegate>)object
+- (void) setDelegate:(id <NSObject, J3ConnectionDelegate>)object
 {
   [self at:&delegate put:object];
 }
@@ -247,35 +247,35 @@
 {
   status = J3SocketStatusConnected;
   if (delegate)
-    [delegate socketIsConnected:self];
+    [delegate connectionIsConnected:self];
 }
 
 - (void) setStatusConnecting
 {
   status = J3SocketStatusConnecting;
   if (delegate)
-    [delegate socketIsConnecting:self];
+    [delegate connectionIsConnecting:self];
 }
 
 - (void) setStatusClosedByClient
 {
   status = J3SocketStatusClosed;
   if (delegate)
-    [delegate socketIsClosedByClient:self];
+    [delegate connectionIsClosedByClient:self];
 }
 
 - (void) setStatusClosedByServer
 {
   status = J3SocketStatusClosed;
   if (delegate)
-    [delegate socketIsClosedByServer:self];
+    [delegate connectionIsClosedByServer:self];
 }
 
 - (void) setStatusClosedWithError:(NSString *)error
 {
   status = J3SocketStatusClosed;
   if (delegate)
-    [delegate socketIsClosed:self withError:error];
+    [delegate connectionIsClosed:self withError:error];
 }
 
 - (void) socketError:(NSString *)errorMessage

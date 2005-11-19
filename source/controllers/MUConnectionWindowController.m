@@ -286,14 +286,14 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark J3Socket delegate
 
-- (void) socketIsConnecting:(J3Socket *)socket;
+- (void) connectionIsConnecting:(id <J3Connection>)socket;
 {
   //TODO: check to see if it's the socket for our connection
   [self displayString:NSLocalizedString (MULConnectionOpening, nil)];  
   [self displayString:@"\n"];  
 }
 
-- (void) socketIsConnected:(J3Socket *)socket;
+- (void) connectionIsConnected:(id <J3Connection>)socket;
 {
   //TODO: check to see if it's the socket for our connection  
   [profile loginWithConnection:telnetConnection];  
@@ -302,7 +302,7 @@ enum MUSearchDirections
   [MUGrowlService connectionOpenedForTitle:[profile windowTitle]];
 }
 
-- (void) socketIsClosedByClient:(J3Socket *)socket;
+- (void) connectionIsClosedByClient:(id <J3Connection>)socket;
 {
   //TODO: check to see if it's the socket for our connection
   [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
@@ -311,7 +311,7 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
 }
 
-- (void) socketIsClosedByServer:(J3Socket *)socket;
+- (void) connectionIsClosedByServer:(id <J3Connection>)socket;
 {
   //TODO: check to see if it's the socket for our connection
   [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
@@ -320,7 +320,7 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
 }
 
-- (void) socketIsClosed:(J3Socket *)socket withError:(NSString *)errorMessage;
+- (void) connectionIsClosed:(id <J3Connection>)socket withError:(NSString *)errorMessage;
 {
   //TODO: check to see if it's the socket for our connection
   [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), errorMessage]];

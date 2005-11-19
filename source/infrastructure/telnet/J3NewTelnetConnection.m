@@ -23,7 +23,7 @@
 
 + (id) lineAtATimeTelnetWithHostname:(NSString *)hostname
                                 port:(int)port
-                            delegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)delegate
+                            delegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)delegate
 {
   J3LineBuffer *buffer = [J3LineBuffer buffer];
   
@@ -35,9 +35,9 @@
 + (id) telnetWithHostname:(NSString *)hostname
                      port:(int)port
               inputBuffer:(id <NSObject, J3Buffer>)buffer
-           socketDelegate:(id <NSObject, J3SocketDelegate>)delegate
+           socketDelegate:(id <NSObject, J3ConnectionDelegate>)delegate
 {
-  J3Socket *newSocket = [J3Socket socketWithHostname:hostname port:port];
+  J3Socket * newSocket = [J3Socket socketWithHostname:hostname port:port];
   J3TelnetParser *newParser = [J3TelnetParser parser];
   
   [newSocket setDelegate:delegate];
@@ -46,7 +46,7 @@
   return [[[self alloc] initWithSocket:newSocket parser:newParser] autorelease];
 }
 
-- (id) initWithSocket:(J3Socket *)newSocket parser:(J3TelnetParser *)newParser
+- (id) initWithSocket:(id <NSObject, J3ByteDestination, J3ByteSource, J3Connection>)newSocket parser:(J3TelnetParser *)newParser;
 {
   if (![super init])
     return nil;

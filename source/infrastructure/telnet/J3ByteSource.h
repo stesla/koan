@@ -5,5 +5,8 @@
 //
 
 @protocol J3ByteSource
+
+- (BOOL) hasDataAvailable;
 - (unsigned) read:(uint8_t *)buffer maxLength:(unsigned)length;
+
 @end

@@ -8,6 +8,7 @@
 #import <netinet/in.h>
 #import "J3ByteDestination.h"
 #import "J3ByteSource.h"
+#import "J3Connection.h"
 
 NSString *J3SocketError;
 
@@ -21,27 +22,13 @@ typedef enum J3SocketStatus
 
 #pragma mark -
 
-@class J3Socket;
-
-@protocol J3SocketDelegate
-
-- (void) socketIsConnecting:(J3Socket *)socket;
-- (void) socketIsConnected:(J3Socket *)socket;
-- (void) socketIsClosedByClient:(J3Socket *)socket;
-- (void) socketIsClosedByServer:(J3Socket *)socket;
-- (void) socketIsClosed:(J3Socket *)socket withError:(NSString *)errorMessage;
-
-@end
-
-#pragma mark -
-
 @interface J3SocketException : NSException
 
 @end
 
 #pragma mark -
 
-@interface J3Socket : NSObject <J3ByteDestination, J3ByteSource>
+@interface J3Socket : NSObject <J3ByteDestination, J3ByteSource, J3Connection>
 {
   NSString *hostname;
   int port;
@@ -52,7 +39,7 @@ typedef enum J3SocketStatus
   BOOL hasError;
   BOOL hasSpaceAvailable;
   J3SocketStatus status;
-  id <NSObject, J3SocketDelegate> delegate;
+  id <NSObject, J3ConnectionDelegate> delegate;
 }
 
 + (id) socketWithHostname:(NSString *)hostname port:(int)port;
@@ -65,7 +52,7 @@ typedef enum J3SocketStatus
 - (BOOL) isConnected;
 - (void) open;
 - (void) poll;
-- (void) setDelegate:(id <NSObject, J3SocketDelegate>)object;
+- (void) setDelegate:(id <NSObject, J3ConnectionDelegate>)object;
 - (J3SocketStatus) status;
 
 @end

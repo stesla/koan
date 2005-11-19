@@ -235,7 +235,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
+- (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
 {
   return [J3NewTelnetConnection lineAtATimeTelnetWithHostname:[self worldHostname] port:[[self worldPort] intValue] delegate:object];
 }

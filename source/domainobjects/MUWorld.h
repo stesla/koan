@@ -7,7 +7,7 @@
 #import <Cocoa/Cocoa.h>
 
 @protocol J3LineBufferDelegate;
-@protocol J3SocketDelegate;
+@protocol J3ConnectionDelegate;
 @class J3NewTelnetConnection;
 @class J3ProxySettings;
 @class MUPlayer;
@@ -64,7 +64,7 @@
 - (void) setPlayers:(NSArray *)newPlayers;
 
 // Actions.
-- (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
+- (J3NewTelnetConnection *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 

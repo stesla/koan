@@ -8,13 +8,13 @@
 #import <RBSplitView/RBSplitView.h>
 
 #import "J3LineBuffer.h"
-#import "J3Socket.h"
+#import "J3Connection.h"
 #import "J3Filter.h"
 #import "MUDisplayTextView.h"
 #import "J3HistoryRing.h"
 #import "MUProfile.h"
 
-@interface MUConnectionWindowController : NSWindowController <J3LineBufferDelegate, J3SocketDelegate>
+@interface MUConnectionWindowController : NSWindowController <J3LineBufferDelegate, J3ConnectionDelegate>
 {
   IBOutlet MUDisplayTextView *receivedTextView;
   IBOutlet NSTextView *inputView;

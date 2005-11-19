@@ -59,6 +59,7 @@
 		7E05EFF807B07F5800B2D3BC /* J3AttributedStringTransformerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E05EFF707B07F5800B2D3BC /* J3AttributedStringTransformerTests.m */; };
 		7E05F00A07B080D700B2D3BC /* J3AttributedStringTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */; };
 		7E05F00C07B080D700B2D3BC /* J3AttributedStringTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */; };
+		7E0A2B24092F72140081D871 /* J3Connection.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E0A2B23092F72140081D871 /* J3Connection.h */; };
 		7E1FC01D0787A2220070AF39 /* MUProfileRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FC01B0787A2220070AF39 /* MUProfileRegistry.m */; };
 		7E20A8AB0748474E00D1A5BF /* J3ANSIRemovingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E20A8A70748474E00D1A5BF /* J3ANSIRemovingFilter.m */; };
 		7E230FFE079A0FE500E7CBA6 /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
@@ -277,6 +278,7 @@
 				7EC30309092B978B00AFA5C7 /* J3NewTelnetConnection.h in CopyFiles */,
 				7EC30341092B99C300AFA5C7 /* NSObject (Accessing).h in CopyFiles */,
 				7EC6142A092EFF72004DF3CD /* J3ByteSource.h in CopyFiles */,
+				7E0A2B24092F72140081D871 /* J3Connection.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +294,7 @@
 		7E05EFF707B07F5800B2D3BC /* J3AttributedStringTransformerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3AttributedStringTransformerTests.m; sourceTree = "<group>"; };
 		7E05F00807B080D700B2D3BC /* J3AttributedStringTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3AttributedStringTransformer.h; sourceTree = "<group>"; };
 		7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3AttributedStringTransformer.m; sourceTree = "<group>"; };
+		7E0A2B23092F72140081D871 /* J3Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Connection.h; sourceTree = "<group>"; };
 		7E13FA590788C75F0071D30C /* MUWorldTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUWorldTests.h; sourceTree = "<group>"; };
 		7E13FA5A0788C75F0071D30C /* MUWorldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUWorldTests.m; sourceTree = "<group>"; };
 		7E1FC01A0787A2220070AF39 /* MUProfileRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUProfileRegistry.h; sourceTree = "<group>"; };
@@ -618,6 +621,7 @@
 				7E68DC34092AC2FB004554BD /* J3Buffer.h */,
 				7E68DCD4092AC77D004554BD /* J3ByteDestination.h */,
 				7EC61429092EFF72004DF3CD /* J3ByteSource.h */,
+				7E0A2B23092F72140081D871 /* J3Connection.h */,
 				7E68DC36092AC2FB004554BD /* J3LineBuffer.h */,
 				7EC30306092B978B00AFA5C7 /* J3NewTelnetConnection.h */,
 				7E68DC38092AC2FB004554BD /* J3Socket.h */,

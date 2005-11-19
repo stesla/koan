@@ -80,7 +80,7 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3NewTelnetConnection *) createNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3SocketDelegate>)object;
+- (J3NewTelnetConnection *) createNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
 - (void) loginWithConnection:(J3NewTelnetConnection *)connection;
 - (void) logoutWithConnection:(J3NewTelnetConnection *)connection;
 
