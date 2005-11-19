@@ -18,6 +18,11 @@
 
 @implementation J3WriteBufferTests
 
+- (BOOL) hasSpaceAvailable;
+{
+  return YES;
+}
+
 - (void) setUp
 {
   buffer = [[J3WriteBuffer buffer] retain];
