@@ -66,7 +66,7 @@
 - (void) close
 {
   if (![self isConnected])
-    return; //TODO: @throw here?
+    return;
   close(socketfd);
   [self setStatusClosedByClient];    
 }
@@ -94,7 +94,7 @@
 - (void) open
 {  
   if ([self isConnected] || [self isClosed])
-    return; //TODO: @throw here?
+    return;
   @try
   {
     [self setStatusConnecting];
@@ -128,7 +128,7 @@
   result = select (socketfd + 1, &read_set, &write_set, NULL, &tv);  
   
   if (result < 0)
-    return; // TODO: error, should probably do something more drastic...
+    [self socketErrorWithErrno];
   
   if (FD_ISSET (socketfd, &read_set))
   {
@@ -184,7 +184,7 @@
   int result = ioctl (socketfd, FIONREAD, &nread);
   
   if (result < 0)
-    ; //TODO: handle error
+    [self socketErrorWithErrno];
   if (!nread)
   {
     close (socketfd);
