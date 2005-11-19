@@ -64,7 +64,7 @@
 - (void) assertState:(Class)stateClass givenByte:(uint8_t)byte producesState:(Class)nextStateClass;
 - (void) assertState:(Class)stateClass hasNoOutputGivenByte:(uint8_t)givenByte;
 - (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte inputsByte:(uint8_t)inputsByte;
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsCommand:(uint8_t)outputsCommand;
+- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsNegtiationCommandWithThatByte:(uint8_t)outputsCommand;
 - (void) assertStateHasNoOutputGivenAnyByte:(Class)stateClass;
 - (void) giveStateClass:(Class)stateClass byte:(uint8_t)byte;
 - (void) setStateClass:(Class)stateClass;
@@ -107,8 +107,8 @@
 
 - (void) testNegotiationAlwaysNVT
 {
-  [self assertState:C(J3TelnetDoState) givenByte:'a' outputsCommand:J3TelnetWont];
-  [self assertState:C(J3TelnetWillState) givenByte:'a' outputsCommand:J3TelnetDont];  
+  [self assertState:C(J3TelnetDoState) givenByte:'a' outputsNegtiationCommandWithThatByte:J3TelnetWont];
+  [self assertState:C(J3TelnetWillState) givenByte:'a' outputsNegtiationCommandWithThatByte:J3TelnetDont];  
   [self assertStateHasNoOutputGivenAnyByte:C(J3TelnetDontState)]; 
   [self assertStateHasNoOutputGivenAnyByte:C(J3TelnetWontState)];
 }
@@ -148,11 +148,13 @@
   [self assertInt:[parser lastByteInput] equals:inputsByte];
 }
 
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsCommand:(uint8_t)outputsCommand;
+- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsNegtiationCommandWithThatByte:(uint8_t)outputsCommand;
 {
   [self giveStateClass:stateClass byte:givenByte];
+  [self assertInt:[parser outputLength] equals:3];
   [self assertInt:[parser outputByteAtIndex:0] equals:J3TelnetInterpretAsCommand];
   [self assertInt:[parser outputByteAtIndex:1] equals:outputsCommand];
+  [self assertInt:[parser outputByteAtIndex:2] equals:givenByte];
 }
 
 - (void) assertStateHasNoOutputGivenAnyByte:(Class)stateClass;

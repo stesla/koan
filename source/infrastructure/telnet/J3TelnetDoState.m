@@ -15,6 +15,7 @@
 {
   [parser bufferOutputByte:J3TelnetInterpretAsCommand];
   [parser bufferOutputByte:J3TelnetWont];
+  [parser bufferOutputByte:byte];
   return [J3TelnetTextState state];
 }
 
