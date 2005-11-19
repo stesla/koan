@@ -279,23 +279,26 @@ enum MUSearchDirections
 
 - (void) lineBufferHasReadLine:(J3LineBuffer *)buffer;
 {
-  //TODO: check to see if it's the buffer for our connection  
+  if (![telnetConnection hasInputBuffer:buffer])
+    return;
   [self displayString:[buffer readLine]];
 }
 
 #pragma mark -
-#pragma mark J3Socket delegate
+#pragma mark J3Connection delegate
 
 - (void) connectionIsConnecting:(id <J3Connection>)socket;
 {
-  //TODO: check to see if it's the socket for our connection
+  if (![telnetConnection isOnConnection:socket])
+    return;
   [self displayString:NSLocalizedString (MULConnectionOpening, nil)];  
   [self displayString:@"\n"];  
 }
 
 - (void) connectionIsConnected:(id <J3Connection>)socket;
 {
-  //TODO: check to see if it's the socket for our connection  
+  if (![telnetConnection isOnConnection:socket])
+    return;
   [profile loginWithConnection:telnetConnection];  
   [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
   [self displayString:@"\n"];
@@ -304,7 +307,8 @@ enum MUSearchDirections
 
 - (void) connectionIsClosedByClient:(id <J3Connection>)socket;
 {
-  //TODO: check to see if it's the socket for our connection
+  if (![telnetConnection isOnConnection:socket])
+    return;
   [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
   [self disconnect:nil];
   [self displayString:@"\n"];
@@ -313,7 +317,8 @@ enum MUSearchDirections
 
 - (void) connectionIsClosedByServer:(id <J3Connection>)socket;
 {
-  //TODO: check to see if it's the socket for our connection
+  if (![telnetConnection isOnConnection:socket])
+    return;
   [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
   [self disconnect:nil];
   [self displayString:@"\n"];
@@ -322,7 +327,8 @@ enum MUSearchDirections
 
 - (void) connectionIsClosed:(id <J3Connection>)socket withError:(NSString *)errorMessage;
 {
-  //TODO: check to see if it's the socket for our connection
+  if (![telnetConnection isOnConnection:socket])
+    return;
   [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), errorMessage]];
   [self disconnect:nil];
   [self displayString:@"\n"];

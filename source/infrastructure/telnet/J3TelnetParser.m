@@ -32,6 +32,11 @@
   [outputBuffer append:byte];
 }
 
+- (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
+{
+  return buffer == inputBuffer;
+}
+
 - (void) parse:(uint8_t)byte
 {
   [self at:&state put:[state parse:byte forParser:self]];

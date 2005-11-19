@@ -36,6 +36,8 @@
 
 - (void) close;
 - (BOOL) isConnected;
+- (BOOL) isOnConnection:(id <J3Connection>)connection;
+- (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
 - (void) open;
 - (void) removeFromRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
 - (void) scheduleInRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;

@@ -75,9 +75,19 @@
   [socket close];
 }
 
+- (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
+{
+  return [parser hasInputBuffer: buffer];
+}
+
 - (BOOL) isConnected
 {
   return [socket isConnected];
+}
+
+- (BOOL) isOnConnection:(id <J3Connection>)connection;
+{
+  return connection == socket;
 }
 
 - (void) open
