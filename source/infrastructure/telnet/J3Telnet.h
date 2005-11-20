@@ -15,9 +15,9 @@
 #import "J3WriteBuffer.h"
 #import "J3TelnetParser.h"
 
-@interface J3Telnet : NSObject 
+@interface J3Telnet : NSObject
 {
-  id <NSObject, J3ByteDestination, J3ByteSource, J3Connection> socket;
+  id <NSObject, J3ByteDestination, J3ByteSource, J3Connection> connection;
   J3WriteBuffer *outputBuffer;
   J3TelnetParser *parser;
   NSMutableDictionary *timers;
@@ -32,7 +32,7 @@
               inputBuffer:(id <NSObject, J3Buffer>)buffer
            socketDelegate:(id <NSObject, J3ConnectionDelegate>)delegate;
 
-- (id) initWithSocket:(id <NSObject, J3ByteDestination, J3ByteSource, J3Connection>)newSocket parser:(J3TelnetParser *)newParser;
+- (id) initWithConnection:(id <NSObject, J3ByteDestination, J3ByteSource, J3Connection>)newConnection parser:(J3TelnetParser *)newParser;
 
 - (void) close;
 - (BOOL) isConnected;

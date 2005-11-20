@@ -43,18 +43,18 @@
   [newSocket setDelegate:delegate];
   [newParser setInputBuffer:buffer];
   
-  return [[[self alloc] initWithSocket:newSocket parser:newParser] autorelease];
+  return [[[self alloc] initWithConnection:newSocket parser:newParser] autorelease];
 }
 
-- (id) initWithSocket:(id <NSObject, J3ByteDestination, J3ByteSource, J3Connection>)newSocket parser:(J3TelnetParser *)newParser;
+- (id) initWithConnection:(id <NSObject, J3ByteDestination, J3ByteSource, J3Connection>)newConnection parser:(J3TelnetParser *)newParser;
 {
   if (![super init])
     return nil;
-  [self at:&socket put:newSocket];
+  [self at:&connection put:newConnection];
   [self at:&parser put:newParser];
   [self at:&outputBuffer put:[J3WriteBuffer buffer]];
   [self at:&timers put:[NSMutableDictionary dictionary]];
-  [outputBuffer setByteDestination:socket];
+  [outputBuffer setByteDestination:connection];
   [parser setOuptutBuffer:outputBuffer];
   return self;
 }
@@ -65,14 +65,14 @@
     [self close];
   [parser release];
   [outputBuffer release];
-  [socket release];
+  [connection release];
   [super dealloc];
 }
 
 - (void) close
 {
   [self removeAllTimers];
-  [socket close];
+  [connection close];
 }
 
 - (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
@@ -82,17 +82,17 @@
 
 - (BOOL) isConnected
 {
-  return [socket isConnected];
+  return [connection isConnected];
 }
 
-- (BOOL) isOnConnection:(id <J3Connection>)connection;
+- (BOOL) isOnConnection:(id <J3Connection>)aConnection;
 {
-  return connection == socket;
+  return aConnection == connection;
 }
 
 - (void) open
 {
-  [socket open];
+  [connection open];
 }
 
 - (void) removeFromRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode
@@ -134,16 +134,16 @@
   uint8_t bytes[TELNET_READ_BUFFER_SIZE];
   unsigned bytesRead = 0;
   
-  if (![socket isConnected])
+  if (![connection isConnected])
     return;
   
-  [socket poll];
-  if ([socket hasDataAvailable])
+  [connection poll];
+  if ([connection hasDataAvailable])
   {
-    bytesRead = [socket read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
+    bytesRead = [connection read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
     [parser parse:bytes length:bytesRead];
   }
-  if ([socket hasSpaceAvailable])
+  if ([connection hasSpaceAvailable])
     [outputBuffer writeUnlessEmpty];
 }
 

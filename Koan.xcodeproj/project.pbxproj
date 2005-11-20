@@ -587,13 +587,7 @@
 		7E68DC33092AC2FB004554BD /* telnet */ = {
 			isa = PBXGroup;
 			children = (
-				7E68DC34092AC2FB004554BD /* J3Buffer.h */,
-				7E68DCD4092AC77D004554BD /* J3ByteDestination.h */,
-				7EC61429092EFF72004DF3CD /* J3ByteSource.h */,
-				7E0A2B23092F72140081D871 /* J3Connection.h */,
-				7E68DC36092AC2FB004554BD /* J3LineBuffer.h */,
 				7EC30306092B978B00AFA5C7 /* J3Telnet.h */,
-				7E68DC38092AC2FB004554BD /* J3Socket.h */,
 				7E68DC3A092AC2FB004554BD /* J3TelnetConstants.h */,
 				7E68DC3C092AC2FB004554BD /* J3TelnetDontState.h */,
 				7E68DC3E092AC2FB004554BD /* J3TelnetDoState.h */,
@@ -603,11 +597,7 @@
 				7E68DC46092AC2FB004554BD /* J3TelnetTextState.h */,
 				7E68DC48092AC2FB004554BD /* J3TelnetWillState.h */,
 				7E68DC4A092AC2FB004554BD /* J3TelnetWontState.h */,
-				7EC301B3092B78F200AFA5C7 /* J3WriteBuffer.h */,
-				7E68DC35092AC2FB004554BD /* J3Buffer.m */,
-				7E68DC37092AC2FB004554BD /* J3LineBuffer.m */,
 				7EC30307092B978B00AFA5C7 /* J3Telnet.m */,
-				7E68DC39092AC2FB004554BD /* J3Socket.m */,
 				7E68DC3B092AC2FB004554BD /* J3TelnetConstants.m */,
 				7E68DC3D092AC2FB004554BD /* J3TelnetDontState.m */,
 				7E68DC3F092AC2FB004554BD /* J3TelnetDoState.m */,
@@ -617,7 +607,6 @@
 				7E68DC47092AC2FB004554BD /* J3TelnetTextState.m */,
 				7E68DC49092AC2FB004554BD /* J3TelnetWillState.m */,
 				7E68DC4B092AC2FB004554BD /* J3TelnetWontState.m */,
-				7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */,
 			);
 			path = telnet;
 			sourceTree = "<group>";
@@ -768,11 +757,22 @@
 			children = (
 				7E68DC33092AC2FB004554BD /* telnet */,
 				7E05F00807B080D700B2D3BC /* J3AttributedStringTransformer.h */,
+				7E68DC34092AC2FB004554BD /* J3Buffer.h */,
+				7E68DCD4092AC77D004554BD /* J3ByteDestination.h */,
+				7EC61429092EFF72004DF3CD /* J3ByteSource.h */,
+				7E0A2B23092F72140081D871 /* J3Connection.h */,
+				7E68DC36092AC2FB004554BD /* J3LineBuffer.h */,
 				E6E7A6210749693A007005AC /* J3HistoryRing.h */,
 				E64C9631076BF95E00D0D7C0 /* J3PortFormatter.h */,
+				7E68DC38092AC2FB004554BD /* J3Socket.h */,
+				7EC301B3092B78F200AFA5C7 /* J3WriteBuffer.h */,
 				7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */,
 				E6E7A62707496940007005AC /* J3HistoryRing.m */,
+				7E68DC35092AC2FB004554BD /* J3Buffer.m */,
+				7E68DC37092AC2FB004554BD /* J3LineBuffer.m */,
 				E64C9632076BF95E00D0D7C0 /* J3PortFormatter.m */,
+				7E68DC39092AC2FB004554BD /* J3Socket.m */,
+				7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */,
 			);
 			name = Infrastructure;
 			path = infrastructure;

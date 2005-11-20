@@ -59,7 +59,6 @@
 
 @interface J3TelnetStateMachineTests (Private)
 
-- (void) assertState:(Class)stateClass givenAnyByteOutputsCommand:(uint8_t)outputsCommand;
 - (void) assertState:(Class)stateClass givenAnyByteProducesState:(Class)nextStateClass;
 - (void) assertState:(Class)stateClass givenByte:(uint8_t)byte producesState:(Class)nextStateClass;
 - (void) assertState:(Class)stateClass hasNoOutputGivenByte:(uint8_t)givenByte;
@@ -117,11 +116,6 @@
 #pragma mark -
 
 @implementation J3TelnetStateMachineTests (Private)
-
-- (void) assertState:(Class)stateClass givenAnyByteOutputsCommand:(uint8_t)outputsCommand;
-{
-  [self assertState:stateClass givenByte:'a' outputsCommand:outputsCommand];
-}
 
 - (void) assertState:(Class)stateClass givenAnyByteProducesState:(Class)nextStateClass;
 {
