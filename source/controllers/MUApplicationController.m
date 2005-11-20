@@ -130,9 +130,6 @@
                                worldHostname:[url host]
                                    worldPort:[url port]
                                     worldURL:@""
-                                     usesSSL:NO
-                                   usesProxy:NO
-                               proxySettings:nil
                                      players:nil];
   controller = [[MUConnectionWindowController alloc] initWithWorld:world];
 	
