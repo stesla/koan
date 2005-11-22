@@ -13,6 +13,7 @@
 - (void) appendString:(NSString *)string;
 - (const void *)bytes;
 - (void) clear;
+- (void) flush;
 - (BOOL) isEmpty;
 - (unsigned) length;
 - (NSData *) dataValue;

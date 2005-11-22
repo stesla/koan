@@ -68,6 +68,10 @@
   return [NSData dataWithData:data];
 }
 
+- (void) flush;
+{
+}
+
 - (BOOL) isEmpty
 {
   return [self length] == 0;

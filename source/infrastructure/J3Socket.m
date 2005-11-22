@@ -78,7 +78,7 @@
 
 - (BOOL) hasSpaceAvailable
 {
-  return hasSpaceAvailable; 
+  return YES; 
 }
 
 - (BOOL) isClosed
@@ -113,19 +113,18 @@
 - (void) poll
 {
   fd_set read_set;
-  fd_set write_set;
-  struct timeval tv;
+  struct timeval tval;
   int result;
   
   hasDataAvailable = NO;
-  hasSpaceAvailable = NO;
+  
+  memset (&tval, 0, sizeof (struct timeval));
+  tval.tv_usec = 100;
   
   [self initializeDescriptorSet:&read_set];
-  [self initializeDescriptorSet:&write_set];
-  memset (&tv, 0, sizeof (struct timeval));
   errno = 0;
   
-  result = select (socketfd + 1, &read_set, &write_set, NULL, &tv);  
+  result = select (socketfd + 1, &read_set, NULL, NULL, &tval);  
   
   if (result < 0)
     [self socketErrorWithErrno];
@@ -135,8 +134,6 @@
     [self checkRemoteConnection];
     hasDataAvailable = YES;    
   }
-  if (FD_ISSET (socketfd, &write_set))
-    hasSpaceAvailable = YES;    
 }
 
 - (unsigned) read:(uint8_t *)bytes maxLength:(unsigned)length

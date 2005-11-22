@@ -13,9 +13,7 @@
 
 - (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetParser *)parser
 {
-  [parser bufferOutputByte:J3TelnetInterpretAsCommand];
-  [parser bufferOutputByte:J3TelnetWont];
-  [parser bufferOutputByte:byte];
+  [parser wont:byte];
   return [J3TelnetTextState state];
 }
 

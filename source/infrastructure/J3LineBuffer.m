@@ -38,6 +38,11 @@
     [self hasReadLine];
 }
 
+- (void) flush;
+{
+  while (![self isEmpty])
+    [self hasReadLine];
+}
 @end
 
 #pragma mark -

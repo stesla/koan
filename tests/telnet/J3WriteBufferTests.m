@@ -36,20 +36,6 @@
   [buffer release];
 }
 
-- (void) testWriteToNowhere
-{
-  [buffer setByteDestination:nil];
-  @try
-  {
-    [buffer write];
-    [self fail:@"Write to nil destination should throw exception"];
-  }
-  @catch (J3WriteBufferException *e)
-  {
-    [self assertTrue:true];
-  }
-}
-
 - (void) testWriteAll
 {
   [buffer appendString:@"foo"];
@@ -59,7 +45,6 @@
 - (void) testWriteSome
 {
   [buffer appendString:@"123456"];
-  [self assertOutputIsString:@"123" lengthWritten:3];
   [self assertOutputIsString:@"123456" lengthWritten:3];
 }
 
@@ -90,7 +75,7 @@
 - (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned)length
 {
   [self setLengthWritten:length];
-  [buffer writeUnlessEmpty];
+  [buffer flush];
   [self assert:[self output] equals:string];
 }
 

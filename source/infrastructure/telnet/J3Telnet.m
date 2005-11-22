@@ -111,11 +111,13 @@
 - (void) writeLine:(NSString *)line
 {
   [outputBuffer appendLine:line];
+  [outputBuffer flush];
 }
 
 - (void) writeString:(NSString *)string
 {
   [outputBuffer appendString:string];
+  [outputBuffer flush];
 }
 
 @end
@@ -143,8 +145,6 @@
     bytesRead = [connection read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
     [parser parse:bytes length:bytesRead];
   }
-  if ([connection hasSpaceAvailable])
-    [outputBuffer writeUnlessEmpty];
 }
 
 - (void) removeAllTimers

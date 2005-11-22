@@ -20,7 +20,4 @@
 }
 
 - (void) setByteDestination:(id <NSObject, J3ByteDestination>)object;
-- (void) write;
-- (void) writeUnlessEmpty;
-
 @end

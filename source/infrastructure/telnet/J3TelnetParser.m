@@ -4,8 +4,15 @@
 // Copyright (c) 2005 3James Software
 //
 
+#import "J3TelnetConstants.h"
 #import "J3TelnetParser.h"
 #import "J3TelnetTextState.h"
+
+@interface J3TelnetParser (Private)
+
+- (void) sendCommand:(uint8_t)command withByte:(uint8_t)byte;
+
+@end
 
 @implementation J3TelnetParser
 
@@ -30,6 +37,11 @@
 - (void) bufferOutputByte:(uint8_t)byte
 {
   [outputBuffer append:byte];
+}
+
+- (void) dont:(uint8_t)byte;
+{
+  [self sendCommand:J3TelnetDont withByte:byte];
 }
 
 - (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
@@ -63,4 +75,21 @@
   outputBuffer = buffer;
 }
 
+- (void) wont:(uint8_t)byte;
+{
+  [self sendCommand:J3TelnetWont withByte:byte];
+}
 @end
+
+@implementation J3TelnetParser (Private)
+
+- (void) sendCommand:(uint8_t)command withByte:(uint8_t)byte;
+{
+  [self bufferOutputByte:J3TelnetInterpretAsCommand];
+  [self bufferOutputByte:command];
+  [self bufferOutputByte:byte];
+  [outputBuffer flush];  
+}
+
+@end
+

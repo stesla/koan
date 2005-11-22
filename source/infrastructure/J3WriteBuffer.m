@@ -10,6 +10,12 @@
 
 @end
 
+@interface J3WriteBuffer (Private)
+
+- (void) write;
+
+@end
+
 #pragma mark -
 
 @implementation J3WriteBuffer
@@ -20,6 +26,21 @@
   [destination release];
   destination = object;
 }
+
+#pragma mark -
+#pragma mark Overrides
+
+- (void) flush
+{
+  while (![self isEmpty])
+    [self write];
+}
+
+@end
+
+#pragma mark -
+
+@implementation J3WriteBuffer (Private)
 
 - (void) write
 {
@@ -33,13 +54,6 @@
   range.location = bytesWritten;
   range.length = [self length] - bytesWritten;
   [self setDataValue:[[self dataValue] subdataWithRange:range]];
-}
-
-- (void) writeUnlessEmpty
-{
-  if ([self isEmpty])
-    return;
-  [self write];
 }
 
 @end

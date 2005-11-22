@@ -37,7 +37,6 @@ typedef enum J3SocketStatus
 	struct sockaddr_in server_addr;
   BOOL hasDataAvailable;
   BOOL hasError;
-  BOOL hasSpaceAvailable;
   J3SocketStatus status;
   id <NSObject, J3ConnectionDelegate> delegate;
 }
