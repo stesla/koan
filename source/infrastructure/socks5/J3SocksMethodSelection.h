@@ -1,5 +1,5 @@
 //
-//  J3Socks5MethodSelection.h
+//  J3SocksMethodSelection.h
 //  Koan
 //
 //  Created by Samuel Tesla on 11/22/05.
@@ -8,14 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 #import "J3Buffer.h"
-#import "J3Socks5Constants.h"
+#import "J3SocksConstants.h"
 
-@interface J3Socks5MethodSelection : NSObject 
+@interface J3SocksMethodSelection : NSObject 
 {
   NSMutableData * methods;
 }
 
-- (void) addMethod:(J3Socks5Method)method;
+- (void) addMethod:(J3SocksMethod)method;
 - (void) appendToBuffer:(id <J3Buffer>)buffer;
 
 @end

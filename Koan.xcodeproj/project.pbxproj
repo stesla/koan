@@ -59,13 +59,13 @@
 		7E05EFF807B07F5800B2D3BC /* J3AttributedStringTransformerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E05EFF707B07F5800B2D3BC /* J3AttributedStringTransformerTests.m */; };
 		7E05F00A07B080D700B2D3BC /* J3AttributedStringTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */; };
 		7E05F00C07B080D700B2D3BC /* J3AttributedStringTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */; };
-		7E070ACF0933CD81000A36CF /* J3TestSocks5Primitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070ACE0933CD81000A36CF /* J3TestSocks5Primitives.m */; };
-		7E070AFE0933D01E000A36CF /* J3Socks5MethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3Socks5MethodSelection.m */; };
-		7E070AFF0933D01E000A36CF /* J3Socks5MethodSelection.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E070AFC0933D01E000A36CF /* J3Socks5MethodSelection.h */; };
-		7E070B000933D01E000A36CF /* J3Socks5MethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3Socks5MethodSelection.m */; };
-		7E070B280933D32B000A36CF /* J3Socks5Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3Socks5Constants.m */; };
-		7E070B290933D32B000A36CF /* J3Socks5Constants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E070B260933D32B000A36CF /* J3Socks5Constants.h */; };
-		7E070B2A0933D32B000A36CF /* J3Socks5Constants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3Socks5Constants.m */; };
+		7E070ACF0933CD81000A36CF /* J3TestSocksPrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */; };
+		7E070AFE0933D01E000A36CF /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
+		7E070AFF0933D01E000A36CF /* J3SocksMethodSelection.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E070AFC0933D01E000A36CF /* J3SocksMethodSelection.h */; };
+		7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
+		7E070B280933D32B000A36CF /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
+		7E070B290933D32B000A36CF /* J3SocksConstants.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E070B260933D32B000A36CF /* J3SocksConstants.h */; };
+		7E070B2A0933D32B000A36CF /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
 		7E1FC01D0787A2220070AF39 /* MUProfileRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FC01B0787A2220070AF39 /* MUProfileRegistry.m */; };
 		7E20A8AB0748474E00D1A5BF /* J3ANSIRemovingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E20A8A70748474E00D1A5BF /* J3ANSIRemovingFilter.m */; };
 		7E230FFE079A0FE500E7CBA6 /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
@@ -253,8 +253,8 @@
 				E61C3C9A07B7314E00519A89 /* AGRegex.framework in CopyFiles */,
 				E615A40607D3B38C00FC7F6B /* Growl.framework in CopyFiles */,
 				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */,
-				7E070AFF0933D01E000A36CF /* J3Socks5MethodSelection.h in CopyFiles */,
-				7E070B290933D32B000A36CF /* J3Socks5Constants.h in CopyFiles */,
+				7E070AFF0933D01E000A36CF /* J3SocksMethodSelection.h in CopyFiles */,
+				7E070B290933D32B000A36CF /* J3SocksConstants.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,12 +270,12 @@
 		7E05EFF707B07F5800B2D3BC /* J3AttributedStringTransformerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3AttributedStringTransformerTests.m; sourceTree = "<group>"; };
 		7E05F00807B080D700B2D3BC /* J3AttributedStringTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3AttributedStringTransformer.h; sourceTree = "<group>"; };
 		7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3AttributedStringTransformer.m; sourceTree = "<group>"; };
-		7E070ACD0933CD81000A36CF /* J3TestSocks5Primitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TestSocks5Primitives.h; sourceTree = "<group>"; };
-		7E070ACE0933CD81000A36CF /* J3TestSocks5Primitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TestSocks5Primitives.m; sourceTree = "<group>"; };
-		7E070AFC0933D01E000A36CF /* J3Socks5MethodSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Socks5MethodSelection.h; sourceTree = "<group>"; };
-		7E070AFD0933D01E000A36CF /* J3Socks5MethodSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3Socks5MethodSelection.m; sourceTree = "<group>"; };
-		7E070B260933D32B000A36CF /* J3Socks5Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Socks5Constants.h; sourceTree = "<group>"; };
-		7E070B270933D32B000A36CF /* J3Socks5Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3Socks5Constants.m; sourceTree = "<group>"; };
+		7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TestSocksPrimitives.h; sourceTree = "<group>"; };
+		7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TestSocksPrimitives.m; sourceTree = "<group>"; };
+		7E070AFC0933D01E000A36CF /* J3SocksMethodSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocksMethodSelection.h; sourceTree = "<group>"; };
+		7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SocksMethodSelection.m; sourceTree = "<group>"; };
+		7E070B260933D32B000A36CF /* J3SocksConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocksConstants.h; sourceTree = "<group>"; };
+		7E070B270933D32B000A36CF /* J3SocksConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SocksConstants.m; sourceTree = "<group>"; };
 		7E0A2B23092F72140081D871 /* J3Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Connection.h; sourceTree = "<group>"; };
 		7E13FA590788C75F0071D30C /* MUWorldTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUWorldTests.h; sourceTree = "<group>"; };
 		7E13FA5A0788C75F0071D30C /* MUWorldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUWorldTests.m; sourceTree = "<group>"; };
@@ -581,10 +581,10 @@
 		7E0709EF09339A1E000A36CF /* socks5 */ = {
 			isa = PBXGroup;
 			children = (
-				7E070B260933D32B000A36CF /* J3Socks5Constants.h */,
-				7E070AFC0933D01E000A36CF /* J3Socks5MethodSelection.h */,
-				7E070B270933D32B000A36CF /* J3Socks5Constants.m */,
-				7E070AFD0933D01E000A36CF /* J3Socks5MethodSelection.m */,
+				7E070B260933D32B000A36CF /* J3SocksConstants.h */,
+				7E070AFC0933D01E000A36CF /* J3SocksMethodSelection.h */,
+				7E070B270933D32B000A36CF /* J3SocksConstants.m */,
+				7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */,
 			);
 			path = socks5;
 			sourceTree = "<group>";
@@ -592,8 +592,8 @@
 		7E0709F009339A38000A36CF /* socks5 */ = {
 			isa = PBXGroup;
 			children = (
-				7E070ACD0933CD81000A36CF /* J3TestSocks5Primitives.h */,
-				7E070ACE0933CD81000A36CF /* J3TestSocks5Primitives.m */,
+				7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */,
+				7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */,
 			);
 			path = socks5;
 			sourceTree = "<group>";
@@ -1085,8 +1085,8 @@
 				7EC3030A092B978B00AFA5C7 /* J3Telnet.m in Sources */,
 				7EC30342092B99C300AFA5C7 /* NSObject (Accessing).m in Sources */,
 				E6914C52092FDAD1005DA235 /* MUPreferencesController.m in Sources */,
-				7E070B000933D01E000A36CF /* J3Socks5MethodSelection.m in Sources */,
-				7E070B2A0933D32B000A36CF /* J3Socks5Constants.m in Sources */,
+				7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */,
+				7E070B2A0933D32B000A36CF /* J3SocksConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1145,9 +1145,9 @@
 				7EC301B5092B78F200AFA5C7 /* J3WriteBuffer.m in Sources */,
 				7EC30308092B978B00AFA5C7 /* J3Telnet.m in Sources */,
 				7EC30340092B99C300AFA5C7 /* NSObject (Accessing).m in Sources */,
-				7E070ACF0933CD81000A36CF /* J3TestSocks5Primitives.m in Sources */,
-				7E070AFE0933D01E000A36CF /* J3Socks5MethodSelection.m in Sources */,
-				7E070B280933D32B000A36CF /* J3Socks5Constants.m in Sources */,
+				7E070ACF0933CD81000A36CF /* J3TestSocksPrimitives.m in Sources */,
+				7E070AFE0933D01E000A36CF /* J3SocksMethodSelection.m in Sources */,
+				7E070B280933D32B000A36CF /* J3SocksConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

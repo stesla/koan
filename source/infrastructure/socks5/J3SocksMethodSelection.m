@@ -1,16 +1,16 @@
 //
-//  J3Socks5MethodSelection.m
+//  J3SocksMethodSelection.m
 //  Koan
 //
 //  Created by Samuel Tesla on 11/22/05.
 //  Copyright 2005 __MyCompanyName__. All rights reserved.
 //
 
-#import "J3Socks5MethodSelection.h"
+#import "J3SocksMethodSelection.h"
 
 
-@implementation J3Socks5MethodSelection
-- (void) addMethod:(J3Socks5Method)method;
+@implementation J3SocksMethodSelection
+- (void) addMethod:(J3SocksMethod)method;
 {
   char bytes[1] = {method};
   [methods appendBytes:bytes length:1];
@@ -21,7 +21,7 @@
   const uint8_t * bytes;
   int i;
   
-  [buffer append:J3Socks5Version];
+  [buffer append:J3SocksVersion];
   [buffer append:[methods length]];
   bytes = [methods bytes];
   for (i = 0; i < [methods length]; i++)
@@ -39,7 +39,7 @@
   if (![super init])
     return nil;
   methods = [[NSMutableData alloc] init];
-  [self addMethod:J3Socks5NoAuthentication];
+  [self addMethod:J3SocksNoAuthentication];
   return self;
 }
 @end
