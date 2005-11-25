@@ -11,13 +11,16 @@
 #import "J3SocksConstants.h"
 #import "J3SocksMethodSelection.h"
 
-@interface J3TestSocks5Primitives (Private)
+@interface J3TestSocksPrimitives (Private)
 
 - (void) assertSelection:(J3SocksMethodSelection *)selection writes:(NSString *)output;
 
 @end
 
-@implementation J3TestSocks5Primitives
+#pragma mark -
+
+@implementation J3TestSocksPrimitives
+
 - (void) setUp
 {
   buffer = [[J3Buffer alloc] init];
@@ -38,7 +41,9 @@
 
 @end
 
-@implementation J3TestSocks5Primitives (Private)
+#pragma mark -
+
+@implementation J3TestSocksPrimitives (Private)
 
 - (void) assertSelection:(J3SocksMethodSelection *)selection writes:(NSString *)output;
 {

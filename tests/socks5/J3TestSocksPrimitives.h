@@ -11,9 +11,9 @@
 
 @class J3Buffer;
 
-@interface J3TestSocks5Primitives : TestCase 
+@interface J3TestSocksPrimitives : TestCase 
 {
-  J3Buffer * buffer;
+  J3Buffer *buffer;
 }
 
 @end
