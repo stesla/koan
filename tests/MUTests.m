@@ -5,28 +5,8 @@
 //
 
 #import "MUTests.h"
-
-#import "J3FilterTests.h"
-#import "J3ANSIRemovingFilterTests.h"
-#import "J3AttributedStringTransformerTests.h"
-#import "J3HistoryRingTests.h"
-#import "J3LineBufferTests.h"
-#import "J3NaiveANSIFilterTests.h"
-#import "J3NaiveURLFilterTests.h"
-#import "J3TestSocksPrimitives.h"
-#import "J3TelnetStateMachineTests.h"
-#import "J3TextLoggerTests.h"
-#import "J3UpdateIntervalTests.h"
-#import "J3WriteBufferTests.h"
-#import "MUProfileRegistryTests.h"
-#import "MUWorldTests.h"
-#import "MUProfileTests.h"
-#import "MUPlayerTests.h"
 #import "categories/NSObject (Subclasses).h"
-
 #import <objc/objc-runtime.h>
-
-@class _NSZombie;
 
 int
 main (int argc, const char *argv[])
