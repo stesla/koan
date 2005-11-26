@@ -101,6 +101,9 @@
 		7EA5BA5307A733F9002336EE /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
 		7EA5BA5507A733F9002336EE /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
 		7EA5BB2007A76A98002336EE /* TestCase (NSAttributedStringAssertions).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */; };
+		7EBFDB0D09380B100077BA3A /* NSObject (Subclasses).h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */; };
+		7EBFDB0E09380B100077BA3A /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
+		7EBFDB0F09380B100077BA3A /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
 		7EC301B2092B78DE00AFA5C7 /* J3WriteBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */; };
 		7EC301B5092B78F200AFA5C7 /* J3WriteBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */; };
 		7EC30308092B978B00AFA5C7 /* J3Telnet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3Telnet.m */; };
@@ -255,6 +258,7 @@
 				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */,
 				7E070AFF0933D01E000A36CF /* J3SocksMethodSelection.h in CopyFiles */,
 				7E070B290933D32B000A36CF /* J3SocksConstants.h in CopyFiles */,
+				7EBFDB0D09380B100077BA3A /* NSObject (Subclasses).h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +330,8 @@
 		7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3NaiveANSIFilter.m; sourceTree = "<group>"; };
 		7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestCase (NSAttributedStringAssertions).h"; sourceTree = "<group>"; };
 		7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCase (NSAttributedStringAssertions).m"; sourceTree = "<group>"; };
+		7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject (Subclasses).h"; sourceTree = "<group>"; };
+		7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject (Subclasses).m"; sourceTree = "<group>"; };
 		7EC112E8078B763E00CFA562 /* MUPlayerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUPlayerTests.h; sourceTree = "<group>"; };
 		7EC112E9078B763E00CFA562 /* MUPlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUPlayerTests.m; sourceTree = "<group>"; };
 		7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3WriteBufferTests.h; sourceTree = "<group>"; };
@@ -652,6 +658,7 @@
 				7EC3033E092B99C300AFA5C7 /* NSObject (Accessing).h */,
 				E6550DFE07763B72002E81FF /* NSObject (BetterHashing).h */,
 				E6550DF807763B57002E81FF /* NSObject (DeepMutableCopy).h */,
+				7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */,
 				E6505679077ECE760016F30E /* NSURL (Allocating).h */,
 				E6055F7D07492729007A13BD /* NSAttributedString (Allocating).m */,
 				E62E7FA107A1AB5400BF15E9 /* NSCursor (Finger).m */,
@@ -660,6 +667,7 @@
 				7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */,
 				E6550DFF07763B72002E81FF /* NSObject (BetterHashing).m */,
 				E6550DF907763B57002E81FF /* NSObject (DeepMutableCopy).m */,
+				7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */,
 				E650567A077ECE760016F30E /* NSURL (Allocating).m */,
 			);
 			name = Categories;
@@ -1087,6 +1095,7 @@
 				E6914C52092FDAD1005DA235 /* MUPreferencesController.m in Sources */,
 				7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */,
 				7E070B2A0933D32B000A36CF /* J3SocksConstants.m in Sources */,
+				7EBFDB0E09380B100077BA3A /* NSObject (Subclasses).m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1148,6 +1157,7 @@
 				7E070ACF0933CD81000A36CF /* J3TestSocksPrimitives.m in Sources */,
 				7E070AFE0933D01E000A36CF /* J3SocksMethodSelection.m in Sources */,
 				7E070B280933D32B000A36CF /* J3SocksConstants.m in Sources */,
+				7EBFDB0F09380B100077BA3A /* NSObject (Subclasses).m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

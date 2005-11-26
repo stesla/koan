@@ -22,6 +22,11 @@
 #import "MUWorldTests.h"
 #import "MUProfileTests.h"
 #import "MUPlayerTests.h"
+#import "categories/NSObject (Subclasses).h"
+
+#import <objc/objc-runtime.h>
+
+@class _NSZombie;
 
 int
 main (int argc, const char *argv[])
@@ -32,30 +37,28 @@ main (int argc, const char *argv[])
 
 #pragma mark -
 
+@class _WarningTest;
+
 @implementation MUTests
++ (void) addTestsToSuite:(TestSuite *)suite;
+{
+  NSArray * testCases = [TestCase subclasses];
+  unsigned i, count = [testCases count];
+  Class testCaseClass;
+  
+  for (i = 0; i < count; i++)
+  {
+    testCaseClass = [[testCases objectAtIndex:i] class];
+    if (testCaseClass == [_WarningTest class])
+      continue;
+    [suite addTestSuite:testCaseClass];    
+  }
+}
 
 + (TestSuite *) suite
 {
-  TestSuite *suite = [TestSuite suiteWithName:@"Koan Tests"];
-  
-  // Add tests here.
-  [suite addTestSuite:[J3FilterTests class]];
-  [suite addTestSuite:[J3FilterQueueTests class]];
-  [suite addTestSuite:[J3ANSIRemovingFilterTests class]];
-  [suite addTestSuite:[J3AttributedStringTransformerTests class]];
-  [suite addTestSuite:[J3HistoryRingTests class]];
-  [suite addTestSuite:[J3NaiveURLFilterTests class]];
-  [suite addTestSuite:[J3TextLoggerTests class]];
-  [suite addTestSuite:[MUProfileRegistryTests class]];
-  [suite addTestSuite:[MUWorldTests class]];
-  [suite addTestSuite:[MUProfileTests class]];
-  [suite addTestSuite:[MUPlayerTests class]];
-  [suite addTestSuite:[J3NaiveANSIFilterTests class]];
-  [suite addTestSuite:[J3UpdateIntervalTests class]];
-  [suite addTestSuite:[J3LineBufferTests class]];
-  [suite addTestSuite:[J3TelnetStateMachineTests class]];
-  [suite addTestSuite:[J3WriteBufferTests class]];
-  [suite addTestSuite:[J3TestSocksPrimitives class]];
+  TestSuite * suite = [TestSuite suiteWithName:@"Koan Tests"];
+  [self addTestsToSuite:suite];
   return suite;
 }
 
