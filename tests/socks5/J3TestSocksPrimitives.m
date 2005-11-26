@@ -1,9 +1,7 @@
 //
-//  J3TestSocks5Primitives.m
-//  Koan
+// J3TestSocksPrimitives.m
 //
-//  Created by Samuel Tesla on 11/22/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3Buffer.h"
@@ -33,7 +31,8 @@
 
 - (void) testMethodSelection;
 {
-  J3SocksMethodSelection * selection = [[[J3SocksMethodSelection alloc] init] autorelease];
+  J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
+
   [self assertSelection:selection writes:@"\x05\x01\x00"];
   [selection addMethod:J3SocksUsernamePassword];
   [self assertSelection:selection writes:@"\x05\x02\x00\x02"];

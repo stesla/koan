@@ -1,14 +1,15 @@
 //
-//  NSObject (Subclasses).h
-//  Koan
+// NSObject (Subclasses).h
 //
-//  Created by Samuel Tesla on 11/25/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
+//
+// This file is in the public domain.
 //
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface NSObject (Subclasses)
+
 + (NSArray *) subclasses;
+
 @end

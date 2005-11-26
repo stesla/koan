@@ -1,15 +1,13 @@
 //
-//  J3SocksMethodSelection.m
-//  Koan
+// J3SocksMethodSelection.m
 //
-//  Created by Samuel Tesla on 11/22/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3SocksMethodSelection.h"
 
-
 @implementation J3SocksMethodSelection
+
 - (void) addMethod:(J3SocksMethod)method;
 {
   char bytes[1] = {method};
@@ -18,7 +16,7 @@
 
 - (void) appendToBuffer:(id <J3Buffer>)buffer;
 {
-  const uint8_t * bytes;
+  const uint8_t *bytes;
   int i;
   
   [buffer append:J3SocksVersion];
@@ -38,8 +36,11 @@
 {
   if (![super init])
     return nil;
+  
   methods = [[NSMutableData alloc] init];
   [self addMethod:J3SocksNoAuthentication];
+  
   return self;
 }
+
 @end

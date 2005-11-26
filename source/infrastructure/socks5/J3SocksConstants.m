@@ -1,10 +1,7 @@
 //
-//  J3SocksConstants.m
-//  Koan
+// J3SocksConstants.m
 //
-//  Created by Samuel Tesla on 11/22/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import "J3SocksConstants.h"
-

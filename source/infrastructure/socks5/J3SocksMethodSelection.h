@@ -1,9 +1,7 @@
 //
-//  J3SocksMethodSelection.h
-//  Koan
+// J3SocksMethodSelection.h
 //
-//  Created by Samuel Tesla on 11/22/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -12,7 +10,7 @@
 
 @interface J3SocksMethodSelection : NSObject 
 {
-  NSMutableData * methods;
+  NSMutableData *methods;
 }
 
 - (void) addMethod:(J3SocksMethod)method;

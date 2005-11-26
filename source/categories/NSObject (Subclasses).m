@@ -1,21 +1,22 @@
 //
-//  NSObject (Subclasses).m
-//  Koan
+// NSObject (Subclasses).m
 //
-//  Created by Samuel Tesla on 11/25/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
+//
+// This file is in the public domain.
 //
 
 #import "NSObject (Subclasses).h"
 #import <objc/objc-runtime.h>
 
 @implementation NSObject (Subclasses)
+
 + (NSArray *) subclasses;
 {
-  NSMutableArray * subclasses;
-  struct objc_class * superClass;
-  Class * classes = NULL;
-  Class * current = NULL;
+  NSMutableArray *subclasses;
+  struct objc_class *superClass;
+  Class *classes = NULL;
+  Class *current = NULL;
   const Class thisClass = [self class];
   int count, i;
   
@@ -49,4 +50,5 @@
   
   return subclasses;
 }
+
 @end

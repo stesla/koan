@@ -1,9 +1,7 @@
 //
-//  J3SocksConstants.h
-//  Koan
+// J3SocksConstants.h
 //
-//  Created by Samuel Tesla on 11/22/05.
-//  Copyright 2005 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2005 3James Software
 //
 
 #import <Cocoa/Cocoa.h>

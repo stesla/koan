@@ -8,6 +8,8 @@
 #import "categories/NSObject (Subclasses).h"
 #import <objc/objc-runtime.h>
 
+@class WarningTest;
+
 int
 main (int argc, const char *argv[])
 {
@@ -17,19 +19,18 @@ main (int argc, const char *argv[])
 
 #pragma mark -
 
-@class _WarningTest;
-
 @implementation MUTests
+
 + (void) addTestsToSuite:(TestSuite *)suite;
 {
-  NSArray * testCases = [TestCase subclasses];
+  NSArray *testCases = [TestCase subclasses];
   unsigned i, count = [testCases count];
   Class testCaseClass;
   
   for (i = 0; i < count; i++)
   {
     testCaseClass = [[testCases objectAtIndex:i] class];
-    if (testCaseClass == [_WarningTest class])
+    if (testCaseClass == [WarningTest class])
       continue;
     [suite addTestSuite:testCaseClass];    
   }
@@ -37,7 +38,7 @@ main (int argc, const char *argv[])
 
 + (TestSuite *) suite
 {
-  TestSuite * suite = [TestSuite suiteWithName:@"Koan Tests"];
+  TestSuite *suite = [TestSuite suiteWithName:@"Koan Tests"];
   [self addTestsToSuite:suite];
   return suite;
 }
