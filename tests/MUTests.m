@@ -8,7 +8,7 @@
 #import "categories/NSObject (Subclasses).h"
 #import <objc/objc-runtime.h>
 
-@class WarningTest;
+@class _WarningTest;
 
 int
 main (int argc, const char *argv[])
@@ -30,7 +30,7 @@ main (int argc, const char *argv[])
   for (i = 0; i < count; i++)
   {
     testCaseClass = [[testCases objectAtIndex:i] class];
-    if (testCaseClass == [WarningTest class])
+    if (testCaseClass == [_WarningTest class])
       continue;
     [suite addTestSuite:testCaseClass];    
   }
