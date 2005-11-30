@@ -68,7 +68,7 @@
   if (![super init])
     return nil;
   
-  [self setDelegate:delegate];
+  [self setDelegate:newDelegate];
   [self at:&connection put:newConnection];
   [self at:&parser put:newParser];
   [self at:&outputBuffer put:[J3WriteBuffer buffer]];
