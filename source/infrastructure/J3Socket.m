@@ -131,8 +131,8 @@
   
   if (FD_ISSET (socketfd, &read_set))
   {
+    hasDataAvailable = YES;
     [self checkRemoteConnection];
-    hasDataAvailable = YES;    
   }
 }
 
@@ -181,10 +181,14 @@
   int result = ioctl (socketfd, FIONREAD, &nread);
   
   if (result < 0)
+  {
+    hasDataAvailable = NO;
     [self socketErrorWithErrno];
+  }
   if (!nread)
   {
     close (socketfd);
+    hasDataAvailable = NO;
     [self setStatusClosedByServer];
   }
 }

@@ -372,6 +372,8 @@
   return [world newTelnetConnectionWithDelegate:delegate];
 }
 
+// FIXME: I think this may be a red herring.
+
 - (void) loginWithConnection:(J3Telnet *)connection
 {
   if (!loggedIn && player)
