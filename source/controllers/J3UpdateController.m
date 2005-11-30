@@ -49,6 +49,7 @@ enum J3UpdateIntervals
 - (void) dealloc
 {
   [automaticCheckTimer invalidate];
+  [automaticCheckTimer release];
   [macPADSocket release];
   [updateLock release];
   [super dealloc];

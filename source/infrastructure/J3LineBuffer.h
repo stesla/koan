@@ -19,10 +19,10 @@
 
 @interface J3LineBuffer : J3Buffer
 {
-  id <NSObject, J3LineBufferDelegate> delegate;
+  NSObject <J3LineBufferDelegate> *delegate;
 }
 
 - (NSString *) readLine;
-- (void) setDelegate:(id <NSObject, J3LineBufferDelegate>)object;
+- (void) setDelegate:(NSObject <J3LineBufferDelegate> *)object;
 
 @end

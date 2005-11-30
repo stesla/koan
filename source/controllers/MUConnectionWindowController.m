@@ -176,7 +176,7 @@ enum MUSearchDirections
       return NO;
     }
     
-    [self disconnect:sender];
+    [self disconnect:nil];
   }
   
   [splitView saveState:YES];
@@ -254,14 +254,15 @@ enum MUSearchDirections
 - (IBAction) connectOrDisconnect:(id)sender
 {
   if ([self isConnected])
-    [self disconnect:sender];
+    [self disconnect:nil];
   else
-    [self connect:sender];
+    [self connect:nil];
 }
 
 - (IBAction) disconnect:(id)sender
-{	
-	[profile logoutWithConnection:telnetConnection];
+{
+  if ([self isConnected])
+    [profile logoutWithConnection:telnetConnection];
 	
 	if (pingTimer)
 	{
@@ -269,10 +270,12 @@ enum MUSearchDirections
 		[pingTimer release];
 		pingTimer = nil;
 	}
-	
-  if ([self isConnected])
+  
+  if (telnetConnection)
   {
-    [telnetConnection close];
+    if ([self isConnected])
+      [telnetConnection close];
+    
     [telnetConnection release];
     telnetConnection = nil;
   }
@@ -307,9 +310,9 @@ enum MUSearchDirections
 }
 
 #pragma mark -
-#pragma mark J3LineBuffer delegate
+#pragma mark J3LineBufferDelegate protocol
 
-- (void) lineBufferHasReadLine:(J3LineBuffer *)buffer;
+- (void) lineBufferHasReadLine:(J3LineBuffer *)buffer
 {
   if (![telnetConnection hasInputBuffer:buffer])
     return;
@@ -317,52 +320,39 @@ enum MUSearchDirections
 }
 
 #pragma mark -
-#pragma mark J3Connection delegate
+#pragma mark J3TelnetConnectionDelegate protocol
 
-- (void) connectionIsConnecting:(id <J3Connection>)socket;
+- (void) telnetConnectionIsConnecting:(J3Telnet *)socket
 {
-  if (![telnetConnection isOnConnection:socket])
-    return;
   [self displayString:NSLocalizedString (MULConnectionOpening, nil)];  
   [self displayString:@"\n"];  
 }
 
-- (void) connectionIsConnected:(id <J3Connection>)socket;
+- (void) telnetConnectionIsConnected:(J3Telnet *)socket
 {
-  if (![telnetConnection isOnConnection:socket])
-    return;
   [profile loginWithConnection:telnetConnection];  
   [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
   [self displayString:@"\n"];
   [MUGrowlService connectionOpenedForTitle:[profile windowTitle]];
 }
 
-- (void) connectionIsClosedByClient:(id <J3Connection>)socket;
+- (void) telnetConnectionWasClosedByClient:(J3Telnet *)socket
 {
-  if (![telnetConnection isOnConnection:socket])
-    return;
   [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
-  [self disconnect:nil];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
 }
 
-- (void) connectionIsClosedByServer:(id <J3Connection>)socket;
+- (void) telnetConnectionWasClosedByServer:(J3Telnet *)socket
 {
-  if (![telnetConnection isOnConnection:socket])
-    return;
   [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
-  [self disconnect:nil];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
 }
 
-- (void) connectionIsClosed:(id <J3Connection>)socket withError:(NSString *)errorMessage;
+- (void) telnetConnectionWasClosed:(J3Telnet *)socket withError:(NSString *)errorMessage
 {
-  if (![telnetConnection isOnConnection:socket])
-    return;
   [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), errorMessage]];
-  [self disconnect:nil];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:errorMessage];
 }

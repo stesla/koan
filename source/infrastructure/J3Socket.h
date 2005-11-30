@@ -38,7 +38,7 @@ typedef enum J3SocketStatus
   BOOL hasDataAvailable;
   BOOL hasError;
   J3SocketStatus status;
-  id <NSObject, J3ConnectionDelegate> delegate;
+  NSObject <J3ConnectionDelegate> *delegate;
 }
 
 + (id) socketWithHostname:(NSString *)hostname port:(int)port;
@@ -51,7 +51,7 @@ typedef enum J3SocketStatus
 - (BOOL) isConnected;
 - (void) open;
 - (void) poll;
-- (void) setDelegate:(id <NSObject, J3ConnectionDelegate>)object;
+- (void) setDelegate:(NSObject <J3ConnectionDelegate> *)object;
 - (J3SocketStatus) status;
 
 @end

@@ -16,8 +16,8 @@
 
 @interface J3WriteBuffer : J3Buffer 
 {
-  id <NSObject, J3ByteDestination> destination;
+  NSObject <J3ByteDestination> *destination;
 }
 
-- (void) setByteDestination:(id <NSObject, J3ByteDestination>)object;
+- (void) setByteDestination:(NSObject <J3ByteDestination> *)object;
 @end

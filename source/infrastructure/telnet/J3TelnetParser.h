@@ -11,8 +11,8 @@
 
 @interface J3TelnetParser : NSObject 
 {
-  id <NSObject, J3Buffer> inputBuffer;
-  id <NSObject, J3Buffer> outputBuffer;
+  NSObject <J3Buffer> *inputBuffer;
+  NSObject <J3Buffer> *outputBuffer;
   J3TelnetState *state;
 }
 
@@ -24,8 +24,8 @@
 - (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
 - (void) parse:(uint8_t)byte;
 - (void) parse:(uint8_t *)bytes length:(int)count;
-- (void) setInputBuffer:(id <NSObject, J3Buffer>)buffer;
-- (void) setOuptutBuffer:(id <NSObject, J3Buffer>)buffer;
+- (void) setInputBuffer:(NSObject <J3Buffer> *)buffer;
+- (void) setOuptutBuffer:(NSObject <J3Buffer> *)buffer;
 - (void) wont:(uint8_t)byte;
 
 @end

@@ -146,7 +146,7 @@
   return result;
 }
 
-- (void) setDelegate:(id <NSObject, J3ConnectionDelegate>)object
+- (void) setDelegate:(NSObject <J3ConnectionDelegate> *)object
 {
   [self at:&delegate put:object];
 }
@@ -243,36 +243,36 @@
 - (void) setStatusConnected
 {
   status = J3SocketStatusConnected;
-  if (delegate)
+  if (delegate && [delegate respondsToSelector:@selector(connectionIsConnected:)])
     [delegate connectionIsConnected:self];
 }
 
 - (void) setStatusConnecting
 {
   status = J3SocketStatusConnecting;
-  if (delegate)
+  if (delegate && [delegate respondsToSelector:@selector(connectionIsConnecting:)])
     [delegate connectionIsConnecting:self];
 }
 
 - (void) setStatusClosedByClient
 {
   status = J3SocketStatusClosed;
-  if (delegate)
-    [delegate connectionIsClosedByClient:self];
+  if (delegate && [delegate respondsToSelector:@selector(connectionWasClosedByClient:)])
+    [delegate connectionWasClosedByClient:self];
 }
 
 - (void) setStatusClosedByServer
 {
   status = J3SocketStatusClosed;
-  if (delegate)
-    [delegate connectionIsClosedByServer:self];
+  if (delegate && [delegate respondsToSelector:@selector(connectionWasClosedByServer:)])
+    [delegate connectionWasClosedByServer:self];
 }
 
 - (void) setStatusClosedWithError:(NSString *)error
 {
   status = J3SocketStatusClosed;
-  if (delegate)
-    [delegate connectionIsClosed:self withError:error];
+  if (delegate && [delegate respondsToSelector:@selector(connectionWasClosed:withError:)])
+    [delegate connectionWasClosed:self withError:error];
 }
 
 - (void) socketError:(NSString *)errorMessage

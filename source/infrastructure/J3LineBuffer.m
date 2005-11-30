@@ -23,7 +23,7 @@
   return result;
 }
 
-- (void) setDelegate:(id <NSObject, J3LineBufferDelegate>)object
+- (void) setDelegate:(NSObject <J3LineBufferDelegate> *)object
 {
   [self at:&delegate put:object];
 }

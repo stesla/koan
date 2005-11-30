@@ -61,14 +61,14 @@
     [self parse:bytes[i]];
 }
 
-- (void) setInputBuffer:(id <NSObject, J3Buffer>)buffer
+- (void) setInputBuffer:(NSObject <J3Buffer> *)buffer
 {
   [buffer retain];
   [inputBuffer release];
   inputBuffer = buffer;
 }
 
-- (void) setOuptutBuffer:(id <NSObject, J3Buffer>)buffer
+- (void) setOuptutBuffer:(NSObject <J3Buffer> *)buffer
 {
   [buffer retain];
   [outputBuffer release];

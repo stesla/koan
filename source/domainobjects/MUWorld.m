@@ -193,9 +193,12 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3Telnet *) newTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
+- (J3Telnet *) newTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
 {
-  return [J3Telnet lineAtATimeTelnetWithHostname:[self worldHostname] port:[[self worldPort] intValue] delegate:object];
+  return [J3Telnet lineAtATimeTelnetWithHostname:[self worldHostname]
+                                            port:[[self worldPort] intValue]
+                                        delegate:delegate
+                              lineBufferDelegate:delegate];
 }
 
 - (NSString *) uniqueIdentifier

@@ -20,7 +20,7 @@
 
 @implementation J3WriteBuffer
 
-- (void) setByteDestination:(id <NSObject, J3ByteDestination>)object
+- (void) setByteDestination:(NSObject <J3ByteDestination> *)object
 {
   [object retain];
   [destination release];

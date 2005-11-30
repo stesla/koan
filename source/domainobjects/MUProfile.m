@@ -367,15 +367,9 @@
   return (player ? [player windowTitle] : [world windowTitle]);
 }
 
-- (J3Telnet *) createNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
+- (J3Telnet *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
 {
-  J3Telnet *telnet = [world newTelnetConnectionWithDelegate:object];
-  
-  if (telnet)
-  {
-    [telnet scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-  }
-  return telnet;
+  return [world newTelnetConnectionWithDelegate:delegate];
 }
 
 - (void) loginWithConnection:(J3Telnet *)connection

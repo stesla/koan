@@ -4,6 +4,9 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
+@protocol J3LineBufferDelegate;
+@protocol J3TelnetConnectionDelegate;
+
 #import <Cocoa/Cocoa.h>
 #import "MUWorld.h"
 #import "MUPlayer.h"
@@ -80,7 +83,7 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3Telnet *) createNewTelnetConnectionWithDelegate:(id <NSObject, J3LineBufferDelegate, J3ConnectionDelegate>)object;
+- (J3Telnet *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate;
 - (void) loginWithConnection:(J3Telnet *)connection;
 - (void) logoutWithConnection:(J3Telnet *)connection;
 
