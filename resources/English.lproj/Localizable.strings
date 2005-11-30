@@ -33,11 +33,13 @@
 // Alert panel messages.
 
 "Okay" = "OK";
+"Confirm" = "Confirm";
 "Cancel" = "Cancel";
 "None" = "None";
 "Never" = "Never";
 "Yes" = "Yes";
 "No" = "No";
+"QuitImmediately" = "Quit Immediately";
 "Download" = "Download";
 "RemindLater" = "Remind Me Later";
 "DontRemind" = "Don't Remind Me Again";
@@ -45,9 +47,9 @@
 "ConfirmCloseTitle" = "Are you sure you want to close %@?";
 "ConfirmCloseMessage" = "The currently open connection to %@ will be closed.";
 
-"ConfirmQuitTitle" = "Are you sure you want to quit %@?";
-"ConfirmQuitMessageSingular" = "%d connection is still open and will be disconnected.";
-"ConfirmQuitMessagePlural" = "%d connections are still open and will be disconnected.";
+"ConfirmQuitTitleSingular" = "You have %d open connection.";
+"ConfirmQuitTitlePlural" = "You have %d open connections.";
+"ConfirmQuitMessage" = "Do you want to confirm closing each connection individually, quit immediately, or cancel?";
 
 "ErrorCheckingForUpdatesTitle" = "An error occured while checking for updates.";
 

@@ -12,6 +12,8 @@
 #import "J3NaiveURLFilter.h"
 #import "J3TextLogger.h"
 
+#import <objc/objc-runtime.h>
+
 enum MUSearchDirections
 {
   MUBackwardSearch,
@@ -20,7 +22,9 @@ enum MUSearchDirections
 
 @interface MUConnectionWindowController (Private)
 
+- (BOOL) canCloseWindow;
 - (J3Filter *) createLogger;
+- (void) didEndCloseSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) displayString:(NSString *)string;
 - (void) endCompletion;
 - (BOOL) isUsingTelnet:(J3Telnet *)telnet;
@@ -29,6 +33,7 @@ enum MUSearchDirections
 - (void) sendPeriodicPing:(NSTimer *)timer;
 - (NSString *) splitViewAutosaveName;
 - (void) tabCompleteWithDirection:(enum MUSearchDirections)direction;
+- (void) willEndCloseSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 @end
 
@@ -156,37 +161,19 @@ enum MUSearchDirections
 
 - (BOOL) windowShouldClose:(id)sender
 {
-  if ([self isConnected])
-  {
-    NSString *title = [NSString stringWithFormat:
-      NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowTitle]];
-    NSAlert *alert;
-    int choice;
-    
-    alert = [NSAlert alertWithMessageText:title
-                            defaultButton:NSLocalizedString (MULOkay, nil)
-                          alternateButton:NSLocalizedString (MULCancel, nil)
-                              otherButton:nil
-                informativeTextWithFormat:NSLocalizedString (MULConfirmCloseMessage, nil),
-      [profile hostname]];
-    
-    choice = [alert runModal];
-    
-    if (choice == NSAlertAlternateReturn)
-    {
-      return NO;
-    }
-    
-    [self disconnect:nil];
-  }
-  
-  [splitView saveState:YES];
-  
-  [self postConnectionWindowControllerWillCloseNotification];
-  
-  return YES;
+  return [self canCloseWindow];
 }
 
+- (void) windowWillClose:(NSNotification *)notification
+{
+  NSWindow *window = [self window];
+  
+  [splitView saveState:YES];
+  [window setDelegate:nil];
+  
+  [self postConnectionWindowControllerWillCloseNotification];
+}
+  
 #pragma mark -
 #pragma mark Accessors
 
@@ -227,6 +214,26 @@ enum MUSearchDirections
 
 #pragma mark -
 #pragma mark Actions
+
+- (void) confirmClose:(SEL)callback 
+{
+  NSString *title = [NSString stringWithFormat:
+    NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowTitle]];
+  
+  [[self window] makeKeyAndOrderFront:nil];
+  
+  NSBeginAlertSheet (title,
+                     NSLocalizedString (MULOkay, nil),
+                     NSLocalizedString (MULCancel, nil),
+                     nil,
+                     [self window],
+                     self,
+                     @selector(willEndCloseSheet:returnCode:contextInfo:),
+                     @selector(didEndCloseSheet:returnCode:contextInfo:),
+                     (void *) callback,
+                     NSLocalizedString (MULConfirmCloseMessage, nil),
+                     [profile hostname]);
+}
 
 - (IBAction) clearWindow:(id)sender
 {
@@ -512,12 +519,32 @@ enum MUSearchDirections
 
 @implementation MUConnectionWindowController (Private)
 
+- (BOOL) canCloseWindow
+{
+  if ([self isConnected])
+  {
+    [self confirmClose:NULL];
+    return NO;
+  }
+  
+  return YES;
+}
+
 - (J3Filter *) createLogger
 {
   if (profile)
     return [profile logger];
   else
     return [J3TextLogger filter];
+}
+
+- (void) didEndCloseSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+  if (returnCode == NSAlertAlternateReturn) /* Cancel. */
+  {
+    if (contextInfo)
+      ((void (*) (id, SEL, BOOL)) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, NO);
+  }
 }
 
 - (void) displayString:(NSString *)string
@@ -616,5 +643,17 @@ enum MUSearchDirections
   
   currentlySearching = YES;
 }
+
+- (void) willEndCloseSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
+{
+  if (returnCode == NSAlertDefaultReturn) /* Close. */
+  {
+    [[self window] close];
+
+    if (contextInfo)
+      ((void (*) (id, SEL, BOOL)) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, YES);
+  }
+}
+
 
 @end

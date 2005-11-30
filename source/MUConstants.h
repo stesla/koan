@@ -87,6 +87,8 @@ extern NSString *MULConnectionClosedByError;
 #pragma mark Alert panel localization constants.
 
 extern NSString *MULOkay;
+extern NSString *MULConfirm;
+extern NSString *MULQuitImmediately;
 extern NSString *MULCancel;
 extern NSString *MULNone;
 extern NSString *MULNever;
@@ -99,9 +101,9 @@ extern NSString *MULDontRemind;
 extern NSString *MULConfirmCloseTitle;
 extern NSString *MULConfirmCloseMessage;
 
-extern NSString *MULConfirmQuitTitle;
-extern NSString *MULConfirmQuitMessageSingular;
-extern NSString *MULConfirmQuitMessagePlural;
+extern NSString *MULConfirmQuitTitleSingular;
+extern NSString *MULConfirmQuitTitlePlural;
+extern NSString *MULConfirmQuitMessage;
 
 extern NSString *MULErrorCheckingForUpdatesTitle;
 

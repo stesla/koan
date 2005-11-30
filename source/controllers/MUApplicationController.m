@@ -175,6 +175,26 @@
   [newConnectionPanel makeKeyAndOrderFront:self];
 }
 
+- (void) recursivelyConfirmClose:(BOOL)cont
+{
+  if (cont)
+  {
+    unsigned count = [connectionWindowControllers count];
+
+    while (count--)
+    {
+      MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex:count];
+      if (controller && [controller isConnected])
+      {
+        [controller confirmClose:@selector(recursivelyConfirmClose:)];
+        return;
+      }
+    }
+  }
+  
+  [NSApp replyToApplicationShouldTerminate:cont];
+}
+
 - (IBAction) showPreferencesPanel:(id)sender
 {
   [preferencesController showPreferencesPanel:sender];
@@ -234,6 +254,7 @@
 {
   unsigned count = [connectionWindowControllers count];
   unsigned openConnections = 0;
+  int choice;
   
   while (count--)
   {
@@ -245,20 +266,31 @@
   if (openConnections > 0)
   {
     NSAlert *alert;
-    int choice;
-    
-    alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString (MULConfirmQuitTitle, nil), MUApplicationName]
-                            defaultButton:NSLocalizedString (MULOkay, nil)
-                          alternateButton:NSLocalizedString (MULCancel, nil)
-                              otherButton:nil
-                informativeTextWithFormat:(openConnections == 1 ? NSLocalizedString (MULConfirmQuitMessageSingular, nil)
-                                                                : NSLocalizedString (MULConfirmQuitMessagePlural, nil)),
+    int choice = NSAlertDefaultReturn;
+    NSString *title = [NSString stringWithFormat:
+      (openConnections == 1 ? NSLocalizedString (MULConfirmQuitTitleSingular, nil)
+                            : NSLocalizedString (MULConfirmQuitTitlePlural, nil)),
       openConnections];
+  
+    if (openConnections > 1)
+    {
+      alert = [NSAlert alertWithMessageText:title
+                              defaultButton:NSLocalizedString (MULConfirm, nil)
+                            alternateButton:NSLocalizedString (MULCancel, nil)
+                                otherButton:NSLocalizedString (MULQuitImmediately, nil)
+                  informativeTextWithFormat:NSLocalizedString (MULConfirmQuitMessage, nil)];
     
-    choice = [alert runModal];
+      choice = [alert runModal];
+      
+      if (choice == NSAlertAlternateReturn)
+        return NSTerminateCancel;
+    }
     
-    if (choice == NSAlertAlternateReturn)
-      return NSTerminateCancel;
+    if (choice == NSAlertDefaultReturn)
+    {
+      [self recursivelyConfirmClose:YES];
+      return NSTerminateLater;
+    }
   }
   
   return NSTerminateNow;

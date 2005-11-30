@@ -36,18 +36,17 @@
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer;
 - (id) initWithWorld:(MUWorld *)newWorld;
 
-- (BOOL) isConnected;
-
 - (id) delegate;
 - (void) setDelegate:(id)delegate;
 
+- (void) confirmClose:(SEL)callback;
 - (IBAction) connect:(id)sender;
 - (IBAction) disconnect:(id)sender;
 - (IBAction) goToWorldURL:(id)sender;
-- (IBAction) sendInputText:(id)sender;
-
+- (BOOL) isConnected;
 - (IBAction) nextCommand:(id)sender;
 - (IBAction) previousCommand:(id)sender;
+- (IBAction) sendInputText:(id)sender;
 
 @end
 

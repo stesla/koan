@@ -87,6 +87,8 @@ NSString *MULConnectionClosedByError = @"ConnectionClosedByError";
 #pragma mark Alert panel localization constants.
 
 NSString *MULOkay = @"OK";
+NSString *MULConfirm = @"Confirm";
+NSString *MULQuitImmediately = @"QuitImmediately";
 NSString *MULCancel = @"Cancel";
 NSString *MULNone = @"None";
 NSString *MULNever = @"Never";
@@ -99,9 +101,9 @@ NSString *MULDontRemind = @"DontRemind";
 NSString *MULConfirmCloseTitle = @"ConfirmCloseTitle";
 NSString *MULConfirmCloseMessage = @"ConfirmCloseMessage";
 
-NSString *MULConfirmQuitTitle = @"ConfirmQuitTitle";
-NSString *MULConfirmQuitMessageSingular = @"ConfirmQuitMessageSingular";
-NSString *MULConfirmQuitMessagePlural = @"ConfirmQuitMessagePlural";
+NSString *MULConfirmQuitTitleSingular = @"ConfirmQuitTitleSingular";
+NSString *MULConfirmQuitTitlePlural = @"ConfirmQuitTitlePlural";
+NSString *MULConfirmQuitMessage = @"ConfirmQuitMessage";
 
 NSString *MULErrorCheckingForUpdatesTitle = @"ErrorCheckingForUpdatesTitle";
 
