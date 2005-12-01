@@ -32,10 +32,11 @@ static MUProfileRegistry *sharedRegistry = nil;
 
 - (id) init
 {
-  self = [super init];
-  {
-    profiles = [[NSMutableDictionary alloc] init];
-  }
+  if (![super init])
+    return nil;
+  
+  profiles = [[NSMutableDictionary alloc] init];
+  
   return self;
 }
 

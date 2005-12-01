@@ -141,11 +141,11 @@ enum MUProfilesEditingReturnValues
       
 			if ([item isKindOfClass:[MUWorld class]])
       {
-        url = [(MUWorld *) item worldURL];
+        url = [(MUWorld *) item URL];
       }
 			else if ([item isKindOfClass:[MUPlayer class]])
 			{
-        url = [[(MUPlayer *) item world] worldURL];
+        url = [[(MUPlayer *) item world] URL];
       }
       
       return (url && ![url isEqualToString:@""]);
@@ -342,9 +342,9 @@ enum MUProfilesEditingReturnValues
 	selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
 	
 	if ([selectedItem isKindOfClass:[MUWorld class]])
-		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[(MUWorld *) selectedItem worldURL]]];
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[(MUWorld *) selectedItem URL]]];
 	else if ([selectedItem isKindOfClass:[MUPlayer class]])
-		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[(MUPlayer *) selectedItem world] worldURL]]];
+		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[(MUPlayer *) selectedItem world] URL]]];
 }
 
 - (IBAction) removeSelectedRow:(id)sender
@@ -462,7 +462,7 @@ enum MUProfilesEditingReturnValues
 - (id) outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)column byItem:(id)item
 {
 	if ([item isKindOfClass:[MUWorld class]])
-		return [(MUWorld *) item worldName];
+		return [(MUWorld *) item name];
 	else if ([item isKindOfClass:[MUPlayer class]])
 		return [(MUPlayer *) item name];
 	else
@@ -570,11 +570,11 @@ enum MUProfilesEditingReturnValues
 
 - (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
 {
-  return [[MUWorld alloc] initWithWorldName:[worldNameField stringValue]
-                              worldHostname:[worldHostnameField stringValue]
-                                  worldPort:[NSNumber numberWithInt:[worldPortField intValue]]
-                                   worldURL:[worldURLField stringValue]
-                                    players:players];
+  return [[MUWorld alloc] initWithName:[worldNameField stringValue]
+                              hostname:[worldHostnameField stringValue]
+                                  port:[NSNumber numberWithInt:[worldPortField intValue]]
+                                   URL:[worldURLField stringValue]
+                               players:players];
 }
 
 - (IBAction) editPlayer:(MUPlayer *)player
@@ -618,10 +618,10 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editWorld:(MUWorld *)world
 {
-  [worldNameField setStringValue:[world worldName]];
-  [worldHostnameField setStringValue:[world worldHostname]];
-  [worldPortField setObjectValue:[world worldPort]];
-  [worldURLField setStringValue:[world worldURL]];
+  [worldNameField setStringValue:[world name]];
+  [worldHostnameField setStringValue:[world hostname]];
+  [worldPortField setObjectValue:[world port]];
+  [worldURLField setStringValue:[world URL]];
   
   [worldEditorSheet makeFirstResponder:worldNameField];
   

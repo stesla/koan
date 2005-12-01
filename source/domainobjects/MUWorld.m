@@ -20,39 +20,39 @@
 
 @implementation MUWorld
 
-- (id) initWithWorldName:(NSString *)newWorldName
-           worldHostname:(NSString *)newWorldHostname
-               worldPort:(NSNumber *)newWorldPort
-                worldURL:(NSString *)newWorldURL
-                 players:(NSArray *)newPlayers
+- (id) initWithName:(NSString *)newName
+           hostname:(NSString *)newHostname
+               port:(NSNumber *)newPort
+                URL:(NSString *)newURL
+            players:(NSArray *)newPlayers
 {
   if (![super init])
     return nil;
-  [self setWorldName:newWorldName];
-  [self setWorldHostname:newWorldHostname];
-  [self setWorldPort:newWorldPort];
-  [self setWorldURL:newWorldURL];
-  [self setPlayers:newPlayers];
-  if (![self players])
-    [self setPlayers:[NSArray array]];
+  
+  [self setName:newName];
+  [self setHostname:newHostname];
+  [self setPort:newPort];
+  [self setURL:newURL];
+  [self setPlayers:(newPlayers ? newPlayers : [NSArray array])];
+  
   return self;
 }
 
 - (id) init
 {
-  return [self initWithWorldName:@""
-                   worldHostname:@""
-                       worldPort:[NSNumber numberWithInt:0]
-                        worldURL:@""
-                         players:[NSArray array]];
+  return [self initWithName:@""
+                   hostname:@""
+                       port:[NSNumber numberWithInt:0]
+                        URL:@""
+                    players:nil];
 }
 
 - (void) dealloc
 {
-  [worldName release];
-  [worldHostname release];
-  [worldPort release];
-  [worldURL release];
+  [name release];
+  [hostname release];
+  [port release];
+  [url release];
   [players release];
   [super dealloc];
 }
@@ -60,52 +60,56 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (NSString *) worldName
+- (NSString *) name
 {
-  return worldName;
+  return name;
 }
 
-- (void) setWorldName:(NSString *)newWorldName
+- (void) setName:(NSString *)newName
 {
-  NSString *copy = [newWorldName copy];
-  [worldName release];
-  worldName = copy;
+  if (name == newName)
+    return;
+  [name release];
+  name = [newName copy];
 }
 
-- (NSString *) worldHostname
+- (NSString *) hostname
 {
-  return worldHostname;
+  return hostname;
 }
 
-- (void) setWorldHostname:(NSString *)newWorldHostname
+- (void) setHostname:(NSString *)newHostname
 {
-  NSString *copy = [newWorldHostname copy];
-  [worldHostname release];
-  worldHostname = copy;
+  if (hostname == newHostname)
+    return;
+  [hostname release];
+  hostname = [newHostname copy];
 }
 
-- (NSNumber *) worldPort
+- (NSNumber *) port
 {
-  return worldPort;
+  return port;
 }
 
-- (void) setWorldPort:(NSNumber *)newWorldPort
+- (void) setPort:(NSNumber *)newPort
 {
-  NSNumber *copy = [newWorldPort copy];
-  [worldPort release];
-  worldPort = copy;
+  if (port == newPort)
+    return;
+  [port release];
+  port = [newPort copy];
 }
 
-- (NSString *) worldURL
+- (NSString *) URL
 {
-  return worldURL;
+  return url;
 }
 
-- (void) setWorldURL:(NSString *)newWorldURL
+- (void) setURL:(NSString *)newURL
 {
-  NSString *copy = [newWorldURL copy];
-  [worldURL release];
-  worldURL = copy;
+  if (url == newURL)
+    return;
+  [url release];
+  url = [newURL copy];
 }
 
 - (NSMutableArray *) players
@@ -115,10 +119,10 @@
 
 - (void) setPlayers:(NSArray *)newPlayers
 {
-  NSMutableArray *copy = [newPlayers mutableCopy];
-  
+  if (players == newPlayers)
+    return;
   [players release];
-  players = copy;
+  players = [newPlayers mutableCopy];
   [self postWorldsDidChangeNotification];
 }
 
@@ -131,9 +135,7 @@
 		MUPlayer *iteratedPlayer = [players objectAtIndex:i];
 		
 		if (player == iteratedPlayer)
-		{
 			return (int) i;
-		}
 	}
 	
 	return -1;
@@ -153,12 +155,12 @@
 
 - (void) addPlayer:(MUPlayer *)player
 {
-  if (![self containsPlayer:player])
-  {
-    [players addObject:player];
-    [player setWorld:self];
-		[self postWorldsDidChangeNotification];
-  }
+  if ([self containsPlayer:player])
+    return;
+  
+  [players addObject:player];
+  [player setWorld:self];
+  [self postWorldsDidChangeNotification];
 }
 
 - (BOOL) containsPlayer:(MUPlayer *)player
@@ -181,12 +183,12 @@
 	{
 		MUPlayer *player = [players objectAtIndex:i];
 		
-		if (player == oldPlayer)
-		{
-			[players replaceObjectAtIndex:i withObject:newPlayer];
-			[self postWorldsDidChangeNotification];
-			break;
-		}
+		if (player != oldPlayer)
+      continue;
+    
+    [players replaceObjectAtIndex:i withObject:newPlayer];
+    [self postWorldsDidChangeNotification];
+    break;
 	}
 }
 
@@ -195,20 +197,23 @@
 
 - (J3Telnet *) newTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
 {
-  return [J3Telnet lineAtATimeTelnetWithHostname:[self worldHostname]
-                                            port:[[self worldPort] intValue]
+  return [J3Telnet lineAtATimeTelnetWithHostname:[self hostname]
+                                            port:[[self port] intValue]
                                         delegate:delegate
                               lineBufferDelegate:delegate];
 }
 
 - (NSString *) uniqueIdentifier
 {
-  NSArray *tokens = [worldName componentsSeparatedByString:@" "];
+  NSArray *tokens = [[self name] componentsSeparatedByString:@" "];
   NSMutableString *result = [NSMutableString string];
+
   if ([tokens count] > 0)
   {
     int i = 0;
+    
     [result appendFormat:@"%@", [[tokens objectAtIndex:i] lowercaseString]];
+    
     for (i = 1; i < [tokens count]; i++)
       [result appendFormat:@".%@", [[tokens objectAtIndex:i] lowercaseString]];
   }
@@ -217,7 +222,7 @@
 
 - (NSString *) windowTitle
 {
-  return [NSString stringWithFormat:@"%@", [self worldName]];
+  return [NSString stringWithFormat:@"%@", [self name]];
 }
 
 #pragma mark -
@@ -230,8 +235,10 @@
 
 - (id) initWithCoder:(NSCoder *)decoder
 {
-  if (self = [super init])
-    [MUCodingService decodeWorld:self withCoder:decoder];
+  if (![super init])
+    return;
+  
+  [MUCodingService decodeWorld:self withCoder:decoder];
   return self;
 }
 
@@ -240,11 +247,11 @@
 
 - (id) copyWithZone:(NSZone *)zone
 {
-  return [[MUWorld allocWithZone:zone] initWithWorldName:[self worldName]
-                                           worldHostname:[self worldHostname]
-                                               worldPort:[self worldPort]
-                                                worldURL:[self worldURL]
-                                                 players:[self players]];
+  return [[MUWorld allocWithZone:zone] initWithName:[self name]
+                                           hostname:[self hostname]
+                                               port:[self port]
+                                                URL:[self URL]
+                                            players:[self players]];
 }
 
 @end

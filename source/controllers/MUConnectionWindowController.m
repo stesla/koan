@@ -43,18 +43,19 @@ enum MUSearchDirections
 
 - (id) initWithProfile:(MUProfile*)newProfile;
 {
-  if (self = [super initWithWindowNibName:@"MUConnectionWindow"])
-  {
-    profile = [newProfile retain];
+  if (![super initWithWindowNibName:@"MUConnectionWindow"])
+    return nil;
+  
+  profile = [newProfile retain];
     
-    historyRing = [[J3HistoryRing alloc] init];
+  historyRing = [[J3HistoryRing alloc] init];
     
-    filterQueue = [[J3FilterQueue alloc] init];
-//  [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
-    [filterQueue addFilter:[J3NaiveURLFilter filter]];
-    [filterQueue addFilter:[J3NaiveANSIFilter filter]];
-    [filterQueue addFilter:[self createLogger]];
-  }
+  filterQueue = [[J3FilterQueue alloc] init];
+  // [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
+  [filterQueue addFilter:[J3NaiveURLFilter filter]];
+  [filterQueue addFilter:[J3NaiveANSIFilter filter]];
+  [filterQueue addFilter:[self createLogger]];
+  
   return self;
 }
 
@@ -151,7 +152,7 @@ enum MUSearchDirections
 	
 	if (toolbarItemAction == @selector(goToWorldURL:))
   {
-    NSString *url = [[profile world] worldURL];
+    NSString *url = [[profile world] URL];
     
     return (url && ![url isEqualToString:@""]);
   }
@@ -291,7 +292,7 @@ enum MUSearchDirections
 
 - (IBAction) goToWorldURL:(id)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[profile world] worldURL]]];
+  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[profile world] URL]]];
 }
 
 - (IBAction) sendInputText:(id)sender

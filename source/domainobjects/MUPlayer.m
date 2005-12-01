@@ -13,12 +13,13 @@
            password:(NSString *)newPassword
               world:(MUWorld *)newWorld
 {
-  if (self = [super init])
-  {
-    [self setName:newName];
-    [self setPassword:newPassword];
-    [self setWorld:newWorld];
-  }
+  if (![super init])
+    return nil;
+  
+  [self setName:newName];
+  [self setPassword:newPassword];
+  [self setWorld:newWorld];
+  
   return self;
 }
 
@@ -44,9 +45,10 @@
 
 - (void) setName:(NSString *)newName
 {
-  NSString *copy = [newName copy];
+  if (name == newName)
+    return;
   [name release];
-  name = copy;
+  name = [newName copy];
 }
 
 - (NSString *) password
@@ -56,9 +58,10 @@
 
 - (void) setPassword:(NSString *)newPassword
 {
-  NSString *copy = [newPassword copy];
+  if (password == newPassword)
+    return;
   [password release];
-  password = copy;
+  password = [newPassword copy];
 }
 
 - (MUWorld *) world
@@ -90,12 +93,12 @@
 
 - (NSString *) uniqueIdentifier
 {
-  return [NSString stringWithFormat:@"%@.%@.%@", [world worldHostname], [world worldPort], [self name]];
+  return [NSString stringWithFormat:@"%@.%@.%@", [world hostname], [world port], [self name]];
 }
 
 - (NSString *) windowTitle
 {
-  return [NSString stringWithFormat:@"%@ @ %@", [self name], [world worldName]];
+  return [NSString stringWithFormat:@"%@ @ %@", [self name], [world name]];
 }
 
 #pragma mark -
@@ -108,9 +111,11 @@
 
 - (id) initWithCoder:(NSCoder *)decoder
 {
-  self = [super init];
-  if (self)
-    [MUCodingService decodePlayer:self withCoder:decoder];
+  if (![super init])
+    return nil;
+  
+  [MUCodingService decodePlayer:self withCoder:decoder];
+  
   return self;
 }
 

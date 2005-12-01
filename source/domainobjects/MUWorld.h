@@ -13,30 +13,31 @@
 
 @interface MUWorld : NSObject <NSCoding, NSCopying>
 {
-  NSString *worldName;
-  NSString *worldHostname;
-  NSNumber *worldPort;
-  NSString *worldURL;
+  NSString *name;
+  NSString *hostname;
+  NSNumber *port;
+  NSString *url;
   NSMutableArray *players;
 }
 
 // Designated initializer.
-- (id) initWithWorldName:(NSString *)newWorldName
-           worldHostname:(NSString *)newWorldHostname
-               worldPort:(NSNumber *)newWorldPort
-                worldURL:(NSString *)newWorldURL
-                 players:(NSArray *)newPlayers;
+- (id) initWithName:(NSString *)newWorldName
+           hostname:(NSString *)newWorldHostname
+               port:(NSNumber *)newWorldPort
+                URL:(NSString *)newWorldURL
+            players:(NSArray *)newPlayers;
 
 // Accessors.
-- (NSString *) worldName;
-- (void) setWorldName:(NSString *)newWorldName;
-- (NSString *) worldHostname;
-- (void) setWorldHostname:(NSString *)newWorldHostname;
-- (NSNumber *) worldPort;
-- (void) setWorldPort:(NSNumber *)newWorldPort;
-- (NSString *) worldURL;
-- (void) setWorldURL:(NSString *)newWorldURL;
+- (NSString *) name;
+- (void) setName:(NSString *)newName;
+- (NSString *) hostname;
+- (void) setHostname:(NSString *)newHostname;
+- (NSNumber *) port;
+- (void) setPort:(NSNumber *)newPort;
+- (NSString *) URL;
+- (void) setURL:(NSString *)newURL;
 
+// Array-like functions.
 - (void) addPlayer:(MUPlayer *)player;
 - (BOOL) containsPlayer:(MUPlayer *)player;
 - (int) indexOfPlayer:(MUPlayer *)player;

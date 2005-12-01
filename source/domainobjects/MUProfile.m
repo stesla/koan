@@ -72,21 +72,20 @@
 					 linkColor:(NSColor *)newLinkColor
 		visitedLinkColor:(NSColor *)newVisitedLinkColor
 {
-	self = [super init];
-	
-  if (self && newWorld)
-  {
-    [self setWorld:newWorld];
-    [self setPlayer:newPlayer];
-    [self setAutoconnect:newAutoconnect];
-		[self setFont:newFont];
-		[self setTextColor:newTextColor];
-		[self setBackgroundColor:newBackgroundColor];
-		[self setLinkColor:newLinkColor];
-		[self setVisitedLinkColor:newVisitedLinkColor];
-		
-		[self registerForNotifications];
-  }
+	if (!(newWorld && [super init]))
+    return nil;
+  
+  [self setWorld:newWorld];
+  [self setPlayer:newPlayer];
+  [self setAutoconnect:newAutoconnect];
+  [self setFont:newFont];
+  [self setTextColor:newTextColor];
+  [self setBackgroundColor:newBackgroundColor];
+  [self setLinkColor:newLinkColor];
+  [self setVisitedLinkColor:newVisitedLinkColor];
+  
+  [self registerForNotifications];
+  
   return self;
 }
 
@@ -134,9 +133,10 @@
 
 - (void) setWorld:(MUWorld *)newWorld
 {
-  [newWorld retain];
+  if (world == newWorld)
+    return;
   [world release];
-  world = newWorld;
+  world = [newWorld retain];
 }
 
 - (MUPlayer *) player
@@ -146,9 +146,10 @@
 
 - (void) setPlayer:(MUPlayer *)newPlayer
 {
-  [newPlayer retain];
+  if (player == newPlayer)
+    return;
   [player release];
-  player = newPlayer;
+  player = [newPlayer retain];
 }
 
 - (BOOL) autoconnect
@@ -168,15 +169,15 @@
 
 - (void) setFont:(NSFont *)newFont
 {
-	if (![font isEqual:newFont])
-	{
-		[self willChangeValueForKey:@"effectiveFont"];
-		[self willChangeValueForKey:@"effectiveFontDisplayName"];
-		[font release];
-		font = [newFont copy];
-		[self didChangeValueForKey:@"effectiveFont"];
-		[self didChangeValueForKey:@"effectiveFontDisplayName"];
-	}
+	if ([font isEqual:newFont])
+    return;
+  
+  [self willChangeValueForKey:@"effectiveFont"];
+  [self willChangeValueForKey:@"effectiveFontDisplayName"];
+  [font release];
+  font = [newFont copy];
+  [self didChangeValueForKey:@"effectiveFont"];
+  [self didChangeValueForKey:@"effectiveFontDisplayName"];
 }
 
 - (NSColor *) textColor
@@ -186,13 +187,13 @@
 
 - (void) setTextColor:(NSColor *)newTextColor
 {
-	if (![textColor isEqual:newTextColor])
-	{
-		[self willChangeValueForKey:@"effectiveTextColor"];
-		[textColor release];
-		textColor = [newTextColor copy];
-		[self didChangeValueForKey:@"effectiveTextColor"];
-	}
+	if ([textColor isEqual:newTextColor])
+    return;
+  
+  [self willChangeValueForKey:@"effectiveTextColor"];
+  [textColor release];
+  textColor = [newTextColor copy];
+  [self didChangeValueForKey:@"effectiveTextColor"];
 }
 
 - (NSColor *) backgroundColor
@@ -202,13 +203,13 @@
 
 - (void) setBackgroundColor:(NSColor *)newBackgroundColor
 {
-	if (![backgroundColor isEqual:newBackgroundColor])
-	{
-		[self willChangeValueForKey:@"effectiveBackgroundColor"];
-		[backgroundColor release];
-		backgroundColor = [newBackgroundColor copy];
-		[self didChangeValueForKey:@"effectiveBackgroundColor"];
-	}
+	if ([backgroundColor isEqual:newBackgroundColor])
+    return;
+  
+  [self willChangeValueForKey:@"effectiveBackgroundColor"];
+  [backgroundColor release];
+  backgroundColor = [newBackgroundColor copy];
+  [self didChangeValueForKey:@"effectiveBackgroundColor"];
 }
 
 - (NSColor *) linkColor
@@ -218,13 +219,13 @@
 
 - (void) setLinkColor:(NSColor *)newLinkColor
 {
-	if (![linkColor isEqual:newLinkColor])
-	{
-		[self willChangeValueForKey:@"effectiveLinkColor"];
-		[linkColor release];
-		linkColor = [newLinkColor copy];
-		[self didChangeValueForKey:@"effectiveLinkColor"];
-	}
+	if ([linkColor isEqual:newLinkColor])
+    return;
+  
+  [self willChangeValueForKey:@"effectiveLinkColor"];
+  [linkColor release];
+  linkColor = [newLinkColor copy];
+  [self didChangeValueForKey:@"effectiveLinkColor"];
 }
 
 - (NSColor *) visitedLinkColor
@@ -234,13 +235,13 @@
 
 - (void) setVisitedLinkColor:(NSColor *)newVisitedLinkColor
 {
-	if (![visitedLinkColor isEqual:newVisitedLinkColor])
-	{
-		[self willChangeValueForKey:@"effectiveVisitedLinkColor"];
-		[visitedLinkColor release];
-		visitedLinkColor = [newVisitedLinkColor copy];
-		[self didChangeValueForKey:@"effectiveVisitedLinkColor"];
-	}
+	if ([visitedLinkColor isEqual:newVisitedLinkColor])
+    return;
+  
+  [self willChangeValueForKey:@"effectiveVisitedLinkColor"];
+  [visitedLinkColor release];
+  visitedLinkColor = [newVisitedLinkColor copy];
+  [self didChangeValueForKey:@"effectiveVisitedLinkColor"];
 }
 
 #pragma mark -
@@ -329,7 +330,7 @@
 
 - (NSString *) hostname;
 {
-  return [world worldHostname];
+  return [world hostname];
 }
 
 - (J3Filter *) logger
@@ -350,8 +351,7 @@
   NSString *rval = nil;
   if (player)
   {
-    // Consider offloading the generation of a unique name for the player on
-    // MUPlayer.
+    // FIXME: Consider offloading the generation of a unique name for the player on MUPlayer.
     rval = [NSString stringWithFormat:@"%@.%@", 
       [world uniqueIdentifier], [[player name] lowercaseString]];
   }
@@ -387,9 +387,7 @@
 
 - (void) logoutWithConnection:(J3Telnet *)connection
 {
-  // We don't do anything with the connection at this point, but we could.
-  // I put it there for parallelism with -loginWithConnection: and to make it
-  // easy to add any shutdown we may decide we need later.
+  // We don't do anything with the connection at this point, but we could. I put it there for parallelism with -loginWithConnection: and to make it easy to add any shutdown we may decide we need later.
   loggedIn = NO;
 }
 

@@ -15,10 +15,11 @@
 
 - (id) initWithType:(enum J3UpdateIntervalTypes)newType
 {
-  if (self = [super init])
-  {
-    type = newType;
-  }
+  if (![super init])
+    return nil;
+  
+  type = newType;
+  
   return self;
 }
 

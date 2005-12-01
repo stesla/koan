@@ -110,9 +110,7 @@
   NSFont *font = [NSFont fontWithName:fontName size:fontSize];
   
   if (font == nil)
-  {
     font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-  }
   
   [[NSFontManager sharedFontManager] setSelectedFont:font isMultiple:NO];
   [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
@@ -126,11 +124,11 @@
   if (![[url scheme] isEqualToString:@"telnet"])
     return;
   
-  world = [[MUWorld alloc] initWithWorldName:[url host]
-                               worldHostname:[url host]
-                                   worldPort:[url port]
-                                    worldURL:@""
-                                     players:nil];
+  world = [[MUWorld alloc] initWithName:[url host]
+                               hostname:[url host]
+                                   port:[url port]
+                                    URL:@""
+                                players:nil];
   controller = [[MUConnectionWindowController alloc] initWithWorld:world];
 	
 	[self openConnectionWithController:controller];
@@ -142,17 +140,15 @@
 - (IBAction) connectUsingPanelInformation:(id)sender
 {
 	MUConnectionWindowController *controller;
-	MUWorld *world = [[MUWorld alloc] initWithWorldName:[newConnectionHostnameField stringValue]
-																				worldHostname:[newConnectionHostnameField stringValue]
-																						worldPort:[NSNumber numberWithInt:[newConnectionPortField intValue]]
-																						 worldURL:@""
-																							players:nil];
+	MUWorld *world = [[MUWorld alloc] initWithName:[newConnectionHostnameField stringValue]
+																				hostname:[newConnectionHostnameField stringValue]
+																						port:[NSNumber numberWithInt:[newConnectionPortField intValue]]
+                                             URL:@""
+                                         players:nil];
   controller = [[MUConnectionWindowController alloc] initWithWorld:world];
 	
 	if ([newConnectionSaveWorldButton state] == NSOnState)
-	{
 		[[MUServices worldRegistry] insertObject:world inWorldsAtIndex:[[MUServices worldRegistry] count]];
-	}
 	
 	[self openConnectionWithController:controller];
 	[newConnectionPanel close];
@@ -383,7 +379,7 @@
     MUProfile *profile = [profiles profileForWorld:world];
     NSArray *players = [world players];
     NSMenuItem *worldItem = [[NSMenuItem alloc] init];
-    NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world worldName]];
+    NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world name]];
     NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString (MULConnectWithoutLogin, nil)
                                                          action:@selector(openConnection:)
                                                   keyEquivalent:@""];
@@ -428,7 +424,7 @@
     }
     
     [worldMenu addItem:connectItem];
-    [worldItem setTitle:[world worldName]];
+    [worldItem setTitle:[world name]];
     [worldItem setSubmenu:worldMenu];
     [openConnectionMenu addItem:worldItem];
     [worldItem release];

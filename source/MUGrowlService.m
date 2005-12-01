@@ -32,10 +32,11 @@ static MUGrowlService *growlService;
 
 - (id) init
 {
-	if (self = [super init])
-	{
-		[GrowlApplicationBridge setGrowlDelegate:self];
-	}
+	if (![super init])
+    return nil;
+  
+  [GrowlApplicationBridge setGrowlDelegate:self];
+	
 	return self;
 }
 

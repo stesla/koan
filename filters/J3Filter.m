@@ -24,10 +24,11 @@
 
 - (id) init
 {
-  if (self = [super init])
-  {
-    filters = [[NSMutableArray alloc] init];
-  }
+  if (![super init])
+    return nil;
+  
+  filters = [[NSMutableArray alloc] init];
+  
   return self;
 }
 

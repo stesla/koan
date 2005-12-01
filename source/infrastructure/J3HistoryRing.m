@@ -10,13 +10,14 @@
 
 - (id) init
 {
-  if (self = [super init])
-  {
-    ring = [[NSMutableArray alloc] init];
-    updates = [[NSMutableDictionary alloc] init];
-    cursor = -1;
-    searchCursor = -1;
-  }
+  if (![super init])
+    return nil;
+
+  ring = [[NSMutableArray alloc] init];
+  updates = [[NSMutableDictionary alloc] init];
+  cursor = -1;
+  searchCursor = -1;
+  
   return self;
 }
 

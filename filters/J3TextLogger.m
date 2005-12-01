@@ -36,14 +36,12 @@
 
 - (id) initWithOutputStream:(NSOutputStream *)stream
 {
-  if (self = [super init])
-  {
-    if (!stream)
-      return nil;
-    
-    output = [stream retain];
-    [output open];
-  }
+  if (!stream || ![super init])
+    return nil;
+  
+  output = [stream retain];
+  [output open];
+  
   return self;
 }
 
@@ -66,7 +64,7 @@
 {
   NSCalendarDate *today = [NSCalendarDate date];
   NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%@/Unknown/%d/%d/%d.txt",
-    [world worldName],
+    [world name],
     [today yearOfCommonEra],
     [today monthOfYear],
     [today dayOfMonth]] stringByExpandingTildeInPath];
@@ -82,7 +80,7 @@
 {
   NSCalendarDate *today = [NSCalendarDate date];
   NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%@/%@/%d/%d/%d.txt",
-    [world worldName],
+    [world name],
     [player name],
     [today yearOfCommonEra],
     [today monthOfYear],

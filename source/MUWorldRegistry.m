@@ -33,11 +33,11 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 - (id) init
 {
-  self = [super init];
-  if (self)
-  {
-    [self setWorlds:[NSArray array]];
-  }
+  if (![super init])
+    return nil;
+  
+  [self setWorlds:[NSArray array]];
+  
   return self;
 }
 

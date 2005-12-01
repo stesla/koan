@@ -31,13 +31,13 @@
                        value:(id)newValue
                   atLocation:(int)newLocation
 {
-  self = [super init];
-  if (self)
-  {
-    name = [newName copy];
-    value = [newValue copy];
-    location = newLocation;
-  }
+  if (![super init])
+    return nil;
+  
+  name = [newName copy];
+  value = [newValue copy];
+  location = newLocation;
+  
   return self;
 }
 
@@ -96,10 +96,11 @@
 
 - (id) init
 {
-  self = [super init];
-  {
-    transforms = [[NSMutableArray alloc] init];
-  }
+  if (![super init])
+    return nil;
+  
+  transforms = [[NSMutableArray alloc] init];
+  
   return self;
 }
 

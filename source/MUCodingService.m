@@ -9,7 +9,7 @@
 
 static const int32_t currentProfileVersion = 2;
 static const int32_t currentPlayerVersion = 1;
-static const int32_t currentWorldVersion = 4;
+static const int32_t currentWorldVersion = 5;
 
 #pragma mark -
 
@@ -64,26 +64,38 @@ static const int32_t currentWorldVersion = 4;
 {
   [encoder encodeInt32:currentWorldVersion forKey:@"version"];
   
-  [encoder encodeObject:[world worldName] forKey:@"worldName"];
-  [encoder encodeObject:[world worldHostname] forKey:@"worldHostname"];
-  [encoder encodeObject:[world worldPort] forKey:@"worldPort"];
+  [encoder encodeObject:[world name] forKey:@"name"];
+  [encoder encodeObject:[world hostname] forKey:@"hostname"];
+  [encoder encodeObject:[world port] forKey:@"port"];
   [encoder encodeObject:[world players] forKey:@"players"];
-  [encoder encodeObject:[world worldURL] forKey:@"worldURL"];
+  [encoder encodeObject:[world URL] forKey:@"URL"];
 }
 
 + (void) decodeWorld:(MUWorld *)world withCoder:(NSCoder *)decoder
 {
   int32_t version = [decoder decodeInt32ForKey:@"version"];
   
-  [world setWorldName:[decoder decodeObjectForKey:@"worldName"]];
-  [world setWorldHostname:[decoder decodeObjectForKey:@"worldHostname"]];
-  [world setWorldPort:[decoder decodeObjectForKey:@"worldPort"]];
+  if (version >= 5)
+  {
+    [world setName:[decoder decodeObjectForKey:@"name"]];
+    [world setHostname:[decoder decodeObjectForKey:@"hostname"]];
+    [world setPort:[decoder decodeObjectForKey:@"port"]];
+  }
+  else
+  {
+    [world setName:[decoder decodeObjectForKey:@"worldName"]];
+    [world setHostname:[decoder decodeObjectForKey:@"worldHostname"]];
+    [world setPort:[decoder decodeObjectForKey:@"worldPort"]];
+  }
+  
   [world setPlayers:[decoder decodeObjectForKey:@"players"]];
   
-  if (version >= 1)
-    [world setWorldURL:[decoder decodeObjectForKey:@"worldURL"]];
+  if (version >= 5)
+    [world setURL:[decoder decodeObjectForKey:@"URL"]];
+  else if (version >= 1)
+    [world setURL:[decoder decodeObjectForKey:@"worldURL"]];
   else
-    [world setWorldURL:@""];
+    [world setURL:@""];
 }
 
 @end
