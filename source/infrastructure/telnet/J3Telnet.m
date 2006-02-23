@@ -25,42 +25,6 @@
 
 @implementation J3Telnet
 
-+ (id) lineAtATimeTelnetWithHostname:(NSString *)hostname
-                                port:(int)port
-                            delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
-                  lineBufferDelegate:(NSObject <J3LineBufferDelegate> *)lineBufferDelegate
-{
-  J3LineBuffer *buffer = [J3LineBuffer buffer];
-  
-  [buffer setDelegate:lineBufferDelegate];
-  
-  return [self telnetWithHostname:hostname port:port inputBuffer:buffer delegate:newDelegate];
-}
-
-+ (id) telnetWithHostname:(NSString *)hostname
-                     port:(int)port
-              inputBuffer:(NSObject <J3Buffer> *)buffer
-                 delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
-{
-  J3TelnetParser *newParser = [J3TelnetParser parser];
-  
-  [newParser setInputBuffer:buffer];
-  
-  return [[[self alloc] initWithHostname:hostname port:port parser:newParser delegate:newDelegate] autorelease];
-}
-
-- (id) initWithHostname:(NSString *)hostname
-                   port:(int)port
-                 parser:(J3TelnetParser *)newParser
-               delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
-{
-  J3Socket *newSocket = [J3Socket socketWithHostname:hostname port:port];
-  
-  [newSocket setDelegate:self];
-  
-  return [[self initWithConnection:newSocket parser:newParser delegate:newDelegate] autorelease];
-}
-
 - (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
                    parser:(J3TelnetParser *)newParser
                  delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate

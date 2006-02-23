@@ -10,8 +10,6 @@
 #import "J3ByteDestination.h"
 #import "J3ByteSource.h"
 #import "J3Connection.h"
-#import "J3LineBuffer.h"
-#import "J3Socket.h"
 #import "J3WriteBuffer.h"
 #import "J3TelnetParser.h"
 
@@ -26,24 +24,9 @@
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
-+ (id) lineAtATimeTelnetWithHostname:(NSString *)hostname
-                                port:(int)port
-                            delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
-                  lineBufferDelegate:(NSObject <J3LineBufferDelegate> *)lineBufferDelegate;
-
-+ (id) telnetWithHostname:(NSString *)hostname
-                     port:(int)port
-              inputBuffer:(NSObject <J3Buffer> *)buffer
-                 delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;
-
 - (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
                    parser:(J3TelnetParser *)newParser
                  delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;
-
-- (id) initWithHostname:(NSString *)hostname
-                   port:(int)port
-                 parser:(J3TelnetParser *)newParser
-               delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;
 
 - (void) close;
 - (BOOL) isConnected;

@@ -4,7 +4,7 @@
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import "J3Telnet.h"
+#import "J3ConnectionFactory.h"
 #import "MUWorld.h"
 #import "MUConstants.h"
 #import "MUPlayer.h"
@@ -197,10 +197,7 @@
 
 - (J3Telnet *) newTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
 {
-  return [J3Telnet lineAtATimeTelnetWithHostname:[self hostname]
-                                            port:[[self port] intValue]
-                                        delegate:delegate
-                              lineBufferDelegate:delegate];
+  return [[J3ConnectionFactory factory] lineAtATimeTelnetWithHostname:[self hostname] port:[[self port] intValue] delegate:delegate lineBufferDelegate:delegate];
 }
 
 - (NSString *) uniqueIdentifier
