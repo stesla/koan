@@ -1,12 +1,12 @@
 //
-// TestCase (NSAttributedStringAssertions).m
+// J3TestCase (NSAttributedStringAssertions).m
 //
 // Copyright (c) 2005 3James Software
 //
 
 #import "TestCase (NSAttributedStringAssertions).h"
 
-@implementation TestCase (NSAttributedStringAssertions)
+@implementation J3TestCase (NSAttributedStringAssertions)
 
 - (void) assertAttributedString:(NSAttributedString *)actual 
                    equalsString:(NSString *)expected

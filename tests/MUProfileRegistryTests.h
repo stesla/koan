@@ -5,11 +5,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
 @class MUProfileRegistry;
 
-@interface MUProfileRegistryTests : TestCase 
+@interface MUProfileRegistryTests : J3TestCase 
 {
   MUProfileRegistry *registry;
 }

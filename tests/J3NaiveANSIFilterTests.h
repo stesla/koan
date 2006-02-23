@@ -5,11 +5,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
 @class J3NaiveANSIFilter;
 
-@interface J3NaiveANSIFilterTests : TestCase 
+@interface J3NaiveANSIFilterTests : J3TestCase 
 {
   J3NaiveANSIFilter *filter;
 }

@@ -5,15 +5,15 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
 #import "J3Filter.h"
 
-@interface J3FilterTests : TestCase
+@interface J3FilterTests : J3TestCase
 
 @end
 
-@interface J3FilterQueueTests : TestCase
+@interface J3FilterQueueTests : J3TestCase
 
 @end
 

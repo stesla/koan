@@ -5,12 +5,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
 @class MUWorld;
 @class MUPlayer;
 
-@interface MUWorldTests : TestCase
+@interface MUWorldTests : J3TestCase
 {
   MUWorld *world;
   MUPlayer *player;

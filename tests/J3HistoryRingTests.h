@@ -5,11 +5,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
 #import "J3HistoryRing.h"
 
-@interface J3HistoryRingTests : TestCase
+@interface J3HistoryRingTests : J3TestCase
 {
   J3HistoryRing *ring;
 }

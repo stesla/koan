@@ -5,8 +5,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
-@interface MUPlayerTests : TestCase
+@interface MUPlayerTests : J3TestCase
 
 @end

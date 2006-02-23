@@ -5,7 +5,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 #import "J3TelnetParser.h"
 
 @class J3WriteBuffer;
@@ -21,7 +21,7 @@
 - (unsigned) outputLength;
 @end
 
-@interface J3TelnetStateMachineTests : TestCase 
+@interface J3TelnetStateMachineTests : J3TestCase 
 {
   J3TelnetState * state;
   J3MockTelnetParser * parser;

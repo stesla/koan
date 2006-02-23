@@ -5,10 +5,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 #import "J3LineBuffer.h"
 
-@interface J3LineBufferTests : TestCase <J3LineBufferDelegate>
+@interface J3LineBufferTests : J3TestCase <J3LineBufferDelegate>
 {
   NSString *line;
   J3LineBuffer *buffer;

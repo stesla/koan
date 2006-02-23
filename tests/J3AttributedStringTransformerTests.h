@@ -5,11 +5,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
 @class J3AttributedStringTransformer;
 
-@interface J3AttributedStringTransformerTests : TestCase
+@interface J3AttributedStringTransformerTests : J3TestCase
 {
   J3AttributedStringTransformer *transformer;
   NSAttributedString *input;

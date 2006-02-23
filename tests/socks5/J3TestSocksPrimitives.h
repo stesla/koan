@@ -5,11 +5,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <ObjcUnit/ObjcUnit.h>
+#import "J3TestCase.h"
 
 @class J3Buffer;
 
-@interface J3TestSocksPrimitives : TestCase 
+@interface J3TestSocksPrimitives : J3TestCase 
 {
   J3Buffer *buffer;
 }
