@@ -99,6 +99,13 @@
   [super dealloc];
 }
 
+- (BOOL) validateMenuItem:(id <NSMenuItem>)anItem
+{
+  if ([anItem isEqual:useProxyMenuItem])
+    [useProxyMenuItem setState:useProxy?NSOnState:NSOffState];
+  return YES;
+}
+
 #pragma mark -
 #pragma mark Actions
 
@@ -207,6 +214,17 @@
   {
     [profilesController showWindow:self];
   }
+}
+
+- (IBAction) showProxySettings:(id)sender;
+{
+  NSLog(@"showProxySettings:");
+}
+
+- (IBAction) toggleUseProxy:(id)sender;
+{
+  NSLog(@"toggleUseProxy:");
+  useProxy = !useProxy;
 }
 
 #pragma mark -

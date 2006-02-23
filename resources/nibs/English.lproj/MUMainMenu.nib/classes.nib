@@ -37,6 +37,8 @@
                 openNewConnectionPanel = id; 
                 showPreferencesPanel = id; 
                 showProfilesPanel = id; 
+                showProxySettings = id; 
+                toggleUseProxy = id; 
             }; 
             CLASS = MUApplicationController; 
             LANGUAGE = ObjC; 
@@ -48,6 +50,7 @@
                 openConnectionMenu = NSMenu; 
                 preferencesController = MUPreferencesController; 
                 updateController = MUUpdateController; 
+                useProxyMenuItem = NSMenuItem; 
             }; 
             SUPERCLASS = NSObject; 
         }, 

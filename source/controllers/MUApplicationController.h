@@ -13,6 +13,7 @@
 @interface MUApplicationController : NSObject
 {
   IBOutlet NSMenu *openConnectionMenu;
+  IBOutlet NSMenuItem *useProxyMenuItem;
   
 	IBOutlet NSPanel *newConnectionPanel;
 	IBOutlet NSTextField *newConnectionHostnameField;
@@ -26,6 +27,7 @@
   
   NSMutableArray *connectionWindowControllers;
   MUProfilesController *profilesController;
+  BOOL useProxy;
 }
 
 - (IBAction) chooseNewFont:(id)sender;
@@ -35,5 +37,7 @@
 - (IBAction) openNewConnectionPanel:(id)sender;
 - (IBAction) showPreferencesPanel:(id)sender;
 - (IBAction) showProfilesPanel:(id)sender;
+- (IBAction) showProxySettings:(id)sender;
+- (IBAction) toggleUseProxy:(id)sender;
 
 @end
