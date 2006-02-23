@@ -236,7 +236,7 @@
 - (id) initWithCoder:(NSCoder *)decoder
 {
   if (![super init])
-    return;
+    return nil;
   
   [MUCodingService decodeWorld:self withCoder:decoder];
   return self;

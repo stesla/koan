@@ -24,7 +24,7 @@
 
 - (void) testUniqueIdentifier
 {
-  [world setWorldName:@"Test World"];
+  [world setName:@"Test World"];
   [self assert:[world uniqueIdentifier] equals:@"test.world"]; 
 }
 
@@ -60,7 +60,7 @@
 
 - (void) testNilPlayers
 {
-  MUWorld * thisWorld = [[MUWorld alloc] initWithWorldName:@"" worldHostname:@"" worldPort:0 worldURL:@"" players:nil];
+  MUWorld * thisWorld = [[MUWorld alloc] initWithName:@"" hostname:@"" port:0 URL:@"" players:nil];
   @try
   {
     [thisWorld addPlayer:player];

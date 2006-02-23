@@ -16,7 +16,7 @@
   MUProfile *profile = nil;
   
   world = [[[MUWorld alloc] init] autorelease];
-  [world setWorldName:@"Test World"];
+  [world setName:@"Test World"];
   
   profile = [MUProfile profileWithWorld:world];
   [self assert:[profile uniqueIdentifier] equals:@"test.world"];

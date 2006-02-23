@@ -97,6 +97,21 @@
 		7E68DC6B092AC2FB004554BD /* J3TelnetTextState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC47092AC2FB004554BD /* J3TelnetTextState.m */; };
 		7E68DC6D092AC2FB004554BD /* J3TelnetWillState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC49092AC2FB004554BD /* J3TelnetWillState.m */; };
 		7E68DC6F092AC2FB004554BD /* J3TelnetWontState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC4B092AC2FB004554BD /* J3TelnetWontState.m */; };
+		7E87731A09AD411200A883BC /* _WarningTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8772FA09AD411200A883BC /* _WarningTest.m */; };
+		7E87731B09AD411200A883BC /* AbstractExpectation.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8772FC09AD411200A883BC /* AbstractExpectation.m */; };
+		7E87731C09AD411200A883BC /* AbstractExpectationCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E8772FE09AD411200A883BC /* AbstractExpectationCollection.m */; };
+		7E87731D09AD411200A883BC /* AssertionFailedException.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87730009AD411200A883BC /* AssertionFailedException.m */; };
+		7E87731E09AD411200A883BC /* ExpectationCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87730209AD411200A883BC /* ExpectationCounter.m */; };
+		7E87731F09AD411200A883BC /* ExpectationGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87730409AD411200A883BC /* ExpectationGroup.m */; };
+		7E87732009AD411200A883BC /* ExpectationList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87730609AD411200A883BC /* ExpectationList.m */; };
+		7E87732109AD411200A883BC /* ExpectationSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87730809AD411200A883BC /* ExpectationSet.m */; };
+		7E87732209AD411200A883BC /* ExpectationValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87730A09AD411200A883BC /* ExpectationValue.m */; };
+		7E87732309AD411200A883BC /* NSObject-ObjcUnitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87730C09AD411200A883BC /* NSObject-ObjcUnitAdditions.m */; };
+		7E87732409AD411200A883BC /* TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87731009AD411200A883BC /* TestCase.m */; };
+		7E87732509AD411200A883BC /* TestFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87731209AD411200A883BC /* TestFailure.m */; };
+		7E87732609AD411200A883BC /* TestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87731509AD411200A883BC /* TestResult.m */; };
+		7E87732709AD411200A883BC /* TestRunner.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87731709AD411200A883BC /* TestRunner.m */; };
+		7E87732809AD411200A883BC /* TestSuite.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87731909AD411200A883BC /* TestSuite.m */; };
 		7EA5BA4807A7221A002336EE /* J3NaiveANSIFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA4707A7221A002336EE /* J3NaiveANSIFilterTests.m */; };
 		7EA5BA5307A733F9002336EE /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
 		7EA5BA5507A733F9002336EE /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
@@ -168,7 +183,6 @@
 		E69679B1078F59D30033A4C8 /* MUProfileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EDD3E40078A4AFB00138CD1 /* MUProfileTests.m */; };
 		E69679B2078F59D30033A4C8 /* MUPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC112E9078B763E00CFA562 /* MUPlayerTests.m */; };
 		E69679D3078F59DF0033A4C8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		E69679D4078F59DF0033A4C8 /* ObjcUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E620410A06B0551D00236608 /* ObjcUnit.framework */; };
 		E6A2312A0772E166008EF744 /* MUDisplayTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6A231280772E166008EF744 /* MUDisplayTextView.m */; };
 		E6B5E3B906A6EEA600F53EBB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E6B5E3B706A6EEA600F53EBB /* InfoPlist.strings */; };
 		E6B5E61206A73B0A00F53EBB /* version.plist in Resources */ = {isa = PBXBuildFile; fileRef = E6B5E61106A73B0A00F53EBB /* version.plist */; };
@@ -324,6 +338,39 @@
 		7E68DC4A092AC2FB004554BD /* J3TelnetWontState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetWontState.h; sourceTree = "<group>"; };
 		7E68DC4B092AC2FB004554BD /* J3TelnetWontState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetWontState.m; sourceTree = "<group>"; };
 		7E68DCD4092AC77D004554BD /* J3ByteDestination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3ByteDestination.h; sourceTree = "<group>"; };
+		7E8772F909AD411200A883BC /* _WarningTest.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = _WarningTest.h; sourceTree = "<group>"; };
+		7E8772FA09AD411200A883BC /* _WarningTest.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = _WarningTest.m; sourceTree = "<group>"; };
+		7E8772FB09AD411200A883BC /* AbstractExpectation.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AbstractExpectation.h; sourceTree = "<group>"; };
+		7E8772FC09AD411200A883BC /* AbstractExpectation.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AbstractExpectation.m; sourceTree = "<group>"; };
+		7E8772FD09AD411200A883BC /* AbstractExpectationCollection.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AbstractExpectationCollection.h; sourceTree = "<group>"; };
+		7E8772FE09AD411200A883BC /* AbstractExpectationCollection.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AbstractExpectationCollection.m; sourceTree = "<group>"; };
+		7E8772FF09AD411200A883BC /* AssertionFailedException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AssertionFailedException.h; sourceTree = "<group>"; };
+		7E87730009AD411200A883BC /* AssertionFailedException.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AssertionFailedException.m; sourceTree = "<group>"; };
+		7E87730109AD411200A883BC /* ExpectationCounter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ExpectationCounter.h; sourceTree = "<group>"; };
+		7E87730209AD411200A883BC /* ExpectationCounter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ExpectationCounter.m; sourceTree = "<group>"; };
+		7E87730309AD411200A883BC /* ExpectationGroup.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ExpectationGroup.h; sourceTree = "<group>"; };
+		7E87730409AD411200A883BC /* ExpectationGroup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ExpectationGroup.m; sourceTree = "<group>"; };
+		7E87730509AD411200A883BC /* ExpectationList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ExpectationList.h; sourceTree = "<group>"; };
+		7E87730609AD411200A883BC /* ExpectationList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ExpectationList.m; sourceTree = "<group>"; };
+		7E87730709AD411200A883BC /* ExpectationSet.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ExpectationSet.h; sourceTree = "<group>"; };
+		7E87730809AD411200A883BC /* ExpectationSet.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ExpectationSet.m; sourceTree = "<group>"; };
+		7E87730909AD411200A883BC /* ExpectationValue.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ExpectationValue.h; sourceTree = "<group>"; };
+		7E87730A09AD411200A883BC /* ExpectationValue.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ExpectationValue.m; sourceTree = "<group>"; };
+		7E87730B09AD411200A883BC /* NSObject-ObjcUnitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSObject-ObjcUnitAdditions.h"; sourceTree = "<group>"; };
+		7E87730C09AD411200A883BC /* NSObject-ObjcUnitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSObject-ObjcUnitAdditions.m"; sourceTree = "<group>"; };
+		7E87730D09AD411200A883BC /* ObjcUnit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ObjcUnit.h; sourceTree = "<group>"; };
+		7E87730E09AD411200A883BC /* Test.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		7E87730F09AD411200A883BC /* TestCase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TestCase.h; sourceTree = "<group>"; };
+		7E87731009AD411200A883BC /* TestCase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TestCase.m; sourceTree = "<group>"; };
+		7E87731109AD411200A883BC /* TestFailure.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TestFailure.h; sourceTree = "<group>"; };
+		7E87731209AD411200A883BC /* TestFailure.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TestFailure.m; sourceTree = "<group>"; };
+		7E87731309AD411200A883BC /* TestListener.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TestListener.h; sourceTree = "<group>"; };
+		7E87731409AD411200A883BC /* TestResult.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TestResult.h; sourceTree = "<group>"; };
+		7E87731509AD411200A883BC /* TestResult.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TestResult.m; sourceTree = "<group>"; };
+		7E87731609AD411200A883BC /* TestRunner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TestRunner.h; sourceTree = "<group>"; };
+		7E87731709AD411200A883BC /* TestRunner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TestRunner.m; sourceTree = "<group>"; };
+		7E87731809AD411200A883BC /* TestSuite.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = TestSuite.h; sourceTree = "<group>"; };
+		7E87731909AD411200A883BC /* TestSuite.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = TestSuite.m; sourceTree = "<group>"; };
 		7EA5BA4607A7221A002336EE /* J3NaiveANSIFilterTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3NaiveANSIFilterTests.h; sourceTree = "<group>"; };
 		7EA5BA4707A7221A002336EE /* J3NaiveANSIFilterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3NaiveANSIFilterTests.m; sourceTree = "<group>"; };
 		7EA5BA5107A733F9002336EE /* J3NaiveANSIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3NaiveANSIFilter.h; sourceTree = "<group>"; };
@@ -469,7 +516,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E69679D3078F59DF0033A4C8 /* Cocoa.framework in Frameworks */,
-				E69679D4078F59DF0033A4C8 /* ObjcUnit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,6 +555,7 @@
 		29B97314FDCFA39411CA2CEA /* Koan */ = {
 			isa = PBXGroup;
 			children = (
+				7E8772F709AD411200A883BC /* vendor */,
 				7E2B447D0855639900769ED6 /* Externals */,
 				29B97315FDCFA39411CA2CEA /* Source */,
 				E6D0A56C0745518A002DA041 /* Filters */,
@@ -646,6 +693,54 @@
 				7E68DC4B092AC2FB004554BD /* J3TelnetWontState.m */,
 			);
 			path = telnet;
+			sourceTree = "<group>";
+		};
+		7E8772F709AD411200A883BC /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				7E8772F809AD411200A883BC /* ObjcUnit */,
+			);
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		7E8772F809AD411200A883BC /* ObjcUnit */ = {
+			isa = PBXGroup;
+			children = (
+				7E8772F909AD411200A883BC /* _WarningTest.h */,
+				7E8772FA09AD411200A883BC /* _WarningTest.m */,
+				7E8772FB09AD411200A883BC /* AbstractExpectation.h */,
+				7E8772FC09AD411200A883BC /* AbstractExpectation.m */,
+				7E8772FD09AD411200A883BC /* AbstractExpectationCollection.h */,
+				7E8772FE09AD411200A883BC /* AbstractExpectationCollection.m */,
+				7E8772FF09AD411200A883BC /* AssertionFailedException.h */,
+				7E87730009AD411200A883BC /* AssertionFailedException.m */,
+				7E87730109AD411200A883BC /* ExpectationCounter.h */,
+				7E87730209AD411200A883BC /* ExpectationCounter.m */,
+				7E87730309AD411200A883BC /* ExpectationGroup.h */,
+				7E87730409AD411200A883BC /* ExpectationGroup.m */,
+				7E87730509AD411200A883BC /* ExpectationList.h */,
+				7E87730609AD411200A883BC /* ExpectationList.m */,
+				7E87730709AD411200A883BC /* ExpectationSet.h */,
+				7E87730809AD411200A883BC /* ExpectationSet.m */,
+				7E87730909AD411200A883BC /* ExpectationValue.h */,
+				7E87730A09AD411200A883BC /* ExpectationValue.m */,
+				7E87730B09AD411200A883BC /* NSObject-ObjcUnitAdditions.h */,
+				7E87730C09AD411200A883BC /* NSObject-ObjcUnitAdditions.m */,
+				7E87730D09AD411200A883BC /* ObjcUnit.h */,
+				7E87730E09AD411200A883BC /* Test.h */,
+				7E87730F09AD411200A883BC /* TestCase.h */,
+				7E87731009AD411200A883BC /* TestCase.m */,
+				7E87731109AD411200A883BC /* TestFailure.h */,
+				7E87731209AD411200A883BC /* TestFailure.m */,
+				7E87731309AD411200A883BC /* TestListener.h */,
+				7E87731409AD411200A883BC /* TestResult.h */,
+				7E87731509AD411200A883BC /* TestResult.m */,
+				7E87731609AD411200A883BC /* TestRunner.h */,
+				7E87731709AD411200A883BC /* TestRunner.m */,
+				7E87731809AD411200A883BC /* TestSuite.h */,
+				7E87731909AD411200A883BC /* TestSuite.m */,
+			);
+			path = ObjcUnit;
 			sourceTree = "<group>";
 		};
 		E6550EF307764C01002E81FF /* Categories */ = {
@@ -1158,6 +1253,21 @@
 				7E070AFE0933D01E000A36CF /* J3SocksMethodSelection.m in Sources */,
 				7E070B280933D32B000A36CF /* J3SocksConstants.m in Sources */,
 				7EBFDB0F09380B100077BA3A /* NSObject (Subclasses).m in Sources */,
+				7E87731A09AD411200A883BC /* _WarningTest.m in Sources */,
+				7E87731B09AD411200A883BC /* AbstractExpectation.m in Sources */,
+				7E87731C09AD411200A883BC /* AbstractExpectationCollection.m in Sources */,
+				7E87731D09AD411200A883BC /* AssertionFailedException.m in Sources */,
+				7E87731E09AD411200A883BC /* ExpectationCounter.m in Sources */,
+				7E87731F09AD411200A883BC /* ExpectationGroup.m in Sources */,
+				7E87732009AD411200A883BC /* ExpectationList.m in Sources */,
+				7E87732109AD411200A883BC /* ExpectationSet.m in Sources */,
+				7E87732209AD411200A883BC /* ExpectationValue.m in Sources */,
+				7E87732309AD411200A883BC /* NSObject-ObjcUnitAdditions.m in Sources */,
+				7E87732409AD411200A883BC /* TestCase.m in Sources */,
+				7E87732509AD411200A883BC /* TestFailure.m in Sources */,
+				7E87732609AD411200A883BC /* TestResult.m in Sources */,
+				7E87732709AD411200A883BC /* TestRunner.m in Sources */,
+				7E87732809AD411200A883BC /* TestSuite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1443,6 +1553,7 @@
 					./source,
 					./filters,
 					./externals,
+					./vendor,
 				);
 				INFOPLIST_FILE = "tests/Tests-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
@@ -1477,6 +1588,7 @@
 					./source,
 					./filters,
 					./externals,
+					./vendor,
 				);
 				INFOPLIST_FILE = "tests/Tests-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
@@ -1509,6 +1621,7 @@
 					./source,
 					./filters,
 					./externals,
+					./vendor,
 				);
 				INFOPLIST_FILE = "tests/Tests-Info.plist";
 				INSTALL_PATH = "$(USER_APPS_DIR)";
