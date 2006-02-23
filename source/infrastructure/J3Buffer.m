@@ -45,9 +45,15 @@
 
 - (void) appendString:(NSString *)string
 {
-  const char *bytes = [string cStringUsingEncoding:NSASCIIStringEncoding];
-  unsigned length = strlen (bytes);
+  const char *bytes;
+  unsigned length;
   unsigned i;
+  
+  if (!string)
+    return;
+  
+  bytes = [string cStringUsingEncoding:NSASCIIStringEncoding];
+  length = strlen (bytes);
   
   for (i = 0; i < length; i++)
     [self append:bytes[i]];

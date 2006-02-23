@@ -36,6 +36,27 @@
   [buffer release];
 }
 
+- (void) testWriteNil
+{
+  [buffer appendString:nil];
+  [self assertOutputIsString:@""];
+}
+
+- (void) testWriteMultipleTimes
+{
+  [buffer appendString:@"foo"];
+  [buffer appendString:@"bar"];
+  [self assertOutputIsString:@"foobar"];
+}
+
+- (void) testWriteMultipleTimesWithInterspersedNil
+{
+  [buffer appendString:@"foo"];
+  [buffer appendString:nil];
+  [buffer appendString:@"bar"];
+  [self assertOutputIsString:@"foobar"];
+}
+
 - (void) testWriteAll
 {
   [buffer appendString:@"foo"];

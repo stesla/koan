@@ -23,6 +23,7 @@
 #import "J3TestCase.h"
 
 @implementation J3TestCase
+
 - (void) assert:(id)actual equals:(id)expected;
 {
   [self assert:actual equals:expected message:@""];
@@ -109,4 +110,5 @@
 {
   [self failWithException:[NSException exceptionWithName:@"J3TestFailure" reason:message userInfo:nil]];
 }
+
 @end

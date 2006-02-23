@@ -19,6 +19,7 @@
 #pragma mark -
 
 @implementation J3MockTelnetParser
+
 - (id) init;
 {
   if (![super init])
@@ -167,4 +168,5 @@
 {
   state = [[[stateClass alloc] init] autorelease];  
 }
+
 @end

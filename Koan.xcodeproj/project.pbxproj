@@ -1792,6 +1792,7 @@
 				7E87751D09AD558700A883BC /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
 		};
 		7E87752309AD55D600A883BC /* Build configuration list for PBXNativeTarget "test-stub" */ = {
 			isa = XCConfigurationList;
@@ -1801,6 +1802,7 @@
 				7E87752609AD55D600A883BC /* Default */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
 		};
 		E69E22280854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Unpack Frameworks" */ = {
 			isa = XCConfigurationList;

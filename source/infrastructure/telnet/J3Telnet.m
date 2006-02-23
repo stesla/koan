@@ -45,7 +45,7 @@
 
 - (void) dealloc
 {
-  if ([self isConnected])
+  if (connection)
     [self close];
   
   [self removeAllTimers];
@@ -59,6 +59,8 @@
 {
   [self removeAllTimers];
   [connection close];
+  [connection release];
+  connection = nil;
 }
 
 - (BOOL) hasInputBuffer:(NSObject <J3Buffer> *)buffer;
@@ -166,7 +168,10 @@
   uint8_t bytes[TELNET_READ_BUFFER_SIZE];
   unsigned bytesRead = 0;
   
-  if (![connection isConnected])
+  // It is possible for the connection to have been released but for there to
+  // be a pending timer fire that was registered before the timers were
+  // invalidated.
+  if (!connection || ![connection isConnected])
     return;
   
   [connection poll];

@@ -84,7 +84,5 @@
 - (NSString *) windowTitle;
 
 - (J3Telnet *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate;
-- (void) loginWithConnection:(J3Telnet *)connection;
-- (void) logoutWithConnection:(J3Telnet *)connection;
 
 @end

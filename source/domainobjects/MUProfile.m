@@ -343,7 +343,10 @@
 
 - (NSString *) loginString
 {
-  return [player loginString];
+  if (player)
+    return [player loginString];
+  else
+    return nil;
 }
 
 - (NSString *) uniqueIdentifier
@@ -370,25 +373,6 @@
 - (J3Telnet *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
 {
   return [world newTelnetConnectionWithDelegate:delegate];
-}
-
-// FIXME: I think this may be a red herring.
-
-- (void) loginWithConnection:(J3Telnet *)connection
-{
-  if (!loggedIn && player)
-  {
-    NSString *loginString = [player loginString];
-    
-    [connection writeLine:loginString];
-    loggedIn = YES;
-  }
-}
-
-- (void) logoutWithConnection:(J3Telnet *)connection
-{
-  // We don't do anything with the connection at this point, but we could. I put it there for parallelism with -loginWithConnection: and to make it easy to add any shutdown we may decide we need later.
-  loggedIn = NO;
 }
 
 #pragma mark -
