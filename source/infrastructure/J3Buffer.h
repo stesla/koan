@@ -30,6 +30,8 @@
 
 + (id) buffer;
 
+- (void) removeDataNotInRange:(NSRange)range;
+- (void) removeDataUpTo:(unsigned)position;
 - (void) setDataValue:(NSData *)newDataValue;
 
 @end

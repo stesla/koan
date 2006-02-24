@@ -5,6 +5,13 @@
 //
 
 #import "J3SocksMethodSelection.h"
+#import "J3ByteSource.h"
+
+@interface J3SocksMethodSelection (Private)
+
+- (void) ensureBytesReadFromSource:(id <J3ByteSource>)byteSource intoBuffer:(uint8_t *)buffer ofLength:(unsigned)length;
+
+@end
 
 @implementation J3SocksMethodSelection
 
@@ -41,6 +48,35 @@
   [self addMethod:J3SocksNoAuthentication];
   
   return self;
+}
+
+- (J3SocksMethod) method;
+{
+  return selectedMethod;
+}
+
+- (void) parseResponseFromByteSource:(id <J3ByteSource>)byteSource;
+{
+  uint8_t response[2] = {0,0};
+  
+  [self ensureBytesReadFromSource:byteSource intoBuffer:response ofLength:2];
+  selectedMethod = response[1];    
+}
+
+@end
+
+@implementation J3SocksMethodSelection (Private)
+
+- (void) ensureBytesReadFromSource:(id <J3ByteSource>)byteSource intoBuffer:(uint8_t *)buffer ofLength:(unsigned)length;
+{
+  unsigned bytesRead = 0;
+  int i;
+  for (i = 0; i < length; ++i)
+  {
+    bytesRead = [byteSource read:buffer + i maxLength:1];
+    if (bytesRead = 0)
+      ; //TODO: EOF - What should we do in this case?
+  }
 }
 
 @end

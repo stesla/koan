@@ -21,6 +21,19 @@
   return self;
 }
 
+- (void) removeDataNotInRange:(NSRange)range;
+{
+  [self setDataValue:[[self dataValue] subdataWithRange:range]];  
+}
+
+- (void) removeDataUpTo:(unsigned)position;
+{
+  NSRange range;
+  range.location = position;
+  range.length = [self length] - position;
+  [self removeDataNotInRange:range];
+}
+
 - (void) setDataValue:(NSData *)newDataValue
 {
   NSMutableData *copy = [[NSMutableData alloc] initWithData:newDataValue];
