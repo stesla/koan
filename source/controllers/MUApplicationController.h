@@ -9,6 +9,7 @@
 @class MUPreferencesController;
 @class MUProfilesController;
 @class MUUpdateController;
+@class MUProxySettingsController;
 
 @interface MUApplicationController : NSObject
 {
@@ -27,7 +28,7 @@
   
   NSMutableArray *connectionWindowControllers;
   MUProfilesController *profilesController;
-  BOOL useProxy;
+  MUProxySettingsController *proxySettingsController;
 }
 
 - (IBAction) chooseNewFont:(id)sender;

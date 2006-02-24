@@ -11,11 +11,15 @@
 #import "J3LineBuffer.h"
 #import "J3Telnet.h"
 
+@class J3ProxySettings;
+
 @interface J3ConnectionFactory : NSObject 
 {
+  BOOL useProxy;
+  J3ProxySettings * proxySettings;
 }
 
-+ (J3ConnectionFactory *) factory;
++ (J3ConnectionFactory *) currentFactory;
 
 - (J3Telnet *) lineAtATimeTelnetWithHostname:(NSString *)hostname
                                         port:(int)port
@@ -26,4 +30,10 @@
                              port:(int)port
                       inputBuffer:(NSObject <J3Buffer> *)buffer
                          delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;
+
+- (J3ProxySettings *) proxySettings;
+- (void) saveProxySettings;
+- (BOOL) toggleUseProxy;
+- (BOOL) useProxy;
+
 @end

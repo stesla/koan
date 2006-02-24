@@ -21,6 +21,8 @@ NSString *MUPTextColor = @"MUPTextColor";
 NSString *MUPWorlds = @"MUPWorlds";
 NSString *MUPProfiles = @"MUPProfiles";
 NSString *MUPVisitedLinkColor = @"MUPVisitedLinkColor";
+NSString *MUPProxySettings = @"MUPProxySettings";
+NSString *MUPUseProxy = @"MUPUseProxy";
 
 NSString *MUPCheckForUpdatesAutomatically = @"MUPCheckForUpdatesAutomatically";
 NSString *MUPCheckForUpdatesInterval = @"MUPCheckForUpdatesInterval";

@@ -6,10 +6,12 @@
 
 #import "MUCodingService.h"
 #import "MUProfile.h"
+#import "J3ProxySettings.h"
 
 static const int32_t currentProfileVersion = 2;
 static const int32_t currentPlayerVersion = 1;
 static const int32_t currentWorldVersion = 5;
+static const int32_t currentProxyVersion = 1;
 
 #pragma mark -
 
@@ -97,5 +99,22 @@ static const int32_t currentWorldVersion = 5;
   else
     [world setURL:@""];
 }
+
++ (void) encodeProxySettings:(J3ProxySettings *)settings withCoder:(NSCoder *)encoder;
+{
+  [encoder encodeInt32:currentProxyVersion forKey:@"version"];
+  
+  [encoder encodeObject:[settings hostname] forKey:@"hostname"];
+  [encoder encodeObject:[settings port] forKey:@"port"];  
+}
+
++ (void) decodeProxySettings:(J3ProxySettings *)settings withCoder:(NSCoder *)decoder;
+{
+  // int32_t version = [decoder decodeInt32ForKey:@"version"];
+  
+  [settings setHostname:[decoder decodeObjectForKey:@"hostname"]];
+  [settings setPort:[decoder decodeObjectForKey:@"port"]];
+}
+
 
 @end

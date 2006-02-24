@@ -21,6 +21,8 @@ extern NSString *MUPTextColor;
 extern NSString *MUPWorlds;
 extern NSString *MUPProfiles;
 extern NSString *MUPVisitedLinkColor;
+extern NSString *MUPProxySettings;
+extern NSString *MUPUseProxy;
 
 extern NSString *MUPCheckForUpdatesAutomatically;
 extern NSString *MUPCheckForUpdatesInterval;

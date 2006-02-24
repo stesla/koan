@@ -13,6 +13,7 @@
 #import "MUPreferencesController.h"
 #import "MUProfilesController.h"
 #import "MUServices.h"
+#import "J3ConnectionFactory.h"
 #import "J3UpdateController.h"
 #import "MUWorld.h"
 
@@ -96,13 +97,14 @@
   [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
   [connectionWindowControllers release];
   [profilesController release];
+  [proxySettingsController release];
   [super dealloc];
 }
 
 - (BOOL) validateMenuItem:(id <NSMenuItem>)anItem
 {
   if ([anItem isEqual:useProxyMenuItem])
-    [useProxyMenuItem setState:useProxy?NSOnState:NSOffState];
+    [useProxyMenuItem setState:[[J3ConnectionFactory currentFactory] useProxy]?NSOnState:NSOffState];
   return YES;
 }
 
@@ -206,25 +208,22 @@
 - (IBAction) showProfilesPanel:(id)sender
 {
   if (!profilesController)
-  {
     profilesController = [[MUProfilesController alloc] init];
-  }
-  
   if (profilesController)
-  {
     [profilesController showWindow:self];
-  }
 }
 
 - (IBAction) showProxySettings:(id)sender;
 {
-  NSLog(@"showProxySettings:");
+  if (!proxySettingsController)
+    proxySettingsController = [[MUProxySettingsController alloc] init];
+  if (proxySettingsController)
+    [proxySettingsController showWindow:self];
 }
 
 - (IBAction) toggleUseProxy:(id)sender;
 {
-  NSLog(@"toggleUseProxy:");
-  useProxy = !useProxy;
+  [[J3ConnectionFactory currentFactory] toggleUseProxy];
 }
 
 #pragma mark -
@@ -317,6 +316,7 @@
   
   [[MUServices worldRegistry] saveWorlds];
   [[MUServices profileRegistry] saveProfiles];
+  [[J3ConnectionFactory currentFactory] saveProxySettings];
 }
 
 #pragma mark -
