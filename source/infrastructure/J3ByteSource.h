@@ -10,3 +10,9 @@
 - (unsigned) read:(uint8_t *)buffer maxLength:(unsigned)length;
 
 @end
+
+@interface J3ByteSource : NSObject
+
++ (void) ensureBytesReadFromSource:(id <J3ByteSource>)byteSource intoBuffer:(uint8_t *)buffer ofLength:(unsigned)length;
+
+@end

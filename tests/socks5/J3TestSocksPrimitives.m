@@ -110,6 +110,54 @@
     [self assertInt:((uint8_t *)[data bytes])[i] equals:expected[i]];
 }
 
+- (void) testReplyWithDomainName;
+{
+  J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:@"example.com" port:0xABCD] autorelease];
+  J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
+  uint8_t reply[18] = {5, J3SocksConnectionNotAllowed, 0, J3SocksDomainName, 11, 'e', 'x', 'a', 'm', 'p', 'l', 'e', '.', 'c', 'o', 'm', 0xAB, 0xCD};
+  int i;
+  
+  [self assertInt:[request reply] equals:J3SocksNoReply];
+  for (i = 0; i < 18; ++i)
+    [source append:reply[i]];
+  [source appendString:@"foo"];
+  [request parseReplyFromByteSource:source];
+  [self assert:[source stringValue] equals:@"foo"];
+  [self assertInt:[request reply] equals:J3SocksConnectionNotAllowed];
+}
+
+- (void) testReplyWithIPV4;
+{
+  J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:@"example.com" port:0xABCD] autorelease];
+  J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
+  uint8_t reply[10] = {5, J3SocksConnectionNotAllowed, 0, J3SocksIPV4, 10, 1, 2, 3, 0xAB, 0xCD};
+  int i;
+  
+  [self assertInt:[request reply] equals:J3SocksNoReply];
+  for (i = 0; i < 10; ++i)
+    [source append:reply[i]];
+  [source appendString:@"foo"];
+  [request parseReplyFromByteSource:source];
+  [self assert:[source stringValue] equals:@"foo"];
+  [self assertInt:[request reply] equals:J3SocksConnectionNotAllowed];
+}
+
+- (void) testReplyWithIPV6;
+{
+  J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:@"example.com" port:0xABCD] autorelease];
+  J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
+  uint8_t reply[22] = {5, J3SocksConnectionNotAllowed, 0, J3SocksIPV6, 0xFE, 0xC0, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0xAB, 0xCD};
+  int i;
+  
+  [self assertInt:[request reply] equals:J3SocksNoReply];
+  for (i = 0; i < 22; ++i)
+    [source append:reply[i]];
+  [source appendString:@"foo"];
+  [request parseReplyFromByteSource:source];
+  [self assert:[source stringValue] equals:@"foo"];
+  [self assertInt:[request reply] equals:J3SocksConnectionNotAllowed];
+}
+
 @end
 
 #pragma mark -

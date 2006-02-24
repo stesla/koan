@@ -11,6 +11,13 @@ enum J3SocksMiscellaneous
   J3SocksVersion = 0x05
 };
 
+typedef enum J3SocksAddressType
+{
+  J3SocksIPV4 = 0x01,
+  J3SocksDomainName = 0x03,
+  J3SocksIPV6 = 0x04
+} J3SocksAddressType;
+
 typedef enum J3SocksMethod
 {
   J3SocksNoAuthentication = 0x00,
@@ -21,6 +28,7 @@ typedef enum J3SocksMethod
 
 typedef enum J3SocksReply
 {
+  J3SocksNoReply = -1,
   J3SocksSuccess = 0x00,
   J3SocksGeneralServerFailure = 0x01,
   J3SocksConnectionNotAllowed = 0x02,
