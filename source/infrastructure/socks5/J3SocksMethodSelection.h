@@ -5,9 +5,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "J3Buffer.h"
 #import "J3SocksConstants.h"
 
+@protocol J3Buffer;
 @protocol J3ByteSource;
 
 @interface J3SocksMethodSelection : NSObject 

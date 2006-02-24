@@ -9,6 +9,7 @@
 #import "J3TestSocksPrimitives.h"
 #import "J3SocksConstants.h"
 #import "J3SocksMethodSelection.h"
+#import "J3SocksRequest.h"
 
 @interface J3MockByteSource : J3Buffer <J3ByteSource>
 {
@@ -46,7 +47,7 @@
 
 @interface J3TestSocksPrimitives (Private)
 
-- (void) assertSelection:(J3SocksMethodSelection *)selection writes:(NSString *)output;
+- (void) assertObject:(id)selection writes:(NSString *)output;
 
 @end
 
@@ -67,9 +68,9 @@
 - (void) testMethodSelection;
 {
   J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
-  [self assertSelection:selection writes:@"\x05\x01\x00"];
+  [self assertObject:selection writes:@"\x05\x01\x00"];
   [selection addMethod:J3SocksUsernamePassword];
-  [self assertSelection:selection writes:@"\x05\x02\x00\x02"];
+  [self assertObject:selection writes:@"\x05\x02\x00\x02"];
 }
 
 - (void) testSelectMethod;
@@ -94,16 +95,31 @@
   [self assertInt:[selection method] equals:J3SocksUsernamePassword];  
 }
 
+- (void) testRequest;
+{
+  J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:@"example.com" port:0xABCD] autorelease];
+  uint8_t expected[18] = {5, 1, 0, 3, 11, 'e', 'x', 'a', 'm', 'p', 'l', 'e', '.', 'c', 'o', 'm', 0xAB, 0xCD};
+  NSData * data;
+  int i;
+  
+  [buffer clear];
+  [request appendToBuffer:buffer];
+  data = [buffer dataValue];
+  [self assertInt:[data length] equals:18]; // same as expected length above
+  for (i = 0; i < 18; ++i)
+    [self assertInt:((uint8_t *)[data bytes])[i] equals:expected[i]];
+}
+
 @end
 
 #pragma mark -
 
 @implementation J3TestSocksPrimitives (Private)
 
-- (void) assertSelection:(J3SocksMethodSelection *)selection writes:(NSString *)output;
+- (void) assertObject:(id)object writes:(NSString *)output;
 {
   [buffer clear];
-  [selection appendToBuffer:buffer];
+  [object appendToBuffer:buffer];
   [self assert:[buffer stringValue] equals:output];  
 }
 

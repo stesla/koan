@@ -153,6 +153,9 @@
 		7EA5BA5507A733F9002336EE /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
 		7EBFDB0D09380B100077BA3A /* NSObject (Subclasses).h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */; };
 		7EBFDB0E09380B100077BA3A /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
+		7EC10AEA09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
+		7EC10AEB09AF947C00D840A1 /* J3SocksRequest.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7EC10AE809AF947C00D840A1 /* J3SocksRequest.h */; };
+		7EC10AEC09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
 		7EC3030A092B978B00AFA5C7 /* J3Telnet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3Telnet.m */; };
 		7EC30342092B99C300AFA5C7 /* NSObject (Accessing).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */; };
 		7EC30509092BBB6200AFA5C7 /* J3WriteBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */; };
@@ -278,6 +281,7 @@
 				7E13B9B609AE8B7600508460 /* MUProxySettingsController.h in CopyFiles */,
 				7E13BA1C09AE950600508460 /* J3ProxySettings.h in CopyFiles */,
 				7E50AC2209AEB90B00E0BFE7 /* J3ProxySocket.h in CopyFiles */,
+				7EC10AEB09AF947C00D840A1 /* J3SocksRequest.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +370,8 @@
 		7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCase (NSAttributedStringAssertions).m"; sourceTree = "<group>"; };
 		7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject (Subclasses).h"; sourceTree = "<group>"; };
 		7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject (Subclasses).m"; sourceTree = "<group>"; };
+		7EC10AE809AF947C00D840A1 /* J3SocksRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocksRequest.h; sourceTree = "<group>"; };
+		7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SocksRequest.m; sourceTree = "<group>"; };
 		7EC112E8078B763E00CFA562 /* MUPlayerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUPlayerTests.h; sourceTree = "<group>"; };
 		7EC112E9078B763E00CFA562 /* MUPlayerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUPlayerTests.m; sourceTree = "<group>"; };
 		7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3WriteBufferTests.h; sourceTree = "<group>"; };
@@ -628,8 +634,10 @@
 			children = (
 				7E070B260933D32B000A36CF /* J3SocksConstants.h */,
 				7E070AFC0933D01E000A36CF /* J3SocksMethodSelection.h */,
+				7EC10AE809AF947C00D840A1 /* J3SocksRequest.h */,
 				7E070B270933D32B000A36CF /* J3SocksConstants.m */,
 				7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */,
+				7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */,
 			);
 			path = socks5;
 			sourceTree = "<group>";
@@ -1224,6 +1232,7 @@
 				7E87752809AD55E600A883BC /* test-stub-main.m in Sources */,
 				7E13BA1E09AE950600508460 /* J3ProxySettings.m in Sources */,
 				7E50AC2109AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */,
+				7EC10AEA09AF947C00D840A1 /* J3SocksRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1290,6 +1299,7 @@
 				7E13B9B709AE8B7600508460 /* MUProxySettingsController.m in Sources */,
 				7E13BA1D09AE950600508460 /* J3ProxySettings.m in Sources */,
 				7E50AC2309AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */,
+				7EC10AEC09AF947C00D840A1 /* J3SocksRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

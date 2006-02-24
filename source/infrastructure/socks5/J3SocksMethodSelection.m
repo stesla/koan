@@ -5,6 +5,7 @@
 //
 
 #import "J3SocksMethodSelection.h"
+#import "J3Buffer.h"
 #import "J3ByteSource.h"
 
 @interface J3SocksMethodSelection (Private)
