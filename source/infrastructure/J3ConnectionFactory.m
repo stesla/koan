@@ -16,8 +16,8 @@ static J3ConnectionFactory * currentFactory = nil;
 
 @interface J3ConnectionFactory (Private)
 
-- loadProxySettingsFromDefaults;
-- writeProxySettingsToDefaults;
+- (void) loadProxySettingsFromDefaults;
+- (void) writeProxySettingsToDefaults;
 
 - (J3Socket *) makeSocketWithHostname:(NSString *)hostname port:(int)port;
 
@@ -82,7 +82,7 @@ static J3ConnectionFactory * currentFactory = nil;
   [self writeProxySettingsToDefaults];
 }
 
-- (BOOL) toggleUseProxy;
+- (void) toggleUseProxy;
 {
   useProxy = !useProxy;
 }
@@ -96,7 +96,7 @@ static J3ConnectionFactory * currentFactory = nil;
 
 @implementation J3ConnectionFactory (Private)
 
-- loadProxySettingsFromDefaults;
+- (void) loadProxySettingsFromDefaults;
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSData *proxySettingsData = [defaults dataForKey:MUPProxySettings];
@@ -108,7 +108,7 @@ static J3ConnectionFactory * currentFactory = nil;
     useProxy = [[NSKeyedUnarchiver unarchiveObjectWithData:useProxyData] boolValue];
 }
 
-- writeProxySettingsToDefaults;
+- (void) writeProxySettingsToDefaults;
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSData *proxySettingsData = [NSKeyedArchiver archivedDataWithRootObject:proxySettings];

@@ -33,7 +33,7 @@
 
 - (J3ProxySettings *) proxySettings;
 - (void) saveProxySettings;
-- (BOOL) toggleUseProxy;
+- (void) toggleUseProxy;
 - (BOOL) useProxy;
 
 @end
