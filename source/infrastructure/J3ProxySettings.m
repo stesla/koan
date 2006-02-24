@@ -21,7 +21,7 @@
   if (![super init])
     return nil;
   [self setHostname:@""];
-  [self setPort:[NSNumber numberWithInt:8080]];
+  [self setPort:[NSNumber numberWithInt:1080]];
   return self;
 }
 
