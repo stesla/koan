@@ -72,6 +72,9 @@
 		7E230FFE079A0FE500E7CBA6 /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
 		7E23103C079A374B00E7CBA6 /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
 		7E39EF9E0783938F0042A17A /* MUProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E39EF9C0783938F0042A17A /* MUProfile.m */; };
+		7E50AC2109AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E50AC2009AEB90B00E0BFE7 /* J3ProxySocket.m */; };
+		7E50AC2209AEB90B00E0BFE7 /* J3ProxySocket.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E50AC1F09AEB90B00E0BFE7 /* J3ProxySocket.h */; };
+		7E50AC2309AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E50AC2009AEB90B00E0BFE7 /* J3ProxySocket.m */; };
 		7E68DC59092AC2FB004554BD /* J3Buffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC35092AC2FB004554BD /* J3Buffer.m */; };
 		7E68DC5B092AC2FB004554BD /* J3LineBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC37092AC2FB004554BD /* J3LineBuffer.m */; };
 		7E68DC5D092AC2FB004554BD /* J3Socket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC39092AC2FB004554BD /* J3Socket.m */; };
@@ -274,6 +277,7 @@
 				7E87735309AD44DE00A883BC /* J3ConnectionFactory.h in CopyFiles */,
 				7E13B9B609AE8B7600508460 /* MUProxySettingsController.h in CopyFiles */,
 				7E13BA1C09AE950600508460 /* J3ProxySettings.h in CopyFiles */,
+				7E50AC2209AEB90B00E0BFE7 /* J3ProxySocket.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +319,8 @@
 		7E23103A079A374B00E7CBA6 /* MUCodingService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUCodingService.m; path = source/MUCodingService.m; sourceTree = SOURCE_ROOT; };
 		7E39EF9B0783938F0042A17A /* MUProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUProfile.h; sourceTree = "<group>"; };
 		7E39EF9C0783938F0042A17A /* MUProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUProfile.m; sourceTree = "<group>"; };
+		7E50AC1F09AEB90B00E0BFE7 /* J3ProxySocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3ProxySocket.h; sourceTree = "<group>"; };
+		7E50AC2009AEB90B00E0BFE7 /* J3ProxySocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3ProxySocket.m; sourceTree = "<group>"; };
 		7E68DC28092AC2AF004554BD /* J3LineBufferTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3LineBufferTests.h; sourceTree = "<group>"; };
 		7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3LineBufferTests.m; sourceTree = "<group>"; };
 		7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetStateMachineTests.h; sourceTree = "<group>"; };
@@ -847,6 +853,7 @@
 				E6E7A6210749693A007005AC /* J3HistoryRing.h */,
 				E64C9631076BF95E00D0D7C0 /* J3PortFormatter.h */,
 				7E13BA1A09AE950600508460 /* J3ProxySettings.h */,
+				7E50AC1F09AEB90B00E0BFE7 /* J3ProxySocket.h */,
 				7E68DC38092AC2FB004554BD /* J3Socket.h */,
 				7EC301B3092B78F200AFA5C7 /* J3WriteBuffer.h */,
 				7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */,
@@ -856,6 +863,7 @@
 				7E68DC37092AC2FB004554BD /* J3LineBuffer.m */,
 				E64C9632076BF95E00D0D7C0 /* J3PortFormatter.m */,
 				7E13BA1B09AE950600508460 /* J3ProxySettings.m */,
+				7E50AC2009AEB90B00E0BFE7 /* J3ProxySocket.m */,
 				7E68DC39092AC2FB004554BD /* J3Socket.m */,
 				7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */,
 			);
@@ -1215,6 +1223,7 @@
 				7E87760E09AD668900A883BC /* J3ConnectionFactory.m in Sources */,
 				7E87752809AD55E600A883BC /* test-stub-main.m in Sources */,
 				7E13BA1E09AE950600508460 /* J3ProxySettings.m in Sources */,
+				7E50AC2109AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1280,6 +1289,7 @@
 				7E87735409AD44DE00A883BC /* J3ConnectionFactory.m in Sources */,
 				7E13B9B709AE8B7600508460 /* MUProxySettingsController.m in Sources */,
 				7E13BA1D09AE950600508460 /* J3ProxySettings.m in Sources */,
+				7E50AC2309AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
