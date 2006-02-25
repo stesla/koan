@@ -35,6 +35,12 @@ static J3ConnectionFactory * currentFactory = nil;
   return currentFactory;
 }
 
+- (void) dealloc;
+{
+  [proxySettings release];
+  [super dealloc];
+}
+
 - (id) init;
 {
   if (![super init])

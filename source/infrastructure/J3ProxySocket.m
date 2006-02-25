@@ -20,6 +20,12 @@
   return [[[self alloc] initWithHostname:hostname port:port proxySettings:settings] autorelease];
 }
 
+- (void) dealloc;
+{
+  [realHostname release];
+  [super dealloc];
+}
+
 - (id) initWithHostname:(NSString *)hostnameValue port:(int)portValue proxySettings:(J3ProxySettings *)settings;
 {
   if (![super initWithHostname:[settings hostname] port:[[settings port] intValue]])

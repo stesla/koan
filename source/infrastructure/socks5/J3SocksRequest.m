@@ -24,6 +24,12 @@
   [buffer append:0x00FF & htons(port)]; //least significant byte of port
 }
 
+- (void) dealloc;
+{
+  [hostname release];
+  [super dealloc];
+}
+
 - (id) initWithHostname:(NSString *)hostnameValue port:(int)portValue;
 {
   if (![super init])

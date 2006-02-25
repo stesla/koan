@@ -16,6 +16,13 @@
   return [[[self alloc] init] autorelease];
 }
 
+- (void) dealloc;
+{
+  [hostname release];
+  [port release];
+  [super dealloc];
+}
+
 - (id) init;
 {
   if (![super init])
