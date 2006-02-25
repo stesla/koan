@@ -12,6 +12,8 @@
 {
   NSString * hostname;
   NSNumber * port;
+  NSString * username;
+  NSString * password;
 }
 
 + (id) proxySettings;
@@ -20,5 +22,11 @@
 - (void) setHostname:(NSString *)value;
 - (NSNumber *) port;
 - (void) setPort:(NSNumber *)value;
+- (NSString *) username;
+- (void) setUsername:(NSString *)value;
+- (NSString *) password;
+- (void) setPassword:(NSString *)value;
+
+- (BOOL) hasAuthentication;
 
 @end

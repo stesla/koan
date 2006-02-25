@@ -31,7 +31,7 @@
 
 - (void) appendToBuffer:(id <J3Buffer>)buffer;
 {
-  [buffer append:5];
+  [buffer append:1]; //RFC 1929 version
   [buffer append:[username length]];
   [buffer appendString:username];
   [buffer append:[password length]];
@@ -45,7 +45,7 @@
 
 - (void) parseReplyFromSource:(id <J3ByteSource>)source;
 {
-  uint8_t reply[2];
+  uint8_t reply[2] = {0,0};
   
   [J3ByteSource ensureBytesReadFromSource:source intoBuffer:reply ofLength:2];
   authenticated = !reply[1];

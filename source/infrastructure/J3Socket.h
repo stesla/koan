@@ -52,6 +52,7 @@ typedef enum J3SocketStatus
 - (BOOL) hasSpaceAvailable;
 - (BOOL) isClosed;
 - (BOOL) isConnected;
+- (BOOL) isConnecting;
 - (void) open;
 - (void) poll;
 - (void) setDelegate:(NSObject <J3ConnectionDelegate> *)object;

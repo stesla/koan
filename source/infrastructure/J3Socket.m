@@ -106,9 +106,14 @@
   return status == J3SocketStatusConnected;
 }
 
+- (BOOL) isConnecting
+{
+  return status == J3SocketStatusConnecting;
+}
+
 - (void) open
 {  
-  if ([self isConnected] || [self isClosed])
+  if ([self isConnected] || [self isConnecting] || [self isClosed])
     return;
   @try
   {
@@ -235,7 +240,7 @@
 
 - (void) handleReadWriteError;
 {
-  if (![self isConnected])
+  if (![self isConnected] && ![self isConnecting])
     return;
   if ((errno == EBADF) || (errno == EPIPE))
     [self setStatusClosedByServer];

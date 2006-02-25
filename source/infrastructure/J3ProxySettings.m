@@ -68,4 +68,29 @@
   [self at:&port put:value];
 }
 
+- (NSString *) username;
+{
+  return username;
+}
+
+- (void) setUsername:(NSString *)value;
+{
+  [self at:&username put:value];
+}
+
+- (NSString *) password;
+{
+  return password;
+}
+
+- (void) setPassword:(NSString *)value;
+{
+  [self at:&password put:value];
+}
+
+- (BOOL) hasAuthentication;
+{
+  return username && ([username length] > 0);
+}
+
 @end

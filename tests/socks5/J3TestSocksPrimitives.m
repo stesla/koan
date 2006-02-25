@@ -162,7 +162,7 @@
 - (void) testAuthentication;
 {
   J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername:@"bob" password:@"barfoo"] autorelease];
-  uint8_t expected[12] = {5, 3, 'b', 'o', 'b', 6, 'b', 'a', 'r', 'f', 'o', 'o'};
+  uint8_t expected[12] = {1, 3, 'b', 'o', 'b', 6, 'b', 'a', 'r', 'f', 'o', 'o'};
   NSData * data;
   int i;
   
@@ -180,11 +180,11 @@
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
 
   [self assertFalse:[auth authenticated]];
-  [source append:5];
+  [source append:1];
   [source append:0];
   [auth parseReplyFromSource:source];
   [self assertTrue:[auth authenticated]];
-  [source append:5];
+  [source append:1];
   [source append:11]; // non-zero
   [auth parseReplyFromSource:source];  
   [self assertFalse:[auth authenticated]];

@@ -11,7 +11,7 @@
 static const int32_t currentProfileVersion = 2;
 static const int32_t currentPlayerVersion = 1;
 static const int32_t currentWorldVersion = 5;
-static const int32_t currentProxyVersion = 1;
+static const int32_t currentProxyVersion = 2;
 
 #pragma mark -
 
@@ -106,14 +106,26 @@ static const int32_t currentProxyVersion = 1;
   
   [encoder encodeObject:[settings hostname] forKey:@"hostname"];
   [encoder encodeObject:[settings port] forKey:@"port"];  
+  [encoder encodeObject:[settings username] forKey:@"username"];
+  [encoder encodeObject:[settings password] forKey:@"password"];  
 }
 
 + (void) decodeProxySettings:(J3ProxySettings *)settings withCoder:(NSCoder *)decoder;
 {
-  // int32_t version = [decoder decodeInt32ForKey:@"version"];
+  int32_t version = [decoder decodeInt32ForKey:@"version"];
   
   [settings setHostname:[decoder decodeObjectForKey:@"hostname"]];
   [settings setPort:[decoder decodeObjectForKey:@"port"]];
+  if (version >= 2)
+  {
+    [settings setUsername:[decoder decodeObjectForKey:@"username"]];
+    [settings setPassword:[decoder decodeObjectForKey:@"password"]];
+  }
+  else
+  {
+    [settings setUsername:@""];
+    [settings setPassword:@""];    
+  }
 }
 
 

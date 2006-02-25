@@ -9,9 +9,16 @@
 #import "J3ProxySocket.h"
 #import "J3ProxySettings.h"
 #import "J3SocksConstants.h"
+#import "J3SocksAuthentication.h"
 #import "J3SocksMethodSelection.h"
 #import "J3SocksRequest.h"
 #import "J3WriteBuffer.h"
+
+@interface J3ProxySocket (Private)
+
+- (void) performUsernamePasswordNegotiation:(id <J3Buffer>)buffer;
+
+@end
 
 @implementation J3ProxySocket
 
@@ -23,6 +30,7 @@
 - (void) dealloc;
 {
   [realHostname release];
+  [proxySettings release];
   [super dealloc];
 }
 
@@ -32,6 +40,7 @@
     return nil;
   [self at:&realHostname put:hostnameValue];
   realPort = portValue;
+  [self at:&proxySettings put:settings];
   return self;
 }
 
@@ -42,16 +51,41 @@
   J3WriteBuffer * buffer = [J3WriteBuffer buffer];
   
   [buffer setByteDestination:self];
+  
+  // Select Method
+  if ([proxySettings hasAuthentication])
+    [methodSelection addMethod:J3SocksUsernamePassword];
   [methodSelection appendToBuffer:buffer];
   [buffer flush];
   [methodSelection parseResponseFromByteSource:self];
+  
+  // Method Specific Stuff
   if ([methodSelection method] == J3SocksNoAcceptableMethods)
     [J3SocketException socketError:@"No acceptable SOCKS5 methods"];
+  else if ([methodSelection method] == J3SocksUsernamePassword)
+    [self performUsernamePasswordNegotiation:buffer];
+  
+  // Make Request
   [request appendToBuffer:buffer];
   [buffer flush];
   [request parseReplyFromByteSource:self];
   if ([request reply] != J3SocksSuccess)
     [J3SocketException socketError:@"Unable to establish connection via proxy"];
+}
+
+@end
+
+@implementation J3ProxySocket (Private)
+
+- (void) performUsernamePasswordNegotiation:(id <J3Buffer>)buffer;
+{
+  J3SocksAuthentication * auth = [[[J3SocksAuthentication alloc] initWithUsername:[proxySettings username] password:[proxySettings password]] autorelease];
+  
+  [auth appendToBuffer:buffer];
+  [buffer flush];
+  [auth parseReplyFromSource:self];
+  if (![auth authenticated])
+    [J3SocketException socketError:@"Could not authenticate to proxy"];
 }
 
 @end
