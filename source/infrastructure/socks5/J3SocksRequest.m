@@ -14,12 +14,12 @@
 
 - (void) appendToBuffer:(id <J3Buffer>)buffer;
 {
-  [buffer append:5]; //version: 5
-  [buffer append:1]; //command: CONNECT
+  [buffer append:J3SocksVersion];
+  [buffer append:J3SocksConnect];
   [buffer append:0]; //reserved
-  [buffer append:J3SocksDomainName]; //address type
-  [buffer append:[hostname length]]; //length of domain name
-  [buffer appendString:hostname]; //domain
+  [buffer append:J3SocksDomainName];
+  [buffer append:[hostname length]];
+  [buffer appendString:hostname];
   [buffer append:(0xFF00 & htons(port)) >> 8]; //most significant byte of port
   [buffer append:0x00FF & htons(port)]; //least significant byte of port
 }

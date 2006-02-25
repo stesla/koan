@@ -9,7 +9,7 @@
 #import "J3SocksAuthentication.h"
 #import "J3Buffer.h"
 #import "J3ByteSource.h"
-
+#import "J3SocksConstants.h"
 
 @implementation J3SocksAuthentication
 
@@ -31,7 +31,7 @@
 
 - (void) appendToBuffer:(id <J3Buffer>)buffer;
 {
-  [buffer append:1]; //RFC 1929 version
+  [buffer append:J3SocksUsernamePasswordVersion];
   [buffer append:[username length]];
   [buffer appendString:username];
   [buffer append:[password length]];

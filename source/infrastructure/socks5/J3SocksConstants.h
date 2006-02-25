@@ -8,7 +8,8 @@
 
 enum J3SocksMiscellaneous
 {
-  J3SocksVersion = 0x05
+  J3SocksVersion = 0x05,
+  J3SocksUsernamePasswordVersion = 0x01
 };
 
 typedef enum J3SocksAddressType
@@ -25,6 +26,13 @@ typedef enum J3SocksMethod
   J3SocksUsernamePassword = 0x02,
   J3SocksNoAcceptableMethods = 0xFF
 } J3SocksMethod;
+
+typedef enum J3SocksCommand
+{
+  J3SocksConnect = 0x01,
+  J3SocksBind = 0x02,
+  J3SocksUDPAssociate = 0x03
+} J3SocksCommand;
 
 typedef enum J3SocksReply
 {
