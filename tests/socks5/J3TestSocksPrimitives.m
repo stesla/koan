@@ -7,6 +7,7 @@
 #import "J3Buffer.h"
 #import "J3ByteSource.h"
 #import "J3TestSocksPrimitives.h"
+#import "J3SocksAuthentication.h"
 #import "J3SocksConstants.h"
 #import "J3SocksMethodSelection.h"
 #import "J3SocksRequest.h"
@@ -157,6 +158,38 @@
   [self assert:[source stringValue] equals:@"foo"];
   [self assertInt:[request reply] equals:J3SocksConnectionNotAllowed];
 }
+
+- (void) testAuthentication;
+{
+  J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername:@"bob" password:@"barfoo"] autorelease];
+  uint8_t expected[12] = {5, 3, 'b', 'o', 'b', 6, 'b', 'a', 'r', 'f', 'o', 'o'};
+  NSData * data;
+  int i;
+  
+  [buffer clear];
+  [auth appendToBuffer:buffer];
+  data = [buffer dataValue];
+  [self assertInt:[data length] equals:12]; // same as expected length above
+  for (i = 0; i < 12; ++i)
+    [self assertInt:((uint8_t *)[data bytes])[i] equals:expected[i]];
+}
+
+- (void) testAuthenticationReply;
+{
+  J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername:@"bob" password:@"barfoo"] autorelease];
+  J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
+
+  [self assertFalse:[auth authenticated]];
+  [source append:5];
+  [source append:0];
+  [auth parseReplyFromSource:source];
+  [self assertTrue:[auth authenticated]];
+  [source append:5];
+  [source append:11]; // non-zero
+  [auth parseReplyFromSource:source];  
+  [self assertFalse:[auth authenticated]];
+}
+
 
 @end
 
