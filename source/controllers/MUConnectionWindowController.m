@@ -23,8 +23,12 @@ enum MUSearchDirections
 @interface MUConnectionWindowController (Private)
 
 - (BOOL) canCloseWindow;
+- (void) cleanUp;
+- (void) cleanUpPingTimer;
+- (void) cleanUpTelnetConnection;
 - (J3Filter *) createLogger;
 - (void) didEndCloseSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+- (void) disconnect;
 - (void) disconnectAndCleanUp;
 - (void) displayString:(NSString *)string;
 - (void) endCompletion;
@@ -341,7 +345,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet:telnet])
     return;
   
-  [self disconnectAndCleanUp];
+  [self cleanUp];
   [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
@@ -352,7 +356,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet:telnet])
     return;
   
-  [self disconnectAndCleanUp];
+  [self cleanUp];
   [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
@@ -363,7 +367,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet:telnet])
     return;
   
-  [self disconnectAndCleanUp];
+  [self cleanUp];
   [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), errorMessage]];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:errorMessage];
@@ -507,6 +511,25 @@ enum MUSearchDirections
   return YES;
 }
 
+- (void) cleanUp;
+{
+  [self cleanUpPingTimer];
+  [self cleanUpTelnetConnection];
+}
+
+- (void) cleanUpPingTimer;
+{
+  [pingTimer invalidate];
+  [pingTimer release];
+  pingTimer = nil;  
+}
+
+- (void) cleanUpTelnetConnection;
+{
+  [telnetConnection release];
+  telnetConnection = nil;  
+}
+
 - (J3Filter *) createLogger
 {
   if (profile)
@@ -524,21 +547,16 @@ enum MUSearchDirections
   }
 }
 
-- (void) disconnectAndCleanUp
+- (void) disconnect;
 {
   if (telnetConnection)
-  {
     [telnetConnection close];
-    [telnetConnection release];
-    telnetConnection = nil;
-  }
-  
-	if (pingTimer)
-	{
-		[pingTimer invalidate];
-		[pingTimer release];
-		pingTimer = nil;
-	}
+}
+
+- (void) disconnectAndCleanUp
+{
+  [self disconnect];
+  [self cleanUp];
 }
 
 - (void) displayString:(NSString *)string

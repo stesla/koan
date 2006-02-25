@@ -45,6 +45,7 @@
 
 - (void) dealloc
 {
+  delegate = nil;
   [self close];
   [self removeAllTimers];
   [parser release];

@@ -73,6 +73,7 @@
 
 - (void) dealloc
 {
+  delegate = nil;
   [hostname release];
   [super dealloc];
 }
