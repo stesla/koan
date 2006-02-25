@@ -528,6 +528,7 @@ enum MUSearchDirections
 {
   if (telnetConnection)
   {
+    [telnetConnection close];
     [telnetConnection release];
     telnetConnection = nil;
   }
