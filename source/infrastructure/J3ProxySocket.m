@@ -8,6 +8,10 @@
 
 #import "J3ProxySocket.h"
 #import "J3ProxySettings.h"
+#import "J3SocksConstants.h"
+#import "J3SocksMethodSelection.h"
+#import "J3SocksRequest.h"
+#import "J3WriteBuffer.h"
 
 @implementation J3ProxySocket
 
@@ -23,6 +27,25 @@
   [self at:&realHostname put:hostnameValue];
   realPort = portValue;
   return self;
+}
+
+- (void) performPostConnectNegotiation;
+{
+  J3SocksMethodSelection * methodSelection = [[[J3SocksMethodSelection alloc] init] autorelease];
+  J3SocksRequest * request = [[[J3SocksRequest alloc] initWithHostname:realHostname port:realPort] autorelease];
+  J3WriteBuffer * buffer = [J3WriteBuffer buffer];
+  
+  [buffer setByteDestination:self];
+  [methodSelection appendToBuffer:buffer];
+  [buffer flush];
+  [methodSelection parseResponseFromByteSource:self];
+  if ([methodSelection method] == J3SocksNoAcceptableMethods)
+    [J3SocketException socketError:@"No acceptable SOCKS5 methods"];
+  [request appendToBuffer:buffer];
+  [buffer flush];
+  [request parseReplyFromByteSource:self];
+  if ([request reply] != J3SocksSuccess)
+    [J3SocketException socketError:@"Unable to establish connection via proxy"];
 }
 
 @end

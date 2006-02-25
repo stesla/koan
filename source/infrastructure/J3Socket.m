@@ -20,21 +20,35 @@
 - (void) createSocket;
 - (void) handleReadWriteError;
 - (void) initializeDescriptorSet:(fd_set *)set;
+- (void) performPostConnectNegotiation;
 - (void) resolveHostname;
 - (void) setStatusConnected;
 - (void) setStatusConnecting;
 - (void) setStatusClosedByClient;
 - (void) setStatusClosedByServer;
 - (void) setStatusClosedWithError:(NSString *)error;
-- (void) socketError:(NSString *)errorMessage;
-- (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
-- (void) socketErrorWithErrno;
 
 @end
 
 #pragma mark -
 
 @implementation J3SocketException
+
++ (void) socketError:(NSString *)errorMessage
+{
+  @throw [J3SocketException exceptionWithName:@"" reason:errorMessage userInfo:nil];
+}
+
++ (void) socketErrorFormat:(NSString *)format arguments:(va_list)args
+{
+  NSString *message = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
+  [self socketError:message];
+}
+
++ (void) socketErrorWithErrno;
+{
+  [J3SocketException socketError:[NSString stringWithCString:strerror (errno)]];
+}
 
 @end
 
@@ -102,6 +116,7 @@
     [self createSocket];
     [self configureSocket];
     [self connectSocket];
+    [self performPostConnectNegotiation];
     [self setStatusConnected];    
   }
   @catch(J3SocketException *socketException)
@@ -127,7 +142,7 @@
   result = select (socketfd + 1, &read_set, NULL, NULL, &tval);  
   
   if (result < 0)
-    [self socketErrorWithErrno];
+    [J3SocketException socketErrorWithErrno];
   
   if (FD_ISSET (socketfd, &read_set))
   {
@@ -183,7 +198,7 @@
   if (result < 0)
   {
     hasDataAvailable = NO;
-    [self socketErrorWithErrno];
+    [J3SocketException socketErrorWithErrno];
   }
   if (!nread)
   {
@@ -206,7 +221,7 @@
   errno = 0;
   result = connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr));
   if (result < 0)
-    [self socketErrorWithErrno];
+    [J3SocketException socketErrorWithErrno];
 }
 
 - (void) createSocket
@@ -214,7 +229,7 @@
   errno = 0;
   socketfd = socket (AF_INET, SOCK_STREAM, 0);
   if (socketfd < 0)
-    [self socketErrorWithErrno];
+    [J3SocketException socketErrorWithErrno];
 }
 
 - (void) handleReadWriteError;
@@ -223,13 +238,18 @@
     return;
   if ((errno == EBADF) || (errno == EPIPE))
     [self setStatusClosedByServer];
-  [self socketErrorWithErrno];
+  [J3SocketException socketErrorWithErrno];
 }
 
 - (void) initializeDescriptorSet:(fd_set *)set
 {
   FD_ZERO (set);
   FD_SET (socketfd, set);
+}
+
+- (void) performPostConnectNegotiation;
+{
+  // Override in subclass to do something after connecting but before changing status
 }
 
 - (void) resolveHostname
@@ -240,7 +260,7 @@
   if (!server)
   {
     error = hstrerror (h_errno);
-    [self socketError:[NSString stringWithFormat:@"%s", error]];
+    [J3SocketException socketError:[NSString stringWithFormat:@"%s", error]];
   }
 }
 
@@ -277,21 +297,5 @@
   status = J3SocketStatusClosed;
   if (delegate && [delegate respondsToSelector:@selector(connectionWasClosed:withError:)])
     [delegate connectionWasClosed:self withError:error];
-}
-
-- (void) socketError:(NSString *)errorMessage
-{
-  @throw [J3SocketException exceptionWithName:@"" reason:errorMessage userInfo:nil];
-}
-
-- (void) socketErrorFormat:(NSString *)format arguments:(va_list)args
-{
-  NSString *message = [[[NSString alloc] initWithFormat:format arguments:args] autorelease];
-  [self socketError:message];
-}
-
-- (void) socketErrorWithErrno;
-{
-  [self socketError:[NSString stringWithCString:strerror (errno)]];
 }
 @end

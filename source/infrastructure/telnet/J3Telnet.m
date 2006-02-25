@@ -45,9 +45,7 @@
 
 - (void) dealloc
 {
-  if (connection)
-    [self close];
-  
+  [self close];
   [self removeAllTimers];
   [parser release];
   [outputBuffer release];
@@ -58,6 +56,8 @@
 - (void) close
 {
   [self removeAllTimers];
+  if (!connection)
+    return;
   [connection close];
   [connection release];
   connection = nil;

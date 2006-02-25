@@ -24,6 +24,9 @@ typedef enum J3SocketStatus
 
 @interface J3SocketException : NSException
 
++ (void) socketError:(NSString *)errorMessage;
++ (void) socketErrorFormat:(NSString *)format arguments:(va_list)args;
+
 @end
 
 #pragma mark -
