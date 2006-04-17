@@ -1,19 +1,17 @@
 //
-//  J3ProxySettings.h
-//  Koan
+// J3ProxySettings.h
 //
-//  Created by Samuel on 2/23/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 
-@interface J3ProxySettings : NSObject 
+@interface J3ProxySettings : NSObject <NSCoding>
 {
-  NSString * hostname;
-  NSNumber * port;
-  NSString * username;
-  NSString * password;
+  NSString *hostname;
+  NSNumber *port;
+  NSString *username;
+  NSString *password;
 }
 
 + (id) proxySettings;

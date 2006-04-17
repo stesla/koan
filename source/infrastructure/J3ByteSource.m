@@ -1,13 +1,10 @@
 //
-//  J3ByteSource.m
-//  Koan
+// J3ByteSource.m
 //
-//  Created by Samuel on 2/24/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "J3ByteSource.h"
-
 
 @implementation J3ByteSource
 

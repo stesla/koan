@@ -1,9 +1,7 @@
 //
-//  J3SocksRequest.m
-//  Koan
+// J3SocksRequest.m
 //
-//  Created by Samuel on 2/24/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "J3SocksRequest.h"
@@ -11,24 +9,6 @@
 #import "J3ByteSource.h"
 
 @implementation J3SocksRequest
-
-- (void) appendToBuffer:(id <J3Buffer>)buffer;
-{
-  [buffer append:J3SocksVersion];
-  [buffer append:J3SocksConnect];
-  [buffer append:0]; //reserved
-  [buffer append:J3SocksDomainName];
-  [buffer append:[hostname length]];
-  [buffer appendString:hostname];
-  [buffer append:(0xFF00 & htons(port)) >> 8]; //most significant byte of port
-  [buffer append:0x00FF & htons(port)]; //least significant byte of port
-}
-
-- (void) dealloc;
-{
-  [hostname release];
-  [super dealloc];
-}
 
 - (id) initWithHostname:(NSString *)hostnameValue port:(int)portValue;
 {
@@ -40,7 +20,25 @@
   return self;
 }
 
-- (void) parseReplyFromByteSource:(id <J3ByteSource>)source;
+- (void) dealloc
+{
+  [hostname release];
+  [super dealloc];
+}
+
+- (void) appendToBuffer:(id <J3Buffer>)buffer
+{
+  [buffer append:J3SocksVersion];
+  [buffer append:J3SocksConnect];
+  [buffer append:0]; //reserved
+  [buffer append:J3SocksDomainName];
+  [buffer append:[hostname length]];
+  [buffer appendString:hostname];
+  [buffer append:(0xFF00 & htons(port)) >> 8]; //most significant byte of port
+  [buffer append:0x00FF & htons(port)]; //least significant byte of port
+}
+
+- (void) parseReplyFromByteSource:(id <J3ByteSource>)source
 {
   uint8_t buffer[261];
   unsigned bytesRead = 0;
@@ -73,7 +71,7 @@
   reply = buffer[1];
 }
 
-- (J3SocksReply) reply;
+- (J3SocksReply) reply
 {
   return reply;
 }

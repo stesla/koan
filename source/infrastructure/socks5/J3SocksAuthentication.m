@@ -1,9 +1,7 @@
 //
-//  J3SocksAuthentication.m
-//  Koan
+// J3SocksAuthentication.m
 //
-//  Created by Samuel on 2/25/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "J3SocksAuthentication.h"
@@ -13,14 +11,7 @@
 
 @implementation J3SocksAuthentication
 
-- (void) dealloc;
-{
-  [username release];
-  [password release];
-  [super dealloc];
-}
-
-- (id) initWithUsername:(NSString *)usernameValue password:(NSString *)passwordValue;
+- (id) initWithUsername:(NSString *)usernameValue password:(NSString *)passwordValue
 {
   if (![super init])
     return nil;
@@ -29,7 +20,14 @@
   return self;
 }
 
-- (void) appendToBuffer:(id <J3Buffer>)buffer;
+- (void) dealloc
+{
+  [username release];
+  [password release];
+  [super dealloc];
+}
+
+- (void) appendToBuffer:(id <J3Buffer>)buffer
 {
   [buffer append:J3SocksUsernamePasswordVersion];
   [buffer append:[username length]];
@@ -38,12 +36,12 @@
   [buffer appendString:password];
 }
 
-- (BOOL) authenticated;
+- (BOOL) authenticated
 {
   return authenticated;
 }
 
-- (void) parseReplyFromSource:(id <J3ByteSource>)source;
+- (void) parseReplyFromSource:(id <J3ByteSource>)source
 {
   uint8_t reply[2] = {0,0};
   

@@ -1,9 +1,7 @@
 //
-//  J3SocksRequest.h
-//  Koan
+// J3SocksRequest.h
 //
-//  Created by Samuel on 2/24/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -14,7 +12,7 @@
 
 @interface J3SocksRequest : NSObject 
 {
-  NSString * hostname;
+  NSString *hostname;
   int port;
   J3SocksReply reply;
 }

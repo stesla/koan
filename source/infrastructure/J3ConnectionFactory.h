@@ -1,9 +1,7 @@
 //
-//  J3ConnectionFactory.h
-//  Koan
+// J3ConnectionFactory.h
 //
-//  Created by Samuel on 2/22/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -16,10 +14,10 @@
 @interface J3ConnectionFactory : NSObject 
 {
   BOOL useProxy;
-  J3ProxySettings * proxySettings;
+  J3ProxySettings *proxySettings;
 }
 
-+ (J3ConnectionFactory *) currentFactory;
++ (J3ConnectionFactory *) defaultFactory;
 
 - (J3Telnet *) lineAtATimeTelnetWithHostname:(NSString *)hostname
                                         port:(int)port

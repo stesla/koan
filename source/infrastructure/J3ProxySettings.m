@@ -1,9 +1,7 @@
 //
-//  J3ProxySettings.m
-//  Koan
+// J3ProxySettings.m
 //
-//  Created by Samuel on 2/23/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "J3ProxySettings.h"
@@ -11,86 +9,91 @@
 
 @implementation J3ProxySettings
 
-+ (id) proxySettings;
++ (id) proxySettings
 {
   return [[[self alloc] init] autorelease];
 }
 
-- (void) dealloc;
+- (id) init
+{
+  if (![super init])
+    return nil;
+  
+  [self setHostname:@""];
+  [self setPort:[NSNumber numberWithInt:1080]];
+  
+  return self;
+}
+
+- (void) dealloc
 {
   [hostname release];
   [port release];
   [super dealloc];
 }
 
-- (id) init;
-{
-  if (![super init])
-    return nil;
-  [self setHostname:@""];
-  [self setPort:[NSNumber numberWithInt:1080]];
-  return self;
-}
-
-- (NSString *) description;
+- (NSString *) description
 {
   return [NSString stringWithFormat:@"%@:%@", hostname, port];
 }
 
-- (id) initWithCoder:(NSCoder *)coder;
+- (NSString *) hostname
+{
+  return hostname;
+}
+
+- (void) setHostname:(NSString *)value
+{
+  [self at:&hostname put:value];
+}
+
+- (NSNumber *) port
+{
+  return port;
+}
+
+- (void) setPort:(NSNumber *)value
+{
+  [self at:&port put:value];
+}
+
+- (NSString *) username
+{
+  return username;
+}
+
+- (void) setUsername:(NSString *)value
+{
+  [self at:&username put:value];
+}
+
+- (NSString *) password
+{
+  return password;
+}
+
+- (void) setPassword:(NSString *)value
+{
+  [self at:&password put:value];
+}
+
+- (BOOL) hasAuthentication
+{
+  return username && ([username length] > 0);
+}
+
+#pragma mark -
+#pragma mark NSCoding protocol
+
+- (id) initWithCoder:(NSCoder *)coder
 {
   [MUCodingService decodeProxySettings:self withCoder:coder];
   return self;
 }
 
-- (void) encodeWithCoder:(NSCoder *)coder;
+- (void) encodeWithCoder:(NSCoder *)coder
 {
   [MUCodingService encodeProxySettings:self withCoder:coder];
-}
-
-- (NSString *) hostname;
-{
-  return hostname;
-}
-
-- (void) setHostname:(NSString *)value;
-{
-  [self at:&hostname put:value];
-}
-
-- (NSNumber *) port;
-{
-  return port;
-}
-
-- (void) setPort:(NSNumber *)value;
-{
-  [self at:&port put:value];
-}
-
-- (NSString *) username;
-{
-  return username;
-}
-
-- (void) setUsername:(NSString *)value;
-{
-  [self at:&username put:value];
-}
-
-- (NSString *) password;
-{
-  return password;
-}
-
-- (void) setPassword:(NSString *)value;
-{
-  [self at:&password put:value];
-}
-
-- (BOOL) hasAuthentication;
-{
-  return username && ([username length] > 0);
 }
 
 @end

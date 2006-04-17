@@ -1,16 +1,17 @@
 //
 // MUWorldRegistry.m
 //
-// Copyright (c) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005, 2006 3James Software
 //
 
 #import "MUServices.h"
 #import "MUProfile.h"
 
-static MUWorldRegistry *sharedRegistry = nil;
+static MUWorldRegistry *defaultRegistry = nil;
 
 @interface MUWorldRegistry (Private)
 
+- (void) cleanUpDefaultRegistry:(NSNotification *)notification;
 - (void) postWorldsDidChangeNotification;
 - (void) readWorldsFromUserDefaults;
 - (void) writeWorldsToUserDefaults;
@@ -21,14 +22,19 @@ static MUWorldRegistry *sharedRegistry = nil;
 
 @implementation MUWorldRegistry
 
-+ (MUWorldRegistry *) sharedRegistry
++ (MUWorldRegistry *) defaultRegistry
 {
-  if (!sharedRegistry)
+  if (!defaultRegistry)
   {
-    sharedRegistry = [[MUWorldRegistry alloc] init];
-    [sharedRegistry readWorldsFromUserDefaults];
+    defaultRegistry = [[MUWorldRegistry alloc] init];
+    [defaultRegistry readWorldsFromUserDefaults];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:defaultRegistry
+                                             selector:@selector(cleanUpDefaultRegistry:)
+                                                 name:NSApplicationWillTerminateNotification
+                                               object:NSApp];
   }
-  return sharedRegistry;
+  return defaultRegistry;
 }
 
 - (id) init
@@ -153,6 +159,12 @@ static MUWorldRegistry *sharedRegistry = nil;
 #pragma mark -
 
 @implementation MUWorldRegistry (Private)
+
+- (void) cleanUpDefaultRegistry:(NSNotification *)notification
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:defaultRegistry];
+  [defaultRegistry release];
+}
 
 - (void) postWorldsDidChangeNotification
 {

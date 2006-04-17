@@ -20,7 +20,7 @@
 
 - (J3ProxySettings *) proxySettings;
 {
-  return [[J3ConnectionFactory currentFactory] proxySettings];
+  return [[J3ConnectionFactory defaultFactory] proxySettings];
 }
 
 @end

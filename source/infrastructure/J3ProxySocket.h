@@ -1,9 +1,7 @@
 //
-//  J3ProxySocket.h
-//  Koan
+// J3ProxySocket.h
 //
-//  Created by Samuel on 2/23/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -14,10 +12,10 @@
 
 @interface J3ProxySocket : J3Socket
 {
-  J3ProxySettings * proxySettings;
-  NSString * realHostname;
+  J3ProxySettings *proxySettings;
+  NSString *realHostname;
   int realPort;
-  J3WriteBuffer * outputBuffer;
+  J3WriteBuffer *outputBuffer;
 }
 
 + (id) socketWithHostname:(NSString *)hostname port:(int)port proxySettings:(J3ProxySettings *)settings;

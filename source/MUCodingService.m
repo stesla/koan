@@ -128,5 +128,4 @@ static const int32_t currentProxyVersion = 2;
   }
 }
 
-
 @end

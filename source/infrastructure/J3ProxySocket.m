@@ -1,9 +1,7 @@
 //
-//  J3ProxySocket.m
-//  Koan
+// J3ProxySocket.m
 //
-//  Created by Samuel on 2/23/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "J3ProxySocket.h"
@@ -23,14 +21,30 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3ProxySocket
 
-+ (id) socketWithHostname:(NSString *)hostname port:(int)port proxySettings:(J3ProxySettings *)settings;
++ (id) socketWithHostname:(NSString *)hostname port:(int)port proxySettings:(J3ProxySettings *)settings
 {
   return [[[self alloc] initWithHostname:hostname port:port proxySettings:settings] autorelease];
 }
 
-- (void) dealloc;
+- (id) initWithHostname:(NSString *)hostnameValue port:(int)portValue proxySettings:(J3ProxySettings *)settings
+{
+  if (![super initWithHostname:[settings hostname] port:[[settings port] intValue]])
+    return nil;
+  
+  [self at:&realHostname put:hostnameValue];
+  realPort = portValue;
+  [self at:&proxySettings put:settings];
+  [self at:&outputBuffer put:[J3WriteBuffer buffer]];
+  [outputBuffer setByteDestination:self];
+  
+  return self;
+}
+
+- (void) dealloc
 {
   [realHostname release];
   [proxySettings release];
@@ -38,19 +52,7 @@
   [super dealloc];
 }
 
-- (id) initWithHostname:(NSString *)hostnameValue port:(int)portValue proxySettings:(J3ProxySettings *)settings;
-{
-  if (![super initWithHostname:[settings hostname] port:[[settings port] intValue]])
-    return nil;
-  [self at:&realHostname put:hostnameValue];
-  realPort = portValue;
-  [self at:&proxySettings put:settings];
-  [self at:&outputBuffer put:[J3WriteBuffer buffer]];
-  [outputBuffer setByteDestination:self];
-  return self;
-}
-
-- (void) performPostConnectNegotiation;
+- (void) performPostConnectNegotiation
 {
   [self performMethodSpecificNegotiation:[self selectMethod]];
   [self makeRequest];
@@ -58,11 +60,13 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3ProxySocket (Private)
 
-- (void) makeRequest;
+- (void) makeRequest
 {
-  J3SocksRequest * request = [[[J3SocksRequest alloc] initWithHostname:realHostname port:realPort] autorelease];
+  J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:realHostname port:realPort] autorelease];
 
   [request appendToBuffer:outputBuffer];
   [outputBuffer flush];
@@ -71,7 +75,7 @@
     [J3SocketException socketError:@"Unable to establish connection via proxy"];  
 }
 
-- (void) performMethodSpecificNegotiation:(J3SocksMethod)method;
+- (void) performMethodSpecificNegotiation:(J3SocksMethod)method
 {
   if (method == J3SocksNoAcceptableMethods)
     [J3SocketException socketError:@"No acceptable SOCKS5 methods"];
@@ -79,9 +83,9 @@
     [self performUsernamePasswordNegotiation];  
 }
 
-- (void) performUsernamePasswordNegotiation;
+- (void) performUsernamePasswordNegotiation
 {
-  J3SocksAuthentication * auth = [[[J3SocksAuthentication alloc] initWithUsername:[proxySettings username] password:[proxySettings password]] autorelease];
+  J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername:[proxySettings username] password:[proxySettings password]] autorelease];
   
   [auth appendToBuffer:outputBuffer];
   [outputBuffer flush];
@@ -90,9 +94,9 @@
     [J3SocketException socketError:@"Could not authenticate to proxy"];
 }
 
-- (J3SocksMethod) selectMethod;
+- (J3SocksMethod) selectMethod
 {
-  J3SocksMethodSelection * methodSelection = [[[J3SocksMethodSelection alloc] init] autorelease];
+  J3SocksMethodSelection *methodSelection = [[[J3SocksMethodSelection alloc] init] autorelease];
 
   if ([proxySettings hasAuthentication])
     [methodSelection addMethod:J3SocksUsernamePassword];

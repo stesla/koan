@@ -1,16 +1,17 @@
 //
 // MUGrowlService.m
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006 3James Software
 //
 
 #import "MUGrowlService.h"
 
 static BOOL growlIsReady = NO;
-static MUGrowlService *growlService;
+static MUGrowlService *defaultGrowlService;
 
 @interface MUGrowlService (Private)
 
+- (void) cleanUpDefaultGrowlService:(NSNotification *)notification;
 - (void) notifyWithName:(NSString *)name
 									title:(NSString *)title
 						description:(NSString *)description;
@@ -21,13 +22,18 @@ static MUGrowlService *growlService;
 
 @implementation MUGrowlService
 
-+ (MUGrowlService *) growlService
++ (MUGrowlService *) defaultGrowlService
 {
-  if (!growlService)
+  if (!defaultGrowlService)
   {
-    growlService = [[MUGrowlService alloc] init];
+    defaultGrowlService = [[MUGrowlService alloc] init];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:defaultGrowlService
+                                             selector:@selector(cleanUpDefaultGrowlService:)
+                                                 name:NSApplicationWillTerminateNotification
+                                               object:NSApp];
   }
-  return growlService;
+  return defaultGrowlService;
 }
 
 - (id) init
@@ -45,30 +51,30 @@ static MUGrowlService *growlService;
   NSString *description = [NSString stringWithFormat:NSLocalizedString (MUGConnectionClosedByErrorDescription, nil),
     error];
   
-  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionClosedByErrorName, nil)
-																					title:title
-																		description:description];
+  [[MUGrowlService defaultGrowlService] notifyWithName:NSLocalizedString (MUGConnectionClosedByErrorName, nil)
+                                                 title:title
+                                           description:description];
 }
 
 + (void) connectionClosedByServerForTitle:(NSString *)title
 {
-  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionClosedByServerName, nil)
-																					title:title
-																		description:NSLocalizedString (MUGConnectionClosedByServerDescription, nil)];
+  [[MUGrowlService defaultGrowlService] notifyWithName:NSLocalizedString (MUGConnectionClosedByServerName, nil)
+                                                 title:title
+                                           description:NSLocalizedString (MUGConnectionClosedByServerDescription, nil)];
 }
 
 + (void) connectionClosedForTitle:(NSString *)title
 {
-  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionClosedName, nil)
-																					title:title
-																		description:NSLocalizedString (MUGConnectionClosedDescription, nil)];
+  [[MUGrowlService defaultGrowlService] notifyWithName:NSLocalizedString (MUGConnectionClosedName, nil)
+                                                 title:title
+                                           description:NSLocalizedString (MUGConnectionClosedDescription, nil)];
 }
 
 + (void) connectionOpenedForTitle:(NSString *)title
 {
-  [[MUGrowlService growlService] notifyWithName:NSLocalizedString (MUGConnectionOpenedName, nil)
-																					title:title
-																		description:NSLocalizedString (MUGConnectionOpenedDescription, nil)];
+  [[MUGrowlService defaultGrowlService] notifyWithName:NSLocalizedString (MUGConnectionOpenedName, nil)
+                                                 title:title
+                                           description:NSLocalizedString (MUGConnectionOpenedDescription, nil)];
 }
 
 #pragma mark -
@@ -115,6 +121,12 @@ static MUGrowlService *growlService;
 #pragma mark -
 
 @implementation MUGrowlService (Private)
+
+- (void) cleanUpDefaultGrowlService:(NSNotification *)notification
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:defaultGrowlService];
+  [defaultGrowlService release];
+}
 
 - (void) notifyWithName:(NSString *)name
 									title:(NSString *)title

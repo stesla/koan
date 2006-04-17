@@ -1,9 +1,7 @@
 //
-//  J3SocksAuthentication.h
-//  Koan
+// J3SocksAuthentication.h
 //
-//  Created by Samuel on 2/25/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -13,8 +11,8 @@
 
 @interface J3SocksAuthentication : NSObject 
 {
-  NSString * username;
-  NSString * password;
+  NSString *username;
+  NSString *password;
   BOOL authenticated;
 }
 

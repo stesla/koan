@@ -13,12 +13,18 @@
 - (void) postGlobalLinkColorDidChangeNotification;
 - (void) postGlobalTextColorDidChangeNotification;
 - (void) postGlobalVisitedLinkColorDidChangeNotification;
+- (NSArray *) systemSoundsArray;
 
 @end
 
 #pragma mark -
 
 @implementation MUPreferencesController
+
+- (void) awakeFromNib
+{
+  [self systemSoundsArray];
+}
 
 - (IBAction) changeFont
 {
@@ -93,6 +99,34 @@
 {
 	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalVisitedLinkColorDidChangeNotification
 																											object:self];
+}
+
+- (NSArray *) systemSoundsArray
+{
+  NSEnumerator *libraryPathEnumerator;
+	NSString *libraryPath;
+	NSMutableArray *foundPaths = [NSMutableArray array];
+	
+	libraryPathEnumerator =
+    [NSSearchPathForDirectoriesInDomains (NSLibraryDirectory, NSAllDomainsMask, YES) objectEnumerator];
+	
+	while ((libraryPath = [libraryPathEnumerator nextObject]))
+	{
+		NSDirectoryEnumerator	*directoryEnumerator;
+		NSString *filePath;
+    NSString *searchPath;
+		
+		searchPath = [libraryPath stringByAppendingPathComponent:@"Sounds"];
+		
+		directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:searchPath];
+		
+		while ((filePath = [directoryEnumerator nextObject]))
+		{
+      [foundPaths addObject:[searchPath stringByAppendingPathComponent:filePath]];
+		}
+	}
+  
+	return foundPaths;
 }
 
 @end

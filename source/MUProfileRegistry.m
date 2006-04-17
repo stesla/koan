@@ -1,16 +1,17 @@
 //
 // MUProfileRegistry.m
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006 3James Software
 //
 
 #import "MUProfileRegistry.h"
 #import "MUProfile.h"
 
-static MUProfileRegistry *sharedRegistry = nil;
+static MUProfileRegistry *defaultRegistry = nil;
 
 @interface MUProfileRegistry (Private)
 
+- (void) cleanUpDefaultRegistry:(NSNotification *)notification;
 - (void) readProfilesFromUserDefaults;
 - (void) writeProfilesToUserDefaults;
 
@@ -20,14 +21,19 @@ static MUProfileRegistry *sharedRegistry = nil;
 
 @implementation MUProfileRegistry
 
-+ (MUProfileRegistry *) sharedRegistry
++ (MUProfileRegistry *) defaultRegistry
 {
-  if (!sharedRegistry)
+  if (!defaultRegistry)
   {
-    sharedRegistry = [[MUProfileRegistry alloc] init];
-    [sharedRegistry readProfilesFromUserDefaults];
+    defaultRegistry = [[MUProfileRegistry alloc] init];
+    [defaultRegistry readProfilesFromUserDefaults];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:defaultRegistry
+                                             selector:@selector(cleanUpDefaultRegistry:)
+                                                 name:NSApplicationWillTerminateNotification
+                                               object:NSApp];
   }
-  return sharedRegistry;
+  return defaultRegistry;
 }
 
 - (id) init
@@ -126,7 +132,7 @@ static MUProfileRegistry *sharedRegistry = nil;
     [self removeProfileForWorld:world
                          player:[players objectAtIndex:i]];
   }
-
+  
   [self removeProfileForWorld:world];
 }
 
@@ -152,6 +158,12 @@ static MUProfileRegistry *sharedRegistry = nil;
 #pragma mark -
 
 @implementation MUProfileRegistry (Private)
+
+- (void) cleanUpDefaultRegistry:(NSNotification *)notification
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:defaultRegistry];
+  [defaultRegistry release];
+}
 
 - (void) readProfilesFromUserDefaults
 {

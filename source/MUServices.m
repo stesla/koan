@@ -1,7 +1,7 @@
 //
 // MUServices.m
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006 3James Software
 //
 
 #import "MUServices.h"
@@ -10,12 +10,12 @@
 
 + (MUProfileRegistry *) profileRegistry
 {
-  return [MUProfileRegistry sharedRegistry];
+  return [MUProfileRegistry defaultRegistry];
 }
 
 + (MUWorldRegistry *) worldRegistry
 {
-  return [MUWorldRegistry sharedRegistry];
+  return [MUWorldRegistry defaultRegistry];
 }
 
 @end

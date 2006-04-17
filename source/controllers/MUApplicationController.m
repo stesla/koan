@@ -62,7 +62,7 @@
   
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
   
-  [MUGrowlService growlService];
+  [MUGrowlService defaultGrowlService];
 }
 
 - (void) awakeFromNib
@@ -104,7 +104,7 @@
 - (BOOL) validateMenuItem:(id <NSMenuItem>)anItem
 {
   if ([anItem isEqual:useProxyMenuItem])
-    [useProxyMenuItem setState:[[J3ConnectionFactory currentFactory] useProxy]?NSOnState:NSOffState];
+    [useProxyMenuItem setState:[[J3ConnectionFactory defaultFactory] useProxy]?NSOnState:NSOffState];
   return YES;
 }
 
@@ -223,7 +223,7 @@
 
 - (IBAction) toggleUseProxy:(id)sender;
 {
-  [[J3ConnectionFactory currentFactory] toggleUseProxy];
+  [[J3ConnectionFactory defaultFactory] toggleUseProxy];
 }
 
 #pragma mark -
@@ -316,7 +316,7 @@
   
   [[MUServices worldRegistry] saveWorlds];
   [[MUServices profileRegistry] saveProfiles];
-  [[J3ConnectionFactory currentFactory] saveProxySettings];
+  [[J3ConnectionFactory defaultFactory] saveProxySettings];
 }
 
 #pragma mark -

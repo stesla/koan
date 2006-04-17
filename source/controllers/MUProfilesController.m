@@ -291,10 +291,10 @@ enum MUProfilesEditingReturnValues
 	selectedItem = [worldsAndPlayersOutlineView itemAtRow:selectedRow];
 	
 	if ([selectedItem isKindOfClass:[MUWorld class]])
-		[self editProfile:[[MUProfileRegistry sharedRegistry] profileForWorld:selectedItem]];
+		[self editProfile:[[MUProfileRegistry defaultRegistry] profileForWorld:selectedItem]];
 	else if ([selectedItem isKindOfClass:[MUPlayer class]])
-		[self editProfile:[[MUProfileRegistry sharedRegistry] profileForWorld:[(MUPlayer *) selectedItem world]
-																																	 player:selectedItem]];
+		[self editProfile:[[MUProfileRegistry defaultRegistry] profileForWorld:[(MUPlayer *) selectedItem world]
+                                                                    player:selectedItem]];
 }
 
 - (IBAction) editSelectedRow:(id)sender

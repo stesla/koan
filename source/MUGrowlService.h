@@ -1,7 +1,7 @@
 //
 // MUGrowlService.h
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -9,7 +9,7 @@
 
 @interface MUGrowlService : NSObject <GrowlApplicationBridgeDelegate>
 
-+ (MUGrowlService *) growlService;
++ (MUGrowlService *) defaultGrowlService;
 
 + (void) connectionClosedByErrorForTitle:(NSString *)title error:(NSString *)error;
 + (void) connectionClosedByServerForTitle:(NSString *)title;
