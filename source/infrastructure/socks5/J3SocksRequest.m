@@ -34,8 +34,8 @@
   [buffer append:J3SocksDomainName];
   [buffer append:[hostname length]];
   [buffer appendString:hostname];
-  [buffer append:(0xFF00 & htons(port)) >> 8]; //most significant byte of port
-  [buffer append:0x00FF & htons(port)]; //least significant byte of port
+  [buffer append:(0xFF00 & port) >> 8]; //most significant byte of port
+  [buffer append:(0x00FF & port)]; //least significant byte of port
 }
 
 - (void) parseReplyFromByteSource:(id <J3ByteSource>)source
