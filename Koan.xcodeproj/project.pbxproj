@@ -13,18 +13,6 @@
 			buildPhases = (
 				E659F6CF0770D4DA00534D1B /* ShellScript */,
 			);
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Update plist";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = "Update plist";
@@ -36,18 +24,6 @@
 			buildPhases = (
 				E6967A17078F5C7A0033A4C8 /* ShellScript */,
 			);
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Unpack Frameworks";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = "Unpack Frameworks";
@@ -162,9 +138,7 @@
 		E60DDB86076CE889009870E4 /* FontNameToDisplayNameTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */; };
 		E615A3C707D3B2FE00FC7F6B /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E615A3C607D3B2FE00FC7F6B /* Growl.framework */; };
 		E615A40607D3B38C00FC7F6B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E615A3C607D3B2FE00FC7F6B /* Growl.framework */; };
-		E61C3C6F07B7312B00519A89 /* AGRegex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61C3C6C07B7312B00519A89 /* AGRegex.framework */; };
 		E61C3C7107B7312B00519A89 /* RBSplitView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61C3C6E07B7312B00519A89 /* RBSplitView.framework */; };
-		E61C3C9A07B7314E00519A89 /* AGRegex.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E61C3C6C07B7312B00519A89 /* AGRegex.framework */; };
 		E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E61C3C6E07B7312B00519A89 /* RBSplitView.framework */; };
 		E622A553074231A60069335B /* MUConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E622A551074231A60069335B /* MUConstants.m */; };
 		E62C8FBE07421D83005662BC /* MUConnectionToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E62C8FBC07421D83005662BC /* MUConnectionToolbarController.m */; };
@@ -212,30 +186,6 @@
 		E6F60DAE0778A3C600E0EBB4 /* NSFileManager (Recursive).m in Sources */ = {isa = PBXBuildFile; fileRef = E6F60DAC0778A3C600E0EBB4 /* NSFileManager (Recursive).m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXBuildStyle section */
-		4A9504CCFFE6A4B311CA0CBA /* Development */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				ZERO_LINK = NO;
-			};
-			name = Development;
-		};
-		4A9504CDFFE6A4B311CA0CBA /* Deployment */ = {
-			isa = PBXBuildStyle;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				ZERO_LINK = NO;
-			};
-			name = Deployment;
-		};
-/* End PBXBuildStyle section */
-
 /* Begin PBXContainerItemProxy section */
 		7E87755E09AD577900A883BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -267,7 +217,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E61C3C9A07B7314E00519A89 /* AGRegex.framework in CopyFiles */,
 				E615A40607D3B38C00FC7F6B /* Growl.framework in CopyFiles */,
 				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */,
 			);
@@ -389,9 +338,7 @@
 		E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontNameToDisplayNameTransformer.m; sourceTree = "<group>"; };
 		E60F8DC6080E0801009A2C58 /* com.3james.Koan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = com.3james.Koan.plist; sourceTree = "<group>"; };
 		E615A3C607D3B2FE00FC7F6B /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../Growl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E61C3C6C07B7312B00519A89 /* AGRegex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGRegex.framework; path = ../AGRegex.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61C3C6E07B7312B00519A89 /* RBSplitView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RBSplitView.framework; path = ../RBSplitView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E620410A06B0551D00236608 /* ObjcUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcUnit.framework; path = /Library/Frameworks/ObjcUnit.framework; sourceTree = "<absolute>"; };
 		E622A550074231A60069335B /* MUConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUConstants.h; sourceTree = "<group>"; };
 		E622A551074231A60069335B /* MUConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUConstants.m; sourceTree = "<group>"; };
 		E62C8FBB07421D83005662BC /* MUConnectionToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUConnectionToolbarController.h; sourceTree = "<group>"; };
@@ -500,7 +447,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				E61C3C6F07B7312B00519A89 /* AGRegex.framework in Frameworks */,
 				E615A3C707D3B2FE00FC7F6B /* Growl.framework in Frameworks */,
 				E61C3C7107B7312B00519A89 /* RBSplitView.framework in Frameworks */,
 			);
@@ -512,11 +458,9 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E61C3C6C07B7312B00519A89 /* AGRegex.framework */,
 				E615A3C607D3B2FE00FC7F6B /* Growl.framework */,
 				E61C3C6E07B7312B00519A89 /* RBSplitView.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
-				E620410A06B0551D00236608 /* ObjcUnit.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -905,61 +849,12 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				INFOPLIST_FILE = "Unit Tests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				LIBRARY_STYLE = BUNDLE;
-				OPTIMIZATION_CFLAGS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = "Unit Tests";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = octest;
-			};
 			dependencies = (
 				7E87755F09AD577900A883BC /* PBXTargetDependency */,
 			);
 			name = "Unit Tests";
 			productName = "Unit Tests";
 			productReference = 7E87751809AD558700A883BC /* Unit Tests.octest */;
-			productSettingsXML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<!DOCTYPE plist PUBLIC \"-//Apple Computer//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">
-<plist version=\"1.0\">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
-	<key>CFBundleExecutable</key>
-	<string>Unit Tests</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.Unit_Tests</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundlePackageType</key>
-	<string>APPL</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
-</dict>
-</plist>
-";
 			productType = "com.apple.product-type.bundle";
 		};
 		7E87752009AD55A900A883BC /* test-stub */ = {
@@ -971,30 +866,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INSTALL_PATH = /usr/local/bin;
-				OPTIMIZATION_CFLAGS = "";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = "test-stub";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
 			dependencies = (
 			);
 			name = "test-stub";
@@ -1013,24 +884,6 @@
 			);
 			buildRules = (
 			);
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
-				);
-				INFOPLIST_FILE = resources/Info.plist;
-				INSTALL_PATH = "$(USER_APPS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
-				OTHER_LDFLAGS = "";
-				PREBINDING = YES;
-				PRODUCT_NAME = Koan;
-				WRAPPER_EXTENSION = app;
-			};
 			dependencies = (
 				E6967A1A078F5CC60033A4C8 /* PBXTargetDependency */,
 				E659F6DF0770D52800534D1B /* PBXTargetDependency */,
@@ -1047,12 +900,6 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = E69E22380854FB100055BCF5 /* Build configuration list for PBXProject "Koan" */;
-			buildSettings = {
-			};
-			buildStyles = (
-				4A9504CCFFE6A4B311CA0CBA /* Development */,
-				4A9504CDFFE6A4B311CA0CBA /* Deployment */,
-			);
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Koan */;
 			projectDirPath = "";
