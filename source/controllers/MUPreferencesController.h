@@ -13,14 +13,11 @@
 	IBOutlet NSColorWell *globalBackgroundColorWell;
 	IBOutlet NSColorWell *globalLinkColorWell;
 	IBOutlet NSColorWell *globalVisitedLinkColorWell;
-	IBOutlet NSButton *playSoundsButton;
-  IBOutlet NSButton *playWhenActiveButton;
-  IBOutlet NSTextField *soundChoiceString;
-  IBOutlet NSPopUpButton *soundChoiceButton;
 }
 
 - (IBAction) changeFont;
 - (void) colorPanelColorDidChange;
+- (void) playSelectedSound:(id)sender;
 - (void) showPreferencesPanel:(id)sender;
 
 @end
