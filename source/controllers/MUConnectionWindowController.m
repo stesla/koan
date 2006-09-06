@@ -8,7 +8,6 @@
 #import "MUGrowlService.h"
 
 #import "J3ANSIRemovingFilter.h"
-#import "J3NaiveANSIFilter.h"
 #import "J3NaiveURLFilter.h"
 #import "J3TextLogger.h"
 
@@ -56,9 +55,8 @@ enum MUSearchDirections
   historyRing = [[J3HistoryRing alloc] init];
     
   filterQueue = [[J3FilterQueue alloc] init];
-  // [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
+  [filterQueue addFilter:[J3ANSIRemovingFilter filter]];
   [filterQueue addFilter:[J3NaiveURLFilter filter]];
-  [filterQueue addFilter:[J3NaiveANSIFilter filter]];
   [filterQueue addFilter:[self createLogger]];
   
   return self;

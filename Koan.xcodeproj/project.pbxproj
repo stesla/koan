@@ -68,7 +68,6 @@
 		7E87756409AD62E400A883BC /* J3FilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE43B20749CB16002C7D48 /* J3FilterTests.m */; };
 		7E87756509AD62E400A883BC /* J3HistoryRingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */; };
 		7E87756609AD62E400A883BC /* J3LineBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */; };
-		7E87756709AD62E400A883BC /* J3NaiveANSIFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA4707A7221A002336EE /* J3NaiveANSIFilterTests.m */; };
 		7E87756809AD62E400A883BC /* J3NaiveURLFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */; };
 		7E87756909AD62E400A883BC /* J3TextLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A63E0749698F007005AC /* J3TextLoggerTests.m */; };
 		7E87756A09AD62E400A883BC /* J3UpdateIntervalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */; };
@@ -98,7 +97,6 @@
 		7E8775F009AD668900A883BC /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
 		7E8775F109AD668900A883BC /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
 		7E8775F209AD668900A883BC /* NSCursor (Finger).m in Sources */ = {isa = PBXBuildFile; fileRef = E62E7FA107A1AB5400BF15E9 /* NSCursor (Finger).m */; };
-		7E8775F409AD668900A883BC /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
 		7E8775F609AD668900A883BC /* J3AttributedStringTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E05F00907B080D700B2D3BC /* J3AttributedStringTransformer.m */; };
 		7E8775FB09AD668900A883BC /* J3UpdateInterval.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8CC086258290060412C /* J3UpdateInterval.m */; };
 		7E8775FC09AD668900A883BC /* J3Buffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC35092AC2FB004554BD /* J3Buffer.m */; };
@@ -122,7 +120,6 @@
 		7E87761709AD692400A883BC /* J3TextLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6340749697C007005AC /* J3TextLogger.m */; };
 		7E87761809AD694E00A883BC /* MUWorldRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3A71E077A1B270011A461 /* MUWorldRegistry.m */; };
 		7E87764409AD6B3000A883BC /* MUConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E622A551074231A60069335B /* MUConstants.m */; };
-		7EA5BA5507A733F9002336EE /* J3NaiveANSIFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */; };
 		7EBFDB0E09380B100077BA3A /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
 		7EC10AEA09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
 		7EC10AEC09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
@@ -301,10 +298,6 @@
 		7E87752709AD55E600A883BC /* test-stub-main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "test-stub-main.m"; sourceTree = "<group>"; };
 		7E87755209AD570300A883BC /* J3TestCase.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TestCase.h; sourceTree = "<group>"; };
 		7E87755309AD570300A883BC /* J3TestCase.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TestCase.m; sourceTree = "<group>"; };
-		7EA5BA4607A7221A002336EE /* J3NaiveANSIFilterTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3NaiveANSIFilterTests.h; sourceTree = "<group>"; };
-		7EA5BA4707A7221A002336EE /* J3NaiveANSIFilterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3NaiveANSIFilterTests.m; sourceTree = "<group>"; };
-		7EA5BA5107A733F9002336EE /* J3NaiveANSIFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3NaiveANSIFilter.h; sourceTree = "<group>"; };
-		7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3NaiveANSIFilter.m; sourceTree = "<group>"; };
 		7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestCase (NSAttributedStringAssertions).h"; sourceTree = "<group>"; };
 		7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCase (NSAttributedStringAssertions).m"; sourceTree = "<group>"; };
 		7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject (Subclasses).h"; sourceTree = "<group>"; };
@@ -704,7 +697,6 @@
 				7EFE43B10749CB16002C7D48 /* J3FilterTests.h */,
 				E6E7A6CC074970FE007005AC /* J3HistoryRingTests.h */,
 				7E68DC28092AC2AF004554BD /* J3LineBufferTests.h */,
-				7EA5BA4607A7221A002336EE /* J3NaiveANSIFilterTests.h */,
 				E6505497077EA20E0016F30E /* J3NaiveURLFilterTests.h */,
 				7E87755209AD570300A883BC /* J3TestCase.h */,
 				E6E7A63D0749698F007005AC /* J3TextLoggerTests.h */,
@@ -720,7 +712,6 @@
 				7EFE43B20749CB16002C7D48 /* J3FilterTests.m */,
 				E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */,
 				7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */,
-				7EA5BA4707A7221A002336EE /* J3NaiveANSIFilterTests.m */,
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
 				7E87755309AD570300A883BC /* J3TestCase.m */,
 				E6E7A63E0749698F007005AC /* J3TextLoggerTests.m */,
@@ -754,12 +745,10 @@
 			children = (
 				7E20A8A60748474E00D1A5BF /* J3ANSIRemovingFilter.h */,
 				7EFE43820749C7CE002C7D48 /* J3Filter.h */,
-				7EA5BA5107A733F9002336EE /* J3NaiveANSIFilter.h */,
 				E6C9D604077C2DC6007BB2C1 /* J3NaiveURLFilter.h */,
 				E6E7A62E07496971007005AC /* J3TextLogger.h */,
 				7E20A8A70748474E00D1A5BF /* J3ANSIRemovingFilter.m */,
 				7EFE43830749C7CE002C7D48 /* J3Filter.m */,
-				7EA5BA5207A733F9002336EE /* J3NaiveANSIFilter.m */,
 				E6C9D605077C2DC6007BB2C1 /* J3NaiveURLFilter.m */,
 				E6E7A6340749697C007005AC /* J3TextLogger.m */,
 			);
@@ -1011,7 +1000,6 @@
 				7E87756409AD62E400A883BC /* J3FilterTests.m in Sources */,
 				7E87756509AD62E400A883BC /* J3HistoryRingTests.m in Sources */,
 				7E87756609AD62E400A883BC /* J3LineBufferTests.m in Sources */,
-				7E87756709AD62E400A883BC /* J3NaiveANSIFilterTests.m in Sources */,
 				7E87756809AD62E400A883BC /* J3NaiveURLFilterTests.m in Sources */,
 				7E87755409AD570300A883BC /* J3TestCase.m in Sources */,
 				7E87756909AD62E400A883BC /* J3TextLoggerTests.m in Sources */,
@@ -1049,7 +1037,6 @@
 				7E8775F009AD668900A883BC /* MUServices.m in Sources */,
 				7E8775F109AD668900A883BC /* MUCodingService.m in Sources */,
 				7E8775F209AD668900A883BC /* NSCursor (Finger).m in Sources */,
-				7E8775F409AD668900A883BC /* J3NaiveANSIFilter.m in Sources */,
 				7E8775F609AD668900A883BC /* J3AttributedStringTransformer.m in Sources */,
 				7E8775FB09AD668900A883BC /* J3UpdateInterval.m in Sources */,
 				7E8775FC09AD668900A883BC /* J3Buffer.m in Sources */,
@@ -1112,7 +1099,6 @@
 				7E23103C079A374B00E7CBA6 /* MUCodingService.m in Sources */,
 				E62E7FA307A1AB5400BF15E9 /* NSCursor (Finger).m in Sources */,
 				E62E832007A1D10400BF15E9 /* MUTextView.m in Sources */,
-				7EA5BA5507A733F9002336EE /* J3NaiveANSIFilter.m in Sources */,
 				E653A7D207AEFAB900023476 /* MUGrowlService.m in Sources */,
 				7E05F00C07B080D700B2D3BC /* J3AttributedStringTransformer.m in Sources */,
 				E62F2AEA07CD3B5100DC8C1B /* J3UpdateController.m in Sources */,
