@@ -78,8 +78,8 @@
                 globalTextColorWell = NSColorWell; 
                 globalVisitedLinkColorWell = NSColorWell; 
                 playSoundsButton = NSButton; 
+                playWhenActiveButton = NSButton; 
                 preferencesPanel = NSPanel; 
-                silentWhenActiveButton = NSButton; 
                 soundChoiceButton = NSPopUpButton; 
                 soundChoiceString = NSTextField; 
             }; 

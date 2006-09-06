@@ -26,6 +26,7 @@
 - (void) playNotificationSound;
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
 - (void) updateApplicationBadge;
+- (BOOL) shouldPlayNotificationSound;
 - (void) worldsDidChange:(NSNotification *)notification;
 
 @end
@@ -59,7 +60,7 @@
   [initialValues setObject:archivedLightGray forKey:MUPTextColor];
   [initialValues setObject:archivedPurple forKey:MUPVisitedLinkColor];
   [initialValues setObject:[NSNumber numberWithBool:YES] forKey:MUPPlaySounds];
-  [initialValues setObject:[NSNumber numberWithBool:YES] forKey:MUPSilentWhenActive];
+  [initialValues setObject:[NSNumber numberWithBool:NO] forKey:MUPPlayWhenActive];
   
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
   
@@ -334,9 +335,10 @@
 
 - (void) connectionWindowControllerDidReceiveText:(NSNotification *)notification
 {
+  if ([self shouldPlayNotificationSound])
+    [self playNotificationSound];
   if (![NSApp isActive])
   {
-    [self playNotificationSound];
     [NSApp requestUserAttention:NSInformationalRequest];   
     unreadCount++;
     [self updateApplicationBadge];
@@ -381,13 +383,17 @@
 
 - (void) playNotificationSound;
 {
+  NSSound *sound = [NSSound soundNamed:@"Blow"];
+  [sound play];  
+}
+
+- (BOOL) shouldPlayNotificationSound;
+{
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSSound *blow = [NSSound soundNamed:@"Blow"];
-  
-  if (![defaults boolForKey:MUPPlaySounds])
-    return;
-  
-  [blow play];  
+  BOOL result = [defaults boolForKey:MUPPlaySounds];
+  if ([NSApp isActive])
+    result = result && [defaults boolForKey:MUPPlayWhenActive];
+  return result;
 }
 
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect

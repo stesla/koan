@@ -14,7 +14,7 @@
 	IBOutlet NSColorWell *globalLinkColorWell;
 	IBOutlet NSColorWell *globalVisitedLinkColorWell;
 	IBOutlet NSButton *playSoundsButton;
-  IBOutlet NSButton *silentWhenActiveButton;
+  IBOutlet NSButton *playWhenActiveButton;
   IBOutlet NSTextField *soundChoiceString;
   IBOutlet NSPopUpButton *soundChoiceButton;
 }
