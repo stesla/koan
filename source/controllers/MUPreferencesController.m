@@ -122,7 +122,7 @@
 		
 		while ((filePath = [directoryEnumerator nextObject]))
 		{
-      [foundPaths addObject:[searchPath stringByAppendingPathComponent:filePath]];
+      [foundPaths addObject:[filePath stringByDeletingPathExtension]];
 		}
 	}
   

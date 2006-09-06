@@ -61,6 +61,7 @@
   [initialValues setObject:archivedPurple forKey:MUPVisitedLinkColor];
   [initialValues setObject:[NSNumber numberWithBool:YES] forKey:MUPPlaySounds];
   [initialValues setObject:[NSNumber numberWithBool:NO] forKey:MUPPlayWhenActive];
+  [initialValues setObject:@"Blow" forKey:MUPSoundChoice];
   
   [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
   
@@ -383,7 +384,8 @@
 
 - (void) playNotificationSound;
 {
-  NSSound *sound = [NSSound soundNamed:@"Blow"];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSSound *sound = [NSSound soundNamed:[defaults stringForKey:MUPSoundChoice]];
   [sound play];  
 }
 

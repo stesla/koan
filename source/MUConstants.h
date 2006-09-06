@@ -33,6 +33,7 @@ extern NSString *MUPMostRecentVersionURL;
 
 extern NSString *MUPPlaySounds;
 extern NSString *MUPPlayWhenActive;
+extern NSString *MUPSoundChoice;
 
 #pragma mark Notification constants.
 

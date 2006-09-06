@@ -33,6 +33,7 @@ NSString *MUPMostRecentVersionURL = @"MUPMostRecentVersionURL";
 
 NSString *MUPPlaySounds = @"MUPPlaySounds";
 NSString *MUPPlayWhenActive = @"MUPPlayWhenActive";
+NSString *MUPSoundChoice = @"MUPSoundChoice";
 
 #pragma mark Notification constants.
 
