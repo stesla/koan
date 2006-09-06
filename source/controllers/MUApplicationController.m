@@ -23,6 +23,7 @@
 - (void) colorPanelColorDidChange:(NSNotification *)notification;
 - (IBAction) openConnection:(id)sender;
 - (void) openConnectionWithController:(MUConnectionWindowController *)controller;
+- (void) playNotificationSound;
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
 - (void) updateApplicationBadge;
 - (void) worldsDidChange:(NSNotification *)notification;
@@ -335,10 +336,8 @@
 {
   if (![NSApp isActive])
   {
-    NSSound *blow = [NSSound soundNamed:@"Blow"];
-    [NSApp requestUserAttention:NSInformationalRequest];
-    
-    [blow play];
+    [self playNotificationSound];
+    [NSApp requestUserAttention:NSInformationalRequest];   
     unreadCount++;
     [self updateApplicationBadge];
   }
@@ -378,6 +377,17 @@
   [connectionWindowControllers addObject:controller];
   [controller showWindow:self];
   [controller connect:nil];
+}
+
+- (void) playNotificationSound;
+{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSSound *blow = [NSSound soundNamed:@"Blow"];
+  
+  if (![defaults boolForKey:MUPPlaySounds])
+    return;
+  
+  [blow play];  
 }
 
 - (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
