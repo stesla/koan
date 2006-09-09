@@ -572,26 +572,12 @@
 			path = socks5;
 			sourceTree = "<group>";
 		};
-		7E0709F009339A38000A36CF /* socks5 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = socks5;
-			sourceTree = "<group>";
-		};
 		7E2B447D0855639900769ED6 /* Externals */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Externals;
 			path = externals;
-			sourceTree = "<group>";
-		};
-		7E68DC27092AC2AF004554BD /* telnet */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = telnet;
 			sourceTree = "<group>";
 		};
 		7E68DC33092AC2FB004554BD /* telnet */ = {
@@ -686,8 +672,6 @@
 		E6B5E40A06A6F28400F53EBB /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				7E0709F009339A38000A36CF /* socks5 */,
-				7E68DC27092AC2AF004554BD /* telnet */,
 				7E20A8E907486C1300D1A5BF /* J3ANSIRemovingFilterTests.h */,
 				7E05EFF607B07F5800B2D3BC /* J3AttributedStringTransformerTests.h */,
 				7EFE43B10749CB16002C7D48 /* J3FilterTests.h */,
