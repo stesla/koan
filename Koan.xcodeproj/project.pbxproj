@@ -575,8 +575,6 @@
 		7E0709F009339A38000A36CF /* socks5 */ = {
 			isa = PBXGroup;
 			children = (
-				7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */,
-				7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */,
 			);
 			path = socks5;
 			sourceTree = "<group>";
@@ -592,8 +590,6 @@
 		7E68DC27092AC2AF004554BD /* telnet */ = {
 			isa = PBXGroup;
 			children = (
-				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
-				7E68DC2D092AC2AF004554BD /* J3TelnetStateMachineTests.m */,
 			);
 			path = telnet;
 			sourceTree = "<group>";
@@ -698,7 +694,9 @@
 				E6E7A6CC074970FE007005AC /* J3HistoryRingTests.h */,
 				7E68DC28092AC2AF004554BD /* J3LineBufferTests.h */,
 				E6505497077EA20E0016F30E /* J3NaiveURLFilterTests.h */,
+				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
 				7E87755209AD570300A883BC /* J3TestCase.h */,
+				7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */,
 				E6E7A63D0749698F007005AC /* J3TextLoggerTests.h */,
 				E6BFD8E9086258830060412C /* J3UpdateIntervalTests.h */,
 				7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */,
@@ -713,7 +711,9 @@
 				E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */,
 				7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */,
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
+				7E68DC2D092AC2AF004554BD /* J3TelnetStateMachineTests.m */,
 				7E87755309AD570300A883BC /* J3TestCase.m */,
+				7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */,
 				E6E7A63E0749698F007005AC /* J3TextLoggerTests.m */,
 				E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */,
 				7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */,
