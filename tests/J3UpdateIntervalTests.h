@@ -5,7 +5,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "J3TestCase.h"
+#import <J3Testing/J3Testcase.h>
 
 @interface J3UpdateIntervalTests : J3TestCase
 

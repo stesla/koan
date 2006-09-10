@@ -5,7 +5,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "J3TestCase.h"
+#import <J3Testing/J3Testcase.h>
 #import "J3LineBuffer.h"
 
 @interface J3LineBufferTests : J3TestCase <J3LineBufferDelegate>

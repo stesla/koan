@@ -8,7 +8,7 @@
 #import <Foundation/Foundation.h>
 #endif
 
-#import "J3TestCase.h"
+#import <J3Testing/J3Testcase.h>
 #import "categories/NSAttributedString (Allocating).h"
 #import "categories/NSFont (FullDisplayName).h"
 #import "categories/NSObject (Accessing).h"
