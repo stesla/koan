@@ -322,7 +322,7 @@
 		7EFE43B10749CB16002C7D48 /* J3FilterTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3FilterTests.h; sourceTree = "<group>"; };
 		7EFE43B20749CB16002C7D48 /* J3FilterTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3FilterTests.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* Koan.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Koan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Koan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Koan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6055F7C07492729007A13BD /* NSAttributedString (Allocating).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString (Allocating).h"; sourceTree = "<group>"; };
 		E6055F7D07492729007A13BD /* NSAttributedString (Allocating).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString (Allocating).m"; sourceTree = "<group>"; };
 		E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Tests-Prefix.pch"; sourceTree = "<group>"; };
