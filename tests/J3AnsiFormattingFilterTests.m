@@ -1,13 +1,13 @@
 //
-// J3ANSIRemovingFilterTests.m
+// J3AnsiFormattingFilterTests.m
 //
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import "J3ANSIRemovingFilterTests.h"
-#import "J3ANSIRemovingFilter.h"
+#import "J3AnsiFormattingFilterTests.h"
+#import "J3AnsiFormattingFilter.h"
 
-@interface J3ANSIRemovingFilterTests (Private)
+@interface J3AnsiFormattingFilterTests (Private)
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message;
@@ -16,7 +16,7 @@
 
 #pragma mark -
 
-@implementation J3ANSIRemovingFilterTests (Private)
+@implementation J3AnsiFormattingFilterTests (Private)
 
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
 {
@@ -45,12 +45,12 @@
 
 #pragma mark -
 
-@implementation J3ANSIRemovingFilterTests
+@implementation J3AnsiFormattingFilterTests
 
 - (void) setUp
 {
   queue = [[J3FilterQueue alloc] init];
-  [queue addFilter:[J3ANSIRemovingFilter filter]];
+  [queue addFilter:[J3AnsiFormattingFilter filter]];
 }
 
 - (void) tearDown

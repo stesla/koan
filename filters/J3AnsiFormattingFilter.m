@@ -1,18 +1,18 @@
 //
-// J3ANSIRemovingFilter.m
+// J3AnsiFormattingFilter.m
 //
 // Copyright (c) 2004, 2005 3James Software
 //
 
-#import "J3ANSIRemovingFilter.h"
+#import "J3AnsiFormattingFilter.h"
 
-@interface J3ANSIRemovingFilter (Private)
+@interface J3AnsiFormattingFilter (Private)
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 @end
 
-@implementation J3ANSIRemovingFilter
+@implementation J3AnsiFormattingFilter
 
 - (NSAttributedString *) filter:(NSAttributedString *)string
 {
@@ -27,7 +27,7 @@
 
 @end
 
-@implementation J3ANSIRemovingFilter (Private)
+@implementation J3AnsiFormattingFilter (Private)
 
 - (BOOL) extractCode:(NSMutableAttributedString *)editString
 {
@@ -76,7 +76,7 @@
 
   NSCharacterSet *resumeSet = 
     [NSCharacterSet characterSetWithCharactersInString:
-      @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+      @"m"];
 
   //TODO: Figure out how to do this with a nil intoString: parameter
   //like I do above with scanUpToCodeInString:

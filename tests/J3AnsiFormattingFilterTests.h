@@ -1,5 +1,5 @@
 //
-// J3ANSIRemovingFilterTests.h
+// J3AnsiFormattingFilterTests.h
 //
 // Copyright (c) 2004, 2005 3James Software
 //
@@ -9,7 +9,7 @@
 
 #import "J3Filter.h"
 
-@interface J3ANSIRemovingFilterTests : J3TestCase
+@interface J3AnsiFormattingFilterTests : J3TestCase
 {
   J3FilterQueue *queue;
 }
