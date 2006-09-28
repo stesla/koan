@@ -391,6 +391,25 @@
 	return self;
 }
 
+#pragma mark -
+#pragma mark MUFormatting protocol
+
+- (NSColor *) foreground;
+{
+  if (textColor)
+    return textColor;
+  else
+    return [NSUnarchiver unarchiveObjectWithData:[self effectiveTextColor]];  
+}
+
+- (NSColor *) background;
+{
+  if (backgroundColor)
+    return backgroundColor;
+  else
+    return [NSUnarchiver unarchiveObjectWithData:[self effectiveBackgroundColor]];  
+}
+
 @end
 
 #pragma mark -

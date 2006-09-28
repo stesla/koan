@@ -14,7 +14,7 @@
 #import "J3Filter.h"
 #import "J3Telnet.h"
 
-@interface MUProfile : NSObject <NSCoding>
+@interface MUProfile : NSObject <NSCoding, MUFormatting>
 {
   MUWorld *world;
   MUPlayer *player;

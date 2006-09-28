@@ -20,6 +20,11 @@
 @end
 
 @implementation J3AnsiFormattingFilter
++ (J3Filter *) filterWithFormatting:(NSObject <MUFormatting> *)format;
+{
+  return [[[self alloc] initWithFormatting:format] autorelease];
+}
+
 
 - (NSAttributedString *) filter:(NSAttributedString *)string;
 {
@@ -32,12 +37,17 @@
   return editString;
 }
 
-- (id) init;
+- (id) initWithFormatting:(NSObject <MUFormatting> *)format;
 {
   if (!(self = [super init]))
     return nil;
-  [self at:&formatting put:[MUFormatting formattingForTesting]];
-  return self;
+  [self at:&formatting put:format];
+  return self; 
+}
+
+- (id) init;
+{
+  return [self initWithFormatting:[MUFormatting formattingForTesting]];
 }
 
 @end

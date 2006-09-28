@@ -8,8 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@protocol MUFormatting
+- (NSColor *) background;
+- (NSColor *) foreground;
+@end
 
-@interface MUFormatting : NSObject 
+@interface MUFormatting : NSObject <MUFormatting>
 {
   NSColor * background;
   NSColor * foreground;
@@ -21,8 +25,5 @@
 + (NSColor *) testingForeground;
 
 - (id) initWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back;
-
-- (NSColor *) background;
-- (NSColor *) foreground;
 
 @end

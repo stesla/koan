@@ -57,7 +57,7 @@ enum MUSearchDirections
   historyRing = [[J3HistoryRing alloc] init];
     
   filterQueue = [[J3FilterQueue alloc] init];
-  [filterQueue addFilter:[J3AnsiFormattingFilter filter]];
+  [filterQueue addFilter:[J3AnsiFormattingFilter filterWithFormatting:profile]];
   [filterQueue addFilter:[J3NaiveURLFilter filter]];
   [filterQueue addFilter:[self createLogger]];
   
@@ -565,29 +565,26 @@ enum MUSearchDirections
     [NSMutableDictionary dictionaryWithDictionary:[receivedTextView typingAttributes]];
   NSAttributedString *unfilteredString;
   NSAttributedString *filteredString;
+  NSTextStorage *textStorage;
+  float scrollerPosition;
   
   if (!string)
     return;
   
+  textStorage = [receivedTextView textStorage];
+  scrollerPosition = [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
+  
   [typingAttributes removeObjectForKey:NSLinkAttributeName];
+  [typingAttributes removeObjectForKey:NSUnderlineStyleAttributeName];
+  [typingAttributes setObject:[profile foreground] forKey:NSForegroundColorAttributeName];
+  [typingAttributes setObject:[profile background] forKey:NSBackgroundColorDocumentAttribute];
   
-  unfilteredString =
-    [NSAttributedString attributedStringWithString:string
-                                        attributes:typingAttributes];  
-  
-  filteredString = [filterQueue processAttributedString:unfilteredString];
-  NSTextStorage *textStorage = [receivedTextView textStorage];
-  float scrollerPosition = 
-    [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
-  
-  [textStorage replaceCharactersInRange:NSMakeRange ([textStorage length], 0)
-                   withAttributedString:filteredString];
-  
+  unfilteredString = [NSAttributedString attributedStringWithString:string attributes:typingAttributes];  
+  filteredString = [filterQueue processAttributedString:unfilteredString]; 
+  [textStorage replaceCharactersInRange:NSMakeRange ([textStorage length], 0) withAttributedString:filteredString];
   [[receivedTextView window] invalidateCursorRectsForView:receivedTextView];
-  
   if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
     [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 0)];
-
 	[self postConnectionWindowControllerDidReceiveTextNotification];
 }
 

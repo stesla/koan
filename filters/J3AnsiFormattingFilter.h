@@ -7,14 +7,20 @@
 #import <Cocoa/Cocoa.h>
 #import "J3Filter.h"
 
-@class MUFormatting;
+@protocol MUFormatting;
 
 @interface J3AnsiFormattingFilter : J3Filter
 {
-  NSString * ansiCode;
-  MUFormatting *formatting;
+  NSString *ansiCode;
+  NSObject <MUFormatting> *formatting;
 }
+
++ (J3Filter *) filterWithFormatting:(NSObject <MUFormatting> *)format;
+
+- (id) initWithFormatting:(NSObject <MUFormatting> *)format;
+
 @end
+
 
 typedef enum J3AnsiCode
 {
