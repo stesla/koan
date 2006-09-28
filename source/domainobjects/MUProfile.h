@@ -8,6 +8,7 @@
 @protocol J3TelnetConnectionDelegate;
 
 #import <Cocoa/Cocoa.h>
+#import "MUFormatting.h"
 #import "MUWorld.h"
 #import "MUPlayer.h"
 #import "J3Filter.h"

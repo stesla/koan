@@ -7,9 +7,12 @@
 #import <Cocoa/Cocoa.h>
 #import "J3Filter.h"
 
+@class MUFormatting;
+
 @interface J3AnsiFormattingFilter : J3Filter
 {
   NSString * ansiCode;
+  MUFormatting *formatting;
 }
 @end
 

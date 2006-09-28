@@ -47,6 +47,8 @@ enum MUSearchDirections
 
 - (id) initWithProfile:(MUProfile*)newProfile;
 {
+  J3AnsiFormattingFilter * formattingFilter;
+  
   if (![super initWithWindowNibName:@"MUConnectionWindow"])
     return nil;
   

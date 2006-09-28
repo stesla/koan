@@ -5,12 +5,14 @@
 //
 
 #import "J3AnsiFormattingFilter.h"
+#import "MUFormatting.h"
 
 @interface J3AnsiFormattingFilter (Private)
+
 - (NSString *) attributeNameForAnsiCode;
 - (id) attributeValueForAnsiCode;
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
-- (void) removeAllAttributesFromString:(NSMutableAttributedString *)string inRange:(NSRange)range;
+- (void) resetAllAttributesInString:(NSMutableAttributedString *)string inRange:(NSRange)range;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 - (void) setAttributesInString:(NSMutableAttributedString *)string atPosition:(int)start;
@@ -19,7 +21,7 @@
 
 @implementation J3AnsiFormattingFilter
 
-- (NSAttributedString *) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter:(NSAttributedString *)string;
 {
   NSMutableAttributedString *editString = [[NSMutableAttributedString alloc] initWithAttributedString:string];
   
@@ -28,6 +30,14 @@
   
   [editString autorelease];
   return editString;
+}
+
+- (id) init;
+{
+  if (!(self = [super init]))
+    return nil;
+  [self at:&formatting put:[MUFormatting formattingForTesting]];
+  return self;
 }
 
 @end
@@ -84,8 +94,11 @@ return nil;
       break;
       
     case J3AnsiBackgroundDefault:
+      return [formatting background];
+      break;
+
     case J3AnsiForegroundDefault:
-      return nil;
+      return [formatting foreground];
       break;
       
     case J3AnsiBackgroundGreen:
@@ -138,10 +151,10 @@ return nil;
   return NO;
 }
 
-- (void) removeAllAttributesFromString:(NSMutableAttributedString *)string inRange:(NSRange)range;
+- (void) resetAllAttributesInString:(NSMutableAttributedString *)string inRange:(NSRange)range;
 {
-  [string removeAttribute:NSForegroundColorAttributeName range:range];
-  [string removeAttribute:NSBackgroundColorAttributeName range:range];
+  [string addAttribute:NSForegroundColorAttributeName value:[formatting foreground] range:range];
+  [string addAttribute:NSBackgroundColorAttributeName value:[formatting background] range:range];
 }
 
 - (int) scanUpToCodeInString:(NSString *)string
@@ -182,14 +195,14 @@ return nil;
 - (void) setAttributesInString:(NSMutableAttributedString *)string atPosition:(int)start;
 {
   NSRange formattingRange;
-  NSString * attributeName;
-  id attributeValue;
+  NSString * attributeName = nil;
+  id attributeValue = nil;
 
   formattingRange.location = start;
   formattingRange.length = [string length] - start;
 
   if ([[ansiCode substringFromIndex:2] intValue] == 0)
-    [self removeAllAttributesFromString:string inRange:formattingRange];
+    [self resetAllAttributesInString:string inRange:formattingRange];
   
   attributeName = [self attributeNameForAnsiCode];
   if (!attributeName)
@@ -198,13 +211,13 @@ return nil;
   
   attributeValue = [self attributeValueForAnsiCode];
   if (attributeValue)
-  {
     [string addAttribute:attributeName value:attributeValue range:formattingRange];    
-  }
+  else if ([attributeName isEqualToString:NSForegroundColorAttributeName])
+    [string addAttribute:NSForegroundColorAttributeName value:[formatting foreground] range:formattingRange];
+  else if ([attributeName isEqualToString:NSBackgroundColorAttributeName])
+    [string addAttribute:NSBackgroundColorAttributeName value:[formatting background] range:formattingRange];
   else
-  {
     [string removeAttribute:attributeName range:formattingRange];
-  }
 }
 
 @end
