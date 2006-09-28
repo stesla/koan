@@ -12,6 +12,7 @@
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message;
 - (void) assertFinalCharacter:(unsigned char)finalChar;
+- (void) assertString:(NSAttributedString *)string hasValue:(id)value forAttribute:(NSString *)attribute atIndex:(int)index message:(NSString *)message;
 @end
 
 #pragma mark -
@@ -28,11 +29,14 @@
 {
   NSAttributedString *attributedInput = 
     [NSAttributedString attributedStringWithString:input];
-  NSAttributedString *attributedOutput = 
+  NSAttributedString *attributedExpectedOutput = 
     [NSAttributedString attributedStringWithString:output];
-  [self assert:[queue processAttributedString:attributedInput] 
-        equals:attributedOutput
-       message:message];  
+  NSMutableAttributedString *actualOutput = [NSMutableAttributedString attributedStringWithAttributedString:[queue processAttributedString:attributedInput]];
+  NSRange range;
+  range.location = 0;
+  range.length = [actualOutput length];
+  [actualOutput setAttributes:[NSDictionary dictionary] range:range];
+  [self assert:actualOutput equals:attributedExpectedOutput message:message];  
 }
 
 - (void) assertFinalCharacter:(unsigned char)finalChar
@@ -41,6 +45,13 @@
           hasOutput:@"Foo"
             message:[NSString stringWithFormat:@"[%X]", finalChar]];
 }
+
+- (void) assertString:(NSAttributedString *)string hasValue:(id)value forAttribute:(NSString *)attribute atIndex:(int)index message:(NSString *)message;
+{
+  NSDictionary * attributes = [string attributesAtIndex:index effectiveRange:NULL];
+  [self assert:[attributes valueForKey:attribute] equals:value message:message]; 
+}
+
 @end
 
 #pragma mark -
@@ -143,6 +154,41 @@
 {
   [self assertInput:@" \x1B[1m"
           hasOutput:@" "];
+}
+
+- (void) testForegroundColor;
+{
+  NSAttributedString * input = [NSAttributedString attributedStringWithString:@"a\x1B[36mbc\x1B[35md\x1B[39me"];
+  NSAttributedString * output = [queue processAttributedString:input];
+  
+  [self assertString:output hasValue:nil forAttribute:NSForegroundColorAttributeName atIndex:0 message:@"a"];
+  [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:1 message:@"b"];
+  [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:2 message:@"c"];
+  [self assertString:output hasValue:[NSColor magentaColor] forAttribute:NSForegroundColorAttributeName atIndex:3 message:@"d"];
+  [self assertString:output hasValue:nil forAttribute:NSForegroundColorAttributeName atIndex:4 message:@"e"];
+}
+
+- (void) testBackgroundColor;
+{
+  NSAttributedString * input = [NSAttributedString attributedStringWithString:@"a\x1B[46mbc\x1B[45md\x1B[49me"];
+  NSAttributedString * output = [queue processAttributedString:input];
+  
+  [self assertString:output hasValue:nil forAttribute:NSForegroundColorAttributeName atIndex:0 message:@"a"];
+  [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSBackgroundColorAttributeName atIndex:1 message:@"b"];
+  [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSBackgroundColorAttributeName atIndex:2 message:@"c"];
+  [self assertString:output hasValue:[NSColor magentaColor] forAttribute:NSBackgroundColorAttributeName atIndex:3 message:@"d"];
+  [self assertString:output hasValue:nil forAttribute:NSBackgroundColorAttributeName atIndex:4 message:@"e"];
+}
+
+- (void) testReset;
+{
+  NSAttributedString * input = [NSAttributedString attributedStringWithString:@"a\x1B[36m\x1B[46mb\x1B[0mc"];
+  NSAttributedString * output = [queue processAttributedString:input];
+  
+  [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSBackgroundColorAttributeName atIndex:1 message:@"b background"];
+  [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:1 message:@"b foreground"];
+  [self assertString:output hasValue:nil forAttribute:NSBackgroundColorAttributeName atIndex:2 message:@"c background"];  
+  [self assertString:output hasValue:nil forAttribute:NSForegroundColorAttributeName atIndex:2 message:@"c foreground"];  
 }
 
 @end

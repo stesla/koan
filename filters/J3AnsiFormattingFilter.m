@@ -7,9 +7,14 @@
 #import "J3AnsiFormattingFilter.h"
 
 @interface J3AnsiFormattingFilter (Private)
+- (NSString *) attributeNameForAnsiCode;
+- (id) attributeValueForAnsiCode;
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
+- (void) removeAllAttributesFromString:(NSMutableAttributedString *)string inRange:(NSRange)range;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
+- (void) setAttributesInString:(NSMutableAttributedString *)string atPosition:(int)start;
+
 @end
 
 @implementation J3AnsiFormattingFilter
@@ -29,6 +34,88 @@
 
 @implementation J3AnsiFormattingFilter (Private)
 
+- (NSString *) attributeNameForAnsiCode;
+{
+  switch ([[ansiCode substringFromIndex:2] intValue]) 
+  {
+    case J3AnsiBackgroundBlack:
+    case J3AnsiBackgroundBlue:
+    case J3AnsiBackgroundCyan:
+    case J3AnsiBackgroundDefault:
+    case J3AnsiBackgroundGreen:
+    case J3AnsiBackgroundMagenta:
+    case J3AnsiBackgroundRed:
+    case J3AnsiBackgroundWhite:
+    case J3AnsiBackgroundYellow:
+      return NSBackgroundColorAttributeName;
+      break;
+    case J3AnsiForegroundBlack:
+    case J3AnsiForegroundBlue:
+    case J3AnsiForegroundCyan:
+    case J3AnsiForegroundDefault:
+    case J3AnsiForegroundGreen:
+    case J3AnsiForegroundMagenta:
+    case J3AnsiForegroundRed:
+    case J3AnsiForegroundWhite:
+    case J3AnsiForegroundYellow:
+      return NSForegroundColorAttributeName;
+      break;
+  }
+return nil;
+}
+
+- (id) attributeValueForAnsiCode;
+{
+  switch ([[ansiCode substringFromIndex:2] intValue]) 
+  {
+    case J3AnsiBackgroundBlack: 
+    case J3AnsiForegroundBlack: 
+      return [NSColor blackColor];
+      break;
+      
+    case J3AnsiBackgroundBlue:
+    case J3AnsiForegroundBlue:
+      return [NSColor blueColor];
+      break;
+
+    case J3AnsiBackgroundCyan:
+    case J3AnsiForegroundCyan:
+      return [NSColor cyanColor];
+      break;
+      
+    case J3AnsiBackgroundDefault:
+    case J3AnsiForegroundDefault:
+      return nil;
+      break;
+      
+    case J3AnsiBackgroundGreen:
+    case J3AnsiForegroundGreen:
+      return [NSColor greenColor];
+      break;
+      
+    case J3AnsiBackgroundMagenta:
+    case J3AnsiForegroundMagenta:
+      return [NSColor magentaColor];
+      break;
+      
+    case J3AnsiBackgroundRed:
+    case J3AnsiForegroundRed:
+      return [NSColor redColor];
+      break;
+      
+    case J3AnsiBackgroundWhite:
+    case J3AnsiForegroundWhite:
+      return [NSColor whiteColor];
+      break;
+      
+    case J3AnsiBackgroundYellow:
+    case J3AnsiForegroundYellow:
+      return [NSColor yellowColor];
+      break;    
+  }
+  return nil;
+}
+
 - (BOOL) extractCode:(NSMutableAttributedString *)editString
 {
   NSRange codeRange;
@@ -43,11 +130,18 @@
     if (codeRange.location < [editString length])
     {
       [editString deleteCharactersInRange:codeRange];
+      [self setAttributesInString:editString atPosition:codeRange.location];
       return YES;
     }
   }
 
   return NO;
+}
+
+- (void) removeAllAttributesFromString:(NSMutableAttributedString *)string inRange:(NSRange)range;
+{
+  [string removeAttribute:NSForegroundColorAttributeName range:range];
+  [string removeAttribute:NSBackgroundColorAttributeName range:range];
 }
 
 - (int) scanUpToCodeInString:(NSString *)string
@@ -80,9 +174,37 @@
 
   //TODO: Figure out how to do this with a nil intoString: parameter
   //like I do above with scanUpToCodeInString:
-  NSString *ansiCode = @"";
+  ansiCode = @"";
   [scanner scanUpToCharactersFromSet:resumeSet intoString:&ansiCode];
   return [ansiCode length] + 1;
+}
+
+- (void) setAttributesInString:(NSMutableAttributedString *)string atPosition:(int)start;
+{
+  NSRange formattingRange;
+  NSString * attributeName;
+  id attributeValue;
+
+  formattingRange.location = start;
+  formattingRange.length = [string length] - start;
+
+  if ([[ansiCode substringFromIndex:2] intValue] == 0)
+    [self removeAllAttributesFromString:string inRange:formattingRange];
+  
+  attributeName = [self attributeNameForAnsiCode];
+  if (!attributeName)
+    return;
+
+  
+  attributeValue = [self attributeValueForAnsiCode];
+  if (attributeValue)
+  {
+    [string addAttribute:attributeName value:attributeValue range:formattingRange];    
+  }
+  else
+  {
+    [string removeAttribute:attributeName range:formattingRange];
+  }
 }
 
 @end
