@@ -13,6 +13,7 @@
 {
   NSString *ansiCode;
   NSObject <MUFormatting> *formatting;
+  NSMutableDictionary *currentAttributes;
 }
 
 + (J3Filter *) filterWithFormatting:(NSObject <MUFormatting> *)format;

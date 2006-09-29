@@ -12,7 +12,11 @@
 - (NSString *) attributeNameForAnsiCode;
 - (id) attributeValueForAnsiCode;
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
-- (void) resetAllAttributesInString:(NSMutableAttributedString *)string inRange:(NSRange)range;
+- (void) resetAllAttributesInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) setAttribute:(NSString *)attribute toValue:(id)value inString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) setAttributes:(NSDictionary *)attributes onString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 - (void) setAttributesInString:(NSMutableAttributedString *)string atPosition:(int)start;
@@ -30,6 +34,8 @@
 {
   NSMutableAttributedString *editString = [[NSMutableAttributedString alloc] initWithAttributedString:string];
   
+  [self setAttributes:currentAttributes onString:editString fromLocation:0];
+  
   while ([self extractCode:editString])
     ;
   
@@ -41,6 +47,7 @@
 {
   if (!(self = [super init]))
     return nil;
+  [self at:&currentAttributes put:[NSMutableDictionary dictionary]];
   [self at:&formatting put:format];
   return self; 
 }
@@ -161,10 +168,36 @@ return nil;
   return NO;
 }
 
-- (void) resetAllAttributesInString:(NSMutableAttributedString *)string inRange:(NSRange)range;
+- (void) resetAllAttributesInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 {
-  [string addAttribute:NSForegroundColorAttributeName value:[formatting foreground] range:range];
-  [string addAttribute:NSBackgroundColorAttributeName value:[formatting background] range:range];
+  [self resetBackgroundInString:string fromLocation:location];
+  [self resetForegroundInString:string fromLocation:location];
+}
+
+- (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+{
+  [self setAttribute:NSBackgroundColorAttributeName toValue:[formatting background] inString:string fromLocation:location];
+}
+
+- (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+{
+  [self setAttribute:NSForegroundColorAttributeName toValue:[formatting foreground] inString:string fromLocation:location];
+}
+
+- (void) setAttribute:(NSString *)attribute toValue:(id)value inString:(NSMutableAttributedString *)string fromLocation:(int)location;
+{
+  [string addAttribute:attribute value:value range:NSMakeRange (location,[string length] - location)];
+  [currentAttributes setObject:value forKey:attribute];
+}
+
+- (void) setAttributes:(NSDictionary *)attributes onString:(NSMutableAttributedString *)string fromLocation:(int)location;
+{
+  NSDictionary * attributeCopy = [attributes copy];
+  NSEnumerator * keyEnumerator = [attributeCopy keyEnumerator];
+  NSString * key;
+  
+  while ((key = [keyEnumerator nextObject]))
+    [self setAttribute:key toValue:[attributeCopy valueForKey:key] inString:string fromLocation:location];
 }
 
 - (int) scanUpToCodeInString:(NSString *)string
@@ -204,30 +237,25 @@ return nil;
 
 - (void) setAttributesInString:(NSMutableAttributedString *)string atPosition:(int)start;
 {
-  NSRange formattingRange;
   NSString * attributeName = nil;
   id attributeValue = nil;
 
-  formattingRange.location = start;
-  formattingRange.length = [string length] - start;
-
   if ([[ansiCode substringFromIndex:2] intValue] == 0)
-    [self resetAllAttributesInString:string inRange:formattingRange];
+    [self resetAllAttributesInString:string fromLocation:start];
   
   attributeName = [self attributeNameForAnsiCode];
   if (!attributeName)
     return;
 
-  
   attributeValue = [self attributeValueForAnsiCode];
   if (attributeValue)
-    [string addAttribute:attributeName value:attributeValue range:formattingRange];    
+    [self setAttribute:attributeName toValue:attributeValue inString:string fromLocation:start];
   else if ([attributeName isEqualToString:NSForegroundColorAttributeName])
-    [string addAttribute:NSForegroundColorAttributeName value:[formatting foreground] range:formattingRange];
+    [self resetForegroundInString:string fromLocation:start];
   else if ([attributeName isEqualToString:NSBackgroundColorAttributeName])
-    [string addAttribute:NSBackgroundColorAttributeName value:[formatting background] range:formattingRange];
+    [self resetBackgroundInString:string fromLocation:start];
   else
-    [string removeAttribute:attributeName range:formattingRange];
+    [string removeAttribute:attributeName range:NSMakeRange (start, [string length] - start)];
 }
 
 @end

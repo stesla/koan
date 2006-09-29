@@ -192,4 +192,16 @@
   [self assertString:output hasValue:[MUFormatting testingForeground] forAttribute:NSForegroundColorAttributeName atIndex:2 message:@"c foreground"];  
 }
 
+- (void) testPersistColorsBetweenLines;
+{
+  NSAttributedString * firstInput = [NSAttributedString attributedStringWithString:@"a\x1B[36mb"];
+  NSAttributedString * secondInput = [NSAttributedString attributedStringWithString:@"c"];
+  NSAttributedString * output;
+  
+  [queue processAttributedString:firstInput];
+  output = [queue processAttributedString:secondInput];
+  
+  [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:0 message:@"c"];
+}
+
 @end
