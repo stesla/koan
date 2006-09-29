@@ -69,9 +69,24 @@
 - (void) testMethodSelection;
 {
   J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
-  [self assertObject:selection writes:@"\x05\x01\x00"];
+  NSString *output;
+  unsigned i;
+  const char expected1[] = {0x05, 0x01, 0x00};
+  const char expected2[] = {0x05, 0x02, 0x00, 0x02};
+  
+  [buffer clear];
+  [selection appendToBuffer:buffer];
+  output = [buffer stringValue];
+  for (i = 0; i < [buffer length]; ++i)
+    [self assertInt:(int)[output characterAtIndex:i] equals:expected1[i]];
+   
   [selection addMethod:J3SocksUsernamePassword];
-  [self assertObject:selection writes:@"\x05\x02\x00\x02"];
+
+  [buffer clear];
+  [selection appendToBuffer:buffer];
+  output = [buffer stringValue];
+  for (i = 0; i < [buffer length]; ++i)
+    [self assertInt:(int)[output characterAtIndex:i] equals:expected2[i]];
 }
 
 - (void) testSelectMethod;
