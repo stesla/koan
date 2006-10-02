@@ -10,16 +10,19 @@
 @interface J3AnsiFormattingFilter (Private)
 
 - (NSString *) attributeNameForAnsiCode;
-- (id) attributeValueForAnsiCode;
+- (id) attributeValueForAnsiCodeAndString:(NSAttributedString *)string location:(int)location;
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
+- (NSFont *) fontInString:(NSAttributedString *)string atLocation:(int)location;
 - (void) resetAllAttributesInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) resetBoldInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) setAttribute:(NSString *)attribute toValue:(id)value inString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) setAttributes:(NSDictionary *)attributes onString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (int) scanUpToCodeInString:(NSString *)string;
 - (int) scanThruEndOfCodeAt:(int)index inString:(NSString *)string;
 - (void) setAttributesInString:(NSMutableAttributedString *)string atPosition:(int)start;
+- (NSFont *) setTrait:(NSFontTraitMask)trait onFont:(NSFont *)font;
 
 @end
 
@@ -76,6 +79,7 @@
     case J3AnsiBackgroundYellow:
       return NSBackgroundColorAttributeName;
       break;
+      
     case J3AnsiForegroundBlack:
     case J3AnsiForegroundBlue:
     case J3AnsiForegroundCyan:
@@ -87,11 +91,16 @@
     case J3AnsiForegroundYellow:
       return NSForegroundColorAttributeName;
       break;
+      
+    case J3AnsiBoldOn:
+    case J3AnsiBoldOff:
+      return NSFontAttributeName;
+      break;
   }
 return nil;
 }
 
-- (id) attributeValueForAnsiCode;
+- (id) attributeValueForAnsiCodeAndString:(NSAttributedString *)string location:(int)location;
 {
   switch ([[ansiCode substringFromIndex:2] intValue]) 
   {
@@ -142,6 +151,14 @@ return nil;
     case J3AnsiForegroundYellow:
       return [NSColor yellowColor];
       break;    
+      
+    case J3AnsiBoldOn:
+      return [self setTrait:NSBoldFontMask onFont:[self fontInString:string atLocation:location]];
+      break;
+        
+    case J3AnsiBoldOff:
+      return [self setTrait:NSUnboldFontMask onFont:[self fontInString:string atLocation:location]];
+      break;
   }
   return nil;
 }
@@ -168,15 +185,28 @@ return nil;
   return NO;
 }
 
+- (NSFont *) fontInString:(NSAttributedString *)string atLocation:(int)location;
+{
+  return [string attribute:NSFontAttributeName atIndex:location effectiveRange:NULL];
+}
+
 - (void) resetAllAttributesInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 {
   [self resetBackgroundInString:string fromLocation:location];
   [self resetForegroundInString:string fromLocation:location];
+  [self resetBoldInString:string fromLocation:location];
 }
 
 - (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 {
   [self setAttribute:NSBackgroundColorAttributeName toValue:[formatting background] inString:string fromLocation:location];
+}
+
+- (void) resetBoldInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+{
+  NSFont * font;
+  font = [self fontInString:string atLocation:location];
+  [self setAttribute:NSFontAttributeName toValue:[self setTrait:NSUnboldFontMask onFont:font] inString:string fromLocation:location];
 }
 
 - (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
@@ -240,6 +270,9 @@ return nil;
   NSString * attributeName = nil;
   id attributeValue = nil;
 
+  if ([string length] <= start)
+    return;
+  
   if ([[ansiCode substringFromIndex:2] intValue] == 0)
     [self resetAllAttributesInString:string fromLocation:start];
   
@@ -247,7 +280,7 @@ return nil;
   if (!attributeName)
     return;
 
-  attributeValue = [self attributeValueForAnsiCode];
+  attributeValue = [self attributeValueForAnsiCodeAndString:string location:start];
   if (attributeValue)
     [self setAttribute:attributeName toValue:attributeValue inString:string fromLocation:start];
   else if ([attributeName isEqualToString:NSForegroundColorAttributeName])
@@ -255,7 +288,13 @@ return nil;
   else if ([attributeName isEqualToString:NSBackgroundColorAttributeName])
     [self resetBackgroundInString:string fromLocation:start];
   else
-    [string removeAttribute:attributeName range:NSMakeRange (start, [string length] - start)];
+    @throw [NSException exceptionWithName:@"J3AnsiException" reason:@"Did not provide attributeValue" userInfo:nil];
+}
+
+- (NSFont *) setTrait:(NSFontTraitMask)trait onFont:(NSFont *)font;
+{
+  NSFontManager * fontManager = [NSFontManager sharedFontManager];
+  return [fontManager convertFont:font toHaveTrait:trait];
 }
 
 @end

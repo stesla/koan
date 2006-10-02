@@ -14,6 +14,9 @@
              message:(NSString *)message;
 - (void) assertFinalCharacter:(unsigned char)finalChar;
 - (void) assertString:(NSAttributedString *)string hasValue:(id)value forAttribute:(NSString *)attribute atIndex:(int)index message:(NSString *)message;
+- (void) assertString:(NSAttributedString *)string isBoldAtIndex:(int)index message:(NSString *)message;
+- (void) assertString:(NSAttributedString *)string isNotBoldAtIndex:(int)index message:(NSString *)message;
+- (NSMutableAttributedString *) makeString:(NSString *)string;
 @end
 
 #pragma mark -
@@ -28,10 +31,8 @@
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message
 {
-  NSAttributedString *attributedInput = 
-    [NSAttributedString attributedStringWithString:input];
-  NSAttributedString *attributedExpectedOutput = 
-    [NSAttributedString attributedStringWithString:output];
+  NSAttributedString *attributedInput = [self makeString:input];
+  NSAttributedString *attributedExpectedOutput = [NSAttributedString attributedStringWithString:output];
   NSMutableAttributedString *actualOutput = [NSMutableAttributedString attributedStringWithAttributedString:[queue processAttributedString:attributedInput]];
   NSRange range;
   range.location = 0;
@@ -51,6 +52,31 @@
 {
   NSDictionary * attributes = [string attributesAtIndex:index effectiveRange:NULL];
   [self assert:[attributes valueForKey:attribute] equals:value message:message]; 
+}
+
+- (void) assertString:(NSAttributedString *)string isBoldAtIndex:(int)index message:(NSString *)message;
+{
+  NSFontManager * fontManager = [NSFontManager sharedFontManager];
+  NSFont * font;
+  font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
+  [self assertTrue:[fontManager fontNamed:[font fontName] hasTraits:NSBoldFontMask] message:message];
+  
+}
+
+- (void) assertString:(NSAttributedString *)string isNotBoldAtIndex:(int)index message:(NSString *)message;
+{
+  NSFontManager * fontManager = [NSFontManager sharedFontManager];
+  NSFont * font;
+  font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
+  [self assertFalse:[fontManager fontNamed:[font fontName] hasTraits:NSBoldFontMask] message:message];
+}
+
+- (NSMutableAttributedString *) makeString:(NSString *)string;
+{
+  NSFont * font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+  NSMutableDictionary * attributes = [NSMutableDictionary dictionary];
+  [attributes setValue:font forKey:NSFontAttributeName];
+  return [NSMutableAttributedString attributedStringWithString:string attributes:attributes];
 }
 
 @end
@@ -151,7 +177,7 @@
           hasOutput:longString];
 }
 
-- (void) testOnlyWhitespaceBeforeCode
+- (void) testOnlyWhitespaceBeforeCodeAndNothingAfterIt;
 {
   [self assertInput:@" \x1B[1m"
           hasOutput:@" "];
@@ -159,7 +185,7 @@
 
 - (void) testForegroundColor;
 {
-  NSAttributedString * input = [NSAttributedString attributedStringWithString:@"a\x1B[36mbc\x1B[35md\x1B[39me"];
+  NSAttributedString * input = [self makeString:@"a\x1B[36mbc\x1B[35md\x1B[39me"];
   NSAttributedString * output = [queue processAttributedString:input];
   
   [self assertString:output hasValue:nil forAttribute:NSForegroundColorAttributeName atIndex:0 message:@"a"];
@@ -171,7 +197,7 @@
 
 - (void) testBackgroundColor;
 {
-  NSAttributedString * input = [NSAttributedString attributedStringWithString:@"a\x1B[46mbc\x1B[45md\x1B[49me"];
+  NSAttributedString * input = [self makeString:@"a\x1B[46mbc\x1B[45md\x1B[49me"];
   NSAttributedString * output = [queue processAttributedString:input];
   
   [self assertString:output hasValue:nil forAttribute:NSForegroundColorAttributeName atIndex:0 message:@"a"];
@@ -181,9 +207,9 @@
   [self assertString:output hasValue:[MUFormatting testingBackground] forAttribute:NSBackgroundColorAttributeName atIndex:4 message:@"e"];
 }
 
-- (void) testReset;
+- (void) testResetForeAndBack;
 {
-  NSAttributedString * input = [NSAttributedString attributedStringWithString:@"a\x1B[36m\x1B[46mb\x1B[0mc"];
+  NSAttributedString * input = [self makeString:@"a\x1B[36m\x1B[46mb\x1B[0mc"];
   NSAttributedString * output = [queue processAttributedString:input];
   
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSBackgroundColorAttributeName atIndex:1 message:@"b background"];
@@ -194,14 +220,26 @@
 
 - (void) testPersistColorsBetweenLines;
 {
-  NSAttributedString * firstInput = [NSAttributedString attributedStringWithString:@"a\x1B[36mb"];
-  NSAttributedString * secondInput = [NSAttributedString attributedStringWithString:@"c"];
+  NSAttributedString * firstInput = [self makeString:@"a\x1B[36mb"];
+  NSAttributedString * secondInput = [self makeString:@"c"];
   NSAttributedString * output;
   
   [queue processAttributedString:firstInput];
   output = [queue processAttributedString:secondInput];
   
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:0 message:@"c"];
+}
+
+- (void) testBold;
+{
+  NSAttributedString * input = [self makeString:@"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSAttributedString * output = [queue processAttributedString:input];
+
+  [self assertString:output isNotBoldAtIndex:0 message:@"a"];
+  [self assertString:output isBoldAtIndex:1 message:@"b"];
+  [self assertString:output isNotBoldAtIndex:2 message:@"c"];
+  [self assertString:output isBoldAtIndex:3 message:@"d"];
+  [self assertString:output isNotBoldAtIndex:4 message:@"e"];
 }
 
 @end
