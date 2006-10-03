@@ -251,4 +251,16 @@
   [self assertString:output hasTrait:NSBoldFontMask atIndex:0 message:@"a2"];
 }
 
+- (void) testUnderline;
+{
+  NSAttributedString * input = [self makeString:@"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me"];  
+  NSAttributedString * output = [queue processAttributedString:input];
+  
+  [self assertString:output hasValue:nil forAttribute:NSUnderlineStyleAttributeName atIndex:0 message:@"a"];
+  [self assertString:output hasValue:[NSNumber numberWithInt:NSSingleUnderlineStyle] forAttribute:NSUnderlineStyleAttributeName atIndex:1 message:@"b"];
+  [self assertString:output hasValue:[NSNumber numberWithInt:NSNoUnderlineStyle] forAttribute:NSUnderlineStyleAttributeName atIndex:2 message:@"c"];
+  [self assertString:output hasValue:[NSNumber numberWithInt:NSSingleUnderlineStyle] forAttribute:NSUnderlineStyleAttributeName atIndex:3 message:@"d"];
+  [self assertString:output hasValue:[NSNumber numberWithInt:NSNoUnderlineStyle] forAttribute:NSUnderlineStyleAttributeName atIndex:4 message:@"e"];  
+}
+
 @end

@@ -20,6 +20,7 @@
 - (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) resetFontInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) resetUnderlineInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) setAttribute:(NSString *)attribute toValue:(id)value inString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) setAttributes:(NSDictionary *)attributes onString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (int) scanUpToCodeInString:(NSString *)string;
@@ -102,8 +103,13 @@
     case J3AnsiBoldOff:
       return NSFontAttributeName;
       break;
+      
+    case J3AnsiUnderlineOn:
+    case J3AnsiUnderlineOff:
+      return NSUnderlineStyleAttributeName;
+      break;
   }
-return nil;
+  return nil;
 }
 
 - (id) attributeValueForAnsiCodeAndString:(NSAttributedString *)string location:(int)location;
@@ -165,6 +171,14 @@ return nil;
     case J3AnsiBoldOff:
       return [self makeFontUnbold:[self fontInString:string atLocation:location]];
       break;
+      
+    case J3AnsiUnderlineOn:
+      return [NSNumber numberWithInt:NSSingleUnderlineStyle];
+      break;
+      
+    case J3AnsiUnderlineOff:
+      return [NSNumber numberWithInt:NSNoUnderlineStyle];
+      break;
   }
   return nil;
 }
@@ -217,6 +231,7 @@ return nil;
   [self resetBackgroundInString:string fromLocation:location];
   [self resetForegroundInString:string fromLocation:location];
   [self resetFontInString:string fromLocation:location];
+  [self resetUnderlineInString:string fromLocation:location];
 }
 
 - (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
@@ -232,6 +247,11 @@ return nil;
 - (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 {
   [self setAttribute:NSForegroundColorAttributeName toValue:[formatting foreground] inString:string fromLocation:location];
+}
+
+- (void) resetUnderlineInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+{
+  [self setAttribute:NSUnderlineStyleAttributeName toValue:[NSNumber numberWithInt:NSNoUnderlineStyle] inString:string fromLocation:location];
 }
 
 - (void) setAttribute:(NSString *)attribute toValue:(id)value inString:(NSMutableAttributedString *)string fromLocation:(int)location;
