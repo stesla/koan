@@ -15,8 +15,7 @@
              message:(NSString *)message;
 - (void) assertFinalCharacter:(unsigned char)finalChar;
 - (void) assertString:(NSAttributedString *)string hasValue:(id)value forAttribute:(NSString *)attribute atIndex:(int)index message:(NSString *)message;
-- (void) assertString:(NSAttributedString *)string isBoldAtIndex:(int)index message:(NSString *)message;
-- (void) assertString:(NSAttributedString *)string isNotBoldAtIndex:(int)index message:(NSString *)message;
+- (void) assertString:(NSAttributedString *)string hasTrait:(NSFontTraitMask)trait atIndex:(int)index message:(NSString *)message;
 - (NSMutableAttributedString *) makeString:(NSString *)string;
 @end
 
@@ -55,17 +54,10 @@
   [self assert:[attributes valueForKey:attribute] equals:value message:message]; 
 }
 
-- (void) assertString:(NSAttributedString *)string isBoldAtIndex:(int)index message:(NSString *)message;
+- (void) assertString:(NSAttributedString *)string hasTrait:(NSFontTraitMask)trait atIndex:(int)index message:(NSString *)message;
 {
   NSFont * font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
-  [self assertTrue:[font hasTrait:NSBoldFontMask] message:message];
-  
-}
-
-- (void) assertString:(NSAttributedString *)string isNotBoldAtIndex:(int)index message:(NSString *)message;
-{
-  NSFont * font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
-  [self assertFalse:[font hasTrait:NSBoldFontMask] message:message];
+  [self assertTrue:[font hasTrait:trait] message:message];
 }
 
 - (NSMutableAttributedString *) makeString:(NSString *)string;
@@ -232,11 +224,11 @@
   NSAttributedString * input = [self makeString:@"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString * output = [queue processAttributedString:input];
 
-  [self assertString:output isNotBoldAtIndex:0 message:@"a"];
-  [self assertString:output isBoldAtIndex:1 message:@"b"];
-  [self assertString:output isNotBoldAtIndex:2 message:@"c"];
-  [self assertString:output isBoldAtIndex:3 message:@"d"];
-  [self assertString:output isNotBoldAtIndex:4 message:@"e"];
+  [self assertString:output hasTrait:NSUnboldFontMask atIndex:0 message:@"a"];
+  [self assertString:output hasTrait:NSBoldFontMask atIndex:1 message:@"b"];
+  [self assertString:output hasTrait:NSUnboldFontMask atIndex:2 message:@"c"];
+  [self assertString:output hasTrait:NSBoldFontMask atIndex:3 message:@"d"];
+  [self assertString:output hasTrait:NSUnboldFontMask atIndex:4 message:@"e"];
 }
 
 - (void) testBoldWithBoldAlreadyOn;
@@ -249,14 +241,14 @@
   [queue addFilter:[J3AnsiFormattingFilter filterWithFormatting:[J3Formatting formattingWithForegroundColor:[J3Formatting testingForeground] backgroundColor:[J3Formatting testingBackground] font:boldFont]]];
 
   output = [queue processAttributedString:input];
-  [self assertString:output isBoldAtIndex:0 message:@"a"];
-  [self assertString:output isNotBoldAtIndex:1 message:@"b"];
-  [self assertString:output isBoldAtIndex:2 message:@"c"];
-  [self assertString:output isNotBoldAtIndex:3 message:@"d"];
-  [self assertString:output isBoldAtIndex:4 message:@"e"];
+  [self assertString:output hasTrait:NSBoldFontMask atIndex:0 message:@"a"];
+  [self assertString:output hasTrait:NSUnboldFontMask atIndex:1 message:@"b"];
+  [self assertString:output hasTrait:NSBoldFontMask atIndex:2 message:@"c"];
+  [self assertString:output hasTrait:NSUnboldFontMask atIndex:3 message:@"d"];
+  [self assertString:output hasTrait:NSBoldFontMask atIndex:4 message:@"e"];
   
   output = [queue processAttributedString:input];
-  [self assertString:output isBoldAtIndex:0 message:@"a2"];
+  [self assertString:output hasTrait:NSBoldFontMask atIndex:0 message:@"a2"];
 }
 
 @end
