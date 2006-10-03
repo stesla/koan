@@ -57,7 +57,7 @@
     return nil;
   [self at:&formatting put:format];
   [self at:&currentAttributes put:[NSMutableDictionary dictionary]];
-  [currentAttributes setValue:[formatting activeFont] forKey:NSFontAttributeName];
+  [currentAttributes setValue:[formatting font] forKey:NSFontAttributeName];
   return self; 
 }
 
@@ -198,7 +198,7 @@ return nil;
 
 - (NSFont *) makeFontBold:(NSFont *)font;
 {  
-  if ([[formatting activeFont] isBold])
+  if ([[formatting font] isBold])
     return [font fontWithTrait:NSUnboldFontMask];
   else
     return [font fontWithTrait:NSBoldFontMask];
@@ -206,7 +206,7 @@ return nil;
 
 - (NSFont *) makeFontUnbold:(NSFont *)font;
 {
-  if ([[formatting activeFont] isBold])
+  if ([[formatting font] isBold])
     return [font fontWithTrait:NSBoldFontMask];
   else
     return [font fontWithTrait:NSUnboldFontMask];
@@ -226,7 +226,7 @@ return nil;
 
 - (void) resetFontInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 {
-  [self setAttribute:NSFontAttributeName toValue:[formatting activeFont] inString:string fromLocation:location];
+  [self setAttribute:NSFontAttributeName toValue:[formatting font] inString:string fromLocation:location];
 }
 
 - (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;

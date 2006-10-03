@@ -52,7 +52,7 @@
   return background;
 }
 
-- (NSFont *) activeFont;
+- (NSFont *) font;
 {
   return font;
 }

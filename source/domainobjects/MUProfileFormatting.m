@@ -24,7 +24,7 @@
 #pragma mark -
 #pragma mark J3Formatting protocol
 
-- (NSFont *) activeFont;
+- (NSFont *) font;
 {
   return [profile effectiveFont];
 }

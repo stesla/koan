@@ -10,7 +10,7 @@
 
 @protocol J3Formatting
 - (NSColor *) background;
-- (NSFont *) activeFont;
+- (NSFont *) font;
 - (NSColor *) foreground;
 @end
 
