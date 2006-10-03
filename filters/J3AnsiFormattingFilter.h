@@ -7,18 +7,18 @@
 #import <Cocoa/Cocoa.h>
 #import "J3Filter.h"
 
-@protocol MUFormatting;
+@protocol J3Formatting;
 
 @interface J3AnsiFormattingFilter : J3Filter
 {
   NSString *ansiCode;
-  NSObject <MUFormatting> *formatting;
+  NSObject <J3Formatting> *formatting;
   NSMutableDictionary *currentAttributes;
 }
 
-+ (J3Filter *) filterWithFormatting:(NSObject <MUFormatting> *)format;
++ (J3Filter *) filterWithFormatting:(NSObject <J3Formatting> *)format;
 
-- (id) initWithFormatting:(NSObject <MUFormatting> *)format;
+- (id) initWithFormatting:(NSObject <J3Formatting> *)format;
 
 @end
 

@@ -392,7 +392,7 @@
 }
 
 #pragma mark -
-#pragma mark MUFormatting protocol
+#pragma mark J3Formatting protocol
 
 - (NSFont *) activeFont;
 {

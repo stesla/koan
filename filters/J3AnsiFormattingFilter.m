@@ -5,7 +5,7 @@
 //
 
 #import "J3AnsiFormattingFilter.h"
-#import "MUFormatting.h"
+#import "J3Formatting.h"
 #import "NSFont (Traits).h"
 
 @interface J3AnsiFormattingFilter (Private)
@@ -30,7 +30,7 @@
 @end
 
 @implementation J3AnsiFormattingFilter
-+ (J3Filter *) filterWithFormatting:(NSObject <MUFormatting> *)format;
++ (J3Filter *) filterWithFormatting:(NSObject <J3Formatting> *)format;
 {
   return [[[self alloc] initWithFormatting:format] autorelease];
 }
@@ -49,7 +49,7 @@
   return editString;
 }
 
-- (id) initWithFormatting:(NSObject <MUFormatting> *)format;
+- (id) initWithFormatting:(NSObject <J3Formatting> *)format;
 {
   if (!(self = [super init]))
     return nil;
@@ -63,7 +63,7 @@
 
 - (id) init;
 {
-  return [self initWithFormatting:[MUFormatting formattingForTesting]];
+  return [self initWithFormatting:[J3Formatting formattingForTesting]];
 }
 
 @end

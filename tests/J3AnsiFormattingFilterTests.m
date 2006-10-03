@@ -6,7 +6,7 @@
 
 #import "J3AnsiFormattingFilterTests.h"
 #import "J3AnsiFormattingFilter.h"
-#import "MUFormatting.h"
+#import "J3Formatting.h"
 #import "NSFont (Traits).h"
 
 @interface J3AnsiFormattingFilterTests (Private)
@@ -189,7 +189,7 @@
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:1 message:@"b"];
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:2 message:@"c"];
   [self assertString:output hasValue:[NSColor magentaColor] forAttribute:NSForegroundColorAttributeName atIndex:3 message:@"d"];
-  [self assertString:output hasValue:[MUFormatting testingForeground] forAttribute:NSForegroundColorAttributeName atIndex:4 message:@"e"];
+  [self assertString:output hasValue:[J3Formatting testingForeground] forAttribute:NSForegroundColorAttributeName atIndex:4 message:@"e"];
 }
 
 - (void) testBackgroundColor;
@@ -201,7 +201,7 @@
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSBackgroundColorAttributeName atIndex:1 message:@"b"];
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSBackgroundColorAttributeName atIndex:2 message:@"c"];
   [self assertString:output hasValue:[NSColor magentaColor] forAttribute:NSBackgroundColorAttributeName atIndex:3 message:@"d"];
-  [self assertString:output hasValue:[MUFormatting testingBackground] forAttribute:NSBackgroundColorAttributeName atIndex:4 message:@"e"];
+  [self assertString:output hasValue:[J3Formatting testingBackground] forAttribute:NSBackgroundColorAttributeName atIndex:4 message:@"e"];
 }
 
 - (void) testResetForeAndBack;
@@ -211,8 +211,8 @@
   
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSBackgroundColorAttributeName atIndex:1 message:@"b background"];
   [self assertString:output hasValue:[NSColor cyanColor] forAttribute:NSForegroundColorAttributeName atIndex:1 message:@"b foreground"];
-  [self assertString:output hasValue:[MUFormatting testingBackground] forAttribute:NSBackgroundColorAttributeName atIndex:2 message:@"c background"];  
-  [self assertString:output hasValue:[MUFormatting testingForeground] forAttribute:NSForegroundColorAttributeName atIndex:2 message:@"c foreground"];  
+  [self assertString:output hasValue:[J3Formatting testingBackground] forAttribute:NSBackgroundColorAttributeName atIndex:2 message:@"c background"];  
+  [self assertString:output hasValue:[J3Formatting testingForeground] forAttribute:NSForegroundColorAttributeName atIndex:2 message:@"c foreground"];  
 }
 
 - (void) testPersistColorsBetweenLines;
@@ -243,10 +243,10 @@
 {
   NSMutableAttributedString * input = [self makeString:@"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString * output; 
-  NSFont * boldFont = [[MUFormatting testingFont] fontWithTrait:NSBoldFontMask];
+  NSFont * boldFont = [[J3Formatting testingFont] fontWithTrait:NSBoldFontMask];
   
   [queue clearFilters];
-  [queue addFilter:[J3AnsiFormattingFilter filterWithFormatting:[MUFormatting formattingWithForegroundColor:[MUFormatting testingForeground] backgroundColor:[MUFormatting testingBackground] font:boldFont]]];
+  [queue addFilter:[J3AnsiFormattingFilter filterWithFormatting:[J3Formatting formattingWithForegroundColor:[J3Formatting testingForeground] backgroundColor:[J3Formatting testingBackground] font:boldFont]]];
 
   output = [queue processAttributedString:input];
   [self assertString:output isBoldAtIndex:0 message:@"a"];

@@ -8,13 +8,13 @@
 @protocol J3TelnetConnectionDelegate;
 
 #import <Cocoa/Cocoa.h>
-#import "MUFormatting.h"
+#import "J3Formatting.h"
 #import "MUWorld.h"
 #import "MUPlayer.h"
 #import "J3Filter.h"
 #import "J3Telnet.h"
 
-@interface MUProfile : NSObject <NSCoding, MUFormatting>
+@interface MUProfile : NSObject <NSCoding, J3Formatting>
 {
   MUWorld *world;
   MUPlayer *player;

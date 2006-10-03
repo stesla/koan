@@ -1,19 +1,19 @@
 //
-//  MUFormatting.m
+//  J3Formatting.m
 //  Koan
 //
 //  Created by Samuel Tesla on 9/27/06.
 //  Copyright 2006 __MyCompanyName__. All rights reserved.
 //
 
-#import "MUFormatting.h"
+#import "J3Formatting.h"
 
 
-@implementation MUFormatting
+@implementation J3Formatting
 
 + (id) formattingForTesting;
 {
-  return [self formattingWithForegroundColor:[MUFormatting testingForeground] backgroundColor:[MUFormatting testingBackground] font:[MUFormatting testingFont]];
+  return [self formattingWithForegroundColor:[J3Formatting testingForeground] backgroundColor:[J3Formatting testingBackground] font:[J3Formatting testingFont]];
 }
 
 + (id) formattingWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)font;

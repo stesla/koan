@@ -1,5 +1,5 @@
 //
-//  MUFormatting.h
+//  J3Formatting.h
 //  Koan
 //
 //  Created by Samuel Tesla on 9/27/06.
@@ -8,13 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol MUFormatting
+@protocol J3Formatting
 - (NSColor *) background;
 - (NSFont *) activeFont;
 - (NSColor *) foreground;
 @end
 
-@interface MUFormatting : NSObject <MUFormatting>
+@interface J3Formatting : NSObject <J3Formatting>
 {
   NSColor * background;
   NSFont * font;
