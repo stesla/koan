@@ -13,12 +13,12 @@
 
 + (id) formattingForTesting;
 {
-  return [self formattingWithForegroundColor:[MUFormatting testingForeground] backgroundColor:[MUFormatting testingBackground]];
+  return [self formattingWithForegroundColor:[MUFormatting testingForeground] backgroundColor:[MUFormatting testingBackground] font:[MUFormatting testingFont]];
 }
 
-+ (id) formattingWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back;
++ (id) formattingWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)font;
 {
-  return [[[self alloc] initWithForegroundColor:fore backgroundColor:back] autorelease];
+  return [[[self alloc] initWithForegroundColor:fore backgroundColor:back font:font] autorelease];
 }
 
 + (NSColor *) testingBackground;
@@ -26,23 +26,35 @@
   return [NSColor blackColor];
 }
 
++ (NSFont *) testingFont;
+{
+  return [NSFont systemFontOfSize:[NSFont systemFontSize]];
+}
+
 + (NSColor *) testingForeground;
 {
   return [NSColor lightGrayColor];
 }
 
-- (id) initWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back;
+
+- (id) initWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)aFont;
 {
   if (!(self = [super init]))
     return nil;
   [self at:&foreground put:fore];
   [self at:&background put:back];
+  [self at:&font put:aFont];
   return self;
 }
 
 - (NSColor *) background;
 {
   return background;
+}
+
+- (NSFont *) activeFont;
+{
+  return font;
 }
 
 - (NSColor *) foreground;

@@ -7,6 +7,7 @@
 #import "J3AnsiFormattingFilterTests.h"
 #import "J3AnsiFormattingFilter.h"
 #import "MUFormatting.h"
+#import "NSFont (Traits).h"
 
 @interface J3AnsiFormattingFilterTests (Private)
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
@@ -56,19 +57,15 @@
 
 - (void) assertString:(NSAttributedString *)string isBoldAtIndex:(int)index message:(NSString *)message;
 {
-  NSFontManager * fontManager = [NSFontManager sharedFontManager];
-  NSFont * font;
-  font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
-  [self assertTrue:[fontManager fontNamed:[font fontName] hasTraits:NSBoldFontMask] message:message];
+  NSFont * font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
+  [self assertTrue:[font hasTrait:NSBoldFontMask] message:message];
   
 }
 
 - (void) assertString:(NSAttributedString *)string isNotBoldAtIndex:(int)index message:(NSString *)message;
 {
-  NSFontManager * fontManager = [NSFontManager sharedFontManager];
-  NSFont * font;
-  font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
-  [self assertFalse:[fontManager fontNamed:[font fontName] hasTraits:NSBoldFontMask] message:message];
+  NSFont * font = [string attribute:NSFontAttributeName atIndex:index effectiveRange:NULL];
+  [self assertFalse:[font hasTrait:NSBoldFontMask] message:message];
 }
 
 - (NSMutableAttributedString *) makeString:(NSString *)string;
@@ -240,6 +237,26 @@
   [self assertString:output isNotBoldAtIndex:2 message:@"c"];
   [self assertString:output isBoldAtIndex:3 message:@"d"];
   [self assertString:output isNotBoldAtIndex:4 message:@"e"];
+}
+
+- (void) testBoldWithBoldAlreadyOn;
+{
+  NSMutableAttributedString * input = [self makeString:@"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSAttributedString * output; 
+  NSFont * boldFont = [[MUFormatting testingFont] fontWithTrait:NSBoldFontMask];
+  
+  [queue clearFilters];
+  [queue addFilter:[J3AnsiFormattingFilter filterWithFormatting:[MUFormatting formattingWithForegroundColor:[MUFormatting testingForeground] backgroundColor:[MUFormatting testingBackground] font:boldFont]]];
+
+  output = [queue processAttributedString:input];
+  [self assertString:output isBoldAtIndex:0 message:@"a"];
+  [self assertString:output isNotBoldAtIndex:1 message:@"b"];
+  [self assertString:output isBoldAtIndex:2 message:@"c"];
+  [self assertString:output isNotBoldAtIndex:3 message:@"d"];
+  [self assertString:output isBoldAtIndex:4 message:@"e"];
+  
+  output = [queue processAttributedString:input];
+  [self assertString:output isBoldAtIndex:0 message:@"a2"];
 }
 
 @end

@@ -26,9 +26,7 @@
 {
   if (![super init])
     return nil;
-  
-  filters = [[NSMutableArray alloc] init];
-  
+  [self clearFilters];
   return self;
 }
 
@@ -55,6 +53,11 @@
 - (void) addFilter:(id <J3Filtering>)filter
 {
   [filters addObject:filter];
+}
+
+- (void) clearFilters;
+{
+  [self at:&filters put:[NSMutableArray array]];
 }
 
 @end

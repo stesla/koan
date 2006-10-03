@@ -394,6 +394,11 @@
 #pragma mark -
 #pragma mark MUFormatting protocol
 
+- (NSFont *) activeFont;
+{
+  return [self effectiveFont];
+}
+
 - (NSColor *) foreground;
 {
   if (textColor)

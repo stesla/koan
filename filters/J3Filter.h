@@ -25,5 +25,6 @@
 
 - (NSAttributedString *) processAttributedString:(NSAttributedString *)string;
 - (void) addFilter:(id <J3Filtering>)filter;
+- (void) clearFilters;
 
 @end

@@ -6,6 +6,7 @@
 
 #import "J3AnsiFormattingFilter.h"
 #import "MUFormatting.h"
+#import "NSFont (Traits).h"
 
 @interface J3AnsiFormattingFilter (Private)
 
@@ -13,9 +14,11 @@
 - (id) attributeValueForAnsiCodeAndString:(NSAttributedString *)string location:(int)location;
 - (BOOL) extractCode:(NSMutableAttributedString *)editString;
 - (NSFont *) fontInString:(NSAttributedString *)string atLocation:(int)location;
+- (NSFont *) makeFontBold:(NSFont *)font;
+- (NSFont *) makeFontUnbold:(NSFont *)font;
 - (void) resetAllAttributesInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
-- (void) resetBoldInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) resetFontInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) setAttribute:(NSString *)attribute toValue:(id)value inString:(NSMutableAttributedString *)string fromLocation:(int)location;
 - (void) setAttributes:(NSDictionary *)attributes onString:(NSMutableAttributedString *)string fromLocation:(int)location;
@@ -50,8 +53,11 @@
 {
   if (!(self = [super init]))
     return nil;
-  [self at:&currentAttributes put:[NSMutableDictionary dictionary]];
+  if (!format)
+    return nil;
   [self at:&formatting put:format];
+  [self at:&currentAttributes put:[NSMutableDictionary dictionary]];
+  [currentAttributes setValue:[formatting activeFont] forKey:NSFontAttributeName];
   return self; 
 }
 
@@ -153,11 +159,11 @@ return nil;
       break;    
       
     case J3AnsiBoldOn:
-      return [self setTrait:NSBoldFontMask onFont:[self fontInString:string atLocation:location]];
+      return [self makeFontBold:[self fontInString:string atLocation:location]];
       break;
         
     case J3AnsiBoldOff:
-      return [self setTrait:NSUnboldFontMask onFont:[self fontInString:string atLocation:location]];
+      return [self makeFontUnbold:[self fontInString:string atLocation:location]];
       break;
   }
   return nil;
@@ -190,11 +196,27 @@ return nil;
   return [string attribute:NSFontAttributeName atIndex:location effectiveRange:NULL];
 }
 
+- (NSFont *) makeFontBold:(NSFont *)font;
+{  
+  if ([[formatting activeFont] isBold])
+    return [font fontWithTrait:NSUnboldFontMask];
+  else
+    return [font fontWithTrait:NSBoldFontMask];
+}
+
+- (NSFont *) makeFontUnbold:(NSFont *)font;
+{
+  if ([[formatting activeFont] isBold])
+    return [font fontWithTrait:NSBoldFontMask];
+  else
+    return [font fontWithTrait:NSUnboldFontMask];
+}
+
 - (void) resetAllAttributesInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 {
   [self resetBackgroundInString:string fromLocation:location];
   [self resetForegroundInString:string fromLocation:location];
-  [self resetBoldInString:string fromLocation:location];
+  [self resetFontInString:string fromLocation:location];
 }
 
 - (void) resetBackgroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
@@ -202,11 +224,9 @@ return nil;
   [self setAttribute:NSBackgroundColorAttributeName toValue:[formatting background] inString:string fromLocation:location];
 }
 
-- (void) resetBoldInString:(NSMutableAttributedString *)string fromLocation:(int)location;
+- (void) resetFontInString:(NSMutableAttributedString *)string fromLocation:(int)location;
 {
-  NSFont * font;
-  font = [self fontInString:string atLocation:location];
-  [self setAttribute:NSFontAttributeName toValue:[self setTrait:NSUnboldFontMask onFont:font] inString:string fromLocation:location];
+  [self setAttribute:NSFontAttributeName toValue:[formatting activeFont] inString:string fromLocation:location];
 }
 
 - (void) resetForegroundInString:(NSMutableAttributedString *)string fromLocation:(int)location;
