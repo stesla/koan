@@ -54,6 +54,9 @@
 		7E5103A30AD1E14000142EF3 /* J3Formatting.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E5103A10AD1E14000142EF3 /* J3Formatting.h */; };
 		7E5103A40AD1E14000142EF3 /* J3Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103A20AD1E14000142EF3 /* J3Formatting.m */; };
 		7E5103A50AD1E14000142EF3 /* J3Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103A20AD1E14000142EF3 /* J3Formatting.m */; };
+		7E5103BC0AD1E22D00142EF3 /* MUProfileFormatting.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E5103BA0AD1E22D00142EF3 /* MUProfileFormatting.h */; };
+		7E5103BD0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */; };
+		7E5103BE0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */; };
 		7E5166610AB4C01400F32CCB /* J3Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E5166600AB4C01400F32CCB /* J3Testing.framework */; };
 		7E5C2DDB09B105B2006993E1 /* J3SocksAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C2DDA09B105B2006993E1 /* J3SocksAuthentication.m */; };
 		7E5C2DDD09B105B2006993E1 /* J3SocksAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C2DDA09B105B2006993E1 /* J3SocksAuthentication.m */; };
@@ -223,6 +226,7 @@
 				7E43C1C10ACB1A4000A8E677 /* J3AnsiFormattingFilter.h in CopyFiles */,
 				7E5103110AD1D5AA00142EF3 /* NSFont (Traits).h in CopyFiles */,
 				7E5103A30AD1E14000142EF3 /* J3Formatting.h in CopyFiles */,
+				7E5103BC0AD1E22D00142EF3 /* MUProfileFormatting.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +270,8 @@
 		7E5103100AD1D5AA00142EF3 /* NSFont (Traits).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFont (Traits).m"; sourceTree = "<group>"; };
 		7E5103A10AD1E14000142EF3 /* J3Formatting.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3Formatting.h; sourceTree = "<group>"; };
 		7E5103A20AD1E14000142EF3 /* J3Formatting.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3Formatting.m; sourceTree = "<group>"; };
+		7E5103BA0AD1E22D00142EF3 /* MUProfileFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUProfileFormatting.h; sourceTree = "<group>"; };
+		7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUProfileFormatting.m; sourceTree = "<group>"; };
 		7E5166600AB4C01400F32CCB /* J3Testing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = J3Testing.framework; path = /System/Library/Frameworks/J3Testing.framework; sourceTree = "<absolute>"; };
 		7E5C2DD909B105B2006993E1 /* J3SocksAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocksAuthentication.h; sourceTree = "<group>"; };
 		7E5C2DDA09B105B2006993E1 /* J3SocksAuthentication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SocksAuthentication.m; sourceTree = "<group>"; };
@@ -754,10 +760,12 @@
 				E6BFD8CB086258290060412C /* J3UpdateInterval.h */,
 				E677D20E0778041F00B417D2 /* MUPlayer.h */,
 				7E39EF9B0783938F0042A17A /* MUProfile.h */,
+				7E5103BA0AD1E22D00142EF3 /* MUProfileFormatting.h */,
 				E6DA667007776D9900C46267 /* MUWorld.h */,
 				E6BFD8CC086258290060412C /* J3UpdateInterval.m */,
 				E677D20F0778041F00B417D2 /* MUPlayer.m */,
 				7E39EF9C0783938F0042A17A /* MUProfile.m */,
+				7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */,
 				E6DA667107776D9900C46267 /* MUWorld.m */,
 			);
 			name = "Domain Objects";
@@ -1052,6 +1060,7 @@
 				7E43C1C30ACB1A4000A8E677 /* J3AnsiFormattingFilter.m in Sources */,
 				7E5103130AD1D5AA00142EF3 /* NSFont (Traits).m in Sources */,
 				7E5103A50AD1E14000142EF3 /* J3Formatting.m in Sources */,
+				7E5103BE0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1121,6 +1130,7 @@
 				7E43C1C20ACB1A4000A8E677 /* J3AnsiFormattingFilter.m in Sources */,
 				7E5103120AD1D5AA00142EF3 /* NSFont (Traits).m in Sources */,
 				7E5103A40AD1E14000142EF3 /* J3Formatting.m in Sources */,
+				7E5103BD0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

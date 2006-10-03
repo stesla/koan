@@ -57,7 +57,7 @@ enum MUSearchDirections
   historyRing = [[J3HistoryRing alloc] init];
     
   filterQueue = [[J3FilterQueue alloc] init];
-  [filterQueue addFilter:[J3AnsiFormattingFilter filterWithFormatting:profile]];
+  [filterQueue addFilter:[J3AnsiFormattingFilter filterWithFormatting:[profile formatting]]];
   [filterQueue addFilter:[J3NaiveURLFilter filter]];
   [filterQueue addFilter:[self createLogger]];
   
@@ -576,8 +576,8 @@ enum MUSearchDirections
   
   [typingAttributes removeObjectForKey:NSLinkAttributeName];
   [typingAttributes removeObjectForKey:NSUnderlineStyleAttributeName];
-  [typingAttributes setObject:[profile foreground] forKey:NSForegroundColorAttributeName];
-  [typingAttributes setObject:[profile background] forKey:NSBackgroundColorDocumentAttribute];
+  [typingAttributes setObject:[[profile formatting] foreground] forKey:NSForegroundColorAttributeName];
+  [typingAttributes setObject:[[profile formatting] background] forKey:NSBackgroundColorDocumentAttribute];
   
   unfilteredString = [NSAttributedString attributedStringWithString:string attributes:typingAttributes];  
   filteredString = [filterQueue processAttributedString:unfilteredString]; 

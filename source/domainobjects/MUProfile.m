@@ -6,6 +6,7 @@
 
 #import "MUCodingService.h"
 #import "MUProfile.h"
+#import "MUProfileFormatting.h"
 #import "J3TextLogger.h"
 
 @interface MUProfile (Private)
@@ -244,6 +245,11 @@
   [self didChangeValueForKey:@"effectiveVisitedLinkColor"];
 }
 
+- (NSObject <J3Formatting> *) formatting;
+{
+  return [[[MUProfileFormatting alloc] initWithProfile:self] autorelease];
+}
+
 #pragma mark -
 #pragma mark Accessors for bindings
 
@@ -389,30 +395,6 @@
 	[self registerForNotifications];
 	
 	return self;
-}
-
-#pragma mark -
-#pragma mark J3Formatting protocol
-
-- (NSFont *) activeFont;
-{
-  return [self effectiveFont];
-}
-
-- (NSColor *) foreground;
-{
-  if (textColor)
-    return textColor;
-  else
-    return [NSUnarchiver unarchiveObjectWithData:[self effectiveTextColor]];  
-}
-
-- (NSColor *) background;
-{
-  if (backgroundColor)
-    return backgroundColor;
-  else
-    return [NSUnarchiver unarchiveObjectWithData:[self effectiveBackgroundColor]];  
 }
 
 @end

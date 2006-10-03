@@ -14,7 +14,7 @@
 #import "J3Filter.h"
 #import "J3Telnet.h"
 
-@interface MUProfile : NSObject <NSCoding, J3Formatting>
+@interface MUProfile : NSObject <NSCoding>
 {
   MUWorld *world;
   MUPlayer *player;
@@ -68,6 +68,7 @@
 - (void) setLinkColor:(NSColor *)newLinkColor;
 - (NSColor *) visitedLinkColor;
 - (void) setVisitedLinkColor:(NSColor *)newVisitedLinkColor;
+- (NSObject <J3Formatting> *) formatting;
 
 // Derived bindings.
 - (NSFont *) effectiveFont;
