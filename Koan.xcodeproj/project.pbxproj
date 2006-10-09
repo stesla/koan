@@ -78,7 +78,7 @@
 		7E87756509AD62E400A883BC /* J3HistoryRingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */; };
 		7E87756609AD62E400A883BC /* J3LineBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */; };
 		7E87756809AD62E400A883BC /* J3NaiveURLFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */; };
-		7E87756909AD62E400A883BC /* J3TextLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A63E0749698F007005AC /* J3TextLoggerTests.m */; };
+		7E87756909AD62E400A883BC /* MUTextLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A63E0749698F007005AC /* MUTextLoggerTests.m */; };
 		7E87756A09AD62E400A883BC /* J3UpdateIntervalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */; };
 		7E87756B09AD62E400A883BC /* J3WriteBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */; };
 		7E87756C09AD62E400A883BC /* MUPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC112E9078B763E00CFA562 /* MUPlayerTests.m */; };
@@ -124,7 +124,7 @@
 		7E87760C09AD668900A883BC /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
 		7E87760D09AD668900A883BC /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
 		7E87760E09AD668900A883BC /* J3ConnectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87735209AD44DE00A883BC /* J3ConnectionFactory.m */; };
-		7E87761709AD692400A883BC /* J3TextLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6340749697C007005AC /* J3TextLogger.m */; };
+		7E87761709AD692400A883BC /* MUTextLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6340749697C007005AC /* MUTextLogger.m */; };
 		7E87761809AD694E00A883BC /* MUWorldRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3A71E077A1B270011A461 /* MUWorldRegistry.m */; };
 		7E87764409AD6B3000A883BC /* MUConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E622A551074231A60069335B /* MUConstants.m */; };
 		7EBFDB0E09380B100077BA3A /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
@@ -181,7 +181,7 @@
 		E6DA667307776D9900C46267 /* MUWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DA667107776D9900C46267 /* MUWorld.m */; };
 		E6E79CED07697FD100A8FB96 /* UKPrefsPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E79CEB07697FD100A8FB96 /* UKPrefsPanel.m */; };
 		E6E7A62807496940007005AC /* J3HistoryRing.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A62707496940007005AC /* J3HistoryRing.m */; };
-		E6E7A6350749697C007005AC /* J3TextLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6340749697C007005AC /* J3TextLogger.m */; };
+		E6E7A6350749697C007005AC /* MUTextLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6340749697C007005AC /* MUTextLogger.m */; };
 		E6E7BF0E07867F080065EDD6 /* finger-cursor.png in Resources */ = {isa = PBXBuildFile; fileRef = E6E7BF0D07867F080065EDD6 /* finger-cursor.png */; };
 		E6EB62BF07569D2E009F47D5 /* MUMainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = E6EB62BE07569D2E009F47D5 /* MUMainMenu.nib */; };
 		E6EB62C107569D33009F47D5 /* MUConnectionWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = E6EB62C007569D33009F47D5 /* MUConnectionWindow.nib */; };
@@ -416,10 +416,10 @@
 		E6E79CEB07697FD100A8FB96 /* UKPrefsPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKPrefsPanel.m; sourceTree = "<group>"; };
 		E6E7A6210749693A007005AC /* J3HistoryRing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3HistoryRing.h; sourceTree = "<group>"; };
 		E6E7A62707496940007005AC /* J3HistoryRing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3HistoryRing.m; sourceTree = "<group>"; };
-		E6E7A62E07496971007005AC /* J3TextLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TextLogger.h; sourceTree = "<group>"; };
-		E6E7A6340749697C007005AC /* J3TextLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TextLogger.m; sourceTree = "<group>"; };
-		E6E7A63D0749698F007005AC /* J3TextLoggerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TextLoggerTests.h; sourceTree = "<group>"; };
-		E6E7A63E0749698F007005AC /* J3TextLoggerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TextLoggerTests.m; sourceTree = "<group>"; };
+		E6E7A62E07496971007005AC /* MUTextLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUTextLogger.h; sourceTree = "<group>"; };
+		E6E7A6340749697C007005AC /* MUTextLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUTextLogger.m; sourceTree = "<group>"; };
+		E6E7A63D0749698F007005AC /* MUTextLoggerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUTextLoggerTests.h; sourceTree = "<group>"; };
+		E6E7A63E0749698F007005AC /* MUTextLoggerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUTextLoggerTests.m; sourceTree = "<group>"; };
 		E6E7A6CC074970FE007005AC /* J3HistoryRingTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3HistoryRingTests.h; sourceTree = "<group>"; };
 		E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3HistoryRingTests.m; sourceTree = "<group>"; };
 		E6E7BF0D07867F080065EDD6 /* finger-cursor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "finger-cursor.png"; sourceTree = "<group>"; };
@@ -695,12 +695,12 @@
 				E6505497077EA20E0016F30E /* J3NaiveURLFilterTests.h */,
 				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
 				7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */,
-				E6E7A63D0749698F007005AC /* J3TextLoggerTests.h */,
 				E6BFD8E9086258830060412C /* J3UpdateIntervalTests.h */,
 				7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */,
 				7EC112E8078B763E00CFA562 /* MUPlayerTests.h */,
 				E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */,
 				7EDD3E3F078A4AFB00138CD1 /* MUProfileTests.h */,
+				E6E7A63D0749698F007005AC /* MUTextLoggerTests.h */,
 				7E13FA590788C75F0071D30C /* MUWorldTests.h */,
 				7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */,
 				7E43C1ED0ACB1C0900A8E677 /* J3AnsiFormattingFilterTests.m */,
@@ -710,12 +710,12 @@
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
 				7E68DC2D092AC2AF004554BD /* J3TelnetStateMachineTests.m */,
 				7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */,
-				E6E7A63E0749698F007005AC /* J3TextLoggerTests.m */,
 				E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */,
 				7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */,
 				7EC112E9078B763E00CFA562 /* MUPlayerTests.m */,
 				E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */,
 				7EDD3E40078A4AFB00138CD1 /* MUProfileTests.m */,
+				E6E7A63E0749698F007005AC /* MUTextLoggerTests.m */,
 				7E13FA5A0788C75F0071D30C /* MUWorldTests.m */,
 				7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */,
 				E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */,
@@ -743,12 +743,12 @@
 				7EFE43820749C7CE002C7D48 /* J3Filter.h */,
 				7E5103A10AD1E14000142EF3 /* J3Formatting.h */,
 				E6C9D604077C2DC6007BB2C1 /* J3NaiveURLFilter.h */,
-				E6E7A62E07496971007005AC /* J3TextLogger.h */,
+				E6E7A62E07496971007005AC /* MUTextLogger.h */,
 				7E43C1C00ACB1A4000A8E677 /* J3AnsiFormattingFilter.m */,
 				7EFE43830749C7CE002C7D48 /* J3Filter.m */,
 				7E5103A20AD1E14000142EF3 /* J3Formatting.m */,
 				E6C9D605077C2DC6007BB2C1 /* J3NaiveURLFilter.m */,
-				E6E7A6340749697C007005AC /* J3TextLogger.m */,
+				E6E7A6340749697C007005AC /* MUTextLogger.m */,
 			);
 			name = Filters;
 			path = filters;
@@ -997,7 +997,7 @@
 				7E87756509AD62E400A883BC /* J3HistoryRingTests.m in Sources */,
 				7E87756609AD62E400A883BC /* J3LineBufferTests.m in Sources */,
 				7E87756809AD62E400A883BC /* J3NaiveURLFilterTests.m in Sources */,
-				7E87756909AD62E400A883BC /* J3TextLoggerTests.m in Sources */,
+				7E87756909AD62E400A883BC /* MUTextLoggerTests.m in Sources */,
 				7E87756A09AD62E400A883BC /* J3UpdateIntervalTests.m in Sources */,
 				7E87756B09AD62E400A883BC /* J3WriteBufferTests.m in Sources */,
 				7E87756C09AD62E400A883BC /* MUPlayerTests.m in Sources */,
@@ -1014,7 +1014,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E87761809AD694E00A883BC /* MUWorldRegistry.m in Sources */,
-				7E87761709AD692400A883BC /* J3TextLogger.m in Sources */,
+				7E87761709AD692400A883BC /* MUTextLogger.m in Sources */,
 				7E8775D709AD668900A883BC /* J3WriteBuffer.m in Sources */,
 				7E8775D909AD668900A883BC /* NSAttributedString (Allocating).m in Sources */,
 				7E8775DA09AD668900A883BC /* MUConstants.m in Sources */,
@@ -1077,7 +1077,7 @@
 				E62C8FBE07421D83005662BC /* MUConnectionToolbarController.m in Sources */,
 				E6E7A62807496940007005AC /* J3HistoryRing.m in Sources */,
 				7EFE43870749C7CE002C7D48 /* J3Filter.m in Sources */,
-				E6E7A6350749697C007005AC /* J3TextLogger.m in Sources */,
+				E6E7A6350749697C007005AC /* MUTextLogger.m in Sources */,
 				E64C9634076BF95E00D0D7C0 /* J3PortFormatter.m in Sources */,
 				E6E79CED07697FD100A8FB96 /* UKPrefsPanel.m in Sources */,
 				E60DDB86076CE889009870E4 /* FontNameToDisplayNameTransformer.m in Sources */,

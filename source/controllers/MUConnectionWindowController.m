@@ -9,7 +9,7 @@
 
 #import "J3AnsiFormattingFilter.h"
 #import "J3NaiveURLFilter.h"
-#import "J3TextLogger.h"
+#import "MUTextLogger.h"
 
 #import <objc/objc-runtime.h>
 
@@ -535,7 +535,7 @@ enum MUSearchDirections
   if (profile)
     return [profile logger];
   else
-    return [J3TextLogger filter];
+    return [MUTextLogger filter];
 }
 
 - (void) didEndCloseSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo

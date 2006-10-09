@@ -7,7 +7,7 @@
 #import "MUCodingService.h"
 #import "MUProfile.h"
 #import "MUProfileFormatting.h"
-#import "J3TextLogger.h"
+#import "MUTextLogger.h"
 
 @interface MUProfile (Private)
 
@@ -342,9 +342,9 @@
 - (J3Filter *) logger
 {
   if (player)
-    return [J3TextLogger filterWithWorld:world player:player];
+    return [MUTextLogger filterWithWorld:world player:player];
   else
-    return [J3TextLogger filterWithWorld:world];
+    return [MUTextLogger filterWithWorld:world];
 }
 
 - (NSString *) loginString

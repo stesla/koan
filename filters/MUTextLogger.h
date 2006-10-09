@@ -1,5 +1,5 @@
 //
-// J3TextLogger.h
+// MUTextLogger.h
 //
 // Copyright (c) 2004, 2005 3James Software
 //
@@ -10,7 +10,7 @@
 @class MUPlayer;
 @class MUWorld;
 
-@interface J3TextLogger : J3Filter
+@interface MUTextLogger : J3Filter
 {
   NSOutputStream *output;
 }

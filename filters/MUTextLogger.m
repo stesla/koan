@@ -1,15 +1,15 @@
 //
-// J3TextLogger.m
+// MUTextLogger.m
 //
 // Copyright (c) 2004, 2005 3James Software
 //
 
 #import "categories/NSFileManager (Recursive).h"
-#import "J3TextLogger.h"
+#import "MUTextLogger.h"
 #import "MUPlayer.h"
 #import "MUWorld.h"
 
-@interface J3TextLogger (Private)
+@interface MUTextLogger (Private)
 
 - (void) log:(NSAttributedString *)editString;
 
@@ -17,21 +17,21 @@
 
 #pragma mark -
 
-@implementation J3TextLogger
+@implementation MUTextLogger
 
 + (J3Filter *) filter
 {
-  return [[[J3TextLogger alloc] init] autorelease];
+  return [[[MUTextLogger alloc] init] autorelease];
 }
 
 + (J3Filter *) filterWithWorld:(MUWorld *)world
 {
-  return [[[J3TextLogger alloc] initWithWorld:world] autorelease];
+  return [[[MUTextLogger alloc] initWithWorld:world] autorelease];
 }
 
 + (J3Filter *) filterWithWorld:(MUWorld *)world player:(MUPlayer *)player
 {
-  return [[[J3TextLogger alloc] initWithWorld:world player:player] autorelease];
+  return [[[MUTextLogger alloc] initWithWorld:world player:player] autorelease];
 }
 
 - (id) initWithOutputStream:(NSOutputStream *)stream
@@ -112,7 +112,7 @@
 
 #pragma mark -
 
-@implementation J3TextLogger (Private)
+@implementation MUTextLogger (Private)
 
 - (void) log:(NSAttributedString *)string
 {
