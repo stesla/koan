@@ -8,7 +8,6 @@
 
 @class MUPreferencesController;
 @class MUProfilesController;
-@class MUUpdateController;
 @class MUProxySettingsController;
 
 @interface MUApplicationController : NSObject
@@ -21,7 +20,6 @@
 	IBOutlet NSTextField *newConnectionPortField;
 	IBOutlet NSButton *newConnectionSaveWorldButton;
   
-  IBOutlet MUUpdateController *updateController;
   IBOutlet MUPreferencesController *preferencesController;
   
   unsigned unreadCount;

@@ -1,9 +1,7 @@
 //
-//  MUProfileFormatting.m
-//  Koan
+// MUProfileFormatting.m
 //
-//  Created by Samuel on 10/2/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "MUProfileFormatting.h"
@@ -24,12 +22,12 @@
 #pragma mark -
 #pragma mark J3Formatting protocol
 
-- (NSFont *) font;
+- (NSFont *) font
 {
   return [profile effectiveFont];
 }
 
-- (NSColor *) foreground;
+- (NSColor *) foreground
 {
   if ([profile textColor])
     return [profile textColor];
@@ -37,7 +35,7 @@
     return [NSUnarchiver unarchiveObjectWithData:[profile effectiveTextColor]];  
 }
 
-- (NSColor *) background;
+- (NSColor *) background
 {
   if ([profile backgroundColor])
     return [profile backgroundColor];

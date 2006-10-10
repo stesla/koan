@@ -14,7 +14,6 @@
 #import "MUProfilesController.h"
 #import "MUServices.h"
 #import "J3ConnectionFactory.h"
-#import "J3UpdateController.h"
 #import "MUWorld.h"
 
 @interface MUApplicationController (Private)
@@ -49,7 +48,6 @@
   [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
   
   [defaults setObject:[NSArray array] forKey:MUPWorlds];
-  [defaults setObject:[NSNumber numberWithInt:0] forKey:MUPCheckForUpdatesInterval];
   
   [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
   
@@ -236,34 +234,6 @@
 {
   unreadCount = 0;
   [self updateApplicationBadge];
-}
-
-- (void) applicationDidFinishLaunching:(NSNotification *)notification
-{
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  id checkAutomatically = [defaults objectForKey:MUPCheckForUpdatesAutomatically];
-  
-  if (!checkAutomatically)
-  {
-    int choice;
-    NSAlert *alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesTitle, nil), MUApplicationName]
-                                     defaultButton:NSLocalizedString (MULYes, nil)
-                                   alternateButton:NSLocalizedString (MULNo, nil)
-                                       otherButton:nil
-                         informativeTextWithFormat:[NSString stringWithFormat:NSLocalizedString (MULShouldCheckAutomaticallyForUpdatesMessage, nil), MUApplicationName]];
-    
-    choice = [alert runModal];
-    
-    if (choice == NSAlertDefaultReturn)
-      [defaults setBool:YES forKey:MUPCheckForUpdatesAutomatically];
-    else if (choice == NSAlertAlternateReturn)
-      [defaults setBool:NO forKey:MUPCheckForUpdatesAutomatically];
-  }
-  
-  if ([defaults boolForKey:MUPCheckForUpdatesAutomatically])
-  {
-    [updateController checkForUpdatesAutomatically];
-  }
 }
 
 - (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *)application

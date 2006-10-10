@@ -24,13 +24,6 @@ extern NSString *MUPVisitedLinkColor;
 extern NSString *MUPProxySettings;
 extern NSString *MUPUseProxy;
 
-extern NSString *MUPCheckForUpdatesAutomatically;
-extern NSString *MUPCheckForUpdatesInterval;
-extern NSString *MUPNewestVersionToIgnore;
-extern NSString *MUPMostRecentVersion;
-extern NSString *MUPMostRecentVersionCheckTime;
-extern NSString *MUPMostRecentVersionURL;
-
 extern NSString *MUPPlaySounds;
 extern NSString *MUPPlayWhenActive;
 extern NSString *MUPSoundChoice;

@@ -1,24 +1,26 @@
 //
-//  J3Formatting.h
-//  Koan
+// J3Formatting.h
 //
-//  Created by Samuel Tesla on 9/27/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 
 @protocol J3Formatting
+
 - (NSColor *) background;
 - (NSFont *) font;
 - (NSColor *) foreground;
+
 @end
+
+#pragma mark -
 
 @interface J3Formatting : NSObject <J3Formatting>
 {
-  NSColor * background;
-  NSFont * font;
-  NSColor * foreground;
+  NSColor *background;
+  NSFont *font;
+  NSColor *foreground;
 }
 
 + (id) formattingForTesting;

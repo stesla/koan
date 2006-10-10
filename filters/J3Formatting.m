@@ -1,43 +1,39 @@
 //
-//  J3Formatting.m
-//  Koan
+// J3Formatting.m
 //
-//  Created by Samuel Tesla on 9/27/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "J3Formatting.h"
 
-
 @implementation J3Formatting
 
-+ (id) formattingForTesting;
++ (id) formattingForTesting
 {
   return [self formattingWithForegroundColor:[J3Formatting testingForeground] backgroundColor:[J3Formatting testingBackground] font:[J3Formatting testingFont]];
 }
 
-+ (id) formattingWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)font;
++ (id) formattingWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)font
 {
   return [[[self alloc] initWithForegroundColor:fore backgroundColor:back font:font] autorelease];
 }
 
-+ (NSColor *) testingBackground;
++ (NSColor *) testingBackground
 {
   return [NSColor blackColor];
 }
 
-+ (NSFont *) testingFont;
++ (NSFont *) testingFont
 {
   return [NSFont systemFontOfSize:[NSFont systemFontSize]];
 }
 
-+ (NSColor *) testingForeground;
++ (NSColor *) testingForeground
 {
   return [NSColor lightGrayColor];
 }
 
-
-- (id) initWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)aFont;
+- (id) initWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)aFont
 {
   if (!(self = [super init]))
     return nil;
@@ -47,20 +43,19 @@
   return self;
 }
 
-- (NSColor *) background;
+- (NSColor *) background
 {
   return background;
 }
 
-- (NSFont *) font;
+- (NSFont *) font
 {
   return font;
 }
 
-- (NSColor *) foreground;
+- (NSColor *) foreground
 {
   return foreground;
 }
-
 
 @end

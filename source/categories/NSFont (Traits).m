@@ -1,34 +1,31 @@
 //
-//  NSFont (Traits).m
-//  Koan
+// NSFont (Traits).m
 //
-//  Created by Samuel on 10/2/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import "NSFont (Traits).h"
 
-
 @implementation NSFont (Traits)
 
-- (NSFont *) fontWithTrait:(NSFontTraitMask)trait;
+- (NSFont *) fontWithTrait:(NSFontTraitMask)trait
 {
   NSFontManager * fontManager = [NSFontManager sharedFontManager];
   return [fontManager convertFont:self toHaveTrait:trait];
 }
 
-- (BOOL) hasTrait:(NSFontTraitMask)trait;
+- (BOOL) hasTrait:(NSFontTraitMask)trait
 {
   NSFontManager * fontManager = [NSFontManager sharedFontManager];
   return [fontManager fontNamed:[self fontName] hasTraits:trait];
 }
 
-- (BOOL) isBold;
+- (BOOL) isBold
 {
   return [self hasTrait:NSBoldFontMask];
 }
 
-- (BOOL) isItalic;
+- (BOOL) isItalic
 {
   return [self hasTrait:NSItalicFontMask];
 }

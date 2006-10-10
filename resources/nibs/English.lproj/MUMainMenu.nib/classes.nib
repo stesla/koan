@@ -49,7 +49,6 @@
                 newConnectionSaveWorldButton = NSButton; 
                 openConnectionMenu = NSMenu; 
                 preferencesController = MUPreferencesController; 
-                updateController = MUUpdateController; 
                 useProxyMenuItem = NSMenuItem; 
             }; 
             SUPERCLASS = NSObject; 
@@ -89,6 +88,12 @@
                 window = NSWindow; 
                 windowController = NSWindowController; 
             }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {
+            ACTIONS = {checkForUpdates = id; }; 
+            CLASS = SUUpdater; 
+            LANGUAGE = ObjC; 
             SUPERCLASS = NSObject; 
         }, 
         {

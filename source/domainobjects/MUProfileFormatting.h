@@ -1,9 +1,7 @@
 //
-//  MUProfileFormatting.h
-//  Koan
+// MUProfileFormatting.h
 //
-//  Created by Samuel on 10/2/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -13,7 +11,7 @@
 
 @interface MUProfileFormatting : NSObject <J3Formatting>
 {
-  MUProfile * profile;
+  MUProfile *profile;
 }
 
 - (id) initWithProfile:(MUProfile *)newProfile;

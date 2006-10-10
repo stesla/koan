@@ -24,13 +24,6 @@ NSString *MUPVisitedLinkColor = @"MUPVisitedLinkColor";
 NSString *MUPProxySettings = @"MUPProxySettings";
 NSString *MUPUseProxy = @"MUPUseProxy";
 
-NSString *MUPCheckForUpdatesAutomatically = @"MUPCheckForUpdatesAutomatically";
-NSString *MUPCheckForUpdatesInterval = @"MUPCheckForUpdatesInterval";
-NSString *MUPMostRecentVersion = @"MUPMostRecentVersion";
-NSString *MUPNewestVersionToIgnore = @"MUPNewestVersionToIgnore";
-NSString *MUPMostRecentVersionCheckTime = @"MUPMostRecentVersionCheckTime";
-NSString *MUPMostRecentVersionURL = @"MUPMostRecentVersionURL";
-
 NSString *MUPPlaySounds = @"MUPPlaySounds";
 NSString *MUPPlayWhenActive = @"MUPPlayWhenActive";
 NSString *MUPSoundChoice = @"MUPSoundChoice";

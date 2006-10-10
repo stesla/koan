@@ -1,13 +1,10 @@
 //
-//  NSFont (Traits).h
-//  Koan
+// NSFont (Traits).h
 //
-//  Created by Samuel on 10/2/06.
-//  Copyright 2006 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
-
 
 @interface NSFont (Traits)
 
