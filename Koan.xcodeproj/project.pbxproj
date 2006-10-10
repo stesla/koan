@@ -1206,7 +1206,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		7E87751B09AD558700A883BC /* Development */ = {
+		7E87751B09AD558700A883BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-stub";
@@ -1245,9 +1245,9 @@
 				);
 				WRAPPER_EXTENSION = octest;
 			};
-			name = Development;
+			name = Debug;
 		};
-		7E87751C09AD558700A883BC /* Deployment */ = {
+		7E87751C09AD558700A883BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-stub";
@@ -1286,49 +1286,9 @@
 				);
 				WRAPPER_EXTENSION = octest;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		7E87751D09AD558700A883BC /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-stub";
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
-					./externals,
-					./tests,
-				);
-				INFOPLIST_FILE = "resources/Unit Tests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
-				LIBRARY_STYLE = BUNDLE;
-				OPTIMIZATION_CFLAGS = "-O0";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Cocoa,
-					"-framework",
-					SenTestingKit,
-				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = "Unit Tests";
-				SECTORDER_FLAGS = "";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Default;
-		};
-		7E87752409AD55D600A883BC /* Development */ = {
+		7E87752409AD55D600A883BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -1363,9 +1323,9 @@
 					"-Wno-unknown-pragmas",
 				);
 			};
-			name = Development;
+			name = Debug;
 		};
-		7E87752509AD55D600A883BC /* Deployment */ = {
+		7E87752509AD55D600A883BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -1400,45 +1360,9 @@
 					"-Wno-unknown-pragmas",
 				);
 			};
-			name = Deployment;
+			name = Release;
 		};
-		7E87752609AD55D600A883BC /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "source/Koan-prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
-					./externals,
-					./tests,
-				);
-				INSTALL_PATH = /usr/local/bin;
-				OPTIMIZATION_CFLAGS = "-O0";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = "test-stub";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Default;
-		};
-		E69E22290854FB100055BCF5 /* Development */ = {
+		E69E22290854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -1458,9 +1382,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		E69E222A0854FB100055BCF5 /* Deployment */ = {
+		E69E222A0854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -1477,25 +1401,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		E69E222B0854FB100055BCF5 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Unpack Frameworks";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Default;
-		};
-		E69E222D0854FB100055BCF5 /* Development */ = {
+		E69E222D0854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -1515,9 +1423,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		E69E222E0854FB100055BCF5 /* Deployment */ = {
+		E69E222E0854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
@@ -1534,25 +1442,9 @@
 				);
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		E69E222F0854FB100055BCF5 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Update plist";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Default;
-		};
-		E69E22310854FB100055BCF5 /* Development */ = {
+		E69E22310854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
@@ -1583,9 +1475,9 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Development;
+			name = Debug;
 		};
-		E69E22320854FB100055BCF5 /* Deployment */ = {
+		E69E22320854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
@@ -1618,59 +1510,23 @@
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = NO;
 			};
-			name = Deployment;
+			name = Release;
 		};
-		E69E22330854FB100055BCF5 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_CPP_RTTI = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
-					./externals,
-				);
-				INFOPLIST_FILE = resources/Info.plist;
-				INSTALL_PATH = "$(USER_APPS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
-				OTHER_LDFLAGS = "-lSystem";
-				OTHER_LDFLAGS_ppc = "-prebind";
-				PREBINDING = NO;
-				PRODUCT_NAME = Koan;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				WRAPPER_EXTENSION = app;
-			};
-			name = Default;
-		};
-		E69E22390854FB100055BCF5 /* Development */ = {
+		E69E22390854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				OBJROOT = "$(SYMROOT)";
 				SYMROOT = build;
 			};
-			name = Development;
+			name = Debug;
 		};
-		E69E223A0854FB100055BCF5 /* Deployment */ = {
+		E69E223A0854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				OBJROOT = "$(SYMROOT)";
 				SYMROOT = build;
 			};
-			name = Deployment;
-		};
-		E69E223B0854FB100055BCF5 /* Default */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				OBJROOT = "$(SYMROOT)";
-				SYMROOT = build;
-			};
-			name = Default;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1678,62 +1534,56 @@
 		7E87751A09AD558700A883BC /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7E87751B09AD558700A883BC /* Development */,
-				7E87751C09AD558700A883BC /* Deployment */,
-				7E87751D09AD558700A883BC /* Default */,
+				7E87751B09AD558700A883BC /* Debug */,
+				7E87751C09AD558700A883BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		7E87752309AD55D600A883BC /* Build configuration list for PBXNativeTarget "test-stub" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7E87752409AD55D600A883BC /* Development */,
-				7E87752509AD55D600A883BC /* Deployment */,
-				7E87752609AD55D600A883BC /* Default */,
+				7E87752409AD55D600A883BC /* Debug */,
+				7E87752509AD55D600A883BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		E69E22280854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Unpack Frameworks" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E69E22290854FB100055BCF5 /* Development */,
-				E69E222A0854FB100055BCF5 /* Deployment */,
-				E69E222B0854FB100055BCF5 /* Default */,
+				E69E22290854FB100055BCF5 /* Debug */,
+				E69E222A0854FB100055BCF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		E69E222C0854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Update plist" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E69E222D0854FB100055BCF5 /* Development */,
-				E69E222E0854FB100055BCF5 /* Deployment */,
-				E69E222F0854FB100055BCF5 /* Default */,
+				E69E222D0854FB100055BCF5 /* Debug */,
+				E69E222E0854FB100055BCF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		E69E22300854FB100055BCF5 /* Build configuration list for PBXNativeTarget "Koan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E69E22310854FB100055BCF5 /* Development */,
-				E69E22320854FB100055BCF5 /* Deployment */,
-				E69E22330854FB100055BCF5 /* Default */,
+				E69E22310854FB100055BCF5 /* Debug */,
+				E69E22320854FB100055BCF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 		E69E22380854FB100055BCF5 /* Build configuration list for PBXProject "Koan" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E69E22390854FB100055BCF5 /* Development */,
-				E69E223A0854FB100055BCF5 /* Deployment */,
-				E69E223B0854FB100055BCF5 /* Default */,
+				E69E22390854FB100055BCF5 /* Debug */,
+				E69E223A0854FB100055BCF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Default;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
