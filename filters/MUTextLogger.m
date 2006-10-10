@@ -12,8 +12,9 @@
 @interface MUTextLogger (Private)
 
 - (void) log:(NSAttributedString *)editString;
-- (NSOutputStream *) openStreamToPath:(NSString *)path withWorld:(MUWorld *)world andPlayer:(MUPlayer *)player onDate:(NSCalendarDate *)date;
+- (void) initializeFileAtPath:(NSString *)path withHeaders:(NSDictionary *)headers;
 - (void) writeToStream:(NSOutputStream *)stream withFormat:(NSString *)format,...;
+
 @end
 
 #pragma mark -
@@ -48,48 +49,29 @@
 
 - (id) init
 {
-  NSCalendarDate *today = [NSCalendarDate date];
-  NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%04d-%02d-%02d.koanlog",
-    [today yearOfCommonEra],
-    [today monthOfYear],
-    [today dayOfMonth]] stringByExpandingTildeInPath];
-  [[NSFileManager defaultManager] createDirectoryAtPath:[path stringByDeletingLastPathComponent]
-                                             attributes:nil
-                                              recursive:YES];
-  NSOutputStream *stream = [self openStreamToPath:path withWorld:nil andPlayer:nil onDate:today];
-  return [self initWithOutputStream:stream];
+  return [self initWithWorld:nil player:nil];
 }
 
 - (id) initWithWorld:(MUWorld *)world
 {
-  NSCalendarDate *today = [NSCalendarDate date];
-  NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%@-%04d-%02d-%02d.koanlog",
-    [world name],
-    [today yearOfCommonEra],
-    [today monthOfYear],
-    [today dayOfMonth]] stringByExpandingTildeInPath];
-  [[NSFileManager defaultManager] createDirectoryAtPath:[path stringByDeletingLastPathComponent]
-                                             attributes:nil
-                                              recursive:YES];
-  
-  NSOutputStream *stream = [self openStreamToPath:path withWorld:world andPlayer:nil onDate:today];
-  return [self initWithOutputStream:stream];
+  return [self initWithWorld:world player:nil];
 }
 
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player
 {
+  NSString *worldString = world ? [NSString stringWithFormat:@"%@-",[world name]] : @"";
+  NSString *playerString = player ? [NSString stringWithFormat:@"%@-",[player name]] : @"";
   NSCalendarDate *today = [NSCalendarDate date];
-  NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%@-%@-%04d-%02d-%02d.koanlog",
-    [world name],
-    [player name],
-    [today yearOfCommonEra],
-    [today monthOfYear],
-    [today dayOfMonth]] stringByExpandingTildeInPath];
-  [[NSFileManager defaultManager] createDirectoryAtPath:[path stringByDeletingLastPathComponent]
-                                             attributes:nil
-                                              recursive:YES];
-  NSOutputStream *stream = [self openStreamToPath:path withWorld:world andPlayer:player onDate:today];
-  return [self initWithOutputStream:stream];
+  NSString *todayString = [NSString stringWithFormat: @"%04d-%02d-%02d", [today yearOfCommonEra],[today monthOfYear],[today dayOfMonth]];
+  NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%@%@%@.koanlog",worldString,playerString,todayString] stringByExpandingTildeInPath];
+  NSMutableDictionary *headers = [NSMutableDictionary dictionary];
+  [headers setValue:(world ? [world name] : @"") forKey:@"World"];
+  [headers setValue:(player ? [player name] : @"") forKey:@"Player"];
+  [headers setValue:todayString forKey:@"Date"];
+  
+  [[NSFileManager defaultManager] createDirectoryAtPath:[path stringByDeletingLastPathComponent] attributes:nil recursive:YES];
+  [self initializeFileAtPath:path withHeaders:headers];
+  return [self initWithOutputStream:[NSOutputStream outputStreamToFileAtPath:path append:YES]];
 }
 
 - (void) dealloc
@@ -118,27 +100,32 @@
   [self writeToStream:output withFormat:[string string]];
 }
 
-- (NSOutputStream *) openStreamToPath:(NSString *)path withWorld:(MUWorld *)world andPlayer:(MUPlayer *)player onDate:(NSCalendarDate *)date;
+- (void) initializeFileAtPath:(NSString *)path withHeaders:(NSDictionary *)headers;
 {
-  if (![[NSFileManager defaultManager] fileExistsAtPath:path])
+  NSOutputStream *stream;
+  
+  if ([[NSFileManager defaultManager] fileExistsAtPath:path])
+    return;
+  
+  stream = [NSOutputStream outputStreamToFileAtPath:path append:YES];
+  [stream open];
+  @try
   {
-    NSOutputStream *stream = [NSOutputStream outputStreamToFileAtPath:path append:YES];
-    [stream open];
-    @try
+    NSEnumerator *keyEnumerator = [headers keyEnumerator];
+    NSString *key;
+    
+    while((key = [keyEnumerator nextObject]))
     {
-      if (world)
-        [self writeToStream:stream withFormat:@"World: %@\n",[world name]];
-      if (player)
-        [self writeToStream:stream withFormat:@"Player: %@\n",[player name]];
-      [self writeToStream:stream withFormat:@"Date: %04d-%02d-%02d\n",[date yearOfCommonEra],[date monthOfYear],[date dayOfMonth]];
-      [self writeToStream:stream withFormat:@"\n"];      
+      NSString *value = [headers objectForKey:key];
+      if ([value length] > 0)
+        [self writeToStream:stream withFormat:@"%@: %@\n",key,[headers objectForKey:key]];
     }
-    @finally
-    {
-      [stream close];      
-    }
+    [self writeToStream:stream withFormat:@"\n"];      
   }
-  return [NSOutputStream outputStreamToFileAtPath:path append:YES];
+  @finally
+  {
+    [stream close];      
+  }
 }
 
 - (void) writeToStream:(NSOutputStream *)stream withFormat:(NSString *)format,...;
