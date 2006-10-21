@@ -40,13 +40,6 @@
 		7E13B9B709AE8B7600508460 /* MUProxySettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E13B9B509AE8B7600508460 /* MUProxySettingsController.m */; };
 		7E13BA1D09AE950600508460 /* J3ProxySettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E13BA1B09AE950600508460 /* J3ProxySettings.m */; };
 		7E13BA1E09AE950600508460 /* J3ProxySettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E13BA1B09AE950600508460 /* J3ProxySettings.m */; };
-		7E17BDF90AE6D6F2001CE2D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E17BDEF0AE6D6F2001CE2D7 /* InfoPlist.strings */; };
-		7E17BDFA0AE6D6F2001CE2D7 /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7E17BDF10AE6D6F2001CE2D7 /* schema.strings */; };
-		7E17BDFB0AE6D6F2001CE2D7 /* GetMetadataForFile.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E17BDF30AE6D6F2001CE2D7 /* GetMetadataForFile.c */; };
-		7E17BDFD0AE6D6F2001CE2D7 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E17BDF50AE6D6F2001CE2D7 /* main.c */; };
-		7E17BDFE0AE6D6F2001CE2D7 /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 7E17BDF60AE6D6F2001CE2D7 /* schema.xml */; };
-		7E17BEA30AE6D7C2001CE2D7 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E17BEA20AE6D7C2001CE2D7 /* CoreServices.framework */; };
-		7E17BEA50AE6D7D6001CE2D7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E17BEA40AE6D7D6001CE2D7 /* CoreFoundation.framework */; };
 		7E1FC01D0787A2220070AF39 /* MUProfileRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FC01B0787A2220070AF39 /* MUProfileRegistry.m */; };
 		7E230FFE079A0FE500E7CBA6 /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
 		7E23103C079A374B00E7CBA6 /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
@@ -252,17 +245,6 @@
 		7E13BA1B09AE950600508460 /* J3ProxySettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3ProxySettings.m; sourceTree = "<group>"; };
 		7E13FA590788C75F0071D30C /* MUWorldTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUWorldTests.h; sourceTree = "<group>"; };
 		7E13FA5A0788C75F0071D30C /* MUWorldTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUWorldTests.m; sourceTree = "<group>"; };
-		7E17BDE00AE6D68B001CE2D7 /* KoanLogImporter.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KoanLogImporter.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
-		7E17BDF00AE6D6F2001CE2D7 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = InfoPlist.strings; sourceTree = "<group>"; };
-		7E17BDF20AE6D6F2001CE2D7 /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.strings; name = English; path = schema.strings; sourceTree = "<group>"; };
-		7E17BDF30AE6D6F2001CE2D7 /* GetMetadataForFile.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = GetMetadataForFile.c; sourceTree = "<group>"; };
-		7E17BDF40AE6D6F2001CE2D7 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = Info.plist; sourceTree = "<group>"; };
-		7E17BDF50AE6D6F2001CE2D7 /* main.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		7E17BDF60AE6D6F2001CE2D7 /* schema.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = schema.xml; sourceTree = "<group>"; };
-		7E17BDF70AE6D6F2001CE2D7 /* Version */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = Version; sourceTree = "<group>"; };
-		7E17BDF80AE6D6F2001CE2D7 /* version.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = version.plist; sourceTree = "<group>"; };
-		7E17BEA20AE6D7C2001CE2D7 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
-		7E17BEA40AE6D7D6001CE2D7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = /System/Library/Frameworks/CoreFoundation.framework; sourceTree = "<absolute>"; };
 		7E1FC01A0787A2220070AF39 /* MUProfileRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUProfileRegistry.h; sourceTree = "<group>"; };
 		7E1FC01B0787A2220070AF39 /* MUProfileRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUProfileRegistry.m; sourceTree = "<group>"; };
 		7E230FFB079A0FE500E7CBA6 /* MUServices.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUServices.h; sourceTree = "<group>"; };
@@ -346,7 +328,7 @@
 		7EFE43B10749CB16002C7D48 /* J3FilterTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3FilterTests.h; sourceTree = "<group>"; };
 		7EFE43B20749CB16002C7D48 /* J3FilterTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3FilterTests.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* Koan.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Koan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Koan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Koan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6055F7C07492729007A13BD /* NSAttributedString (Allocating).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString (Allocating).h"; sourceTree = "<group>"; };
 		E6055F7D07492729007A13BD /* NSAttributedString (Allocating).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString (Allocating).m"; sourceTree = "<group>"; };
 		E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Tests-Prefix.pch"; sourceTree = "<group>"; };
@@ -440,15 +422,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		7E17BDDE0AE6D68B001CE2D7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7E17BEA30AE6D7C2001CE2D7 /* CoreServices.framework in Frameworks */,
-				7E17BEA50AE6D7D6001CE2D7 /* CoreFoundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7E87751509AD558700A883BC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -493,8 +466,6 @@
 		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7E17BEA40AE6D7D6001CE2D7 /* CoreFoundation.framework */,
-				7E17BEA20AE6D7C2001CE2D7 /* CoreServices.framework */,
 				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
 				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
 			);
@@ -507,7 +478,6 @@
 				8D1107320486CEB800E47090 /* Koan.app */,
 				7E87751809AD558700A883BC /* Unit Tests.octest */,
 				7E87752109AD55A900A883BC /* test-stub */,
-				7E17BDE00AE6D68B001CE2D7 /* KoanLogImporter.mdimporter */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -519,7 +489,6 @@
 				29B97315FDCFA39411CA2CEA /* Source */,
 				E6D0A56C0745518A002DA041 /* Filters */,
 				E6B5E40A06A6F28400F53EBB /* Tests */,
-				7E17BDC30AE6D358001CE2D7 /* Importer */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				E6B5E42906A6F36300F53EBB /* Documentation */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -606,30 +575,6 @@
 				7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */,
 			);
 			path = socks5;
-			sourceTree = "<group>";
-		};
-		7E17BDC30AE6D358001CE2D7 /* Importer */ = {
-			isa = PBXGroup;
-			children = (
-				7E17BDEE0AE6D6F2001CE2D7 /* English.lproj */,
-				7E17BDF30AE6D6F2001CE2D7 /* GetMetadataForFile.c */,
-				7E17BDF40AE6D6F2001CE2D7 /* Info.plist */,
-				7E17BDF50AE6D6F2001CE2D7 /* main.c */,
-				7E17BDF60AE6D6F2001CE2D7 /* schema.xml */,
-				7E17BDF70AE6D6F2001CE2D7 /* Version */,
-				7E17BDF80AE6D6F2001CE2D7 /* version.plist */,
-			);
-			name = Importer;
-			path = importer;
-			sourceTree = "<group>";
-		};
-		7E17BDEE0AE6D6F2001CE2D7 /* English.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				7E17BDEF0AE6D6F2001CE2D7 /* InfoPlist.strings */,
-				7E17BDF10AE6D6F2001CE2D7 /* schema.strings */,
-			);
-			path = English.lproj;
 			sourceTree = "<group>";
 		};
 		7E2B447D0855639900769ED6 /* Externals */ = {
@@ -867,23 +812,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7E17BDDF0AE6D68B001CE2D7 /* KoanLogImporter */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7E17BDE20AE6D68B001CE2D7 /* Build configuration list for PBXNativeTarget "KoanLogImporter" */;
-			buildPhases = (
-				7E17BDDC0AE6D68B001CE2D7 /* Resources */,
-				7E17BDDD0AE6D68B001CE2D7 /* Sources */,
-				7E17BDDE0AE6D68B001CE2D7 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = KoanLogImporter;
-			productName = KoanLogImporter;
-			productReference = 7E17BDE00AE6D68B001CE2D7 /* KoanLogImporter.mdimporter */;
-			productType = "com.apple.product-type.bundle";
-		};
 		7E87751709AD558700A883BC /* Unit Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7E87751A09AD558700A883BC /* Build configuration list for PBXNativeTarget "Unit Tests" */;
@@ -955,22 +883,11 @@
 				E659F6D00770D4DA00534D1B /* Update plist */,
 				7E87751709AD558700A883BC /* Unit Tests */,
 				7E87752009AD55A900A883BC /* test-stub */,
-				7E17BDDF0AE6D68B001CE2D7 /* KoanLogImporter */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		7E17BDDC0AE6D68B001CE2D7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7E17BDF90AE6D6F2001CE2D7 /* InfoPlist.strings in Resources */,
-				7E17BDFA0AE6D6F2001CE2D7 /* schema.strings in Resources */,
-				7E17BDFE0AE6D6F2001CE2D7 /* schema.xml in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7E87751309AD558700A883BC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1056,15 +973,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		7E17BDDD0AE6D68B001CE2D7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7E17BDFB0AE6D6F2001CE2D7 /* GetMetadataForFile.c in Sources */,
-				7E17BDFD0AE6D6F2001CE2D7 /* main.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7E87751409AD558700A883BC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1239,22 +1147,6 @@
 			name = MUProxySettings.nib;
 			sourceTree = "<group>";
 		};
-		7E17BDEF0AE6D6F2001CE2D7 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7E17BDF00AE6D6F2001CE2D7 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7E17BDF10AE6D6F2001CE2D7 /* schema.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7E17BDF20AE6D6F2001CE2D7 /* English */,
-			);
-			name = schema.strings;
-			sourceTree = "<group>";
-		};
 		E62C909E07422669005662BC /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1298,62 +1190,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		7E17BDE30AE6D68B001CE2D7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = importer/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Spotlight";
-				LIBRARY_STYLE = Bundle;
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = KoanLogImporter;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				WRAPPER_EXTENSION = mdimporter;
-				ZERO_LINK = YES;
-			};
-			name = Debug;
-		};
-		7E17BDE40AE6D68B001CE2D7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-				);
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = NO;
-				GCC_PREFIX_HEADER = "";
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = importer/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Spotlight";
-				LIBRARY_STYLE = Bundle;
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = KoanLogImporter;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				WRAPPER_EXTENSION = mdimporter;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		7E87751B09AD558700A883BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1679,15 +1515,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		7E17BDE20AE6D68B001CE2D7 /* Build configuration list for PBXNativeTarget "KoanLogImporter" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7E17BDE30AE6D68B001CE2D7 /* Debug */,
-				7E17BDE40AE6D68B001CE2D7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
 		7E87751A09AD558700A883BC /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
