@@ -968,7 +968,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${BUILD_ROOT}\"\nfor name in `ls \"${SOURCE_ROOT}/frameworks\"`; do\n\ttar zxvf \"${SOURCE_ROOT}/frameworks/${name}\"\ndone\n";
+			shellScript = "cd \"${BUILD_ROOT}\"\nFRAMEWORKS=\"Growl RBSplitView Sparkle\"\nfor name in $FRAMEWORKS; do\n\ttar zxvf \"${SOURCE_ROOT}/frameworks/${name}.framework.tar.gz\"\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
