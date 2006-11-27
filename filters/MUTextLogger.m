@@ -97,7 +97,7 @@
 
 - (void) log:(NSAttributedString *)string
 {
-  [self writeToStream:output withFormat:[string string]];
+  [self writeToStream:output withFormat:@"%@",[string string]];
 }
 
 - (void) initializeFileAtPath:(NSString *)path withHeaders:(NSDictionary *)headers;
