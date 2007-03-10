@@ -118,7 +118,7 @@
   {
     case J3AnsiBackgroundBlack: 
     case J3AnsiForegroundBlack: 
-      return [NSColor blackColor];
+      return [NSColor darkGrayColor];
       break;
       
     case J3AnsiBackgroundBlue:
