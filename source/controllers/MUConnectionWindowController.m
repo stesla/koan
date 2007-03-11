@@ -613,7 +613,7 @@ enum MUSearchDirections
 
 - (void) sendPeriodicPing:(NSTimer *)timer
 {
-  [telnetConnection writeLine:@"@pemit me="];
+  [telnetConnection writeLine:@"@@"];
 }
 
 - (NSString *) splitViewAutosaveName
