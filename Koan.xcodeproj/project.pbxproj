@@ -77,7 +77,6 @@
 		7E87756609AD62E400A883BC /* J3LineBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */; };
 		7E87756809AD62E400A883BC /* J3NaiveURLFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */; };
 		7E87756909AD62E400A883BC /* MUTextLoggerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A63E0749698F007005AC /* MUTextLoggerTests.m */; };
-		7E87756A09AD62E400A883BC /* J3UpdateIntervalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */; };
 		7E87756B09AD62E400A883BC /* J3WriteBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */; };
 		7E87756C09AD62E400A883BC /* MUPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC112E9078B763E00CFA562 /* MUPlayerTests.m */; };
 		7E87756D09AD62E400A883BC /* MUProfileRegistryTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */; };
@@ -385,8 +384,6 @@
 		E6A231280772E166008EF744 /* MUDisplayTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUDisplayTextView.m; sourceTree = "<group>"; };
 		E6B5E3B806A6EEA600F53EBB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E6B5E61106A73B0A00F53EBB /* version.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = version.plist; sourceTree = "<group>"; };
-		E6BFD8E9086258830060412C /* J3UpdateIntervalTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3UpdateIntervalTests.h; sourceTree = "<group>"; };
-		E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3UpdateIntervalTests.m; sourceTree = "<group>"; };
 		E6C9D448077BF6B5007BB2C1 /* add-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-pressed.png"; sourceTree = "<group>"; };
 		E6C9D449077BF6B5007BB2C1 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "edit-pressed.png"; sourceTree = "<group>"; };
@@ -489,8 +486,8 @@
 				29B97315FDCFA39411CA2CEA /* Source */,
 				E6D0A56C0745518A002DA041 /* Filters */,
 				E6B5E40A06A6F28400F53EBB /* Tests */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
 				E6B5E42906A6F36300F53EBB /* Documentation */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -684,7 +681,6 @@
 				E6505497077EA20E0016F30E /* J3NaiveURLFilterTests.h */,
 				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
 				7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */,
-				E6BFD8E9086258830060412C /* J3UpdateIntervalTests.h */,
 				7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */,
 				7EC112E8078B763E00CFA562 /* MUPlayerTests.h */,
 				E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */,
@@ -699,7 +695,6 @@
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
 				7E68DC2D092AC2AF004554BD /* J3TelnetStateMachineTests.m */,
 				7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */,
-				E6BFD8EA086258830060412C /* J3UpdateIntervalTests.m */,
 				7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */,
 				7EC112E9078B763E00CFA562 /* MUPlayerTests.m */,
 				E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */,
@@ -723,7 +718,7 @@
 			);
 			name = Documentation;
 			path = documentation;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		E6D0A56C0745518A002DA041 /* Filters */ = {
 			isa = PBXGroup;
@@ -985,7 +980,6 @@
 				7E87756609AD62E400A883BC /* J3LineBufferTests.m in Sources */,
 				7E87756809AD62E400A883BC /* J3NaiveURLFilterTests.m in Sources */,
 				7E87756909AD62E400A883BC /* MUTextLoggerTests.m in Sources */,
-				7E87756A09AD62E400A883BC /* J3UpdateIntervalTests.m in Sources */,
 				7E87756B09AD62E400A883BC /* J3WriteBufferTests.m in Sources */,
 				7E87756C09AD62E400A883BC /* MUPlayerTests.m in Sources */,
 				7E87756D09AD62E400A883BC /* MUProfileRegistryTests.m in Sources */,
