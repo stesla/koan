@@ -33,5 +33,40 @@
 	<string>MUMainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+  <key>UTExportedTypeDeclarations</key>
+  <array>             
+    <dict>                 
+      <key>UTTypeIdentifier</key>                 
+      <string>com.3james.Koan.log.plain-text</string>                 
+
+      <key>UTTypeDescription</key>                 
+      <string>Koan log files</string>          
+              
+      <key>UTTypeConformsTo</key>                 
+      <array>                     
+        <string>public.plain-text</string>                     
+      </array>
+
+      <key>UTTypeTagSpecification</key>                 
+      <dict>
+        <key>public.filename-extension</key>                 
+        <array>
+          <string>koanlog</string>                     
+        </array>
+      </dict>
+    </dict>
+  </array>
+  <key>CFBundleDocumentTypes</key>
+  <array>             
+    <dict>                 
+      <key>LSItemContentTypes</key>                 
+        <array>             
+          <string>com.3james.Koan.log</string>                 
+        </array>             
+
+      <key>CFBundleTypeRole</key>                 
+      <string>None</string>                 
+    </dict>
+  </array>
 </dict>
 </plist>
