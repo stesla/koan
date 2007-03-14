@@ -47,7 +47,12 @@
 - (void) append:(uint8_t)byte
 {
   char bytes[1] = {byte};
-  [data appendBytes:bytes length:1];
+  [self appendBytes:bytes length:1];
+}
+
+- (void) appendBytes:(const void *)bytes length:(unsigned)length;
+{
+  [data appendBytes:bytes length:length];
 }
 
 - (void) appendLine:(NSString *)line
@@ -58,18 +63,16 @@
 
 - (void) appendString:(NSString *)string
 {
-  const char *bytes;
-  unsigned length;
+  NSData * stringData;
   unsigned i;
   
   if (!string)
     return;
   
-  bytes = [string cStringUsingEncoding:NSASCIIStringEncoding];
-  length = strlen (bytes);
+  stringData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
   
-  for (i = 0; i < length; i++)
-    [self append:bytes[i]];
+  for (i = 0; i < [stringData length]; i++)
+    [self append:((const char *)[stringData bytes])[i]];
 }
 
 - (const void *)bytes

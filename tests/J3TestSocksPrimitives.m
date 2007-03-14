@@ -134,8 +134,7 @@
   int i;
   
   [self assertInt:[request reply] equals:J3SocksNoReply];
-  for (i = 0; i < 18; ++i)
-    [source append:reply[i]];
+  [source appendBytes:reply length:18];
   [source appendString:@"foo"];
   [request parseReplyFromByteSource:source];
   [self assert:[source stringValue] equals:@"foo"];
@@ -150,8 +149,7 @@
   int i;
   
   [self assertInt:[request reply] equals:J3SocksNoReply];
-  for (i = 0; i < 10; ++i)
-    [source append:reply[i]];
+  [source appendBytes:reply length:10];
   [source appendString:@"foo"];
   [request parseReplyFromByteSource:source];
   [self assert:[source stringValue] equals:@"foo"];
@@ -166,8 +164,7 @@
   int i;
   
   [self assertInt:[request reply] equals:J3SocksNoReply];
-  for (i = 0; i < 22; ++i)
-    [source append:reply[i]];
+  [source appendBytes:reply length:22];
   [source appendString:@"foo"];
   [request parseReplyFromByteSource:source];
   [self assert:[source stringValue] equals:@"foo"];

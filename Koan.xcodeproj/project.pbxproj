@@ -215,21 +215,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 7E4AFB170BA7CC990050B5AE /* Unit Tests.octest */;
+			remoteGlobalIDString = 7E4AFB170BA7CC990050B5AE;
 			remoteInfo = "Unit Tests";
 		};
 		7E4AFBE50BA7D2C60050B5AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7E87751709AD558700A883BC /* Unit Tests */;
+			remoteGlobalIDString = 7E87751709AD558700A883BC;
 			remoteInfo = "Unit Tests";
 		};
 		7E4AFBE70BA7D2CA0050B5AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 7E4AFB160BA7CC990050B5AE /* Unit Tests */;
+			remoteGlobalIDString = 7E4AFB160BA7CC990050B5AE;
 			remoteInfo = "Unit Tests";
 		};
 		7E87755E09AD577900A883BC /* PBXContainerItemProxy */ = {
