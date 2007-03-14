@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		7E4AFBE40BA7D2C10050B5AE /* All Tests */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 7E4AFBEF0BA7D2ED0050B5AE /* Build configuration list for PBXAggregateTarget "All Tests" */;
+			buildPhases = (
+			);
+			dependencies = (
+				7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */,
+				7E4AFBE80BA7D2CA0050B5AE /* PBXTargetDependency */,
+			);
+			name = "All Tests";
+			productName = "All Tests";
+		};
 		E659F6D00770D4DA00534D1B /* Update plist */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = E69E222C0854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Update plist" */;
@@ -199,6 +211,27 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = KoanLogImporter;
 		};
+		7E4AFB2C0BA7CD0D0050B5AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7E4AFB170BA7CC990050B5AE /* Unit Tests.octest */;
+			remoteInfo = "Unit Tests";
+		};
+		7E4AFBE50BA7D2C60050B5AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E87751709AD558700A883BC /* Unit Tests */;
+			remoteInfo = "Unit Tests";
+		};
+		7E4AFBE70BA7D2CA0050B5AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E4AFB160BA7CC990050B5AE /* Unit Tests */;
+			remoteInfo = "Unit Tests";
+		};
 		7E87755E09AD577900A883BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -349,7 +382,7 @@
 		7EFE43B10749CB16002C7D48 /* J3FilterTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3FilterTests.h; sourceTree = "<group>"; };
 		7EFE43B20749CB16002C7D48 /* J3FilterTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3FilterTests.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* Koan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Koan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Koan.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Koan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6055F7C07492729007A13BD /* NSAttributedString (Allocating).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString (Allocating).h"; sourceTree = "<group>"; };
 		E6055F7D07492729007A13BD /* NSAttributedString (Allocating).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString (Allocating).m"; sourceTree = "<group>"; };
 		E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Tests-Prefix.pch"; sourceTree = "<group>"; };
@@ -586,6 +619,7 @@
 			isa = PBXGroup;
 			children = (
 				7E0152DC0BA79967004BB9B8 /* KoanLogImporter.mdimporter */,
+				7E4AFB2D0BA7CD0D0050B5AE /* Unit Tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -918,6 +952,7 @@
 				E659F6D00770D4DA00534D1B /* Update plist */,
 				7E87751709AD558700A883BC /* Unit Tests */,
 				7E87752009AD55A900A883BC /* test-stub */,
+				7E4AFBE40BA7D2C10050B5AE /* All Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -928,6 +963,13 @@
 			fileType = wrapper.cfbundle;
 			path = KoanLogImporter.mdimporter;
 			remoteRef = 7E0152DB0BA79967004BB9B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		7E4AFB2D0BA7CD0D0050B5AE /* Unit Tests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Unit Tests.octest";
+			remoteRef = 7E4AFB2C0BA7CD0D0050B5AE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1187,6 +1229,16 @@
 			name = KoanLogImporter;
 			targetProxy = 7E0153250BA79D71004BB9B8 /* PBXContainerItemProxy */;
 		};
+		7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E87751709AD558700A883BC /* Unit Tests */;
+			targetProxy = 7E4AFBE50BA7D2C60050B5AE /* PBXContainerItemProxy */;
+		};
+		7E4AFBE80BA7D2CA0050B5AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Unit Tests";
+			targetProxy = 7E4AFBE70BA7D2CA0050B5AE /* PBXContainerItemProxy */;
+		};
 		7E87755F09AD577900A883BC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7E87752009AD55A900A883BC /* test-stub */;
@@ -1261,11 +1313,34 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		7E4AFBF00BA7D2ED0050B5AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "All Tests";
+			};
+			name = Debug;
+		};
+		7E4AFBF10BA7D2ED0050B5AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				PRODUCT_NAME = "All Tests";
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		7E87751B09AD558700A883BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-stub";
 				COPY_PHASE_STRIP = NO;
+				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
 				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -1308,6 +1383,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-stub";
 				COPY_PHASE_STRIP = YES;
+				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
 				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
@@ -1588,6 +1664,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		7E4AFBEF0BA7D2ED0050B5AE /* Build configuration list for PBXAggregateTarget "All Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E4AFBF00BA7D2ED0050B5AE /* Debug */,
+				7E4AFBF10BA7D2ED0050B5AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		7E87751A09AD558700A883BC /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
