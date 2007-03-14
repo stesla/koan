@@ -185,6 +185,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7E0152DB0BA79967004BB9B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D576316048677EA00EA77CD;
+			remoteInfo = KoanLogImporter;
+		};
+		7E0153250BA79D71004BB9B8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* KoanLogImporter */;
+			remoteInfo = KoanLogImporter;
+		};
 		7E87755E09AD577900A883BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -237,6 +251,7 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		32CA4F630368D1EE00C91783 /* Koan-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Prefix.pch"; sourceTree = "<group>"; };
+		7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KoanLogImporter.xcodeproj; path = KoanLogImporter/KoanLogImporter.xcodeproj; sourceTree = "<group>"; };
 		7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TestSocksPrimitives.h; sourceTree = "<group>"; };
 		7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TestSocksPrimitives.m; sourceTree = "<group>"; };
 		7E070AFC0933D01E000A36CF /* J3SocksMethodSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocksMethodSelection.h; sourceTree = "<group>"; };
@@ -497,6 +512,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */,
 			);
 			name = Koan;
 			sourceTree = "<group>";
@@ -565,6 +581,14 @@
 			name = Frameworks;
 			path = frameworks;
 			sourceTree = SOURCE_ROOT;
+		};
+		7E0152D80BA79967004BB9B8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7E0152DC0BA79967004BB9B8 /* KoanLogImporter.mdimporter */,
+			);
+			name = Products;
+			sourceTree = "<group>";
 		};
 		7E0709EF09339A1E000A36CF /* socks5 */ = {
 			isa = PBXGroup;
@@ -858,12 +882,14 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				16D5FA0A075434F9007C5F34 /* CopyFiles */,
+				7E01530B0BA79ACE004BB9B8 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				E6967A1A078F5CC60033A4C8 /* PBXTargetDependency */,
 				E659F6DF0770D52800534D1B /* PBXTargetDependency */,
+				7E0153260BA79D71004BB9B8 /* PBXTargetDependency */,
 			);
 			name = Koan;
 			productInstallPath = "$(HOME)/Applications";
@@ -880,6 +906,12 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Koan */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 7E0152D80BA79967004BB9B8 /* Products */;
+					ProjectRef = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
+				},
+			);
 			targets = (
 				8D1107260486CEB800E47090 /* Koan */,
 				E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */,
@@ -889,6 +921,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		7E0152DC0BA79967004BB9B8 /* KoanLogImporter.mdimporter */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = KoanLogImporter.mdimporter;
+			remoteRef = 7E0152DB0BA79967004BB9B8 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7E87751309AD558700A883BC /* Resources */ = {
@@ -927,6 +969,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7E01530B0BA79ACE004BB9B8 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(PROJECT_DIR)/KoanLogImporter/build/$(CONFIGURATION)/KoanLogImporter.mdimporter",
+			);
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(WRAPPER_NAME)/Contents/Library/Spotlight/KoanLogImporter.mdimporter",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SOURCE=\"${PROJECT_DIR}/KoanLogImporter/build/${CONFIGURATION}/KoanLogImporter.mdimporter\"\nDEST_DIR=\"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Contents/Library/Spotlight\"\nDEST=\"${DEST_DIR}/KoanLogImporter.mdimporter\"\nif [ ! -d ${DEST_DIR} ]; then\n\tmkdir -p ${DEST_DIR}\nfi\ncp -r ${SOURCE} ${DEST}";
+		};
 		7E87751609AD558700A883BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1125,6 +1182,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		7E0153260BA79D71004BB9B8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = KoanLogImporter;
+			targetProxy = 7E0153250BA79D71004BB9B8 /* PBXContainerItemProxy */;
+		};
 		7E87755F09AD577900A883BC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7E87752009AD55A900A883BC /* test-stub */;
