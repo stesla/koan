@@ -196,7 +196,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* KoanLogImporter */;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = KoanLogImporter;
 		};
 		7E87755E09AD577900A883BC /* PBXContainerItemProxy */ = {

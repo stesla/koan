@@ -61,7 +61,7 @@
     <dict>                 
       <key>LSItemContentTypes</key>                 
         <array>             
-          <string>com.3james.Koan.log</string>                 
+          <string>com.3james.Koan.log.plain-text</string>                 
         </array>             
 
       <key>CFBundleTypeRole</key>                 
