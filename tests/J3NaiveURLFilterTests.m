@@ -172,20 +172,20 @@
 
 - (void) testCanonicalEmail
 {
-  NSString *input = @"mailto:tyler@3james.com";
+  NSString *input = @"mailto:test@example.com";
   
   [self assertInput:input
-       producesLink:[NSURL URLWithString:@"mailto:tyler@3james.com"]
-           forRange:[input rangeOfString:@"mailto:tyler@3james.com"]];
+       producesLink:[NSURL URLWithString:@"mailto:test@example.com"]
+           forRange:[input rangeOfString:@"mailto:test@example.com"]];
 }
 
 - (void) testInformalEmail
 {
-  NSString *input = @"tyler@3james.com";
+  NSString *input = @"test@example.com";
   
   [self assertInput:input
-       producesLink:[NSURL URLWithString:@"mailto:tyler@3james.com"]
-           forRange:[input rangeOfString:@"tyler@3james.com"]];
+       producesLink:[NSURL URLWithString:@"mailto:test@example.com"]
+           forRange:[input rangeOfString:@"test@example.com"]];
 }
 
 @end
