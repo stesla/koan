@@ -60,7 +60,7 @@
 
 - (void) testNilPlayers
 {
-  MUWorld * thisWorld = [[MUWorld alloc] initWithName:@"" hostname:@"" port:0 URL:@"" players:nil];
+  MUWorld *thisWorld = [[MUWorld alloc] initWithName:@"" hostname:@"" port:0 URL:@"" players:nil];
   @try
   {
     [thisWorld addPlayer:player];

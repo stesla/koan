@@ -21,9 +21,7 @@
   profile = [MUProfile profileWithWorld:world];
   [self assert:[profile uniqueIdentifier] equals:@"test.world"];
   
-  player = [[[MUPlayer alloc] initWithName:@"User"
-                                  password:@""
-                                     world:world] autorelease];
+  player = [MUPlayer playerWithName:@"User" password:@"" world:world];
   
   profile = [MUProfile profileWithWorld:world player:player];
   [self assert:[profile uniqueIdentifier] equals:@"test.world.user"];

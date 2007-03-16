@@ -86,15 +86,25 @@
 
 - (NSString *) loginString
 {
-  NSString *format;
+	if (![self name])
+		return nil;
+
   NSRange whitespaceRange = [[self name] rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
-  
-  if (whitespaceRange.location == NSNotFound)
-    format = @"connect %@ %@";
-  else
-    format = @"connect \"%@\" %@";
-  
-  return [NSString stringWithFormat:format, [self name], [self password]];
+	
+	if ([self password] && [[self password] length] > 0)
+	{
+		if (whitespaceRange.location == NSNotFound)
+			return [NSString stringWithFormat:@"connect %@ %@", [self name], [self password]];
+		else
+			return [NSString stringWithFormat:@"connect \"%@\" %@", [self name], [self password]];
+	}
+	else
+  {
+		if (whitespaceRange.location == NSNotFound)
+			return [NSString stringWithFormat:@"connect %@", [self name]];
+		else
+			return [NSString stringWithFormat:@"connect \"%@\"", [self name]];
+	}
 }
 
 - (NSString *) uniqueIdentifier
