@@ -140,7 +140,7 @@
 
 - (MUWorld *) testWorld
 {
-  MUWorld * world = [[[MUWorld alloc] init] autorelease];
+  MUWorld *world = [[[MUWorld alloc] init] autorelease];
   [world setName:@"Test World"];
   return world;
 }

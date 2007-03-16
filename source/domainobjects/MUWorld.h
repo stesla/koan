@@ -20,6 +20,12 @@
   NSMutableArray *players;
 }
 
++ (MUWorld *) worldWithName:(NSString *)newWorldName
+									 hostname:(NSString *)newWorldHostname
+											 port:(NSNumber *)newWorldPort
+												URL:(NSString *)newWorldURL
+										players:(NSArray *)newPlayers;
+
 // Designated initializer.
 - (id) initWithName:(NSString *)newWorldName
            hostname:(NSString *)newWorldHostname

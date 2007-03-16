@@ -20,6 +20,19 @@
 
 @implementation MUWorld
 
++ (MUWorld *) worldWithName:(NSString *)newWorldName
+									 hostname:(NSString *)newWorldHostname
+											 port:(NSNumber *)newWorldPort
+												URL:(NSString *)newWorldURL
+										players:(NSArray *)newPlayers
+{
+	return [[[self alloc] initWithName:newName
+														hostname:newHostname
+																port:newPort
+																 URL:newURL
+														 players:newPlayers] autorelease];
+}
+
 - (id) initWithName:(NSString *)newName
            hostname:(NSString *)newHostname
                port:(NSNumber *)newPort
@@ -128,9 +141,9 @@
 
 - (int) indexOfPlayer:(MUPlayer *)player
 {
-	unsigned i, playersCount = [players count];
+	unsigned i;
 	
-	for (i = 0; i < playersCount; i++)
+	for (i = 0; i < [players count]; i++)
 	{
 		MUPlayer *iteratedPlayer = [players objectAtIndex:i];
 		
@@ -177,9 +190,9 @@
 
 - (void) replacePlayer:(MUPlayer *)oldPlayer withPlayer:(MUPlayer *)newPlayer
 {
-	unsigned i, playersCount = [players count];
+	unsigned i;
 	
-	for (i = 0; i < playersCount; i++)
+	for (i = 0; i < [players count]; i++)
 	{
 		MUPlayer *player = [players objectAtIndex:i];
 		
