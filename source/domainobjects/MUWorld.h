@@ -1,7 +1,7 @@
 //
 // MUWorld.h
 //
-// Copyright (c) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005, 2007 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -20,17 +20,17 @@
   NSMutableArray *players;
 }
 
-+ (MUWorld *) worldWithName:(NSString *)newWorldName
-									 hostname:(NSString *)newWorldHostname
-											 port:(NSNumber *)newWorldPort
-												URL:(NSString *)newWorldURL
++ (MUWorld *) worldWithName:(NSString *)newName
+									 hostname:(NSString *)newHostname
+											 port:(NSNumber *)newPort
+												URL:(NSString *)newURL
 										players:(NSArray *)newPlayers;
 
 // Designated initializer.
-- (id) initWithName:(NSString *)newWorldName
-           hostname:(NSString *)newWorldHostname
-               port:(NSNumber *)newWorldPort
-                URL:(NSString *)newWorldURL
+- (id) initWithName:(NSString *)newName
+           hostname:(NSString *)newHostname
+               port:(NSNumber *)newPort
+                URL:(NSString *)newURL
             players:(NSArray *)newPlayers;
 
 // Accessors.

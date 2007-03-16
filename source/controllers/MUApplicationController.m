@@ -1,7 +1,7 @@
 //
 // MUApplicationController.m
 //
-// Copyright (c) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005, 2007 3James Software
 //
 
 #import "FontNameToDisplayNameTransformer.h"
@@ -128,34 +128,29 @@
 
 - (IBAction) connectToURL:(NSURL *)url
 {
-	MUConnectionWindowController *controller;
-	MUWorld *world;
-  
   if (![[url scheme] isEqualToString:@"telnet"])
     return;
   
-  world = [[MUWorld alloc] initWithName:[url host]
-                               hostname:[url host]
-                                   port:[url port]
-                                    URL:@""
-                                players:nil];
-  controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+  MUWorld *world = [MUWorld worldWithName:[url host]
+												hostname:[url host]
+														port:[url port]
+														 URL:@""
+												 players:nil];
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
 	
 	[self openConnectionWithController:controller];
 	
-	[world release];
   [controller release];
 }
 
 - (IBAction) connectUsingPanelInformation:(id)sender
 {
-	MUConnectionWindowController *controller;
-	MUWorld *world = [[MUWorld alloc] initWithName:[newConnectionHostnameField stringValue]
-																				hostname:[newConnectionHostnameField stringValue]
-																						port:[NSNumber numberWithInt:[newConnectionPortField intValue]]
-                                             URL:@""
-                                         players:nil];
-  controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+	MUWorld *world = [MUWorld worldWithName:[newConnectionHostnameField stringValue]
+																 hostname:[newConnectionHostnameField stringValue]
+																		 port:[NSNumber numberWithInt:[newConnectionPortField intValue]]
+																			URL:@""
+																	players:nil];
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
 	
 	if ([newConnectionSaveWorldButton state] == NSOnState)
 		[[MUServices worldRegistry] insertObject:world inWorldsAtIndex:[[MUServices worldRegistry] count]];
@@ -163,7 +158,6 @@
 	[self openConnectionWithController:controller];
 	[newConnectionPanel close];
 	
-	[world release];
   [controller release];
 }
 

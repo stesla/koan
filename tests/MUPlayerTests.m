@@ -51,14 +51,12 @@
 	MUPlayer *playerOne = [MUPlayer playerWithName:nil
 																				password:nil
 																					 world:nil];
-	[self assert:[playerOne loginString]
-				equals:nil];
+	[self assertNil:[playerOne loginString]];
 	
 	MUPlayer *playerTwo = [MUPlayer playerWithName:nil
 																				password:@"nonsense"
 																					 world:nil];
-	[self assert:[playerTwo loginString]
-				equals:nil];
+	[self assertNil:[playerTwo loginString]];
 }
 
 @end

@@ -1,7 +1,7 @@
 //
 // MUProfilesController.m
 //
-// Copyright (c) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005, 2007 3James Software
 //
 
 #import "MUProfilesController.h"
@@ -19,7 +19,6 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) changeFont:(id)sender;
 - (void) colorPanelColorDidChange:(NSNotification *)notification;
-- (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players;
 - (IBAction) editPlayer:(MUPlayer *)player;
 - (IBAction) editProfile:(MUProfile *)player;
 - (IBAction) editWorld:(MUWorld *)world;
@@ -38,6 +37,7 @@ enum MUProfilesEditingReturnValues
 - (void) updateProfileForWorld:(MUWorld *)world 
                         player:(MUPlayer *)player 
                     withPlayer:(MUPlayer *)newPlayer;
+- (MUWorld *) worldFromSheetWithPlayers:(NSArray *)players;
 - (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 - (void) worldSheetDidEndEditing:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
@@ -568,15 +568,6 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (MUWorld *) createWorldFromSheetWithPlayers:(NSArray *)players
-{
-  return [[MUWorld alloc] initWithName:[worldNameField stringValue]
-                              hostname:[worldHostnameField stringValue]
-                                  port:[NSNumber numberWithInt:[worldPortField intValue]]
-                                   URL:[worldURLField stringValue]
-                               players:players];
-}
-
 - (IBAction) editPlayer:(MUPlayer *)player
 {
   MUWorld *world = [player world];
@@ -868,16 +859,23 @@ enum MUProfilesEditingReturnValues
   [profile release];
 }
 
+- (MUWorld *) worldFromSheetWithPlayers:(NSArray *)players
+{
+  return [MUWorld worldWithName:[worldNameField stringValue]
+											 hostname:[worldHostnameField stringValue]
+													 port:[NSNumber numberWithInt:[worldPortField intValue]]
+														URL:[worldURLField stringValue]
+												players:players];
+}
+
 - (void) worldSheetDidEndAdding:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
   if (returnCode == MUEditOkay)
   {
-    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[NSArray array]];
+    MUWorld *newWorld = [self worldFromSheetWithPlayers:[NSArray array]];
 		unsigned insertionIndex = [(NSNumber *) contextInfo unsignedIntValue];
 		
 		[[MUServices worldRegistry] insertObject:newWorld inWorldsAtIndex:insertionIndex];
-		
-		[newWorld release];
 		
 		[worldsAndPlayersOutlineView reloadData];
 		[worldsAndPlayersOutlineView expandItem:newWorld];
@@ -891,7 +889,7 @@ enum MUProfilesEditingReturnValues
   if (returnCode == MUEditOkay)
   {
     MUWorld *oldWorld = (MUWorld *) contextInfo;
-    MUWorld *newWorld = [self createWorldFromSheetWithPlayers:[oldWorld players]];
+    MUWorld *newWorld = [self worldFromSheetWithPlayers:[oldWorld players]];
 		BOOL isExpanded = [worldsAndPlayersOutlineView isItemExpanded:oldWorld];
 		
     // Update every profile that has this world.
@@ -900,8 +898,6 @@ enum MUProfilesEditingReturnValues
 		
 		// Actually replace the old world with the new one.
 		[[MUServices worldRegistry] replaceWorld:oldWorld withWorld:newWorld];
-		
-		[newWorld release];
 		
 		[worldsAndPlayersOutlineView reloadData];
 		
