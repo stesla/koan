@@ -9,6 +9,13 @@
 
 @implementation MUPlayer
 
++ (MUPlayer *) playerWithName:(NSString *)newName
+										 password:(NSString *)newPassword
+												world:(MUWorld *)newWorld
+{
+	return [[[self alloc] initWithName:newName password:newPassword world:newWorld] autorelease];
+}
+
 - (id) initWithName:(NSString *)newName
            password:(NSString *)newPassword
               world:(MUWorld *)newWorld

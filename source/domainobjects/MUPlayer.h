@@ -14,6 +14,10 @@
   MUWorld *world;
 }
 
++ (MUPlayer *) playerWithName:(NSString *)newName
+										 password:(NSString *)newPassword
+												world:(MUWorld *)world;
+
 // Designated initializer.
 - (id) initWithName:(NSString *)newName
            password:(NSString *)newPassword
