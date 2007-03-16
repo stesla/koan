@@ -80,9 +80,8 @@
 - (NSString *) loginString
 {
   NSString *format;
-  NSRange whitespaceRange;
-    
-  whitespaceRange = [[self name] rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+  NSRange whitespaceRange = [[self name] rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+  
   if (whitespaceRange.location == NSNotFound)
     format = @"connect %@ %@";
   else

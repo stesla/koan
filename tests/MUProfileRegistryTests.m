@@ -11,12 +11,14 @@
 #import "MUWorld.h"
 
 @interface MUProfileRegistryTests (Private)
+
 - (void) assertProfile:(MUProfile *)profile
                  world:(MUWorld *)world 
                 player:(MUPlayer *)player;
 
 - (MUWorld *) testWorld;
 - (MUPlayer *) testPlayerWithWorld:(MUWorld *)world;
+
 @end
 
 @implementation MUProfileRegistryTests
@@ -44,7 +46,8 @@
 
 - (void) testProfileWithWorld
 {
-  MUProfile *profileOne = nil, *profileTwo = nil;
+  MUProfile *profileOne = nil;
+	MUProfile *profileTwo = nil;
   MUWorld *world = [self testWorld];
   
   profileOne = [registry profileForWorld:world];

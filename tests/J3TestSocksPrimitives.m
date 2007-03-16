@@ -131,7 +131,6 @@
   J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:@"example.com" port:0xABCD] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
   uint8_t reply[18] = {J3SocksVersion, J3SocksConnectionNotAllowed, 0, J3SocksDomainName, 11, 'e', 'x', 'a', 'm', 'p', 'l', 'e', '.', 'c', 'o', 'm', 0xAB, 0xCD};
-  int i;
   
   [self assertInt:[request reply] equals:J3SocksNoReply];
   [source appendBytes:reply length:18];
@@ -146,7 +145,6 @@
   J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:@"example.com" port:0xABCD] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
   uint8_t reply[10] = {J3SocksVersion, J3SocksConnectionNotAllowed, 0, J3SocksIPV4, 10, 1, 2, 3, 0xAB, 0xCD};
-  int i;
   
   [self assertInt:[request reply] equals:J3SocksNoReply];
   [source appendBytes:reply length:10];
@@ -161,7 +159,6 @@
   J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname:@"example.com" port:0xABCD] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
   uint8_t reply[22] = {J3SocksVersion, J3SocksConnectionNotAllowed, 0, J3SocksIPV6, 0xFE, 0xC0, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0xAB, 0xCD};
-  int i;
   
   [self assertInt:[request reply] equals:J3SocksNoReply];
   [source appendBytes:reply length:22];
