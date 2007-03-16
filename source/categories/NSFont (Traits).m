@@ -1,7 +1,7 @@
 //
 // NSFont (Traits).m
 //
-// Copyright (c) 2006 3James Software
+// Copyright (c) 2006, 2007 3James Software
 //
 
 #import "NSFont (Traits).h"
@@ -10,13 +10,13 @@
 
 - (NSFont *) fontWithTrait:(NSFontTraitMask)trait
 {
-  NSFontManager * fontManager = [NSFontManager sharedFontManager];
+  NSFontManager *fontManager = [NSFontManager sharedFontManager];
   return [fontManager convertFont:self toHaveTrait:trait];
 }
 
 - (BOOL) hasTrait:(NSFontTraitMask)trait
 {
-  NSFontManager * fontManager = [NSFontManager sharedFontManager];
+  NSFontManager *fontManager = [NSFontManager sharedFontManager];
   return [fontManager fontNamed:[self fontName] hasTraits:trait];
 }
 

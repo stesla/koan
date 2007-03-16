@@ -1,7 +1,7 @@
 //
 // J3WriteBuffer.m
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006, 2007 3James Software
 //
 
 #import "J3WriteBuffer.h"
@@ -9,6 +9,8 @@
 @implementation J3WriteBufferException
 
 @end
+
+#pragma mark -
 
 @interface J3WriteBuffer (Private)
 

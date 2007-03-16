@@ -1,7 +1,7 @@
 //
 // J3ByteSource.h
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2006 3James Software
 //
 
 @protocol J3ByteSource

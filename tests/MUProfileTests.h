@@ -1,7 +1,7 @@
 //
 // MUProfileTests.h
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006 3James Software
 //
 
 #import <Cocoa/Cocoa.h>

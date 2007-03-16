@@ -1,7 +1,7 @@
 //
 // J3WriteBuffer.h
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006, 2007 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -20,4 +20,5 @@
 }
 
 - (void) setByteDestination:(NSObject <J3ByteDestination> *)object;
+
 @end

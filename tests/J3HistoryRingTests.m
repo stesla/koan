@@ -1,7 +1,7 @@
 //
 // J3HistoryRingTests.m
 //
-// Copyright (c) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import "J3HistoryRingTests.h"
@@ -11,12 +11,14 @@ NSString *Second = @"Second";
 NSString *Third = @"Third";
 
 @interface J3HistoryRingTests (Private)
+
 - (void) assertCurrent:(NSString *)expected;
 - (void) assertPrevious:(NSString *)expected;
 - (void) assertNext:(NSString *)expected;
 - (void) saveOne;
 - (void) saveTwo;
 - (void) saveThree;
+
 @end
 
 #pragma mark -

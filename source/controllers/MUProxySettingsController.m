@@ -1,3 +1,9 @@
+//
+// MUProxySettingsController.m
+//
+// Copyright (c) 2006, 2007 3James Software
+//
+
 #import "MUProxySettingsController.h"
 #import "J3ConnectionFactory.h"
 #import "J3PortFormatter.h"
@@ -14,8 +20,7 @@
 
 - (id) init;
 {
-  if (![super initWithWindowNibName:@"MUProxySettings"])
-    return nil;
+  return [super initWithWindowNibName:@"MUProxySettings"];
 }
 
 - (J3ProxySettings *) proxySettings;

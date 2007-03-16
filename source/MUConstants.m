@@ -1,7 +1,7 @@
 //
 // MUConstants.m
 //
-// Copyright (c) 2004, 2005 3James Software
+// Copyright (c) 2004, 2005, 2006 3James Software
 //
 
 #import "MUConstants.h"

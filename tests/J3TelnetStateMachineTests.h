@@ -1,7 +1,7 @@
 //
 // J3TelnetStateMachineTests.h
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2006, 2007 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -19,6 +19,7 @@
 - (uint8_t) lastByteInput;
 - (uint8_t) outputByteAtIndex:(unsigned)index;
 - (unsigned) outputLength;
+
 @end
 
 @interface J3TelnetStateMachineTests : J3TestCase 
