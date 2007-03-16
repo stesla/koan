@@ -1,16 +1,11 @@
 //
-//  TestImporter.h
-//  KoanLogImporter
+// TestImporter.h
 //
-//  Created by Samuel Tesla on 3/14/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software
 //
 
 #import <J3Testing/J3TestCase.h>
 
-
-@interface TestImporter : J3TestCase 
-{
-}
+@interface TestImporter : J3TestCase
 
 @end

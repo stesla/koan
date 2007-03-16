@@ -1,9 +1,7 @@
 //
-//  main.c
-//  KoanLogImporter
+// main.c
 //
-//  Created by Samuel Tesla on 3/13/07.
-//  Copyright (c) 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software
 //
 
 

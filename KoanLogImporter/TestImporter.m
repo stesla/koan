@@ -1,13 +1,10 @@
 //
-//  TestImporter.m
-//  KoanLogImporter
+// TestImporter.m
 //
-//  Created by Samuel Tesla on 3/14/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software
 //
 
 #import "TestImporter.h"
-
 
 @implementation TestImporter
 

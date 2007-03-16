@@ -1,3 +1,9 @@
+//
+// GetMetadataForFile.c
+//
+// Copyright (c) 2007 3James Software
+//
+
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h> 
 
@@ -33,8 +39,6 @@
   
    ----------------------------------------------------------------------------- */
 
-
-
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
    
@@ -42,10 +46,11 @@
    and return it as a dictionary
    ----------------------------------------------------------------------------- */
 
-Boolean GetMetadataForFile(void* thisInterface, 
-			   CFMutableDictionaryRef attributes, 
-			   CFStringRef contentTypeUTI,
-			   CFStringRef pathToFile)
+Boolean
+GetMetadataForFile (void *thisInterface, 
+										CFMutableDictionaryRef attributes, 
+										CFStringRef contentTypeUTI,
+										CFStringRef pathToFile)
 {
 //    #warning To complete your importer please implement the function GetMetadataForFile in GetMetadataForFile.c
 //    return FALSE;
