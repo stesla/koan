@@ -21,6 +21,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation MUProfileRegistryTests
 
 - (void) setUp
@@ -52,8 +54,10 @@
   
   profileOne = [registry profileForWorld:world];
   [self assertProfile:profileOne world:world player:nil];
+	
   profileTwo = [registry profileForUniqueIdentifier:@"test.world"];
   [self assert:profileTwo equals:profileOne message:@"First"];
+	
   profileOne = [registry profileForWorld:world];
   [self assert:profileOne equals:profileTwo message:@"Second"];
 }
@@ -66,8 +70,10 @@
   
   profileOne = [registry profileForWorld:world player:player];
   [self assertProfile:profileOne world:world player:player];
+	
   profileTwo = [registry profileForUniqueIdentifier:@"test.world.user"];
   [self assert:profileTwo equals:profileOne message:@"First"];
+	
   profileOne = [registry profileForWorld:world player:player];
   [self assert:profileOne equals:profileTwo message:@"Second"];
 }
@@ -116,9 +122,13 @@
                                                player:player]
             message:@"World and player"];
 }
+
 @end
 
+#pragma mark -
+
 @implementation MUProfileRegistryTests (Private)
+
 - (void) assertProfile:(MUProfile *)profile
                  world:(MUWorld *)world 
                 player:(MUPlayer *)player
@@ -137,8 +147,7 @@
 
 - (MUPlayer *) testPlayerWithWorld:(MUWorld *)world
 {
-  return [[[MUPlayer alloc] initWithName:@"User"
-                                password:@""
-                                   world:world] autorelease];
+  return [MUPlayer playerWithName:@"User" password:@"" world:world];
 }
+
 @end

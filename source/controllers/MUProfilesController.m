@@ -698,13 +698,12 @@ enum MUProfilesEditingReturnValues
 		NSDictionary *contextDictionary = (NSDictionary *) contextInfo;
 		unsigned insertionIndex = [(NSNumber *) [contextDictionary objectForKey:MUInsertionIndex] unsignedIntValue];
 		MUWorld *insertionWorld = (MUWorld *) [contextDictionary objectForKey:MUInsertionWorld];
-    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
-                                                password:[playerPasswordField stringValue]
-                                                   world:insertionWorld];
+    MUPlayer *newPlayer = [MUPlayer playerWithName:[playerNameField stringValue]
+																					password:[playerPasswordField stringValue]
+																						 world:insertionWorld];
     
 		[insertionWorld insertObject:newPlayer inPlayersAtIndex:insertionIndex];
 		
-    [newPlayer release];
 		[worldsAndPlayersOutlineView reloadData];
   }
 	
@@ -717,9 +716,9 @@ enum MUProfilesEditingReturnValues
   {
 		MUPlayer *oldPlayer = (MUPlayer *) contextInfo;
     MUWorld *oldWorld = [oldPlayer world];
-    MUPlayer *newPlayer = [[MUPlayer alloc] initWithName:[playerNameField stringValue]
-																								password:[playerPasswordField stringValue]
-																									 world:oldWorld];
+    MUPlayer *newPlayer = [MUPlayer playerWithName:[playerNameField stringValue]
+																					password:[playerPasswordField stringValue]
+																						 world:oldWorld];
 		
     // Updates the profile for the player/world with the new player object.
     [self updateProfileForWorld:oldWorld
@@ -729,7 +728,6 @@ enum MUProfilesEditingReturnValues
 		// Actually replace the old player with the new one.
 		[oldWorld replacePlayer:oldPlayer withPlayer:newPlayer];
 		
-    [newPlayer release];
 		[worldsAndPlayersOutlineView reloadData];
   }
 }
