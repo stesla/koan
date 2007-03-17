@@ -97,10 +97,10 @@
 
 - (void) log:(NSAttributedString *)string
 {
-  [self writeToStream:output withFormat:@"%@",[string string]];
+  [self writeToStream:output withFormat:@"%@", [string string]];
 }
 
-- (void) initializeFileAtPath:(NSString *)path withHeaders:(NSDictionary *)headers;
+- (void) initializeFileAtPath:(NSString *)path withHeaders:(NSDictionary *)headers
 {
   NSOutputStream *stream;
   
@@ -128,7 +128,7 @@
   }
 }
 
-- (void) writeToStream:(NSOutputStream *)stream withFormat:(NSString *)format,...;
+- (void) writeToStream:(NSOutputStream *)stream withFormat:(NSString *)format, ...
 {
   va_list args;
   NSString *string;

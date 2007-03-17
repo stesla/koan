@@ -12,6 +12,7 @@
 #import "MUPlayer.h"
 #import "MUPreferencesController.h"
 #import "MUProfilesController.h"
+#import "MUProxySettingsController.h"
 #import "MUServices.h"
 #import "J3ConnectionFactory.h"
 #import "MUWorld.h"
