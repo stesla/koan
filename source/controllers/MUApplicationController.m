@@ -249,17 +249,17 @@
     NSAlert *alert;
     int choice = NSAlertDefaultReturn;
     NSString *title = [NSString stringWithFormat:
-      (openConnections == 1 ? NSLocalizedString (MULConfirmQuitTitleSingular, nil)
-                            : NSLocalizedString (MULConfirmQuitTitlePlural, nil)),
+      (openConnections == 1 ? _(MULConfirmQuitTitleSingular)
+                            : _(MULConfirmQuitTitlePlural)),
       openConnections];
   
     if (openConnections > 1)
     {
       alert = [NSAlert alertWithMessageText:title
-                              defaultButton:NSLocalizedString (MULConfirm, nil)
-                            alternateButton:NSLocalizedString (MULCancel, nil)
-                                otherButton:NSLocalizedString (MULQuitImmediately, nil)
-                  informativeTextWithFormat:NSLocalizedString (MULConfirmQuitMessage, nil)];
+                              defaultButton:_(MULConfirm)
+                            alternateButton:_(MULCancel)
+                                otherButton:_(MULQuitImmediately)
+                  informativeTextWithFormat:_(MULConfirmQuitMessage)];
     
       choice = [alert runModal];
       
@@ -381,7 +381,7 @@
     NSArray *players = [world players];
     NSMenuItem *worldItem = [[NSMenuItem alloc] init];
     NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world name]];
-    NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString (MULConnectWithoutLogin, nil)
+    NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle:_(MULConnectWithoutLogin)
                                                          action:@selector(openConnection:)
                                                   keyEquivalent:@""];
     int j, playersCount = [players count];

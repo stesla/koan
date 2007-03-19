@@ -11,11 +11,13 @@
 - (void) awakeFromNib
 {
   toolbar = [[NSToolbar alloc] initWithIdentifier:@"connectionWindowToolbar"];
+	
   [toolbar setDelegate:self];
   [toolbar setAllowsUserCustomization:YES];
   [toolbar setAutosavesConfiguration:YES];
-  
+	
   [window setToolbar:toolbar];
+	
 	[toolbar release];
 }
 
@@ -28,8 +30,8 @@
   
   if ([itemIdentifier isEqualToString:MUGoToURLToolbarItem])
   {
-    [item setLabel:NSLocalizedString (MULGoToURL, nil)];
-    [item setPaletteLabel:NSLocalizedString (MULGoToURL, nil)];
+    [item setLabel:_(MULGoToURL)];
+    [item setPaletteLabel:_(MULGoToURL)];
     [item setImage:nil];
     [item setTarget:windowController];
     [item setAction:@selector(goToWorldURL:)];

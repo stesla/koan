@@ -28,48 +28,48 @@
   
 	if ([itemIdentifier isEqualToString:MUAddWorldToolbarItem])
 	{
-		[item setLabel:NSLocalizedString (MULAddWorld, nil)];
-		[item setPaletteLabel:NSLocalizedString (MULAddWorld, nil)];
+		[item setLabel:_(MULAddWorld)];
+		[item setPaletteLabel:_(MULAddWorld)];
 		[item setImage:nil];
 		[item setTarget:windowController];
 		[item setAction:@selector(addWorld:)];
 	}
 	else if ([itemIdentifier isEqualToString:MUAddPlayerToolbarItem])
 	{
-		[item setLabel:NSLocalizedString (MULAddPlayer, nil)];
-		[item setPaletteLabel:NSLocalizedString (MULAddPlayer, nil)];
+		[item setLabel:_(MULAddPlayer)];
+		[item setPaletteLabel:_(MULAddPlayer)];
 		[item setImage:nil];
 		[item setTarget:windowController];
 		[item setAction:@selector(addPlayer:)];
 	}
 	else if ([itemIdentifier isEqualToString:MUEditSelectedRowToolbarItem])
 	{
-		[item setLabel:NSLocalizedString (MULEditItem, nil)];
-		[item setPaletteLabel:NSLocalizedString (MULEditItem, nil)];
+		[item setLabel:_(MULEditItem)];
+		[item setPaletteLabel:_(MULEditItem)];
 		[item setImage:nil];
 		[item setTarget:windowController];
 		[item setAction:@selector(editSelectedRow:)];
 	}
 	else if ([itemIdentifier isEqualToString:MURemoveSelectedRowToolbarItem])
 	{
-		[item setLabel:NSLocalizedString (MULRemoveItem, nil)];
-		[item setPaletteLabel:NSLocalizedString (MULRemoveItem, nil)];
+		[item setLabel:_(MULRemoveItem)];
+		[item setPaletteLabel:_(MULRemoveItem)];
 		[item setImage:nil];
 		[item setTarget:windowController];
 		[item setAction:@selector(removeSelectedRow:)];
 	}
 	else if ([itemIdentifier isEqualToString:MUEditProfileForSelectedRowToolbarItem])
 	{
-		[item setLabel:NSLocalizedString (MULEditProfile, nil)];
-		[item setPaletteLabel:NSLocalizedString (MULEditProfile, nil)];
+		[item setLabel:_(MULEditProfile)];
+		[item setPaletteLabel:_(MULEditProfile)];
 		[item setImage:nil];
 		[item setTarget:windowController];
 		[item setAction:@selector(editProfileForSelectedRow:)];
 	}
   else if ([itemIdentifier isEqualToString:MUGoToURLToolbarItem])
   {
-    [item setLabel:NSLocalizedString (MULGoToURL, nil)];
-    [item setPaletteLabel:NSLocalizedString (MULGoToURL, nil)];
+    [item setLabel:_(MULGoToURL)];
+    [item setPaletteLabel:_(MULGoToURL)];
     [item setImage:nil];
     [item setTarget:windowController];
     [item setAction:@selector(goToWorldURL:)];

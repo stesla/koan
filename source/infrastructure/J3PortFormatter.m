@@ -32,7 +32,7 @@
   }
   
   //if (error)
-  //  *error = NSLocalizedString (GBLErrorConverting, nil);
+  //  *error = _(GBLErrorConverting);
   
   return NO;
 }

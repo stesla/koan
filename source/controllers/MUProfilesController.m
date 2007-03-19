@@ -92,7 +92,7 @@ enum MUProfilesEditingReturnValues
 	{
 		if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
 		{
-			[toolbarItem setLabel:NSLocalizedString (MULEditItem, nil)];
+			[toolbarItem setLabel:_(MULEditItem)];
 			return NO;
 		}
 		else
@@ -100,9 +100,9 @@ enum MUProfilesEditingReturnValues
 			id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
 			
 			if ([item isKindOfClass:[MUWorld class]])
-				[toolbarItem setLabel:NSLocalizedString (MULEditWorld, nil)];
+				[toolbarItem setLabel:_(MULEditWorld)];
 			else if ([item isKindOfClass:[MUPlayer class]])
-				[toolbarItem setLabel:NSLocalizedString (MULEditPlayer, nil)];
+				[toolbarItem setLabel:_(MULEditPlayer)];
       else return NO;
 			
 			return YES;
@@ -112,7 +112,7 @@ enum MUProfilesEditingReturnValues
 	{
 		if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
 		{
-			[toolbarItem setLabel:NSLocalizedString (MULRemoveItem, nil)];
+			[toolbarItem setLabel:_(MULRemoveItem)];
 			return NO;
 		}
 		else
@@ -120,9 +120,9 @@ enum MUProfilesEditingReturnValues
 			id item = [worldsAndPlayersOutlineView itemAtRow:[worldsAndPlayersOutlineView selectedRow]];
 			
 			if ([item isKindOfClass:[MUWorld class]])
-				[toolbarItem setLabel:NSLocalizedString (MULRemoveWorld, nil)];
+				[toolbarItem setLabel:_(MULRemoveWorld)];
 			else if ([item isKindOfClass:[MUPlayer class]])
-				[toolbarItem setLabel:NSLocalizedString (MULRemovePlayer, nil)];
+				[toolbarItem setLabel:_(MULRemovePlayer)];
       else return NO;
 			
 			return YES;

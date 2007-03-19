@@ -158,7 +158,6 @@
 		E62C909F07422669005662BC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E62C909E07422669005662BC /* Localizable.strings */; };
 		E62E7FA307A1AB5400BF15E9 /* NSCursor (Finger).m in Sources */ = {isa = PBXBuildFile; fileRef = E62E7FA107A1AB5400BF15E9 /* NSCursor (Finger).m */; };
 		E62E832007A1D10400BF15E9 /* MUTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E62E831E07A1D10400BF15E9 /* MUTextView.m */; };
-		E62F2AEB07CD3B5100DC8C1B /* MacPADSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = E6824F5207B174DF002C9507 /* MacPADSocket.m */; };
 		E63CC4E5077A06CD003A54AA /* MUProfilesController.m in Sources */ = {isa = PBXBuildFile; fileRef = E63CC4E3077A06CD003A54AA /* MUProfilesController.m */; };
 		E63F31C00815B5C1006C4704 /* NSFont (FullDisplayName).m in Sources */ = {isa = PBXBuildFile; fileRef = E63F31BE0815B5C1006C4704 /* NSFont (FullDisplayName).m */; };
 		E64C9634076BF95E00D0D7C0 /* J3PortFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E64C9632076BF95E00D0D7C0 /* J3PortFormatter.m */; };
@@ -429,8 +428,6 @@
 		E677D20F0778041F00B417D2 /* MUPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUPlayer.m; sourceTree = "<group>"; };
 		E67CBF3007D03FEE004BB3DB /* MUProfilesToolbarController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUProfilesToolbarController.m; sourceTree = "<group>"; };
 		E67CBF3107D03FEE004BB3DB /* MUProfilesToolbarController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUProfilesToolbarController.h; sourceTree = "<group>"; };
-		E6824F5107B174DF002C9507 /* MacPADSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacPADSocket.h; sourceTree = "<group>"; };
-		E6824F5207B174DF002C9507 /* MacPADSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MacPADSocket.m; sourceTree = "<group>"; };
 		E6914C4F092FDAD1005DA235 /* MUPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUPreferencesController.h; sourceTree = "<group>"; };
 		E6914C50092FDAD1005DA235 /* MUPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUPreferencesController.m; sourceTree = "<group>"; };
 		E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUProfileRegistryTests.h; sourceTree = "<group>"; };
@@ -855,12 +852,10 @@
 			isa = PBXGroup;
 			children = (
 				E60DDB83076CE889009870E4 /* FontNameToDisplayNameTransformer.h */,
-				E6824F5107B174DF002C9507 /* MacPADSocket.h */,
 				E6A231270772E166008EF744 /* MUDisplayTextView.h */,
 				E62E831D07A1D10400BF15E9 /* MUTextView.h */,
 				E6E79CEA07697FD100A8FB96 /* UKPrefsPanel.h */,
 				E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */,
-				E6824F5207B174DF002C9507 /* MacPADSocket.m */,
 				E6A231280772E166008EF744 /* MUDisplayTextView.m */,
 				E62E831E07A1D10400BF15E9 /* MUTextView.m */,
 				E6E79CEB07697FD100A8FB96 /* UKPrefsPanel.m */,
@@ -1186,7 +1181,6 @@
 				E62E7FA307A1AB5400BF15E9 /* NSCursor (Finger).m in Sources */,
 				E62E832007A1D10400BF15E9 /* MUTextView.m in Sources */,
 				E653A7D207AEFAB900023476 /* MUGrowlService.m in Sources */,
-				E62F2AEB07CD3B5100DC8C1B /* MacPADSocket.m in Sources */,
 				E67CBF3207D03FEE004BB3DB /* MUProfilesToolbarController.m in Sources */,
 				E63F31C00815B5C1006C4704 /* NSFont (FullDisplayName).m in Sources */,
 				7E68DC59092AC2FB004554BD /* J3Buffer.m in Sources */,

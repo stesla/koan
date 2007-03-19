@@ -126,6 +126,9 @@ enum MUSearchDirections
 - (void) dealloc
 {
   [self disconnectAndCleanUp];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:nil name:nil object:self];
+	
   [filterQueue release];
   [historyRing release];
   [profile release];
@@ -139,9 +142,9 @@ enum MUSearchDirections
   if (menuItemAction == @selector(connectOrDisconnect:))
   {
     if ([self isConnected])
-      [menuItem setTitle:MULDisconnect];
+      [menuItem setTitle:_(MULDisconnect)];
     else
-      [menuItem setTitle:MULConnect];
+      [menuItem setTitle:_(MULConnect)];
     return YES;
   }
 	else if (menuItemAction == @selector(clearWindow:))
@@ -172,12 +175,15 @@ enum MUSearchDirections
 
 - (void) windowWillClose:(NSNotification *)notification
 {
-  NSWindow *window = [self window];
+  NSWindow *window = [notification object];
   
-  [splitView saveState:YES];
-  [window setDelegate:nil];
+	if (window == [self window])
+	{
+		[splitView saveState:YES];
+		[window setDelegate:nil];
   
-  [self postConnectionWindowControllerWillCloseNotification];
+		[self postConnectionWindowControllerWillCloseNotification];
+	}
 }
   
 #pragma mark -
@@ -223,21 +229,20 @@ enum MUSearchDirections
 
 - (void) confirmClose:(SEL)callback 
 {
-  NSString *title = [NSString stringWithFormat:
-    NSLocalizedString (MULConfirmCloseTitle, nil), [profile windowTitle]];
+  NSString *title = [NSString stringWithFormat:_(MULConfirmCloseTitle), [profile windowTitle]];
   
   [[self window] makeKeyAndOrderFront:nil];
   
   NSBeginAlertSheet (title,
-                     NSLocalizedString (MULOkay, nil),
-                     NSLocalizedString (MULCancel, nil),
+                     _(MULOkay),
+                     _(MULCancel),
                      nil,
                      [self window],
                      self,
                      @selector(willEndCloseSheet:returnCode:contextInfo:),
                      @selector(didEndCloseSheet:returnCode:contextInfo:),
                      (void *) callback,
-                     NSLocalizedString (MULConfirmCloseMessage, nil),
+                     _(MULConfirmCloseMessage),
                      [profile hostname]);
 }
 
@@ -324,7 +329,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet:telnet])
     return;
   
-  [self displayString:NSLocalizedString (MULConnectionOpening, nil)];  
+  [self displayString:_(MULConnectionOpening)];  
   [self displayString:@"\n"];  
 }
 
@@ -333,7 +338,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet:telnet])
     return;
   
-  [self displayString:NSLocalizedString (MULConnectionOpen, nil)];
+  [self displayString:_(MULConnectionOpen)];
   [self displayString:@"\n"];
   [MUGrowlService connectionOpenedForTitle:[profile windowTitle]];
   
@@ -346,7 +351,7 @@ enum MUSearchDirections
     return;
   
   [self cleanUp];
-  [self displayString:NSLocalizedString (MULConnectionClosed, nil)];
+  [self displayString:_(MULConnectionClosed)];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
 }
@@ -357,7 +362,7 @@ enum MUSearchDirections
     return;
   
   [self cleanUp];
-  [self displayString:NSLocalizedString (MULConnectionClosedByServer, nil)];
+  [self displayString:_(MULConnectionClosedByServer)];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
 }
@@ -368,7 +373,7 @@ enum MUSearchDirections
     return;
   
   [self cleanUp];
-  [self displayString:[NSString stringWithFormat:NSLocalizedString (MULConnectionClosedByError, nil), errorMessage]];
+  [self displayString:[NSString stringWithFormat:_(MULConnectionClosedByError), errorMessage]];
   [self displayString:@"\n"];
   [MUGrowlService connectionClosedByErrorForTitle:[profile windowTitle] error:errorMessage];
 }

@@ -14,3 +14,5 @@
 #import "categories/NSObject (Accessing).h"
 #import "categories/NSObject (BetterHashing).h"
 #import "categories/NSObject (DeepMutableCopy).h"
+
+#define _(name) NSLocalizedString (name, nil)

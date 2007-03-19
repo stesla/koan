@@ -18,7 +18,8 @@
   IBOutlet MUDisplayTextView *receivedTextView;
   IBOutlet NSTextView *inputView;
   IBOutlet RBSplitView *splitView;
-  IBOutlet id delegate;
+  
+	id delegate;
   
   MUProfile *profile;
   J3Telnet *telnetConnection;
