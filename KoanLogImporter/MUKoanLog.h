@@ -1,18 +1,15 @@
 //
-//  MUKoanLog.h
-//  KoanLogImporter
+// MUKoanLog.h
 //
-//  Created by Samuel Tesla on 3/14/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface MUKoanLog : NSObject 
 {
-  NSDictionary * headers;
-  NSString * content;
+  NSDictionary *headers;
+  NSString *content;
 }
 
 + (id) logWithContentsOfFile:(NSString *)path;

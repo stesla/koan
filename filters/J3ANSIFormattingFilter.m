@@ -1,14 +1,14 @@
 //
-// J3AnsiFormattingFilter.m
+// J3ANSIFormattingFilter.m
 //
 // Copyright (c) 2004, 2005, 2006 3James Software
 //
 
-#import "J3AnsiFormattingFilter.h"
+#import "J3ANSIFormattingFilter.h"
 #import "J3Formatting.h"
 #import "NSFont (Traits).h"
 
-@interface J3AnsiFormattingFilter (Private)
+@interface J3ANSIFormattingFilter (Private)
 
 - (NSString *) attributeNameForAnsiCode;
 - (id) attributeValueForAnsiCodeAndString:(NSAttributedString *)string location:(int)location;
@@ -30,7 +30,7 @@
 
 @end
 
-@implementation J3AnsiFormattingFilter
+@implementation J3ANSIFormattingFilter
 + (J3Filter *) filterWithFormatting:(NSObject <J3Formatting> *)format;
 {
   return [[[self alloc] initWithFormatting:format] autorelease];
@@ -69,43 +69,43 @@
 
 @end
 
-@implementation J3AnsiFormattingFilter (Private)
+@implementation J3ANSIFormattingFilter (Private)
 
 - (NSString *) attributeNameForAnsiCode;
 {
   switch ([[ansiCode substringFromIndex:2] intValue]) 
   {
-    case J3AnsiBackgroundBlack:
-    case J3AnsiBackgroundBlue:
-    case J3AnsiBackgroundCyan:
-    case J3AnsiBackgroundDefault:
-    case J3AnsiBackgroundGreen:
-    case J3AnsiBackgroundMagenta:
-    case J3AnsiBackgroundRed:
-    case J3AnsiBackgroundWhite:
-    case J3AnsiBackgroundYellow:
+    case J3ANSIBackgroundBlack:
+    case J3ANSIBackgroundBlue:
+    case J3ANSIBackgroundCyan:
+    case J3ANSIBackgroundDefault:
+    case J3ANSIBackgroundGreen:
+    case J3ANSIBackgroundMagenta:
+    case J3ANSIBackgroundRed:
+    case J3ANSIBackgroundWhite:
+    case J3ANSIBackgroundYellow:
       return NSBackgroundColorAttributeName;
       break;
       
-    case J3AnsiForegroundBlack:
-    case J3AnsiForegroundBlue:
-    case J3AnsiForegroundCyan:
-    case J3AnsiForegroundDefault:
-    case J3AnsiForegroundGreen:
-    case J3AnsiForegroundMagenta:
-    case J3AnsiForegroundRed:
-    case J3AnsiForegroundWhite:
-    case J3AnsiForegroundYellow:
+    case J3ANSIForegroundBlack:
+    case J3ANSIForegroundBlue:
+    case J3ANSIForegroundCyan:
+    case J3ANSIForegroundDefault:
+    case J3ANSIForegroundGreen:
+    case J3ANSIForegroundMagenta:
+    case J3ANSIForegroundRed:
+    case J3ANSIForegroundWhite:
+    case J3ANSIForegroundYellow:
       return NSForegroundColorAttributeName;
       break;
       
-    case J3AnsiBoldOn:
-    case J3AnsiBoldOff:
+    case J3ANSIBoldOn:
+    case J3ANSIBoldOff:
       return NSFontAttributeName;
       break;
       
-    case J3AnsiUnderlineOn:
-    case J3AnsiUnderlineOff:
+    case J3ANSIUnderlineOn:
+    case J3ANSIUnderlineOff:
       return NSUnderlineStyleAttributeName;
       break;
   }
@@ -116,67 +116,67 @@
 {
   switch ([[ansiCode substringFromIndex:2] intValue]) 
   {
-    case J3AnsiBackgroundBlack: 
-    case J3AnsiForegroundBlack: 
+    case J3ANSIBackgroundBlack: 
+    case J3ANSIForegroundBlack: 
       return [NSColor darkGrayColor];
       break;
       
-    case J3AnsiBackgroundBlue:
-    case J3AnsiForegroundBlue:
+    case J3ANSIBackgroundBlue:
+    case J3ANSIForegroundBlue:
       return [NSColor blueColor];
       break;
 
-    case J3AnsiBackgroundCyan:
-    case J3AnsiForegroundCyan:
+    case J3ANSIBackgroundCyan:
+    case J3ANSIForegroundCyan:
       return [NSColor cyanColor];
       break;
       
-    case J3AnsiBackgroundDefault:
+    case J3ANSIBackgroundDefault:
       return [formatting background];
       break;
 
-    case J3AnsiForegroundDefault:
+    case J3ANSIForegroundDefault:
       return [formatting foreground];
       break;
       
-    case J3AnsiBackgroundGreen:
-    case J3AnsiForegroundGreen:
+    case J3ANSIBackgroundGreen:
+    case J3ANSIForegroundGreen:
       return [NSColor greenColor];
       break;
       
-    case J3AnsiBackgroundMagenta:
-    case J3AnsiForegroundMagenta:
+    case J3ANSIBackgroundMagenta:
+    case J3ANSIForegroundMagenta:
       return [NSColor magentaColor];
       break;
       
-    case J3AnsiBackgroundRed:
-    case J3AnsiForegroundRed:
+    case J3ANSIBackgroundRed:
+    case J3ANSIForegroundRed:
       return [NSColor redColor];
       break;
       
-    case J3AnsiBackgroundWhite:
-    case J3AnsiForegroundWhite:
+    case J3ANSIBackgroundWhite:
+    case J3ANSIForegroundWhite:
       return [NSColor whiteColor];
       break;
       
-    case J3AnsiBackgroundYellow:
-    case J3AnsiForegroundYellow:
+    case J3ANSIBackgroundYellow:
+    case J3ANSIForegroundYellow:
       return [NSColor yellowColor];
       break;    
       
-    case J3AnsiBoldOn:
+    case J3ANSIBoldOn:
       return [self makeFontBold:[self fontInString:string atLocation:location]];
       break;
         
-    case J3AnsiBoldOff:
+    case J3ANSIBoldOff:
       return [self makeFontUnbold:[self fontInString:string atLocation:location]];
       break;
       
-    case J3AnsiUnderlineOn:
+    case J3ANSIUnderlineOn:
       return [NSNumber numberWithInt:NSSingleUnderlineStyle];
       break;
       
-    case J3AnsiUnderlineOff:
+    case J3ANSIUnderlineOff:
       return [NSNumber numberWithInt:NSNoUnderlineStyle];
       break;
   }
@@ -328,7 +328,7 @@
   else if ([attributeName isEqualToString:NSBackgroundColorAttributeName])
     [self resetBackgroundInString:string fromLocation:start];
   else
-    @throw [NSException exceptionWithName:@"J3AnsiException" reason:@"Did not provide attributeValue" userInfo:nil];
+    @throw [NSException exceptionWithName:@"J3ANSIException" reason:@"Did not provide attributeValue" userInfo:nil];
 }
 
 - (NSFont *) setTrait:(NSFontTraitMask)trait onFont:(NSFont *)font;

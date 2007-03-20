@@ -1,3 +1,9 @@
+//
+// GetMetadataForFile.m
+//
+// Copyright (c) 2007 3James Software
+//
+
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h> 
 #include <Foundation/Foundation.h>

@@ -1,15 +1,15 @@
 //
-// J3AnsiFormattingFilterTests.m
+// J3ANSIFormattingFilterTests.m
 //
 // Copyright (c) 2004, 2005, 2006 3James Software
 //
 
-#import "J3AnsiFormattingFilterTests.h"
-#import "J3AnsiFormattingFilter.h"
+#import "J3ANSIFormattingFilterTests.h"
+#import "J3ANSIFormattingFilter.h"
 #import "J3Formatting.h"
 #import "NSFont (Traits).h"
 
-@interface J3AnsiFormattingFilterTests (Private)
+@interface J3ANSIFormattingFilterTests (Private)
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output;
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
              message:(NSString *)message;
@@ -21,7 +21,7 @@
 
 #pragma mark -
 
-@implementation J3AnsiFormattingFilterTests (Private)
+@implementation J3ANSIFormattingFilterTests (Private)
 
 - (void) assertInput:(NSString *)input hasOutput:(NSString *)output
 {
@@ -72,12 +72,12 @@
 
 #pragma mark -
 
-@implementation J3AnsiFormattingFilterTests
+@implementation J3ANSIFormattingFilterTests
 
 - (void) setUp
 {
   queue = [[J3FilterQueue alloc] init];
-  [queue addFilter:[J3AnsiFormattingFilter filter]];
+  [queue addFilter:[J3ANSIFormattingFilter filter]];
 }
 
 - (void) tearDown
@@ -238,7 +238,7 @@
   NSFont * boldFont = [[J3Formatting testingFont] fontWithTrait:NSBoldFontMask];
   
   [queue clearFilters];
-  [queue addFilter:[J3AnsiFormattingFilter filterWithFormatting:[J3Formatting formattingWithForegroundColor:[J3Formatting testingForeground] backgroundColor:[J3Formatting testingBackground] font:boldFont]]];
+  [queue addFilter:[J3ANSIFormattingFilter filterWithFormatting:[J3Formatting formattingWithForegroundColor:[J3Formatting testingForeground] backgroundColor:[J3Formatting testingBackground] font:boldFont]]];
 
   output = [queue processAttributedString:input];
   [self assertString:output hasTrait:NSBoldFontMask atIndex:0 message:@"a"];

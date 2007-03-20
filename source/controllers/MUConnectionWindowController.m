@@ -1,13 +1,13 @@
 //
 // MUConnectionWindowController.m
 //
-// Copyright (c) 2004, 2005, 2006 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import "MUConnectionWindowController.h"
 #import "MUGrowlService.h"
 
-#import "J3AnsiFormattingFilter.h"
+#import "J3ANSIFormattingFilter.h"
 #import "J3NaiveURLFilter.h"
 #import "MUTextLogger.h"
 
@@ -47,7 +47,7 @@ enum MUSearchDirections
 
 - (id) initWithProfile:(MUProfile*)newProfile;
 {
-  J3AnsiFormattingFilter * formattingFilter;
+  J3ANSIFormattingFilter *formattingFilter;
   
   if (![super initWithWindowNibName:@"MUConnectionWindow"])
     return nil;
@@ -57,7 +57,7 @@ enum MUSearchDirections
   historyRing = [[J3HistoryRing alloc] init];
     
   filterQueue = [[J3FilterQueue alloc] init];
-  [filterQueue addFilter:[J3AnsiFormattingFilter filterWithFormatting:[profile formatting]]];
+  [filterQueue addFilter:[J3ANSIFormattingFilter filterWithFormatting:[profile formatting]]];
   [filterQueue addFilter:[J3NaiveURLFilter filter]];
   [filterQueue addFilter:[self createLogger]];
   
@@ -234,7 +234,7 @@ enum MUSearchDirections
   [[self window] makeKeyAndOrderFront:nil];
   
   NSBeginAlertSheet (title,
-                     _(MULOkay),
+                     _(MULOK),
                      _(MULCancel),
                      nil,
                      [self window],

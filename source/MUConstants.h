@@ -1,7 +1,7 @@
 //
 // MUConstants.h
 //
-// Copyright (c) 2004, 2005, 2006 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -82,17 +82,10 @@ extern NSString *MULConnectionClosedByError;
 
 #pragma mark Alert panel localization constants.
 
-extern NSString *MULOkay;
+extern NSString *MULOK;
 extern NSString *MULConfirm;
 extern NSString *MULQuitImmediately;
 extern NSString *MULCancel;
-extern NSString *MULNone;
-extern NSString *MULNever;
-extern NSString *MULYes;
-extern NSString *MULNo;
-extern NSString *MULDownload;
-extern NSString *MULRemindLater;
-extern NSString *MULDontRemind;
 
 extern NSString *MULConfirmCloseTitle;
 extern NSString *MULConfirmCloseMessage;
@@ -100,20 +93,6 @@ extern NSString *MULConfirmCloseMessage;
 extern NSString *MULConfirmQuitTitleSingular;
 extern NSString *MULConfirmQuitTitlePlural;
 extern NSString *MULConfirmQuitMessage;
-
-extern NSString *MULErrorCheckingForUpdatesTitle;
-
-extern NSString *MULNewVersionAvailableTitle;
-extern NSString *MULNewVersionAvailableMessage;
-
-extern NSString *MULHasMostRecentVersionTitle;
-extern NSString *MULHasMostRecentVersionMessage;
-
-extern NSString *MULHasUnreleasedVersionTitle;
-extern NSString *MULHasUnreleasedVersionMessage;
-
-extern NSString *MULShouldCheckAutomaticallyForUpdatesTitle;
-extern NSString *MULShouldCheckAutomaticallyForUpdatesMessage;
 
 #pragma mark Miscellaneous localization constants.
 

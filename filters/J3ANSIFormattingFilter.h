@@ -1,5 +1,5 @@
 //
-// J3AnsiFormattingFilter.h
+// J3ANSIFormattingFilter.h
 //
 // Copyright (c) 2004, 2005, 2006 3James Software
 //
@@ -9,7 +9,7 @@
 
 @protocol J3Formatting;
 
-@interface J3AnsiFormattingFilter : J3Filter
+@interface J3ANSIFormattingFilter : J3Filter
 {
   NSString *ansiCode;
   NSObject <J3Formatting> *formatting;
@@ -27,35 +27,35 @@
 // implemented because my survey of mushes indicates that they are
 // not used.
 
-typedef enum J3AnsiCode
+typedef enum J3ANSICode
 {
-  J3AnsiReset = 0,
-  J3AnsiBoldOn = 1,
-  J3AnsiItalicsOn = 3,
-  J3AnsiUnderlineOn = 4,
-  J3AnsiInverseOn = 7,
-  J3AnsiStrikeOn = 9,
-  J3AnsiBoldOff = 22,
-  J3AnsiItalicsOff = 23,
-  J3AnsiUnderlineOff = 24,
-  J3AnsiInverseOff = 27,
-  J3AnsiStrikeOff = 29,
-  J3AnsiForegroundBlack = 30,
-  J3AnsiForegroundRed = 31,
-  J3AnsiForegroundGreen = 32,
-  J3AnsiForegroundYellow = 33,
-  J3AnsiForegroundBlue = 34,
-  J3AnsiForegroundMagenta = 35,
-  J3AnsiForegroundCyan = 36,
-  J3AnsiForegroundWhite = 37,
-  J3AnsiForegroundDefault = 39,
-  J3AnsiBackgroundBlack = 40,
-  J3AnsiBackgroundRed = 41,
-  J3AnsiBackgroundGreen = 42,
-  J3AnsiBackgroundYellow = 43,
-  J3AnsiBackgroundBlue = 44,
-  J3AnsiBackgroundMagenta = 45,
-  J3AnsiBackgroundCyan = 46,
-  J3AnsiBackgroundWhite = 47,
-  J3AnsiBackgroundDefault = 49
-} J3AnsiCode;
+  J3ANSIReset = 0,
+  J3ANSIBoldOn = 1,
+  J3ANSIItalicsOn = 3,
+  J3ANSIUnderlineOn = 4,
+  J3ANSIInverseOn = 7,
+  J3ANSIStrikeOn = 9,
+  J3ANSIBoldOff = 22,
+  J3ANSIItalicsOff = 23,
+  J3ANSIUnderlineOff = 24,
+  J3ANSIInverseOff = 27,
+  J3ANSIStrikeOff = 29,
+  J3ANSIForegroundBlack = 30,
+  J3ANSIForegroundRed = 31,
+  J3ANSIForegroundGreen = 32,
+  J3ANSIForegroundYellow = 33,
+  J3ANSIForegroundBlue = 34,
+  J3ANSIForegroundMagenta = 35,
+  J3ANSIForegroundCyan = 36,
+  J3ANSIForegroundWhite = 37,
+  J3ANSIForegroundDefault = 39,
+  J3ANSIBackgroundBlack = 40,
+  J3ANSIBackgroundRed = 41,
+  J3ANSIBackgroundGreen = 42,
+  J3ANSIBackgroundYellow = 43,
+  J3ANSIBackgroundBlue = 44,
+  J3ANSIBackgroundMagenta = 45,
+  J3ANSIBackgroundCyan = 46,
+  J3ANSIBackgroundWhite = 47,
+  J3ANSIBackgroundDefault = 49
+} J3ANSICode;

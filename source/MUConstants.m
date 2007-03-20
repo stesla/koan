@@ -1,7 +1,7 @@
 //
 // MUConstants.m
 //
-// Copyright (c) 2004, 2005, 2006 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import "MUConstants.h"
@@ -82,17 +82,10 @@ NSString *MULConnectionClosedByError = @"ConnectionClosedByError";
 
 #pragma mark Alert panel localization constants.
 
-NSString *MULOkay = @"OK";
+NSString *MULOK = @"OK";
 NSString *MULConfirm = @"Confirm";
 NSString *MULQuitImmediately = @"QuitImmediately";
 NSString *MULCancel = @"Cancel";
-NSString *MULNone = @"None";
-NSString *MULNever = @"Never";
-NSString *MULYes = @"Yes";
-NSString *MULNo = @"No";
-NSString *MULDownload = @"Download";
-NSString *MULRemindLater = @"RemindLater";
-NSString *MULDontRemind = @"DontRemind";
 
 NSString *MULConfirmCloseTitle = @"ConfirmCloseTitle";
 NSString *MULConfirmCloseMessage = @"ConfirmCloseMessage";
@@ -100,20 +93,6 @@ NSString *MULConfirmCloseMessage = @"ConfirmCloseMessage";
 NSString *MULConfirmQuitTitleSingular = @"ConfirmQuitTitleSingular";
 NSString *MULConfirmQuitTitlePlural = @"ConfirmQuitTitlePlural";
 NSString *MULConfirmQuitMessage = @"ConfirmQuitMessage";
-
-NSString *MULErrorCheckingForUpdatesTitle = @"ErrorCheckingForUpdatesTitle";
-
-NSString *MULNewVersionAvailableTitle = @"NewVersionAvailableTitle";
-NSString *MULNewVersionAvailableMessage = @"NewVersionAvailableMessage";
-
-NSString *MULHasMostRecentVersionTitle = @"HasMostRecentVersionTitle";
-NSString *MULHasMostRecentVersionMessage = @"HasMostRecentVersionMessage";
-
-NSString *MULHasUnreleasedVersionTitle = @"HasUnreleasedVersionTitle";
-NSString *MULHasUnreleasedVersionMessage = @"HasUnreleasedVersionMessage";
-
-NSString *MULShouldCheckAutomaticallyForUpdatesTitle = @"ShouldCheckAutomaticallyForUpdatesTitle";
-NSString *MULShouldCheckAutomaticallyForUpdatesMessage = @"ShouldCheckAutomaticallyForUpdatesMessage";
 
 #pragma mark Miscellaneous localization constants.
 

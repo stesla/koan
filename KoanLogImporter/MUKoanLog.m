@@ -1,15 +1,13 @@
 //
-//  MUKoanLog.m
-//  KoanLogImporter
+// MUKoanLog.m
 //
-//  Created by Samuel Tesla on 3/14/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software
 //
 
 #import "MUKoanLog.h"
 
-static NSString * MUKoanLogWorld = @"com_3james_koan_log_world";
-static NSString * MUKoanLogPlayer = @"com_3james_koan_log_player";
+static NSString *MUKoanLogWorld = @"com_3james_koan_log_world";
+static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
 
 @interface MUKoanLog (Private)
 
@@ -18,6 +16,8 @@ static NSString * MUKoanLogPlayer = @"com_3james_koan_log_player";
 - (BOOL) parse:(NSString *)string;
 
 @end
+
+#pragma mark -
 
 @implementation MUKoanLog
 
@@ -78,6 +78,8 @@ static NSString * MUKoanLogPlayer = @"com_3james_koan_log_player";
 }
 
 @end
+
+#pragma mark -
 
 @implementation MUKoanLog (Private)
 
