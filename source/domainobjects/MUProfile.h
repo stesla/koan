@@ -18,15 +18,15 @@
 {
   MUWorld *world;
   MUPlayer *player;
-	
+  
   BOOL loggedIn;
   BOOL autoconnect;
-	
-	NSFont *font;
-	NSColor *textColor;
-	NSColor *backgroundColor;
-	NSColor *linkColor;
-	NSColor *visitedLinkColor;
+  
+  NSFont *font;
+  NSColor *textColor;
+  NSColor *backgroundColor;
+  NSColor *linkColor;
+  NSColor *visitedLinkColor;
 }
 
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld 
@@ -39,11 +39,11 @@
 - (id) initWithWorld:(MUWorld *)newWorld 
               player:(MUPlayer *)newPlayer
          autoconnect:(BOOL)newAutoconnect
-								font:(NSFont *)newFont
-					 textColor:(NSColor *)newTextColor
-		 backgroundColor:(NSColor *)newBackgroundColor
-					 linkColor:(NSColor *)newLinkColor
-		visitedLinkColor:(NSColor *)newVisitedLinkColor;
+  							font:(NSFont *)newFont
+  				 textColor:(NSColor *)newTextColor
+  	 backgroundColor:(NSColor *)newBackgroundColor
+  				 linkColor:(NSColor *)newLinkColor
+  	visitedLinkColor:(NSColor *)newVisitedLinkColor;
 
 - (id) initWithWorld:(MUWorld *)newWorld 
               player:(MUPlayer *)newPlayer

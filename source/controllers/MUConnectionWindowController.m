@@ -78,8 +78,8 @@ enum MUSearchDirections
 {
   NSDictionary *bindingOptions = [NSDictionary dictionaryWithObject:NSUnarchiveFromDataTransformerName
                                                              forKey:@"NSValueTransformerName"];
-	
-	[receivedTextView bind:@"font"
+  
+  [receivedTextView bind:@"font"
                 toObject:profile
              withKeyPath:@"effectiveFont"
                  options:nil];
@@ -87,8 +87,8 @@ enum MUSearchDirections
          toObject:profile
       withKeyPath:@"effectiveFont"
           options:nil];
-	
-	[receivedTextView bind:@"textColor"
+  
+  [receivedTextView bind:@"textColor"
                 toObject:profile
              withKeyPath:@"effectiveTextColor"
                  options:bindingOptions];
@@ -96,8 +96,8 @@ enum MUSearchDirections
          toObject:profile
       withKeyPath:@"effectiveTextColor"
           options:bindingOptions];
-	
-	[receivedTextView bind:@"backgroundColor"
+  
+  [receivedTextView bind:@"backgroundColor"
                 toObject:profile
              withKeyPath:@"effectiveBackgroundColor"
                  options:bindingOptions];
@@ -105,7 +105,7 @@ enum MUSearchDirections
          toObject:profile
       withKeyPath:@"effectiveBackgroundColor"
           options:bindingOptions];
-	
+  
   [inputView bind:@"insertionPointColor"
          toObject:profile
       withKeyPath:@"effectiveTextColor"
@@ -126,9 +126,9 @@ enum MUSearchDirections
 - (void) dealloc
 {
   [self disconnectAndCleanUp];
-	
-	[[NSNotificationCenter defaultCenter] removeObserver:nil name:nil object:self];
-	
+  
+  [[NSNotificationCenter defaultCenter] removeObserver:nil name:nil object:self];
+  
   [filterQueue release];
   [historyRing release];
   [profile release];
@@ -147,25 +147,25 @@ enum MUSearchDirections
       [menuItem setTitle:_(MULConnect)];
     return YES;
   }
-	else if (menuItemAction == @selector(clearWindow:))
-	{
-		return YES;
-	}
+  else if (menuItemAction == @selector(clearWindow:))
+  {
+  	return YES;
+  }
   return NO;
 }
 
 - (BOOL) validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
-	SEL toolbarItemAction = [toolbarItem action];
-	
-	if (toolbarItemAction == @selector(goToWorldURL:))
+  SEL toolbarItemAction = [toolbarItem action];
+  
+  if (toolbarItemAction == @selector(goToWorldURL:))
   {
     NSString *url = [[profile world] URL];
     
     return (url && ![url isEqualToString:@""]);
   }
-	
-	return NO;
+  
+  return NO;
 }
 
 - (BOOL) windowShouldClose:(id)sender
@@ -177,13 +177,13 @@ enum MUSearchDirections
 {
   NSWindow *window = [notification object];
   
-	if (window == [self window])
-	{
-		[splitView saveState:YES];
-		[window setDelegate:nil];
+  if (window == [self window])
+  {
+  	[splitView saveState:YES];
+  	[window setDelegate:nil];
   
-		[self postConnectionWindowControllerWillCloseNotification];
-	}
+  	[self postConnectionWindowControllerWillCloseNotification];
+  }
 }
   
 #pragma mark -
@@ -248,7 +248,7 @@ enum MUSearchDirections
 
 - (IBAction) clearWindow:(id)sender
 {
-	[receivedTextView setString:@""];
+  [receivedTextView setString:@""];
 }
 
 - (IBAction) connect:(id)sender
@@ -590,7 +590,7 @@ enum MUSearchDirections
   [[receivedTextView window] invalidateCursorRectsForView:receivedTextView];
   if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
     [receivedTextView scrollRangeToVisible:NSMakeRange ([textStorage length], 0)];
-	[self postConnectionWindowControllerDidReceiveTextNotification];
+  [self postConnectionWindowControllerDidReceiveTextNotification];
 }
 
 - (void) endCompletion
@@ -606,13 +606,13 @@ enum MUSearchDirections
 
 - (void) postConnectionWindowControllerDidReceiveTextNotification
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerDidReceiveTextNotification
-																											object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerDidReceiveTextNotification
+  																										object:self];
 }
 
 - (void) postConnectionWindowControllerWillCloseNotification
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUConnectionWindowControllerWillCloseNotification
                                                       object:self];
 }
 
@@ -623,7 +623,7 @@ enum MUSearchDirections
 
 - (NSString *) splitViewAutosaveName
 {
-	return [NSString stringWithFormat:@"%@.split", [profile uniqueIdentifier]];
+  return [NSString stringWithFormat:@"%@.split", [profile uniqueIdentifier]];
 }
 
 - (void) tabCompleteWithDirection:(enum MUSearchDirections)direction

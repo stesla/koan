@@ -11,14 +11,14 @@
 - (void) awakeFromNib
 {
   toolbar = [[NSToolbar alloc] initWithIdentifier:@"connectionWindowToolbar"];
-	
+  
   [toolbar setDelegate:self];
   [toolbar setAllowsUserCustomization:YES];
   [toolbar setAutosavesConfiguration:YES];
-	
+  
   [window setToolbar:toolbar];
-	
-	[toolbar release];
+  
+  [toolbar release];
 }
 
 #pragma mark -

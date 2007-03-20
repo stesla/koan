@@ -91,42 +91,42 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 - (int) indexOfWorld:(MUWorld *)world
 {
-	unsigned i, worldsCount = [worlds count];
-	
-	for (i = 0; i < worldsCount; i++)
-	{
-		MUWorld *iteratedWorld = [worlds objectAtIndex:i];
-		
-		if (world == iteratedWorld)
-		{
-			return (int) i;
-		}
-	}
-	
-	return -1;
+  unsigned i, worldsCount = [worlds count];
+  
+  for (i = 0; i < worldsCount; i++)
+  {
+  	MUWorld *iteratedWorld = [worlds objectAtIndex:i];
+  	
+  	if (world == iteratedWorld)
+  	{
+  		return (int) i;
+  	}
+  }
+  
+  return -1;
 }
 
 - (void) removeWorld:(MUWorld *)world
 {
-	[worlds removeObject:world];
-	[self postWorldsDidChangeNotification];
+  [worlds removeObject:world];
+  [self postWorldsDidChangeNotification];
 }
 
 - (void) replaceWorld:(MUWorld *)oldWorld withWorld:(MUWorld *)newWorld
 {
-	unsigned i, worldsCount = [worlds count];
-	
-	for (i = 0; i < worldsCount; i++)
-	{
-		MUWorld *world = [worlds objectAtIndex:i];
-		
-		if (world == oldWorld)
-		{
-			[worlds replaceObjectAtIndex:i withObject:newWorld];
-			[self postWorldsDidChangeNotification];
-			break;
-		}
-	}
+  unsigned i, worldsCount = [worlds count];
+  
+  for (i = 0; i < worldsCount; i++)
+  {
+  	MUWorld *world = [worlds objectAtIndex:i];
+  	
+  	if (world == oldWorld)
+  	{
+  		[worlds replaceObjectAtIndex:i withObject:newWorld];
+  		[self postWorldsDidChangeNotification];
+  		break;
+  	}
+  }
 }
 
 - (void) saveWorlds
@@ -141,17 +141,17 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 - (MUWorld *) worldForUniqueIdentifier:(NSString *)identifier
 {
-	unsigned i, worldsCount = [worlds count];
-	
-	for (i = 0; i < worldsCount; i++)
-	{
-		MUWorld *world = [worlds objectAtIndex:i];
-		
-		if ([identifier isEqualToString:[world uniqueIdentifier]])
-			return world;
-	}
-	
-	return nil;
+  unsigned i, worldsCount = [worlds count];
+  
+  for (i = 0; i < worldsCount; i++)
+  {
+  	MUWorld *world = [worlds objectAtIndex:i];
+  	
+  	if ([identifier isEqualToString:[world uniqueIdentifier]])
+  		return world;
+  }
+  
+  return nil;
 }
 
 @end

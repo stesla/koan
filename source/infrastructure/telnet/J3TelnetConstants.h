@@ -23,3 +23,14 @@ enum J3TelnetCommands
   J3TelnetDont = 254,
   J3TelnetInterpretAsCommand = 255
 };
+
+enum J3TelnetOptions
+{
+  J3TelnetSuppressGoAhead = 3,
+  J3TelnetTerminalType = 24,
+  J3TelnetEndOfRecord = 25,
+  J3TelnetNegotiateAboutWindowSize = 31,
+  J3TelnetLineMode = 34,
+  J3TelnetMCCP1 = 85,
+  J3TelnetMCCP2 = 86
+};

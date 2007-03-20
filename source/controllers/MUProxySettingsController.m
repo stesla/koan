@@ -13,7 +13,7 @@
 
 - (void) awakeFromNib;
 {
-	J3PortFormatter *portFormatter = [[[J3PortFormatter alloc] init] autorelease];
+  J3PortFormatter *portFormatter = [[[J3PortFormatter alloc] init] autorelease];
   
   [portField setFormatter:portFormatter];
 }

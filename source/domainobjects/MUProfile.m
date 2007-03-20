@@ -24,24 +24,24 @@
 
 + (BOOL) automaticallyNotifiesObserversForKey:(NSString *)key
 {
-	static NSArray *keyArray;
-	
-	if (!keyArray)
-	{
-		keyArray = [NSArray arrayWithObjects:
-			@"effectiveFont",
-			@"effectiveFontDisplayName",
-			@"effectiveTextColor",
-			@"effectiveBackgroundColor",
-			@"effectiveLinkColor",
-			@"effectiveVisitedLinkColor",
-			nil];
-	}
-	
-	if ([keyArray containsObject:key])
-		return NO;
-	else
-		return YES;
+  static NSArray *keyArray;
+  
+  if (!keyArray)
+  {
+  	keyArray = [NSArray arrayWithObjects:
+  		@"effectiveFont",
+  		@"effectiveFontDisplayName",
+  		@"effectiveTextColor",
+  		@"effectiveBackgroundColor",
+  		@"effectiveLinkColor",
+  		@"effectiveVisitedLinkColor",
+  		nil];
+  }
+  
+  if ([keyArray containsObject:key])
+  	return NO;
+  else
+  	return YES;
 }
 
 + (MUProfile *) profileWithWorld:(MUWorld *)newWorld 
@@ -67,13 +67,13 @@
 - (id) initWithWorld:(MUWorld *)newWorld 
               player:(MUPlayer *)newPlayer
          autoconnect:(BOOL)newAutoconnect
-								font:(NSFont *)newFont
-					 textColor:(NSColor *)newTextColor
-		 backgroundColor:(NSColor *)newBackgroundColor
-					 linkColor:(NSColor *)newLinkColor
-		visitedLinkColor:(NSColor *)newVisitedLinkColor
+  							font:(NSFont *)newFont
+  				 textColor:(NSColor *)newTextColor
+  	 backgroundColor:(NSColor *)newBackgroundColor
+  				 linkColor:(NSColor *)newLinkColor
+  	visitedLinkColor:(NSColor *)newVisitedLinkColor
 {
-	if (!(newWorld && [super init]))
+  if (!(newWorld && [super init]))
     return nil;
   
   [self setWorld:newWorld];
@@ -94,14 +94,14 @@
               player:(MUPlayer *)newPlayer
          autoconnect:(BOOL)newAutoconnect
 {
-	return [self initWithWorld:newWorld
-											player:newPlayer
-								 autoconnect:newAutoconnect
-												font:nil
-									 textColor:nil
-						 backgroundColor:nil
-									 linkColor:nil
-						visitedLinkColor:nil];
+  return [self initWithWorld:newWorld
+  										player:newPlayer
+  							 autoconnect:newAutoconnect
+  											font:nil
+  								 textColor:nil
+  					 backgroundColor:nil
+  								 linkColor:nil
+  					visitedLinkColor:nil];
 }
 
 - (id) initWithWorld:(MUWorld *)newWorld player:(MUPlayer *)newPlayer
@@ -165,12 +165,12 @@
 
 - (NSFont *) font
 {
-	return font;
+  return font;
 }
 
 - (void) setFont:(NSFont *)newFont
 {
-	if ([font isEqual:newFont])
+  if ([font isEqual:newFont])
     return;
   
   [self willChangeValueForKey:@"effectiveFont"];
@@ -183,12 +183,12 @@
 
 - (NSColor *) textColor
 {
-	return textColor;
+  return textColor;
 }
 
 - (void) setTextColor:(NSColor *)newTextColor
 {
-	if ([textColor isEqual:newTextColor])
+  if ([textColor isEqual:newTextColor])
     return;
   
   [self willChangeValueForKey:@"effectiveTextColor"];
@@ -199,12 +199,12 @@
 
 - (NSColor *) backgroundColor
 {
-	return backgroundColor;
+  return backgroundColor;
 }
 
 - (void) setBackgroundColor:(NSColor *)newBackgroundColor
 {
-	if ([backgroundColor isEqual:newBackgroundColor])
+  if ([backgroundColor isEqual:newBackgroundColor])
     return;
   
   [self willChangeValueForKey:@"effectiveBackgroundColor"];
@@ -215,12 +215,12 @@
 
 - (NSColor *) linkColor
 {
-	return linkColor;
+  return linkColor;
 }
 
 - (void) setLinkColor:(NSColor *)newLinkColor
 {
-	if ([linkColor isEqual:newLinkColor])
+  if ([linkColor isEqual:newLinkColor])
     return;
   
   [self willChangeValueForKey:@"effectiveLinkColor"];
@@ -231,12 +231,12 @@
 
 - (NSColor *) visitedLinkColor
 {
-	return visitedLinkColor;
+  return visitedLinkColor;
 }
 
 - (void) setVisitedLinkColor:(NSColor *)newVisitedLinkColor
 {
-	if ([visitedLinkColor isEqual:newVisitedLinkColor])
+  if ([visitedLinkColor isEqual:newVisitedLinkColor])
     return;
   
   [self willChangeValueForKey:@"effectiveVisitedLinkColor"];
@@ -255,80 +255,80 @@
 
 - (NSData *) effectiveBackgroundColor
 {
-	if (backgroundColor)
-		return [NSArchiver archivedDataWithRootObject:backgroundColor];
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		
-		return [[defaults values] valueForKey:MUPBackgroundColor];
-	}
+  if (backgroundColor)
+  	return [NSArchiver archivedDataWithRootObject:backgroundColor];
+  else
+  {
+  	NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+  	
+  	return [[defaults values] valueForKey:MUPBackgroundColor];
+  }
 }
 
 - (NSFont *) effectiveFont
 {
-	if (font)
-		return font;
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		NSString *fontName = [[defaults values] valueForKey:MUPFontName];
-		float fontSize = [(NSNumber *) [[defaults values] valueForKey:MUPFontSize] floatValue];
-		
-		return [NSFont fontWithName:fontName size:fontSize];
-	}
+  if (font)
+  	return font;
+  else
+  {
+  	NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+  	NSString *fontName = [[defaults values] valueForKey:MUPFontName];
+  	float fontSize = [(NSNumber *) [[defaults values] valueForKey:MUPFontSize] floatValue];
+  	
+  	return [NSFont fontWithName:fontName size:fontSize];
+  }
 }
 
 - (NSString *) effectiveFontDisplayName
 {
-	if (font)
-	{
-		return [font fullDisplayName];
-	}
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		NSString *fontName = [[defaults values] valueForKey:MUPFontName];
-		NSNumber *fontSize = [[defaults values] valueForKey:MUPFontSize];
-		
-		return [[NSFont fontWithName:fontName size:[fontSize floatValue]] fullDisplayName];
-	}
+  if (font)
+  {
+  	return [font fullDisplayName];
+  }
+  else
+  {
+  	NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+  	NSString *fontName = [[defaults values] valueForKey:MUPFontName];
+  	NSNumber *fontSize = [[defaults values] valueForKey:MUPFontSize];
+  	
+  	return [[NSFont fontWithName:fontName size:[fontSize floatValue]] fullDisplayName];
+  }
 }
 
 - (NSData *) effectiveLinkColor
 {
-	if (linkColor)
-		return [NSArchiver archivedDataWithRootObject:linkColor];
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		
-		return [[defaults values] valueForKey:MUPLinkColor];
-	}
+  if (linkColor)
+  	return [NSArchiver archivedDataWithRootObject:linkColor];
+  else
+  {
+  	NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+  	
+  	return [[defaults values] valueForKey:MUPLinkColor];
+  }
 }
 
 - (NSData *) effectiveTextColor
 {
-	if (textColor)
-		return [NSArchiver archivedDataWithRootObject:textColor];
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		
-		return [[defaults values] valueForKey:MUPTextColor];
-	}
+  if (textColor)
+  	return [NSArchiver archivedDataWithRootObject:textColor];
+  else
+  {
+  	NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+  	
+  	return [[defaults values] valueForKey:MUPTextColor];
+  }
 }
 
 - (NSData *) effectiveVisitedLinkColor
 {
-	if (visitedLinkColor)
-		return [NSArchiver archivedDataWithRootObject:visitedLinkColor];
-	else
-	{
-		NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
-		
-		return [[defaults values] valueForKey:MUPVisitedLinkColor];
-	}
+  if (visitedLinkColor)
+  	return [NSArchiver archivedDataWithRootObject:visitedLinkColor];
+  else
+  {
+  	NSUserDefaultsController *defaults = [NSUserDefaultsController sharedUserDefaultsController];
+  	
+  	return [[defaults values] valueForKey:MUPVisitedLinkColor];
+  }
 }
 
 #pragma mark -
@@ -392,9 +392,9 @@
 - (id) initWithCoder:(NSCoder *)decoder
 {
   [MUCodingService decodeProfile:self withCoder:decoder];
-	[self registerForNotifications];
-	
-	return self;
+  [self registerForNotifications];
+  
+  return self;
 }
 
 @end
@@ -405,49 +405,49 @@
 
 - (void) globalBackgroundColorDidChange:(NSNotification *)notification
 {
-	if (!backgroundColor)
-	{
-		[self willChangeValueForKey:@"effectiveBackgroundColor"];
-		[self didChangeValueForKey:@"effectiveBackgroundColor"];
-	}
+  if (!backgroundColor)
+  {
+  	[self willChangeValueForKey:@"effectiveBackgroundColor"];
+  	[self didChangeValueForKey:@"effectiveBackgroundColor"];
+  }
 }
 
 - (void) globalFontDidChange:(NSNotification *)notification
 {
-	if (!font)
-	{
-		[self willChangeValueForKey:@"effectiveFont"];
-		[self willChangeValueForKey:@"effectiveFontDisplayName"];
-		[self didChangeValueForKey:@"effectiveFont"];
-		[self didChangeValueForKey:@"effectiveFontDisplayName"];
-	}
+  if (!font)
+  {
+  	[self willChangeValueForKey:@"effectiveFont"];
+  	[self willChangeValueForKey:@"effectiveFontDisplayName"];
+  	[self didChangeValueForKey:@"effectiveFont"];
+  	[self didChangeValueForKey:@"effectiveFontDisplayName"];
+  }
 }
 
 - (void) globalTextColorDidChange:(NSNotification *)notification
 {
-	if (!textColor)
-	{
-		[self willChangeValueForKey:@"effectiveTextColor"];
-		[self didChangeValueForKey:@"effectiveTextColor"];
-	}
+  if (!textColor)
+  {
+  	[self willChangeValueForKey:@"effectiveTextColor"];
+  	[self didChangeValueForKey:@"effectiveTextColor"];
+  }
 }
 
 - (void) registerForNotifications
 {
-	[[NSNotificationCenter defaultCenter] addObserver:self
-																					 selector:@selector(globalBackgroundColorDidChange:)
-																							 name:MUGlobalBackgroundColorDidChangeNotification
-																						 object:nil];
-		
-	[[NSNotificationCenter defaultCenter] addObserver:self
-																					 selector:@selector(globalFontDidChange:)
-																							 name:MUGlobalFontDidChangeNotification
-																						 object:nil];
-		
-	[[NSNotificationCenter defaultCenter] addObserver:self
-																					 selector:@selector(globalTextColorDidChange:)
-																							 name:MUGlobalTextColorDidChangeNotification
-																						 object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self
+  																				 selector:@selector(globalBackgroundColorDidChange:)
+  																						 name:MUGlobalBackgroundColorDidChangeNotification
+  																					 object:nil];
+  	
+  [[NSNotificationCenter defaultCenter] addObserver:self
+  																				 selector:@selector(globalFontDidChange:)
+  																						 name:MUGlobalFontDidChangeNotification
+  																					 object:nil];
+  	
+  [[NSNotificationCenter defaultCenter] addObserver:self
+  																				 selector:@selector(globalTextColorDidChange:)
+  																						 name:MUGlobalTextColorDidChangeNotification
+  																					 object:nil];
 }
 
 @end

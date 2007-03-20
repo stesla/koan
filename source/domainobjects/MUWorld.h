@@ -21,10 +21,10 @@
 }
 
 + (MUWorld *) worldWithName:(NSString *)newName
-									 hostname:(NSString *)newHostname
-											 port:(NSNumber *)newPort
-												URL:(NSString *)newURL
-										players:(NSArray *)newPlayers;
+  								 hostname:(NSString *)newHostname
+  										 port:(NSNumber *)newPort
+  											URL:(NSString *)newURL
+  									players:(NSArray *)newPlayers;
 
 // Designated initializer.
 - (id) initWithName:(NSString *)newName

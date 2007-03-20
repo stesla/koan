@@ -10,8 +10,8 @@
 
 @interface MUProxySettingsController : NSWindowController
 {
-	IBOutlet NSTextField *hostnameField;
-	IBOutlet NSTextField *portField;
+  IBOutlet NSTextField *hostnameField;
+  IBOutlet NSTextField *portField;
 }
 
 - (J3ProxySettings *) proxySettings;

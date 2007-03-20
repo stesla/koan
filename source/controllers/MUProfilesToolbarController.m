@@ -16,7 +16,7 @@
   [toolbar setAutosavesConfiguration:YES];
   
   [window setToolbar:toolbar];
-	[toolbar release];
+  [toolbar release];
 }
 
 #pragma mark -
@@ -26,46 +26,46 @@
 {
   NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
   
-	if ([itemIdentifier isEqualToString:MUAddWorldToolbarItem])
-	{
-		[item setLabel:_(MULAddWorld)];
-		[item setPaletteLabel:_(MULAddWorld)];
-		[item setImage:nil];
-		[item setTarget:windowController];
-		[item setAction:@selector(addWorld:)];
-	}
-	else if ([itemIdentifier isEqualToString:MUAddPlayerToolbarItem])
-	{
-		[item setLabel:_(MULAddPlayer)];
-		[item setPaletteLabel:_(MULAddPlayer)];
-		[item setImage:nil];
-		[item setTarget:windowController];
-		[item setAction:@selector(addPlayer:)];
-	}
-	else if ([itemIdentifier isEqualToString:MUEditSelectedRowToolbarItem])
-	{
-		[item setLabel:_(MULEditItem)];
-		[item setPaletteLabel:_(MULEditItem)];
-		[item setImage:nil];
-		[item setTarget:windowController];
-		[item setAction:@selector(editSelectedRow:)];
-	}
-	else if ([itemIdentifier isEqualToString:MURemoveSelectedRowToolbarItem])
-	{
-		[item setLabel:_(MULRemoveItem)];
-		[item setPaletteLabel:_(MULRemoveItem)];
-		[item setImage:nil];
-		[item setTarget:windowController];
-		[item setAction:@selector(removeSelectedRow:)];
-	}
-	else if ([itemIdentifier isEqualToString:MUEditProfileForSelectedRowToolbarItem])
-	{
-		[item setLabel:_(MULEditProfile)];
-		[item setPaletteLabel:_(MULEditProfile)];
-		[item setImage:nil];
-		[item setTarget:windowController];
-		[item setAction:@selector(editProfileForSelectedRow:)];
-	}
+  if ([itemIdentifier isEqualToString:MUAddWorldToolbarItem])
+  {
+  	[item setLabel:_(MULAddWorld)];
+  	[item setPaletteLabel:_(MULAddWorld)];
+  	[item setImage:nil];
+  	[item setTarget:windowController];
+  	[item setAction:@selector(addWorld:)];
+  }
+  else if ([itemIdentifier isEqualToString:MUAddPlayerToolbarItem])
+  {
+  	[item setLabel:_(MULAddPlayer)];
+  	[item setPaletteLabel:_(MULAddPlayer)];
+  	[item setImage:nil];
+  	[item setTarget:windowController];
+  	[item setAction:@selector(addPlayer:)];
+  }
+  else if ([itemIdentifier isEqualToString:MUEditSelectedRowToolbarItem])
+  {
+  	[item setLabel:_(MULEditItem)];
+  	[item setPaletteLabel:_(MULEditItem)];
+  	[item setImage:nil];
+  	[item setTarget:windowController];
+  	[item setAction:@selector(editSelectedRow:)];
+  }
+  else if ([itemIdentifier isEqualToString:MURemoveSelectedRowToolbarItem])
+  {
+  	[item setLabel:_(MULRemoveItem)];
+  	[item setPaletteLabel:_(MULRemoveItem)];
+  	[item setImage:nil];
+  	[item setTarget:windowController];
+  	[item setAction:@selector(removeSelectedRow:)];
+  }
+  else if ([itemIdentifier isEqualToString:MUEditProfileForSelectedRowToolbarItem])
+  {
+  	[item setLabel:_(MULEditProfile)];
+  	[item setPaletteLabel:_(MULEditProfile)];
+  	[item setImage:nil];
+  	[item setTarget:windowController];
+  	[item setAction:@selector(editProfileForSelectedRow:)];
+  }
   else if ([itemIdentifier isEqualToString:MUGoToURLToolbarItem])
   {
     [item setLabel:_(MULGoToURL)];
@@ -74,18 +74,18 @@
     [item setTarget:windowController];
     [item setAction:@selector(goToWorldURL:)];
   }
-	
+  
   return [item autorelease];
 }
 
 - (NSArray *) toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
   return [NSArray arrayWithObjects:
-		MUAddWorldToolbarItem,
-		MUAddPlayerToolbarItem,
-		MUEditSelectedRowToolbarItem,
-		MURemoveSelectedRowToolbarItem,
-		MUEditProfileForSelectedRowToolbarItem,
+  	MUAddWorldToolbarItem,
+  	MUAddPlayerToolbarItem,
+  	MUEditSelectedRowToolbarItem,
+  	MURemoveSelectedRowToolbarItem,
+  	MUEditProfileForSelectedRowToolbarItem,
     NSToolbarFlexibleSpaceItemIdentifier,
     NSToolbarCustomizeToolbarItemIdentifier,
     nil];
@@ -98,11 +98,11 @@
     NSToolbarSpaceItemIdentifier,
     NSToolbarFlexibleSpaceItemIdentifier,
     NSToolbarCustomizeToolbarItemIdentifier,
-		MUAddWorldToolbarItem,
-		MUAddPlayerToolbarItem,
-		MUEditSelectedRowToolbarItem,
-		MURemoveSelectedRowToolbarItem,
-		MUEditProfileForSelectedRowToolbarItem,
+  	MUAddWorldToolbarItem,
+  	MUAddPlayerToolbarItem,
+  	MUEditSelectedRowToolbarItem,
+  	MURemoveSelectedRowToolbarItem,
+  	MUEditProfileForSelectedRowToolbarItem,
     MUGoToURLToolbarItem,
     nil];
 }

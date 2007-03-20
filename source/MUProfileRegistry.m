@@ -113,7 +113,7 @@ static MUProfileRegistry *defaultRegistry = nil;
 - (void) removeProfileForWorld:(MUWorld *)world player:(MUPlayer *)player
 {
   MUProfile *profile = [self profileForWorld:world player:player];
-	
+  
   [self removeProfile:profile];
 }
 

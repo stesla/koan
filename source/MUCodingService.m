@@ -37,29 +37,29 @@ static const int32_t currentProxyVersion = 2;
 {
   [encoder encodeInt32:currentProfileVersion forKey:@"version"];
   [encoder encodeBool:[profile autoconnect] forKey:@"autoconnect"];
-	[encoder encodeObject:[[profile font] fontName] forKey:@"fontName"];
-	[encoder encodeFloat:[[profile font] pointSize] forKey:@"fontSize"];
-	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile textColor]] forKey:@"textColor"];
-	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile backgroundColor]] forKey:@"backgroundColor"];
-	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile linkColor]] forKey:@"linkColor"];
-	[encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile visitedLinkColor]] forKey:@"visitedLinkColor"];
+  [encoder encodeObject:[[profile font] fontName] forKey:@"fontName"];
+  [encoder encodeFloat:[[profile font] pointSize] forKey:@"fontSize"];
+  [encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile textColor]] forKey:@"textColor"];
+  [encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile backgroundColor]] forKey:@"backgroundColor"];
+  [encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile linkColor]] forKey:@"linkColor"];
+  [encoder encodeObject:[NSArchiver archivedDataWithRootObject:[profile visitedLinkColor]] forKey:@"visitedLinkColor"];
 }
 
 + (void) decodeProfile:(MUProfile *)profile withCoder:(NSCoder *)decoder
 {
   int32_t version = [decoder decodeInt32ForKey:@"version"];
-	
+  
   [profile setAutoconnect:[decoder decodeBoolForKey:@"autoconnect"]];
-	
-	if (version >= 2)
-	{
-		[profile setFont:[NSFont fontWithName:[decoder decodeObjectForKey:@"fontName"]
-																		 size:[decoder decodeFloatForKey:@"fontSize"]]];
-		[profile setTextColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"textColor"]]];
-		[profile setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"backgroundColor"]]];
-		[profile setLinkColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"linkColor"]]];
-		[profile setVisitedLinkColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"visitedLinkColor"]]];
-	}
+  
+  if (version >= 2)
+  {
+  	[profile setFont:[NSFont fontWithName:[decoder decodeObjectForKey:@"fontName"]
+  																	 size:[decoder decodeFloatForKey:@"fontSize"]]];
+  	[profile setTextColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"textColor"]]];
+  	[profile setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"backgroundColor"]]];
+  	[profile setLinkColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"linkColor"]]];
+  	[profile setVisitedLinkColor:[NSUnarchiver unarchiveObjectWithData:[decoder decodeObjectForKey:@"visitedLinkColor"]]];
+  }
 }
 
 + (void) encodeWorld:(MUWorld *)world withCoder:(NSCoder *)encoder

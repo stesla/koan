@@ -217,8 +217,8 @@
 - (void) configureSocket
 {
   server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons (port);
-	memcpy (&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);    
+  server_addr.sin_port = htons (port);
+  memcpy (&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);    
 }
 
 - (void) connectSocket
@@ -262,7 +262,7 @@
 {
   h_errno = 0;
   const char *error;
-	server = gethostbyname ([hostname cString]);
+  server = gethostbyname ([hostname cString]);
   if (!server)
   {
     error = hstrerror (h_errno);

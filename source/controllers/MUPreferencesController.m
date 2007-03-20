@@ -32,32 +32,32 @@
   NSFont *selectedFont = [fontManager selectedFont];
   NSFont *panelFont;
   NSNumber *fontSize;
-	id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
+  id currentPrefsValues = [[NSUserDefaultsController sharedUserDefaultsController] values];
   
   if (selectedFont == nil)
   {
     selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
   }
-	
+  
   panelFont = [fontManager convertFont:selectedFont];
-  fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];	
+  fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];  
   
   [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
   [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
-	
-	[self postGlobalFontDidChangeNotification];
+  
+  [self postGlobalFontDidChangeNotification];
 }
 
 - (void) colorPanelColorDidChange
 {
-	if ([globalTextColorWell isActive])
-		[self postGlobalTextColorDidChangeNotification];
-	else if ([globalBackgroundColorWell isActive])
-		[self postGlobalBackgroundColorDidChangeNotification];
-	else if ([globalLinkColorWell isActive])
-		[self postGlobalLinkColorDidChangeNotification];
-	else if ([globalVisitedLinkColorWell isActive])
-		[self postGlobalVisitedLinkColorDidChangeNotification];
+  if ([globalTextColorWell isActive])
+  	[self postGlobalTextColorDidChangeNotification];
+  else if ([globalBackgroundColorWell isActive])
+  	[self postGlobalBackgroundColorDidChangeNotification];
+  else if ([globalLinkColorWell isActive])
+  	[self postGlobalLinkColorDidChangeNotification];
+  else if ([globalVisitedLinkColorWell isActive])
+  	[self postGlobalVisitedLinkColorDidChangeNotification];
 }
 
 - (void) playSelectedSound:(id)sender;
@@ -80,60 +80,60 @@
 
 - (void) postGlobalBackgroundColorDidChangeNotification
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalBackgroundColorDidChangeNotification
-																											object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalBackgroundColorDidChangeNotification
+  																										object:self];
 }
 
 - (void) postGlobalFontDidChangeNotification
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalFontDidChangeNotification
-																											object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalFontDidChangeNotification
+  																										object:self];
 }
 
 - (void) postGlobalLinkColorDidChangeNotification
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalLinkColorDidChangeNotification
-																											object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalLinkColorDidChangeNotification
+  																										object:self];
 }
 
 - (void) postGlobalTextColorDidChangeNotification
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
-																											object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
+  																										object:self];
 }
 
 - (void) postGlobalVisitedLinkColorDidChangeNotification
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalVisitedLinkColorDidChangeNotification
-																											object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalVisitedLinkColorDidChangeNotification
+  																										object:self];
 }
 
 - (NSArray *) systemSoundsArray
 {
   NSEnumerator *libraryPathEnumerator;
-	NSString *libraryPath;
-	NSMutableArray *foundPaths = [NSMutableArray array];
-	
-	libraryPathEnumerator =
-    [NSSearchPathForDirectoriesInDomains (NSLibraryDirectory, NSAllDomainsMask, YES) objectEnumerator];
-	
-	while ((libraryPath = [libraryPathEnumerator nextObject]))
-	{
-		NSDirectoryEnumerator	*directoryEnumerator;
-		NSString *filePath;
-    NSString *searchPath;
-		
-		searchPath = [libraryPath stringByAppendingPathComponent:@"Sounds"];
-		
-		directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:searchPath];
-		
-		while ((filePath = [directoryEnumerator nextObject]))
-		{
-      [foundPaths addObject:[filePath stringByDeletingPathExtension]];
-		}
-	}
+  NSString *libraryPath;
+  NSMutableArray *foundPaths = [NSMutableArray array];
   
-	return foundPaths;
+  libraryPathEnumerator =
+    [NSSearchPathForDirectoriesInDomains (NSLibraryDirectory, NSAllDomainsMask, YES) objectEnumerator];
+  
+  while ((libraryPath = [libraryPathEnumerator nextObject]))
+  {
+  	NSDirectoryEnumerator	*directoryEnumerator;
+  	NSString *filePath;
+    NSString *searchPath;
+  	
+  	searchPath = [libraryPath stringByAppendingPathComponent:@"Sounds"];
+  	
+  	directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:searchPath];
+  	
+  	while ((filePath = [directoryEnumerator nextObject]))
+  	{
+      [foundPaths addObject:[filePath stringByDeletingPathExtension]];
+  	}
+  }
+  
+  return foundPaths;
 }
 
 @end

@@ -69,8 +69,8 @@
 
 - (void) awakeFromNib
 {
-	J3PortFormatter *newConnectionPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
-	
+  J3PortFormatter *newConnectionPortFormatter = [[[J3PortFormatter alloc] init] autorelease];
+  
   [MUServices profileRegistry];
   [MUServices worldRegistry];
   
@@ -79,8 +79,8 @@
   [self rebuildConnectionsMenuWithAutoconnect:YES];
   
   [newConnectionPortField setFormatter:newConnectionPortFormatter];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
+  
+  [[NSNotificationCenter defaultCenter] addObserver:self
                                            selector:@selector(colorPanelColorDidChange:)
                                                name:NSColorPanelColorDidChangeNotification
                                              object:nil];
@@ -133,32 +133,32 @@
     return;
   
   MUWorld *world = [MUWorld worldWithName:[url host]
-												hostname:[url host]
-														port:[url port]
-														 URL:@""
-												 players:nil];
+  											hostname:[url host]
+  													port:[url port]
+  													 URL:@""
+  											 players:nil];
   MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
-	
-	[self openConnectionWithController:controller];
-	
+  
+  [self openConnectionWithController:controller];
+  
   [controller release];
 }
 
 - (IBAction) connectUsingPanelInformation:(id)sender
 {
-	MUWorld *world = [MUWorld worldWithName:[newConnectionHostnameField stringValue]
-																 hostname:[newConnectionHostnameField stringValue]
-																		 port:[NSNumber numberWithInt:[newConnectionPortField intValue]]
-																			URL:@""
-																	players:nil];
+  MUWorld *world = [MUWorld worldWithName:[newConnectionHostnameField stringValue]
+  															 hostname:[newConnectionHostnameField stringValue]
+  																	 port:[NSNumber numberWithInt:[newConnectionPortField intValue]]
+  																		URL:@""
+  																players:nil];
   MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
-	
-	if ([newConnectionSaveWorldButton state] == NSOnState)
-		[[MUServices worldRegistry] insertObject:world inWorldsAtIndex:[[MUServices worldRegistry] count]];
-	
-	[self openConnectionWithController:controller];
-	[newConnectionPanel close];
-	
+  
+  if ([newConnectionSaveWorldButton state] == NSOnState)
+  	[[MUServices worldRegistry] insertObject:world inWorldsAtIndex:[[MUServices worldRegistry] count]];
+  
+  [self openConnectionWithController:controller];
+  [newConnectionPanel close];
+  
   [controller release];
 }
 
@@ -169,10 +169,10 @@
 
 - (IBAction) openNewConnectionPanel:(id)sender
 {
-	[newConnectionHostnameField setObjectValue:nil];
-	[newConnectionPortField setObjectValue:nil];
-	[newConnectionSaveWorldButton setState:NSOffState];
-	[newConnectionPanel makeFirstResponder:newConnectionHostnameField];
+  [newConnectionHostnameField setObjectValue:nil];
+  [newConnectionPortField setObjectValue:nil];
+  [newConnectionSaveWorldButton setState:NSOffState];
+  [newConnectionPanel makeFirstResponder:newConnectionHostnameField];
   [newConnectionPanel makeKeyAndOrderFront:self];
 }
 
@@ -324,17 +324,17 @@
 
 - (void) colorPanelColorDidChange:(NSNotification *)notification
 {
-	[preferencesController colorPanelColorDidChange];
+  [preferencesController colorPanelColorDidChange];
 }
 
 - (IBAction) openConnection:(id)sender
 {
-	MUConnectionWindowController *controller;
+  MUConnectionWindowController *controller;
   MUProfile *profile = [sender representedObject];
   controller = [[MUConnectionWindowController alloc] initWithProfile:profile];
-	
-	[self openConnectionWithController:controller];
-	
+  
+  [self openConnectionWithController:controller];
+  
   [controller release];
 }
 

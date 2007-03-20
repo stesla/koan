@@ -13,8 +13,8 @@ static MUGrowlService *defaultGrowlService;
 
 - (void) cleanUpDefaultGrowlService:(NSNotification *)notification;
 - (void) notifyWithName:(NSString *)name
-									title:(NSString *)title
-						description:(NSString *)description;
+  								title:(NSString *)title
+  					description:(NSString *)description;
 
 @end
 
@@ -38,12 +38,12 @@ static MUGrowlService *defaultGrowlService;
 
 - (id) init
 {
-	if (![super init])
+  if (![super init])
     return nil;
   
   [GrowlApplicationBridge setGrowlDelegate:self];
-	
-	return self;
+  
+  return self;
 }
 
 + (void) connectionClosedByErrorForTitle:(NSString *)title error:(NSString *)error
@@ -82,38 +82,38 @@ static MUGrowlService *defaultGrowlService;
 
 - (NSData *) applicationIconDataForGrowl
 {
-	return [[NSImage imageNamed:@"NSApplicationIcon"] TIFFRepresentation];
+  return [[NSImage imageNamed:@"NSApplicationIcon"] TIFFRepresentation];
 }
 
 - (NSString *) applicationNameForGrowl
 {
-	return MUApplicationName;
+  return MUApplicationName;
 }
 
 - (void) growlIsReady
 {
-	growlIsReady = YES;
+  growlIsReady = YES;
 }
 
 - (NSDictionary *) registrationDictionaryForGrowl
 {
-	NSArray *allNotifications = [NSArray arrayWithObjects:
-		_(MUGConnectionOpenedName),
-		_(MUGConnectionClosedName),
-		_(MUGConnectionClosedByServerName),
-		_(MUGConnectionClosedByErrorName),
-		nil];
-	NSArray *defaultNotifications = [NSArray arrayWithObjects:
-		_(MUGConnectionOpenedName),
-		_(MUGConnectionClosedName),
-		_(MUGConnectionClosedByServerName),
-		_(MUGConnectionClosedByErrorName),
-		nil];
-	
-	return [NSDictionary dictionaryWithObjectsAndKeys:
-		allNotifications, GROWL_NOTIFICATIONS_ALL,
-		defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT,
-		nil];
+  NSArray *allNotifications = [NSArray arrayWithObjects:
+  	_(MUGConnectionOpenedName),
+  	_(MUGConnectionClosedName),
+  	_(MUGConnectionClosedByServerName),
+  	_(MUGConnectionClosedByErrorName),
+  	nil];
+  NSArray *defaultNotifications = [NSArray arrayWithObjects:
+  	_(MUGConnectionOpenedName),
+  	_(MUGConnectionClosedName),
+  	_(MUGConnectionClosedByServerName),
+  	_(MUGConnectionClosedByErrorName),
+  	nil];
+  
+  return [NSDictionary dictionaryWithObjectsAndKeys:
+  	allNotifications, GROWL_NOTIFICATIONS_ALL,
+  	defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT,
+  	nil];
 }
 
 @end
@@ -129,18 +129,18 @@ static MUGrowlService *defaultGrowlService;
 }
 
 - (void) notifyWithName:(NSString *)name
-									title:(NSString *)title
-						description:(NSString *)description
+  								title:(NSString *)title
+  					description:(NSString *)description
 {
   if (growlIsReady)
   {
-		[GrowlApplicationBridge notifyWithTitle:title
-																description:description
-													 notificationName:name
-																	 iconData:nil
-																	 priority:0.0
-																	 isSticky:NO
-															 clickContext:nil];
+  	[GrowlApplicationBridge notifyWithTitle:title
+  															description:description
+  												 notificationName:name
+  																 iconData:nil
+  																 priority:0.0
+  																 isSticky:NO
+  														 clickContext:nil];
   }
 }
 

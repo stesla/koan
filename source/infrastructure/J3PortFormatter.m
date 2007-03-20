@@ -41,31 +41,31 @@
 {
   int intResult;
   NSScanner *scanner;
-	
-	if ([partialString compare:@""] == NSOrderedSame || partialString == nil)
+  
+  if ([partialString compare:@""] == NSOrderedSame || partialString == nil)
   {
-		return YES;
-	}
-	
+  	return YES;
+  }
+  
   scanner = [NSScanner scannerWithString:partialString];
-	
+  
   if (!([scanner scanInt:&intResult] && [scanner isAtEnd]))
   {
     *newString = nil;
     return NO;
   }
-	
-	if (intResult > 65535)
-	{
-		*newString = @"65535";
-		return NO;
-	}
-	
-	if (intResult < 0)
-	{
+  
+  if (intResult > 65535)
+  {
+  	*newString = @"65535";
+  	return NO;
+  }
+  
+  if (intResult < 0)
+  {
     *newString = nil;
     return NO;
-	}
+  }
   
   return YES;
 }

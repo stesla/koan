@@ -37,7 +37,7 @@ typedef enum J3SocketStatus
   int port;
   int socketfd;
   struct hostent *server;
-	struct sockaddr_in server_addr;
+  struct sockaddr_in server_addr;
   BOOL hasDataAvailable;
   BOOL hasError;
   J3SocketStatus status;

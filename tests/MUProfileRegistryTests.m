@@ -49,15 +49,15 @@
 - (void) testProfileWithWorld
 {
   MUProfile *profileOne = nil;
-	MUProfile *profileTwo = nil;
+  MUProfile *profileTwo = nil;
   MUWorld *world = [self testWorld];
   
   profileOne = [registry profileForWorld:world];
   [self assertProfile:profileOne world:world player:nil];
-	
+  
   profileTwo = [registry profileForUniqueIdentifier:@"test.world"];
   [self assert:profileTwo equals:profileOne message:@"First"];
-	
+  
   profileOne = [registry profileForWorld:world];
   [self assert:profileOne equals:profileTwo message:@"Second"];
 }
@@ -70,10 +70,10 @@
   
   profileOne = [registry profileForWorld:world player:player];
   [self assertProfile:profileOne world:world player:player];
-	
+  
   profileTwo = [registry profileForUniqueIdentifier:@"test.world.user"];
   [self assert:profileTwo equals:profileOne message:@"First"];
-	
+  
   profileOne = [registry profileForWorld:world player:player];
   [self assert:profileOne equals:profileTwo message:@"Second"];
 }

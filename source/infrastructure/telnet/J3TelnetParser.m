@@ -41,12 +41,43 @@
 
 - (void) dont:(uint8_t)byte;
 {
+  NSLog (@"    Sent: IAC DONT %@", [self optionNameForByte:byte]);
   [self sendCommand:J3TelnetDont withByte:byte];
 }
 
 - (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
 {
   return buffer == inputBuffer;
+}
+
+- (NSString *) optionNameForByte:(uint8_t)byte
+{
+  switch (byte)
+  {
+  	case J3TelnetSuppressGoAhead:
+  		return @"SUPPRESS-GO-AHEAD";
+  		
+  	case J3TelnetTerminalType:
+  		return @"TERMINAL-TYPE";
+  		
+  	case J3TelnetEndOfRecord:
+  		return @"END-OF-RECORD";
+  		
+  	case J3TelnetNegotiateAboutWindowSize:
+  		return @"NAWS";
+  		
+  	case J3TelnetLineMode:
+  		return @"LINEMODE";
+  		
+  	case J3TelnetMCCP1:
+  		return @"COMPRESS";
+  		
+  	case J3TelnetMCCP2:
+  		return @"COMPRESS2";
+  		
+  	default:
+  		return [NSString stringWithFormat:@"%u (unknown option)", (unsigned) byte];
+  }
 }
 
 - (void) parse:(uint8_t)byte
@@ -68,7 +99,7 @@
   inputBuffer = buffer;
 }
 
-- (void) setOuptutBuffer:(NSObject <J3Buffer> *)buffer
+- (void) setOutputBuffer:(NSObject <J3Buffer> *)buffer
 {
   [buffer retain];
   [outputBuffer release];
@@ -77,6 +108,7 @@
 
 - (void) wont:(uint8_t)byte;
 {
+  NSLog (@"    Sent: IAC WONT %@", [self optionNameForByte:byte]);
   [self sendCommand:J3TelnetWont withByte:byte];
 }
 @end

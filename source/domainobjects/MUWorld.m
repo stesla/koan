@@ -21,16 +21,16 @@
 @implementation MUWorld
 
 + (MUWorld *) worldWithName:(NSString *)newName
-									 hostname:(NSString *)newHostname
-											 port:(NSNumber *)newPort
-												URL:(NSString *)newURL
-										players:(NSArray *)newPlayers
+  								 hostname:(NSString *)newHostname
+  										 port:(NSNumber *)newPort
+  											URL:(NSString *)newURL
+  									players:(NSArray *)newPlayers
 {
-	return [[[self alloc] initWithName:newName
-														hostname:newHostname
-																port:newPort
-																 URL:newURL
-														 players:newPlayers] autorelease];
+  return [[[self alloc] initWithName:newName
+  													hostname:newHostname
+  															port:newPort
+  															 URL:newURL
+  													 players:newPlayers] autorelease];
 }
 
 - (id) initWithName:(NSString *)newName
@@ -141,17 +141,17 @@
 
 - (int) indexOfPlayer:(MUPlayer *)player
 {
-	unsigned i;
-	
-	for (i = 0; i < [players count]; i++)
-	{
-		MUPlayer *iteratedPlayer = [players objectAtIndex:i];
-		
-		if (player == iteratedPlayer)
-			return (int) i;
-	}
-	
-	return -1;
+  unsigned i;
+  
+  for (i = 0; i < [players count]; i++)
+  {
+  	MUPlayer *iteratedPlayer = [players objectAtIndex:i];
+  	
+  	if (player == iteratedPlayer)
+  		return (int) i;
+  }
+  
+  return -1;
 }
 
 - (void) insertObject:(MUPlayer *)player inPlayersAtIndex:(unsigned)index
@@ -185,24 +185,24 @@
 {
   [player setWorld:nil];
   [players removeObject:player];
-	[self postWorldsDidChangeNotification];
+  [self postWorldsDidChangeNotification];
 }
 
 - (void) replacePlayer:(MUPlayer *)oldPlayer withPlayer:(MUPlayer *)newPlayer
 {
-	unsigned i;
-	
-	for (i = 0; i < [players count]; i++)
-	{
-		MUPlayer *player = [players objectAtIndex:i];
-		
-		if (player != oldPlayer)
+  unsigned i;
+  
+  for (i = 0; i < [players count]; i++)
+  {
+  	MUPlayer *player = [players objectAtIndex:i];
+  	
+  	if (player != oldPlayer)
       continue;
     
     [players replaceObjectAtIndex:i withObject:newPlayer];
     [self postWorldsDidChangeNotification];
     break;
-	}
+  }
 }
 
 #pragma mark -

@@ -38,7 +38,7 @@
   [self at:&outputBuffer put:[J3WriteBuffer buffer]];
   [self at:&timers put:[NSMutableDictionary dictionary]];
   [outputBuffer setByteDestination:connection];
-  [parser setOuptutBuffer:outputBuffer];
+  [parser setOutputBuffer:outputBuffer];
   
   return self;
 }

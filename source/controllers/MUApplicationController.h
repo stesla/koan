@@ -15,10 +15,10 @@
   IBOutlet NSMenu *openConnectionMenu;
   IBOutlet NSMenuItem *useProxyMenuItem;
   
-	IBOutlet NSPanel *newConnectionPanel;
-	IBOutlet NSTextField *newConnectionHostnameField;
-	IBOutlet NSTextField *newConnectionPortField;
-	IBOutlet NSButton *newConnectionSaveWorldButton;
+  IBOutlet NSPanel *newConnectionPanel;
+  IBOutlet NSTextField *newConnectionHostnameField;
+  IBOutlet NSTextField *newConnectionPortField;
+  IBOutlet NSButton *newConnectionSaveWorldButton;
   
   IBOutlet MUPreferencesController *preferencesController;
   

@@ -10,10 +10,10 @@
 @implementation MUPlayer
 
 + (MUPlayer *) playerWithName:(NSString *)newName
-										 password:(NSString *)newPassword
-												world:(MUWorld *)newWorld
+  									 password:(NSString *)newPassword
+  											world:(MUWorld *)newWorld
 {
-	return [[[self alloc] initWithName:newName password:newPassword world:newWorld] autorelease];
+  return [[[self alloc] initWithName:newName password:newPassword world:newWorld] autorelease];
 }
 
 - (id) initWithName:(NSString *)newName
@@ -86,25 +86,25 @@
 
 - (NSString *) loginString
 {
-	if (![self name])
-		return nil;
+  if (![self name])
+  	return nil;
 
   NSRange whitespaceRange = [[self name] rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
-	
-	if ([self password] && [[self password] length] > 0)
-	{
-		if (whitespaceRange.location == NSNotFound)
-			return [NSString stringWithFormat:@"connect %@ %@", [self name], [self password]];
-		else
-			return [NSString stringWithFormat:@"connect \"%@\" %@", [self name], [self password]];
-	}
-	else
+  
+  if ([self password] && [[self password] length] > 0)
   {
-		if (whitespaceRange.location == NSNotFound)
-			return [NSString stringWithFormat:@"connect %@", [self name]];
-		else
-			return [NSString stringWithFormat:@"connect \"%@\"", [self name]];
-	}
+  	if (whitespaceRange.location == NSNotFound)
+  		return [NSString stringWithFormat:@"connect %@ %@", [self name], [self password]];
+  	else
+  		return [NSString stringWithFormat:@"connect \"%@\" %@", [self name], [self password]];
+  }
+  else
+  {
+  	if (whitespaceRange.location == NSNotFound)
+  		return [NSString stringWithFormat:@"connect %@", [self name]];
+  	else
+  		return [NSString stringWithFormat:@"connect \"%@\"", [self name]];
+  }
 }
 
 - (NSString *) uniqueIdentifier

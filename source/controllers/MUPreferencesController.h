@@ -9,10 +9,10 @@
 @interface MUPreferencesController : NSObject
 {
   IBOutlet NSPanel *preferencesPanel;
-	IBOutlet NSColorWell *globalTextColorWell;
-	IBOutlet NSColorWell *globalBackgroundColorWell;
-	IBOutlet NSColorWell *globalLinkColorWell;
-	IBOutlet NSColorWell *globalVisitedLinkColorWell;
+  IBOutlet NSColorWell *globalTextColorWell;
+  IBOutlet NSColorWell *globalBackgroundColorWell;
+  IBOutlet NSColorWell *globalLinkColorWell;
+  IBOutlet NSColorWell *globalVisitedLinkColorWell;
 }
 
 - (IBAction) changeFont;
