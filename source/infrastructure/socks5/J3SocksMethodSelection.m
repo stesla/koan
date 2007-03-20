@@ -52,7 +52,7 @@
 
 - (void) parseResponseFromByteSource:(id <J3ByteSource>)byteSource;
 {
-  uint8_t response[2] = {0,0};
+  uint8_t response[2] = {0, 0};
   
   [J3ByteSource ensureBytesReadFromSource:byteSource intoBuffer:response ofLength:2];
   selectedMethod = response[1];    

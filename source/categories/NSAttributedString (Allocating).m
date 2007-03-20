@@ -12,17 +12,17 @@
 
 + (NSAttributedString *) attributedStringWithAttributedString:(NSAttributedString *)attributedString
 {
-  return [[[NSAttributedString alloc] initWithAttributedString:attributedString] autorelease];
+  return [[[self alloc] initWithAttributedString:attributedString] autorelease];
 }
 
 + (NSAttributedString *) attributedStringWithString:(NSString *)string
 {
-  return [[[NSAttributedString alloc] initWithString:string] autorelease];
+  return [[[self alloc] initWithString:string] autorelease];
 }
 
 + (NSAttributedString *) attributedStringWithString:(NSString *)string attributes:(NSDictionary *)dictionary
 {
-  return [[[NSAttributedString alloc] initWithString:string
+  return [[[self alloc] initWithString:string
                                           attributes:dictionary] autorelease];
 }
 
@@ -32,17 +32,17 @@
 
 + (NSMutableAttributedString *) attributedStringWithAttributedString:(NSAttributedString *)attributedString
 {
-  return [[[NSMutableAttributedString alloc] initWithAttributedString:attributedString] autorelease];
+  return [[[self alloc] initWithAttributedString:attributedString] autorelease];
 }
 
 + (NSMutableAttributedString *) attributedStringWithString:(NSString *)string
 {
-  return [[[NSMutableAttributedString alloc] initWithString:string] autorelease];
+  return [[[self alloc] initWithString:string] autorelease];
 }
 
 + (NSMutableAttributedString *) attributedStringWithString:(NSString *)string attributes:(NSDictionary *)dictionary
 {
-  return [[[NSMutableAttributedString alloc] initWithString:string
+  return [[[self alloc] initWithString:string
                                           attributes:dictionary] autorelease];
 }
 

@@ -21,12 +21,12 @@
   return self;
 }
 
-- (void) removeDataNotInRange:(NSRange)range;
+- (void) removeDataNotInRange:(NSRange)range
 {
   [self setDataValue:[[self dataValue] subdataWithRange:range]];  
 }
 
-- (void) removeDataUpTo:(unsigned)position;
+- (void) removeDataUpTo:(unsigned)position
 {
   NSRange range;
   range.location = position;
@@ -63,7 +63,7 @@
 
 - (void) appendString:(NSString *)string
 {
-  NSData * stringData;
+  NSData *stringData;
   unsigned i;
   
   if (!string)
@@ -90,8 +90,9 @@
   return [NSData dataWithData:data];
 }
 
-- (void) flush;
+- (void) flush
 {
+  
 }
 
 - (BOOL) isEmpty

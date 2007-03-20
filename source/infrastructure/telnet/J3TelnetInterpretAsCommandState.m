@@ -1,7 +1,7 @@
 //
 // J3TelnetInterpretAsCommandState.m
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2007 3James Software
 //
 
 #import "J3TelnetConstants.h"
@@ -38,6 +38,8 @@
 
     case J3TelnetInterpretAsCommand:
       [parser bufferInputByte:J3TelnetInterpretAsCommand]; 
+      // Fallthrough.
+      
     default:
       return [J3TelnetTextState state];
   }

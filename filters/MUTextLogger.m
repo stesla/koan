@@ -1,7 +1,7 @@
 //
 // MUTextLogger.m
 //
-// Copyright (c) 2004, 2005, 2006 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import "categories/NSFileManager (Recursive).h"
@@ -23,17 +23,17 @@
 
 + (J3Filter *) filter
 {
-  return [[[MUTextLogger alloc] init] autorelease];
+  return [[[self alloc] init] autorelease];
 }
 
 + (J3Filter *) filterWithWorld:(MUWorld *)world
 {
-  return [[[MUTextLogger alloc] initWithWorld:world] autorelease];
+  return [[[self alloc] initWithWorld:world] autorelease];
 }
 
 + (J3Filter *) filterWithWorld:(MUWorld *)world player:(MUPlayer *)player
 {
-  return [[[MUTextLogger alloc] initWithWorld:world player:player] autorelease];
+  return [[[self alloc] initWithWorld:world player:player] autorelease];
 }
 
 - (id) initWithOutputStream:(NSOutputStream *)stream
@@ -59,11 +59,12 @@
 
 - (id) initWithWorld:(MUWorld *)world player:(MUPlayer *)player
 {
-  NSString *worldString = world ? [NSString stringWithFormat:@"%@-",[world name]] : @"";
-  NSString *playerString = player ? [NSString stringWithFormat:@"%@-",[player name]] : @"";
-  NSCalendarDate *today = [NSCalendarDate date];
-  NSString *todayString = [NSString stringWithFormat: @"%04d-%02d-%02d", [today yearOfCommonEra],[today monthOfYear],[today dayOfMonth]];
-  NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%@%@%@.koanlog",worldString,playerString,todayString] stringByExpandingTildeInPath];
+  NSString *todayString = [[NSCalendarDate calendarDate] descriptionWithCalendarFormat:@"%Y-%m-%d"];
+  NSString *path = [[NSString stringWithFormat:@"~/Library/Logs/Koan/%@%@%@.koanlog",
+    (world ? [NSString stringWithFormat:@"%@-", [world name]] : @""),
+    (player ? [NSString stringWithFormat:@"%@-", [player name]] : @""),
+    todayString] stringByExpandingTildeInPath];
+  
   NSMutableDictionary *headers = [NSMutableDictionary dictionary];
   [headers setValue:(world ? [world name] : @"") forKey:@"World"];
   [headers setValue:(player ? [player name] : @"") forKey:@"Player"];

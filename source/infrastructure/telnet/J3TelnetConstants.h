@@ -21,5 +21,5 @@ enum J3TelnetCommands
   J3TelnetWont = 252,
   J3TelnetDo = 253,
   J3TelnetDont = 254,
-  J3TelnetInterpretAsCommand = 255,
+  J3TelnetInterpretAsCommand = 255
 };

@@ -12,7 +12,7 @@
 
 + (NSURL *) URLWithScheme:(NSString *)scheme host:(NSString *)host path:(NSString *)path
 {
-  return [[[NSURL alloc] initWithScheme:scheme host:host path:path] autorelease];
+  return [[[self alloc] initWithScheme:scheme host:host path:path] autorelease];
 }
 
 @end

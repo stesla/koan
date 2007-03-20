@@ -66,6 +66,7 @@ static J3ConnectionFactory *defaultFactory = nil;
   J3LineBuffer *buffer = [J3LineBuffer buffer];
   
   [buffer setDelegate:lineBufferDelegate];
+  
   return [self telnetWithHostname:hostname port:port inputBuffer:buffer delegate:delegate];
 }
 
@@ -120,9 +121,8 @@ static J3ConnectionFactory *defaultFactory = nil;
 
 - (void) loadProxySettingsFromDefaults
 {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSData *proxySettingsData = [defaults dataForKey:MUPProxySettings];
-  NSData *useProxyData = [defaults dataForKey:MUPUseProxy];
+  NSData *proxySettingsData = [[NSUserDefaults standardUserDefaults] dataForKey:MUPProxySettings];
+  NSData *useProxyData = [[NSUserDefaults standardUserDefaults] dataForKey:MUPUseProxy];
   
   if (proxySettingsData)
     [self at:&proxySettings put:[NSKeyedUnarchiver unarchiveObjectWithData:proxySettingsData]];
@@ -132,21 +132,19 @@ static J3ConnectionFactory *defaultFactory = nil;
 
 - (void) writeProxySettingsToDefaults
 {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSData *proxySettingsData = [NSKeyedArchiver archivedDataWithRootObject:proxySettings];
   NSData *useProxyData = [NSKeyedArchiver archivedDataWithRootObject:[NSNumber numberWithBool:useProxy]];
-  [defaults setObject:proxySettingsData forKey:MUPProxySettings];  
-  [defaults setObject:useProxyData forKey:MUPUseProxy];
+  
+  [[NSUserDefaults standardUserDefaults] setObject:proxySettingsData forKey:MUPProxySettings];  
+  [[NSUserDefaults standardUserDefaults] setObject:useProxyData forKey:MUPUseProxy];
 }
 
 - (J3Socket *) makeSocketWithHostname:(NSString *)hostname port:(int)port
 {
-  J3Socket * result;
   if (useProxy)
-    result = [J3ProxySocket socketWithHostname:hostname port:port proxySettings:proxySettings];
+    return [J3ProxySocket socketWithHostname:hostname port:port proxySettings:proxySettings];
   else
-    result = [J3Socket socketWithHostname:hostname port:port];
-  return result;
+    return [J3Socket socketWithHostname:hostname port:port];
 }
 
 @end
