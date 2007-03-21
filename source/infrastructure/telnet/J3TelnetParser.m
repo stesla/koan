@@ -70,10 +70,10 @@
   		return @"LINEMODE";
   		
   	case J3TelnetMCCP1:
-  		return @"COMPRESS";
+  		return @"COMPRESS (MCCP1)";
   		
   	case J3TelnetMCCP2:
-  		return @"COMPRESS2";
+  		return @"COMPRESS2 (MCCP2)";
   		
   	default:
   		return [NSString stringWithFormat:@"%u (unknown option)", (unsigned) byte];

@@ -26,11 +26,14 @@ enum J3TelnetCommands
 
 enum J3TelnetOptions
 {
+  // These options are defined by RFC.
   J3TelnetSuppressGoAhead = 3,
   J3TelnetTerminalType = 24,
   J3TelnetEndOfRecord = 25,
   J3TelnetNegotiateAboutWindowSize = 31,
   J3TelnetLineMode = 34,
+  
+  // The MCCP extension is defined at <http://mccp.afkmud.com/protocol.html>.
   J3TelnetMCCP1 = 85,
   J3TelnetMCCP2 = 86
 };
