@@ -1,16 +1,16 @@
 //
-// J3Telnet.m
+// J3TelnetConnection.m
 //
-// Copyright (c) 2005, 2006 3James Software
+// Copyright (c) 2005, 2006, 2007 3James Software
 //
 
-#import "J3Telnet.h"
+#import "J3TelnetConnection.h"
 
 #define TELNET_READ_BUFFER_SIZE 512
 
 #pragma mark -
 
-@interface J3Telnet (Private)
+@interface J3TelnetConnection (Private)
 
 - (void) fireTimer:(NSTimer *)timer;
 - (BOOL) isOnConnection:(id <J3Connection>)connection;
@@ -23,10 +23,10 @@
 
 #pragma mark -
 
-@implementation J3Telnet
+@implementation J3TelnetConnection
 
 - (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
-                   parser:(J3TelnetEngine *)newParser
+                   parser:(J3TelnetParser *)newParser
                  delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
 {
   if (![super init])
@@ -152,7 +152,7 @@
 
 #pragma mark -
 
-@implementation J3Telnet (Private)
+@implementation J3TelnetConnection (Private)
 
 - (void) fireTimer:(NSTimer *)timer
 {

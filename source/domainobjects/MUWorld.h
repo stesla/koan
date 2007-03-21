@@ -8,7 +8,7 @@
 
 @protocol J3LineBufferDelegate;
 @protocol J3TelnetConnectionDelegate;
-@class J3Telnet;
+@class J3TelnetConnection;
 @class MUPlayer;
 
 @interface MUWorld : NSObject <NSCoding, NSCopying>
@@ -55,7 +55,7 @@
 - (void) setPlayers:(NSArray *)newPlayers;
 
 // Actions.
-- (J3Telnet *) newTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate;
+- (J3TelnetConnection *) newTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate;
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 

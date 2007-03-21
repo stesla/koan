@@ -31,7 +31,7 @@ enum MUSearchDirections
 - (void) disconnectAndCleanUp;
 - (void) displayString:(NSString *)string;
 - (void) endCompletion;
-- (BOOL) isUsingTelnet:(J3Telnet *)telnet;
+- (BOOL) isUsingTelnet:(J3TelnetConnection *)telnet;
 - (void) postConnectionWindowControllerDidReceiveTextNotification;
 - (void) postConnectionWindowControllerWillCloseNotification;
 - (void) sendPeriodicPing:(NSTimer *)timer;
@@ -324,7 +324,7 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark J3TelnetConnectionDelegate protocol
 
-- (void) telnetConnectionIsConnecting:(J3Telnet *)telnet
+- (void) telnetConnectionIsConnecting:(J3TelnetConnection *)telnet
 {
   if (![self isUsingTelnet:telnet])
     return;
@@ -333,7 +333,7 @@ enum MUSearchDirections
   [self displayString:@"\n"];  
 }
 
-- (void) telnetConnectionIsConnected:(J3Telnet *)telnet
+- (void) telnetConnectionIsConnected:(J3TelnetConnection *)telnet
 {
   if (![self isUsingTelnet:telnet])
     return;
@@ -345,7 +345,7 @@ enum MUSearchDirections
   [telnetConnection writeLine:[profile loginString]];
 }
 
-- (void) telnetConnectionWasClosedByClient:(J3Telnet *)telnet
+- (void) telnetConnectionWasClosedByClient:(J3TelnetConnection *)telnet
 {
   if (![self isUsingTelnet:telnet])
     return;
@@ -356,7 +356,7 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedForTitle:[profile windowTitle]];
 }
 
-- (void) telnetConnectionWasClosedByServer:(J3Telnet *)telnet
+- (void) telnetConnectionWasClosedByServer:(J3TelnetConnection *)telnet
 {
   if (![self isUsingTelnet:telnet])
     return;
@@ -367,7 +367,7 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedByServerForTitle:[profile windowTitle]];
 }
 
-- (void) telnetConnectionWasClosed:(J3Telnet *)telnet withError:(NSString *)errorMessage
+- (void) telnetConnectionWasClosed:(J3TelnetConnection *)telnet withError:(NSString *)errorMessage
 {
   if (![self isUsingTelnet:telnet])
     return;
@@ -599,7 +599,7 @@ enum MUSearchDirections
   [historyRing resetSearchCursor];
 }
 
-- (BOOL) isUsingTelnet:(J3Telnet *)telnet
+- (BOOL) isUsingTelnet:(J3TelnetConnection *)telnet
 {
   return telnetConnection == telnet;
 }

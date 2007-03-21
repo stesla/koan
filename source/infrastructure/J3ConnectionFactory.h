@@ -1,13 +1,13 @@
 //
 // J3ConnectionFactory.h
 //
-// Copyright (c) 2006 3James Software
+// Copyright (c) 2006, 2007 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
 #import "J3Buffer.h"
 #import "J3LineBuffer.h"
-#import "J3Telnet.h"
+#import "J3TelnetConnection.h"
 
 @class J3ProxySettings;
 
@@ -19,12 +19,12 @@
 
 + (J3ConnectionFactory *) defaultFactory;
 
-- (J3Telnet *) lineAtATimeTelnetWithHostname:(NSString *)hostname
+- (J3TelnetConnection *) lineAtATimeTelnetWithHostname:(NSString *)hostname
                                         port:(int)port
                                     delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
                           lineBufferDelegate:(NSObject <J3LineBufferDelegate> *)lineBufferDelegate;
 
-- (J3Telnet *) telnetWithHostname:(NSString *)hostname
+- (J3TelnetConnection *) telnetWithHostname:(NSString *)hostname
                              port:(int)port
                       inputBuffer:(NSObject <J3Buffer> *)buffer
                          delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;

@@ -22,7 +22,7 @@
   id delegate;
   
   MUProfile *profile;
-  J3Telnet *telnetConnection;
+  J3TelnetConnection *telnetConnection;
   
   BOOL currentlySearching;
   

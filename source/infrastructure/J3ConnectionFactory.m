@@ -1,7 +1,7 @@
 //
 // J3ConnectionFactory.m
 //
-// Copyright (c) 2006 3James Software
+// Copyright (c) 2006, 2007 3James Software
 //
 
 #import "J3ConnectionFactory.h"
@@ -58,7 +58,7 @@ static J3ConnectionFactory *defaultFactory = nil;
   [super dealloc];
 }
 
-- (J3Telnet *) lineAtATimeTelnetWithHostname:(NSString *)hostname
+- (J3TelnetConnection *) lineAtATimeTelnetWithHostname:(NSString *)hostname
                                         port:(int)port
                                     delegate:(NSObject <J3TelnetConnectionDelegate> *)delegate
                           lineBufferDelegate:(NSObject <J3LineBufferDelegate> *)lineBufferDelegate
@@ -70,19 +70,19 @@ static J3ConnectionFactory *defaultFactory = nil;
   return [self telnetWithHostname:hostname port:port inputBuffer:buffer delegate:delegate];
 }
 
-- (J3Telnet *) telnetWithHostname:(NSString *)hostname
+- (J3TelnetConnection *) telnetWithHostname:(NSString *)hostname
                              port:(int)port
                       inputBuffer:(NSObject <J3Buffer> *)buffer
                          delegate:(NSObject <J3TelnetConnectionDelegate> *)delegate
 {
   J3TelnetParser *parser;
   J3Socket *socket;
-  J3Telnet *result;
+  J3TelnetConnection *result;
 
   parser = [J3TelnetParser parser];
   [parser setInputBuffer:buffer];
   socket = [self makeSocketWithHostname:hostname port:port];
-  result = [[[J3Telnet alloc] initWithConnection:socket parser:parser delegate:delegate] autorelease];
+  result = [[[J3TelnetConnection alloc] initWithConnection:socket parser:parser delegate:delegate] autorelease];
   [socket setDelegate:result];
   return result;
 }

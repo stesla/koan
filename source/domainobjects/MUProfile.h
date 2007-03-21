@@ -1,7 +1,7 @@
 //
 // MUProfile.h
 //
-// Copyright (c) 2004, 2005, 2006 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 @protocol J3LineBufferDelegate;
@@ -12,7 +12,7 @@
 #import "MUWorld.h"
 #import "MUPlayer.h"
 #import "J3Filter.h"
-#import "J3Telnet.h"
+#import "J3TelnetConnection.h"
 
 @interface MUProfile : NSObject <NSCoding>
 {
@@ -85,6 +85,6 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3Telnet *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate;
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate;
 
 @end

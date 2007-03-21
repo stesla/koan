@@ -125,7 +125,7 @@
 		7E87760509AD668900A883BC /* J3TelnetTextState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC47092AC2FB004554BD /* J3TelnetTextState.m */; };
 		7E87760609AD668900A883BC /* J3TelnetWillState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC49092AC2FB004554BD /* J3TelnetWillState.m */; };
 		7E87760709AD668900A883BC /* J3TelnetWontState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC4B092AC2FB004554BD /* J3TelnetWontState.m */; };
-		7E87760809AD668900A883BC /* J3Telnet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3Telnet.m */; };
+		7E87760809AD668900A883BC /* J3TelnetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */; };
 		7E87760909AD668900A883BC /* NSObject (Accessing).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */; };
 		7E87760B09AD668900A883BC /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
 		7E87760C09AD668900A883BC /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
@@ -139,7 +139,7 @@
 		7EC10AEC09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
 		7EC10C4109AFAC4B00D840A1 /* J3ByteSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10C4009AFAC4B00D840A1 /* J3ByteSource.m */; };
 		7EC10C4209AFAC4B00D840A1 /* J3ByteSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10C4009AFAC4B00D840A1 /* J3ByteSource.m */; };
-		7EC3030A092B978B00AFA5C7 /* J3Telnet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3Telnet.m */; };
+		7EC3030A092B978B00AFA5C7 /* J3TelnetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */; };
 		7EC30342092B99C300AFA5C7 /* NSObject (Accessing).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */; };
 		7EC30509092BBB6200AFA5C7 /* J3WriteBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */; };
 		7EDB35D30BA64FCC008EE7D9 /* J3Testing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7EDB35D20BA64FCC008EE7D9 /* J3Testing.framework */; };
@@ -368,8 +368,8 @@
 		7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3WriteBufferTests.m; sourceTree = "<group>"; };
 		7EC301B3092B78F200AFA5C7 /* J3WriteBuffer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3WriteBuffer.h; sourceTree = "<group>"; };
 		7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3WriteBuffer.m; sourceTree = "<group>"; };
-		7EC30306092B978B00AFA5C7 /* J3Telnet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Telnet.h; sourceTree = "<group>"; };
-		7EC30307092B978B00AFA5C7 /* J3Telnet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3Telnet.m; sourceTree = "<group>"; };
+		7EC30306092B978B00AFA5C7 /* J3TelnetConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TelnetConnection.h; sourceTree = "<group>"; };
+		7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TelnetConnection.m; sourceTree = "<group>"; };
 		7EC3033E092B99C300AFA5C7 /* NSObject (Accessing).h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = "NSObject (Accessing).h"; sourceTree = "<group>"; };
 		7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = "NSObject (Accessing).m"; sourceTree = "<group>"; };
 		7EC61429092EFF72004DF3CD /* J3ByteSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3ByteSource.h; sourceTree = "<group>"; };
@@ -647,7 +647,7 @@
 		7E68DC33092AC2FB004554BD /* telnet */ = {
 			isa = PBXGroup;
 			children = (
-				7EC30306092B978B00AFA5C7 /* J3Telnet.h */,
+				7EC30306092B978B00AFA5C7 /* J3TelnetConnection.h */,
 				7E68DC3A092AC2FB004554BD /* J3TelnetConstants.h */,
 				7E68DC3C092AC2FB004554BD /* J3TelnetDontState.h */,
 				7E68DC3E092AC2FB004554BD /* J3TelnetDoState.h */,
@@ -657,7 +657,7 @@
 				7E68DC46092AC2FB004554BD /* J3TelnetTextState.h */,
 				7E68DC48092AC2FB004554BD /* J3TelnetWillState.h */,
 				7E68DC4A092AC2FB004554BD /* J3TelnetWontState.h */,
-				7EC30307092B978B00AFA5C7 /* J3Telnet.m */,
+				7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */,
 				7E68DC3B092AC2FB004554BD /* J3TelnetConstants.m */,
 				7E68DC3D092AC2FB004554BD /* J3TelnetDontState.m */,
 				7E68DC3F092AC2FB004554BD /* J3TelnetDoState.m */,
@@ -1129,7 +1129,7 @@
 				7E87760509AD668900A883BC /* J3TelnetTextState.m in Sources */,
 				7E87760609AD668900A883BC /* J3TelnetWillState.m in Sources */,
 				7E87760709AD668900A883BC /* J3TelnetWontState.m in Sources */,
-				7E87760809AD668900A883BC /* J3Telnet.m in Sources */,
+				7E87760809AD668900A883BC /* J3TelnetConnection.m in Sources */,
 				7E87760909AD668900A883BC /* NSObject (Accessing).m in Sources */,
 				7E87760B09AD668900A883BC /* J3SocksMethodSelection.m in Sources */,
 				7E87760C09AD668900A883BC /* J3SocksConstants.m in Sources */,
@@ -1195,7 +1195,7 @@
 				7E68DC6B092AC2FB004554BD /* J3TelnetTextState.m in Sources */,
 				7E68DC6D092AC2FB004554BD /* J3TelnetWillState.m in Sources */,
 				7E68DC6F092AC2FB004554BD /* J3TelnetWontState.m in Sources */,
-				7EC3030A092B978B00AFA5C7 /* J3Telnet.m in Sources */,
+				7EC3030A092B978B00AFA5C7 /* J3TelnetConnection.m in Sources */,
 				7EC30342092B99C300AFA5C7 /* NSObject (Accessing).m in Sources */,
 				E6914C52092FDAD1005DA235 /* MUPreferencesController.m in Sources */,
 				7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */,

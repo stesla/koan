@@ -92,7 +92,7 @@
 
 - (void) flush
 {
-  
+  // Base implementation does nothing.
 }
 
 - (BOOL) isEmpty

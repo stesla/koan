@@ -1,7 +1,7 @@
 //
 // MUProfile.m
 //
-// Copyright (c) 2004, 20020065 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import "MUCodingService.h"
@@ -376,7 +376,7 @@
   return (player ? [player windowTitle] : [world windowTitle]);
 }
 
-- (J3Telnet *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate:(NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
 {
   return [world newTelnetConnectionWithDelegate:delegate];
 }
