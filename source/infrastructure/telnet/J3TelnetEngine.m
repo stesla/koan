@@ -1,20 +1,20 @@
 //
-// J3TelnetParser.m
+// J3TelnetEngine.m
 //
 // Copyright (c) 2005, 2006 3James Software
 //
 
 #import "J3TelnetConstants.h"
-#import "J3TelnetParser.h"
+#import "J3TelnetEngine.h"
 #import "J3TelnetTextState.h"
 
-@interface J3TelnetParser (Private)
+@interface J3TelnetEngine (Private)
 
 - (void) sendCommand:(uint8_t)command withByte:(uint8_t)byte;
 
 @end
 
-@implementation J3TelnetParser
+@implementation J3TelnetEngine
 
 + (id) parser
 {
@@ -112,7 +112,7 @@
 }
 @end
 
-@implementation J3TelnetParser (Private)
+@implementation J3TelnetEngine (Private)
 
 - (void) sendCommand:(uint8_t)command withByte:(uint8_t)byte;
 {

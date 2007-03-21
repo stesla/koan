@@ -8,7 +8,7 @@
 #import "J3TelnetDoState.h"
 #import "J3TelnetDontState.h"
 #import "J3TelnetInterpretAsCommandState.h"
-#import "J3TelnetParser.h"
+#import "J3TelnetEngine.h"
 #import "J3TelnetState.h"
 #import "J3TelnetTextState.h"
 #import "J3TelnetWillState.h"
@@ -16,7 +16,7 @@
 
 @implementation J3TelnetInterpretAsCommandState
 
-- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetParser *)parser
+- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetEngine *)parser
 {
   switch (byte)
   {

@@ -1,5 +1,5 @@
 //
-// J3TelnetParser.h
+// J3TelnetEngine.h
 //
 // Copyright (c) 2005 3James Software
 //
@@ -9,7 +9,7 @@
 
 @class J3TelnetState;
 
-@interface J3TelnetParser : NSObject 
+@interface J3TelnetEngine : NSObject 
 {
   NSObject <J3Buffer> *inputBuffer;
   NSObject <J3Buffer> *outputBuffer;

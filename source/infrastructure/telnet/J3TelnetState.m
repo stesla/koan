@@ -6,7 +6,7 @@
 
 #import "J3TelnetState.h"
 
-@class J3TelnetParser;
+@class J3TelnetEngine;
 
 static NSMutableDictionary *states;
 
@@ -32,7 +32,7 @@ static NSMutableDictionary *states;
   return result;
 }
 
-- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetParser *)parser
+- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetEngine *)parser
 {
   @throw [NSException exceptionWithName:@"SubclassResponsibility"
                                  reason:@"Subclass failed to implement -parse:forParser:"

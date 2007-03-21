@@ -26,7 +26,7 @@
 @implementation J3Telnet
 
 - (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
-                   parser:(J3TelnetParser *)newParser
+                   parser:(J3TelnetEngine *)newParser
                  delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
 {
   if (![super init])
