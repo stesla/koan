@@ -9,13 +9,13 @@
 
 @implementation MUProfileFormatting
 
-- (id) initWithProfile:(MUProfile *)newProfile;
+- (id) initWithProfile: (MUProfile *)newProfile;
 {
   if (!(self = [super init]))
     return nil;
   if (!newProfile)
     return nil;
-  [self at:&profile put:newProfile];
+  [self at: &profile put: newProfile];
   return self;
 }
 
@@ -32,7 +32,7 @@
   if ([profile textColor])
     return [profile textColor];
   else
-    return [NSUnarchiver unarchiveObjectWithData:[profile effectiveTextColor]];  
+    return [NSUnarchiver unarchiveObjectWithData: [profile effectiveTextColor]];  
 }
 
 - (NSColor *) background
@@ -40,7 +40,7 @@
   if ([profile backgroundColor])
     return [profile backgroundColor];
   else
-    return [NSUnarchiver unarchiveObjectWithData:[profile effectiveBackgroundColor]];  
+    return [NSUnarchiver unarchiveObjectWithData: [profile effectiveBackgroundColor]];  
 }
 
 @end

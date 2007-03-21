@@ -14,6 +14,6 @@
   MUProfile *profile;
 }
 
-- (id) initWithProfile:(MUProfile *)newProfile;
+- (id) initWithProfile: (MUProfile *)newProfile;
 
 @end

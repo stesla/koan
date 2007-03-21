@@ -7,7 +7,7 @@
 //
 // Copyright (c) 2003 Apple Computer, Inc. All rights reserved.
 //
-// IMPORTANT:  This Apple software is supplied to you by Apple Computer, Inc. ("Apple") in
+// IMPORTANT:   This Apple software is supplied to you by Apple Computer, Inc. ("Apple") in
 // consideration of your agreement to the following terms, and your use, installation, 
 // modification or redistribution of this Apple software constitutes acceptance of these 
 // terms.  If you do not agree with these terms, please do not use, install, modify or 
@@ -50,8 +50,8 @@
 
 @interface NSObject (MUDisplayTextViewDelegate)
 
-- (NSCursor *) cursorForLink:(NSObject *)linkObject
-                     atIndex:(unsigned)charIndex
-                  ofTextView:(NSTextView *)aTextView;
+- (NSCursor *) cursorForLink: (NSObject *)linkObject
+                     atIndex: (unsigned)charIndex
+                  ofTextView: (NSTextView *)aTextView;
 
 @end

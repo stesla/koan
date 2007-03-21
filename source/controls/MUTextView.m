@@ -8,25 +8,25 @@
 
 @implementation MUTextView
 
-- (void) insertText:(id)string
+- (void) insertText: (id)string
 {
   BOOL result;
   
-  if ([[self delegate] respondsToSelector:@selector(textView:insertText:)])
-    result = [[self delegate] textView:self insertText:string];
+  if ([[self delegate] respondsToSelector: @selector (textView: insertText:)])
+    result = [[self delegate] textView: self insertText: string];
   
   if (!result)
-    [super insertText:string];
+    [super insertText: string];
 }
 
-- (IBAction) paste:(id)sender
+- (IBAction) paste: (id)sender
 {
-  [self pasteAsPlainText:sender];
+  [self pasteAsPlainText: sender];
 }
 
-- (IBAction) pasteAsRichText:(id)sender
+- (IBAction) pasteAsRichText: (id)sender
 {
-  [self pasteAsPlainText:sender];
+  [self pasteAsPlainText: sender];
 }
 
 @end

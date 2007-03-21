@@ -14,22 +14,22 @@
   MUWorld *world;
 }
 
-+ (MUPlayer *) playerWithName:(NSString *)newName
-  									 password:(NSString *)newPassword
-  											world:(MUWorld *)world;
++ (MUPlayer *) playerWithName: (NSString *)newName
+  									 password: (NSString *)newPassword
+  											world: (MUWorld *)world;
 
 // Designated initializer.
-- (id) initWithName:(NSString *)newName
-           password:(NSString *)newPassword
-              world:(MUWorld *)world;
+- (id) initWithName: (NSString *)newName
+           password: (NSString *)newPassword
+              world: (MUWorld *)world;
 
 // Accessors.
 - (NSString *) name;
-- (void) setName:(NSString *)newName;
+- (void) setName: (NSString *)newName;
 - (NSString *) password;
-- (void) setPassword:(NSString *)newPassword;
+- (void) setPassword: (NSString *)newPassword;
 - (MUWorld *) world;
-- (void) setWorld:(MUWorld *)newWorld;
+- (void) setWorld: (MUWorld *)newWorld;
 
 // Actions.
 - (NSString *) loginString;

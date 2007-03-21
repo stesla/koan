@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http: //www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
   <key>companyAddress</key>
@@ -15,7 +15,7 @@
   <key>companyPhone</key>
   <string></string>
   <key>companyWebSite</key>
-  <string>http://www.3james.com/</string>
+  <string>http: //www.3james.com/</string>
   <key>fileBundleID</key>
   <string>com.3james.Koan</string>
   <key>fileCreator</key>
@@ -36,12 +36,12 @@
   <string>Client for MUDs, MUSHes, MUXes, etc.</string>
   <key>productDownloadURL</key>
   <array>
-  	<string>http://www.3james.com/koan/downloads/Koan-1.0a3.dmg</string>
+  	<string>http: //www.3james.com/koan/downloads/Koan-1.0a3.dmg</string>
   </array>
   <key>productFileSize</key>
   <string>389KB</string>
   <key>productIconURL</key>
-  <string>http://www.3james.com/koan/koan.png</string>
+  <string>http: //www.3james.com/koan/koan.png</string>
   <key>productKeywords</key>
   <array>
   	<string>mud</string>
@@ -64,7 +64,7 @@
   	<string>10.4</string>
   </array>
   <key>productPageURL</key>
-  <string>http://www.3james.com/koan/</string>
+  <string>http: //www.3james.com/koan/</string>
   <key>productPrice</key>
   <string></string>
   <key>productReleaseNotes</key>

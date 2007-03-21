@@ -11,7 +11,7 @@
 
 @protocol J3LineBufferDelegate
 
-- (void) lineBufferHasReadLine:(J3LineBuffer *)buffer;
+- (void) lineBufferHasReadLine: (J3LineBuffer *)buffer;
 
 @end
 
@@ -23,6 +23,6 @@
 }
 
 - (NSString *) readLine;
-- (void) setDelegate:(NSObject <J3LineBufferDelegate> *)object;
+- (void) setDelegate: (NSObject <J3LineBufferDelegate> *)object;
 
 @end

@@ -36,14 +36,14 @@
   
   if (selectedFont == nil)
   {
-    selectedFont = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+    selectedFont = [NSFont systemFontOfSize: [NSFont systemFontSize]];
   }
   
-  panelFont = [fontManager convertFont:selectedFont];
-  fontSize = [NSNumber numberWithFloat:[panelFont pointSize]];  
+  panelFont = [fontManager convertFont: selectedFont];
+  fontSize = [NSNumber numberWithFloat: [panelFont pointSize]];  
   
-  [currentPrefsValues setValue:[panelFont fontName] forKey:MUPFontName];
-  [currentPrefsValues setValue:fontSize forKey:MUPFontSize];
+  [currentPrefsValues setValue: [panelFont fontName] forKey: MUPFontName];
+  [currentPrefsValues setValue: fontSize forKey: MUPFontSize];
   
   [self postGlobalFontDidChangeNotification];
 }
@@ -60,16 +60,16 @@
   	[self postGlobalVisitedLinkColorDidChangeNotification];
 }
 
-- (void) playSelectedSound:(id)sender;
+- (void) playSelectedSound: (id)sender;
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSSound *sound = [NSSound soundNamed:[defaults stringForKey:MUPSoundChoice]];
+  NSSound *sound = [NSSound soundNamed: [defaults stringForKey: MUPSoundChoice]];
   [sound play];
 }
 
-- (void) showPreferencesPanel:(id)sender
+- (void) showPreferencesPanel: (id)sender
 {
-  [preferencesPanel makeKeyAndOrderFront:self];
+  [preferencesPanel makeKeyAndOrderFront: self];
 }
 
 @end
@@ -80,32 +80,32 @@
 
 - (void) postGlobalBackgroundColorDidChangeNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalBackgroundColorDidChangeNotification
-  																										object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: MUGlobalBackgroundColorDidChangeNotification
+  																										object: self];
 }
 
 - (void) postGlobalFontDidChangeNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalFontDidChangeNotification
-  																										object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: MUGlobalFontDidChangeNotification
+  																										object: self];
 }
 
 - (void) postGlobalLinkColorDidChangeNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalLinkColorDidChangeNotification
-  																										object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: MUGlobalLinkColorDidChangeNotification
+  																										object: self];
 }
 
 - (void) postGlobalTextColorDidChangeNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalTextColorDidChangeNotification
-  																										object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: MUGlobalTextColorDidChangeNotification
+  																										object: self];
 }
 
 - (void) postGlobalVisitedLinkColorDidChangeNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUGlobalVisitedLinkColorDidChangeNotification
-  																										object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: MUGlobalVisitedLinkColorDidChangeNotification
+  																										object: self];
 }
 
 - (NSArray *) systemSoundsArray
@@ -123,13 +123,13 @@
   	NSString *filePath;
     NSString *searchPath;
   	
-  	searchPath = [libraryPath stringByAppendingPathComponent:@"Sounds"];
+  	searchPath = [libraryPath stringByAppendingPathComponent: @"Sounds"];
   	
-  	directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath:searchPath];
+  	directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath: searchPath];
   	
   	while ((filePath = [directoryEnumerator nextObject]))
   	{
-      [foundPaths addObject:[filePath stringByDeletingPathExtension]];
+      [foundPaths addObject: [filePath stringByDeletingPathExtension]];
   	}
   }
   

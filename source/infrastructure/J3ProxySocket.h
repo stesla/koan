@@ -18,7 +18,7 @@
   J3WriteBuffer *outputBuffer;
 }
 
-+ (id) socketWithHostname:(NSString *)hostname port:(int)port proxySettings:(J3ProxySettings *)settings;
-- (id) initWithHostname:(NSString *)hostname port:(int)port proxySettings:(J3ProxySettings *)settings;
++ (id) socketWithHostname: (NSString *)hostname port: (int)port proxySettings: (J3ProxySettings *)settings;
+- (id) initWithHostname: (NSString *)hostname port: (int)port proxySettings: (J3ProxySettings *)settings;
 
 @end

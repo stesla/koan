@@ -9,7 +9,7 @@
 #pragma mark Application constants.
 
 NSString *MUApplicationName = @"Koan";
-NSString *MUUpdateURL = @"http://www.3james.com/updates/com.3james.Koan.plist";
+NSString *MUUpdateURL = @"http: //www.3james.com/updates/com.3james.Koan.plist";
 
 #pragma mark User defaults constants.
 

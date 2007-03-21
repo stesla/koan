@@ -9,30 +9,30 @@
 
 @implementation MUPlayer
 
-+ (MUPlayer *) playerWithName:(NSString *)newName
-  									 password:(NSString *)newPassword
-  											world:(MUWorld *)newWorld
++ (MUPlayer *) playerWithName: (NSString *)newName
+  									 password: (NSString *)newPassword
+  											world: (MUWorld *)newWorld
 {
-  return [[[self alloc] initWithName:newName password:newPassword world:newWorld] autorelease];
+  return [[[self alloc] initWithName: newName password: newPassword world: newWorld] autorelease];
 }
 
-- (id) initWithName:(NSString *)newName
-           password:(NSString *)newPassword
-              world:(MUWorld *)newWorld
+- (id) initWithName: (NSString *)newName
+           password: (NSString *)newPassword
+              world: (MUWorld *)newWorld
 {
   if (![super init])
     return nil;
   
-  [self setName:newName];
-  [self setPassword:newPassword];
-  [self setWorld:newWorld];
+  [self setName: newName];
+  [self setPassword: newPassword];
+  [self setWorld: newWorld];
   
   return self;
 }
 
 - (id) init
 {
-  return [self initWithName:@"" password:@"" world:nil];
+  return [self initWithName: @"" password: @"" world: nil];
 }
 
 - (void) dealloc
@@ -50,7 +50,7 @@
   return name;
 }
 
-- (void) setName:(NSString *)newName
+- (void) setName: (NSString *)newName
 {
   if (name == newName)
     return;
@@ -63,7 +63,7 @@
   return password;
 }
 
-- (void) setPassword:(NSString *)newPassword
+- (void) setPassword: (NSString *)newPassword
 {
   if (password == newPassword)
     return;
@@ -76,7 +76,7 @@
   return world;
 }
 
-- (void) setWorld:(MUWorld *)newWorld
+- (void) setWorld: (MUWorld *)newWorld
 {
   world = newWorld;
 }
@@ -89,48 +89,48 @@
   if (![self name])
   	return nil;
 
-  NSRange whitespaceRange = [[self name] rangeOfCharacterFromSet:[NSCharacterSet whitespaceCharacterSet]];
+  NSRange whitespaceRange = [[self name] rangeOfCharacterFromSet: [NSCharacterSet whitespaceCharacterSet]];
   
   if ([self password] && [[self password] length] > 0)
   {
   	if (whitespaceRange.location == NSNotFound)
-  		return [NSString stringWithFormat:@"connect %@ %@", [self name], [self password]];
+  		return [NSString stringWithFormat: @"connect %@ %@", [self name], [self password]];
   	else
-  		return [NSString stringWithFormat:@"connect \"%@\" %@", [self name], [self password]];
+  		return [NSString stringWithFormat: @"connect \"%@\" %@", [self name], [self password]];
   }
   else
   {
   	if (whitespaceRange.location == NSNotFound)
-  		return [NSString stringWithFormat:@"connect %@", [self name]];
+  		return [NSString stringWithFormat: @"connect %@", [self name]];
   	else
-  		return [NSString stringWithFormat:@"connect \"%@\"", [self name]];
+  		return [NSString stringWithFormat: @"connect \"%@\"", [self name]];
   }
 }
 
 - (NSString *) uniqueIdentifier
 {
-  return [NSString stringWithFormat:@"%@.%@.%@", [world hostname], [world port], [self name]];
+  return [NSString stringWithFormat: @"%@.%@.%@", [world hostname], [world port], [self name]];
 }
 
 - (NSString *) windowTitle
 {
-  return [NSString stringWithFormat:@"%@ @ %@", [self name], [world name]];
+  return [NSString stringWithFormat: @"%@ @ %@", [self name], [world name]];
 }
 
 #pragma mark -
 #pragma mark NSCoding protocol
 
-- (void) encodeWithCoder:(NSCoder *)encoder
+- (void) encodeWithCoder: (NSCoder *)encoder
 {
-  [MUCodingService encodePlayer:self withCoder:encoder];
+  [MUCodingService encodePlayer: self withCoder: encoder];
 }
 
-- (id) initWithCoder:(NSCoder *)decoder
+- (id) initWithCoder: (NSCoder *)decoder
 {
   if (![super init])
     return nil;
   
-  [MUCodingService decodePlayer:self withCoder:decoder];
+  [MUCodingService decodePlayer: self withCoder: decoder];
   
   return self;
 }
@@ -138,11 +138,11 @@
 #pragma mark -
 #pragma mark NSCopying protocol
 
-- (id) copyWithZone:(NSZone *)zone
+- (id) copyWithZone: (NSZone *)zone
 {
-  return [[MUPlayer allocWithZone:zone] initWithName:[self name]
-                                            password:[self password]
-                                               world:[self world]];
+  return [[MUPlayer allocWithZone: zone] initWithName: [self name]
+                                            password: [self password]
+                                               world: [self world]];
 }
 
 @end

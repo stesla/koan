@@ -12,12 +12,12 @@
 
 @interface J3TelnetConnection (Private)
 
-- (void) fireTimer:(NSTimer *)timer;
-- (BOOL) isOnConnection:(id <J3Connection>)connection;
+- (void) fireTimer: (NSTimer *)timer;
+- (BOOL) isOnConnection: (id <J3Connection>)connection;
 - (void) poll;
 - (void) removeAllTimers;
-- (void) scheduleInRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode;
-- (NSString *) timerKeyWithRunLoop:(NSRunLoop *)runLoop mode:(NSString *)mode;
+- (void) scheduleInRunLoop: (NSRunLoop *)runLoop forMode: (NSString *)mode;
+- (NSString *) timerKeyWithRunLoop: (NSRunLoop *)runLoop mode: (NSString *)mode;
 
 @end
 
@@ -25,22 +25,22 @@
 
 @implementation J3TelnetConnection
 
-- (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
-                   engine:(J3TelnetEngine *)newEngine
-                 delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
+- (id) initWithConnection: (NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
+                   engine: (J3TelnetEngine *)newEngine
+                 delegate: (NSObject <J3TelnetConnectionDelegate> *)newDelegate
 {
   if (![super init])
     return nil;
   
-  [self setDelegate:newDelegate];
-  [self at:&connection put:newConnection];
-  [self at:&engine put:newEngine];
-  [self at:&timers put:[NSMutableDictionary dictionary]];
+  [self setDelegate: newDelegate];
+  [self at: &connection put: newConnection];
+  [self at: &engine put: newEngine];
+  [self at: &timers put: [NSMutableDictionary dictionary]];
   J3WriteBuffer *socketBuffer = [J3WriteBuffer buffer];
-  [socketBuffer setByteDestination:connection];
-  [engine setOutputBuffer:socketBuffer];
-  [self at:&outputBuffer put:[J3WriteBuffer buffer]];
-  [outputBuffer setByteDestination:engine];
+  [socketBuffer setByteDestination: connection];
+  [engine setOutputBuffer: socketBuffer];
+  [self at: &outputBuffer put: [J3WriteBuffer buffer]];
+  [outputBuffer setByteDestination: engine];
   
   return self;
 }
@@ -66,9 +66,9 @@
   connection = nil;
 }
 
-- (BOOL) hasInputBuffer:(NSObject <J3Buffer> *)buffer;
+- (BOOL) hasInputBuffer: (NSObject <J3Buffer> *)buffer;
 {
-  return [engine hasInputBuffer: buffer];
+  return [engine hasInputBuffer:  buffer];
 }
 
 - (BOOL) isConnected
@@ -78,76 +78,76 @@
 
 - (void) open
 {
-  [self scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+  [self scheduleInRunLoop: [NSRunLoop currentRunLoop] forMode: NSDefaultRunLoopMode];
   [connection open];
 }
 
-- (void) setDelegate:(NSObject <J3TelnetConnectionDelegate> *)object
+- (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *)object
 {
-  [self at:&delegate put:object];
+  [self at: &delegate put: object];
 }
 
-- (void) writeLine:(NSString *)line
+- (void) writeLine: (NSString *)line
 {
-  [outputBuffer appendLine:line];
+  [outputBuffer appendLine: line];
   [outputBuffer flush];
 }
 
-- (void) writeString:(NSString *)string
+- (void) writeString: (NSString *)string
 {
-  [outputBuffer appendString:string];
+  [outputBuffer appendString: string];
   [outputBuffer flush];
 }
 
 #pragma mark -
 #pragma mark J3ConnectionDelegate protocol
 
-- (void) connectionIsConnecting:(id <J3Connection>)delegateConnection
+- (void) connectionIsConnecting: (id <J3Connection>)delegateConnection
 {
-  if (![self isOnConnection:delegateConnection])
+  if (![self isOnConnection: delegateConnection])
     return;
   
-  if (delegate && [delegate respondsToSelector:@selector(telnetConnectionIsConnecting:)])
-    [delegate telnetConnectionIsConnecting:self];
+  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnecting:)])
+    [delegate telnetConnectionIsConnecting: self];
 }
 
-- (void) connectionIsConnected:(id <J3Connection>)delegateConnection
+- (void) connectionIsConnected: (id <J3Connection>)delegateConnection
 {
-  if (![self isOnConnection:delegateConnection])
+  if (![self isOnConnection: delegateConnection])
     return;
   
-  if (delegate && [delegate respondsToSelector:@selector(telnetConnectionIsConnected:)])
-    [delegate telnetConnectionIsConnected:self];
+  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnected:)])
+    [delegate telnetConnectionIsConnected: self];
 }
 
-- (void) connectionWasClosedByClient:(id <J3Connection>)delegateConnection
+- (void) connectionWasClosedByClient: (id <J3Connection>)delegateConnection
 {
-  if (![self isOnConnection:delegateConnection])
+  if (![self isOnConnection: delegateConnection])
     return;
   
   [self removeAllTimers];
-  if (delegate && [delegate respondsToSelector:@selector(telnetConnectionWasClosedByClient:)])
-    [delegate telnetConnectionWasClosedByClient:self];
+  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByClient:)])
+    [delegate telnetConnectionWasClosedByClient: self];
 }
 
-- (void) connectionWasClosedByServer:(id <J3Connection>)delegateConnection
+- (void) connectionWasClosedByServer: (id <J3Connection>)delegateConnection
 {
-  if (![self isOnConnection:delegateConnection])
+  if (![self isOnConnection: delegateConnection])
     return;
   
   [self removeAllTimers];
-  if (delegate && [delegate respondsToSelector:@selector(telnetConnectionWasClosedByServer:)])
-    [delegate telnetConnectionWasClosedByServer:self];
+  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByServer:)])
+    [delegate telnetConnectionWasClosedByServer: self];
 }
 
-- (void) connectionWasClosed:(id <J3Connection>)delegateConnection withError:(NSString *)errorMessage
+- (void) connectionWasClosed: (id <J3Connection>)delegateConnection withError: (NSString *)errorMessage
 {
-  if (![self isOnConnection:delegateConnection])
+  if (![self isOnConnection: delegateConnection])
     return;
   
   [self removeAllTimers];
-  if (delegate && [delegate respondsToSelector:@selector(telnetConnectionWasClosed:withError:)])
-    [delegate telnetConnectionWasClosed:self withError:errorMessage];
+  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosed: withError:)])
+    [delegate telnetConnectionWasClosed: self withError: errorMessage];
 }
 
 @end
@@ -156,12 +156,12 @@
 
 @implementation J3TelnetConnection (Private)
 
-- (void) fireTimer:(NSTimer *)timer
+- (void) fireTimer: (NSTimer *)timer
 {
   [self poll];
 }
 
-- (BOOL) isOnConnection:(id <J3Connection>)aConnection;
+- (BOOL) isOnConnection: (id <J3Connection>)aConnection;
 {
   return aConnection == connection;
 }
@@ -180,8 +180,8 @@
   [connection poll];
   if ([connection hasDataAvailable])
   {
-    bytesRead = [connection read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
-    [engine parse:bytes length:bytesRead];
+    bytesRead = [connection read: bytes maxLength: TELNET_READ_BUFFER_SIZE];
+    [engine parse: bytes length: bytesRead];
   }
 }
 
@@ -192,24 +192,24 @@
   
   while (key = [keys nextObject])
   {
-    NSTimer *timer = [timers objectForKey:key];
+    NSTimer *timer = [timers objectForKey: key];
     
     [timer invalidate];
-    [timers removeObjectForKey:key];
+    [timers removeObjectForKey: key];
   }
 }
 
-- (void) scheduleInRunLoop:(NSRunLoop *)runLoop forMode:(NSString *)mode
+- (void) scheduleInRunLoop: (NSRunLoop *)runLoop forMode: (NSString *)mode
 {
-  NSTimer *timer = [NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(fireTimer:) userInfo:nil repeats:YES];
+  NSTimer *timer = [NSTimer timerWithTimeInterval: 0.0 target: self selector: @selector (fireTimer:) userInfo: nil repeats: YES];
   
-  [runLoop addTimer:timer forMode:mode];
-  [timers setObject:timer forKey:[self timerKeyWithRunLoop:runLoop mode:mode]];
+  [runLoop addTimer: timer forMode: mode];
+  [timers setObject: timer forKey: [self timerKeyWithRunLoop: runLoop mode: mode]];
 }
 
-- (NSString *) timerKeyWithRunLoop:(NSRunLoop *)runLoop mode:(NSString *)mode
+- (NSString *) timerKeyWithRunLoop: (NSRunLoop *)runLoop mode: (NSString *)mode
 {
-  return [NSString stringWithFormat:@"%@%@", runLoop, mode];
+  return [NSString stringWithFormat: @"%@%@", runLoop, mode];
 }
 
 @end

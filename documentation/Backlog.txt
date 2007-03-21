@@ -6,10 +6,7 @@ The following features/problems are blocking 1.0b1:
 
 The following features/problems are blocking 1.0:
 
-* Bug 16. (Activate SSL/SOCKS before connect.)
 * Other profile-local settings.
-* Activate the colors from the naive ANSI color filter.
-* Sounds.
 * Store passwords in the Keychain.
 
 (Disable toolbar if not done yet.)

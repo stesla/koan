@@ -11,10 +11,10 @@
 
 @implementation J3TelnetDoState
 
-- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetEngine *)parser
+- (J3TelnetState *) parse: (uint8_t)byte forParser: (J3TelnetEngine *)parser
 {
-  NSLog (@"Received: IAC DO %@", [parser optionNameForByte:byte]);
-  [parser wont:byte];
+  NSLog (@"Received: IAC DO %@", [parser optionNameForByte: byte]);
+  [parser wont: byte];
   return [J3TelnetTextState state];
 }
 

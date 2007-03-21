@@ -16,7 +16,7 @@
 
 @implementation J3TelnetInterpretAsCommandState
 
-- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetEngine *)parser
+- (J3TelnetState *) parse: (uint8_t)byte forParser: (J3TelnetEngine *)parser
 {
   switch (byte)
   {
@@ -37,7 +37,7 @@
       break;
 
     case J3TelnetInterpretAsCommand:
-      [parser bufferInputByte:J3TelnetInterpretAsCommand]; 
+      [parser bufferInputByte: J3TelnetInterpretAsCommand]; 
       // Fallthrough.
       
     default:

@@ -23,17 +23,17 @@
   return result;
 }
 
-- (void) setDelegate:(NSObject <J3LineBufferDelegate> *)object
+- (void) setDelegate: (NSObject <J3LineBufferDelegate> *)object
 {
-  [self at:&delegate put:object];
+  [self at: &delegate put: object];
 }
 
 #pragma mark -
 #pragma mark Overrides
 
-- (void) append:(uint8_t)byte
+- (void) append: (uint8_t)byte
 {
-  [super append:byte];
+  [super append: byte];
   if (byte == (uint8_t) '\n')
     [self hasReadLine];
 }
@@ -51,8 +51,8 @@
 
 - (void) hasReadLine
 {
-  if ([delegate respondsToSelector:@selector(lineBufferHasReadLine:)])
-    [delegate lineBufferHasReadLine:self];
+  if ([delegate respondsToSelector: @selector (lineBufferHasReadLine:)])
+    [delegate lineBufferHasReadLine: self];
 }
 
 @end

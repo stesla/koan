@@ -40,7 +40,7 @@
     {
       if (superClass == thisClass)
       {
-        [subclasses addObject:*current];
+        [subclasses addObject: *current];
         break;
       }
     }

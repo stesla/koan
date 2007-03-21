@@ -10,22 +10,22 @@
 
 @implementation J3SocksMethodSelection
 
-- (void) addMethod:(J3SocksMethod)method;
+- (void) addMethod: (J3SocksMethod)method;
 {
   char bytes[1] = {method};
-  [methods appendBytes:bytes length:1];
+  [methods appendBytes: bytes length: 1];
 }
 
-- (void) appendToBuffer:(id <J3Buffer>)buffer;
+- (void) appendToBuffer: (id <J3Buffer>)buffer;
 {
   const uint8_t *bytes;
   int i;
   
-  [buffer append:J3SocksVersion];
-  [buffer append:[methods length]];
+  [buffer append: J3SocksVersion];
+  [buffer append: [methods length]];
   bytes = [methods bytes];
   for (i = 0; i < [methods length]; i++)
-    [buffer append:bytes[i]];
+    [buffer append: bytes[i]];
 }
 
 - (void) dealloc;
@@ -40,7 +40,7 @@
     return nil;
   
   methods = [[NSMutableData alloc] init];
-  [self addMethod:J3SocksNoAuthentication];
+  [self addMethod: J3SocksNoAuthentication];
   
   return self;
 }
@@ -50,11 +50,11 @@
   return selectedMethod;
 }
 
-- (void) parseResponseFromByteSource:(id <J3ByteSource>)byteSource;
+- (void) parseResponseFromByteSource: (id <J3ByteSource>)byteSource;
 {
   uint8_t response[2] = {0, 0};
   
-  [J3ByteSource ensureBytesReadFromSource:byteSource intoBuffer:response ofLength:2];
+  [J3ByteSource ensureBytesReadFromSource: byteSource intoBuffer: response ofLength: 2];
   selectedMethod = response[1];    
 }
 

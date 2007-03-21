@@ -12,38 +12,38 @@
 
 - (id) deepMutableCopy
 {
-  return [(id) self deepMutableCopyWithZone:NSDefaultMallocZone()];
+  return [(id) self deepMutableCopyWithZone: NSDefaultMallocZone()];
 }
 
 @end
 
 @implementation NSArray (DeepMutableCopy)
 
-- (id) deepMutableCopyWithZone:(NSZone *)zone
+- (id) deepMutableCopyWithZone: (NSZone *)zone
 {
-  NSMutableArray *mutableCopy = [[NSMutableArray allocWithZone:zone] initWithCapacity:[self count]];
+  NSMutableArray *mutableCopy = [[NSMutableArray allocWithZone: zone] initWithCapacity: [self count]];
   int i, count = [self count];
   id currentObject;
   
   for (i = 0; i < count; i++)
   {
-    currentObject = [self objectAtIndex:i];
+    currentObject = [self objectAtIndex: i];
     
-    if ([currentObject respondsToSelector:@selector(deepMutableCopyWithZone:)])
+    if ([currentObject respondsToSelector: @selector (deepMutableCopyWithZone:)])
     {
-      [mutableCopy addObject:[[currentObject deepMutableCopyWithZone:zone] autorelease]];
+      [mutableCopy addObject: [[currentObject deepMutableCopyWithZone: zone] autorelease]];
     }
-    else if ([currentObject respondsToSelector:@selector(mutableCopyWithZone)])
+    else if ([currentObject respondsToSelector: @selector (mutableCopyWithZone)])
     {
-      [mutableCopy addObject:[[currentObject mutableCopyWithZone:zone] autorelease]];
+      [mutableCopy addObject: [[currentObject mutableCopyWithZone: zone] autorelease]];
     }
-    else if ([currentObject respondsToSelector:@selector(copyWithZone)])
+    else if ([currentObject respondsToSelector: @selector (copyWithZone)])
     {
-      [mutableCopy addObject:[[currentObject copyWithZone:zone] autorelease]];
+      [mutableCopy addObject: [[currentObject copyWithZone: zone] autorelease]];
     }
     else
     {
-      [mutableCopy addObject:currentObject];
+      [mutableCopy addObject: currentObject];
     }
   }
   return mutableCopy;
@@ -53,31 +53,31 @@
 
 @implementation NSDictionary (DeepMutableCopy)
 
-- (id) deepMutableCopyWithZone:(NSZone *)zone
+- (id) deepMutableCopyWithZone: (NSZone *)zone
 {
-  NSMutableDictionary *mutableCopy = [[NSMutableDictionary allocWithZone:zone] init];
+  NSMutableDictionary *mutableCopy = [[NSMutableDictionary allocWithZone: zone] init];
   id enumerator = [self keyEnumerator];
   id key;
   
   while (key = [enumerator nextObject])
   {
-    id currentObject = [self objectForKey:key];
+    id currentObject = [self objectForKey: key];
     
-    if ([currentObject respondsToSelector:@selector(deepMutableCopyWithZone:)])
+    if ([currentObject respondsToSelector: @selector (deepMutableCopyWithZone:)])
     {
-      [mutableCopy setObject:[[currentObject deepMutableCopyWithZone:zone] autorelease] forKey:key];
+      [mutableCopy setObject: [[currentObject deepMutableCopyWithZone: zone] autorelease] forKey: key];
     }
-    else if ([currentObject respondsToSelector:@selector(mutableCopyWithZone)])
+    else if ([currentObject respondsToSelector: @selector (mutableCopyWithZone)])
     {
-      [mutableCopy setObject:[[currentObject mutableCopyWithZone:zone] autorelease] forKey:key];
+      [mutableCopy setObject: [[currentObject mutableCopyWithZone: zone] autorelease] forKey: key];
     }
-    else if ([currentObject respondsToSelector:@selector(copyWithZone)])
+    else if ([currentObject respondsToSelector: @selector (copyWithZone)])
     {
-      [mutableCopy setObject:[[currentObject copyWithZone:zone] autorelease] forKey:key];
+      [mutableCopy setObject: [[currentObject copyWithZone: zone] autorelease] forKey: key];
     }
     else
     {
-      [mutableCopy setObject:currentObject forKey:key];
+      [mutableCopy setObject: currentObject forKey: key];
     }
   }
   return mutableCopy;

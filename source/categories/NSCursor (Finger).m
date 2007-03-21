@@ -16,8 +16,8 @@
   
   if (fingerCursor == nil)
   {
-    fingerCursor = [[self alloc] initWithImage:[NSImage imageNamed: @"finger-cursor"]
-                                       hotSpot:NSMakePoint (6, 0)];
+    fingerCursor = [[self alloc] initWithImage: [NSImage imageNamed:  @"finger-cursor"]
+                                       hotSpot: NSMakePoint (6, 0)];
   }
   
   return fingerCursor;

@@ -22,7 +22,7 @@
 
 @implementation J3WriteBuffer
 
-- (void) setByteDestination:(NSObject <J3ByteDestination> *)object
+- (void) setByteDestination: (NSObject <J3ByteDestination> *)object
 {
   [object retain];
   [destination release];
@@ -46,9 +46,9 @@
   return YES;
 }
 
-- (unsigned) write:(const uint8_t *)bytes length:(unsigned)length;
+- (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
 {
-  [self appendBytes:bytes length:length];
+  [self appendBytes: bytes length: length];
   [self flush];
   return length;
 }
@@ -64,10 +64,10 @@
   unsigned bytesWritten; 
   
   if (!destination)
-    @throw [J3WriteBufferException exceptionWithName:@"" reason:@"Must provide destination" userInfo:nil];
+    @throw [J3WriteBufferException exceptionWithName: @"" reason: @"Must provide destination" userInfo: nil];
   
-  bytesWritten = [destination write:(uint8_t *) [self bytes] length:[self length]];
-  [self removeDataUpTo:bytesWritten];
+  bytesWritten = [destination write: (uint8_t *) [self bytes] length: [self length]];
+  [self removeDataUpTo: bytesWritten];
 }
 
 @end

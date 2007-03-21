@@ -15,12 +15,12 @@
 {
   J3PortFormatter *portFormatter = [[[J3PortFormatter alloc] init] autorelease];
   
-  [portField setFormatter:portFormatter];
+  [portField setFormatter: portFormatter];
 }
 
 - (id) init;
 {
-  return [super initWithWindowNibName:@"MUProxySettings"];
+  return [super initWithWindowNibName: @"MUProxySettings"];
 }
 
 - (J3ProxySettings *) proxySettings;

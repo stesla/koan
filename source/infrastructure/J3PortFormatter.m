@@ -10,24 +10,24 @@
 
 @implementation J3PortFormatter
 
-- (BOOL) getObjectValue:(id *)object forString:(NSString *)string errorDescription:(NSString **)error
+- (BOOL) getObjectValue: (id *)object forString: (NSString *)string errorDescription: (NSString **)error
 {
   int intResult;
   NSScanner *scanner;
   
-  if ([string compare:@""] == NSOrderedSame || string == nil)
+  if ([string compare: @""] == NSOrderedSame || string == nil)
   {
     if (object)
-      *object = [NSNumber numberWithInt:0];
+      *object = [NSNumber numberWithInt: 0];
     return YES;
   }
   
-  scanner = [NSScanner scannerWithString:string];
+  scanner = [NSScanner scannerWithString: string];
   
-  if ([scanner scanInt:&intResult] && ([scanner isAtEnd]) && intResult > 0 && intResult < 65536)
+  if ([scanner scanInt: &intResult] && ([scanner isAtEnd]) && intResult > 0 && intResult < 65536)
   {
     if (object)
-      *object = [NSNumber numberWithInt:intResult];
+      *object = [NSNumber numberWithInt: intResult];
     return YES;
   }
   
@@ -37,19 +37,19 @@
   return NO;
 }
 
-- (BOOL) isPartialStringValid:(NSString *)partialString newEditingString:(NSString **)newString errorDescription:(NSString **)error
+- (BOOL) isPartialStringValid: (NSString *)partialString newEditingString: (NSString **)newString errorDescription: (NSString **)error
 {
   int intResult;
   NSScanner *scanner;
   
-  if ([partialString compare:@""] == NSOrderedSame || partialString == nil)
+  if ([partialString compare: @""] == NSOrderedSame || partialString == nil)
   {
   	return YES;
   }
   
-  scanner = [NSScanner scannerWithString:partialString];
+  scanner = [NSScanner scannerWithString: partialString];
   
-  if (!([scanner scanInt:&intResult] && [scanner isAtEnd]))
+  if (!([scanner scanInt: &intResult] && [scanner isAtEnd]))
   {
     *newString = nil;
     return NO;
@@ -70,7 +70,7 @@
   return YES;
 }
 
-- (NSString *) stringForObjectValue:(id)object
+- (NSString *) stringForObjectValue: (id)object
 {
   NSNumber *number = (NSNumber *) object;
   int value = [number intValue];

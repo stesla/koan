@@ -19,15 +19,15 @@
 
 @interface MUApplicationController (Private)
 
-- (IBAction) changeFont:(id)sender;
-- (void) colorPanelColorDidChange:(NSNotification *)notification;
-- (IBAction) openConnection:(id)sender;
-- (void) openConnectionWithController:(MUConnectionWindowController *)controller;
+- (IBAction) changeFont: (id)sender;
+- (void) colorPanelColorDidChange: (NSNotification *)notification;
+- (IBAction) openConnection: (id)sender;
+- (void) openConnectionWithController: (MUConnectionWindowController *)controller;
 - (void) playNotificationSound;
-- (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect;
+- (void) rebuildConnectionsMenuWithAutoconnect: (BOOL)autoconnect;
 - (void) updateApplicationBadge;
 - (BOOL) shouldPlayNotificationSound;
-- (void) worldsDidChange:(NSNotification *)notification;
+- (void) worldsDidChange: (NSNotification *)notification;
 
 @end
 
@@ -40,29 +40,29 @@
   NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
   NSMutableDictionary *initialValues = [NSMutableDictionary dictionary];
   NSValueTransformer *transformer = [[FontNameToDisplayNameTransformer alloc] init];
-  NSData *archivedLightGray = [NSArchiver archivedDataWithRootObject:[NSColor lightGrayColor]];
-  NSData *archivedBlack = [NSArchiver archivedDataWithRootObject:[NSColor blackColor]];
-  NSData *archivedBlue = [NSArchiver archivedDataWithRootObject:[NSColor blueColor]];
-  NSData *archivedPurple = [NSArchiver archivedDataWithRootObject:[NSColor purpleColor]];
-  NSFont *fixedFont = [NSFont userFixedPitchFontOfSize:[NSFont smallSystemFontSize]];
+  NSData *archivedLightGray = [NSArchiver archivedDataWithRootObject: [NSColor lightGrayColor]];
+  NSData *archivedBlack = [NSArchiver archivedDataWithRootObject: [NSColor blackColor]];
+  NSData *archivedBlue = [NSArchiver archivedDataWithRootObject: [NSColor blueColor]];
+  NSData *archivedPurple = [NSArchiver archivedDataWithRootObject: [NSColor purpleColor]];
+  NSFont *fixedFont = [NSFont userFixedPitchFontOfSize: [NSFont smallSystemFontSize]];
   
-  [NSValueTransformer setValueTransformer:transformer forName:@"FontNameToDisplayNameTransformer"];
+  [NSValueTransformer setValueTransformer: transformer forName: @"FontNameToDisplayNameTransformer"];
   
-  [defaults setObject:[NSArray array] forKey:MUPWorlds];
+  [defaults setObject: [NSArray array] forKey: MUPWorlds];
   
-  [[NSUserDefaults standardUserDefaults] registerDefaults:defaults];
+  [[NSUserDefaults standardUserDefaults] registerDefaults: defaults];
   
-  [initialValues setObject:archivedBlack forKey:MUPBackgroundColor];
-  [initialValues setObject:[fixedFont fontName] forKey:MUPFontName];
-  [initialValues setObject:[NSNumber numberWithFloat:[fixedFont pointSize]] forKey:MUPFontSize];
-  [initialValues setObject:archivedBlue forKey:MUPLinkColor];
-  [initialValues setObject:archivedLightGray forKey:MUPTextColor];
-  [initialValues setObject:archivedPurple forKey:MUPVisitedLinkColor];
-  [initialValues setObject:[NSNumber numberWithBool:YES] forKey:MUPPlaySounds];
-  [initialValues setObject:[NSNumber numberWithBool:NO] forKey:MUPPlayWhenActive];
-  [initialValues setObject:@"Blow" forKey:MUPSoundChoice];
+  [initialValues setObject: archivedBlack forKey: MUPBackgroundColor];
+  [initialValues setObject: [fixedFont fontName] forKey: MUPFontName];
+  [initialValues setObject: [NSNumber numberWithFloat: [fixedFont pointSize]] forKey: MUPFontSize];
+  [initialValues setObject: archivedBlue forKey: MUPLinkColor];
+  [initialValues setObject: archivedLightGray forKey: MUPTextColor];
+  [initialValues setObject: archivedPurple forKey: MUPVisitedLinkColor];
+  [initialValues setObject: [NSNumber numberWithBool: YES] forKey: MUPPlaySounds];
+  [initialValues setObject: [NSNumber numberWithBool: NO] forKey: MUPPlayWhenActive];
+  [initialValues setObject: @"Blow" forKey: MUPSoundChoice];
   
-  [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:initialValues];
+  [[NSUserDefaultsController sharedUserDefaultsController] setInitialValues: initialValues];
   
   [MUGrowlService defaultGrowlService];
 }
@@ -76,19 +76,19 @@
   
   connectionWindowControllers = [[NSMutableArray alloc] init];
   
-  [self rebuildConnectionsMenuWithAutoconnect:YES];
+  [self rebuildConnectionsMenuWithAutoconnect: YES];
   
-  [newConnectionPortField setFormatter:newConnectionPortFormatter];
+  [newConnectionPortField setFormatter: newConnectionPortFormatter];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(colorPanelColorDidChange:)
-                                               name:NSColorPanelColorDidChangeNotification
-                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver: self
+                                           selector: @selector (colorPanelColorDidChange:)
+                                               name: NSColorPanelColorDidChangeNotification
+                                             object: nil];
   
-  [[NSNotificationCenter defaultCenter] addObserver:self
-                                           selector:@selector(worldsDidChange:)
-                                               name:MUWorldsDidChangeNotification
-                                             object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver: self
+                                           selector: @selector (worldsDidChange:)
+                                               name: MUWorldsDidChangeNotification
+                                             object: nil];
   
   unreadCount = 0;
   [self updateApplicationBadge];
@@ -96,87 +96,87 @@
 
 - (void) dealloc
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:self name:nil object:nil];
+  [[NSNotificationCenter defaultCenter] removeObserver: self name: nil object: nil];
   [connectionWindowControllers release];
   [profilesController release];
   [proxySettingsController release];
   [super dealloc];
 }
 
-- (BOOL) validateMenuItem:(id <NSMenuItem>)anItem
+- (BOOL) validateMenuItem: (id <NSMenuItem>)anItem
 {
-  if ([anItem isEqual:useProxyMenuItem])
-    [useProxyMenuItem setState:[[J3ConnectionFactory defaultFactory] useProxy]?NSOnState:NSOffState];
+  if ([anItem isEqual: useProxyMenuItem])
+    [useProxyMenuItem setState: [[J3ConnectionFactory defaultFactory] useProxy]?NSOnState: NSOffState];
   return YES;
 }
 
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction) chooseNewFont:(id)sender
+- (IBAction) chooseNewFont: (id)sender
 {
   NSDictionary *values = [[NSUserDefaultsController sharedUserDefaultsController] values];
-  NSString *fontName = [values valueForKey:MUPFontName];
-  int fontSize = [[values valueForKey:MUPFontSize] floatValue];
-  NSFont *font = [NSFont fontWithName:fontName size:fontSize];
+  NSString *fontName = [values valueForKey: MUPFontName];
+  int fontSize = [[values valueForKey: MUPFontSize] floatValue];
+  NSFont *font = [NSFont fontWithName: fontName size: fontSize];
   
   if (font == nil)
-    font = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+    font = [NSFont systemFontOfSize: [NSFont systemFontSize]];
   
-  [[NSFontManager sharedFontManager] setSelectedFont:font isMultiple:NO];
-  [[NSFontManager sharedFontManager] orderFrontFontPanel:self];
+  [[NSFontManager sharedFontManager] setSelectedFont: font isMultiple: NO];
+  [[NSFontManager sharedFontManager] orderFrontFontPanel: self];
 }
 
-- (IBAction) connectToURL:(NSURL *)url
+- (IBAction) connectToURL: (NSURL *)url
 {
-  if (![[url scheme] isEqualToString:@"telnet"])
+  if (![[url scheme] isEqualToString: @"telnet"])
     return;
   
-  MUWorld *world = [MUWorld worldWithName:[url host]
-  											hostname:[url host]
-  													port:[url port]
-  													 URL:@""
-  											 players:nil];
-  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+  MUWorld *world = [MUWorld worldWithName: [url host]
+  											hostname: [url host]
+  													port: [url port]
+  													 URL: @""
+  											 players: nil];
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld: world];
   
-  [self openConnectionWithController:controller];
+  [self openConnectionWithController: controller];
   
   [controller release];
 }
 
-- (IBAction) connectUsingPanelInformation:(id)sender
+- (IBAction) connectUsingPanelInformation: (id)sender
 {
-  MUWorld *world = [MUWorld worldWithName:[newConnectionHostnameField stringValue]
-  															 hostname:[newConnectionHostnameField stringValue]
-  																	 port:[NSNumber numberWithInt:[newConnectionPortField intValue]]
-  																		URL:@""
-  																players:nil];
-  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld:world];
+  MUWorld *world = [MUWorld worldWithName: [newConnectionHostnameField stringValue]
+  															 hostname: [newConnectionHostnameField stringValue]
+  																	 port: [NSNumber numberWithInt: [newConnectionPortField intValue]]
+  																		URL: @""
+  																players: nil];
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld: world];
   
   if ([newConnectionSaveWorldButton state] == NSOnState)
-  	[[MUServices worldRegistry] insertObject:world inWorldsAtIndex:[[MUServices worldRegistry] count]];
+  	[[MUServices worldRegistry] insertObject: world inWorldsAtIndex: [[MUServices worldRegistry] count]];
   
-  [self openConnectionWithController:controller];
+  [self openConnectionWithController: controller];
   [newConnectionPanel close];
   
   [controller release];
 }
 
-- (IBAction) openBugsWebPage:(id)sender
+- (IBAction) openBugsWebPage: (id)sender
 {
-  [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://bugs.3james.com/"]];
+  [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: @"http: //bugs.3james.com/"]];
 }
 
-- (IBAction) openNewConnectionPanel:(id)sender
+- (IBAction) openNewConnectionPanel: (id)sender
 {
-  [newConnectionHostnameField setObjectValue:nil];
-  [newConnectionPortField setObjectValue:nil];
-  [newConnectionSaveWorldButton setState:NSOffState];
-  [newConnectionPanel makeFirstResponder:newConnectionHostnameField];
-  [newConnectionPanel makeKeyAndOrderFront:self];
+  [newConnectionHostnameField setObjectValue: nil];
+  [newConnectionPortField setObjectValue: nil];
+  [newConnectionSaveWorldButton setState: NSOffState];
+  [newConnectionPanel makeFirstResponder: newConnectionHostnameField];
+  [newConnectionPanel makeKeyAndOrderFront: self];
 }
 
-- (void) recursivelyConfirmClose:(BOOL)cont
+- (void) recursivelyConfirmClose: (BOOL)cont
 {
   if (cont)
   {
@@ -184,40 +184,40 @@
 
     while (count--)
     {
-      MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex:count];
+      MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex: count];
       if (controller && [controller isConnected])
       {
-        [controller confirmClose:@selector(recursivelyConfirmClose:)];
+        [controller confirmClose: @selector (recursivelyConfirmClose:)];
         return;
       }
     }
   }
   
-  [NSApp replyToApplicationShouldTerminate:cont];
+  [NSApp replyToApplicationShouldTerminate: cont];
 }
 
-- (IBAction) showPreferencesPanel:(id)sender
+- (IBAction) showPreferencesPanel: (id)sender
 {
-  [preferencesController showPreferencesPanel:sender];
+  [preferencesController showPreferencesPanel: sender];
 }
 
-- (IBAction) showProfilesPanel:(id)sender
+- (IBAction) showProfilesPanel: (id)sender
 {
   if (!profilesController)
     profilesController = [[MUProfilesController alloc] init];
   if (profilesController)
-    [profilesController showWindow:self];
+    [profilesController showWindow: self];
 }
 
-- (IBAction) showProxySettings:(id)sender;
+- (IBAction) showProxySettings: (id)sender;
 {
   if (!proxySettingsController)
     proxySettingsController = [[MUProxySettingsController alloc] init];
   if (proxySettingsController)
-    [proxySettingsController showWindow:self];
+    [proxySettingsController showWindow: self];
 }
 
-- (IBAction) toggleUseProxy:(id)sender;
+- (IBAction) toggleUseProxy: (id)sender;
 {
   [[J3ConnectionFactory defaultFactory] toggleUseProxy];
 }
@@ -225,13 +225,13 @@
 #pragma mark -
 #pragma mark NSApplication delegate
 
-- (void) applicationDidBecomeActive:(NSNotification *)notification
+- (void) applicationDidBecomeActive: (NSNotification *)notification
 {
   unreadCount = 0;
   [self updateApplicationBadge];
 }
 
-- (NSApplicationTerminateReply) applicationShouldTerminate:(NSApplication *)application
+- (NSApplicationTerminateReply) applicationShouldTerminate: (NSApplication *)application
 {
   unsigned count = [connectionWindowControllers count];
   unsigned openConnections = 0;
@@ -239,7 +239,7 @@
   
   while (count--)
   {
-    MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex:count];
+    MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex: count];
     if (controller && [controller isConnected])
       openConnections++;
   }
@@ -255,11 +255,11 @@
   
     if (openConnections > 1)
     {
-      alert = [NSAlert alertWithMessageText:title
-                              defaultButton:_(MULConfirm)
-                            alternateButton:_(MULCancel)
-                                otherButton:_(MULQuitImmediately)
-                  informativeTextWithFormat:_(MULConfirmQuitMessage)];
+      alert = [NSAlert alertWithMessageText: title
+                              defaultButton: _(MULConfirm)
+                            alternateButton: _(MULCancel)
+                                otherButton: _(MULQuitImmediately)
+                  informativeTextWithFormat: _(MULConfirmQuitMessage)];
     
       choice = [alert runModal];
       
@@ -269,7 +269,7 @@
     
     if (choice == NSAlertDefaultReturn)
     {
-      [self recursivelyConfirmClose:YES];
+      [self recursivelyConfirmClose: YES];
       return NSTerminateLater;
     }
   }
@@ -277,7 +277,7 @@
   return NSTerminateNow;
 }
 
-- (void) applicationWillTerminate:(NSNotification *)notification
+- (void) applicationWillTerminate: (NSNotification *)notification
 {
   unreadCount = 0;
   [self updateApplicationBadge];
@@ -290,22 +290,22 @@
 #pragma mark -
 #pragma mark MUConnectionWindowController delegate
 
-- (void) connectionWindowControllerWillClose:(NSNotification *)notification
+- (void) connectionWindowControllerWillClose: (NSNotification *)notification
 {
   MUConnectionWindowController *controller = [notification object];
   
   [controller retain];
-  [connectionWindowControllers removeObject:controller];
+  [connectionWindowControllers removeObject: controller];
   [controller autorelease];
 }
 
-- (void) connectionWindowControllerDidReceiveText:(NSNotification *)notification
+- (void) connectionWindowControllerDidReceiveText: (NSNotification *)notification
 {
   if ([self shouldPlayNotificationSound])
     [self playNotificationSound];
   if (![NSApp isActive])
   {
-    [NSApp requestUserAttention:NSInformationalRequest];   
+    [NSApp requestUserAttention: NSInformationalRequest];   
     unreadCount++;
     [self updateApplicationBadge];
   }
@@ -317,53 +317,53 @@
 
 @implementation MUApplicationController (Private)
 
-- (IBAction) changeFont:(id)sender
+- (IBAction) changeFont: (id)sender
 {
   [preferencesController changeFont];
 }
 
-- (void) colorPanelColorDidChange:(NSNotification *)notification
+- (void) colorPanelColorDidChange: (NSNotification *)notification
 {
   [preferencesController colorPanelColorDidChange];
 }
 
-- (IBAction) openConnection:(id)sender
+- (IBAction) openConnection: (id)sender
 {
   MUConnectionWindowController *controller;
   MUProfile *profile = [sender representedObject];
-  controller = [[MUConnectionWindowController alloc] initWithProfile:profile];
+  controller = [[MUConnectionWindowController alloc] initWithProfile: profile];
   
-  [self openConnectionWithController:controller];
+  [self openConnectionWithController: controller];
   
   [controller release];
 }
 
-- (void) openConnectionWithController:(MUConnectionWindowController *)controller
+- (void) openConnectionWithController: (MUConnectionWindowController *)controller
 {
-  [controller setDelegate:self];
+  [controller setDelegate: self];
   
-  [connectionWindowControllers addObject:controller];
-  [controller showWindow:self];
-  [controller connect:nil];
+  [connectionWindowControllers addObject: controller];
+  [controller showWindow: self];
+  [controller connect: nil];
 }
 
 - (void) playNotificationSound;
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSSound *sound = [NSSound soundNamed:[defaults stringForKey:MUPSoundChoice]];
+  NSSound *sound = [NSSound soundNamed: [defaults stringForKey: MUPSoundChoice]];
   [sound play];  
 }
 
 - (BOOL) shouldPlayNotificationSound;
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  BOOL result = [defaults boolForKey:MUPPlaySounds];
+  BOOL result = [defaults boolForKey: MUPPlaySounds];
   if ([NSApp isActive])
-    result = result && [defaults boolForKey:MUPPlayWhenActive];
+    result = result && [defaults boolForKey: MUPPlayWhenActive];
   return result;
 }
 
-- (void) rebuildConnectionsMenuWithAutoconnect:(BOOL)autoconnect
+- (void) rebuildConnectionsMenuWithAutoconnect: (BOOL)autoconnect
 {
   MUWorldRegistry *registry = [MUServices worldRegistry];
   MUProfileRegistry *profiles = [MUServices profileRegistry];
@@ -371,63 +371,63 @@
   
   for (i = menuCount - 1; i >= 0; i--)
   {
-    [openConnectionMenu removeItemAtIndex:i];
+    [openConnectionMenu removeItemAtIndex: i];
   }
   
   for (i = 0; i < worldsCount; i++)
   {
-    MUWorld *world = [registry worldAtIndex:i];
-    MUProfile *profile = [profiles profileForWorld:world];
+    MUWorld *world = [registry worldAtIndex: i];
+    MUProfile *profile = [profiles profileForWorld: world];
     NSArray *players = [world players];
     NSMenuItem *worldItem = [[NSMenuItem alloc] init];
-    NSMenu *worldMenu = [[NSMenu alloc] initWithTitle:[world name]];
-    NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle:_(MULConnectWithoutLogin)
-                                                         action:@selector(openConnection:)
-                                                  keyEquivalent:@""];
+    NSMenu *worldMenu = [[NSMenu alloc] initWithTitle: [world name]];
+    NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle: _(MULConnectWithoutLogin)
+                                                         action: @selector (openConnection:)
+                                                  keyEquivalent: @""];
     int j, playersCount = [players count];
     
-    [connectItem setTarget:self];
-    [connectItem setRepresentedObject:profile];
+    [connectItem setTarget: self];
+    [connectItem setRepresentedObject: profile];
 
     if (autoconnect)
     {
-      [profile setWorld:world];
+      [profile setWorld: world];
       if ([profile autoconnect])
-        [self openConnection:connectItem];
+        [self openConnection: connectItem];
     }
     
     for (j = 0; j < playersCount; j++)
     {
-      MUPlayer *player = [players objectAtIndex:j];
-      profile = [profiles profileForWorld:world player:player];
+      MUPlayer *player = [players objectAtIndex: j];
+      profile = [profiles profileForWorld: world player: player];
     
-      NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle:[player name]
-                                                          action:@selector(openConnection:)
-                                                   keyEquivalent:@""];
-      [playerItem setTarget:self];
-      [playerItem setRepresentedObject:profile];
+      NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle: [player name]
+                                                          action: @selector (openConnection:)
+                                                   keyEquivalent: @""];
+      [playerItem setTarget: self];
+      [playerItem setRepresentedObject: profile];
       
       if (autoconnect)
       {
-        [profile setWorld:world];
-        [profile setPlayer:player];
+        [profile setWorld: world];
+        [profile setPlayer: player];
         if ([profile autoconnect])
-          [self openConnection:playerItem];
+          [self openConnection: playerItem];
       }
       
-      [worldMenu addItem:playerItem];
+      [worldMenu addItem: playerItem];
       [playerItem release];
     }
     
     if (playersCount > 0)
     {
-      [worldMenu addItem:[NSMenuItem separatorItem]];
+      [worldMenu addItem: [NSMenuItem separatorItem]];
     }
     
-    [worldMenu addItem:connectItem];
-    [worldItem setTitle:[world name]];
-    [worldItem setSubmenu:worldMenu];
-    [openConnectionMenu addItem:worldItem];
+    [worldMenu addItem: connectItem];
+    [worldItem setTitle: [world name]];
+    [worldItem setSubmenu: worldMenu];
+    [openConnectionMenu addItem: worldItem];
     [worldItem release];
     [worldMenu release];
     [connectItem release];
@@ -438,48 +438,48 @@
 {
   NSDictionary *attributeDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
     [NSColor whiteColor], NSForegroundColorAttributeName,
-    [NSFont fontWithName:@"Helvetica Bold" size:25.0], NSFontAttributeName,
+    [NSFont fontWithName: @"Helvetica Bold" size: 25.0], NSFontAttributeName,
     nil];
   NSAttributedString *unreadCountString =
-    [NSAttributedString attributedStringWithString:[NSString stringWithFormat:@"%@", [NSNumber numberWithUnsignedInt:unreadCount]]
-                                        attributes:attributeDictionary];
+    [NSAttributedString attributedStringWithString: [NSString stringWithFormat: @"%@", [NSNumber numberWithUnsignedInt: unreadCount]]
+                                        attributes: attributeDictionary];
   NSImage *appImage, *newAppImage, *badgeImage;
   NSSize newAppImageSize, badgeImageSize;
   NSPoint unreadCountStringLocationPoint;
   
-  appImage = [NSImage imageNamed:@"NSApplicationIcon"];
+  appImage = [NSImage imageNamed: @"NSApplicationIcon"];
   
-  newAppImage = [[NSImage alloc] initWithSize:[appImage size]];
+  newAppImage = [[NSImage alloc] initWithSize: [appImage size]];
   newAppImageSize = [newAppImage size];
   
   [newAppImage lockFocus];
   
-  [appImage drawInRect:NSMakeRect (0, 0, newAppImageSize.width, newAppImageSize.height)
-              fromRect:NSMakeRect (0, 0, [appImage size].width, [appImage size].height)
-             operation:NSCompositeCopy
-              fraction:1.0];
+  [appImage drawInRect: NSMakeRect (0, 0, newAppImageSize.width, newAppImageSize.height)
+              fromRect: NSMakeRect (0, 0, [appImage size].width, [appImage size].height)
+             operation: NSCompositeCopy
+              fraction: 1.0];
   
   if (unreadCount > 0)
   {
     if (unreadCount < 100)
-      badgeImage = [NSImage imageNamed:@"badge-1-2"];
+      badgeImage = [NSImage imageNamed: @"badge-1-2"];
     else if (unreadCount < 1000)
-      badgeImage = [NSImage imageNamed:@"badge-3"];
+      badgeImage = [NSImage imageNamed: @"badge-3"];
     else if (unreadCount < 10000)
-      badgeImage = [NSImage imageNamed:@"badge-4"];
+      badgeImage = [NSImage imageNamed: @"badge-4"];
     else
-      badgeImage = [NSImage imageNamed:@"badge-5"];
+      badgeImage = [NSImage imageNamed: @"badge-5"];
     
     
     badgeImageSize = [badgeImage size];
     
-    [badgeImage drawInRect:NSMakeRect (newAppImageSize.width - badgeImageSize.width,
+    [badgeImage drawInRect: NSMakeRect (newAppImageSize.width - badgeImageSize.width,
                                        newAppImageSize.height - badgeImageSize.height,
                                        badgeImageSize.width,
                                        badgeImageSize.height)
-                  fromRect:NSMakeRect (0, 0, badgeImageSize.width, badgeImageSize.height)
-                 operation:NSCompositeSourceOver
-                  fraction:1.0];
+                  fromRect: NSMakeRect (0, 0, badgeImageSize.width, badgeImageSize.height)
+                 operation: NSCompositeSourceOver
+                  fraction: 1.0];
     
     if (unreadCount < 10)
     {
@@ -508,18 +508,18 @@
     }
     
     
-    [unreadCountString drawAtPoint:unreadCountStringLocationPoint];
+    [unreadCountString drawAtPoint: unreadCountStringLocationPoint];
   }
   
   [newAppImage unlockFocus];
   
-  [NSApp setApplicationIconImage:newAppImage];
+  [NSApp setApplicationIconImage: newAppImage];
   [newAppImage release];
 }
 
-- (void) worldsDidChange:(NSNotification *)notification
+- (void) worldsDidChange: (NSNotification *)notification
 {
-  [self rebuildConnectionsMenuWithAutoconnect:NO];
+  [self rebuildConnectionsMenuWithAutoconnect: NO];
 }
 
 @end

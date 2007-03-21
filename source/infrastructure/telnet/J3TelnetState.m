@@ -19,24 +19,24 @@ static NSMutableDictionary *states;
   if (!states)
     states = [[NSMutableDictionary alloc] init];
   
-  if (![states objectForKey:self])
+  if (![states objectForKey: self])
   {
     result = [[[self alloc] init] autorelease];
-    [states setObject:result forKey:self];
+    [states setObject: result forKey: self];
   }
   else
   {
-    result = [states objectForKey:self];
+    result = [states objectForKey: self];
   }
   
   return result;
 }
 
-- (J3TelnetState *) parse:(uint8_t)byte forParser:(J3TelnetEngine *)parser
+- (J3TelnetState *) parse: (uint8_t)byte forParser: (J3TelnetEngine *)parser
 {
-  @throw [NSException exceptionWithName:@"SubclassResponsibility"
-                                 reason:@"Subclass failed to implement -parse:forParser:"
-                               userInfo:nil];
+  @throw [NSException exceptionWithName: @"SubclassResponsibility"
+                                 reason: @"Subclass failed to implement -parse: forParser: "
+                               userInfo: nil];
 }
 
 @end

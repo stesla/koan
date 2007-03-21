@@ -22,7 +22,7 @@
 // Growl messages.
 
 "GrowlConnectionClosedByErrorName" = "Connection closed by error";
-"GrowlConnectionClosedByErrorDescription" = "An error caused the connection to close: %@";
+"GrowlConnectionClosedByErrorDescription" = "An error caused the connection to close:  %@";
 "GrowlConnectionClosedByServerName" = "Connection closed by server";
 "GrowlConnectionClosedByServerDescription" = "The connection was closed by the server.";
 "GrowlConnectionClosedName" = "Connection closed";

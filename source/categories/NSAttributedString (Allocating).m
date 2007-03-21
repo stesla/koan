@@ -10,40 +10,40 @@
 
 @implementation NSAttributedString (Allocating)
 
-+ (NSAttributedString *) attributedStringWithAttributedString:(NSAttributedString *)attributedString
++ (NSAttributedString *) attributedStringWithAttributedString: (NSAttributedString *)attributedString
 {
-  return [[[self alloc] initWithAttributedString:attributedString] autorelease];
+  return [[[self alloc] initWithAttributedString: attributedString] autorelease];
 }
 
-+ (NSAttributedString *) attributedStringWithString:(NSString *)string
++ (NSAttributedString *) attributedStringWithString: (NSString *)string
 {
-  return [[[self alloc] initWithString:string] autorelease];
+  return [[[self alloc] initWithString: string] autorelease];
 }
 
-+ (NSAttributedString *) attributedStringWithString:(NSString *)string attributes:(NSDictionary *)dictionary
++ (NSAttributedString *) attributedStringWithString: (NSString *)string attributes: (NSDictionary *)dictionary
 {
-  return [[[self alloc] initWithString:string
-                                          attributes:dictionary] autorelease];
+  return [[[self alloc] initWithString: string
+                                          attributes: dictionary] autorelease];
 }
 
 @end
 
 @implementation NSMutableAttributedString (Allocating)
 
-+ (NSMutableAttributedString *) attributedStringWithAttributedString:(NSAttributedString *)attributedString
++ (NSMutableAttributedString *) attributedStringWithAttributedString: (NSAttributedString *)attributedString
 {
-  return [[[self alloc] initWithAttributedString:attributedString] autorelease];
+  return [[[self alloc] initWithAttributedString: attributedString] autorelease];
 }
 
-+ (NSMutableAttributedString *) attributedStringWithString:(NSString *)string
++ (NSMutableAttributedString *) attributedStringWithString: (NSString *)string
 {
-  return [[[self alloc] initWithString:string] autorelease];
+  return [[[self alloc] initWithString: string] autorelease];
 }
 
-+ (NSMutableAttributedString *) attributedStringWithString:(NSString *)string attributes:(NSDictionary *)dictionary
++ (NSMutableAttributedString *) attributedStringWithString: (NSString *)string attributes: (NSDictionary *)dictionary
 {
-  return [[[self alloc] initWithString:string
-                                          attributes:dictionary] autorelease];
+  return [[[self alloc] initWithString: string
+                                          attributes: dictionary] autorelease];
 }
 
 @end

@@ -12,7 +12,7 @@
 
 - (NSString *) fullDisplayName
 {
-  return [NSString stringWithFormat:@"%@ - %@pt", [self displayName], [NSNumber numberWithFloat:[self pointSize]]];
+  return [NSString stringWithFormat: @"%@ - %@pt", [self displayName], [NSNumber numberWithFloat: [self pointSize]]];
 }
 
 @end

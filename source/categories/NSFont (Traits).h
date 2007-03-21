@@ -8,8 +8,8 @@
 
 @interface NSFont (Traits)
 
-- (NSFont *) fontWithTrait:(NSFontTraitMask)trait;
-- (BOOL) hasTrait:(NSFontTraitMask)trait;
+- (NSFont *) fontWithTrait: (NSFontTraitMask)trait;
+- (BOOL) hasTrait: (NSFontTraitMask)trait;
 - (BOOL) isBold;
 - (BOOL) isItalic;
 

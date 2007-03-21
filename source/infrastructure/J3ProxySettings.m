@@ -19,8 +19,8 @@
   if (![super init])
     return nil;
   
-  [self setHostname:@""];
-  [self setPort:[NSNumber numberWithInt:1080]];
+  [self setHostname: @""];
+  [self setPort: [NSNumber numberWithInt: 1080]];
   
   return self;
 }
@@ -34,7 +34,7 @@
 
 - (NSString *) description
 {
-  return [NSString stringWithFormat:@"%@:%@", hostname, port];
+  return [NSString stringWithFormat: @"%@: %@", hostname, port];
 }
 
 - (NSString *) hostname
@@ -42,9 +42,9 @@
   return hostname;
 }
 
-- (void) setHostname:(NSString *)value
+- (void) setHostname: (NSString *)value
 {
-  [self at:&hostname put:value];
+  [self at: &hostname put: value];
 }
 
 - (NSNumber *) port
@@ -52,9 +52,9 @@
   return port;
 }
 
-- (void) setPort:(NSNumber *)value
+- (void) setPort: (NSNumber *)value
 {
-  [self at:&port put:value];
+  [self at: &port put: value];
 }
 
 - (NSString *) username
@@ -62,9 +62,9 @@
   return username;
 }
 
-- (void) setUsername:(NSString *)value
+- (void) setUsername: (NSString *)value
 {
-  [self at:&username put:value];
+  [self at: &username put: value];
 }
 
 - (NSString *) password
@@ -72,9 +72,9 @@
   return password;
 }
 
-- (void) setPassword:(NSString *)value
+- (void) setPassword: (NSString *)value
 {
-  [self at:&password put:value];
+  [self at: &password put: value];
 }
 
 - (BOOL) hasAuthentication
@@ -85,15 +85,15 @@
 #pragma mark -
 #pragma mark NSCoding protocol
 
-- (id) initWithCoder:(NSCoder *)coder
+- (id) initWithCoder: (NSCoder *)coder
 {
-  [MUCodingService decodeProxySettings:self withCoder:coder];
+  [MUCodingService decodeProxySettings: self withCoder: coder];
   return self;
 }
 
-- (void) encodeWithCoder:(NSCoder *)coder
+- (void) encodeWithCoder: (NSCoder *)coder
 {
-  [MUCodingService encodeProxySettings:self withCoder:coder];
+  [MUCodingService encodeProxySettings: self withCoder: coder];
 }
 
 @end

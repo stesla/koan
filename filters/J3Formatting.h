@@ -24,11 +24,11 @@
 }
 
 + (id) formattingForTesting;
-+ (id) formattingWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)font;
++ (id) formattingWithForegroundColor: (NSColor *)fore backgroundColor: (NSColor *)back font: (NSFont *)font;
 + (NSColor *) testingBackground;
 + (NSFont *) testingFont;
 + (NSColor *) testingForeground;
 
-- (id) initWithForegroundColor:(NSColor *)fore backgroundColor:(NSColor *)back font:(NSFont *)font;
+- (id) initWithForegroundColor: (NSColor *)fore backgroundColor: (NSColor *)back font: (NSFont *)font;
 
 @end

@@ -1,10 +1,10 @@
 /* =============================================================================
-  FILE:		UKPrefsPanel.h
+  FILE: 		UKPrefsPanel.h
   
-  AUTHORS:	M. Uli Kusterer (UK), (c) Copyright 2003, all rights reserved.
+  AUTHORS: 	M. Uli Kusterer (UK), (c) Copyright 2003, all rights reserved.
   
   DIRECTIONS:
-  	UKPrefsPanel is ridiculously easy to use: Create a tabless NSTabView,
+  	UKPrefsPanel is ridiculously easy to use:  Create a tabless NSTabView,
   	where the name of each tab is the name for the toolbar item, and the
   	identifier of each tab is the identifier to be used for the toolbar
   	item to represent it. Then create image files with the identifier as
@@ -43,18 +43,18 @@
   NSString*				autosaveName;		// Identifier used for saving toolbar state and current selected page of prefs window.
 }
 
-// Accessors for specifying the tab view: (you should just hook these up in IB)
--(void)  		setTabView: (NSTabView*)tv;
+// Accessors for specifying the tab view:  (you should just hook these up in IB)
+-(void)  		setTabView:  (NSTabView*)tv;
 -(NSTabView*)   tabView;
 
--(void)  		setAutosaveName: (NSString*)name;
+-(void)  		setAutosaveName:  (NSString*)name;
 -(NSString*)  autosaveName;
 
 // Action for hooking up this object and the menu item:
--(IBAction)  	orderFrontPrefsPanel: (id)sender;
+-(IBAction)  	orderFrontPrefsPanel:  (id)sender;
 
 // You don't have to care about these:
 -(void)  mapTabsToToolbar;
--(IBAction)  changePanes: (id)sender;
+-(IBAction)  changePanes:  (id)sender;
 
 @end

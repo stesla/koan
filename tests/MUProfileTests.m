@@ -16,15 +16,15 @@
   MUProfile *profile = nil;
   
   world = [[[MUWorld alloc] init] autorelease];
-  [world setName:@"Test World"];
+  [world setName: @"Test World"];
   
-  profile = [MUProfile profileWithWorld:world];
-  [self assert:[profile uniqueIdentifier] equals:@"test.world"];
+  profile = [MUProfile profileWithWorld: world];
+  [self assert: [profile uniqueIdentifier] equals: @"test.world"];
   
-  player = [MUPlayer playerWithName:@"User" password:@"" world:world];
+  player = [MUPlayer playerWithName: @"User" password: @"" world: world];
   
-  profile = [MUProfile profileWithWorld:world player:player];
-  [self assert:[profile uniqueIdentifier] equals:@"test.world.user"];
+  profile = [MUProfile profileWithWorld: world player: player];
+  [self assert: [profile uniqueIdentifier] equals: @"test.world.user"];
 }
 
 @end

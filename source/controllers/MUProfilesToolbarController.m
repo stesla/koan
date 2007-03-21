@@ -10,75 +10,75 @@
 
 - (void) awakeFromNib
 {
-  toolbar = [[NSToolbar alloc] initWithIdentifier:@"profilesWindowToolbar"];
-  [toolbar setDelegate:self];
-  [toolbar setAllowsUserCustomization:YES];
-  [toolbar setAutosavesConfiguration:YES];
+  toolbar = [[NSToolbar alloc] initWithIdentifier: @"profilesWindowToolbar"];
+  [toolbar setDelegate: self];
+  [toolbar setAllowsUserCustomization: YES];
+  [toolbar setAutosavesConfiguration: YES];
   
-  [window setToolbar:toolbar];
+  [window setToolbar: toolbar];
   [toolbar release];
 }
 
 #pragma mark -
 #pragma mark NSToolbar delegate
 
-- (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+- (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *)itemIdentifier willBeInsertedIntoToolbar: (BOOL)flag
 {
-  NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
+  NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier];
   
-  if ([itemIdentifier isEqualToString:MUAddWorldToolbarItem])
+  if ([itemIdentifier isEqualToString: MUAddWorldToolbarItem])
   {
-  	[item setLabel:_(MULAddWorld)];
-  	[item setPaletteLabel:_(MULAddWorld)];
-  	[item setImage:nil];
-  	[item setTarget:windowController];
-  	[item setAction:@selector(addWorld:)];
+  	[item setLabel: _(MULAddWorld)];
+  	[item setPaletteLabel: _(MULAddWorld)];
+  	[item setImage: nil];
+  	[item setTarget: windowController];
+  	[item setAction: @selector (addWorld:)];
   }
-  else if ([itemIdentifier isEqualToString:MUAddPlayerToolbarItem])
+  else if ([itemIdentifier isEqualToString: MUAddPlayerToolbarItem])
   {
-  	[item setLabel:_(MULAddPlayer)];
-  	[item setPaletteLabel:_(MULAddPlayer)];
-  	[item setImage:nil];
-  	[item setTarget:windowController];
-  	[item setAction:@selector(addPlayer:)];
+  	[item setLabel: _(MULAddPlayer)];
+  	[item setPaletteLabel: _(MULAddPlayer)];
+  	[item setImage: nil];
+  	[item setTarget: windowController];
+  	[item setAction: @selector (addPlayer:)];
   }
-  else if ([itemIdentifier isEqualToString:MUEditSelectedRowToolbarItem])
+  else if ([itemIdentifier isEqualToString: MUEditSelectedRowToolbarItem])
   {
-  	[item setLabel:_(MULEditItem)];
-  	[item setPaletteLabel:_(MULEditItem)];
-  	[item setImage:nil];
-  	[item setTarget:windowController];
-  	[item setAction:@selector(editSelectedRow:)];
+  	[item setLabel: _(MULEditItem)];
+  	[item setPaletteLabel: _(MULEditItem)];
+  	[item setImage: nil];
+  	[item setTarget: windowController];
+  	[item setAction: @selector (editSelectedRow:)];
   }
-  else if ([itemIdentifier isEqualToString:MURemoveSelectedRowToolbarItem])
+  else if ([itemIdentifier isEqualToString: MURemoveSelectedRowToolbarItem])
   {
-  	[item setLabel:_(MULRemoveItem)];
-  	[item setPaletteLabel:_(MULRemoveItem)];
-  	[item setImage:nil];
-  	[item setTarget:windowController];
-  	[item setAction:@selector(removeSelectedRow:)];
+  	[item setLabel: _(MULRemoveItem)];
+  	[item setPaletteLabel: _(MULRemoveItem)];
+  	[item setImage: nil];
+  	[item setTarget: windowController];
+  	[item setAction: @selector (removeSelectedRow:)];
   }
-  else if ([itemIdentifier isEqualToString:MUEditProfileForSelectedRowToolbarItem])
+  else if ([itemIdentifier isEqualToString: MUEditProfileForSelectedRowToolbarItem])
   {
-  	[item setLabel:_(MULEditProfile)];
-  	[item setPaletteLabel:_(MULEditProfile)];
-  	[item setImage:nil];
-  	[item setTarget:windowController];
-  	[item setAction:@selector(editProfileForSelectedRow:)];
+  	[item setLabel: _(MULEditProfile)];
+  	[item setPaletteLabel: _(MULEditProfile)];
+  	[item setImage: nil];
+  	[item setTarget: windowController];
+  	[item setAction: @selector (editProfileForSelectedRow:)];
   }
-  else if ([itemIdentifier isEqualToString:MUGoToURLToolbarItem])
+  else if ([itemIdentifier isEqualToString: MUGoToURLToolbarItem])
   {
-    [item setLabel:_(MULGoToURL)];
-    [item setPaletteLabel:_(MULGoToURL)];
-    [item setImage:nil];
-    [item setTarget:windowController];
-    [item setAction:@selector(goToWorldURL:)];
+    [item setLabel: _(MULGoToURL)];
+    [item setPaletteLabel: _(MULGoToURL)];
+    [item setImage: nil];
+    [item setTarget: windowController];
+    [item setAction: @selector (goToWorldURL:)];
   }
   
   return [item autorelease];
 }
 
-- (NSArray *) toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
+- (NSArray *) toolbarDefaultItemIdentifiers: (NSToolbar*)toolbar
 {
   return [NSArray arrayWithObjects:
   	MUAddWorldToolbarItem,
@@ -91,7 +91,7 @@
     nil];
 }
 
-- (NSArray *) toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
+- (NSArray *) toolbarAllowedItemIdentifiers: (NSToolbar*)toolbar
 {
   return [NSArray arrayWithObjects:
     NSToolbarSeparatorItemIdentifier,

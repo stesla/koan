@@ -24,17 +24,17 @@
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
-- (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
-                   engine:(J3TelnetEngine *)newParser
-                 delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;
+- (id) initWithConnection: (NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
+                   engine: (J3TelnetEngine *)newParser
+                 delegate: (NSObject <J3TelnetConnectionDelegate> *)newDelegate;
 
 - (void) close;
 - (BOOL) isConnected;
-- (BOOL) hasInputBuffer:(NSObject <J3Buffer> *)buffer;
+- (BOOL) hasInputBuffer: (NSObject <J3Buffer> *)buffer;
 - (void) open;
-- (void) setDelegate:(NSObject <J3TelnetConnectionDelegate> *)object;
-- (void) writeLine:(NSString *)line;
-- (void) writeString:(NSString *)string;
+- (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *)object;
+- (void) writeLine: (NSString *)line;
+- (void) writeString: (NSString *)string;
 
 @end
 
@@ -42,10 +42,10 @@
 
 @protocol J3TelnetConnectionDelegate
 
-- (void) telnetConnectionIsConnecting:(J3TelnetConnection *)connection;
-- (void) telnetConnectionIsConnected:(J3TelnetConnection *)connection;
-- (void) telnetConnectionWasClosedByClient:(J3TelnetConnection *)connection;
-- (void) telnetConnectionWasClosedByServer:(J3TelnetConnection *)connection;
-- (void) telnetConnectionWasClosed:(J3TelnetConnection *)connection withError:(NSString *)errorMessage;
+- (void) telnetConnectionIsConnecting: (J3TelnetConnection *)connection;
+- (void) telnetConnectionIsConnected: (J3TelnetConnection *)connection;
+- (void) telnetConnectionWasClosedByClient: (J3TelnetConnection *)connection;
+- (void) telnetConnectionWasClosedByServer: (J3TelnetConnection *)connection;
+- (void) telnetConnectionWasClosed: (J3TelnetConnection *)connection withError: (NSString *)errorMessage;
 
 @end

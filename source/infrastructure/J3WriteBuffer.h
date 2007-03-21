@@ -20,6 +20,6 @@
 }
 
 - (void) flush;
-- (void) setByteDestination:(NSObject <J3ByteDestination> *)object;
+- (void) setByteDestination: (NSObject <J3ByteDestination> *)object;
 
 @end

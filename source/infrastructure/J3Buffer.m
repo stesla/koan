@@ -21,22 +21,22 @@
   return self;
 }
 
-- (void) removeDataNotInRange:(NSRange)range
+- (void) removeDataNotInRange: (NSRange)range
 {
-  [self setDataValue:[[self dataValue] subdataWithRange:range]];  
+  [self setDataValue: [[self dataValue] subdataWithRange: range]];  
 }
 
-- (void) removeDataUpTo:(unsigned)position
+- (void) removeDataUpTo: (unsigned)position
 {
   NSRange range;
   range.location = position;
   range.length = [self length] - position;
-  [self removeDataNotInRange:range];
+  [self removeDataNotInRange: range];
 }
 
-- (void) setDataValue:(NSData *)newDataValue
+- (void) setDataValue: (NSData *)newDataValue
 {
-  NSMutableData *copy = [[NSMutableData alloc] initWithData:newDataValue];
+  NSMutableData *copy = [[NSMutableData alloc] initWithData: newDataValue];
   [data release];
   data = copy;
 }
@@ -44,24 +44,24 @@
 #pragma mark -
 #pragma mark J3Buffer protocol
 
-- (void) append:(uint8_t)byte
+- (void) append: (uint8_t)byte
 {
   char bytes[1] = {byte};
-  [self appendBytes:bytes length:1];
+  [self appendBytes: bytes length: 1];
 }
 
-- (void) appendBytes:(const void *)bytes length:(unsigned)length;
+- (void) appendBytes: (const void *)bytes length: (unsigned)length;
 {
-  [data appendBytes:bytes length:length];
+  [data appendBytes: bytes length: length];
 }
 
-- (void) appendLine:(NSString *)line
+- (void) appendLine: (NSString *)line
 {
-  [self appendString:line];
-  [self append:'\n'];
+  [self appendString: line];
+  [self append: '\n'];
 }
 
-- (void) appendString:(NSString *)string
+- (void) appendString: (NSString *)string
 {
   NSData *stringData;
   unsigned i;
@@ -69,10 +69,10 @@
   if (!string)
     return;
   
-  stringData = [string dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+  stringData = [string dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES];
   
   for (i = 0; i < [stringData length]; i++)
-    [self append:((const char *)[stringData bytes])[i]];
+    [self append: ((const char *)[stringData bytes])[i]];
 }
 
 - (const void *)bytes
@@ -82,12 +82,12 @@
 
 - (void) clear
 {
-  [self setDataValue:[NSData data]];
+  [self setDataValue: [NSData data]];
 }
 
 - (NSData *) dataValue
 {
-  return [NSData dataWithData:data];
+  return [NSData dataWithData: data];
 }
 
 - (BOOL) isEmpty
@@ -102,7 +102,7 @@
 
 - (NSString *) stringValue
 {
-  return [[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding] autorelease];
+  return [[[NSString alloc] initWithData: data encoding: NSASCIIStringEncoding] autorelease];
 }
 
 @end

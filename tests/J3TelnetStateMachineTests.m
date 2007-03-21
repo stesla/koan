@@ -24,7 +24,7 @@
 {
   if (![super init])
     return nil;
-  [self at:&output put:[J3WriteBuffer buffer]];
+  [self at: &output put: [J3WriteBuffer buffer]];
   return self;
 }
 
@@ -33,7 +33,7 @@
   return lastByteInput;
 }
 
-- (uint8_t) outputByteAtIndex:(unsigned)index;
+- (uint8_t) outputByteAtIndex: (unsigned)index;
 {
   const uint8_t * bytes = [output bytes];
   return bytes[index];
@@ -44,14 +44,14 @@
   return [output length];
 }
 
-- (void) bufferInputByte:(uint8_t)byte;
+- (void) bufferInputByte: (uint8_t)byte;
 {
   lastByteInput = byte;
 }
 
-- (void) bufferOutputByte:(uint8_t)byte;
+- (void) bufferOutputByte: (uint8_t)byte;
 {
-  [output append:byte];
+  [output append: byte];
 }
 
 @end
@@ -60,14 +60,14 @@
 
 @interface J3TelnetStateMachineTests (Private)
 
-- (void) assertState:(Class)stateClass givenAnyByteProducesState:(Class)nextStateClass;
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)byte producesState:(Class)nextStateClass;
-- (void) assertState:(Class)stateClass hasNoOutputGivenByte:(uint8_t)givenByte;
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte inputsByte:(uint8_t)inputsByte;
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsNegtiationCommandWithThatByte:(uint8_t)outputsCommand;
-- (void) assertStateHasNoOutputGivenAnyByte:(Class)stateClass;
-- (void) giveStateClass:(Class)stateClass byte:(uint8_t)byte;
-- (void) setStateClass:(Class)stateClass;
+- (void) assertState: (Class)stateClass givenAnyByteProducesState: (Class)nextStateClass;
+- (void) assertState: (Class)stateClass givenByte: (uint8_t)byte producesState: (Class)nextStateClass;
+- (void) assertState: (Class)stateClass hasNoOutputGivenByte: (uint8_t)givenByte;
+- (void) assertState: (Class)stateClass givenByte: (uint8_t)givenByte inputsByte: (uint8_t)inputsByte;
+- (void) assertState: (Class)stateClass givenByte: (uint8_t)givenByte outputsNegtiationCommandWithThatByte: (uint8_t)outputsCommand;
+- (void) assertStateHasNoOutputGivenAnyByte: (Class)stateClass;
+- (void) giveStateClass: (Class)stateClass byte: (uint8_t)byte;
+- (void) setStateClass: (Class)stateClass;
 
 @end
 
@@ -77,43 +77,43 @@
 
 - (void) testTextStateTransitions
 {
-  [self assertState:C(J3TelnetTextState) givenAnyByteProducesState:C(J3TelnetTextState)];
-  [self assertState:C(J3TelnetTextState) givenByte:J3TelnetInterpretAsCommand producesState:C(J3TelnetInterpretAsCommandState)];
+  [self assertState: C(J3TelnetTextState) givenAnyByteProducesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetTextState) givenByte: J3TelnetInterpretAsCommand producesState: C(J3TelnetInterpretAsCommandState)];
 }
 
 - (void) testInterpretAsCommandStateTransitions
 {
-  [self assertState:C(J3TelnetInterpretAsCommandState) givenAnyByteProducesState:C(J3TelnetTextState)];
-  [self assertState:C(J3TelnetInterpretAsCommandState) givenByte:J3TelnetInterpretAsCommand producesState:C(J3TelnetTextState)];
-  [self assertState:C(J3TelnetInterpretAsCommandState) givenByte:J3TelnetDo producesState:C(J3TelnetDoState)];
-  [self assertState:C(J3TelnetInterpretAsCommandState) givenByte:J3TelnetDont producesState:C(J3TelnetDontState)];
-  [self assertState:C(J3TelnetInterpretAsCommandState) givenByte:J3TelnetWill producesState:C(J3TelnetWillState)];
-  [self assertState:C(J3TelnetInterpretAsCommandState) givenByte:J3TelnetWont producesState:C(J3TelnetWontState)];  
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenAnyByteProducesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetInterpretAsCommand producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetDo producesState: C(J3TelnetDoState)];
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetDont producesState: C(J3TelnetDontState)];
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetWill producesState: C(J3TelnetWillState)];
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetWont producesState: C(J3TelnetWontState)];  
 }
   
 - (void) testDoWontWillWontStateTransitions
 {
-  [self assertState:C(J3TelnetDoState) givenAnyByteProducesState:C(J3TelnetTextState)];
-  [self assertState:C(J3TelnetDontState) givenAnyByteProducesState:C(J3TelnetTextState)];
-  [self assertState:C(J3TelnetWillState) givenAnyByteProducesState:C(J3TelnetTextState)];
-  [self assertState:C(J3TelnetWontState) givenAnyByteProducesState:C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetDoState) givenAnyByteProducesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetDontState) givenAnyByteProducesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetWillState) givenAnyByteProducesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetWontState) givenAnyByteProducesState: C(J3TelnetTextState)];
 }
 
 #ifdef TYLER_WILL_FIX
 - (void) testInput
 {
-  [self assertState:C(J3TelnetTextState) givenByte:'a' inputsByte:'a'];
-  [self assertState:C(J3TelnetInterpretAsCommandState) givenByte:J3TelnetInterpretAsCommand inputsByte:J3TelnetInterpretAsCommand];
+  [self assertState: C(J3TelnetTextState) givenByte: 'a' inputsByte: 'a'];
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetInterpretAsCommand inputsByte: J3TelnetInterpretAsCommand];
 }
 #endif
 
 #ifdef TYLER_WILL_FIX
 - (void) testNegotiationAlwaysNVT
 {
-  [self assertState:C(J3TelnetDoState) givenByte:'a' outputsNegtiationCommandWithThatByte:J3TelnetWont];
-  [self assertState:C(J3TelnetWillState) givenByte:'a' outputsNegtiationCommandWithThatByte:J3TelnetDont];  
-  [self assertStateHasNoOutputGivenAnyByte:C(J3TelnetDontState)]; 
-  [self assertStateHasNoOutputGivenAnyByte:C(J3TelnetWontState)];
+  [self assertState: C(J3TelnetDoState) givenByte: 'a' outputsNegtiationCommandWithThatByte: J3TelnetWont];
+  [self assertState: C(J3TelnetWillState) givenByte: 'a' outputsNegtiationCommandWithThatByte: J3TelnetDont];  
+  [self assertStateHasNoOutputGivenAnyByte: C(J3TelnetDontState)]; 
+  [self assertStateHasNoOutputGivenAnyByte: C(J3TelnetWontState)];
 }
 #endif
 
@@ -123,53 +123,53 @@
 
 @implementation J3TelnetStateMachineTests (Private)
 
-- (void) assertState:(Class)stateClass givenAnyByteProducesState:(Class)nextStateClass;
+- (void) assertState: (Class)stateClass givenAnyByteProducesState: (Class)nextStateClass;
 {
-  [self assertState:stateClass givenByte:'a' producesState:nextStateClass];
+  [self assertState: stateClass givenByte: 'a' producesState: nextStateClass];
 }
 
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)byte producesState:(Class)nextStateClass;
+- (void) assertState: (Class)stateClass givenByte: (uint8_t)byte producesState: (Class)nextStateClass;
 {
   J3TelnetState * nextState;
-  [self setStateClass:stateClass];
-  nextState = [state parse:byte forParser:nil];
-  [self assert:[nextState class] equals:nextStateClass];  
+  [self setStateClass: stateClass];
+  nextState = [state parse: byte forParser: nil];
+  [self assert: [nextState class] equals: nextStateClass];  
 }
 
-- (void) assertState:(Class)stateClass hasNoOutputGivenByte:(uint8_t)givenByte;
+- (void) assertState: (Class)stateClass hasNoOutputGivenByte: (uint8_t)givenByte;
 {
-  [self giveStateClass:stateClass byte:givenByte];
-  [self assertInt:[engine outputLength] equals:0];
+  [self giveStateClass: stateClass byte: givenByte];
+  [self assertInt: [engine outputLength] equals: 0];
 }
 
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte inputsByte:(uint8_t)inputsByte;
+- (void) assertState: (Class)stateClass givenByte: (uint8_t)givenByte inputsByte: (uint8_t)inputsByte;
 {
-  [self giveStateClass:stateClass byte:givenByte];
-  [self assertInt:[engine lastByteInput] equals:inputsByte];
+  [self giveStateClass: stateClass byte: givenByte];
+  [self assertInt: [engine lastByteInput] equals: inputsByte];
 }
 
-- (void) assertState:(Class)stateClass givenByte:(uint8_t)givenByte outputsNegtiationCommandWithThatByte:(uint8_t)outputsCommand;
+- (void) assertState: (Class)stateClass givenByte: (uint8_t)givenByte outputsNegtiationCommandWithThatByte: (uint8_t)outputsCommand;
 {
-  [self giveStateClass:stateClass byte:givenByte];
-  [self assertInt:[engine outputLength] equals:3];
-  [self assertInt:[engine outputByteAtIndex:0] equals:J3TelnetInterpretAsCommand];
-  [self assertInt:[engine outputByteAtIndex:1] equals:outputsCommand];
-  [self assertInt:[engine outputByteAtIndex:2] equals:givenByte];
+  [self giveStateClass: stateClass byte: givenByte];
+  [self assertInt: [engine outputLength] equals: 3];
+  [self assertInt: [engine outputByteAtIndex: 0] equals: J3TelnetInterpretAsCommand];
+  [self assertInt: [engine outputByteAtIndex: 1] equals: outputsCommand];
+  [self assertInt: [engine outputByteAtIndex: 2] equals: givenByte];
 }
 
-- (void) assertStateHasNoOutputGivenAnyByte:(Class)stateClass;
+- (void) assertStateHasNoOutputGivenAnyByte: (Class)stateClass;
 {
-  [self assertState:stateClass hasNoOutputGivenByte:'a'];
+  [self assertState: stateClass hasNoOutputGivenByte: 'a'];
 }
 
-- (void) giveStateClass:(Class)stateClass byte:(uint8_t)byte;
+- (void) giveStateClass: (Class)stateClass byte: (uint8_t)byte;
 {
-  [self setStateClass:stateClass];
+  [self setStateClass: stateClass];
   engine = [J3MockTelnetEngine engine];
-  [state parse:byte forParser:engine];  
+  [state parse: byte forParser: engine];  
 }
 
-- (void) setStateClass:(Class)stateClass;
+- (void) setStateClass: (Class)stateClass;
 {
   state = [[[stateClass alloc] init] autorelease];  
 }

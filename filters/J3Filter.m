@@ -13,7 +13,7 @@
   return [[[self alloc] init] autorelease];
 }
 
-- (NSAttributedString *) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter: (NSAttributedString *)string
 {
   return string;
 }
@@ -36,7 +36,7 @@
   [super dealloc];
 }
 
-- (NSAttributedString *) processAttributedString:(NSAttributedString *)string
+- (NSAttributedString *) processAttributedString: (NSAttributedString *)string
 {
   NSAttributedString *returnString = string;
   
@@ -44,20 +44,20 @@
   int i;
   for (i = 0; i < [filters count]; i++)
   {
-    filter = (id <J3Filtering>) [filters objectAtIndex:i];
-    returnString = [filter filter:returnString];
+    filter = (id <J3Filtering>) [filters objectAtIndex: i];
+    returnString = [filter filter: returnString];
   }
   return returnString;
 }
 
-- (void) addFilter:(id <J3Filtering>)filter
+- (void) addFilter: (id <J3Filtering>)filter
 {
-  [filters addObject:filter];
+  [filters addObject: filter];
 }
 
 - (void) clearFilters;
 {
-  [self at:&filters put:[NSMutableArray array]];
+  [self at: &filters put: [NSMutableArray array]];
 }
 
 @end

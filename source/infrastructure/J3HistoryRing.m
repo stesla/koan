@@ -36,33 +36,33 @@
   return [ring count];
 }
 
-- (NSString *) stringAtIndex:(unsigned)index
+- (NSString *) stringAtIndex: (unsigned)index
 {
   if (index == -1)
     return buffer == nil ? @"" : buffer;
   else
   {
-    NSString *string = [updates objectForKey:[NSNumber numberWithInt:index]];
+    NSString *string = [updates objectForKey: [NSNumber numberWithInt: index]];
     
     if (string)
       return string;
     else
-      return [ring objectAtIndex:index];
+      return [ring objectAtIndex: index];
   }
 }
 
 #pragma mark -
 #pragma mark Actions
 
-- (void) saveString:(NSString *)string
+- (void) saveString: (NSString *)string
 {
   NSString *copy = [[string copy] autorelease];
   
-  [updates removeObjectForKey:[NSNumber numberWithInt:cursor]];
+  [updates removeObjectForKey: [NSNumber numberWithInt: cursor]];
   
-  if (!((cursor != -1) && (cursor == [self count] - 1) && [string isEqualToString:[ring objectAtIndex:cursor]]))
+  if (!((cursor != -1) && (cursor == [self count] - 1) && [string isEqualToString: [ring objectAtIndex: cursor]]))
   {
-    [ring addObject:copy];
+    [ring addObject: copy];
   }
   [buffer release];
   buffer = nil;
@@ -70,7 +70,7 @@
   searchCursor = -1;
 }
 
-- (void) updateString:(NSString *)string
+- (void) updateString: (NSString *)string
 {
   NSString *copy = [string copy];
   
@@ -81,13 +81,13 @@
   }
   else
   {
-    [updates setObject:[copy autorelease] forKey:[NSNumber numberWithInt:cursor]];
+    [updates setObject: [copy autorelease] forKey: [NSNumber numberWithInt: cursor]];
   }
 }
 
 - (NSString *) currentString
 {
-  return [self stringAtIndex:cursor];
+  return [self stringAtIndex: cursor];
 }
 
 - (NSString *) nextString
@@ -99,7 +99,7 @@
   
   searchCursor = cursor;
   
-  return [self stringAtIndex:cursor];
+  return [self stringAtIndex: cursor];
 }
 
 - (NSString *) previousString
@@ -113,7 +113,7 @@
   
   searchCursor = cursor;
   
-  return [self stringAtIndex:cursor];
+  return [self stringAtIndex: cursor];
 }
 
 - (void) resetSearchCursor
@@ -121,7 +121,7 @@
   searchCursor = cursor;
 }
 
-- (unsigned) numberOfUniqueMatchesForStringPrefix:(NSString *)prefix
+- (unsigned) numberOfUniqueMatchesForStringPrefix: (NSString *)prefix
 {
   int savedCursor = searchCursor;
   unsigned uniqueMatchCount = 0;
@@ -131,13 +131,13 @@
   
   while (searchCursor < [self count])
   {
-    NSString *candidate = [self stringAtIndex:searchCursor];
+    NSString *candidate = [self stringAtIndex: searchCursor];
     
-    if ([candidate hasPrefix:prefix] && ![candidate isEqualToString:prefix])
+    if ([candidate hasPrefix: prefix] && ![candidate isEqualToString: prefix])
     {
-      if (![uniqueMatchDictionary objectForKey:candidate])
+      if (![uniqueMatchDictionary objectForKey: candidate])
       {
-        [uniqueMatchDictionary setObject:[NSNull null] forKey:candidate];
+        [uniqueMatchDictionary setObject: [NSNull null] forKey: candidate];
         uniqueMatchCount++;
       }
     }
@@ -151,7 +151,7 @@
   return uniqueMatchCount;
 }
 
-- (NSString *) searchForwardForStringPrefix:(NSString *)prefix
+- (NSString *) searchForwardForStringPrefix: (NSString *)prefix
 {
   int originalSearchCursor = searchCursor;
   
@@ -171,9 +171,9 @@
     
     if (searchCursor != -1)
     {
-      NSString *candidate = [self stringAtIndex:searchCursor];
+      NSString *candidate = [self stringAtIndex: searchCursor];
       
-      if ([candidate hasPrefix:prefix] && ![candidate isEqualToString:prefix])
+      if ([candidate hasPrefix: prefix] && ![candidate isEqualToString: prefix])
       {
         return candidate;
       }
@@ -185,7 +185,7 @@
   return nil;
 }
 
-- (NSString *) searchBackwardForStringPrefix:(NSString *)prefix
+- (NSString *) searchBackwardForStringPrefix: (NSString *)prefix
 {
   int originalSearchCursor = searchCursor;
   
@@ -205,9 +205,9 @@
     
     if (searchCursor != -1)
     {
-      NSString *candidate = [self stringAtIndex:searchCursor];
+      NSString *candidate = [self stringAtIndex: searchCursor];
       
-      if ([candidate hasPrefix:prefix] && ![candidate isEqualToString:prefix])
+      if ([candidate hasPrefix: prefix] && ![candidate isEqualToString: prefix])
       {
         return candidate;
       }

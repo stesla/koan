@@ -10,13 +10,13 @@
 
 - (void) awakeFromNib
 {
-  toolbar = [[NSToolbar alloc] initWithIdentifier:@"connectionWindowToolbar"];
+  toolbar = [[NSToolbar alloc] initWithIdentifier: @"connectionWindowToolbar"];
   
-  [toolbar setDelegate:self];
-  [toolbar setAllowsUserCustomization:YES];
-  [toolbar setAutosavesConfiguration:YES];
+  [toolbar setDelegate: self];
+  [toolbar setAllowsUserCustomization: YES];
+  [toolbar setAutosavesConfiguration: YES];
   
-  [window setToolbar:toolbar];
+  [window setToolbar: toolbar];
   
   [toolbar release];
 }
@@ -24,23 +24,23 @@
 #pragma mark -
 #pragma mark NSToolbar delegate
 
-- (NSToolbarItem *) toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
+- (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *)itemIdentifier willBeInsertedIntoToolbar: (BOOL)flag
 {
-  NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
+  NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier];
   
-  if ([itemIdentifier isEqualToString:MUGoToURLToolbarItem])
+  if ([itemIdentifier isEqualToString: MUGoToURLToolbarItem])
   {
-    [item setLabel:_(MULGoToURL)];
-    [item setPaletteLabel:_(MULGoToURL)];
-    [item setImage:nil];
-    [item setTarget:windowController];
-    [item setAction:@selector(goToWorldURL:)];
+    [item setLabel: _(MULGoToURL)];
+    [item setPaletteLabel: _(MULGoToURL)];
+    [item setImage: nil];
+    [item setTarget: windowController];
+    [item setAction: @selector (goToWorldURL:)];
   }
   
   return [item autorelease];
 }
 
-- (NSArray *) toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
+- (NSArray *) toolbarDefaultItemIdentifiers: (NSToolbar*)toolbar
 {
   return [NSArray arrayWithObjects:
     NSToolbarFlexibleSpaceItemIdentifier,
@@ -48,7 +48,7 @@
     nil];
 }
 
-- (NSArray *) toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar
+- (NSArray *) toolbarAllowedItemIdentifiers: (NSToolbar*)toolbar
 {
   return [NSArray arrayWithObjects:
     NSToolbarSeparatorItemIdentifier,

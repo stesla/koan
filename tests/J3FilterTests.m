@@ -11,11 +11,11 @@
 - (void) testFilter
 {
   J3Filter *filter = [J3Filter filter];
-  NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
+  NSAttributedString *input = [NSAttributedString attributedStringWithString: @"Foo"];
 
-  NSAttributedString *output = [filter filter:input];
+  NSAttributedString *output = [filter filter: input];
   
-  [self assert:output equals:input];
+  [self assert: output equals: input];
 }
 
 @end
@@ -24,10 +24,10 @@
 
 @implementation J3UpperCaseFilter
 
-- (NSAttributedString *) filter:(NSAttributedString *)string
+- (NSAttributedString *) filter: (NSAttributedString *)string
 {
-  return [NSAttributedString attributedStringWithString:[[string string] uppercaseString]
-                                             attributes:[string attributesAtIndex:0 effectiveRange:0]];
+  return [NSAttributedString attributedStringWithString: [[string string] uppercaseString]
+                                             attributes: [string attributesAtIndex: 0 effectiveRange: 0]];
 }
 
 @end
@@ -39,20 +39,20 @@
 - (void) testFilter
 {
   J3FilterQueue *queue = [[J3FilterQueue alloc] init];
-  NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
-  NSAttributedString *output = [queue processAttributedString:input];
-  [self assert:output equals:input];
+  NSAttributedString *input = [NSAttributedString attributedStringWithString: @"Foo"];
+  NSAttributedString *output = [queue processAttributedString: input];
+  [self assert: output equals: input];
 }
 
 - (void) testQueue
 {
   J3FilterQueue *queue = [[J3FilterQueue alloc] init];
   J3UpperCaseFilter *filter = [[J3UpperCaseFilter alloc] init];
-  [queue addFilter:filter];
+  [queue addFilter: filter];
   
-  NSAttributedString *input = [NSAttributedString attributedStringWithString:@"Foo"];
-  NSAttributedString *output = [queue processAttributedString:input];
-  [self assert:[output string] equals:@"FOO"];
+  NSAttributedString *input = [NSAttributedString attributedStringWithString: @"Foo"];
+  NSAttributedString *output = [queue processAttributedString: input];
+  [self assert: [output string] equals: @"FOO"];
   [queue release];
 }
 

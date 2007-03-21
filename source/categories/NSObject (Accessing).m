@@ -10,7 +10,7 @@
 
 @implementation NSObject (Accessing)
 
-- (void) at:(id *)field put:(id)value;
+- (void) at: (id *)field put: (id)value;
 {
   [value retain];
   [*field release];

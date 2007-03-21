@@ -12,7 +12,7 @@
 
 @interface J3TelnetEngine (Private)
 
-- (void) sendCommand:(uint8_t)command withByte:(uint8_t)byte;
+- (void) sendCommand: (uint8_t)command withByte: (uint8_t)byte;
 
 @end
 
@@ -31,28 +31,28 @@
   return self;
 }
 
-- (void) bufferInputByte:(uint8_t)byte
+- (void) bufferInputByte: (uint8_t)byte
 {
-  [inputBuffer append:byte];
+  [inputBuffer append: byte];
 }
 
-- (void) bufferOutputByte:(uint8_t)byte
+- (void) bufferOutputByte: (uint8_t)byte
 {
-  [outputBuffer append:byte];
+  [outputBuffer append: byte];
 }
 
-- (void) dont:(uint8_t)byte;
+- (void) dont: (uint8_t)byte;
 {
-  NSLog (@"    Sent: IAC DONT %@", [self optionNameForByte:byte]);
-  [self sendCommand:J3TelnetDont withByte:byte];
+  NSLog (@"    Sent: IAC DONT %@", [self optionNameForByte: byte]);
+  [self sendCommand: J3TelnetDont withByte: byte];
 }
 
-- (BOOL) hasInputBuffer:(id <J3Buffer>)buffer;
+- (BOOL) hasInputBuffer: (id <J3Buffer>)buffer;
 {
   return buffer == inputBuffer;
 }
 
-- (NSString *) optionNameForByte:(uint8_t)byte
+- (NSString *) optionNameForByte: (uint8_t)byte
 {
   switch (byte)
   {
@@ -78,39 +78,39 @@
   		return @"COMPRESS2 (MCCP2)";
   		
   	default:
-  		return [NSString stringWithFormat:@"%u (unknown option)", (unsigned) byte];
+  		return [NSString stringWithFormat: @"%u (unknown option)", (unsigned) byte];
   }
 }
 
-- (void) parse:(uint8_t)byte
+- (void) parse: (uint8_t)byte
 {
-  [self at:&state put:[state parse:byte forParser:self]];
+  [self at: &state put: [state parse: byte forParser: self]];
 }
 
-- (void) parse:(uint8_t *)bytes length:(int)count
+- (void) parse: (uint8_t *)bytes length: (int)count
 {
   for (int i = 0; i < count; i++)
-    [self parse:bytes[i]];
+    [self parse: bytes[i]];
 }
 
-- (void) setInputBuffer:(NSObject <J3Buffer> *)buffer
+- (void) setInputBuffer: (NSObject <J3Buffer> *)buffer
 {
   [buffer retain];
   [inputBuffer release];
   inputBuffer = buffer;
 }
 
-- (void) setOutputBuffer:(J3WriteBuffer *)buffer
+- (void) setOutputBuffer: (J3WriteBuffer *)buffer
 {
   [buffer retain];
   [outputBuffer release];
   outputBuffer = buffer;
 }
 
-- (void) wont:(uint8_t)byte;
+- (void) wont: (uint8_t)byte;
 {
-  NSLog (@"    Sent: IAC WONT %@", [self optionNameForByte:byte]);
-  [self sendCommand:J3TelnetWont withByte:byte];
+  NSLog (@"    Sent: IAC WONT %@", [self optionNameForByte: byte]);
+  [self sendCommand: J3TelnetWont withByte: byte];
 }
 
 #pragma mark -
@@ -121,9 +121,9 @@
   return [outputBuffer hasSpaceAvailable];
 }
 
-- (unsigned) write:(const uint8_t *)bytes length:(unsigned)length;
+- (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
 {
-  return [outputBuffer write:bytes length:length];
+  return [outputBuffer write: bytes length: length];
 }
 
 #pragma mark -
@@ -132,11 +132,11 @@
 
 @implementation J3TelnetEngine (Private)
 
-- (void) sendCommand:(uint8_t)command withByte:(uint8_t)byte;
+- (void) sendCommand: (uint8_t)command withByte: (uint8_t)byte;
 {
-  [self bufferOutputByte:J3TelnetInterpretAsCommand];
-  [self bufferOutputByte:command];
-  [self bufferOutputByte:byte];
+  [self bufferOutputByte: J3TelnetInterpretAsCommand];
+  [self bufferOutputByte: command];
+  [self bufferOutputByte: byte];
   [outputBuffer flush];  
 }
 

@@ -16,12 +16,12 @@
 }
 
 - (unsigned) count;
-- (NSString *) stringAtIndex:(unsigned)index;
+- (NSString *) stringAtIndex: (unsigned)index;
 
 // These methods are all O(1).
 
-- (void) saveString:(NSString *)string;
-- (void) updateString:(NSString *)string;
+- (void) saveString: (NSString *)string;
+- (void) updateString: (NSString *)string;
 - (NSString *) currentString;
 - (NSString *) nextString;
 - (NSString *) previousString;
@@ -30,8 +30,8 @@
 
 // These methods are all O(n).
 
-- (unsigned) numberOfUniqueMatchesForStringPrefix:(NSString *)prefix;
-- (NSString *) searchForwardForStringPrefix:(NSString *)prefix;
-- (NSString *) searchBackwardForStringPrefix:(NSString *)prefix;
+- (unsigned) numberOfUniqueMatchesForStringPrefix: (NSString *)prefix;
+- (NSString *) searchForwardForStringPrefix: (NSString *)prefix;
+- (NSString *) searchBackwardForStringPrefix: (NSString *)prefix;
 
 @end

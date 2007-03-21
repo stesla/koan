@@ -16,9 +16,9 @@
   NSMutableDictionary *currentAttributes;
 }
 
-+ (J3Filter *) filterWithFormatting:(NSObject <J3Formatting> *)format;
++ (J3Filter *) filterWithFormatting: (NSObject <J3Formatting> *)format;
 
-- (id) initWithFormatting:(NSObject <J3Formatting> *)format;
+- (id) initWithFormatting: (NSObject <J3Formatting> *)format;
 
 @end
 

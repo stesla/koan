@@ -3,7 +3,7 @@
 //
 // Copyright (c) 2004, Apple Computer, Inc., all rights reserved.
 //
-// IMPORTANT:  This Apple software is supplied to you by Apple Computer, Inc. ("Apple") in
+// IMPORTANT:   This Apple software is supplied to you by Apple Computer, Inc. ("Apple") in
 // consideration of your agreement to the following terms, and your use, installation, 
 // modification or redistribution of this Apple software constitutes acceptance of these 
 // terms.  If you do not agree with these terms, please do not use, install, modify or 
@@ -54,9 +54,9 @@
   return NO;
 }
 
-- (id) transformedValue:(id)value
+- (id) transformedValue: (id)value
 {
-  NSFont *font = [NSFont fontWithName:value size:12];
+  NSFont *font = [NSFont fontWithName: value size: 12];
   return [font displayName];
 }
 

@@ -8,7 +8,7 @@
 
 @interface J3LineBufferTests (Private)
 
-- (void) bufferString:(NSString *)string;
+- (void) bufferString: (NSString *)string;
 
 @end
 
@@ -16,7 +16,7 @@
 
 @implementation J3LineBufferTests
 
-- (void) lineBufferHasReadLine:(J3LineBuffer *)lineBuffer
+- (void) lineBufferHasReadLine: (J3LineBuffer *)lineBuffer
 {
   line = [lineBuffer readLine];
 }
@@ -33,17 +33,17 @@
 
 - (void) testReadLine
 {
-  [self bufferString:@"ab\n"];
-  [self assert:[buffer readLine] equals:@"ab\n"];
-  [self bufferString:@"de\n"];
-  [self assert:[buffer readLine] equals:@"de\n"];
+  [self bufferString: @"ab\n"];
+  [self assert: [buffer readLine] equals: @"ab\n"];
+  [self bufferString: @"de\n"];
+  [self assert: [buffer readLine] equals: @"de\n"];
 }
 
 - (void) testDelegate
 {
-  [buffer setDelegate:self];
-  [self bufferString:@"ab\n"];
-  [self assert:line equals:@"ab\n"];
+  [buffer setDelegate: self];
+  [self bufferString: @"ab\n"];
+  [self assert: line equals: @"ab\n"];
 }
 
 @end
@@ -52,9 +52,9 @@
 
 @implementation J3LineBufferTests (Private)
 
-- (void) bufferString:(NSString *)string
+- (void) bufferString: (NSString *)string
 {
-  [buffer appendString:string];
+  [buffer appendString: string];
 }
 
 @end

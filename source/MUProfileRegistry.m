@@ -11,7 +11,7 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 @interface MUProfileRegistry (Private)
 
-- (void) cleanUpDefaultRegistry:(NSNotification *)notification;
+- (void) cleanUpDefaultRegistry: (NSNotification *)notification;
 - (void) readProfilesFromUserDefaults;
 - (void) writeProfilesToUserDefaults;
 
@@ -28,10 +28,10 @@ static MUProfileRegistry *defaultRegistry = nil;
     defaultRegistry = [[MUProfileRegistry alloc] init];
     [defaultRegistry readProfilesFromUserDefaults];
     
-    [[NSNotificationCenter defaultCenter] addObserver:defaultRegistry
-                                             selector:@selector(cleanUpDefaultRegistry:)
-                                                 name:NSApplicationWillTerminateNotification
-                                               object:NSApp];
+    [[NSNotificationCenter defaultCenter] addObserver: defaultRegistry
+                                             selector: @selector (cleanUpDefaultRegistry:)
+                                                 name: NSApplicationWillTerminateNotification
+                                               object: NSApp];
   }
   return defaultRegistry;
 }
@@ -52,88 +52,88 @@ static MUProfileRegistry *defaultRegistry = nil;
   [super dealloc];
 }
 
-- (MUProfile *) profileForWorld:(MUWorld *)world
+- (MUProfile *) profileForWorld: (MUWorld *)world
 {
-  return [self profileForWorld:world player:nil];
+  return [self profileForWorld: world player: nil];
 }
 
-- (MUProfile *) profileForWorld:(MUWorld *)world player:(MUPlayer *)player
+- (MUProfile *) profileForWorld: (MUWorld *)world player: (MUPlayer *)player
 {
-  return [self profileForProfile:[MUProfile profileWithWorld:world
-                                                      player:player]];
+  return [self profileForProfile: [MUProfile profileWithWorld: world
+                                                      player: player]];
 }
 
-- (MUProfile *) profileForProfile:(MUProfile *)profile
+- (MUProfile *) profileForProfile: (MUProfile *)profile
 {
-  MUProfile *rval = [self profileForUniqueIdentifier:[profile uniqueIdentifier]];
+  MUProfile *rval = [self profileForUniqueIdentifier: [profile uniqueIdentifier]];
   if (!rval)
   {
     rval = profile;
-    [profiles setObject:rval forKey:[rval uniqueIdentifier]];    
+    [profiles setObject: rval forKey: [rval uniqueIdentifier]];    
   }
   return rval;
 }
 
-- (MUProfile *) profileForUniqueIdentifier:(NSString *)identifier
+- (MUProfile *) profileForUniqueIdentifier: (NSString *)identifier
 {
-  return [profiles objectForKey:identifier];
+  return [profiles objectForKey: identifier];
 }
 
-- (BOOL) containsProfileForWorld:(MUWorld *)world
+- (BOOL) containsProfileForWorld: (MUWorld *)world
 {
-  return [self containsProfileForWorld:world player:nil];
+  return [self containsProfileForWorld: world player: nil];
 }
 
-- (BOOL) containsProfileForWorld:(MUWorld *)world player:(MUPlayer *)player
+- (BOOL) containsProfileForWorld: (MUWorld *)world player: (MUPlayer *)player
 {
-  MUProfile *profile = [MUProfile profileWithWorld:world player:player];
-  return [self containsProfile:profile];
+  MUProfile *profile = [MUProfile profileWithWorld: world player: player];
+  return [self containsProfile: profile];
 }
 
-- (BOOL) containsProfile:(MUProfile *)profile
+- (BOOL) containsProfile: (MUProfile *)profile
 {
-  return [self containsProfileForUniqueIdentifier:[profile uniqueIdentifier]];
+  return [self containsProfileForUniqueIdentifier: [profile uniqueIdentifier]];
 }
 
-- (BOOL) containsProfileForUniqueIdentifier:(NSString *)identifier;
+- (BOOL) containsProfileForUniqueIdentifier: (NSString *)identifier;
 {
-  return [self profileForUniqueIdentifier:identifier] != nil;  
+  return [self profileForUniqueIdentifier: identifier] != nil;  
 }
 
-- (void) removeProfile:(MUProfile *)profile
+- (void) removeProfile: (MUProfile *)profile
 {
-  [self removeProfileForUniqueIdentifier:[profile uniqueIdentifier]];
+  [self removeProfileForUniqueIdentifier: [profile uniqueIdentifier]];
 }
 
-- (void) removeProfileForWorld:(MUWorld *)world
+- (void) removeProfileForWorld: (MUWorld *)world
 {
-  [self removeProfileForWorld:world player:nil];
+  [self removeProfileForWorld: world player: nil];
 }
 
-- (void) removeProfileForWorld:(MUWorld *)world player:(MUPlayer *)player
+- (void) removeProfileForWorld: (MUWorld *)world player: (MUPlayer *)player
 {
-  MUProfile *profile = [self profileForWorld:world player:player];
+  MUProfile *profile = [self profileForWorld: world player: player];
   
-  [self removeProfile:profile];
+  [self removeProfile: profile];
 }
 
-- (void) removeProfileForUniqueIdentifier:(NSString *)identifier
+- (void) removeProfileForUniqueIdentifier: (NSString *)identifier
 {
-  [profiles removeObjectForKey:identifier];  
+  [profiles removeObjectForKey: identifier];  
 }
 
-- (void) removeAllProfilesForWorld:(MUWorld *)world
+- (void) removeAllProfilesForWorld: (MUWorld *)world
 {
   NSArray *players = [world players];
   int i, count = [players count];
   
   for (i = 0; i < count; i++)
   {
-    [self removeProfileForWorld:world
-                         player:[players objectAtIndex:i]];
+    [self removeProfileForWorld: world
+                         player: [players objectAtIndex: i]];
   }
   
-  [self removeProfileForWorld:world];
+  [self removeProfileForWorld: world];
 }
 
 - (void) saveProfiles
@@ -146,7 +146,7 @@ static MUProfileRegistry *defaultRegistry = nil;
   return profiles;
 }
 
-- (void) setProfiles:(NSDictionary *)newProfiles
+- (void) setProfiles: (NSDictionary *)newProfiles
 {
   NSMutableDictionary *copy = [newProfiles mutableCopy];
   [profiles release];
@@ -159,29 +159,29 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 @implementation MUProfileRegistry (Private)
 
-- (void) cleanUpDefaultRegistry:(NSNotification *)notification
+- (void) cleanUpDefaultRegistry: (NSNotification *)notification
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:defaultRegistry];
+  [[NSNotificationCenter defaultCenter] removeObserver: defaultRegistry];
   [defaultRegistry release];
 }
 
 - (void) readProfilesFromUserDefaults
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSData *profilesData = [defaults dataForKey:MUPProfiles];
+  NSData *profilesData = [defaults dataForKey: MUPProfiles];
   
   if (profilesData)
   {
     [self setProfiles:
-      [NSKeyedUnarchiver unarchiveObjectWithData:profilesData]];
+      [NSKeyedUnarchiver unarchiveObjectWithData: profilesData]];
   }
 }
 
 - (void) writeProfilesToUserDefaults
 {
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:profiles];
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject: profiles];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:data forKey:MUPProfiles];
+  [defaults setObject: data forKey: MUPProfiles];
 }
 
 @end

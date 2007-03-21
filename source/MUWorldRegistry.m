@@ -11,7 +11,7 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 @interface MUWorldRegistry (Private)
 
-- (void) cleanUpDefaultRegistry:(NSNotification *)notification;
+- (void) cleanUpDefaultRegistry: (NSNotification *)notification;
 - (void) postWorldsDidChangeNotification;
 - (void) readWorldsFromUserDefaults;
 - (void) writeWorldsToUserDefaults;
@@ -29,10 +29,10 @@ static MUWorldRegistry *defaultRegistry = nil;
     defaultRegistry = [[MUWorldRegistry alloc] init];
     [defaultRegistry readWorldsFromUserDefaults];
     
-    [[NSNotificationCenter defaultCenter] addObserver:defaultRegistry
-                                             selector:@selector(cleanUpDefaultRegistry:)
-                                                 name:NSApplicationWillTerminateNotification
-                                               object:NSApp];
+    [[NSNotificationCenter defaultCenter] addObserver: defaultRegistry
+                                             selector: @selector (cleanUpDefaultRegistry:)
+                                                 name: NSApplicationWillTerminateNotification
+                                               object: NSApp];
   }
   return defaultRegistry;
 }
@@ -42,7 +42,7 @@ static MUWorldRegistry *defaultRegistry = nil;
   if (![super init])
     return nil;
   
-  [self setWorlds:[NSArray array]];
+  [self setWorlds: [NSArray array]];
   
   return self;
 }
@@ -61,7 +61,7 @@ static MUWorldRegistry *defaultRegistry = nil;
   return worlds;
 }
 
-- (void) setWorlds:(NSArray *)newWorlds
+- (void) setWorlds: (NSArray *)newWorlds
 {
   NSMutableArray *copy = [newWorlds mutableCopy];
   [worlds release];
@@ -69,15 +69,15 @@ static MUWorldRegistry *defaultRegistry = nil;
   [self postWorldsDidChangeNotification];
 }
 
-- (void) insertObject:(MUWorld *)world inWorldsAtIndex:(unsigned)index
+- (void) insertObject: (MUWorld *)world inWorldsAtIndex: (unsigned)index
 {
-  [worlds insertObject:world atIndex:index];
+  [worlds insertObject: world atIndex: index];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) removeObjectFromWorldsAtIndex:(unsigned)index
+- (void) removeObjectFromWorldsAtIndex: (unsigned)index
 {
-  [worlds removeObjectAtIndex:index];
+  [worlds removeObjectAtIndex: index];
   [self postWorldsDidChangeNotification];
 }
 
@@ -89,13 +89,13 @@ static MUWorldRegistry *defaultRegistry = nil;
   return [worlds count];
 }
 
-- (int) indexOfWorld:(MUWorld *)world
+- (int) indexOfWorld: (MUWorld *)world
 {
   unsigned i, worldsCount = [worlds count];
   
   for (i = 0; i < worldsCount; i++)
   {
-  	MUWorld *iteratedWorld = [worlds objectAtIndex:i];
+  	MUWorld *iteratedWorld = [worlds objectAtIndex: i];
   	
   	if (world == iteratedWorld)
   	{
@@ -106,23 +106,23 @@ static MUWorldRegistry *defaultRegistry = nil;
   return -1;
 }
 
-- (void) removeWorld:(MUWorld *)world
+- (void) removeWorld: (MUWorld *)world
 {
-  [worlds removeObject:world];
+  [worlds removeObject: world];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) replaceWorld:(MUWorld *)oldWorld withWorld:(MUWorld *)newWorld
+- (void) replaceWorld: (MUWorld *)oldWorld withWorld: (MUWorld *)newWorld
 {
   unsigned i, worldsCount = [worlds count];
   
   for (i = 0; i < worldsCount; i++)
   {
-  	MUWorld *world = [worlds objectAtIndex:i];
+  	MUWorld *world = [worlds objectAtIndex: i];
   	
   	if (world == oldWorld)
   	{
-  		[worlds replaceObjectAtIndex:i withObject:newWorld];
+  		[worlds replaceObjectAtIndex: i withObject: newWorld];
   		[self postWorldsDidChangeNotification];
   		break;
   	}
@@ -134,20 +134,20 @@ static MUWorldRegistry *defaultRegistry = nil;
   [self writeWorldsToUserDefaults];
 }
 
-- (MUWorld *) worldAtIndex:(unsigned)index
+- (MUWorld *) worldAtIndex: (unsigned)index
 {
-  return [worlds objectAtIndex:index];
+  return [worlds objectAtIndex: index];
 }
 
-- (MUWorld *) worldForUniqueIdentifier:(NSString *)identifier
+- (MUWorld *) worldForUniqueIdentifier: (NSString *)identifier
 {
   unsigned i, worldsCount = [worlds count];
   
   for (i = 0; i < worldsCount; i++)
   {
-  	MUWorld *world = [worlds objectAtIndex:i];
+  	MUWorld *world = [worlds objectAtIndex: i];
   	
-  	if ([identifier isEqualToString:[world uniqueIdentifier]])
+  	if ([identifier isEqualToString: [world uniqueIdentifier]])
   		return world;
   }
   
@@ -160,47 +160,47 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 @implementation MUWorldRegistry (Private)
 
-- (void) cleanUpDefaultRegistry:(NSNotification *)notification
+- (void) cleanUpDefaultRegistry: (NSNotification *)notification
 {
-  [[NSNotificationCenter defaultCenter] removeObserver:defaultRegistry];
+  [[NSNotificationCenter defaultCenter] removeObserver: defaultRegistry];
   [defaultRegistry release];
 }
 
 - (void) postWorldsDidChangeNotification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MUWorldsDidChangeNotification
-                                                      object:self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: MUWorldsDidChangeNotification
+                                                      object: self];
 }
 
 - (void) readWorldsFromUserDefaults
 {
-  NSData *worldsData = [[NSUserDefaults standardUserDefaults] dataForKey:MUPWorlds];
+  NSData *worldsData = [[NSUserDefaults standardUserDefaults] dataForKey: MUPWorlds];
   
   if (worldsData)
   {
     MUProfileRegistry *profiles = [MUServices profileRegistry];
     int i, worldsCount;
     
-    [self setWorlds:[NSKeyedUnarchiver unarchiveObjectWithData:worldsData]];
+    [self setWorlds: [NSKeyedUnarchiver unarchiveObjectWithData: worldsData]];
     
     worldsCount = [worlds count];
     
     for (i = 0; i < worldsCount; i++)
     {
-      MUWorld *world = [worlds objectAtIndex:i];
+      MUWorld *world = [worlds objectAtIndex: i];
       MUPlayer *player = nil;
       MUProfile *profile = nil;
       NSArray *players = [world players];
       int j, playersCount = [players count];
     
-      profile = [profiles profileForWorld:world];
+      profile = [profiles profileForWorld: world];
       for (j = 0; j < playersCount; j++)
       {
-        player = [players objectAtIndex:j];
-        [player setWorld:world];
-        profile = [profiles profileForWorld:world player:player];
-        [profile setWorld:world];
-        [profile setPlayer:player];
+        player = [players objectAtIndex: j];
+        [player setWorld: world];
+        profile = [profiles profileForWorld: world player: player];
+        [profile setWorld: world];
+        [profile setPlayer: player];
       }
     }
   }
@@ -208,9 +208,9 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 - (void) writeWorldsToUserDefaults
 {
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject:worlds];
+  NSData *data = [NSKeyedArchiver archivedDataWithRootObject: worlds];
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:data forKey:MUPWorlds];
+  [defaults setObject: data forKey: MUPWorlds];
 }
 
 @end

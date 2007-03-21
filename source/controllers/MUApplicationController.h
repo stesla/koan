@@ -29,14 +29,14 @@
   MUProxySettingsController *proxySettingsController;
 }
 
-- (IBAction) chooseNewFont:(id)sender;
-- (IBAction) connectToURL:(NSURL *)url;
-- (IBAction) connectUsingPanelInformation:(id)sender;
-- (IBAction) openBugsWebPage:(id)sender;
-- (IBAction) openNewConnectionPanel:(id)sender;
-- (IBAction) showPreferencesPanel:(id)sender;
-- (IBAction) showProfilesPanel:(id)sender;
-- (IBAction) showProxySettings:(id)sender;
-- (IBAction) toggleUseProxy:(id)sender;
+- (IBAction) chooseNewFont: (id)sender;
+- (IBAction) connectToURL: (NSURL *)url;
+- (IBAction) connectUsingPanelInformation: (id)sender;
+- (IBAction) openBugsWebPage: (id)sender;
+- (IBAction) openNewConnectionPanel: (id)sender;
+- (IBAction) showPreferencesPanel: (id)sender;
+- (IBAction) showProfilesPanel: (id)sender;
+- (IBAction) showProxySettings: (id)sender;
+- (IBAction) toggleUseProxy: (id)sender;
 
 @end

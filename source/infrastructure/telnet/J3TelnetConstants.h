@@ -33,7 +33,7 @@ enum J3TelnetOptions
   J3TelnetNegotiateAboutWindowSize = 31,
   J3TelnetLineMode = 34,
   
-  // The MCCP extension is defined at <http://mccp.afkmud.com/protocol.html>.
+  // The MCCP extension is defined at <http: //mccp.afkmud.com/protocol.html>.
   J3TelnetMCCP1 = 85,
   J3TelnetMCCP2 = 86
 };
