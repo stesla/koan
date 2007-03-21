@@ -10,7 +10,7 @@
 
 @class J3WriteBuffer;
 
-@interface J3MockTelnetParser : J3TelnetEngine
+@interface J3MockTelnetEngine : J3TelnetEngine
 {
   uint8_t lastByteInput;
   J3WriteBuffer * output;
@@ -25,6 +25,6 @@
 @interface J3TelnetStateMachineTests : J3TestCase 
 {
   J3TelnetState * state;
-  J3MockTelnetParser * parser;
+  J3MockTelnetEngine * engine;
 }
 @end
