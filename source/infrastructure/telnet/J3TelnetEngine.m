@@ -4,9 +4,11 @@
 // Copyright (c) 2005, 2006 3James Software
 //
 
+#import "J3Buffer.h"
 #import "J3TelnetConstants.h"
 #import "J3TelnetEngine.h"
 #import "J3TelnetTextState.h"
+#import "J3WriteBuffer.h"
 
 @interface J3TelnetEngine (Private)
 
@@ -16,7 +18,7 @@
 
 @implementation J3TelnetEngine
 
-+ (id) parser
++ (id) engine
 {
   return [[[self alloc] init] autorelease];
 }
@@ -98,7 +100,7 @@
   inputBuffer = buffer;
 }
 
-- (void) setOutputBuffer:(NSObject <J3Buffer> *)buffer
+- (void) setOutputBuffer:(J3WriteBuffer *)buffer
 {
   [buffer retain];
   [outputBuffer release];
@@ -110,6 +112,22 @@
   NSLog (@"    Sent: IAC WONT %@", [self optionNameForByte:byte]);
   [self sendCommand:J3TelnetWont withByte:byte];
 }
+
+#pragma mark -
+#pragma mark J3ByteDestination protocol
+
+- (BOOL) hasSpaceAvailable;
+{
+  return [outputBuffer hasSpaceAvailable];
+}
+
+- (unsigned) write:(const uint8_t *)bytes length:(unsigned)length;
+{
+  return [outputBuffer write:bytes length:length];
+}
+
+#pragma mark -
+
 @end
 
 @implementation J3TelnetEngine (Private)

@@ -14,11 +14,12 @@
 
 #pragma mark -
 
-@interface J3WriteBuffer : J3Buffer 
+@interface J3WriteBuffer : J3Buffer <J3ByteDestination> 
 {
   NSObject <J3ByteDestination> *destination;
 }
 
+- (void) flush;
 - (void) setByteDestination:(NSObject <J3ByteDestination> *)object;
 
 @end

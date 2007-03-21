@@ -38,6 +38,21 @@
     [self write];
 }
 
+#pragma mark -
+#pragma mark J3ByteDestination protocol
+
+- (BOOL) hasSpaceAvailable;
+{
+  return YES;
+}
+
+- (unsigned) write:(const uint8_t *)bytes length:(unsigned)length;
+{
+  [self appendBytes:bytes length:length];
+  [self flush];
+  return length;
+}
+
 @end
 
 #pragma mark -

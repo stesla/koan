@@ -90,11 +90,6 @@
   return [NSData dataWithData:data];
 }
 
-- (void) flush
-{
-  // Base implementation does nothing.
-}
-
 - (BOOL) isEmpty
 {
   return [self length] == 0;

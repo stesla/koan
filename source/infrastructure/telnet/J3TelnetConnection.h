@@ -19,13 +19,13 @@
 {
   NSObject <J3ByteDestination, J3ByteSource, J3Connection> *connection;
   J3WriteBuffer *outputBuffer;
-  J3TelnetEngine *parser;
+  J3TelnetEngine *engine;
   NSMutableDictionary *timers;
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
 - (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
-                   parser:(J3TelnetEngine *)newParser
+                   engine:(J3TelnetEngine *)newParser
                  delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;
 
 - (void) close;

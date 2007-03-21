@@ -5,18 +5,20 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "J3Buffer.h"
 
+@protocol J3Buffer;
+@protocol J3ByteDestination;
 @class J3TelnetState;
+@class J3WriteBuffer; 
 
-@interface J3TelnetEngine : NSObject 
+@interface J3TelnetEngine : NSObject <J3ByteDestination>
 {
   NSObject <J3Buffer> *inputBuffer;
-  NSObject <J3Buffer> *outputBuffer;
+  J3WriteBuffer *outputBuffer;
   J3TelnetState *state;
 }
 
-+ (id) parser;
++ (id) engine;
 
 - (NSString *) optionNameForByte:(uint8_t)byte;
 
@@ -27,7 +29,7 @@
 - (void) parse:(uint8_t)byte;
 - (void) parse:(uint8_t *)bytes length:(int)count;
 - (void) setInputBuffer:(NSObject <J3Buffer> *)buffer;
-- (void) setOutputBuffer:(NSObject <J3Buffer> *)buffer;
+- (void) setOutputBuffer:(J3WriteBuffer *)buffer;
 - (void) wont:(uint8_t)byte;
 
 @end

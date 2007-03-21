@@ -26,7 +26,7 @@
 @implementation J3TelnetConnection
 
 - (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
-                   parser:(J3TelnetEngine *)newParser
+                   engine:(J3TelnetEngine *)newEngine
                  delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate
 {
   if (![super init])
@@ -34,11 +34,13 @@
   
   [self setDelegate:newDelegate];
   [self at:&connection put:newConnection];
-  [self at:&parser put:newParser];
-  [self at:&outputBuffer put:[J3WriteBuffer buffer]];
+  [self at:&engine put:newEngine];
   [self at:&timers put:[NSMutableDictionary dictionary]];
-  [outputBuffer setByteDestination:connection];
-  [parser setOutputBuffer:outputBuffer];
+  J3WriteBuffer *socketBuffer = [J3WriteBuffer buffer];
+  [socketBuffer setByteDestination:connection];
+  [engine setOutputBuffer:socketBuffer];
+  [self at:&outputBuffer put:[J3WriteBuffer buffer]];
+  [outputBuffer setByteDestination:engine];
   
   return self;
 }
@@ -48,7 +50,7 @@
   delegate = nil;
   [self close];
   [self removeAllTimers];
-  [parser release];
+  [engine release];
   [outputBuffer release];
   [connection release];
   [super dealloc];
@@ -66,7 +68,7 @@
 
 - (BOOL) hasInputBuffer:(NSObject <J3Buffer> *)buffer;
 {
-  return [parser hasInputBuffer: buffer];
+  return [engine hasInputBuffer: buffer];
 }
 
 - (BOOL) isConnected
@@ -179,7 +181,7 @@
   if ([connection hasDataAvailable])
   {
     bytesRead = [connection read:bytes maxLength:TELNET_READ_BUFFER_SIZE];
-    [parser parse:bytes length:bytesRead];
+    [engine parse:bytes length:bytesRead];
   }
 }
 

@@ -75,14 +75,14 @@ static J3ConnectionFactory *defaultFactory = nil;
                       inputBuffer:(NSObject <J3Buffer> *)buffer
                          delegate:(NSObject <J3TelnetConnectionDelegate> *)delegate
 {
-  J3TelnetEngine *parser;
+  J3TelnetEngine *engine;
   J3Socket *socket;
   J3TelnetConnection *result;
 
-  parser = [J3TelnetEngine parser];
-  [parser setInputBuffer:buffer];
+  engine = [J3TelnetEngine engine];
+  [engine setInputBuffer:buffer];
   socket = [self makeSocketWithHostname:hostname port:port];
-  result = [[[J3TelnetConnection alloc] initWithConnection:socket parser:parser delegate:delegate] autorelease];
+  result = [[[J3TelnetConnection alloc] initWithConnection:socket engine:engine delegate:delegate] autorelease];
   [socket setDelegate:result];
   return result;
 }
