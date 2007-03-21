@@ -60,6 +60,29 @@
   [self assertOutputIsString:@"foobar"];
 }
 
+- (void) testClearBufferAndWrite
+{
+  [buffer appendString:@"foo"];
+  [buffer clear];
+  [self assertOutputIsString:@"" maxBytesPerFlush:1];
+  [self assertNumberOfWrites:0];
+}
+
+- (void) testClearBufferThenAddMoreAndWrite
+{
+  [buffer appendString:@"foo"];
+  [buffer clear];
+  [buffer appendString:@"bar"];
+  [self assertOutputIsString:@"bar"];
+}
+
+- (void) testRemoveLastCharacterAndWrite
+{
+  [buffer appendString:@"foop"];
+  [buffer removeLastCharacter];
+  [self assertOutputIsString:@"foo"];
+}
+
 - (void) testWriteAll
 {
   [buffer appendString:@"foo"];
