@@ -6,11 +6,11 @@
 
 #import <Cocoa/Cocoa.h>
 #import <J3Testing/J3Testcase.h>
-#import "J3TelnetParser.h"
+#import "J3TelnetEngine.h"
 
 @class J3WriteBuffer;
 
-@interface J3MockTelnetParser : J3TelnetParser
+@interface J3MockTelnetParser : J3TelnetEngine
 {
   uint8_t lastByteInput;
   J3WriteBuffer * output;

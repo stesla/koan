@@ -11,7 +11,7 @@
 #import "J3ByteSource.h"
 #import "J3Connection.h"
 #import "J3WriteBuffer.h"
-#import "J3TelnetParser.h"
+#import "J3TelnetEngine.h"
 
 @protocol J3TelnetConnectionDelegate;
 
@@ -19,13 +19,13 @@
 {
   NSObject <J3ByteDestination, J3ByteSource, J3Connection> *connection;
   J3WriteBuffer *outputBuffer;
-  J3TelnetParser *parser;
+  J3TelnetEngine *parser;
   NSMutableDictionary *timers;
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
 - (id) initWithConnection:(NSObject <J3ByteDestination, J3ByteSource, J3Connection> *)newConnection
-                   parser:(J3TelnetParser *)newParser
+                   parser:(J3TelnetEngine *)newParser
                  delegate:(NSObject <J3TelnetConnectionDelegate> *)newDelegate;
 
 - (void) close;

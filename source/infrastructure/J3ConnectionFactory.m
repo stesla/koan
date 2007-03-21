@@ -8,7 +8,7 @@
 #import "J3ProxySettings.h"
 #import "J3ProxySocket.h"
 #import "J3Socket.h"
-#import "J3TelnetParser.h"
+#import "J3TelnetEngine.h"
 
 static J3ConnectionFactory *defaultFactory = nil;
 
@@ -75,11 +75,11 @@ static J3ConnectionFactory *defaultFactory = nil;
                       inputBuffer:(NSObject <J3Buffer> *)buffer
                          delegate:(NSObject <J3TelnetConnectionDelegate> *)delegate
 {
-  J3TelnetParser *parser;
+  J3TelnetEngine *parser;
   J3Socket *socket;
   J3TelnetConnection *result;
 
-  parser = [J3TelnetParser parser];
+  parser = [J3TelnetEngine parser];
   [parser setInputBuffer:buffer];
   socket = [self makeSocketWithHostname:hostname port:port];
   result = [[[J3TelnetConnection alloc] initWithConnection:socket parser:parser delegate:delegate] autorelease];
