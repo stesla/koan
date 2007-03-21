@@ -1648,6 +1648,7 @@
 		E69E22390854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				OBJROOT = "$(SYMROOT)";
 				SYMROOT = build;
 			};

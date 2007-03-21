@@ -10,9 +10,10 @@
 @interface J3WriteBufferTests (Private)
 
 - (NSString *) output;
-- (void) setLengthWritten:(unsigned)length;
+- (void) setMaxBytesPerWrite:(unsigned)numberOfBytes;
+- (void) assertNumberOfWrites:(unsigned)number;
 - (void) assertOutputIsString:(NSString *)string;
-- (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned)length;
+- (void) assertOutputIsString:(NSString *)string maxBytesPerFlush:(unsigned)length;
 
 @end
 
@@ -25,6 +26,7 @@
 
 - (void) setUp
 {
+  numberOfWrites = 0;
   buffer = [[J3WriteBuffer buffer] retain];
   [buffer setByteDestination:self];
   output = [[NSMutableData data] retain];
@@ -39,7 +41,8 @@
 - (void) testWriteNil
 {
   [buffer appendString:nil];
-  [self assertOutputIsString:@""];
+  [self assertOutputIsString:@"" maxBytesPerFlush:1];
+  [self assertNumberOfWrites:0];
 }
 
 - (void) testWriteMultipleTimes
@@ -66,7 +69,8 @@
 - (void) testWriteSome
 {
   [buffer appendString:@"123456"];
-  [self assertOutputIsString:@"123456" lengthWritten:3];
+  [self assertOutputIsString:@"123456" maxBytesPerFlush:3];
+  [self assertNumberOfWrites:2];
 }
 
 - (void) testWriteLine
@@ -75,10 +79,14 @@
   [self assertOutputIsString:@"foo\n"];
 }
 
+#pragma mark -
+
+
 - (unsigned) write:(const uint8_t *)bytes length:(unsigned)length;
 {
-  unsigned lengthToWrite = lengthWritten < length ? lengthWritten : length;
+  unsigned lengthToWrite = maxBytesPerWrite < length ? maxBytesPerWrite : length;
   [output appendBytes:bytes length:lengthToWrite];
+  numberOfWrites++;
   return lengthToWrite;
 }
 
@@ -88,21 +96,27 @@
 
 @implementation J3WriteBufferTests (Private)
 
-- (void) assertOutputIsString:(NSString *)string
+- (void) assertNumberOfWrites:(unsigned)number
 {
-  [self assertOutputIsString:string lengthWritten:[string length]];
+  [self assertInt:(int) numberOfWrites equals:(int) number];
 }
 
-- (void) assertOutputIsString:(NSString *)string lengthWritten:(unsigned)length
+- (void) assertOutputIsString:(NSString *)string
 {
-  [self setLengthWritten:length];
+  [self assertOutputIsString:string maxBytesPerFlush:[string length]];
+  [self assertNumberOfWrites:1];
+}
+
+- (void) assertOutputIsString:(NSString *)string maxBytesPerFlush:(unsigned)length
+{
+  [self setMaxBytesPerWrite:length];
   [buffer flush];
   [self assert:[self output] equals:string];
 }
 
-- (void) setLengthWritten:(unsigned)length
+- (void) setMaxBytesPerWrite:(unsigned)numberOfBytes
 {
-  lengthWritten = length;
+  maxBytesPerWrite = numberOfBytes;
 }
 
 - (NSString *) output

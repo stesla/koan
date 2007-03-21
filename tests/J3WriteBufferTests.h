@@ -13,7 +13,8 @@
 @interface J3WriteBufferTests : J3TestCase <J3ByteDestination>
 {
   J3WriteBuffer *buffer;
-  unsigned lengthWritten;
+  unsigned maxBytesPerWrite;
+  unsigned numberOfWrites;
   NSMutableData *output;
 }
 

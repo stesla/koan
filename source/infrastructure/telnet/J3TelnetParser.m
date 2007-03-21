@@ -87,8 +87,7 @@
 
 - (void) parse:(uint8_t *)bytes length:(int)count
 {
-  int i;
-  for (i = 0; i < count; i++)
+  for (int i = 0; i < count; i++)
     [self parse:bytes[i]];
 }
 
