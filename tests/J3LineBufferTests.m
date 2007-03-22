@@ -45,7 +45,9 @@
 - (void) testDelegate
 {
   [buffer setDelegate: self];
+  
   [self bufferBytes: (uint8_t *) "12\n" length: 3];
+  [self assert: line equals: @"12\n"];
   
   [self bufferBytes: (uint8_t *) "12\n34" length: 5];
   [self assert: line equals: @"12\n"];
