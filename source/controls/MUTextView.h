@@ -15,5 +15,6 @@
 @interface NSObject (MUTextViewDelegate)
 
 - (BOOL) textView: (MUTextView *)textView insertText: (id)string;
+- (BOOL) textView: (MUTextView *)textView pasteAsPlainText: (id)originalSender;
 
 @end

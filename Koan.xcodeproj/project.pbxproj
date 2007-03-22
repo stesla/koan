@@ -659,18 +659,18 @@
 			isa = PBXGroup;
 			children = (
 				E62C905A07422595005662BC /* MUApplicationController.h */,
-				E62C8FBB07421D83005662BC /* MUConnectionToolbarController.h */,
-				E670A83F07420FDF00E2DAEB /* MUConnectionWindowController.h */,
-				E6914C4F092FDAD1005DA235 /* MUPreferencesController.h */,
-				E63CC4E2077A06CD003A54AA /* MUProfilesController.h */,
-				E67CBF3107D03FEE004BB3DB /* MUProfilesToolbarController.h */,
-				7E13B9B409AE8B7600508460 /* MUProxySettingsController.h */,
 				E62C905B07422595005662BC /* MUApplicationController.m */,
+				E62C8FBB07421D83005662BC /* MUConnectionToolbarController.h */,
 				E62C8FBC07421D83005662BC /* MUConnectionToolbarController.m */,
+				E670A83F07420FDF00E2DAEB /* MUConnectionWindowController.h */,
 				E670A84007420FDF00E2DAEB /* MUConnectionWindowController.m */,
+				E6914C4F092FDAD1005DA235 /* MUPreferencesController.h */,
 				E6914C50092FDAD1005DA235 /* MUPreferencesController.m */,
+				E63CC4E2077A06CD003A54AA /* MUProfilesController.h */,
 				E63CC4E3077A06CD003A54AA /* MUProfilesController.m */,
+				E67CBF3107D03FEE004BB3DB /* MUProfilesToolbarController.h */,
 				E67CBF3007D03FEE004BB3DB /* MUProfilesToolbarController.m */,
+				7E13B9B409AE8B7600508460 /* MUProxySettingsController.h */,
 				7E13B9B509AE8B7600508460 /* MUProxySettingsController.m */,
 			);
 			name = Controllers;
@@ -810,12 +810,12 @@
 			isa = PBXGroup;
 			children = (
 				E60DDB83076CE889009870E4 /* FontNameToDisplayNameTransformer.h */,
-				E6A231270772E166008EF744 /* MUDisplayTextView.h */,
-				E62E831D07A1D10400BF15E9 /* MUTextView.h */,
-				E6E79CEA07697FD100A8FB96 /* UKPrefsPanel.h */,
 				E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */,
+				E6A231270772E166008EF744 /* MUDisplayTextView.h */,
 				E6A231280772E166008EF744 /* MUDisplayTextView.m */,
+				E62E831D07A1D10400BF15E9 /* MUTextView.h */,
 				E62E831E07A1D10400BF15E9 /* MUTextView.m */,
+				E6E79CEA07697FD100A8FB96 /* UKPrefsPanel.h */,
 				E6E79CEB07697FD100A8FB96 /* UKPrefsPanel.m */,
 			);
 			name = Controls;

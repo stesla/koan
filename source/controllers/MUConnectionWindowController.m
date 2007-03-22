@@ -499,6 +499,22 @@ enum MUSearchDirections
   return NO;
 }
 
+- (BOOL) textView: (MUTextView *)textView pasteAsPlainText: (id)originalSender
+{
+  if (textView == receivedTextView)
+  {
+    [inputView pasteAsPlainText: originalSender];
+    [[self window] makeFirstResponder: inputView];
+    return YES;
+  }
+  else if (textView == inputView)
+  {
+    [self endCompletion];
+    return NO;
+  }
+  return NO;
+}
+
 @end
 
 #pragma mark -
