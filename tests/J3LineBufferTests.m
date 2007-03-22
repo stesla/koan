@@ -8,6 +8,7 @@
 
 @interface J3LineBufferTests (Private)
 
+- (void) bufferBytes: (const uint8_t *) bytes length: (unsigned) length;
 - (void) bufferString: (NSString *) string;
 
 @end
@@ -33,6 +34,8 @@
 
 - (void) testReadLine
 {
+  [self bufferBytes: (uint8_t *) "12\n" length: 3];
+  [self assert: [buffer readLine] equals: @"12\n"];
   [self bufferString: @"ab\n"];
   [self assert: [buffer readLine] equals: @"ab\n"];
   [self bufferString: @"de\n"];
@@ -51,6 +54,11 @@
 #pragma mark -
 
 @implementation J3LineBufferTests (Private)
+
+- (void) bufferBytes: (const uint8_t *) bytes length: (unsigned) length;
+{
+  [buffer appendBytes: bytes length: length];
+}
 
 - (void) bufferString: (NSString *) string
 {

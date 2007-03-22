@@ -51,7 +51,7 @@
 
 - (void) bufferOutputByte: (uint8_t) byte;
 {
-  [output append: byte];
+  [output appendByte: byte];
 }
 
 @end

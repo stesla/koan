@@ -31,11 +31,31 @@
 #pragma mark -
 #pragma mark Overrides
 
-- (void) append: (uint8_t) byte
+// FIXME: ideally -appendByte: would only be used for binary data. This is going to cause issues later with multibyte stuff.
+- (void) appendByte: (uint8_t) byte
 {
-  [super append: byte];
+  [super appendByte: byte];
   if (byte == (uint8_t) '\n')
     [self hasReadLine];
+}
+
+- (void) appendString: (NSString *) string
+{
+  NSRange searchRange = NSMakeRange (0, [string length]);
+  unsigned indexOfNewline = [string indexOfCharacter: (unichar) '\n' range: searchRange];
+  
+  while (indexOfNewline != NSNotFound && searchRange.location < [string length])
+  {
+    [super appendString: [string substringWithRange: NSMakeRange (searchRange.location, indexOfNewline + 1)]];
+    [self hasReadLine];
+      
+    searchRange.location += indexOfNewline + 1;
+    searchRange.length -= indexOfNewline + 1;
+    
+    indexOfNewline = [string indexOfCharacter: '\n' range: searchRange];
+  }
+  
+  [super appendString: [string substringWithRange: searchRange]];
 }
 
 - (void) flush;

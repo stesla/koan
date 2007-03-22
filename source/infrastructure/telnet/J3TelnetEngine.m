@@ -35,12 +35,12 @@
 
 - (void) bufferInputByte: (uint8_t) byte
 {
-  [inputBuffer append: byte];
+  [inputBuffer appendByte: byte];
 }
 
 - (void) bufferOutputByte: (uint8_t) byte
 {
-  [outputBuffer append: byte];
+  [outputBuffer appendByte: byte];
 }
 
 - (void) dont: (uint8_t) byte;

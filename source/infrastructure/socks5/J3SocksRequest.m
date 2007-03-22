@@ -28,14 +28,14 @@
 
 - (void) appendToBuffer: (id <J3Buffer>)buffer
 {
-  [buffer append: J3SocksVersion];
-  [buffer append: J3SocksConnect];
-  [buffer append: 0]; //reserved
-  [buffer append: J3SocksDomainName];
-  [buffer append: [hostname length]];
+  [buffer appendByte: J3SocksVersion];
+  [buffer appendByte: J3SocksConnect];
+  [buffer appendByte: 0]; //reserved
+  [buffer appendByte: J3SocksDomainName];
+  [buffer appendByte: [hostname length]];
   [buffer appendString: hostname];
-  [buffer append: (0xFF00 & port) >> 8]; //most significant byte of port
-  [buffer append: (0x00FF & port)]; //least significant byte of port
+  [buffer appendByte: (0xFF00 & port) >> 8]; //most significant byte of port
+  [buffer appendByte: (0x00FF & port)]; //least significant byte of port
 }
 
 - (void) parseReplyFromByteSource: (id <J3ByteSource>)source

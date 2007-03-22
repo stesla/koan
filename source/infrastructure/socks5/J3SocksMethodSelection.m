@@ -21,11 +21,11 @@
   const uint8_t *bytes;
   int i;
   
-  [buffer append: J3SocksVersion];
-  [buffer append: [methods length]];
+  [buffer appendByte: J3SocksVersion];
+  [buffer appendByte: [methods length]];
   bytes = [methods bytes];
   for (i = 0; i < [methods length]; i++)
-    [buffer append: bytes[i]];
+    [buffer appendByte: bytes[i]];
 }
 
 - (void) dealloc;

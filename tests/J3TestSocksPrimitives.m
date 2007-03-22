@@ -189,12 +189,12 @@
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
 
   [self assertFalse: [auth authenticated]];
-  [source append: 1];
-  [source append: 0];
+  [source appendByte: 1];
+  [source appendByte: 0];
   [auth parseReplyFromSource: source];
   [self assertTrue: [auth authenticated]];
-  [source append: 1];
-  [source append: 11]; // non-zero
+  [source appendByte: 1];
+  [source appendByte: 11]; // non-zero
   [auth parseReplyFromSource: source];  
   [self assertFalse: [auth authenticated]];
 }

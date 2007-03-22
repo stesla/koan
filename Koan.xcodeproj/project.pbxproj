@@ -44,7 +44,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		2FC93E2A0BB103C500149459 /* J3TelnetEngine.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FC93E280BB103C500149459 /* J3TelnetEngine.h */; };
+		2F42D0E30BB2618F0056C27A /* NSString (NDUtilities).m in Sources */ = {isa = PBXBuildFile; fileRef = 2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */; };
 		2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC93E290BB103C500149459 /* J3TelnetEngine.m */; };
 		2FDF39610ADB3D1A00EDD48A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
 		2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
@@ -63,7 +63,6 @@
 		7E5103120AD1D5AA00142EF3 /* NSFont (Traits).m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103100AD1D5AA00142EF3 /* NSFont (Traits).m */; };
 		7E5103A40AD1E14000142EF3 /* J3Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103A20AD1E14000142EF3 /* J3Formatting.m */; };
 		7E5103BD0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */; };
-		7E514D490BB213EF00B52BF4 /* J3TelnetByteDestination.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7E514D470BB213EF00B52BF4 /* J3TelnetByteDestination.h */; };
 		7E514D4A0BB213EF00B52BF4 /* J3TelnetByteDestination.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E514D480BB213EF00B52BF4 /* J3TelnetByteDestination.m */; };
 		7E514D4D0BB2142C00B52BF4 /* J3TelnetByteDestinationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E514D4C0BB2142C00B52BF4 /* J3TelnetByteDestinationTests.m */; };
 		7E5C2DDD09B105B2006993E1 /* J3SocksAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C2DDA09B105B2006993E1 /* J3SocksAuthentication.m */; };
@@ -228,8 +227,6 @@
 				E615A40607D3B38C00FC7F6B /* Growl.framework in CopyFiles */,
 				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */,
 				2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in CopyFiles */,
-				2FC93E2A0BB103C500149459 /* J3TelnetEngine.h in CopyFiles */,
-				7E514D490BB213EF00B52BF4 /* J3TelnetByteDestination.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,6 +237,8 @@
 		29B97316FDCFA39411CA2CEA /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2F42D0E00BB2618F0056C27A /* NSString (NDUtilities).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString (NDUtilities).h"; sourceTree = "<group>"; };
+		2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString (NDUtilities).m"; sourceTree = "<group>"; };
 		2FC93E280BB103C500149459 /* J3TelnetEngine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetEngine.h; sourceTree = "<group>"; };
 		2FC93E290BB103C500149459 /* J3TelnetEngine.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetEngine.m; sourceTree = "<group>"; };
 		2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -510,18 +509,18 @@
 				E6E7BF500788FDA40065EDD6 /* Domain Objects */,
 				E6E7BF540788FDED0065EDD6 /* Infrastructure */,
 				32CA4F630368D1EE00C91783 /* Koan-Prefix.pch */,
-				7E231039079A374B00E7CBA6 /* MUCodingService.h */,
-				E622A550074231A60069335B /* MUConstants.h */,
-				E653A7CF07AEFAB900023476 /* MUGrowlService.h */,
-				7E1FC01A0787A2220070AF39 /* MUProfileRegistry.h */,
-				7E230FFB079A0FE500E7CBA6 /* MUServices.h */,
-				E6F3A71D077A1B270011A461 /* MUWorldRegistry.h */,
 				29B97316FDCFA39411CA2CEA /* Main.m */,
+				7E231039079A374B00E7CBA6 /* MUCodingService.h */,
 				7E23103A079A374B00E7CBA6 /* MUCodingService.m */,
+				E622A550074231A60069335B /* MUConstants.h */,
 				E622A551074231A60069335B /* MUConstants.m */,
+				E653A7CF07AEFAB900023476 /* MUGrowlService.h */,
 				E653A7D007AEFAB900023476 /* MUGrowlService.m */,
+				7E1FC01A0787A2220070AF39 /* MUProfileRegistry.h */,
 				7E1FC01B0787A2220070AF39 /* MUProfileRegistry.m */,
+				7E230FFB079A0FE500E7CBA6 /* MUServices.h */,
 				7E230FFC079A0FE500E7CBA6 /* MUServices.m */,
+				E6F3A71D077A1B270011A461 /* MUWorldRegistry.h */,
 				E6F3A71E077A1B270011A461 /* MUWorldRegistry.m */,
 				7E87752709AD55E600A883BC /* test-stub-main.m */,
 			);
@@ -631,24 +630,26 @@
 			isa = PBXGroup;
 			children = (
 				E6055F7C07492729007A13BD /* NSAttributedString (Allocating).h */,
-				E62E7FA007A1AB5400BF15E9 /* NSCursor (Finger).h */,
-				E6F60DAB0778A3C600E0EBB4 /* NSFileManager (Recursive).h */,
-				E63F31BD0815B5C1006C4704 /* NSFont (FullDisplayName).h */,
-				7E51030F0AD1D5AA00142EF3 /* NSFont (Traits).h */,
-				7EC3033E092B99C300AFA5C7 /* NSObject (Accessing).h */,
-				E6550DFE07763B72002E81FF /* NSObject (BetterHashing).h */,
-				E6550DF807763B57002E81FF /* NSObject (DeepMutableCopy).h */,
-				7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */,
-				E6505679077ECE760016F30E /* NSURL (Allocating).h */,
 				E6055F7D07492729007A13BD /* NSAttributedString (Allocating).m */,
+				E62E7FA007A1AB5400BF15E9 /* NSCursor (Finger).h */,
 				E62E7FA107A1AB5400BF15E9 /* NSCursor (Finger).m */,
+				E6F60DAB0778A3C600E0EBB4 /* NSFileManager (Recursive).h */,
 				E6F60DAC0778A3C600E0EBB4 /* NSFileManager (Recursive).m */,
+				E63F31BD0815B5C1006C4704 /* NSFont (FullDisplayName).h */,
 				E63F31BE0815B5C1006C4704 /* NSFont (FullDisplayName).m */,
+				7E51030F0AD1D5AA00142EF3 /* NSFont (Traits).h */,
 				7E5103100AD1D5AA00142EF3 /* NSFont (Traits).m */,
+				7EC3033E092B99C300AFA5C7 /* NSObject (Accessing).h */,
 				7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */,
+				E6550DFE07763B72002E81FF /* NSObject (BetterHashing).h */,
 				E6550DFF07763B72002E81FF /* NSObject (BetterHashing).m */,
+				E6550DF807763B57002E81FF /* NSObject (DeepMutableCopy).h */,
 				E6550DF907763B57002E81FF /* NSObject (DeepMutableCopy).m */,
+				7EBFDB0B09380B100077BA3A /* NSObject (Subclasses).h */,
 				7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */,
+				2F42D0E00BB2618F0056C27A /* NSString (NDUtilities).h */,
+				2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */,
+				E6505679077ECE760016F30E /* NSURL (Allocating).h */,
 				E650567A077ECE760016F30E /* NSURL (Allocating).m */,
 			);
 			name = Categories;
@@ -693,36 +694,36 @@
 			isa = PBXGroup;
 			children = (
 				7E43C1EC0ACB1C0900A8E677 /* J3AnsiFormattingFilterTests.h */,
-				7EFE43B10749CB16002C7D48 /* J3FilterTests.h */,
-				E6E7A6CC074970FE007005AC /* J3HistoryRingTests.h */,
-				7E68DC28092AC2AF004554BD /* J3LineBufferTests.h */,
-				E6505497077EA20E0016F30E /* J3NaiveURLFilterTests.h */,
-				7E514D4B0BB2142C00B52BF4 /* J3TelnetByteDestinationTests.h */,
-				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
-				7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */,
-				7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */,
-				7EC112E8078B763E00CFA562 /* MUPlayerTests.h */,
-				E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */,
-				7EDD3E3F078A4AFB00138CD1 /* MUProfileTests.h */,
-				E6E7A63D0749698F007005AC /* MUTextLoggerTests.h */,
-				7E13FA590788C75F0071D30C /* MUWorldTests.h */,
-				7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */,
 				7E43C1ED0ACB1C0900A8E677 /* J3AnsiFormattingFilterTests.m */,
+				7EFE43B10749CB16002C7D48 /* J3FilterTests.h */,
 				7EFE43B20749CB16002C7D48 /* J3FilterTests.m */,
+				E6E7A6CC074970FE007005AC /* J3HistoryRingTests.h */,
 				E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */,
+				7E68DC28092AC2AF004554BD /* J3LineBufferTests.h */,
 				7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */,
+				E6505497077EA20E0016F30E /* J3NaiveURLFilterTests.h */,
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
+				7E514D4B0BB2142C00B52BF4 /* J3TelnetByteDestinationTests.h */,
 				7E514D4C0BB2142C00B52BF4 /* J3TelnetByteDestinationTests.m */,
+				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
 				7E68DC2D092AC2AF004554BD /* J3TelnetStateMachineTests.m */,
+				7E070ACD0933CD81000A36CF /* J3TestSocksPrimitives.h */,
 				7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */,
+				7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */,
 				7EC301B1092B78DE00AFA5C7 /* J3WriteBufferTests.m */,
-				7EC112E9078B763E00CFA562 /* MUPlayerTests.m */,
-				E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */,
-				7EDD3E40078A4AFB00138CD1 /* MUProfileTests.m */,
-				E6E7A63E0749698F007005AC /* MUTextLoggerTests.m */,
-				7E13FA5A0788C75F0071D30C /* MUWorldTests.m */,
-				7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */,
 				E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */,
+				7EC112E8078B763E00CFA562 /* MUPlayerTests.h */,
+				7EC112E9078B763E00CFA562 /* MUPlayerTests.m */,
+				E696783C078F55590033A4C8 /* MUProfileRegistryTests.h */,
+				E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */,
+				7EDD3E3F078A4AFB00138CD1 /* MUProfileTests.h */,
+				7EDD3E40078A4AFB00138CD1 /* MUProfileTests.m */,
+				E6E7A63D0749698F007005AC /* MUTextLoggerTests.h */,
+				E6E7A63E0749698F007005AC /* MUTextLoggerTests.m */,
+				7E13FA590788C75F0071D30C /* MUWorldTests.h */,
+				7E13FA5A0788C75F0071D30C /* MUWorldTests.m */,
+				7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */,
+				7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */,
 				E648B8E906B03FBC0070F73E /* Tests-Info.plist */,
 			);
 			name = Tests;
@@ -744,14 +745,14 @@
 			isa = PBXGroup;
 			children = (
 				7E43C1BF0ACB1A4000A8E677 /* J3ANSIFormattingFilter.h */,
-				7EFE43820749C7CE002C7D48 /* J3Filter.h */,
-				7E5103A10AD1E14000142EF3 /* J3Formatting.h */,
-				E6C9D604077C2DC6007BB2C1 /* J3NaiveURLFilter.h */,
-				E6E7A62E07496971007005AC /* MUTextLogger.h */,
 				7E43C1C00ACB1A4000A8E677 /* J3ANSIFormattingFilter.m */,
+				7EFE43820749C7CE002C7D48 /* J3Filter.h */,
 				7EFE43830749C7CE002C7D48 /* J3Filter.m */,
+				7E5103A10AD1E14000142EF3 /* J3Formatting.h */,
 				7E5103A20AD1E14000142EF3 /* J3Formatting.m */,
+				E6C9D604077C2DC6007BB2C1 /* J3NaiveURLFilter.h */,
 				E6C9D605077C2DC6007BB2C1 /* J3NaiveURLFilter.m */,
+				E6E7A62E07496971007005AC /* MUTextLogger.h */,
 				E6E7A6340749697C007005AC /* MUTextLogger.m */,
 			);
 			name = Filters;
@@ -762,12 +763,12 @@
 			isa = PBXGroup;
 			children = (
 				E677D20E0778041F00B417D2 /* MUPlayer.h */,
-				7E39EF9B0783938F0042A17A /* MUProfile.h */,
-				7E5103BA0AD1E22D00142EF3 /* MUProfileFormatting.h */,
-				E6DA667007776D9900C46267 /* MUWorld.h */,
 				E677D20F0778041F00B417D2 /* MUPlayer.m */,
+				7E39EF9B0783938F0042A17A /* MUProfile.h */,
 				7E39EF9C0783938F0042A17A /* MUProfile.m */,
+				7E5103BA0AD1E22D00142EF3 /* MUProfileFormatting.h */,
 				7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */,
+				E6DA667007776D9900C46267 /* MUWorld.h */,
 				E6DA667107776D9900C46267 /* MUWorld.m */,
 			);
 			name = "Domain Objects";
@@ -1101,6 +1102,7 @@
 				7E5103BD0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */,
 				2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */,
 				7E514D4A0BB213EF00B52BF4 /* J3TelnetByteDestination.m in Sources */,
+				2F42D0E30BB2618F0056C27A /* NSString (NDUtilities).m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
