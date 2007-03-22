@@ -47,7 +47,7 @@
     result = [[self delegate] textView: self pasteAsPlainText: sender];
   
   if (!result)
-    [self pasteAsPlainText: sender];
+    [super pasteAsPlainText: sender];
 }
 
 - (IBAction) pasteAsRichText: (id) sender
