@@ -1472,6 +1472,7 @@
 		E69E223A0854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				OBJROOT = "$(SYMROOT)";
 				SYMROOT = "$(PROJECT_DIR)/build";
 			};
