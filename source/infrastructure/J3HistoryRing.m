@@ -36,7 +36,7 @@
   return [ring count];
 }
 
-- (NSString *) stringAtIndex: (unsigned)index
+- (NSString *) stringAtIndex: (unsigned) index
 {
   if (index == -1)
     return buffer == nil ? @"" : buffer;
@@ -54,7 +54,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (void) saveString: (NSString *)string
+- (void) saveString: (NSString *) string
 {
   NSString *copy = [[string copy] autorelease];
   
@@ -70,7 +70,7 @@
   searchCursor = -1;
 }
 
-- (void) updateString: (NSString *)string
+- (void) updateString: (NSString *) string
 {
   NSString *copy = [string copy];
   
@@ -121,7 +121,7 @@
   searchCursor = cursor;
 }
 
-- (unsigned) numberOfUniqueMatchesForStringPrefix: (NSString *)prefix
+- (unsigned) numberOfUniqueMatchesForStringPrefix: (NSString *) prefix
 {
   int savedCursor = searchCursor;
   unsigned uniqueMatchCount = 0;
@@ -151,7 +151,7 @@
   return uniqueMatchCount;
 }
 
-- (NSString *) searchForwardForStringPrefix: (NSString *)prefix
+- (NSString *) searchForwardForStringPrefix: (NSString *) prefix
 {
   int originalSearchCursor = searchCursor;
   
@@ -185,7 +185,7 @@
   return nil;
 }
 
-- (NSString *) searchBackwardForStringPrefix: (NSString *)prefix
+- (NSString *) searchBackwardForStringPrefix: (NSString *) prefix
 {
   int originalSearchCursor = searchCursor;
   

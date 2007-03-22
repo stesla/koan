@@ -22,7 +22,7 @@
 
 @implementation J3WriteBuffer
 
-- (void) setByteDestination: (NSObject <J3ByteDestination> *)object
+- (void) setByteDestination: (NSObject <J3ByteDestination> *) object
 {
   [object retain];
   [destination release];
@@ -46,7 +46,7 @@
   return YES;
 }
 
-- (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
+- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length;
 {
   [self appendBytes: bytes length: length];
   [self flush];

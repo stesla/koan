@@ -60,14 +60,14 @@
   	[self postGlobalVisitedLinkColorDidChangeNotification];
 }
 
-- (void) playSelectedSound: (id)sender;
+- (void) playSelectedSound: (id) sender;
 {
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSSound *sound = [NSSound soundNamed: [defaults stringForKey: MUPSoundChoice]];
   [sound play];
 }
 
-- (void) showPreferencesPanel: (id)sender
+- (void) showPreferencesPanel: (id) sender
 {
   [preferencesPanel makeKeyAndOrderFront: self];
 }

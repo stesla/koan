@@ -11,7 +11,7 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 @interface MUWorldRegistry (Private)
 
-- (void) cleanUpDefaultRegistry: (NSNotification *)notification;
+- (void) cleanUpDefaultRegistry: (NSNotification *) notification;
 - (void) postWorldsDidChangeNotification;
 - (void) readWorldsFromUserDefaults;
 - (void) writeWorldsToUserDefaults;
@@ -61,7 +61,7 @@ static MUWorldRegistry *defaultRegistry = nil;
   return worlds;
 }
 
-- (void) setWorlds: (NSArray *)newWorlds
+- (void) setWorlds: (NSArray *) newWorlds
 {
   NSMutableArray *copy = [newWorlds mutableCopy];
   [worlds release];
@@ -69,13 +69,13 @@ static MUWorldRegistry *defaultRegistry = nil;
   [self postWorldsDidChangeNotification];
 }
 
-- (void) insertObject: (MUWorld *)world inWorldsAtIndex: (unsigned)index
+- (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) index
 {
   [worlds insertObject: world atIndex: index];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) removeObjectFromWorldsAtIndex: (unsigned)index
+- (void) removeObjectFromWorldsAtIndex: (unsigned) index
 {
   [worlds removeObjectAtIndex: index];
   [self postWorldsDidChangeNotification];
@@ -89,7 +89,7 @@ static MUWorldRegistry *defaultRegistry = nil;
   return [worlds count];
 }
 
-- (int) indexOfWorld: (MUWorld *)world
+- (int) indexOfWorld: (MUWorld *) world
 {
   unsigned i, worldsCount = [worlds count];
   
@@ -106,13 +106,13 @@ static MUWorldRegistry *defaultRegistry = nil;
   return -1;
 }
 
-- (void) removeWorld: (MUWorld *)world
+- (void) removeWorld: (MUWorld *) world
 {
   [worlds removeObject: world];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) replaceWorld: (MUWorld *)oldWorld withWorld: (MUWorld *)newWorld
+- (void) replaceWorld: (MUWorld *) oldWorld withWorld: (MUWorld *) newWorld
 {
   unsigned i, worldsCount = [worlds count];
   
@@ -134,12 +134,12 @@ static MUWorldRegistry *defaultRegistry = nil;
   [self writeWorldsToUserDefaults];
 }
 
-- (MUWorld *) worldAtIndex: (unsigned)index
+- (MUWorld *) worldAtIndex: (unsigned) index
 {
   return [worlds objectAtIndex: index];
 }
 
-- (MUWorld *) worldForUniqueIdentifier: (NSString *)identifier
+- (MUWorld *) worldForUniqueIdentifier: (NSString *) identifier
 {
   unsigned i, worldsCount = [worlds count];
   
@@ -160,7 +160,7 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 @implementation MUWorldRegistry (Private)
 
-- (void) cleanUpDefaultRegistry: (NSNotification *)notification
+- (void) cleanUpDefaultRegistry: (NSNotification *) notification
 {
   [[NSNotificationCenter defaultCenter] removeObserver: defaultRegistry];
   [defaultRegistry release];

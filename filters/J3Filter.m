@@ -13,7 +13,7 @@
   return [[[self alloc] init] autorelease];
 }
 
-- (NSAttributedString *) filter: (NSAttributedString *)string
+- (NSAttributedString *) filter: (NSAttributedString *) string
 {
   return string;
 }
@@ -36,7 +36,7 @@
   [super dealloc];
 }
 
-- (NSAttributedString *) processAttributedString: (NSAttributedString *)string
+- (NSAttributedString *) processAttributedString: (NSAttributedString *) string
 {
   NSAttributedString *returnString = string;
   

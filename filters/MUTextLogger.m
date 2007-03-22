@@ -11,9 +11,9 @@
 
 @interface MUTextLogger (Private)
 
-- (void) log: (NSAttributedString *)editString;
-- (void) initializeFileAtPath: (NSString *)path withHeaders: (NSDictionary *)headers;
-- (void) writeToStream: (NSOutputStream *)stream withFormat: (NSString *)format,...;
+- (void) log: (NSAttributedString *) editString;
+- (void) initializeFileAtPath: (NSString *) path withHeaders: (NSDictionary *) headers;
+- (void) writeToStream: (NSOutputStream *) stream withFormat: (NSString *) format,...;
 
 @end
 
@@ -26,17 +26,17 @@
   return [[[self alloc] init] autorelease];
 }
 
-+ (J3Filter *) filterWithWorld: (MUWorld *)world
++ (J3Filter *) filterWithWorld: (MUWorld *) world
 {
   return [[[self alloc] initWithWorld: world] autorelease];
 }
 
-+ (J3Filter *) filterWithWorld: (MUWorld *)world player: (MUPlayer *)player
++ (J3Filter *) filterWithWorld: (MUWorld *) world player: (MUPlayer *) player
 {
   return [[[self alloc] initWithWorld: world player: player] autorelease];
 }
 
-- (id) initWithOutputStream: (NSOutputStream *)stream
+- (id) initWithOutputStream: (NSOutputStream *) stream
 {
   if (!stream || ![super init])
     return nil;
@@ -52,12 +52,12 @@
   return [self initWithWorld: nil player: nil];
 }
 
-- (id) initWithWorld: (MUWorld *)world
+- (id) initWithWorld: (MUWorld *) world
 {
   return [self initWithWorld: world player: nil];
 }
 
-- (id) initWithWorld: (MUWorld *)world player: (MUPlayer *)player
+- (id) initWithWorld: (MUWorld *) world player: (MUPlayer *) player
 {
   NSString *todayString = [[NSCalendarDate calendarDate] descriptionWithCalendarFormat: @"%Y-%m-%d"];
   NSString *path = [[NSString stringWithFormat: @"~/Library/Logs/Koan/%@%@%@.koanlog",
@@ -82,7 +82,7 @@
   [super dealloc];
 }
 
-- (NSAttributedString *) filter: (NSAttributedString *)string
+- (NSAttributedString *) filter: (NSAttributedString *) string
 {
   if ([string length] > 0)
     [self log: string];
@@ -96,12 +96,12 @@
 
 @implementation MUTextLogger (Private)
 
-- (void) log: (NSAttributedString *)string
+- (void) log: (NSAttributedString *) string
 {
   [self writeToStream: output withFormat: @"%@", [string string]];
 }
 
-- (void) initializeFileAtPath: (NSString *)path withHeaders: (NSDictionary *)headers
+- (void) initializeFileAtPath: (NSString *) path withHeaders: (NSDictionary *) headers
 {
   NSOutputStream *stream;
   
@@ -129,7 +129,7 @@
   }
 }
 
-- (void) writeToStream: (NSOutputStream *)stream withFormat: (NSString *)format, ...
+- (void) writeToStream: (NSOutputStream *) stream withFormat: (NSString *) format, ...
 {
   va_list args;
   NSString *string;

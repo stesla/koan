@@ -26,7 +26,7 @@
   if (!count)
     return subclasses;
 
-  classes = malloc (sizeof(Class) * count);
+  classes = malloc (sizeof (Class) * count);
   NSAssert (classes != NULL, @"Memory allocation failed in [NSObject +subclasses]");
   (void) objc_getClassList (classes, count);
   if (!classes)

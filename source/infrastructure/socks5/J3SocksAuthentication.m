@@ -11,7 +11,7 @@
 
 @implementation J3SocksAuthentication
 
-- (id) initWithUsername: (NSString *)usernameValue password: (NSString *)passwordValue
+- (id) initWithUsername: (NSString *) usernameValue password: (NSString *) passwordValue
 {
   if (![super init])
     return nil;

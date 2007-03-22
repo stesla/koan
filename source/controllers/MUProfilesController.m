@@ -17,29 +17,29 @@ enum MUProfilesEditingReturnValues
 
 @interface MUProfilesController (Private)
 
-- (IBAction) changeFont: (id)sender;
-- (void) colorPanelColorDidChange: (NSNotification *)notification;
-- (IBAction) editPlayer: (MUPlayer *)player;
-- (IBAction) editProfile: (MUProfile *)player;
-- (IBAction) editWorld: (MUWorld *)world;
-- (void) globalBackgroundColorDidChange: (NSNotification *)notification;
-- (void) globalFontDidChange: (NSNotification *)notification;
-- (void) globalLinkColorDidChange: (NSNotification *)notification;
-- (void) globalTextColorDidChange: (NSNotification *)notification;
-- (void) globalVisitedLinkColorDidChange: (NSNotification *)notification;
-- (void) playerSheetDidEndAdding: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
-- (void) playerSheetDidEndEditing: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
-- (void) profileSheetDidEndEditing: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
+- (IBAction) changeFont: (id) sender;
+- (void) colorPanelColorDidChange: (NSNotification *) notification;
+- (IBAction) editPlayer: (MUPlayer *) player;
+- (IBAction) editProfile: (MUProfile *) player;
+- (IBAction) editWorld: (MUWorld *) world;
+- (void) globalBackgroundColorDidChange: (NSNotification *) notification;
+- (void) globalFontDidChange: (NSNotification *) notification;
+- (void) globalLinkColorDidChange: (NSNotification *) notification;
+- (void) globalTextColorDidChange: (NSNotification *) notification;
+- (void) globalVisitedLinkColorDidChange: (NSNotification *) notification;
+- (void) playerSheetDidEndAdding: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
+- (void) playerSheetDidEndEditing: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
+- (void) profileSheetDidEndEditing: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
 - (void) registerForNotifications;
-- (IBAction) removePlayer: (MUPlayer *)player;
-- (IBAction) removeWorld: (MUWorld *)world;
-- (void) updateProfilesForWorld: (MUWorld *)world withWorld: (MUWorld *)newWorld;
-- (void) updateProfileForWorld: (MUWorld *)world 
-                        player: (MUPlayer *)player 
-                    withPlayer: (MUPlayer *)newPlayer;
-- (MUWorld *) worldFromSheetWithPlayers: (NSArray *)players;
-- (void) worldSheetDidEndAdding: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
-- (void) worldSheetDidEndEditing: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
+- (IBAction) removePlayer: (MUPlayer *) player;
+- (IBAction) removeWorld: (MUWorld *) world;
+- (void) updateProfilesForWorld: (MUWorld *) world withWorld: (MUWorld *) newWorld;
+- (void) updateProfileForWorld: (MUWorld *) world 
+                        player: (MUPlayer *) player 
+                    withPlayer: (MUPlayer *) newPlayer;
+- (MUWorld *) worldFromSheetWithPlayers: (NSArray *) players;
+- (void) worldSheetDidEndAdding: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
+- (void) worldSheetDidEndEditing: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
 
 @end
 
@@ -72,7 +72,7 @@ enum MUProfilesEditingReturnValues
   [self registerForNotifications];
 }
 
-- (BOOL) validateToolbarItem: (NSToolbarItem *)toolbarItem
+- (BOOL) validateToolbarItem: (NSToolbarItem *) toolbarItem
 {
   SEL toolbarItemAction = [toolbarItem action];
   
@@ -158,7 +158,7 @@ enum MUProfilesEditingReturnValues
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction) addPlayer: (id)sender
+- (IBAction) addPlayer: (id) sender
 {
   int selectedRow = [worldsAndPlayersOutlineView selectedRow];
   MUWorld *insertionWorld;
@@ -210,7 +210,7 @@ enum MUProfilesEditingReturnValues
         contextInfo: contextDictionary];
 }
 
-- (IBAction) addWorld: (id)sender
+- (IBAction) addWorld: (id) sender
 {
   int selectedRow = [worldsAndPlayersOutlineView selectedRow];
   int insertionIndex;
@@ -246,7 +246,7 @@ enum MUProfilesEditingReturnValues
         contextInfo: [[NSNumber alloc] initWithUnsignedInt: insertionIndex]];
 }
 
-- (IBAction) chooseNewFont: (id)sender
+- (IBAction) chooseNewFont: (id) sender
 {
   NSDictionary *values = [[NSUserDefaultsController sharedUserDefaultsController] values];
   NSString *fontName = [values valueForKey: MUPFontName];
@@ -262,7 +262,7 @@ enum MUProfilesEditingReturnValues
   [[NSFontManager sharedFontManager] orderFrontFontPanel: self];
 }
 
-- (IBAction) editClickedRow: (id)sender
+- (IBAction) editClickedRow: (id) sender
 {
   NSEvent *event = [NSApp currentEvent];
   NSPoint location = [worldsAndPlayersOutlineView convertPoint: [event locationInWindow] fromView: nil];
@@ -280,7 +280,7 @@ enum MUProfilesEditingReturnValues
   	[self editPlayer: clickedItem];
 }
 
-- (IBAction) editProfileForSelectedRow: (id)sender
+- (IBAction) editProfileForSelectedRow: (id) sender
 {
   int selectedRow = [worldsAndPlayersOutlineView selectedRow];
   id selectedItem;
@@ -297,7 +297,7 @@ enum MUProfilesEditingReturnValues
                                                                     player: selectedItem]];
 }
 
-- (IBAction) editSelectedRow: (id)sender
+- (IBAction) editSelectedRow: (id) sender
 {
   int selectedRow = [worldsAndPlayersOutlineView selectedRow];
   id selectedItem;
@@ -313,25 +313,25 @@ enum MUProfilesEditingReturnValues
   	[self editPlayer: selectedItem];
 }
 
-- (IBAction) endEditingPlayer: (id)sender
+- (IBAction) endEditingPlayer: (id) sender
 {
   [playerEditorSheet orderOut: sender];
   [NSApp endSheet: playerEditorSheet returnCode: (sender == playerSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
-- (IBAction) endEditingProfile: (id)sender
+- (IBAction) endEditingProfile: (id) sender
 {
   [profileEditorSheet orderOut: sender];
   [NSApp endSheet: profileEditorSheet returnCode: (sender == profileSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
-- (IBAction) endEditingWorld: (id)sender
+- (IBAction) endEditingWorld: (id) sender
 {
   [worldEditorSheet orderOut: sender];
   [NSApp endSheet: worldEditorSheet returnCode: (sender == worldSaveButton ? MUEditOkay : MUEditCancel)];
 }
 
-- (IBAction) goToWorldURL: (id)sender
+- (IBAction) goToWorldURL: (id) sender
 {
   int selectedRow = [worldsAndPlayersOutlineView selectedRow];
   id selectedItem;
@@ -347,7 +347,7 @@ enum MUProfilesEditingReturnValues
   	[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: [[(MUPlayer *) selectedItem world] URL]]];
 }
 
-- (IBAction) removeSelectedRow: (id)sender
+- (IBAction) removeSelectedRow: (id) sender
 {
   int selectedRow = [worldsAndPlayersOutlineView selectedRow];
   id selectedItem;
@@ -363,7 +363,7 @@ enum MUProfilesEditingReturnValues
   	[self removePlayer: selectedItem];
 }
 
-- (IBAction) useGlobalBackgroundColor: (id)sender
+- (IBAction) useGlobalBackgroundColor: (id) sender
 {
   if ([sender state] == NSOnState)
   {
@@ -374,7 +374,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (IBAction) useGlobalFont: (id)sender
+- (IBAction) useGlobalFont: (id) sender
 {
   if ([sender state] == NSOnState)
   {
@@ -389,7 +389,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (IBAction) useGlobalLinkColor: (id)sender
+- (IBAction) useGlobalLinkColor: (id) sender
 {
   if ([sender state] == NSOnState)
   {
@@ -400,7 +400,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (IBAction) useGlobalTextColor: (id)sender
+- (IBAction) useGlobalTextColor: (id) sender
 {
   if ([sender state] == NSOnState)
   {
@@ -411,7 +411,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (IBAction) useGlobalVisitedLinkColor: (id)sender
+- (IBAction) useGlobalVisitedLinkColor: (id) sender
 {
   if ([sender state] == NSOnState)
   {
@@ -425,7 +425,7 @@ enum MUProfilesEditingReturnValues
 #pragma mark -
 #pragma mark NSOutlineView data source
 
-- (id) outlineView: (NSOutlineView *)outlineView child: (int)index ofItem: (id)item
+- (id) outlineView: (NSOutlineView *) outlineView child: (int) index ofItem: (id) item
 {
   if (item)
   	return [[(MUWorld *) item players] objectAtIndex: index];
@@ -433,7 +433,7 @@ enum MUProfilesEditingReturnValues
   	return [[MUServices worldRegistry] worldAtIndex: index];
 }
 
-- (BOOL) outlineView: (NSOutlineView *)outlineView isItemExpandable: (id)item
+- (BOOL) outlineView: (NSOutlineView *) outlineView isItemExpandable: (id) item
 {
   if ([item isKindOfClass: [MUWorld class]])
   	return YES;
@@ -441,7 +441,7 @@ enum MUProfilesEditingReturnValues
   	return NO;
 }
 
-- (id) outlineView: (NSOutlineView *)outlineView itemForPersistentObject: (id)object
+- (id) outlineView: (NSOutlineView *) outlineView itemForPersistentObject: (id) object
 {
   if (object && [object isKindOfClass: [NSString class]])
   {
@@ -451,7 +451,7 @@ enum MUProfilesEditingReturnValues
   return nil;
 }
 
-- (int) outlineView: (NSOutlineView *)outlineView numberOfChildrenOfItem: (id)item
+- (int) outlineView: (NSOutlineView *) outlineView numberOfChildrenOfItem: (id) item
 {
   if (item)
   	return [[(MUWorld *) item players] count];
@@ -459,7 +459,7 @@ enum MUProfilesEditingReturnValues
   	return [[MUServices worldRegistry] count];
 }
 
-- (id) outlineView: (NSOutlineView *)outlineView objectValueForTableColumn: (NSTableColumn *)column byItem: (id)item
+- (id) outlineView: (NSOutlineView *) outlineView objectValueForTableColumn: (NSTableColumn *) column byItem: (id) item
 {
   if ([item isKindOfClass: [MUWorld class]])
   	return [(MUWorld *) item name];
@@ -469,7 +469,7 @@ enum MUProfilesEditingReturnValues
   	return item;
 }
 
-- (id) outlineView: (NSOutlineView *)outlineView persistentObjectForItem: (id)item
+- (id) outlineView: (NSOutlineView *) outlineView persistentObjectForItem: (id) item
 {
   if ([item isKindOfClass: [MUWorld class]])
   	return [(MUWorld *) item uniqueIdentifier];
@@ -480,7 +480,7 @@ enum MUProfilesEditingReturnValues
 #pragma mark -
 #pragma mark NSOutlineView delegate
 
-- (BOOL) outlineView: (NSOutlineView *)outlineView shouldEditTableColumn: (NSTableColumn *)tableColumn item: (id)item
+- (BOOL) outlineView: (NSOutlineView *) outlineView shouldEditTableColumn: (NSTableColumn *) tableColumn item: (id) item
 {
   return NO;
 }
@@ -491,7 +491,7 @@ enum MUProfilesEditingReturnValues
 
 @implementation MUProfilesController (Private)
 
-- (IBAction) changeFont: (id)sender
+- (IBAction) changeFont: (id) sender
 {
   NSFontManager *fontManager = [NSFontManager sharedFontManager];
   NSFont *selectedFont = [fontManager selectedFont];
@@ -509,7 +509,7 @@ enum MUProfilesEditingReturnValues
   editingFont = [panelFont copy];
 }
 
-- (void) colorPanelColorDidChange: (NSNotification *)notification
+- (void) colorPanelColorDidChange: (NSNotification *) notification
 {
   if ([profileBackgroundColorWell isActive])
   {
@@ -568,7 +568,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (IBAction) editPlayer: (MUPlayer *)player
+- (IBAction) editPlayer: (MUPlayer *) player
 {
   MUWorld *world = [player world];
   
@@ -584,7 +584,7 @@ enum MUProfilesEditingReturnValues
         contextInfo: player];
 }
 
-- (IBAction) editProfile: (MUProfile *)profile
+- (IBAction) editProfile: (MUProfile *) profile
 {
   editingProfile = [profile retain];
   
@@ -612,7 +612,7 @@ enum MUProfilesEditingReturnValues
         contextInfo: nil];
 }
 
-- (IBAction) editWorld: (MUWorld *)world
+- (IBAction) editWorld: (MUWorld *) world
 {
   [worldNameField setStringValue: [world name]];
   [worldHostnameField setStringValue: [world hostname]];
@@ -628,7 +628,7 @@ enum MUProfilesEditingReturnValues
         contextInfo: world];
 }
 
-- (void) globalBackgroundColorDidChange: (NSNotification *)notification
+- (void) globalBackgroundColorDidChange: (NSNotification *) notification
 {
   if (editingProfile && [profileBackgroundColorUseGlobalButton state] == NSOnState)
   {
@@ -639,7 +639,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (void) globalFontDidChange: (NSNotification *)notification
+- (void) globalFontDidChange: (NSNotification *) notification
 {
   if (editingProfile && [profileFontUseGlobalButton state] == NSOnState)
   {
@@ -654,7 +654,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (void) globalLinkColorDidChange: (NSNotification *)notification
+- (void) globalLinkColorDidChange: (NSNotification *) notification
 {
   if (editingProfile && [profileBackgroundColorUseGlobalButton state] == NSOnState)
   {
@@ -665,7 +665,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (void) globalTextColorDidChange: (NSNotification *)notification
+- (void) globalTextColorDidChange: (NSNotification *) notification
 {
   if (editingProfile && [profileTextColorUseGlobalButton state] == NSOnState)
   {
@@ -676,7 +676,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (void) globalVisitedLinkColorDidChange: (NSNotification *)notification
+- (void) globalVisitedLinkColorDidChange: (NSNotification *) notification
 {
   if (editingProfile && [profileBackgroundColorUseGlobalButton state] == NSOnState)
   {
@@ -687,7 +687,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (void) playerSheetDidEndAdding: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo
+- (void) playerSheetDidEndAdding: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo
 {
   if (returnCode == MUEditOkay)
   {
@@ -706,7 +706,7 @@ enum MUProfilesEditingReturnValues
   [(NSObject *) contextInfo release];
 }
 
-- (void) playerSheetDidEndEditing: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo
+- (void) playerSheetDidEndEditing: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo
 {
   if (returnCode == MUEditOkay)
   {
@@ -728,7 +728,7 @@ enum MUProfilesEditingReturnValues
   }
 }
 
-- (void) profileSheetDidEndEditing: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo
+- (void) profileSheetDidEndEditing: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo
 {  
   if (returnCode == MUEditOkay)
   {
@@ -804,7 +804,7 @@ enum MUProfilesEditingReturnValues
   																					 object: nil];
 }
 
-- (IBAction) removePlayer: (MUPlayer *)player
+- (IBAction) removePlayer: (MUPlayer *) player
 {
   [[MUServices profileRegistry] removeProfileForWorld: [player world]
   																						 player: player];
@@ -813,7 +813,7 @@ enum MUProfilesEditingReturnValues
   [worldsAndPlayersOutlineView reloadData];
 }
 
-- (IBAction) removeWorld: (MUWorld *)world
+- (IBAction) removeWorld: (MUWorld *) world
 {
   [[MUServices profileRegistry] removeAllProfilesForWorld: world];
   [[MUServices worldRegistry] removeWorld: world];
@@ -821,8 +821,8 @@ enum MUProfilesEditingReturnValues
   [worldsAndPlayersOutlineView reloadData];
 }
 
-- (void) updateProfilesForWorld: (MUWorld *)world 
-                      withWorld: (MUWorld *)newWorld
+- (void) updateProfilesForWorld: (MUWorld *) world 
+                      withWorld: (MUWorld *) newWorld
 {
   MUProfile *profile = nil;
   MUProfileRegistry *registry = [MUServices profileRegistry];
@@ -850,9 +850,9 @@ enum MUProfilesEditingReturnValues
   [profile release];
 }
 
-- (void) updateProfileForWorld: (MUWorld *)world 
-                        player: (MUPlayer *)player 
-                    withPlayer: (MUPlayer *)newPlayer
+- (void) updateProfileForWorld: (MUWorld *) world 
+                        player: (MUPlayer *) player 
+                    withPlayer: (MUPlayer *) newPlayer
 {
   MUProfileRegistry *registry = [MUServices profileRegistry];
   MUProfile *profile = [registry profileForWorld: world
@@ -864,7 +864,7 @@ enum MUProfilesEditingReturnValues
   [profile release];
 }
 
-- (MUWorld *) worldFromSheetWithPlayers: (NSArray *)players
+- (MUWorld *) worldFromSheetWithPlayers: (NSArray *) players
 {
   return [MUWorld worldWithName: [worldNameField stringValue]
   										 hostname: [worldHostnameField stringValue]
@@ -873,7 +873,7 @@ enum MUProfilesEditingReturnValues
   											players: players];
 }
 
-- (void) worldSheetDidEndAdding: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo
+- (void) worldSheetDidEndAdding: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo
 {
   if (returnCode == MUEditOkay)
   {
@@ -889,7 +889,7 @@ enum MUProfilesEditingReturnValues
   [(NSObject *) contextInfo release];
 }
 
-- (void) worldSheetDidEndEditing: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo
+- (void) worldSheetDidEndEditing: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo
 {
   if (returnCode == MUEditOkay)
   {

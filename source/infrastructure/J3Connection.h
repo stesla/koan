@@ -20,6 +20,6 @@
 - (void) connectionIsConnected: (id <J3Connection>)connection;
 - (void) connectionWasClosedByClient: (id <J3Connection>)connection;
 - (void) connectionWasClosedByServer: (id <J3Connection>)connection;
-- (void) connectionWasClosed: (id <J3Connection>)connection withError: (NSString *)errorMessage;
+- (void) connectionWasClosed: (id <J3Connection>)connection withError: (NSString *) errorMessage;
 
 @end

@@ -4,10 +4,8 @@
 // Copyright (c) 2007 3James Software
 //
 
-
 #import <Cocoa/Cocoa.h>
 #import "J3ByteDestination.h"
-
 
 @interface J3TelnetByteDestination : NSObject <J3ByteDestination>
 {

@@ -8,7 +8,7 @@
 
 @protocol J3Filtering
 
-- (NSAttributedString *) filter: (NSAttributedString *)string;
+- (NSAttributedString *) filter: (NSAttributedString *) string;
 
 @end
 
@@ -23,7 +23,7 @@
   NSMutableArray *filters;
 }
 
-- (NSAttributedString *) processAttributedString: (NSAttributedString *)string;
+- (NSAttributedString *) processAttributedString: (NSAttributedString *) string;
 - (void) addFilter: (id <J3Filtering>)filter;
 - (void) clearFilters;
 

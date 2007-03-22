@@ -11,7 +11,7 @@
 
 @implementation J3TelnetTextState
 
-- (J3TelnetState *) parse: (uint8_t)byte forParser: (J3TelnetEngine *)parser
+- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
 {
   if (byte == J3TelnetInterpretAsCommand)
     return [J3TelnetInterpretAsCommandState state];

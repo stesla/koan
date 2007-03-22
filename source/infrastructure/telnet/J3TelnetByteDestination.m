@@ -4,9 +4,7 @@
 // Copyright (c) 2007 3James Software
 //
 
-
 #import "J3TelnetByteDestination.h"
-
 
 @implementation J3TelnetByteDestination
 
@@ -28,10 +26,9 @@
   return [destination hasSpaceAvailable];
 }
 
-- (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
+- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length;
 {
   return [destination write: bytes length: length];
 }
 
 @end
-

@@ -42,7 +42,7 @@
   return hostname;
 }
 
-- (void) setHostname: (NSString *)value
+- (void) setHostname: (NSString *) value
 {
   [self at: &hostname put: value];
 }
@@ -52,7 +52,7 @@
   return port;
 }
 
-- (void) setPort: (NSNumber *)value
+- (void) setPort: (NSNumber *) value
 {
   [self at: &port put: value];
 }
@@ -62,7 +62,7 @@
   return username;
 }
 
-- (void) setUsername: (NSString *)value
+- (void) setUsername: (NSString *) value
 {
   [self at: &username put: value];
 }
@@ -72,7 +72,7 @@
   return password;
 }
 
-- (void) setPassword: (NSString *)value
+- (void) setPassword: (NSString *) value
 {
   [self at: &password put: value];
 }
@@ -85,13 +85,13 @@
 #pragma mark -
 #pragma mark NSCoding protocol
 
-- (id) initWithCoder: (NSCoder *)coder
+- (id) initWithCoder: (NSCoder *) coder
 {
   [MUCodingService decodeProxySettings: self withCoder: coder];
   return self;
 }
 
-- (void) encodeWithCoder: (NSCoder *)coder
+- (void) encodeWithCoder: (NSCoder *) coder
 {
   [MUCodingService encodeProxySettings: self withCoder: coder];
 }

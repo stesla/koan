@@ -15,12 +15,12 @@
   NSOutputStream *output;
 }
 
-+ (J3Filter *) filterWithWorld: (MUWorld *)world;
-+ (J3Filter *) filterWithWorld: (MUWorld *)world player: (MUPlayer *)player;
++ (J3Filter *) filterWithWorld: (MUWorld *) world;
++ (J3Filter *) filterWithWorld: (MUWorld *) world player: (MUPlayer *) player;
 
 // Designated initializer.
-- (id) initWithOutputStream: (NSOutputStream *)stream;
-- (id) initWithWorld: (MUWorld *)world;
-- (id) initWithWorld: (MUWorld *)world player: (MUPlayer *)player;
+- (id) initWithOutputStream: (NSOutputStream *) stream;
+- (id) initWithWorld: (MUWorld *) world;
+- (id) initWithWorld: (MUWorld *) world player: (MUPlayer *) player;
 
 @end

@@ -25,12 +25,12 @@
 
 @implementation J3ProxySocket
 
-+ (id) socketWithHostname: (NSString *)hostname port: (int)port proxySettings: (J3ProxySettings *)settings
++ (id) socketWithHostname: (NSString *) hostname port: (int) port proxySettings: (J3ProxySettings *) settings
 {
   return [[[self alloc] initWithHostname: hostname port: port proxySettings: settings] autorelease];
 }
 
-- (id) initWithHostname: (NSString *)hostnameValue port: (int)portValue proxySettings: (J3ProxySettings *)settings
+- (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue proxySettings: (J3ProxySettings *) settings
 {
   if (![super initWithHostname: [settings hostname] port: [[settings port] intValue]])
     return nil;

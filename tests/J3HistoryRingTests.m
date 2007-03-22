@@ -12,9 +12,9 @@ NSString *Third = @"Third";
 
 @interface J3HistoryRingTests (Private)
 
-- (void) assertCurrent: (NSString *)expected;
-- (void) assertPrevious: (NSString *)expected;
-- (void) assertNext: (NSString *)expected;
+- (void) assertCurrent: (NSString *) expected;
+- (void) assertPrevious: (NSString *) expected;
+- (void) assertNext: (NSString *) expected;
 - (void) saveOne;
 - (void) saveTwo;
 - (void) saveThree;
@@ -25,17 +25,17 @@ NSString *Third = @"Third";
 
 @implementation J3HistoryRingTests (Private)
 
-- (void) assertCurrent: (NSString *)expected
+- (void) assertCurrent: (NSString *) expected
 {
   [self assert: [ring currentString] equals: expected];
 }
 
-- (void) assertPrevious: (NSString *)expected
+- (void) assertPrevious: (NSString *) expected
 {
   [self assert: [ring previousString] equals: expected];
 }
 
-- (void) assertNext: (NSString *)expected
+- (void) assertNext: (NSString *) expected
 {
   [self assert: [ring nextString] equals: expected];
 }

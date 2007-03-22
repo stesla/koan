@@ -22,7 +22,7 @@
 #pragma mark -
 #pragma mark NSToolbar delegate
 
-- (NSToolbarItem *) toolbar: (NSToolbar *)toolbar itemForItemIdentifier: (NSString *)itemIdentifier willBeInsertedIntoToolbar: (BOOL)flag
+- (NSToolbarItem *) toolbar: (NSToolbar *) toolbar itemForItemIdentifier: (NSString *) itemIdentifier willBeInsertedIntoToolbar: (BOOL) flag
 {
   NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier];
   
@@ -78,7 +78,7 @@
   return [item autorelease];
 }
 
-- (NSArray *) toolbarDefaultItemIdentifiers: (NSToolbar*)toolbar
+- (NSArray *) toolbarDefaultItemIdentifiers: (NSToolbar*) toolbar
 {
   return [NSArray arrayWithObjects:
   	MUAddWorldToolbarItem,
@@ -91,7 +91,7 @@
     nil];
 }
 
-- (NSArray *) toolbarAllowedItemIdentifiers: (NSToolbar*)toolbar
+- (NSArray *) toolbarAllowedItemIdentifiers: (NSToolbar*) toolbar
 {
   return [NSArray arrayWithObjects:
     NSToolbarSeparatorItemIdentifier,

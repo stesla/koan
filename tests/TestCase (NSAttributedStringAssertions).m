@@ -8,22 +8,22 @@
 
 @implementation J3TestCase (NSAttributedStringAssertions)
 
-- (void) assertAttributedString: (NSAttributedString *)actualString
-                   equalsString: (NSString *)expectedString
-                        message: (NSString *)message
+- (void) assertAttributedString: (NSAttributedString *) actualString
+                   equalsString: (NSString *) expectedString
+                        message: (NSString *) message
 {
   [self assertTrue: [[actualString string] isEqualToString: expectedString] message: message];  
 }
 
-- (void) assertAttributedString: (NSAttributedString *)actualString 
-                   equalsString: (NSString *)expected
+- (void) assertAttributedString: (NSAttributedString *) actualString 
+                   equalsString: (NSString *) expected
 {
   [self assertAttributedString: actualString equalsString: expected message: nil];
 }
 
-- (void) assertAttributesTheSameInString: (NSAttributedString *)string
+- (void) assertAttributesTheSameInString: (NSAttributedString *) string
                                withRange: (NSRange)range
-                                 message: (NSString *)message
+                                 message: (NSString *) message
 {
   NSRange result;
   
@@ -36,7 +36,7 @@
           message: message];
 }
 
-- (void) assertAttributesTheSameInString: (NSAttributedString *)string
+- (void) assertAttributesTheSameInString: (NSAttributedString *) string
                                withRange: (NSRange)range
 {
   [self assertAttributesTheSameInString: string
@@ -44,11 +44,11 @@
                                 message: nil];
 }
 
-- (void) assertAttribute: (NSString *)attributeName
-                  equals: (id)expectedValue
-      inAttributedString: (NSAttributedString *)string
-                 atIndex: (int)index
-                 message: (NSString *)message
+- (void) assertAttribute: (NSString *) attributeName
+                  equals: (id) expectedValue
+      inAttributedString: (NSAttributedString *) string
+                 atIndex: (int) index
+                 message: (NSString *) message
 {
   NSDictionary *attributes = [string attributesAtIndex: index
                                         effectiveRange: NULL];
@@ -57,10 +57,10 @@
        message: message];
 }
 
-- (void) assertAttribute: (NSString *)attributeName
-                  equals: (id)expectedValue
-      inAttributedString: (NSAttributedString *)string
-                 atIndex: (int)index
+- (void) assertAttribute: (NSString *) attributeName
+                  equals: (id) expectedValue
+      inAttributedString: (NSAttributedString *) string
+                 atIndex: (int) index
 {
   [self assertAttribute: attributeName
                  equals: expectedValue
@@ -69,11 +69,11 @@
                 message: nil];
 }
 
-- (void) assertAttribute: (NSString *)attributeName
-                  equals: (id)expectedValue
-      inAttributedString: (NSAttributedString*)string
+- (void) assertAttribute: (NSString *) attributeName
+                  equals: (id) expectedValue
+      inAttributedString: (NSAttributedString*) string
                withRange: (NSRange)range
-                 message: (NSString *)message
+                 message: (NSString *) message
 {
   [self assertAttribute: attributeName
                  equals: expectedValue
@@ -82,9 +82,9 @@
   [self assertAttributesTheSameInString: string withRange: range message: message];
 }
 
-- (void) assertAttribute: (NSString *)attributeName
-                  equals: (id)expectedValue
-      inAttributedString: (NSAttributedString*)string
+- (void) assertAttribute: (NSString *) attributeName
+                  equals: (id) expectedValue
+      inAttributedString: (NSAttributedString*) string
                withRange: (NSRange)range
 {
   [self assertAttribute: attributeName

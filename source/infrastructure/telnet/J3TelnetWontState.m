@@ -11,7 +11,7 @@
 
 @implementation J3TelnetWontState
 
-- (J3TelnetState *) parse: (uint8_t)byte forParser: (J3TelnetEngine *)parser
+- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
 {
   NSLog (@"Received: IAC WONT %@", [parser optionNameForByte: byte]);
   return [J3TelnetTextState state];

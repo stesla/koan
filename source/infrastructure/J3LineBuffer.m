@@ -23,7 +23,7 @@
   return result;
 }
 
-- (void) setDelegate: (NSObject <J3LineBufferDelegate> *)object
+- (void) setDelegate: (NSObject <J3LineBufferDelegate> *) object
 {
   [self at: &delegate put: object];
 }
@@ -31,7 +31,7 @@
 #pragma mark -
 #pragma mark Overrides
 
-- (void) append: (uint8_t)byte
+- (void) append: (uint8_t) byte
 {
   [super append: byte];
   if (byte == (uint8_t) '\n')

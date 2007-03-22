@@ -29,45 +29,45 @@
   NSColor *visitedLinkColor;
 }
 
-+ (MUProfile *) profileWithWorld: (MUWorld *)newWorld 
-                          player: (MUPlayer *)newPlayer
-                     autoconnect: (BOOL)autoconnect;
-+ (MUProfile *) profileWithWorld: (MUWorld *)newWorld player: (MUPlayer *)newPlayer;
-+ (MUProfile *) profileWithWorld: (MUWorld *)newWorld;
++ (MUProfile *) profileWithWorld: (MUWorld *) newWorld 
+                          player: (MUPlayer *) newPlayer
+                     autoconnect: (BOOL) autoconnect;
++ (MUProfile *) profileWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer;
++ (MUProfile *) profileWithWorld: (MUWorld *) newWorld;
 
 // Designated initializer.
-- (id) initWithWorld: (MUWorld *)newWorld 
-              player: (MUPlayer *)newPlayer
-         autoconnect: (BOOL)newAutoconnect
-  							font: (NSFont *)newFont
-  				 textColor: (NSColor *)newTextColor
-  	 backgroundColor: (NSColor *)newBackgroundColor
-  				 linkColor: (NSColor *)newLinkColor
-  	visitedLinkColor: (NSColor *)newVisitedLinkColor;
+- (id) initWithWorld: (MUWorld *) newWorld 
+              player: (MUPlayer *) newPlayer
+         autoconnect: (BOOL) newAutoconnect
+  							font: (NSFont *) newFont
+  				 textColor: (NSColor *) newTextColor
+  	 backgroundColor: (NSColor *) newBackgroundColor
+  				 linkColor: (NSColor *) newLinkColor
+  	visitedLinkColor: (NSColor *) newVisitedLinkColor;
 
-- (id) initWithWorld: (MUWorld *)newWorld 
-              player: (MUPlayer *)newPlayer
-         autoconnect: (BOOL)newAutoconnect;
-- (id) initWithWorld: (MUWorld *)newWorld player: (MUPlayer *)newPlayer;
-- (id) initWithWorld: (MUWorld *)newWorld;
+- (id) initWithWorld: (MUWorld *) newWorld 
+              player: (MUPlayer *) newPlayer
+         autoconnect: (BOOL) newAutoconnect;
+- (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer;
+- (id) initWithWorld: (MUWorld *) newWorld;
 
 // Accessors.
 - (MUWorld *) world;
-- (void) setWorld: (MUWorld *)newWorld;
+- (void) setWorld: (MUWorld *) newWorld;
 - (MUPlayer *) player;
-- (void) setPlayer: (MUPlayer *)newPlayer;
+- (void) setPlayer: (MUPlayer *) newPlayer;
 - (BOOL) autoconnect;
-- (void) setAutoconnect: (BOOL)newAutoconnect;
+- (void) setAutoconnect: (BOOL) newAutoconnect;
 - (NSFont *) font;
-- (void) setFont: (NSFont *)newFont;
+- (void) setFont: (NSFont *) newFont;
 - (NSColor *) textColor;
-- (void) setTextColor: (NSColor *)newTextColor;
+- (void) setTextColor: (NSColor *) newTextColor;
 - (NSColor *) backgroundColor;
-- (void) setBackgroundColor: (NSColor *)newBackgroundColor;
+- (void) setBackgroundColor: (NSColor *) newBackgroundColor;
 - (NSColor *) linkColor;
-- (void) setLinkColor: (NSColor *)newLinkColor;
+- (void) setLinkColor: (NSColor *) newLinkColor;
 - (NSColor *) visitedLinkColor;
-- (void) setVisitedLinkColor: (NSColor *)newVisitedLinkColor;
+- (void) setVisitedLinkColor: (NSColor *) newVisitedLinkColor;
 - (NSObject <J3Formatting> *) formatting;
 
 // Derived bindings.
@@ -85,6 +85,6 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate;
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *) delegate;
 
 @end

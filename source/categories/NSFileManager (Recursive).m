@@ -10,7 +10,7 @@
 
 @implementation NSFileManager (Recursive)
 
-- (BOOL) createDirectoryAtPath: (NSString *)path attributes: (NSDictionary *)attributes recursive: (BOOL)recursive
+- (BOOL) createDirectoryAtPath: (NSString *) path attributes: (NSDictionary *) attributes recursive: (BOOL) recursive
 {
   if (recursive)
     return [self createDirectoryRecursivelyAtPath: path attributes: attributes];
@@ -18,7 +18,7 @@
     return [self createDirectoryAtPath: path attributes: attributes];
 }
 
-- (BOOL) createDirectoryRecursivelyAtPath: (NSString *)path attributes: (NSDictionary *)attributes
+- (BOOL) createDirectoryRecursivelyAtPath: (NSString *) path attributes: (NSDictionary *) attributes
 {
   BOOL isDirectory;
   

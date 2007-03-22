@@ -9,8 +9,8 @@
 
 @interface J3NaiveURLFilter (Private)
 
-- (void) linkifyURLs: (NSMutableAttributedString *)editString;
-- (NSURL *) normalizedURLForString: (NSString *)string;
+- (void) linkifyURLs: (NSMutableAttributedString *) editString;
+- (NSURL *) normalizedURLForString: (NSString *) string;
 
 @end
 
@@ -21,7 +21,7 @@
   return [[[self alloc] init] autorelease];
 }
 
-- (NSAttributedString *) filter: (NSAttributedString *)string
+- (NSAttributedString *) filter: (NSAttributedString *) string
 {
   NSMutableAttributedString *editString = [NSMutableAttributedString attributedStringWithAttributedString: string];
   
@@ -34,7 +34,7 @@
 
 @implementation J3NaiveURLFilter (Private)
 
-- (void) linkifyURLs: (NSMutableAttributedString *)editString
+- (void) linkifyURLs: (NSMutableAttributedString *) editString
 {
   NSString *sourceString = [editString string];
   NSScanner *scanner = [NSScanner scannerWithString: sourceString];
@@ -98,7 +98,7 @@
   }
 }
 
-- (NSURL *) normalizedURLForString: (NSString *)string
+- (NSURL *) normalizedURLForString: (NSString *) string
 {
   if ([string hasPrefix: @"http: "])
     return [NSURL URLWithString: string];

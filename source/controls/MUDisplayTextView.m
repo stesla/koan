@@ -44,7 +44,7 @@
 
 @implementation MUDisplayTextView
 
-- (NSCursor *) cursorForLink: (NSObject *)linkObject atIndex: (unsigned)charIndex
+- (NSCursor *) cursorForLink: (NSObject *) linkObject atIndex: (unsigned) charIndex
 {
   NSCursor *result = nil;
   

@@ -10,6 +10,6 @@
 
 @interface NSObject (Accessing)
 
-- (void) at: (id *)field put: (id)value;
+- (void) at: (id *) field put: (id) value;
 
 @end

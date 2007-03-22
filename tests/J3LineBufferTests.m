@@ -8,7 +8,7 @@
 
 @interface J3LineBufferTests (Private)
 
-- (void) bufferString: (NSString *)string;
+- (void) bufferString: (NSString *) string;
 
 @end
 
@@ -16,7 +16,7 @@
 
 @implementation J3LineBufferTests
 
-- (void) lineBufferHasReadLine: (J3LineBuffer *)lineBuffer
+- (void) lineBufferHasReadLine: (J3LineBuffer *) lineBuffer
 {
   line = [lineBuffer readLine];
 }
@@ -52,7 +52,7 @@
 
 @implementation J3LineBufferTests (Private)
 
-- (void) bufferString: (NSString *)string
+- (void) bufferString: (NSString *) string
 {
   [buffer appendString: string];
 }

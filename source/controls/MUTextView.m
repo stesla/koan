@@ -8,7 +8,7 @@
 
 @implementation MUTextView
 
-- (BOOL) validateMenuItem: (NSMenuItem *)menuItem
+- (BOOL) validateMenuItem: (NSMenuItem *) menuItem
 {
   SEL menuItemAction = [menuItem action];
   
@@ -23,7 +23,7 @@
   return [super validateMenuItem: menuItem];
 }
 
-- (void) insertText: (id)string
+- (void) insertText: (id) string
 {
   BOOL result;
   
@@ -34,12 +34,12 @@
     [super insertText: string];
 }
 
-- (IBAction) paste: (id)sender
+- (IBAction) paste: (id) sender
 {
   [self pasteAsPlainText: sender];
 }
 
-- (IBAction) pasteAsPlainText: (id)sender
+- (IBAction) pasteAsPlainText: (id) sender
 {
   BOOL result;
   
@@ -50,7 +50,7 @@
     [self pasteAsPlainText: sender];
 }
 
-- (IBAction) pasteAsRichText: (id)sender
+- (IBAction) pasteAsRichText: (id) sender
 {
   [self pasteAsPlainText: sender];
 }

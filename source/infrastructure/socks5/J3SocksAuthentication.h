@@ -16,7 +16,7 @@
   BOOL authenticated;
 }
 
-- (id) initWithUsername: (NSString *)username password: (NSString *)password;
+- (id) initWithUsername: (NSString *) username password: (NSString *) password;
 - (void) appendToBuffer: (id <J3Buffer>)buffer;
 - (BOOL) authenticated;
 - (void) parseReplyFromSource: (id <J3ByteSource>)source;

@@ -7,28 +7,28 @@
 #import "MUTextLoggerTests.h"
 
 @interface MUTextLoggerTests (Private)
-- (void) assertFilter: (id)object;
-- (void) assertFilterString: (NSString *)string;
-- (void) assertLoggedOutput: (NSString *)string;
+- (void) assertFilter: (id) object;
+- (void) assertFilterString: (NSString *) string;
+- (void) assertLoggedOutput: (NSString *) string;
 @end
 
 #pragma mark -
 
 @implementation MUTextLoggerTests (Private)
 
-- (void) assertFilter: (id)object
+- (void) assertFilter: (id) object
 {
   [self assert: [filter filter: object] equals: object message: nil];
 }
 
-- (void) assertFilterString: (NSString *)string
+- (void) assertFilterString: (NSString *) string
 {
   [self assertFilter: [NSAttributedString attributedStringWithString: string]];
 }
 
-- (void) assertLoggedOutput: (NSString *)string
+- (void) assertLoggedOutput: (NSString *) string
 {
-  NSString *outputString = [NSString stringWithCString: (const char *)outputBuffer];
+  NSString *outputString = [NSString stringWithCString: (const char *) outputBuffer];
   
   [self assert: outputString equals: string];
 }

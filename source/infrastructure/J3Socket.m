@@ -19,14 +19,14 @@
 - (void) connectSocket;
 - (void) createSocket;
 - (void) handleReadWriteError;
-- (void) initializeDescriptorSet: (fd_set *)set;
+- (void) initializeDescriptorSet: (fd_set *) set;
 - (void) performPostConnectNegotiation;
 - (void) resolveHostname;
 - (void) setStatusConnected;
 - (void) setStatusConnecting;
 - (void) setStatusClosedByClient;
 - (void) setStatusClosedByServer;
-- (void) setStatusClosedWithError: (NSString *)error;
+- (void) setStatusClosedWithError: (NSString *) error;
 
 @end
 
@@ -34,12 +34,12 @@
 
 @implementation J3SocketException
 
-+ (void) socketError: (NSString *)errorMessage
++ (void) socketError: (NSString *) errorMessage
 {
   @throw [J3SocketException exceptionWithName: @"" reason: errorMessage userInfo: nil];
 }
 
-+ (void) socketErrorFormat: (NSString *)format arguments: (va_list)args
++ (void) socketErrorFormat: (NSString *) format arguments: (va_list)args
 {
   NSString *message = [[[NSString alloc] initWithFormat: format arguments: args] autorelease];
   [self socketError: message];
@@ -56,12 +56,12 @@
 
 @implementation J3Socket
 
-+ (id) socketWithHostname: (NSString *)hostname port: (int)port
++ (id) socketWithHostname: (NSString *) hostname port: (int) port
 {
   return [[[self alloc] initWithHostname: hostname port: port] autorelease];
 }
 
-- (id) initWithHostname: (NSString *)newHostname port: (int)newPort
+- (id) initWithHostname: (NSString *) newHostname port: (int) newPort
 {
   if (![super init])
     return nil;
@@ -157,7 +157,7 @@
   }
 }
 
-- (unsigned) read: (uint8_t *)bytes maxLength: (unsigned)length
+- (unsigned) read: (uint8_t *) bytes maxLength: (unsigned) length
 {
   int result;
   errno = 0;
@@ -167,7 +167,7 @@
   return result;
 }
 
-- (void) setDelegate: (NSObject <J3ConnectionDelegate> *)object
+- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object
 {
   [self at: &delegate put: object];
 }
@@ -180,7 +180,7 @@
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (unsigned) write: (const uint8_t *)bytes length: (unsigned)length
+- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length
 {
   int result;
   errno = 0;
@@ -247,7 +247,7 @@
   [J3SocketException socketErrorWithErrno];
 }
 
-- (void) initializeDescriptorSet: (fd_set *)set
+- (void) initializeDescriptorSet: (fd_set *) set
 {
   FD_ZERO (set);
   FD_SET (socketfd, set);
@@ -298,7 +298,7 @@
     [delegate connectionWasClosedByServer: self];
 }
 
-- (void) setStatusClosedWithError: (NSString *)error
+- (void) setStatusClosedWithError: (NSString *) error
 {
   status = J3SocketStatusClosed;
   if (delegate && [delegate respondsToSelector: @selector (connectionWasClosed:withError:)])

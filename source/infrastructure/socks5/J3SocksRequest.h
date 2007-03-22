@@ -17,7 +17,7 @@
   J3SocksReply reply;
 }
 
-- (id) initWithHostname: (NSString *)hostnameValue port: (int)portValue;
+- (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue;
 - (void) appendToBuffer: (id <J3Buffer>)buffer;
 - (void) parseReplyFromByteSource: (id <J3ByteSource>)source;
 - (J3SocksReply) reply;

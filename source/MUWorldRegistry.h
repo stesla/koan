@@ -17,16 +17,16 @@
 + (MUWorldRegistry *) defaultRegistry;
 
 - (NSMutableArray *) worlds;
-- (void) setWorlds: (NSArray *)newWorlds;
-- (void) insertObject: (MUWorld *)world inWorldsAtIndex: (unsigned)index;
-- (void) removeObjectFromWorldsAtIndex: (unsigned)index;
+- (void) setWorlds: (NSArray *) newWorlds;
+- (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) index;
+- (void) removeObjectFromWorldsAtIndex: (unsigned) index;
 
 - (unsigned) count;
-- (int) indexOfWorld: (MUWorld *)world;
-- (void) removeWorld: (MUWorld *)world;
-- (void) replaceWorld: (MUWorld *)oldWorld withWorld: (MUWorld *)newWorld;
+- (int) indexOfWorld: (MUWorld *) world;
+- (void) removeWorld: (MUWorld *) world;
+- (void) replaceWorld: (MUWorld *) oldWorld withWorld: (MUWorld *) newWorld;
 - (void) saveWorlds;
-- (MUWorld *) worldAtIndex: (unsigned)index;
-- (MUWorld *) worldForUniqueIdentifier: (NSString *)identifier;
+- (MUWorld *) worldAtIndex: (unsigned) index;
+- (MUWorld *) worldForUniqueIdentifier: (NSString *) identifier;
 
 @end

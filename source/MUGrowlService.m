@@ -11,10 +11,10 @@ static MUGrowlService *defaultGrowlService;
 
 @interface MUGrowlService (Private)
 
-- (void) cleanUpDefaultGrowlService: (NSNotification *)notification;
-- (void) notifyWithName: (NSString *)name
-  								title: (NSString *)title
-  					description: (NSString *)description;
+- (void) cleanUpDefaultGrowlService: (NSNotification *) notification;
+- (void) notifyWithName: (NSString *) name
+  								title: (NSString *) title
+  					description: (NSString *) description;
 
 @end
 
@@ -46,7 +46,7 @@ static MUGrowlService *defaultGrowlService;
   return self;
 }
 
-+ (void) connectionClosedByErrorForTitle: (NSString *)title error: (NSString *)error
++ (void) connectionClosedByErrorForTitle: (NSString *) title error: (NSString *) error
 {
   NSString *description = [NSString stringWithFormat: _(MUGConnectionClosedByErrorDescription),
     error];
@@ -56,21 +56,21 @@ static MUGrowlService *defaultGrowlService;
                                            description: description];
 }
 
-+ (void) connectionClosedByServerForTitle: (NSString *)title
++ (void) connectionClosedByServerForTitle: (NSString *) title
 {
   [[MUGrowlService defaultGrowlService] notifyWithName: _(MUGConnectionClosedByServerName)
                                                  title: title
                                            description: _(MUGConnectionClosedByServerDescription)];
 }
 
-+ (void) connectionClosedForTitle: (NSString *)title
++ (void) connectionClosedForTitle: (NSString *) title
 {
   [[MUGrowlService defaultGrowlService] notifyWithName: _(MUGConnectionClosedName)
                                                  title: title
                                            description: _(MUGConnectionClosedDescription)];
 }
 
-+ (void) connectionOpenedForTitle: (NSString *)title
++ (void) connectionOpenedForTitle: (NSString *) title
 {
   [[MUGrowlService defaultGrowlService] notifyWithName: _(MUGConnectionOpenedName)
                                                  title: title
@@ -122,15 +122,15 @@ static MUGrowlService *defaultGrowlService;
 
 @implementation MUGrowlService (Private)
 
-- (void) cleanUpDefaultGrowlService: (NSNotification *)notification
+- (void) cleanUpDefaultGrowlService: (NSNotification *) notification
 {
   [[NSNotificationCenter defaultCenter] removeObserver: defaultGrowlService];
   [defaultGrowlService release];
 }
 
-- (void) notifyWithName: (NSString *)name
-  								title: (NSString *)title
-  					description: (NSString *)description
+- (void) notifyWithName: (NSString *) name
+  								title: (NSString *) title
+  					description: (NSString *) description
 {
   if (growlIsReady)
   {

@@ -9,16 +9,16 @@
 
 @implementation MUPlayer
 
-+ (MUPlayer *) playerWithName: (NSString *)newName
-  									 password: (NSString *)newPassword
-  											world: (MUWorld *)newWorld
++ (MUPlayer *) playerWithName: (NSString *) newName
+  									 password: (NSString *) newPassword
+  											world: (MUWorld *) newWorld
 {
   return [[[self alloc] initWithName: newName password: newPassword world: newWorld] autorelease];
 }
 
-- (id) initWithName: (NSString *)newName
-           password: (NSString *)newPassword
-              world: (MUWorld *)newWorld
+- (id) initWithName: (NSString *) newName
+           password: (NSString *) newPassword
+              world: (MUWorld *) newWorld
 {
   if (![super init])
     return nil;
@@ -50,7 +50,7 @@
   return name;
 }
 
-- (void) setName: (NSString *)newName
+- (void) setName: (NSString *) newName
 {
   if (name == newName)
     return;
@@ -63,7 +63,7 @@
   return password;
 }
 
-- (void) setPassword: (NSString *)newPassword
+- (void) setPassword: (NSString *) newPassword
 {
   if (password == newPassword)
     return;
@@ -76,7 +76,7 @@
   return world;
 }
 
-- (void) setWorld: (MUWorld *)newWorld
+- (void) setWorld: (MUWorld *) newWorld
 {
   world = newWorld;
 }
@@ -120,12 +120,12 @@
 #pragma mark -
 #pragma mark NSCoding protocol
 
-- (void) encodeWithCoder: (NSCoder *)encoder
+- (void) encodeWithCoder: (NSCoder *) encoder
 {
   [MUCodingService encodePlayer: self withCoder: encoder];
 }
 
-- (id) initWithCoder: (NSCoder *)decoder
+- (id) initWithCoder: (NSCoder *) decoder
 {
   if (![super init])
     return nil;
@@ -138,7 +138,7 @@
 #pragma mark -
 #pragma mark NSCopying protocol
 
-- (id) copyWithZone: (NSZone *)zone
+- (id) copyWithZone: (NSZone *) zone
 {
   return [[MUPlayer allocWithZone: zone] initWithName: [self name]
                                             password: [self password]

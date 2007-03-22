@@ -8,13 +8,13 @@
 
 @implementation NSFont (Traits)
 
-- (NSFont *) fontWithTrait: (NSFontTraitMask)trait
+- (NSFont *) fontWithTrait: (NSFontTraitMask) trait
 {
   NSFontManager *fontManager = [NSFontManager sharedFontManager];
   return [fontManager convertFont: self toHaveTrait: trait];
 }
 
-- (BOOL) hasTrait: (NSFontTraitMask)trait
+- (BOOL) hasTrait: (NSFontTraitMask) trait
 {
   NSFontManager *fontManager = [NSFontManager sharedFontManager];
   return [fontManager fontNamed: [self fontName] hasTraits: trait];

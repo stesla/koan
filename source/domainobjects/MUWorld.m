@@ -20,11 +20,11 @@
 
 @implementation MUWorld
 
-+ (MUWorld *) worldWithName: (NSString *)newName
-  								 hostname: (NSString *)newHostname
-  										 port: (NSNumber *)newPort
-  											URL: (NSString *)newURL
-  									players: (NSArray *)newPlayers
++ (MUWorld *) worldWithName: (NSString *) newName
+  								 hostname: (NSString *) newHostname
+  										 port: (NSNumber *) newPort
+  											URL: (NSString *) newURL
+  									players: (NSArray *) newPlayers
 {
   return [[[self alloc] initWithName: newName
   													hostname: newHostname
@@ -33,11 +33,11 @@
   													 players: newPlayers] autorelease];
 }
 
-- (id) initWithName: (NSString *)newName
-           hostname: (NSString *)newHostname
-               port: (NSNumber *)newPort
-                URL: (NSString *)newURL
-            players: (NSArray *)newPlayers
+- (id) initWithName: (NSString *) newName
+           hostname: (NSString *) newHostname
+               port: (NSNumber *) newPort
+                URL: (NSString *) newURL
+            players: (NSArray *) newPlayers
 {
   if (![super init])
     return nil;
@@ -78,7 +78,7 @@
   return name;
 }
 
-- (void) setName: (NSString *)newName
+- (void) setName: (NSString *) newName
 {
   if (name == newName)
     return;
@@ -91,7 +91,7 @@
   return hostname;
 }
 
-- (void) setHostname: (NSString *)newHostname
+- (void) setHostname: (NSString *) newHostname
 {
   if (hostname == newHostname)
     return;
@@ -104,7 +104,7 @@
   return port;
 }
 
-- (void) setPort: (NSNumber *)newPort
+- (void) setPort: (NSNumber *) newPort
 {
   if (port == newPort)
     return;
@@ -117,7 +117,7 @@
   return url;
 }
 
-- (void) setURL: (NSString *)newURL
+- (void) setURL: (NSString *) newURL
 {
   if (url == newURL)
     return;
@@ -130,7 +130,7 @@
   return players;
 }
 
-- (void) setPlayers: (NSArray *)newPlayers
+- (void) setPlayers: (NSArray *) newPlayers
 {
   if (players == newPlayers)
     return;
@@ -139,7 +139,7 @@
   [self postWorldsDidChangeNotification];
 }
 
-- (int) indexOfPlayer: (MUPlayer *)player
+- (int) indexOfPlayer: (MUPlayer *) player
 {
   unsigned i;
   
@@ -154,19 +154,19 @@
   return -1;
 }
 
-- (void) insertObject: (MUPlayer *)player inPlayersAtIndex: (unsigned)index
+- (void) insertObject: (MUPlayer *) player inPlayersAtIndex: (unsigned) index
 {
   [players insertObject: player atIndex: index];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) removeObjectFromPlayersAtIndex: (unsigned)index
+- (void) removeObjectFromPlayersAtIndex: (unsigned) index
 {
   [players removeObjectAtIndex: index];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) addPlayer: (MUPlayer *)player
+- (void) addPlayer: (MUPlayer *) player
 {
   if ([self containsPlayer: player])
     return;
@@ -176,19 +176,19 @@
   [self postWorldsDidChangeNotification];
 }
 
-- (BOOL) containsPlayer: (MUPlayer *)player
+- (BOOL) containsPlayer: (MUPlayer *) player
 {
   return [players containsObject: player];
 }
 
-- (void) removePlayer: (MUPlayer *)player
+- (void) removePlayer: (MUPlayer *) player
 {
   [player setWorld: nil];
   [players removeObject: player];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) replacePlayer: (MUPlayer *)oldPlayer withPlayer: (MUPlayer *)newPlayer
+- (void) replacePlayer: (MUPlayer *) oldPlayer withPlayer: (MUPlayer *) newPlayer
 {
   unsigned i;
   
@@ -208,7 +208,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
+- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *) delegate
 {
   return [[J3ConnectionFactory defaultFactory] lineAtATimeTelnetWithHostname: [self hostname] port: [[self port] intValue] delegate: delegate lineBufferDelegate: delegate];
 }
@@ -238,12 +238,12 @@
 #pragma mark -
 #pragma mark NSCoding protocol
 
-- (void) encodeWithCoder: (NSCoder *)encoder
+- (void) encodeWithCoder: (NSCoder *) encoder
 {
   [MUCodingService encodeWorld: self withCoder: encoder];
 }
 
-- (id) initWithCoder: (NSCoder *)decoder
+- (id) initWithCoder: (NSCoder *) decoder
 {
   if (![super init])
     return nil;
@@ -255,7 +255,7 @@
 #pragma mark -
 #pragma mark NSCopying protocol
 
-- (id) copyWithZone: (NSZone *)zone
+- (id) copyWithZone: (NSZone *) zone
 {
   return [[MUWorld allocWithZone: zone] initWithName: [self name]
                                            hostname: [self hostname]

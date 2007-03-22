@@ -17,7 +17,7 @@
   unsigned bytesToRead;
 }
 
-- (void) setBytesToRead: (unsigned)value;
+- (void) setBytesToRead: (unsigned) value;
 
 @end
 
@@ -28,7 +28,7 @@
   return [self length] > 0;
 }
 
-- (unsigned) read: (uint8_t *)buffer maxLength: (unsigned)length;
+- (unsigned) read: (uint8_t *) buffer maxLength: (unsigned) length;
 {
   unsigned lengthToRead = length;
   if (bytesToRead > 0)
@@ -39,7 +39,7 @@
   return [self length] > lengthToRead ? lengthToRead : [self length];
 }
 
-- (void) setBytesToRead: (unsigned)value;
+- (void) setBytesToRead: (unsigned) value;
 {
   bytesToRead = value;
 }
@@ -48,7 +48,7 @@
 
 @interface J3TestSocksPrimitives (Private)
 
-- (void) assertObject: (id)selection writes: (NSString *)output;
+- (void) assertObject: (id) selection writes: (NSString *) output;
 
 @end
 
@@ -78,7 +78,7 @@
   [selection appendToBuffer: buffer];
   output = [buffer stringValue];
   for (i = 0; i < [buffer length]; ++i)
-    [self assertInt: (int)[output characterAtIndex: i] equals: expected1[i]];
+    [self assertInt: (int) [output characterAtIndex: i] equals: expected1[i]];
    
   [selection addMethod: J3SocksUsernamePassword];
 
@@ -86,7 +86,7 @@
   [selection appendToBuffer: buffer];
   output = [buffer stringValue];
   for (i = 0; i < [buffer length]; ++i)
-    [self assertInt: (int)[output characterAtIndex: i] equals: expected2[i]];
+    [self assertInt: (int) [output characterAtIndex: i] equals: expected2[i]];
 }
 
 - (void) testSelectMethod;
@@ -123,7 +123,7 @@
   data = [buffer dataValue];
   [self assertInt: [data length] equals: 18]; // same as expected length above
   for (i = 0; i < 18; ++i)
-    [self assertInt: ((uint8_t *)[data bytes])[i] equals: expected[i]];
+    [self assertInt: ((uint8_t *) [data bytes])[i] equals: expected[i]];
 }
 
 - (void) testReplyWithDomainName;
@@ -180,7 +180,7 @@
   data = [buffer dataValue];
   [self assertInt: [data length] equals: 12]; // same as expected length above
   for (i = 0; i < 12; ++i)
-    [self assertInt: ((uint8_t *)[data bytes])[i] equals: expected[i]];
+    [self assertInt: ((uint8_t *) [data bytes])[i] equals: expected[i]];
 }
 
 - (void) testAuthenticationReply;
@@ -206,7 +206,7 @@
 
 @implementation J3TestSocksPrimitives (Private)
 
-- (void) assertObject: (id)object writes: (NSString *)output;
+- (void) assertObject: (id) object writes: (NSString *) output;
 {
   [buffer clear];
   [object appendToBuffer: buffer];

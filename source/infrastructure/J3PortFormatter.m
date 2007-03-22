@@ -10,7 +10,7 @@
 
 @implementation J3PortFormatter
 
-- (BOOL) getObjectValue: (id *)object forString: (NSString *)string errorDescription: (NSString **)error
+- (BOOL) getObjectValue: (id *) object forString: (NSString *) string errorDescription: (NSString **) error
 {
   int intResult;
   NSScanner *scanner;
@@ -37,7 +37,7 @@
   return NO;
 }
 
-- (BOOL) isPartialStringValid: (NSString *)partialString newEditingString: (NSString **)newString errorDescription: (NSString **)error
+- (BOOL) isPartialStringValid: (NSString *) partialString newEditingString: (NSString **) newString errorDescription: (NSString **) error
 {
   int intResult;
   NSScanner *scanner;
@@ -70,7 +70,7 @@
   return YES;
 }
 
-- (NSString *) stringForObjectValue: (id)object
+- (NSString *) stringForObjectValue: (id) object
 {
   NSNumber *number = (NSNumber *) object;
   int value = [number intValue];

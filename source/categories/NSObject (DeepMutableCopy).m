@@ -19,7 +19,7 @@
 
 @implementation NSArray (DeepMutableCopy)
 
-- (id) deepMutableCopyWithZone: (NSZone *)zone
+- (id) deepMutableCopyWithZone: (NSZone *) zone
 {
   NSMutableArray *mutableCopy = [[NSMutableArray allocWithZone: zone] initWithCapacity: [self count]];
   int i, count = [self count];
@@ -53,7 +53,7 @@
 
 @implementation NSDictionary (DeepMutableCopy)
 
-- (id) deepMutableCopyWithZone: (NSZone *)zone
+- (id) deepMutableCopyWithZone: (NSZone *) zone
 {
   NSMutableDictionary *mutableCopy = [[NSMutableDictionary allocWithZone: zone] init];
   id enumerator = [self keyEnumerator];

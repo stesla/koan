@@ -17,7 +17,7 @@ static const int32_t currentProxyVersion = 2;
 
 @implementation MUCodingService
 
-+ (void) encodePlayer: (MUPlayer *)player withCoder: (NSCoder *)encoder
++ (void) encodePlayer: (MUPlayer *) player withCoder: (NSCoder *) encoder
 {
   [encoder encodeInt32: currentPlayerVersion forKey: @"version"];
   
@@ -25,7 +25,7 @@ static const int32_t currentProxyVersion = 2;
   [encoder encodeObject: [player password] forKey: @"password"];  
 }
 
-+ (void) decodePlayer: (MUPlayer *)player withCoder: (NSCoder *)decoder
++ (void) decodePlayer: (MUPlayer *) player withCoder: (NSCoder *) decoder
 {
   // int32_t version = [decoder decodeInt32ForKey: @"version"];
   
@@ -33,7 +33,7 @@ static const int32_t currentProxyVersion = 2;
   [player setPassword: [decoder decodeObjectForKey: @"password"]];
 }
 
-+ (void) encodeProfile: (MUProfile *)profile withCoder: (NSCoder *)encoder
++ (void) encodeProfile: (MUProfile *) profile withCoder: (NSCoder *) encoder
 {
   [encoder encodeInt32: currentProfileVersion forKey: @"version"];
   [encoder encodeBool: [profile autoconnect] forKey: @"autoconnect"];
@@ -45,7 +45,7 @@ static const int32_t currentProxyVersion = 2;
   [encoder encodeObject: [NSArchiver archivedDataWithRootObject: [profile visitedLinkColor]] forKey: @"visitedLinkColor"];
 }
 
-+ (void) decodeProfile: (MUProfile *)profile withCoder: (NSCoder *)decoder
++ (void) decodeProfile: (MUProfile *) profile withCoder: (NSCoder *) decoder
 {
   int32_t version = [decoder decodeInt32ForKey: @"version"];
   
@@ -62,7 +62,7 @@ static const int32_t currentProxyVersion = 2;
   }
 }
 
-+ (void) encodeWorld: (MUWorld *)world withCoder: (NSCoder *)encoder
++ (void) encodeWorld: (MUWorld *) world withCoder: (NSCoder *) encoder
 {
   [encoder encodeInt32: currentWorldVersion forKey: @"version"];
   
@@ -73,7 +73,7 @@ static const int32_t currentProxyVersion = 2;
   [encoder encodeObject: [world URL] forKey: @"URL"];
 }
 
-+ (void) decodeWorld: (MUWorld *)world withCoder: (NSCoder *)decoder
++ (void) decodeWorld: (MUWorld *) world withCoder: (NSCoder *) decoder
 {
   int32_t version = [decoder decodeInt32ForKey: @"version"];
   
@@ -100,7 +100,7 @@ static const int32_t currentProxyVersion = 2;
     [world setURL: @""];
 }
 
-+ (void) encodeProxySettings: (J3ProxySettings *)settings withCoder: (NSCoder *)encoder;
++ (void) encodeProxySettings: (J3ProxySettings *) settings withCoder: (NSCoder *) encoder;
 {
   [encoder encodeInt32: currentProxyVersion forKey: @"version"];
   
@@ -110,7 +110,7 @@ static const int32_t currentProxyVersion = 2;
   [encoder encodeObject: [settings password] forKey: @"password"];  
 }
 
-+ (void) decodeProxySettings: (J3ProxySettings *)settings withCoder: (NSCoder *)decoder;
++ (void) decodeProxySettings: (J3ProxySettings *) settings withCoder: (NSCoder *) decoder;
 {
   int32_t version = [decoder decodeInt32ForKey: @"version"];
   

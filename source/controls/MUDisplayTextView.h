@@ -50,8 +50,8 @@
 
 @interface NSObject (MUDisplayTextViewDelegate)
 
-- (NSCursor *) cursorForLink: (NSObject *)linkObject
-                     atIndex: (unsigned)charIndex
-                  ofTextView: (NSTextView *)aTextView;
+- (NSCursor *) cursorForLink: (NSObject *) linkObject
+                     atIndex: (unsigned) charIndex
+                  ofTextView: (NSTextView *) aTextView;
 
 @end

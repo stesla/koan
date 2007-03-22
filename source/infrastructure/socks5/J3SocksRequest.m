@@ -10,7 +10,7 @@
 
 @implementation J3SocksRequest
 
-- (id) initWithHostname: (NSString *)hostnameValue port: (int)portValue;
+- (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue;
 {
   if (![super init])
     return nil;
@@ -43,7 +43,7 @@
   uint8_t buffer[261];
   unsigned bytesRead = 0;
 
-  memset(buffer, 0, sizeof(uint8_t) * 261);
+  memset (buffer, 0, sizeof (uint8_t) * 261);
 
   [J3ByteSource ensureBytesReadFromSource: source intoBuffer: buffer ofLength: 4];
   bytesRead = 4;

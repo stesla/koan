@@ -167,7 +167,7 @@
   	IBAction to assign to "Preferences..." menu item.
    -------------------------------------------------------------------------- */
 
--(IBAction)  	orderFrontPrefsPanel:  (id)sender
+-(IBAction)  	orderFrontPrefsPanel:  (id) sender
 {
   [[tabView window] makeKeyAndOrderFront: sender];
 }
@@ -178,7 +178,7 @@
   	Accessor for specifying the tab view to query.
    -------------------------------------------------------------------------- */
 
--(void)  		setTabView:  (NSTabView*)tv
+-(void)  		setTabView:  (NSTabView*) tv
 {
   tabView = tv;
 }
@@ -195,7 +195,7 @@
   	Name used for saving state of prefs window.
    -------------------------------------------------------------------------- */
 
--(void)  		setAutosaveName:  (NSString*)name
+-(void)  		setAutosaveName:  (NSString*) name
 {
   [name retain];
   [autosaveName release];
@@ -215,7 +215,7 @@
   	of tabs for the specified identifier.
    -------------------------------------------------------------------------- */
 
--(NSToolbarItem *) toolbar:  (NSToolbar *)toolbar itemForItemIdentifier:  (NSString *) itemIdent willBeInsertedIntoToolbar: (BOOL) willBeInserted
+-(NSToolbarItem *) toolbar:  (NSToolbar *) toolbar itemForItemIdentifier:  (NSString *) itemIdent willBeInsertedIntoToolbar: (BOOL) willBeInserted
 {
     // Required delegate method:   Given an item identifier, this method returns an item 
     // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
@@ -255,7 +255,7 @@
    -------------------------------------------------------------------------- */
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
--(NSArray*) toolbarSelectableItemIdentifiers:  (NSToolbar*)toolbar
+-(NSArray*) toolbarSelectableItemIdentifiers:  (NSToolbar*) toolbar
 {
   return [itemsList allKeys];
 }
@@ -269,7 +269,7 @@
   	a click.
    -------------------------------------------------------------------------- */
 
--(IBAction)  changePanes:  (id)sender
+-(IBAction)  changePanes:  (id) sender
 {
   NSString*		key;
   

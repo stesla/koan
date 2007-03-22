@@ -26,18 +26,18 @@ enum MUSearchDirections
 - (void) cleanUpPingTimer;
 - (void) cleanUpTelnetConnection;
 - (J3Filter *) createLogger;
-- (void) didEndCloseSheet: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
+- (void) didEndCloseSheet: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
 - (void) disconnect;
 - (void) disconnectAndCleanUp;
-- (void) displayString: (NSString *)string;
+- (void) displayString: (NSString *) string;
 - (void) endCompletion;
-- (BOOL) isUsingTelnet: (J3TelnetConnection *)telnet;
+- (BOOL) isUsingTelnet: (J3TelnetConnection *) telnet;
 - (void) postConnectionWindowControllerDidReceiveTextNotification;
 - (void) postConnectionWindowControllerWillCloseNotification;
-- (void) sendPeriodicPing: (NSTimer *)timer;
+- (void) sendPeriodicPing: (NSTimer *) timer;
 - (NSString *) splitViewAutosaveName;
 - (void) tabCompleteWithDirection: (enum MUSearchDirections)direction;
-- (void) willEndCloseSheet: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo;
+- (void) willEndCloseSheet: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
 
 @end
 
@@ -45,7 +45,7 @@ enum MUSearchDirections
 
 @implementation MUConnectionWindowController
 
-- (id) initWithProfile: (MUProfile*)newProfile;
+- (id) initWithProfile: (MUProfile*) newProfile;
 {
   J3ANSIFormattingFilter *formattingFilter;
   
@@ -64,12 +64,12 @@ enum MUSearchDirections
   return self;
 }
 
-- (id) initWithWorld: (MUWorld *)newWorld player: (MUPlayer *)newPlayer;
+- (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer;
 {
   return [self initWithProfile: [MUProfile profileWithWorld: newWorld player: newPlayer]];
 }
 
-- (id) initWithWorld: (MUWorld *)newWorld
+- (id) initWithWorld: (MUWorld *) newWorld
 {
   return [self initWithWorld: newWorld player: nil];
 }
@@ -135,7 +135,7 @@ enum MUSearchDirections
   [super dealloc];
 }
 
-- (BOOL) validateMenuItem: (NSMenuItem *)menuItem
+- (BOOL) validateMenuItem: (NSMenuItem *) menuItem
 {
   SEL menuItemAction = [menuItem action];
   
@@ -154,7 +154,7 @@ enum MUSearchDirections
   return NO;
 }
 
-- (BOOL) validateToolbarItem: (NSToolbarItem *)toolbarItem
+- (BOOL) validateToolbarItem: (NSToolbarItem *) toolbarItem
 {
   SEL toolbarItemAction = [toolbarItem action];
   
@@ -168,12 +168,12 @@ enum MUSearchDirections
   return NO;
 }
 
-- (BOOL) windowShouldClose: (id)sender
+- (BOOL) windowShouldClose: (id) sender
 {
   return [self canCloseWindow];
 }
 
-- (void) windowWillClose: (NSNotification *)notification
+- (void) windowWillClose: (NSNotification *) notification
 {
   NSWindow *window = [notification object];
   
@@ -194,7 +194,7 @@ enum MUSearchDirections
   return delegate;
 }
 
-- (void) setDelegate: (id)newDelegate
+- (void) setDelegate: (id) newDelegate
 {
   [[NSNotificationCenter defaultCenter] removeObserver: delegate
                                                   name: nil
@@ -246,12 +246,12 @@ enum MUSearchDirections
                      [profile hostname]);
 }
 
-- (IBAction) clearWindow: (id)sender
+- (IBAction) clearWindow: (id) sender
 {
   [receivedTextView setString: @""];
 }
 
-- (IBAction) connect: (id)sender
+- (IBAction) connect: (id) sender
 {
   if (![self isConnected])
   {
@@ -270,7 +270,7 @@ enum MUSearchDirections
   }
 }
 
-- (IBAction) connectOrDisconnect: (id)sender
+- (IBAction) connectOrDisconnect: (id) sender
 {
   if ([self isConnected])
     [self disconnect: nil];
@@ -278,17 +278,17 @@ enum MUSearchDirections
     [self connect: nil];
 }
 
-- (IBAction) disconnect: (id)sender
+- (IBAction) disconnect: (id) sender
 {
   [self disconnectAndCleanUp];
 }
 
-- (IBAction) goToWorldURL: (id)sender
+- (IBAction) goToWorldURL: (id) sender
 {
   [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: [[profile world] URL]]];
 }
 
-- (IBAction) sendInputText: (id)sender
+- (IBAction) sendInputText: (id) sender
 {
   NSString *input = [inputView string];
   
@@ -299,13 +299,13 @@ enum MUSearchDirections
   [[self window] makeFirstResponder: inputView];
 }
 
-- (IBAction) nextCommand: (id)sender
+- (IBAction) nextCommand: (id) sender
 {
   [historyRing updateString: [inputView string]];
   [inputView setString: [historyRing nextString]];
 }
 
-- (IBAction) previousCommand: (id)sender
+- (IBAction) previousCommand: (id) sender
 {
   [historyRing updateString: [inputView string]];
   [inputView setString: [historyRing previousString]];
@@ -314,7 +314,7 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark J3LineBufferDelegate protocol
 
-- (void) lineBufferHasReadLine: (J3LineBuffer *)buffer
+- (void) lineBufferHasReadLine: (J3LineBuffer *) buffer
 {
   if (![telnetConnection hasInputBuffer: buffer])
     return;
@@ -324,7 +324,7 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark J3TelnetConnectionDelegate protocol
 
-- (void) telnetConnectionIsConnecting: (J3TelnetConnection *)telnet
+- (void) telnetConnectionIsConnecting: (J3TelnetConnection *) telnet
 {
   if (![self isUsingTelnet: telnet])
     return;
@@ -333,7 +333,7 @@ enum MUSearchDirections
   [self displayString: @"\n"];  
 }
 
-- (void) telnetConnectionIsConnected: (J3TelnetConnection *)telnet
+- (void) telnetConnectionIsConnected: (J3TelnetConnection *) telnet
 {
   if (![self isUsingTelnet: telnet])
     return;
@@ -345,7 +345,7 @@ enum MUSearchDirections
   [telnetConnection writeLine: [profile loginString]];
 }
 
-- (void) telnetConnectionWasClosedByClient: (J3TelnetConnection *)telnet
+- (void) telnetConnectionWasClosedByClient: (J3TelnetConnection *) telnet
 {
   if (![self isUsingTelnet: telnet])
     return;
@@ -356,7 +356,7 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedForTitle: [profile windowTitle]];
 }
 
-- (void) telnetConnectionWasClosedByServer: (J3TelnetConnection *)telnet
+- (void) telnetConnectionWasClosedByServer: (J3TelnetConnection *) telnet
 {
   if (![self isUsingTelnet: telnet])
     return;
@@ -367,7 +367,7 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedByServerForTitle: [profile windowTitle]];
 }
 
-- (void) telnetConnectionWasClosed: (J3TelnetConnection *)telnet withError: (NSString *)errorMessage
+- (void) telnetConnectionWasClosed: (J3TelnetConnection *) telnet withError: (NSString *) errorMessage
 {
   if (![self isUsingTelnet: telnet])
     return;
@@ -381,7 +381,7 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark NSTextView delegate
 
-- (BOOL) textView: (NSTextView *)textView doCommandBySelector: (SEL)commandSelector
+- (BOOL) textView: (NSTextView *) textView doCommandBySelector: (SEL)commandSelector
 {
   NSEvent *event = [NSApp currentEvent];
   
@@ -483,7 +483,7 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark MUTextView delegate
 
-- (BOOL) textView: (MUTextView *)textView insertText: (id)string
+- (BOOL) textView: (MUTextView *) textView insertText: (id) string
 {
   if (textView == receivedTextView)
   {
@@ -499,7 +499,7 @@ enum MUSearchDirections
   return NO;
 }
 
-- (BOOL) textView: (MUTextView *)textView pasteAsPlainText: (id)originalSender
+- (BOOL) textView: (MUTextView *) textView pasteAsPlainText: (id) originalSender
 {
   if (textView == receivedTextView)
   {
@@ -559,12 +559,12 @@ enum MUSearchDirections
     return [MUTextLogger filter];
 }
 
-- (void) didEndCloseSheet: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo
+- (void) didEndCloseSheet: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo
 {
   if (returnCode == NSAlertAlternateReturn) /* Cancel. */
   {
     if (contextInfo)
-      ((void (*) (id, SEL, BOOL)) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, NO);
+      ((void (*) (id, SEL, BOOL) ) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, NO);
   }
 }
 
@@ -580,7 +580,7 @@ enum MUSearchDirections
   [self cleanUp];
 }
 
-- (void) displayString: (NSString *)string
+- (void) displayString: (NSString *) string
 {
   NSMutableDictionary *typingAttributes =
     [NSMutableDictionary dictionaryWithDictionary: [receivedTextView typingAttributes]];
@@ -615,7 +615,7 @@ enum MUSearchDirections
   [historyRing resetSearchCursor];
 }
 
-- (BOOL) isUsingTelnet: (J3TelnetConnection *)telnet
+- (BOOL) isUsingTelnet: (J3TelnetConnection *) telnet
 {
   return telnetConnection == telnet;
 }
@@ -632,7 +632,7 @@ enum MUSearchDirections
                                                       object: self];
 }
 
-- (void) sendPeriodicPing: (NSTimer *)timer
+- (void) sendPeriodicPing: (NSTimer *) timer
 {
   [telnetConnection writeLine: @"@@"];
 }
@@ -677,7 +677,7 @@ enum MUSearchDirections
   currentlySearching = YES;
 }
 
-- (void) willEndCloseSheet: (NSWindow *)sheet returnCode: (int)returnCode contextInfo: (void *)contextInfo
+- (void) willEndCloseSheet: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo
 {
   if (returnCode == NSAlertDefaultReturn) /* Close. */
   {
@@ -687,7 +687,7 @@ enum MUSearchDirections
     [[self window] close];
 
     if (contextInfo)
-      ((void (*) (id, SEL, BOOL)) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, YES);
+      ((void (*) (id, SEL, BOOL) ) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, YES);
   }
 }
 

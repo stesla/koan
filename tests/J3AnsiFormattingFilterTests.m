@@ -10,26 +10,26 @@
 #import "NSFont (Traits).h"
 
 @interface J3ANSIFormattingFilterTests (Private)
-- (void) assertInput: (NSString *)input hasOutput: (NSString *)output;
-- (void) assertInput: (NSString *)input hasOutput: (NSString *)output
-             message: (NSString *)message;
+- (void) assertInput: (NSString *) input hasOutput: (NSString *) output;
+- (void) assertInput: (NSString *) input hasOutput: (NSString *) output
+             message: (NSString *) message;
 - (void) assertFinalCharacter: (unsigned char)finalChar;
-- (void) assertString: (NSAttributedString *)string hasValue: (id)value forAttribute: (NSString *)attribute atIndex: (int)index message: (NSString *)message;
-- (void) assertString: (NSAttributedString *)string hasTrait: (NSFontTraitMask)trait atIndex: (int)index message: (NSString *)message;
-- (NSMutableAttributedString *) makeString: (NSString *)string;
+- (void) assertString: (NSAttributedString *) string hasValue: (id) value forAttribute: (NSString *) attribute atIndex: (int) index message: (NSString *) message;
+- (void) assertString: (NSAttributedString *) string hasTrait: (NSFontTraitMask)trait atIndex: (int) index message: (NSString *) message;
+- (NSMutableAttributedString *) makeString: (NSString *) string;
 @end
 
 #pragma mark -
 
 @implementation J3ANSIFormattingFilterTests (Private)
 
-- (void) assertInput: (NSString *)input hasOutput: (NSString *)output
+- (void) assertInput: (NSString *) input hasOutput: (NSString *) output
 {
   [self assertInput: input hasOutput: output message: nil];
 }
 
-- (void) assertInput: (NSString *)input hasOutput: (NSString *)output
-             message: (NSString *)message
+- (void) assertInput: (NSString *) input hasOutput: (NSString *) output
+             message: (NSString *) message
 {
   NSAttributedString *attributedInput = [self makeString: input];
   NSAttributedString *attributedExpectedOutput = [NSAttributedString attributedStringWithString: output];
@@ -48,19 +48,19 @@
             message: [NSString stringWithFormat: @"[%X]", finalChar]];
 }
 
-- (void) assertString: (NSAttributedString *)string hasValue: (id)value forAttribute: (NSString *)attribute atIndex: (int)index message: (NSString *)message;
+- (void) assertString: (NSAttributedString *) string hasValue: (id) value forAttribute: (NSString *) attribute atIndex: (int) index message: (NSString *) message;
 {
   NSDictionary * attributes = [string attributesAtIndex: index effectiveRange: NULL];
   [self assert: [attributes valueForKey: attribute] equals: value message: message]; 
 }
 
-- (void) assertString: (NSAttributedString *)string hasTrait: (NSFontTraitMask)trait atIndex: (int)index message: (NSString *)message;
+- (void) assertString: (NSAttributedString *) string hasTrait: (NSFontTraitMask)trait atIndex: (int) index message: (NSString *) message;
 {
   NSFont * font = [string attribute: NSFontAttributeName atIndex: index effectiveRange: NULL];
   [self assertTrue: [font hasTrait: trait] message: message];
 }
 
-- (NSMutableAttributedString *) makeString: (NSString *)string;
+- (NSMutableAttributedString *) makeString: (NSString *) string;
 {
   NSFont * font = [NSFont systemFontOfSize: [NSFont systemFontSize]];
   NSMutableDictionary * attributes = [NSMutableDictionary dictionary];

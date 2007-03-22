@@ -9,7 +9,7 @@
 
 @implementation MUProfileFormatting
 
-- (id) initWithProfile: (MUProfile *)newProfile;
+- (id) initWithProfile: (MUProfile *) newProfile;
 {
   if (!(self = [super init]))
     return nil;

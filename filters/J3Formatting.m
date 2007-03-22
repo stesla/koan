@@ -13,7 +13,7 @@
   return [self formattingWithForegroundColor: [J3Formatting testingForeground] backgroundColor: [J3Formatting testingBackground] font: [J3Formatting testingFont]];
 }
 
-+ (id) formattingWithForegroundColor: (NSColor *)fore backgroundColor: (NSColor *)back font: (NSFont *)font
++ (id) formattingWithForegroundColor: (NSColor *) fore backgroundColor: (NSColor *) back font: (NSFont *) font
 {
   return [[[self alloc] initWithForegroundColor: fore backgroundColor: back font: font] autorelease];
 }
@@ -33,7 +33,7 @@
   return [NSColor lightGrayColor];
 }
 
-- (id) initWithForegroundColor: (NSColor *)fore backgroundColor: (NSColor *)back font: (NSFont *)aFont
+- (id) initWithForegroundColor: (NSColor *) fore backgroundColor: (NSColor *) back font: (NSFont *) aFont
 {
   if (!(self = [super init]))
     return nil;

@@ -11,7 +11,7 @@
 
 @implementation J3TelnetDontState
 
-- (J3TelnetState *) parse: (uint8_t)byte forParser: (J3TelnetEngine *)parser
+- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
 {
   NSLog (@"Received: IAC DONT %@", [parser optionNameForByte: byte]);
   return [J3TelnetTextState state];

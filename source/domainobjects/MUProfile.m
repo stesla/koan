@@ -11,9 +11,9 @@
 
 @interface MUProfile (Private)
 
-- (void) globalBackgroundColorDidChange: (NSNotification *)notification;
-- (void) globalFontDidChange: (NSNotification *)notification;
-- (void) globalTextColorDidChange: (NSNotification *)notification;
+- (void) globalBackgroundColorDidChange: (NSNotification *) notification;
+- (void) globalFontDidChange: (NSNotification *) notification;
+- (void) globalTextColorDidChange: (NSNotification *) notification;
 - (void) registerForNotifications;
 
 @end
@@ -22,7 +22,7 @@
 
 @implementation MUProfile
 
-+ (BOOL) automaticallyNotifiesObserversForKey: (NSString *)key
++ (BOOL) automaticallyNotifiesObserversForKey: (NSString *) key
 {
   static NSArray *keyArray;
   
@@ -44,34 +44,34 @@
   	return YES;
 }
 
-+ (MUProfile *) profileWithWorld: (MUWorld *)newWorld 
-                          player: (MUPlayer *)newPlayer
-                     autoconnect: (BOOL)newAutoconnect
++ (MUProfile *) profileWithWorld: (MUWorld *) newWorld 
+                          player: (MUPlayer *) newPlayer
+                     autoconnect: (BOOL) newAutoconnect
 {
   return [[[self alloc] initWithWorld: newWorld
                                player: newPlayer
                           autoconnect: newAutoconnect] autorelease];
 }
 
-+ (MUProfile *) profileWithWorld: (MUWorld *)newWorld player: (MUPlayer *)newPlayer
++ (MUProfile *) profileWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer
 {
   return [[[self alloc] initWithWorld: newWorld 
                                player: newPlayer] autorelease];
 }
 
-+ (MUProfile *) profileWithWorld: (MUWorld *)newWorld
++ (MUProfile *) profileWithWorld: (MUWorld *) newWorld
 {
   return [[[self alloc] initWithWorld: newWorld] autorelease];
 }
 
-- (id) initWithWorld: (MUWorld *)newWorld 
-              player: (MUPlayer *)newPlayer
-         autoconnect: (BOOL)newAutoconnect
-  							font: (NSFont *)newFont
-  				 textColor: (NSColor *)newTextColor
-  	 backgroundColor: (NSColor *)newBackgroundColor
-  				 linkColor: (NSColor *)newLinkColor
-  	visitedLinkColor: (NSColor *)newVisitedLinkColor
+- (id) initWithWorld: (MUWorld *) newWorld 
+              player: (MUPlayer *) newPlayer
+         autoconnect: (BOOL) newAutoconnect
+  							font: (NSFont *) newFont
+  				 textColor: (NSColor *) newTextColor
+  	 backgroundColor: (NSColor *) newBackgroundColor
+  				 linkColor: (NSColor *) newLinkColor
+  	visitedLinkColor: (NSColor *) newVisitedLinkColor
 {
   if (!(newWorld && [super init]))
     return nil;
@@ -90,9 +90,9 @@
   return self;
 }
 
-- (id) initWithWorld: (MUWorld *)newWorld 
-              player: (MUPlayer *)newPlayer
-         autoconnect: (BOOL)newAutoconnect
+- (id) initWithWorld: (MUWorld *) newWorld 
+              player: (MUPlayer *) newPlayer
+         autoconnect: (BOOL) newAutoconnect
 {
   return [self initWithWorld: newWorld
   										player: newPlayer
@@ -104,14 +104,14 @@
   					visitedLinkColor: nil];
 }
 
-- (id) initWithWorld: (MUWorld *)newWorld player: (MUPlayer *)newPlayer
+- (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer
 {
   return [self initWithWorld: newWorld 
                       player: newPlayer 
                  autoconnect: NO];
 }
 
-- (id) initWithWorld: (MUWorld *)newWorld
+- (id) initWithWorld: (MUWorld *) newWorld
 {
   return [self initWithWorld: newWorld player: nil];
 }
@@ -132,7 +132,7 @@
   return world;
 }
 
-- (void) setWorld: (MUWorld *)newWorld
+- (void) setWorld: (MUWorld *) newWorld
 {
   if (world == newWorld)
     return;
@@ -145,7 +145,7 @@
   return player;
 }
 
-- (void) setPlayer: (MUPlayer *)newPlayer
+- (void) setPlayer: (MUPlayer *) newPlayer
 {
   if (player == newPlayer)
     return;
@@ -158,7 +158,7 @@
   return autoconnect;
 }
 
-- (void) setAutoconnect: (BOOL)newAutoconnect
+- (void) setAutoconnect: (BOOL) newAutoconnect
 {
   autoconnect = newAutoconnect;
 }
@@ -168,7 +168,7 @@
   return font;
 }
 
-- (void) setFont: (NSFont *)newFont
+- (void) setFont: (NSFont *) newFont
 {
   if ([font isEqual: newFont])
     return;
@@ -186,7 +186,7 @@
   return textColor;
 }
 
-- (void) setTextColor: (NSColor *)newTextColor
+- (void) setTextColor: (NSColor *) newTextColor
 {
   if ([textColor isEqual: newTextColor])
     return;
@@ -202,7 +202,7 @@
   return backgroundColor;
 }
 
-- (void) setBackgroundColor: (NSColor *)newBackgroundColor
+- (void) setBackgroundColor: (NSColor *) newBackgroundColor
 {
   if ([backgroundColor isEqual: newBackgroundColor])
     return;
@@ -218,7 +218,7 @@
   return linkColor;
 }
 
-- (void) setLinkColor: (NSColor *)newLinkColor
+- (void) setLinkColor: (NSColor *) newLinkColor
 {
   if ([linkColor isEqual: newLinkColor])
     return;
@@ -234,7 +234,7 @@
   return visitedLinkColor;
 }
 
-- (void) setVisitedLinkColor: (NSColor *)newVisitedLinkColor
+- (void) setVisitedLinkColor: (NSColor *) newVisitedLinkColor
 {
   if ([visitedLinkColor isEqual: newVisitedLinkColor])
     return;
@@ -376,7 +376,7 @@
   return (player ? [player windowTitle] : [world windowTitle]);
 }
 
-- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *)delegate
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *) delegate
 {
   return [world newTelnetConnectionWithDelegate: delegate];
 }
@@ -384,12 +384,12 @@
 #pragma mark -
 #pragma mark NSCoding protocol
 
-- (void) encodeWithCoder: (NSCoder *)encoder
+- (void) encodeWithCoder: (NSCoder *) encoder
 {
   [MUCodingService encodeProfile: self withCoder: encoder];
 }
 
-- (id) initWithCoder: (NSCoder *)decoder
+- (id) initWithCoder: (NSCoder *) decoder
 {
   [MUCodingService decodeProfile: self withCoder: decoder];
   [self registerForNotifications];
@@ -403,7 +403,7 @@
 
 @implementation MUProfile (Private)
 
-- (void) globalBackgroundColorDidChange: (NSNotification *)notification
+- (void) globalBackgroundColorDidChange: (NSNotification *) notification
 {
   if (!backgroundColor)
   {
@@ -412,7 +412,7 @@
   }
 }
 
-- (void) globalFontDidChange: (NSNotification *)notification
+- (void) globalFontDidChange: (NSNotification *) notification
 {
   if (!font)
   {
@@ -423,7 +423,7 @@
   }
 }
 
-- (void) globalTextColorDidChange: (NSNotification *)notification
+- (void) globalTextColorDidChange: (NSNotification *) notification
 {
   if (!textColor)
   {

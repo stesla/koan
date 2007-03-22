@@ -19,15 +19,15 @@
 
 + (J3ConnectionFactory *) defaultFactory;
 
-- (J3TelnetConnection *) lineAtATimeTelnetWithHostname: (NSString *)hostname
-                                        port: (int)port
-                                    delegate: (NSObject <J3TelnetConnectionDelegate> *)newDelegate
-                          lineBufferDelegate: (NSObject <J3LineBufferDelegate> *)lineBufferDelegate;
+- (J3TelnetConnection *) lineAtATimeTelnetWithHostname: (NSString *) hostname
+                                        port: (int) port
+                                    delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate
+                          lineBufferDelegate: (NSObject <J3LineBufferDelegate> *) lineBufferDelegate;
 
-- (J3TelnetConnection *) telnetWithHostname: (NSString *)hostname
-                             port: (int)port
-                      inputBuffer: (NSObject <J3Buffer> *)buffer
-                         delegate: (NSObject <J3TelnetConnectionDelegate> *)newDelegate;
+- (J3TelnetConnection *) telnetWithHostname: (NSString *) hostname
+                             port: (int) port
+                      inputBuffer: (NSObject <J3Buffer> *) buffer
+                         delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
 
 - (J3ProxySettings *) proxySettings;
 - (void) saveProxySettings;

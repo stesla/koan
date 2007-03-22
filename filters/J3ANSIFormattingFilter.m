@@ -11,33 +11,33 @@
 @interface J3ANSIFormattingFilter (Private)
 
 - (NSString *) attributeNameForAnsiCode;
-- (id) attributeValueForAnsiCodeAndString: (NSAttributedString *)string location: (int)location;
-- (BOOL) extractCode: (NSMutableAttributedString *)editString;
-- (NSFont *) fontInString: (NSAttributedString *)string atLocation: (int)location;
-- (NSFont *) makeFontBold: (NSFont *)font;
-- (NSFont *) makeFontUnbold: (NSFont *)font;
-- (void) resetAllAttributesInString: (NSMutableAttributedString *)string fromLocation: (int)location;
-- (void) resetBackgroundInString: (NSMutableAttributedString *)string fromLocation: (int)location;
-- (void) resetFontInString: (NSMutableAttributedString *)string fromLocation: (int)location;
-- (void) resetForegroundInString: (NSMutableAttributedString *)string fromLocation: (int)location;
-- (void) resetUnderlineInString: (NSMutableAttributedString *)string fromLocation: (int)location;
-- (void) setAttribute: (NSString *)attribute toValue: (id)value inString: (NSMutableAttributedString *)string fromLocation: (int)location;
-- (void) setAttributes: (NSDictionary *)attributes onString: (NSMutableAttributedString *)string fromLocation: (int)location;
-- (int) scanUpToCodeInString: (NSString *)string;
-- (int) scanThruEndOfCodeAt: (int)index inString: (NSString *)string;
-- (void) setAttributesInString: (NSMutableAttributedString *)string atPosition: (int)start;
-- (NSFont *) setTrait: (NSFontTraitMask)trait onFont: (NSFont *)font;
+- (id) attributeValueForAnsiCodeAndString: (NSAttributedString *) string location: (int) location;
+- (BOOL) extractCode: (NSMutableAttributedString *) editString;
+- (NSFont *) fontInString: (NSAttributedString *) string atLocation: (int) location;
+- (NSFont *) makeFontBold: (NSFont *) font;
+- (NSFont *) makeFontUnbold: (NSFont *) font;
+- (void) resetAllAttributesInString: (NSMutableAttributedString *) string fromLocation: (int) location;
+- (void) resetBackgroundInString: (NSMutableAttributedString *) string fromLocation: (int) location;
+- (void) resetFontInString: (NSMutableAttributedString *) string fromLocation: (int) location;
+- (void) resetForegroundInString: (NSMutableAttributedString *) string fromLocation: (int) location;
+- (void) resetUnderlineInString: (NSMutableAttributedString *) string fromLocation: (int) location;
+- (void) setAttribute: (NSString *) attribute toValue: (id) value inString: (NSMutableAttributedString *) string fromLocation: (int) location;
+- (void) setAttributes: (NSDictionary *) attributes onString: (NSMutableAttributedString *) string fromLocation: (int) location;
+- (int) scanUpToCodeInString: (NSString *) string;
+- (int) scanThruEndOfCodeAt: (int) index inString: (NSString *) string;
+- (void) setAttributesInString: (NSMutableAttributedString *) string atPosition: (int) start;
+- (NSFont *) setTrait: (NSFontTraitMask)trait onFont: (NSFont *) font;
 
 @end
 
 @implementation J3ANSIFormattingFilter
-+ (J3Filter *) filterWithFormatting: (NSObject <J3Formatting> *)format;
++ (J3Filter *) filterWithFormatting: (NSObject <J3Formatting> *) format;
 {
   return [[[self alloc] initWithFormatting: format] autorelease];
 }
 
 
-- (NSAttributedString *) filter: (NSAttributedString *)string;
+- (NSAttributedString *) filter: (NSAttributedString *) string;
 {
   NSMutableAttributedString *editString = [[NSMutableAttributedString alloc] initWithAttributedString: string];
   
@@ -50,7 +50,7 @@
   return editString;
 }
 
-- (id) initWithFormatting: (NSObject <J3Formatting> *)format;
+- (id) initWithFormatting: (NSObject <J3Formatting> *) format;
 {
   if (!(self = [super init]))
     return nil;
@@ -73,7 +73,7 @@
 
 - (NSString *) attributeNameForAnsiCode;
 {
-  switch ([[ansiCode substringFromIndex: 2] intValue]) 
+  switch ([[ansiCode substringFromIndex: 2] intValue])
   {
     case J3ANSIBackgroundBlack:
     case J3ANSIBackgroundBlue:
@@ -112,9 +112,9 @@
   return nil;
 }
 
-- (id) attributeValueForAnsiCodeAndString: (NSAttributedString *)string location: (int)location;
+- (id) attributeValueForAnsiCodeAndString: (NSAttributedString *) string location: (int) location;
 {
-  switch ([[ansiCode substringFromIndex: 2] intValue]) 
+  switch ([[ansiCode substringFromIndex: 2] intValue])
   {
     case J3ANSIBackgroundBlack:  
     case J3ANSIForegroundBlack:  
@@ -183,7 +183,7 @@
   return nil;
 }
 
-- (BOOL) extractCode: (NSMutableAttributedString *)editString
+- (BOOL) extractCode: (NSMutableAttributedString *) editString
 {
   NSRange codeRange;
   
@@ -205,12 +205,12 @@
   return NO;
 }
 
-- (NSFont *) fontInString: (NSAttributedString *)string atLocation: (int)location;
+- (NSFont *) fontInString: (NSAttributedString *) string atLocation: (int) location;
 {
   return [string attribute: NSFontAttributeName atIndex: location effectiveRange: NULL];
 }
 
-- (NSFont *) makeFontBold: (NSFont *)font;
+- (NSFont *) makeFontBold: (NSFont *) font;
 {  
   if ([[formatting font] isBold])
     return [font fontWithTrait: NSUnboldFontMask];
@@ -218,7 +218,7 @@
     return [font fontWithTrait: NSBoldFontMask];
 }
 
-- (NSFont *) makeFontUnbold: (NSFont *)font;
+- (NSFont *) makeFontUnbold: (NSFont *) font;
 {
   if ([[formatting font] isBold])
     return [font fontWithTrait: NSBoldFontMask];
@@ -226,7 +226,7 @@
     return [font fontWithTrait: NSUnboldFontMask];
 }
 
-- (void) resetAllAttributesInString: (NSMutableAttributedString *)string fromLocation: (int)location;
+- (void) resetAllAttributesInString: (NSMutableAttributedString *) string fromLocation: (int) location;
 {
   [self resetBackgroundInString: string fromLocation: location];
   [self resetForegroundInString: string fromLocation: location];
@@ -234,33 +234,33 @@
   [self resetUnderlineInString: string fromLocation: location];
 }
 
-- (void) resetBackgroundInString: (NSMutableAttributedString *)string fromLocation: (int)location;
+- (void) resetBackgroundInString: (NSMutableAttributedString *) string fromLocation: (int) location;
 {
   [self setAttribute: NSBackgroundColorAttributeName toValue: [formatting background] inString: string fromLocation: location];
 }
 
-- (void) resetFontInString: (NSMutableAttributedString *)string fromLocation: (int)location;
+- (void) resetFontInString: (NSMutableAttributedString *) string fromLocation: (int) location;
 {
   [self setAttribute: NSFontAttributeName toValue: [formatting font] inString: string fromLocation: location];
 }
 
-- (void) resetForegroundInString: (NSMutableAttributedString *)string fromLocation: (int)location;
+- (void) resetForegroundInString: (NSMutableAttributedString *) string fromLocation: (int) location;
 {
   [self setAttribute: NSForegroundColorAttributeName toValue: [formatting foreground] inString: string fromLocation: location];
 }
 
-- (void) resetUnderlineInString: (NSMutableAttributedString *)string fromLocation: (int)location;
+- (void) resetUnderlineInString: (NSMutableAttributedString *) string fromLocation: (int) location;
 {
   [self setAttribute: NSUnderlineStyleAttributeName toValue: [NSNumber numberWithInt: NSNoUnderlineStyle] inString: string fromLocation: location];
 }
 
-- (void) setAttribute: (NSString *)attribute toValue: (id)value inString: (NSMutableAttributedString *)string fromLocation: (int)location;
+- (void) setAttribute: (NSString *) attribute toValue: (id) value inString: (NSMutableAttributedString *) string fromLocation: (int) location;
 {
   [string addAttribute: attribute value: value range: NSMakeRange (location,[string length] - location)];
   [currentAttributes setObject: value forKey: attribute];
 }
 
-- (void) setAttributes: (NSDictionary *)attributes onString: (NSMutableAttributedString *)string fromLocation: (int)location;
+- (void) setAttributes: (NSDictionary *) attributes onString: (NSMutableAttributedString *) string fromLocation: (int) location;
 {
   NSDictionary * attributeCopy = [attributes copy];
   NSEnumerator * keyEnumerator = [attributeCopy keyEnumerator];
@@ -270,7 +270,7 @@
     [self setAttribute: key toValue: [attributeCopy valueForKey: key] inString: string fromLocation: location];
 }
 
-- (int) scanUpToCodeInString: (NSString *)string
+- (int) scanUpToCodeInString: (NSString *) string
 {
   NSCharacterSet *stopSet = 
     [NSCharacterSet characterSetWithCharactersInString: @"\x1B"];
@@ -287,7 +287,7 @@
   return [scanner scanLocation];
 }
 
-- (int) scanThruEndOfCodeAt: (int)index inString: (NSString *)string
+- (int) scanThruEndOfCodeAt: (int) index inString: (NSString *) string
 {
   NSScanner *scanner = [NSScanner scannerWithString: string];
   [scanner setScanLocation: index];
@@ -305,7 +305,7 @@
   return [ansiCode length] + 1;
 }
 
-- (void) setAttributesInString: (NSMutableAttributedString *)string atPosition: (int)start;
+- (void) setAttributesInString: (NSMutableAttributedString *) string atPosition: (int) start;
 {
   NSString * attributeName = nil;
   id attributeValue = nil;
@@ -331,7 +331,7 @@
     @throw [NSException exceptionWithName: @"J3ANSIException" reason: @"Did not provide attributeValue" userInfo: nil];
 }
 
-- (NSFont *) setTrait: (NSFontTraitMask)trait onFont: (NSFont *)font;
+- (NSFont *) setTrait: (NSFontTraitMask)trait onFont: (NSFont *) font;
 {
   NSFontManager * fontManager = [NSFontManager sharedFontManager];
   return [fontManager convertFont: font toHaveTrait: trait];

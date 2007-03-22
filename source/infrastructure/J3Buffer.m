@@ -26,7 +26,7 @@
   [self setDataValue: [[self dataValue] subdataWithRange: range]];  
 }
 
-- (void) removeDataUpTo: (unsigned)position
+- (void) removeDataUpTo: (unsigned) position
 {
   NSRange range;
   range.location = position;
@@ -34,7 +34,7 @@
   [self removeDataNotInRange: range];
 }
 
-- (void) setDataValue: (NSData *)newDataValue
+- (void) setDataValue: (NSData *) newDataValue
 {
   NSMutableData *copy = [[NSMutableData alloc] initWithData: newDataValue];
   [data release];
@@ -44,24 +44,24 @@
 #pragma mark -
 #pragma mark J3Buffer protocol
 
-- (void) append: (uint8_t)byte
+- (void) append: (uint8_t) byte
 {
   char bytes[1] = {byte};
   [self appendBytes: bytes length: 1];
 }
 
-- (void) appendBytes: (const void *)bytes length: (unsigned)length;
+- (void) appendBytes: (const void *) bytes length: (unsigned) length;
 {
   [data appendBytes: bytes length: length];
 }
 
-- (void) appendLine: (NSString *)line
+- (void) appendLine: (NSString *) line
 {
   [self appendString: line];
   [self append: '\n'];
 }
 
-- (void) appendString: (NSString *)string
+- (void) appendString: (NSString *) string
 {
   NSData *stringData;
   unsigned i;
@@ -72,10 +72,10 @@
   stringData = [string dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES];
   
   for (i = 0; i < [stringData length]; i++)
-    [self append: ((const char *)[stringData bytes])[i]];
+    [self append: ((const char *) [stringData bytes])[i]];
 }
 
-- (const void *)bytes
+- (const void *) bytes
 {
   return [data bytes];
 }

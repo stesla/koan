@@ -19,15 +19,15 @@
 
 @interface MUApplicationController (Private)
 
-- (IBAction) changeFont: (id)sender;
-- (void) colorPanelColorDidChange: (NSNotification *)notification;
-- (IBAction) openConnection: (id)sender;
-- (void) openConnectionWithController: (MUConnectionWindowController *)controller;
+- (IBAction) changeFont: (id) sender;
+- (void) colorPanelColorDidChange: (NSNotification *) notification;
+- (IBAction) openConnection: (id) sender;
+- (void) openConnectionWithController: (MUConnectionWindowController *) controller;
 - (void) playNotificationSound;
-- (void) rebuildConnectionsMenuWithAutoconnect: (BOOL)autoconnect;
+- (void) rebuildConnectionsMenuWithAutoconnect: (BOOL) autoconnect;
 - (void) updateApplicationBadge;
 - (BOOL) shouldPlayNotificationSound;
-- (void) worldsDidChange: (NSNotification *)notification;
+- (void) worldsDidChange: (NSNotification *) notification;
 
 @end
 
@@ -113,7 +113,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction) chooseNewFont: (id)sender
+- (IBAction) chooseNewFont: (id) sender
 {
   NSDictionary *values = [[NSUserDefaultsController sharedUserDefaultsController] values];
   NSString *fontName = [values valueForKey: MUPFontName];
@@ -127,7 +127,7 @@
   [[NSFontManager sharedFontManager] orderFrontFontPanel: self];
 }
 
-- (IBAction) connectToURL: (NSURL *)url
+- (IBAction) connectToURL: (NSURL *) url
 {
   if (![[url scheme] isEqualToString: @"telnet"])
     return;
@@ -144,7 +144,7 @@
   [controller release];
 }
 
-- (IBAction) connectUsingPanelInformation: (id)sender
+- (IBAction) connectUsingPanelInformation: (id) sender
 {
   MUWorld *world = [MUWorld worldWithName: [newConnectionHostnameField stringValue]
   															 hostname: [newConnectionHostnameField stringValue]
@@ -162,12 +162,12 @@
   [controller release];
 }
 
-- (IBAction) openBugsWebPage: (id)sender
+- (IBAction) openBugsWebPage: (id) sender
 {
   [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: @"http: //bugs.3james.com/"]];
 }
 
-- (IBAction) openNewConnectionPanel: (id)sender
+- (IBAction) openNewConnectionPanel: (id) sender
 {
   [newConnectionHostnameField setObjectValue: nil];
   [newConnectionPortField setObjectValue: nil];
@@ -176,7 +176,7 @@
   [newConnectionPanel makeKeyAndOrderFront: self];
 }
 
-- (void) recursivelyConfirmClose: (BOOL)cont
+- (void) recursivelyConfirmClose: (BOOL) cont
 {
   if (cont)
   {
@@ -196,12 +196,12 @@
   [NSApp replyToApplicationShouldTerminate: cont];
 }
 
-- (IBAction) showPreferencesPanel: (id)sender
+- (IBAction) showPreferencesPanel: (id) sender
 {
   [preferencesController showPreferencesPanel: sender];
 }
 
-- (IBAction) showProfilesPanel: (id)sender
+- (IBAction) showProfilesPanel: (id) sender
 {
   if (!profilesController)
     profilesController = [[MUProfilesController alloc] init];
@@ -209,7 +209,7 @@
     [profilesController showWindow: self];
 }
 
-- (IBAction) showProxySettings: (id)sender;
+- (IBAction) showProxySettings: (id) sender;
 {
   if (!proxySettingsController)
     proxySettingsController = [[MUProxySettingsController alloc] init];
@@ -217,7 +217,7 @@
     [proxySettingsController showWindow: self];
 }
 
-- (IBAction) toggleUseProxy: (id)sender;
+- (IBAction) toggleUseProxy: (id) sender;
 {
   [[J3ConnectionFactory defaultFactory] toggleUseProxy];
 }
@@ -225,13 +225,13 @@
 #pragma mark -
 #pragma mark NSApplication delegate
 
-- (void) applicationDidBecomeActive: (NSNotification *)notification
+- (void) applicationDidBecomeActive: (NSNotification *) notification
 {
   unreadCount = 0;
   [self updateApplicationBadge];
 }
 
-- (NSApplicationTerminateReply) applicationShouldTerminate: (NSApplication *)application
+- (NSApplicationTerminateReply) applicationShouldTerminate: (NSApplication *) application
 {
   unsigned count = [connectionWindowControllers count];
   unsigned openConnections = 0;
@@ -277,7 +277,7 @@
   return NSTerminateNow;
 }
 
-- (void) applicationWillTerminate: (NSNotification *)notification
+- (void) applicationWillTerminate: (NSNotification *) notification
 {
   unreadCount = 0;
   [self updateApplicationBadge];
@@ -290,7 +290,7 @@
 #pragma mark -
 #pragma mark MUConnectionWindowController delegate
 
-- (void) connectionWindowControllerWillClose: (NSNotification *)notification
+- (void) connectionWindowControllerWillClose: (NSNotification *) notification
 {
   MUConnectionWindowController *controller = [notification object];
   
@@ -299,7 +299,7 @@
   [controller autorelease];
 }
 
-- (void) connectionWindowControllerDidReceiveText: (NSNotification *)notification
+- (void) connectionWindowControllerDidReceiveText: (NSNotification *) notification
 {
   if ([self shouldPlayNotificationSound])
     [self playNotificationSound];
@@ -317,17 +317,17 @@
 
 @implementation MUApplicationController (Private)
 
-- (IBAction) changeFont: (id)sender
+- (IBAction) changeFont: (id) sender
 {
   [preferencesController changeFont];
 }
 
-- (void) colorPanelColorDidChange: (NSNotification *)notification
+- (void) colorPanelColorDidChange: (NSNotification *) notification
 {
   [preferencesController colorPanelColorDidChange];
 }
 
-- (IBAction) openConnection: (id)sender
+- (IBAction) openConnection: (id) sender
 {
   MUConnectionWindowController *controller;
   MUProfile *profile = [sender representedObject];
@@ -338,7 +338,7 @@
   [controller release];
 }
 
-- (void) openConnectionWithController: (MUConnectionWindowController *)controller
+- (void) openConnectionWithController: (MUConnectionWindowController *) controller
 {
   [controller setDelegate: self];
   
@@ -363,7 +363,7 @@
   return result;
 }
 
-- (void) rebuildConnectionsMenuWithAutoconnect: (BOOL)autoconnect
+- (void) rebuildConnectionsMenuWithAutoconnect: (BOOL) autoconnect
 {
   MUWorldRegistry *registry = [MUServices worldRegistry];
   MUProfileRegistry *profiles = [MUServices profileRegistry];
@@ -517,7 +517,7 @@
   [newAppImage release];
 }
 
-- (void) worldsDidChange: (NSNotification *)notification
+- (void) worldsDidChange: (NSNotification *) notification
 {
   [self rebuildConnectionsMenuWithAutoconnect: NO];
 }

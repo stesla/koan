@@ -17,13 +17,13 @@
 + (id) proxySettings;
 
 - (NSString *) hostname;
-- (void) setHostname: (NSString *)value;
+- (void) setHostname: (NSString *) value;
 - (NSNumber *) port;
-- (void) setPort: (NSNumber *)value;
+- (void) setPort: (NSNumber *) value;
 - (NSString *) username;
-- (void) setUsername: (NSString *)value;
+- (void) setUsername: (NSString *) value;
 - (NSString *) password;
-- (void) setPassword: (NSString *)value;
+- (void) setPassword: (NSString *) value;
 
 - (BOOL) hasAuthentication;
 

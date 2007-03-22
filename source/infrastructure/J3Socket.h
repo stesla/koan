@@ -24,8 +24,8 @@ typedef enum J3SocketStatus
 
 @interface J3SocketException : NSException
 
-+ (void) socketError: (NSString *)errorMessage;
-+ (void) socketErrorFormat: (NSString *)format arguments: (va_list)args;
++ (void) socketError: (NSString *) errorMessage;
++ (void) socketErrorFormat: (NSString *) format arguments: (va_list)args;
 
 @end
 
@@ -44,8 +44,8 @@ typedef enum J3SocketStatus
   NSObject <J3ConnectionDelegate> *delegate;
 }
 
-+ (id) socketWithHostname: (NSString *)hostname port: (int)port;
-- (id) initWithHostname: (NSString *)hostname port: (int)port;
++ (id) socketWithHostname: (NSString *) hostname port: (int) port;
+- (id) initWithHostname: (NSString *) hostname port: (int) port;
 
 - (void) close;
 - (BOOL) hasDataAvailable;
@@ -55,7 +55,7 @@ typedef enum J3SocketStatus
 - (BOOL) isConnecting;
 - (void) open;
 - (void) poll;
-- (void) setDelegate: (NSObject <J3ConnectionDelegate> *)object;
+- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object;
 - (J3SocketStatus) status;
 
 @end

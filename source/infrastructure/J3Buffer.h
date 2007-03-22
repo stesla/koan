@@ -8,11 +8,11 @@
 
 @protocol J3Buffer
 
-- (void) append: (uint8_t)byte;
-- (void) appendBytes: (const void *)bytes length: (unsigned)length;
-- (void) appendLine: (NSString *)line;
-- (void) appendString: (NSString *)string;
-- (const void *)bytes;
+- (void) append: (uint8_t) byte;
+- (void) appendBytes: (const void *) bytes length: (unsigned) length;
+- (void) appendLine: (NSString *) line;
+- (void) appendString: (NSString *) string;
+- (const void *) bytes;
 - (void) clear;
 - (BOOL) isEmpty;
 - (unsigned) length;
@@ -31,7 +31,7 @@
 + (id) buffer;
 
 - (void) removeDataNotInRange: (NSRange)range;
-- (void) removeDataUpTo: (unsigned)position;
-- (void) setDataValue: (NSData *)newDataValue;
+- (void) removeDataUpTo: (unsigned) position;
+- (void) setDataValue: (NSData *) newDataValue;
 
 @end

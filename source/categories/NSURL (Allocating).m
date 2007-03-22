@@ -10,7 +10,7 @@
 
 @implementation NSURL (Allocating)
 
-+ (NSURL *) URLWithScheme: (NSString *)scheme host: (NSString *)host path: (NSString *)path
++ (NSURL *) URLWithScheme: (NSString *) scheme host: (NSString *) host path: (NSString *) path
 {
   return [[[self alloc] initWithScheme: scheme host: host path: path] autorelease];
 }

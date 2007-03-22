@@ -10,7 +10,7 @@
 
 @protocol NSDeepMutableCopying
 
-- (id) deepMutableCopyWithZone: (NSZone *)zone;
+- (id) deepMutableCopyWithZone: (NSZone *) zone;
 
 @end
 
@@ -22,12 +22,12 @@
 
 @interface NSArray (DeepMutableCopy)
 
-- (id) deepMutableCopyWithZone: (NSZone *)zone;
+- (id) deepMutableCopyWithZone: (NSZone *) zone;
 
 @end
 
 @interface NSDictionary (DeepMutableCopy)
 
-- (id) deepMutableCopyWithZone: (NSZone *)zone;
+- (id) deepMutableCopyWithZone: (NSZone *) zone;
 
 @end

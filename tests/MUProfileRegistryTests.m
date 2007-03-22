@@ -12,12 +12,12 @@
 
 @interface MUProfileRegistryTests (Private)
 
-- (void) assertProfile: (MUProfile *)profile
-                 world: (MUWorld *)world 
-                player: (MUPlayer *)player;
+- (void) assertProfile: (MUProfile *) profile
+                 world: (MUWorld *) world 
+                player: (MUPlayer *) player;
 
 - (MUWorld *) testWorld;
-- (MUPlayer *) testPlayerWithWorld: (MUWorld *)world;
+- (MUPlayer *) testPlayerWithWorld: (MUWorld *) world;
 
 @end
 
@@ -129,9 +129,9 @@
 
 @implementation MUProfileRegistryTests (Private)
 
-- (void) assertProfile: (MUProfile *)profile
-                 world: (MUWorld *)world 
-                player: (MUPlayer *)player
+- (void) assertProfile: (MUProfile *) profile
+                 world: (MUWorld *) world 
+                player: (MUPlayer *) player
 {
   [self assertNotNil: profile];
   [self assert: [profile world] equals: world];
@@ -145,7 +145,7 @@
   return world;
 }
 
-- (MUPlayer *) testPlayerWithWorld: (MUWorld *)world
+- (MUPlayer *) testPlayerWithWorld: (MUWorld *) world
 {
   return [MUPlayer playerWithName: @"User" password: @"" world: world];
 }

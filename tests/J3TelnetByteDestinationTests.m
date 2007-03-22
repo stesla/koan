@@ -80,7 +80,7 @@
   return hasSpaceAvailable;
 }
 
-- (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
+- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length;
 {
   unsigned lengthToWrite = maxBytesPerWrite < length ? maxBytesPerWrite : length;
   [output appendBytes: bytes length: lengthToWrite];
@@ -94,7 +94,7 @@
 
 @implementation J3TelnetByteDestinationTests (Private)
 
-- (void) assertOutputContainsOnlyBytes:(const uint8_t *)bytes length:(unsigned)length;
+- (void) assertOutputContainsOnlyBytes:(const uint8_t *) bytes length:(unsigned) length;
 {
   if (length != [output length])
   {

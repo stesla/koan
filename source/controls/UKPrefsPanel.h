@@ -44,17 +44,17 @@
 }
 
 // Accessors for specifying the tab view:  (you should just hook these up in IB)
--(void)  		setTabView:  (NSTabView*)tv;
+-(void)  		setTabView:  (NSTabView*) tv;
 -(NSTabView*)   tabView;
 
--(void)  		setAutosaveName:  (NSString*)name;
+-(void)  		setAutosaveName:  (NSString*) name;
 -(NSString*)  autosaveName;
 
 // Action for hooking up this object and the menu item:
--(IBAction)  	orderFrontPrefsPanel:  (id)sender;
+-(IBAction)  	orderFrontPrefsPanel:  (id) sender;
 
 // You don't have to care about these:
 -(void)  mapTabsToToolbar;
--(IBAction)  changePanes:  (id)sender;
+-(IBAction)  changePanes:  (id) sender;
 
 @end

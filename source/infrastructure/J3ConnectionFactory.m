@@ -14,11 +14,11 @@ static J3ConnectionFactory *defaultFactory = nil;
 
 @interface J3ConnectionFactory (Private)
 
-- (void) cleanUpDefaultFactory: (NSNotification *)notification;
+- (void) cleanUpDefaultFactory: (NSNotification *) notification;
 - (void) loadProxySettingsFromDefaults;
 - (void) writeProxySettingsToDefaults;
 
-- (J3Socket *) makeSocketWithHostname: (NSString *)hostname port: (int)port;
+- (J3Socket *) makeSocketWithHostname: (NSString *) hostname port: (int) port;
 
 @end
 
@@ -58,10 +58,10 @@ static J3ConnectionFactory *defaultFactory = nil;
   [super dealloc];
 }
 
-- (J3TelnetConnection *) lineAtATimeTelnetWithHostname: (NSString *)hostname
-                                        port: (int)port
-                                    delegate: (NSObject <J3TelnetConnectionDelegate> *)delegate
-                          lineBufferDelegate: (NSObject <J3LineBufferDelegate> *)lineBufferDelegate
+- (J3TelnetConnection *) lineAtATimeTelnetWithHostname: (NSString *) hostname
+                                        port: (int) port
+                                    delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+                          lineBufferDelegate: (NSObject <J3LineBufferDelegate> *) lineBufferDelegate
 {  
   J3LineBuffer *buffer = [J3LineBuffer buffer];
   
@@ -70,10 +70,10 @@ static J3ConnectionFactory *defaultFactory = nil;
   return [self telnetWithHostname: hostname port: port inputBuffer: buffer delegate: delegate];
 }
 
-- (J3TelnetConnection *) telnetWithHostname: (NSString *)hostname
-                             port: (int)port
-                      inputBuffer: (NSObject <J3Buffer> *)buffer
-                         delegate: (NSObject <J3TelnetConnectionDelegate> *)delegate
+- (J3TelnetConnection *) telnetWithHostname: (NSString *) hostname
+                             port: (int) port
+                      inputBuffer: (NSObject <J3Buffer> *) buffer
+                         delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
   J3TelnetEngine *engine;
   J3Socket *socket;
@@ -113,7 +113,7 @@ static J3ConnectionFactory *defaultFactory = nil;
 
 @implementation J3ConnectionFactory (Private)
 
-- (void) cleanUpDefaultFactory: (NSNotification *)notification
+- (void) cleanUpDefaultFactory: (NSNotification *) notification
 {
   [[NSNotificationCenter defaultCenter] removeObserver: defaultFactory];
   [defaultFactory release];
@@ -139,7 +139,7 @@ static J3ConnectionFactory *defaultFactory = nil;
   [[NSUserDefaults standardUserDefaults] setObject: useProxyData forKey: MUPUseProxy];
 }
 
-- (J3Socket *) makeSocketWithHostname: (NSString *)hostname port: (int)port
+- (J3Socket *) makeSocketWithHostname: (NSString *) hostname port: (int) port
 {
   if (useProxy)
     return [J3ProxySocket socketWithHostname: hostname port: port proxySettings: proxySettings];

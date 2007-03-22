@@ -11,9 +11,9 @@
 
 + (MUGrowlService *) defaultGrowlService;
 
-+ (void) connectionClosedByErrorForTitle: (NSString *)title error: (NSString *)error;
-+ (void) connectionClosedByServerForTitle: (NSString *)title;
-+ (void) connectionClosedForTitle: (NSString *)title;
-+ (void) connectionOpenedForTitle: (NSString *)title;
++ (void) connectionClosedByErrorForTitle: (NSString *) title error: (NSString *) error;
++ (void) connectionClosedByServerForTitle: (NSString *) title;
++ (void) connectionClosedForTitle: (NSString *) title;
++ (void) connectionOpenedForTitle: (NSString *) title;
 
 @end

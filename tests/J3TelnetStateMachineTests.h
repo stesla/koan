@@ -17,7 +17,7 @@
 }
 
 - (uint8_t) lastByteInput;
-- (uint8_t) outputByteAtIndex: (unsigned)index;
+- (uint8_t) outputByteAtIndex: (unsigned) index;
 - (unsigned) outputLength;
 
 @end

@@ -7,6 +7,6 @@
 @protocol J3ByteDestination
 
 - (BOOL) hasSpaceAvailable;
-- (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
+- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length;
 
 @end

@@ -10,7 +10,7 @@
 
 @interface J3NaiveURLFilterTests (Private)
 
-- (void) assertInput: (NSString *)input producesLink: (NSURL *)link forRange: (NSRange)range;
+- (void) assertInput: (NSString *) input producesLink: (NSURL *) link forRange: (NSRange)range;
 
 @end
 
@@ -18,7 +18,7 @@
 
 @implementation J3NaiveURLFilterTests (Private)
 
-- (void) assertInput: (NSString *)input producesLink: (NSURL *)link forRange: (NSRange)range
+- (void) assertInput: (NSString *) input producesLink: (NSURL *) link forRange: (NSRange)range
 {
   NSAttributedString *attributedInput = 
   [NSAttributedString attributedStringWithString: input];

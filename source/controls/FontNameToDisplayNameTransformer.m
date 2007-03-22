@@ -54,7 +54,7 @@
   return NO;
 }
 
-- (id) transformedValue: (id)value
+- (id) transformedValue: (id) value
 {
   NSFont *font = [NSFont fontWithName: value size: 12];
   return [font displayName];

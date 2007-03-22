@@ -32,28 +32,28 @@
 }
 
 // Designated initializer.
-- (id) initWithProfile: (MUProfile *)newProfile;
+- (id) initWithProfile: (MUProfile *) newProfile;
 
-- (id) initWithWorld: (MUWorld *)newWorld player: (MUPlayer *)newPlayer;
-- (id) initWithWorld: (MUWorld *)newWorld;
+- (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer;
+- (id) initWithWorld: (MUWorld *) newWorld;
 
 - (id) delegate;
-- (void) setDelegate: (id)delegate;
+- (void) setDelegate: (id) delegate;
 
 - (void) confirmClose: (SEL)callback;
-- (IBAction) connect: (id)sender;
-- (IBAction) disconnect: (id)sender;
-- (IBAction) goToWorldURL: (id)sender;
+- (IBAction) connect: (id) sender;
+- (IBAction) disconnect: (id) sender;
+- (IBAction) goToWorldURL: (id) sender;
 - (BOOL) isConnected;
-- (IBAction) nextCommand: (id)sender;
-- (IBAction) previousCommand: (id)sender;
-- (IBAction) sendInputText: (id)sender;
+- (IBAction) nextCommand: (id) sender;
+- (IBAction) previousCommand: (id) sender;
+- (IBAction) sendInputText: (id) sender;
 
 @end
 
 @interface NSObject (MUConnectionWindowControllerDelegate)
 
-- (void) connectionWindowControllerWillClose: (NSNotification *)notification;
-- (void) connectionWindowControllerDidReceiveText: (NSNotification *)notification;
+- (void) connectionWindowControllerWillClose: (NSNotification *) notification;
+- (void) connectionWindowControllerDidReceiveText: (NSNotification *) notification;
 
 @end

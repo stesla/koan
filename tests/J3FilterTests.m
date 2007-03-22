@@ -24,7 +24,7 @@
 
 @implementation J3UpperCaseFilter
 
-- (NSAttributedString *) filter: (NSAttributedString *)string
+- (NSAttributedString *) filter: (NSAttributedString *) string
 {
   return [NSAttributedString attributedStringWithString: [[string string] uppercaseString]
                                              attributes: [string attributesAtIndex: 0 effectiveRange: 0]];

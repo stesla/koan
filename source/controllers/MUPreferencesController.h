@@ -17,7 +17,7 @@
 
 - (IBAction) changeFont;
 - (void) colorPanelColorDidChange;
-- (void) playSelectedSound: (id)sender;
-- (void) showPreferencesPanel: (id)sender;
+- (void) playSelectedSound: (id) sender;
+- (void) showPreferencesPanel: (id) sender;
 
 @end
