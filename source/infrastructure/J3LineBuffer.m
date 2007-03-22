@@ -32,11 +32,24 @@
 #pragma mark Overrides
 
 // FIXME: ideally -appendByte: would only be used for binary data. This is going to cause issues later with multibyte stuff.
-- (void) appendByte: (uint8_t) byte
+- (void) appendBytes: (uint8_t *) bytes length: (unsigned) length
 {
-  [super appendByte: byte];
-  if (byte == (uint8_t) '\n')
-    [self hasReadLine];
+  uint8_t *origin = bytes;
+  unsigned offset = 0;
+  
+  for (unsigned span = 0; span < length; span++)
+  {
+    if (bytes[span] == (uint8_t) '\n')
+    {
+      [super appendBytes: origin length: span + 1];
+      [self hasReadLine];
+      
+      origin += span + 1;
+      offset += span + 1;
+    }
+  }
+  
+  [super appendBytes: origin length: length - offset];
 }
 
 - (void) appendString: (NSString *) string
