@@ -46,7 +46,6 @@
 /* Begin PBXBuildFile section */
 		2FC93E2A0BB103C500149459 /* J3TelnetEngine.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FC93E280BB103C500149459 /* J3TelnetEngine.h */; };
 		2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC93E290BB103C500149459 /* J3TelnetEngine.m */; };
-		2FC93E7B0BB1046400149459 /* J3TelnetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC93E290BB103C500149459 /* J3TelnetEngine.m */; };
 		2FDF39610ADB3D1A00EDD48A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
 		2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
 		7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
@@ -54,23 +53,16 @@
 		7E13B9AD09AE87D800508460 /* MUProxySettings.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7E13B9AB09AE87D800508460 /* MUProxySettings.nib */; };
 		7E13B9B709AE8B7600508460 /* MUProxySettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E13B9B509AE8B7600508460 /* MUProxySettingsController.m */; };
 		7E13BA1D09AE950600508460 /* J3ProxySettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E13BA1B09AE950600508460 /* J3ProxySettings.m */; };
-		7E13BA1E09AE950600508460 /* J3ProxySettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E13BA1B09AE950600508460 /* J3ProxySettings.m */; };
 		7E1FC01D0787A2220070AF39 /* MUProfileRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FC01B0787A2220070AF39 /* MUProfileRegistry.m */; };
 		7E230FFE079A0FE500E7CBA6 /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
 		7E23103C079A374B00E7CBA6 /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
 		7E39EF9E0783938F0042A17A /* MUProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E39EF9C0783938F0042A17A /* MUProfile.m */; };
 		7E43C1C20ACB1A4000A8E677 /* J3ANSIFormattingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E43C1C00ACB1A4000A8E677 /* J3ANSIFormattingFilter.m */; };
-		7E43C1C30ACB1A4000A8E677 /* J3ANSIFormattingFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E43C1C00ACB1A4000A8E677 /* J3ANSIFormattingFilter.m */; };
 		7E43C1EE0ACB1C0900A8E677 /* J3AnsiFormattingFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E43C1ED0ACB1C0900A8E677 /* J3AnsiFormattingFilterTests.m */; };
-		7E50AC2109AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E50AC2009AEB90B00E0BFE7 /* J3ProxySocket.m */; };
 		7E50AC2309AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E50AC2009AEB90B00E0BFE7 /* J3ProxySocket.m */; };
 		7E5103120AD1D5AA00142EF3 /* NSFont (Traits).m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103100AD1D5AA00142EF3 /* NSFont (Traits).m */; };
-		7E5103130AD1D5AA00142EF3 /* NSFont (Traits).m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103100AD1D5AA00142EF3 /* NSFont (Traits).m */; };
 		7E5103A40AD1E14000142EF3 /* J3Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103A20AD1E14000142EF3 /* J3Formatting.m */; };
-		7E5103A50AD1E14000142EF3 /* J3Formatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103A20AD1E14000142EF3 /* J3Formatting.m */; };
 		7E5103BD0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */; };
-		7E5103BE0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5103BB0AD1E22D00142EF3 /* MUProfileFormatting.m */; };
-		7E5C2DDB09B105B2006993E1 /* J3SocksAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C2DDA09B105B2006993E1 /* J3SocksAuthentication.m */; };
 		7E5C2DDD09B105B2006993E1 /* J3SocksAuthentication.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C2DDA09B105B2006993E1 /* J3SocksAuthentication.m */; };
 		7E68DC59092AC2FB004554BD /* J3Buffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC35092AC2FB004554BD /* J3Buffer.m */; };
 		7E68DC5B092AC2FB004554BD /* J3LineBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC37092AC2FB004554BD /* J3LineBuffer.m */; };
@@ -84,7 +76,6 @@
 		7E68DC6D092AC2FB004554BD /* J3TelnetWillState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC49092AC2FB004554BD /* J3TelnetWillState.m */; };
 		7E68DC6F092AC2FB004554BD /* J3TelnetWontState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC4B092AC2FB004554BD /* J3TelnetWontState.m */; };
 		7E87735409AD44DE00A883BC /* J3ConnectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87735209AD44DE00A883BC /* J3ConnectionFactory.m */; };
-		7E87752809AD55E600A883BC /* test-stub-main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87752709AD55E600A883BC /* test-stub-main.m */; };
 		7E87756409AD62E400A883BC /* J3FilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE43B20749CB16002C7D48 /* J3FilterTests.m */; };
 		7E87756509AD62E400A883BC /* J3HistoryRingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */; };
 		7E87756609AD62E400A883BC /* J3LineBufferTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC29092AC2AF004554BD /* J3LineBufferTests.m */; };
@@ -98,47 +89,9 @@
 		7E87757109AD62E400A883BC /* TestCase (NSAttributedStringAssertions).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */; };
 		7E87757209AD62FE00A883BC /* J3TestSocksPrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070ACE0933CD81000A36CF /* J3TestSocksPrimitives.m */; };
 		7E87757309AD630E00A883BC /* J3TelnetStateMachineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC2D092AC2AF004554BD /* J3TelnetStateMachineTests.m */; };
-		7E8775D709AD668900A883BC /* J3WriteBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */; };
-		7E8775D909AD668900A883BC /* NSAttributedString (Allocating).m in Sources */ = {isa = PBXBuildFile; fileRef = E6055F7D07492729007A13BD /* NSAttributedString (Allocating).m */; };
-		7E8775DA09AD668900A883BC /* MUConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E622A551074231A60069335B /* MUConstants.m */; };
-		7E8775DE09AD668900A883BC /* J3HistoryRing.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A62707496940007005AC /* J3HistoryRing.m */; };
-		7E8775DF09AD668900A883BC /* J3Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE43830749C7CE002C7D48 /* J3Filter.m */; };
-		7E8775E209AD668900A883BC /* J3PortFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = E64C9632076BF95E00D0D7C0 /* J3PortFormatter.m */; };
-		7E8775E609AD668900A883BC /* NSObject (DeepMutableCopy).m in Sources */ = {isa = PBXBuildFile; fileRef = E6550DF907763B57002E81FF /* NSObject (DeepMutableCopy).m */; };
-		7E8775E709AD668900A883BC /* NSObject (BetterHashing).m in Sources */ = {isa = PBXBuildFile; fileRef = E6550DFF07763B72002E81FF /* NSObject (BetterHashing).m */; };
-		7E8775E809AD668900A883BC /* MUWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DA667107776D9900C46267 /* MUWorld.m */; };
-		7E8775E909AD668900A883BC /* MUPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E677D20F0778041F00B417D2 /* MUPlayer.m */; };
-		7E8775EA09AD668900A883BC /* NSFileManager (Recursive).m in Sources */ = {isa = PBXBuildFile; fileRef = E6F60DAC0778A3C600E0EBB4 /* NSFileManager (Recursive).m */; };
-		7E8775ED09AD668900A883BC /* J3NaiveURLFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C9D605077C2DC6007BB2C1 /* J3NaiveURLFilter.m */; };
-		7E8775EE09AD668900A883BC /* MUProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E39EF9C0783938F0042A17A /* MUProfile.m */; };
-		7E8775EF09AD668900A883BC /* MUProfileRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E1FC01B0787A2220070AF39 /* MUProfileRegistry.m */; };
-		7E8775F009AD668900A883BC /* MUServices.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E230FFC079A0FE500E7CBA6 /* MUServices.m */; };
-		7E8775F109AD668900A883BC /* MUCodingService.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E23103A079A374B00E7CBA6 /* MUCodingService.m */; };
-		7E8775F209AD668900A883BC /* NSCursor (Finger).m in Sources */ = {isa = PBXBuildFile; fileRef = E62E7FA107A1AB5400BF15E9 /* NSCursor (Finger).m */; };
-		7E8775FC09AD668900A883BC /* J3Buffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC35092AC2FB004554BD /* J3Buffer.m */; };
-		7E8775FD09AD668900A883BC /* J3LineBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC37092AC2FB004554BD /* J3LineBuffer.m */; };
-		7E8775FE09AD668900A883BC /* J3Socket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC39092AC2FB004554BD /* J3Socket.m */; };
-		7E8775FF09AD668900A883BC /* J3TelnetConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC3B092AC2FB004554BD /* J3TelnetConstants.m */; };
-		7E87760009AD668900A883BC /* J3TelnetDontState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC3D092AC2FB004554BD /* J3TelnetDontState.m */; };
-		7E87760109AD668900A883BC /* J3TelnetDoState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC3F092AC2FB004554BD /* J3TelnetDoState.m */; };
-		7E87760209AD668900A883BC /* J3TelnetInterpretAsCommandState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC41092AC2FB004554BD /* J3TelnetInterpretAsCommandState.m */; };
-		7E87760409AD668900A883BC /* J3TelnetState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC45092AC2FB004554BD /* J3TelnetState.m */; };
-		7E87760509AD668900A883BC /* J3TelnetTextState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC47092AC2FB004554BD /* J3TelnetTextState.m */; };
-		7E87760609AD668900A883BC /* J3TelnetWillState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC49092AC2FB004554BD /* J3TelnetWillState.m */; };
-		7E87760709AD668900A883BC /* J3TelnetWontState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC4B092AC2FB004554BD /* J3TelnetWontState.m */; };
-		7E87760809AD668900A883BC /* J3TelnetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */; };
-		7E87760909AD668900A883BC /* NSObject (Accessing).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */; };
-		7E87760B09AD668900A883BC /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
-		7E87760C09AD668900A883BC /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
-		7E87760D09AD668900A883BC /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
-		7E87760E09AD668900A883BC /* J3ConnectionFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87735209AD44DE00A883BC /* J3ConnectionFactory.m */; };
-		7E87761709AD692400A883BC /* MUTextLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6340749697C007005AC /* MUTextLogger.m */; };
-		7E87761809AD694E00A883BC /* MUWorldRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = E6F3A71E077A1B270011A461 /* MUWorldRegistry.m */; };
 		7E87764409AD6B3000A883BC /* MUConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E622A551074231A60069335B /* MUConstants.m */; };
 		7EBFDB0E09380B100077BA3A /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
-		7EC10AEA09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
 		7EC10AEC09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
-		7EC10C4109AFAC4B00D840A1 /* J3ByteSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10C4009AFAC4B00D840A1 /* J3ByteSource.m */; };
 		7EC10C4209AFAC4B00D840A1 /* J3ByteSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10C4009AFAC4B00D840A1 /* J3ByteSource.m */; };
 		7EC3030A092B978B00AFA5C7 /* J3TelnetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */; };
 		7EC30342092B99C300AFA5C7 /* NSObject (Accessing).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC3033F092B99C300AFA5C7 /* NSObject (Accessing).m */; };
@@ -211,6 +164,13 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = KoanLogImporter;
 		};
+		7E3F47310BB2061F00D2947F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D1107260486CEB800E47090 /* Koan */;
+			remoteInfo = Koan;
+		};
 		7E4AFB2C0BA7CD0D0050B5AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
@@ -231,13 +191,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 7E4AFB160BA7CC990050B5AE;
 			remoteInfo = "Unit Tests";
-		};
-		7E87755E09AD577900A883BC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7E87752009AD55A900A883BC;
-			remoteInfo = "test-stub";
 		};
 		7EDB35580BA64EA0008EE7D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -355,7 +308,6 @@
 		7E87735209AD44DE00A883BC /* J3ConnectionFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3ConnectionFactory.m; sourceTree = "<group>"; };
 		7E87751809AD558700A883BC /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E87751909AD558700A883BC /* Unit Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
-		7E87752109AD55A900A883BC /* test-stub */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "test-stub"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E87752709AD55E600A883BC /* test-stub-main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "test-stub-main.m"; sourceTree = "<group>"; };
 		7EA5BB1E07A76A98002336EE /* TestCase (NSAttributedStringAssertions).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestCase (NSAttributedStringAssertions).h"; sourceTree = "<group>"; };
 		7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TestCase (NSAttributedStringAssertions).m"; sourceTree = "<group>"; };
@@ -481,13 +433,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7E87751F09AD55A900A883BC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D11072E0486CEB800E47090 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -528,7 +473,6 @@
 			children = (
 				8D1107320486CEB800E47090 /* Koan.app */,
 				7E87751809AD558700A883BC /* Unit Tests.octest */,
-				7E87752109AD55A900A883BC /* test-stub */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -882,28 +826,12 @@
 			);
 			dependencies = (
 				7EDB35590BA64EA0008EE7D9 /* PBXTargetDependency */,
-				7E87755F09AD577900A883BC /* PBXTargetDependency */,
+				7E3F47320BB2061F00D2947F /* PBXTargetDependency */,
 			);
 			name = "Unit Tests";
 			productName = "Unit Tests";
 			productReference = 7E87751809AD558700A883BC /* Unit Tests.octest */;
 			productType = "com.apple.product-type.bundle";
-		};
-		7E87752009AD55A900A883BC /* test-stub */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7E87752309AD55D600A883BC /* Build configuration list for PBXNativeTarget "test-stub" */;
-			buildPhases = (
-				7E87751E09AD55A900A883BC /* Sources */,
-				7E87751F09AD55A900A883BC /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "test-stub";
-			productName = "test-stub";
-			productReference = 7E87752109AD55A900A883BC /* test-stub */;
-			productType = "com.apple.product-type.tool";
 		};
 		8D1107260486CEB800E47090 /* Koan */ = {
 			isa = PBXNativeTarget;
@@ -949,7 +877,6 @@
 				E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */,
 				E659F6D00770D4DA00534D1B /* Update plist */,
 				7E87751709AD558700A883BC /* Unit Tests */,
-				7E87752009AD55A900A883BC /* test-stub */,
 			);
 		};
 /* End PBXProject section */
@@ -1096,60 +1023,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7E87751E09AD55A900A883BC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7E87761809AD694E00A883BC /* MUWorldRegistry.m in Sources */,
-				7E87761709AD692400A883BC /* MUTextLogger.m in Sources */,
-				7E8775D709AD668900A883BC /* J3WriteBuffer.m in Sources */,
-				7E8775D909AD668900A883BC /* NSAttributedString (Allocating).m in Sources */,
-				7E8775DA09AD668900A883BC /* MUConstants.m in Sources */,
-				7E8775DE09AD668900A883BC /* J3HistoryRing.m in Sources */,
-				7E8775DF09AD668900A883BC /* J3Filter.m in Sources */,
-				7E8775E209AD668900A883BC /* J3PortFormatter.m in Sources */,
-				7E8775E609AD668900A883BC /* NSObject (DeepMutableCopy).m in Sources */,
-				7E8775E709AD668900A883BC /* NSObject (BetterHashing).m in Sources */,
-				7E8775E809AD668900A883BC /* MUWorld.m in Sources */,
-				7E8775E909AD668900A883BC /* MUPlayer.m in Sources */,
-				7E8775EA09AD668900A883BC /* NSFileManager (Recursive).m in Sources */,
-				7E8775ED09AD668900A883BC /* J3NaiveURLFilter.m in Sources */,
-				7E8775EE09AD668900A883BC /* MUProfile.m in Sources */,
-				7E8775EF09AD668900A883BC /* MUProfileRegistry.m in Sources */,
-				7E8775F009AD668900A883BC /* MUServices.m in Sources */,
-				7E8775F109AD668900A883BC /* MUCodingService.m in Sources */,
-				7E8775F209AD668900A883BC /* NSCursor (Finger).m in Sources */,
-				7E8775FC09AD668900A883BC /* J3Buffer.m in Sources */,
-				7E8775FD09AD668900A883BC /* J3LineBuffer.m in Sources */,
-				7E8775FE09AD668900A883BC /* J3Socket.m in Sources */,
-				7E8775FF09AD668900A883BC /* J3TelnetConstants.m in Sources */,
-				7E87760009AD668900A883BC /* J3TelnetDontState.m in Sources */,
-				7E87760109AD668900A883BC /* J3TelnetDoState.m in Sources */,
-				7E87760209AD668900A883BC /* J3TelnetInterpretAsCommandState.m in Sources */,
-				7E87760409AD668900A883BC /* J3TelnetState.m in Sources */,
-				7E87760509AD668900A883BC /* J3TelnetTextState.m in Sources */,
-				7E87760609AD668900A883BC /* J3TelnetWillState.m in Sources */,
-				7E87760709AD668900A883BC /* J3TelnetWontState.m in Sources */,
-				7E87760809AD668900A883BC /* J3TelnetConnection.m in Sources */,
-				7E87760909AD668900A883BC /* NSObject (Accessing).m in Sources */,
-				7E87760B09AD668900A883BC /* J3SocksMethodSelection.m in Sources */,
-				7E87760C09AD668900A883BC /* J3SocksConstants.m in Sources */,
-				7E87760D09AD668900A883BC /* NSObject (Subclasses).m in Sources */,
-				7E87760E09AD668900A883BC /* J3ConnectionFactory.m in Sources */,
-				7E87752809AD55E600A883BC /* test-stub-main.m in Sources */,
-				7E13BA1E09AE950600508460 /* J3ProxySettings.m in Sources */,
-				7E50AC2109AEB90B00E0BFE7 /* J3ProxySocket.m in Sources */,
-				7EC10AEA09AF947C00D840A1 /* J3SocksRequest.m in Sources */,
-				7EC10C4109AFAC4B00D840A1 /* J3ByteSource.m in Sources */,
-				7E5C2DDB09B105B2006993E1 /* J3SocksAuthentication.m in Sources */,
-				7E43C1C30ACB1A4000A8E677 /* J3ANSIFormattingFilter.m in Sources */,
-				7E5103130AD1D5AA00142EF3 /* NSFont (Traits).m in Sources */,
-				7E5103A50AD1E14000142EF3 /* J3Formatting.m in Sources */,
-				7E5103BE0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */,
-				2FC93E7B0BB1046400149459 /* J3TelnetEngine.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1225,6 +1098,11 @@
 			name = KoanLogImporter;
 			targetProxy = 7E0153250BA79D71004BB9B8 /* PBXContainerItemProxy */;
 		};
+		7E3F47320BB2061F00D2947F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D1107260486CEB800E47090 /* Koan */;
+			targetProxy = 7E3F47310BB2061F00D2947F /* PBXContainerItemProxy */;
+		};
 		7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7E87751709AD558700A883BC /* Unit Tests */;
@@ -1234,11 +1112,6 @@
 			isa = PBXTargetDependency;
 			name = "Unit Tests";
 			targetProxy = 7E4AFBE70BA7D2CA0050B5AE /* PBXContainerItemProxy */;
-		};
-		7E87755F09AD577900A883BC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7E87752009AD55A900A883BC /* test-stub */;
-			targetProxy = 7E87755E09AD577900A883BC /* PBXContainerItemProxy */;
 		};
 		7EDB35590BA64EA0008EE7D9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1334,7 +1207,7 @@
 		7E87751B09AD558700A883BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-stub";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Koan.app/Contents/MacOS/Koan";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
@@ -1378,7 +1251,7 @@
 		7E87751C09AD558700A883BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/test-stub";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Koan.app/Contents/MacOS/Koan";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
@@ -1416,82 +1289,6 @@
 					"-Wno-unknown-pragmas",
 				);
 				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
-		7E87752409AD55D600A883BC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "source/Koan-prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
-					./externals,
-					./tests,
-				);
-				INSTALL_PATH = /usr/local/bin;
-				OPTIMIZATION_CFLAGS = "-O0";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = "test-stub";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-			};
-			name = Debug;
-		};
-		7E87752509AD55D600A883BC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "source/Koan-prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
-					./externals,
-					./tests,
-				);
-				INSTALL_PATH = /usr/local/bin;
-				OPTIMIZATION_CFLAGS = "-O0";
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-framework",
-					Foundation,
-					"-framework",
-					AppKit,
-				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
-				PRODUCT_NAME = "test-stub";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
 			};
 			name = Release;
 		};
@@ -1681,15 +1478,6 @@
 			buildConfigurations = (
 				7E87751B09AD558700A883BC /* Debug */,
 				7E87751C09AD558700A883BC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		7E87752309AD55D600A883BC /* Build configuration list for PBXNativeTarget "test-stub" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7E87752409AD55D600A883BC /* Debug */,
-				7E87752509AD55D600A883BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
