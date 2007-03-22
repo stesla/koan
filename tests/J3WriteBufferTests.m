@@ -17,6 +17,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3WriteBufferTests
 
 - (BOOL) hasSpaceAvailable;
@@ -105,7 +107,7 @@
 }
 
 #pragma mark -
-
+#pragma mark J3ByteDestination protocol
 
 - (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
 {

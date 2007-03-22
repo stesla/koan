@@ -304,4 +304,5 @@
   if (delegate && [delegate respondsToSelector: @selector (connectionWasClosed:withError:)])
     [delegate connectionWasClosed: self withError: error];
 }
+
 @end

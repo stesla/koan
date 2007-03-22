@@ -56,6 +56,9 @@
 {
   switch (byte)
   {
+    case J3TelnetEcho:
+      return @"ECHO";
+    
   	case J3TelnetSuppressGoAhead:
   		return @"SUPPRESS-GO-AHEAD";
   		
@@ -77,6 +80,12 @@
   	case J3TelnetMCCP2:
   		return @"COMPRESS2 (MCCP2)";
   		
+    case J3TelnetMSP:
+      return @"MSP";
+      
+    case J3TelnetMXP:
+      return @"MXP";
+      
   	default:
   		return [NSString stringWithFormat: @"%u (unknown option)", (unsigned) byte];
   }
