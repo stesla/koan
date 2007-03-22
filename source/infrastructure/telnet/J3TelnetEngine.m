@@ -6,6 +6,7 @@
 
 #import "J3Buffer.h"
 #import "J3TelnetConstants.h"
+#import "J3TelnetByteDestination.h"
 #import "J3TelnetEngine.h"
 #import "J3TelnetTextState.h"
 #import "J3WriteBuffer.h"
@@ -27,7 +28,8 @@
 {
   if (![super init])
     return nil;
-  state = [[J3TelnetTextState state] retain];
+  state = [[J3TelnetTextState state] retain]; 
+  [self at: &telnetByteDestination put: [J3TelnetByteDestination destination]];
   return self;
 }
 
@@ -111,9 +113,8 @@
 
 - (void) setOutputBuffer: (J3WriteBuffer *)buffer
 {
-  [buffer retain];
-  [outputBuffer release];
-  outputBuffer = buffer;
+  [self at: &outputBuffer put: buffer];
+  [telnetByteDestination setDestination: outputBuffer];
 }
 
 - (void) wont: (uint8_t)byte;
@@ -127,12 +128,12 @@
 
 - (BOOL) hasSpaceAvailable;
 {
-  return [outputBuffer hasSpaceAvailable];
+  return [telnetByteDestination hasSpaceAvailable];
 }
 
 - (unsigned) write: (const uint8_t *)bytes length: (unsigned)length;
 {
-  return [outputBuffer write: bytes length: length];
+  return [telnetByteDestination write: bytes length: length];
 }
 
 #pragma mark -
