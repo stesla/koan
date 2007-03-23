@@ -7,11 +7,10 @@
 #import <Cocoa/Cocoa.h>
 
 @protocol J3Buffer;
-@protocol J3ByteDestination;
 @class J3TelnetState;
 @class J3WriteBuffer; 
 
-@interface J3TelnetEngine : NSObject <J3ByteDestination>
+@interface J3TelnetEngine : NSObject
 {
   NSObject <J3Buffer> *inputBuffer;
   J3WriteBuffer *outputBuffer;

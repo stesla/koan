@@ -6,7 +6,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "J3Buffer.h"
-#import "J3ByteDestination.h"
+
+@protocol J3ByteDestination;
 
 @interface J3WriteBufferException : NSException
 
@@ -14,7 +15,7 @@
 
 #pragma mark -
 
-@interface J3WriteBuffer : J3Buffer <J3ByteDestination> 
+@interface J3WriteBuffer : J3Buffer
 {
   NSObject <J3ByteDestination> *destination;
 }

@@ -36,11 +36,9 @@
   [self at: &connection put: newConnection];
   [self at: &engine put: newEngine];
   [self at: &timers put: [NSMutableDictionary dictionary]];
-  J3WriteBuffer *socketBuffer = [J3WriteBuffer buffer];
-  [socketBuffer setByteDestination: connection];
-  [engine setOutputBuffer: socketBuffer];
   [self at: &outputBuffer put: [J3WriteBuffer buffer]];
-  [outputBuffer setByteDestination: engine];
+  [outputBuffer setByteDestination: connection];
+  [engine setOutputBuffer: outputBuffer];
   
   return self;
 }

@@ -127,21 +127,6 @@
   [self sendCommand: J3TelnetWont withByte: byte];
 }
 
-#pragma mark -
-#pragma mark J3ByteDestination protocol
-
-- (BOOL) hasSpaceAvailable;
-{
-  return [outputBuffer hasSpaceAvailable];
-}
-
-- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length;
-{
-  return [outputBuffer write: bytes length: length];
-}
-
-#pragma mark -
-
 @end
 
 @implementation J3TelnetEngine (Private)
