@@ -4,15 +4,17 @@
 // Copyright (c) 2005, 2006, 2007 3James Software
 //
 
-#import "J3Buffer.h"
-#import "J3ByteSource.h"
 #import "J3TestSocksPrimitives.h"
+
+#import "J3ByteSource.h"
+#import "J3ReadBuffer.h"
 #import "J3SocksAuthentication.h"
 #import "J3SocksConstants.h"
 #import "J3SocksMethodSelection.h"
 #import "J3SocksRequest.h"
+#import "J3WriteBuffer.h"
 
-@interface J3MockByteSource : J3Buffer <J3ByteSource>
+@interface J3MockByteSource : J3ReadBuffer <J3ByteSource>
 {
   unsigned bytesToRead;
 }
@@ -20,6 +22,8 @@
 - (void) setBytesToRead: (unsigned) value;
 
 @end
+
+#pragma mark -
 
 @implementation J3MockByteSource
 
@@ -33,9 +37,9 @@
   unsigned lengthToRead = length;
   if (bytesToRead > 0)
     lengthToRead = length < bytesToRead ? length : bytesToRead;
-
-  [[self dataValue] getBytes: buffer length: lengthToRead];
-  [self removeDataUpTo: lengthToRead];
+  
+  [[self dataByConsumingBytesToIndex: lengthToRead] getBytes: buffer length: lengthToRead];
+  
   return [self length] > lengthToRead ? lengthToRead : [self length];
 }
 
@@ -46,9 +50,12 @@
 
 @end
 
+#pragma mark -
+
 @interface J3TestSocksPrimitives (Private)
 
 - (void) assertObject: (id) selection writes: (NSString *) output;
+- (void) setReadString: (NSString *) newString;
 
 @end
 
@@ -58,12 +65,14 @@
 
 - (void) setUp
 {
-  buffer = [[J3Buffer alloc] init];
+  buffer = [[J3WriteBuffer alloc] init];
+  readString = nil;
 }
 
 - (void) tearDown
 {
   [buffer release];
+  [readString release];
 }
 
 - (void) testMethodSelection;
@@ -93,9 +102,11 @@
 {
   J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
+  
+  [source setDelegate: self];
   [selection addMethod: J3SocksUsernamePassword];
   [self assertInt: [selection method] equals: J3SocksNoAuthentication];
-  [source appendString: @"\x05\x02"];
+  [source appendBytes: (uint8_t *) "\x05\x02" length: 2];
   [selection parseResponseFromByteSource: source];
   [self assertInt: [selection method] equals: J3SocksUsernamePassword];
 }
@@ -104,8 +115,10 @@
 {
   J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
+  
+  [source setDelegate: self];
   [selection addMethod: J3SocksUsernamePassword];
-  [source appendString: @"\x05\x02"];
+  [source appendBytes: (uint8_t *) "\x05\x02" length: 2];
   [source setBytesToRead: 1];
   [selection parseResponseFromByteSource: source];
   [self assertInt: [selection method] equals: J3SocksUsernamePassword];  
@@ -132,11 +145,13 @@
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
   uint8_t reply[18] = {J3SocksVersion, J3SocksConnectionNotAllowed, 0, J3SocksDomainName, 11, 'e', 'x', 'a', 'm', 'p', 'l', 'e', '.', 'c', 'o', 'm', 0xAB, 0xCD};
   
+  [source setDelegate: self];
   [self assertInt: [request reply] equals: J3SocksNoReply];
   [source appendBytes: reply length: 18];
-  [source appendString: @"foo"];
+  [source appendBytes: (uint8_t *) "foo" length: 3];
   [request parseReplyFromByteSource: source];
-  [self assert: [source stringValue] equals: @"foo"];
+  [source interpretBufferAsString];
+  [self assert: readString equals: @"foo"];
   [self assertInt: [request reply] equals: J3SocksConnectionNotAllowed];
 }
 
@@ -146,11 +161,13 @@
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
   uint8_t reply[10] = {J3SocksVersion, J3SocksConnectionNotAllowed, 0, J3SocksIPV4, 10, 1, 2, 3, 0xAB, 0xCD};
   
+  [source setDelegate: self];
   [self assertInt: [request reply] equals: J3SocksNoReply];
   [source appendBytes: reply length: 10];
-  [source appendString: @"foo"];
+  [source appendBytes: (uint8_t *) "foo" length: 3];
   [request parseReplyFromByteSource: source];
-  [self assert: [source stringValue] equals: @"foo"];
+  [source interpretBufferAsString];
+  [self assert: readString equals: @"foo"];
   [self assertInt: [request reply] equals: J3SocksConnectionNotAllowed];
 }
 
@@ -160,11 +177,13 @@
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
   uint8_t reply[22] = {J3SocksVersion, J3SocksConnectionNotAllowed, 0, J3SocksIPV6, 0xFE, 0xC0, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0xAB, 0xCD};
   
+  [source setDelegate: self];
   [self assertInt: [request reply] equals: J3SocksNoReply];
   [source appendBytes: reply length: 22];
-  [source appendString: @"foo"];
+  [source appendBytes: (uint8_t *) "foo" length: 3];
   [request parseReplyFromByteSource: source];
-  [self assert: [source stringValue] equals: @"foo"];
+  [source interpretBufferAsString];
+  [self assert: readString equals: @"foo"];
   [self assertInt: [request reply] equals: J3SocksConnectionNotAllowed];
 }
 
@@ -187,7 +206,8 @@
 {
   J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername: @"bob" password: @"barfoo"] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
-
+  
+  [source setDelegate: self];
   [self assertFalse: [auth authenticated]];
   [source appendByte: 1];
   [source appendByte: 0];
@@ -199,6 +219,13 @@
   [self assertFalse: [auth authenticated]];
 }
 
+#pragma mark -
+#pragma mark J3ReadBuffer delegate
+
+- (void) readBufferDidProvideString: (NSNotification *) notification
+{
+  [self setReadString: [[notification userInfo] objectForKey: @"string"]];
+}
 
 @end
 
@@ -211,6 +238,11 @@
   [buffer clear];
   [object appendToBuffer: buffer];
   [self assert: [buffer stringValue] equals: output];  
+}
+
+- (void) setReadString: (NSString *) newString
+{
+  [self at: &readString put: newString];
 }
 
 @end

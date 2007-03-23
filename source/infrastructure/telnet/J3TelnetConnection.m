@@ -64,9 +64,9 @@
   connection = nil;
 }
 
-- (BOOL) hasInputBuffer: (NSObject <J3Buffer> *) buffer;
+- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
 {
-  return [engine hasInputBuffer:  buffer];
+  return [engine hasInputBuffer: buffer];
 }
 
 - (BOOL) isConnected
@@ -176,6 +176,8 @@
     bytesRead = [connection read: bytes maxLength: TELNET_READ_BUFFER_SIZE];
     [engine parse: bytes length: bytesRead];
   }
+  else
+    [engine handleEndOfReceivedData];
 }
 
 - (void) removeAllTimers

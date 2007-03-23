@@ -5,7 +5,7 @@
 //
 
 #import "J3SocksAuthentication.h"
-#import "J3Buffer.h"
+#import "J3WriteBuffer.h"
 #import "J3ByteSource.h"
 #import "J3SocksConstants.h"
 
@@ -27,7 +27,7 @@
   [super dealloc];
 }
 
-- (void) appendToBuffer: (id <J3Buffer>) buffer
+- (void) appendToBuffer: (id <J3WriteBuffer>) buffer
 {
   [buffer appendByte: J3SocksUsernamePasswordVersion];
   [buffer appendByte: [username length]];

@@ -6,7 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "J3Buffer.h"
+#import "J3ReadBuffer.h"
 #import "J3ByteDestination.h"
 #import "J3ByteSource.h"
 #import "J3Connection.h"
@@ -30,7 +30,7 @@
 
 - (void) close;
 - (BOOL) isConnected;
-- (BOOL) hasInputBuffer: (NSObject <J3Buffer> *) buffer;
+- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
 - (void) open;
 - (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object;
 - (void) writeLine: (NSString *) line;

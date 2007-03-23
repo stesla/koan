@@ -312,13 +312,12 @@ enum MUSearchDirections
 }
 
 #pragma mark -
-#pragma mark J3LineBufferDelegate protocol
+#pragma mark J3ReadBuffer delegate
 
-- (void) lineBufferHasReadLine: (J3LineBuffer *) buffer
+- (void) readBufferDidProvideString: (NSNotification *) notification
 {
-  if (![telnetConnection hasInputBuffer: buffer])
-    return;
-  [self displayString: [buffer readLine]];
+  NSString *readString = [[notification userInfo] objectForKey: @"string"];
+  [self displayString: readString];
 }
 
 #pragma mark -

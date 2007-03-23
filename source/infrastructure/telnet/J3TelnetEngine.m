@@ -4,7 +4,7 @@
 // Copyright (c) 2005, 2006 3James Software
 //
 
-#import "J3Buffer.h"
+#import "J3ReadBuffer.h"
 #import "J3TelnetConstants.h"
 #import "J3TelnetEngine.h"
 #import "J3TelnetTextState.h"
@@ -54,7 +54,12 @@
   [outputBuffer flush];
 }
 
-- (BOOL) hasInputBuffer: (id <J3Buffer>)buffer;
+- (void) handleEndOfReceivedData
+{
+  [inputBuffer interpretBufferAsString];
+}
+
+- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *)buffer;
 {
   return buffer == inputBuffer;
 }
@@ -109,14 +114,12 @@
     [self parse: bytes[i]];
 }
 
-- (void) setInputBuffer: (NSObject <J3Buffer> *) buffer
+- (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer
 {
-  [buffer retain];
-  [inputBuffer release];
-  inputBuffer = buffer;
+  [self at: &inputBuffer put: buffer];
 }
 
-- (void) setOutputBuffer: (J3WriteBuffer *) buffer
+- (void) setOutputBuffer: (NSObject <J3WriteBuffer> *) buffer
 {
   [self at: &outputBuffer put: buffer];
 }

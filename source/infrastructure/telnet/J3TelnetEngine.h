@@ -6,14 +6,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol J3Buffer;
+@protocol J3ReadBuffer;
+@protocol J3WriteBuffer; 
 @class J3TelnetState;
-@class J3WriteBuffer; 
 
 @interface J3TelnetEngine : NSObject
 {
-  NSObject <J3Buffer> *inputBuffer;
-  J3WriteBuffer *outputBuffer;
+  NSObject <J3ReadBuffer> *inputBuffer;
+  NSObject <J3WriteBuffer> *outputBuffer;
   J3TelnetState *state;
 }
 
@@ -24,12 +24,13 @@
 - (void) bufferInputByte: (uint8_t) byte;
 - (void) bufferOutputByte: (uint8_t) byte;
 - (void) dont: (uint8_t) byte;
-- (BOOL) hasInputBuffer: (id <J3Buffer>)buffer;
+- (void) handleEndOfReceivedData;
+- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *)buffer;
 - (void) goAhead;
 - (void) parse: (uint8_t) byte;
 - (void) parse: (uint8_t *) bytes length: (int) count;
-- (void) setInputBuffer: (NSObject <J3Buffer> *) buffer;
-- (void) setOutputBuffer: (J3WriteBuffer *) buffer;
+- (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
+- (void) setOutputBuffer: (NSObject <J3WriteBuffer> *) buffer;
 - (void) wont: (uint8_t) byte;
 
 @end

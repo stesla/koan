@@ -5,7 +5,7 @@
 //
 
 #import "J3SocksRequest.h"
-#import "J3Buffer.h"
+#import "J3WriteBuffer.h"
 #import "J3ByteSource.h"
 
 @implementation J3SocksRequest
@@ -26,7 +26,7 @@
   [super dealloc];
 }
 
-- (void) appendToBuffer: (id <J3Buffer>) buffer
+- (void) appendToBuffer: (id <J3WriteBuffer>) buffer
 {
   [buffer appendByte: J3SocksVersion];
   [buffer appendByte: J3SocksConnect];

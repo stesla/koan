@@ -1,8 +1,8 @@
 //
 // J3LineBufferTests.m
 //
-// Copyright (c) 2005, 2006 3James Software
-// telnet://cajun.targonia.com:7373/
+// Copyright (c) 2005, 2006, 2007 3James Software
+//
 
 #import "J3LineBufferTests.h"
 
@@ -17,35 +17,21 @@
 
 @implementation J3LineBufferTests
 
-- (void) lineBufferHasReadLine: (J3LineBuffer *) lineBuffer
-{
-  line = [lineBuffer readLine];
-}
-
 - (void) setUp
 {
-  buffer = [[J3LineBuffer alloc] init];  
+  buffer = [[J3LineBuffer alloc] init];
+  [buffer setByteDestination: self];
+  line = nil;
 }
 
 - (void) tearDown
 {
   [buffer release];
+  [line release];
 }
 
-- (void) testReadLine
+- (void) testLineBuffering
 {
-  [self bufferBytes: (uint8_t *) "12\n" length: 3];
-  [self assert: [buffer readLine] equals: @"12\n"];
-  [self bufferString: @"ab\n"];
-  [self assert: [buffer readLine] equals: @"ab\n"];
-  [self bufferString: @"de\n"];
-  [self assert: [buffer readLine] equals: @"de\n"];
-}
-
-- (void) testDelegate
-{
-  [buffer setDelegate: self];
-  
   [self bufferBytes: (uint8_t *) "12\n" length: 3];
   [self assert: line equals: @"12\n"];
   
@@ -61,6 +47,23 @@
   [self assert: line equals: @"ab\n"];
   [self bufferString: @"\n"];
   [self assert: line equals: @"cd\n"];
+}
+
+#pragma mark -
+#pragma mark J3ByteDestination protocol
+
+- (BOOL) hasSpaceAvailable
+{
+  return YES;
+}
+
+- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length
+{
+  line = [[NSString alloc] initWithBytes: bytes
+                                  length: length
+                                encoding: NSASCIIStringEncoding];
+  
+  return length;
 }
 
 @end

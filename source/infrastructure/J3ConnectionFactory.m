@@ -58,33 +58,22 @@ static J3ConnectionFactory *defaultFactory = nil;
   [super dealloc];
 }
 
-- (J3TelnetConnection *) lineAtATimeTelnetWithHostname: (NSString *) hostname
-                                                  port: (int) port
-                                              delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
-                                    lineBufferDelegate: (NSObject <J3LineBufferDelegate> *) lineBufferDelegate
-{
-  J3LineBuffer *buffer = [J3LineBuffer buffer];
-  
-  [buffer setDelegate: lineBufferDelegate];
-  
-  return [self telnetWithHostname: hostname port: port inputBuffer: buffer delegate: delegate];
-}
-
 - (J3TelnetConnection *) telnetWithHostname: (NSString *) hostname
                                        port: (int) port
-                                inputBuffer: (NSObject <J3Buffer> *) buffer
                                    delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
-  J3TelnetEngine *engine;
-  J3Socket *socket;
-  J3TelnetConnection *result;
+  J3TelnetEngine *engine = [J3TelnetEngine engine];
+  J3ReadBuffer *buffer = [J3ReadBuffer buffer];
+  J3Socket *socket = [self makeSocketWithHostname: hostname port: port];
+  J3TelnetConnection *telnetConnection;
 
-  engine = [J3TelnetEngine engine];
+  [buffer setDelegate: delegate];
   [engine setInputBuffer: buffer];
-  socket = [self makeSocketWithHostname: hostname port: port];
-  result = [[[J3TelnetConnection alloc] initWithConnection: socket engine: engine delegate: delegate] autorelease];
-  [socket setDelegate: result];
-  return result;
+  
+  telnetConnection = [[[J3TelnetConnection alloc] initWithConnection: socket engine: engine delegate: delegate] autorelease];
+  [socket setDelegate: telnetConnection];
+  
+  return telnetConnection;
 }
 
 - (J3ProxySettings *) proxySettings

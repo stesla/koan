@@ -159,7 +159,7 @@
 
 - (unsigned) read: (uint8_t *) bytes maxLength: (unsigned) length
 {
-  int result;
+  ssize_t result;
   errno = 0;
   result = read (socketfd, bytes, length);
   if (result < 0)
@@ -182,7 +182,7 @@
 
 - (unsigned) write: (const uint8_t *) bytes length: (unsigned) length
 {
-  int result;
+  ssize_t result;
   errno = 0;
   result = write (socketfd, bytes, length);
   if (result < 0)

@@ -7,11 +7,12 @@
 #import <Cocoa/Cocoa.h>
 #import <J3Testing/J3Testcase.h>
 
-@class J3Buffer;
+@class J3WriteBuffer;
 
 @interface J3TestSocksPrimitives : J3TestCase 
 {
-  J3Buffer *buffer;
+  J3WriteBuffer *buffer;
+  NSString *readString;
 }
 
 @end

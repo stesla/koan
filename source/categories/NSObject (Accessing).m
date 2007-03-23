@@ -12,9 +12,10 @@
 
 - (void) at: (id *) field put: (id) value;
 {
-  [value retain];
+  if (*field == value)
+    return;
   [*field release];
-  *field = value;
+  *field = [value retain];
 }
 
 @end

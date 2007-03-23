@@ -5,9 +5,27 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "J3Buffer.h"
 
-@protocol J3ByteDestination;
+@protocol J3WriteBuffer
+
+- (void) appendByte: (uint8_t) byte;
+- (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length;
+- (void) appendCharacter: (unichar) character;
+- (void) appendLine: (NSString *) line;
+- (void) appendString: (NSString *) string;
+- (const uint8_t *) bytes;
+- (void) clear;
+- (void) flush;
+- (BOOL) isEmpty;
+- (unsigned) length;
+
+// Both of these are pretty expensive in J3WriteBuffer currently.
+- (NSData *) dataValue;
+- (NSString *) stringValue;
+
+@end
+
+#pragma mark -
 
 @interface J3WriteBufferException : NSException
 
@@ -15,12 +33,20 @@
 
 #pragma mark -
 
-@interface J3WriteBuffer : J3Buffer
+@protocol J3ByteDestination;
+
+@interface J3WriteBuffer : NSObject <J3WriteBuffer>
 {
   NSObject <J3ByteDestination> *destination;
+  
+  NSMutableArray *blocks;
+  id lastBlock;
+  BOOL lastBlockIsBinary;
+  unsigned totalLength;
 }
 
-- (void) flush;
++ (id) buffer;
+
 - (void) setByteDestination: (NSObject <J3ByteDestination> *) object;
 
 @end

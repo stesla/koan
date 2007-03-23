@@ -8,7 +8,7 @@
 #import <J3Testing/J3Testcase.h>
 #import "J3LineBuffer.h"
 
-@interface J3LineBufferTests : J3TestCase <J3LineBufferDelegate>
+@interface J3LineBufferTests : J3TestCase <J3ByteDestination>
 {
   NSString *line;
   J3LineBuffer *buffer;

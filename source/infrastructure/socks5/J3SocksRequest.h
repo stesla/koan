@@ -7,8 +7,8 @@
 #import <Cocoa/Cocoa.h>
 #import "J3SocksConstants.h"
 
-@protocol J3Buffer;
 @protocol J3ByteSource;
+@protocol J3WriteBuffer;
 
 @interface J3SocksRequest : NSObject 
 {
@@ -18,7 +18,7 @@
 }
 
 - (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue;
-- (void) appendToBuffer: (id <J3Buffer>) buffer;
+- (void) appendToBuffer: (id <J3WriteBuffer>) buffer;
 - (void) parseReplyFromByteSource: (id <J3ByteSource>) source;
 - (J3SocksReply) reply;
 

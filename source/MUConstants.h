@@ -39,6 +39,8 @@ extern NSString *MUGlobalTextColorDidChangeNotification;
 extern NSString *MUGlobalVisitedLinkColorDidChangeNotification;
 extern NSString *MUWorldsDidChangeNotification;
 
+extern NSString *J3ReadBufferDidProvideStringNotification;
+
 #pragma mark Toolbar item constants.
 
 extern NSString *MUAddWorldToolbarItem;

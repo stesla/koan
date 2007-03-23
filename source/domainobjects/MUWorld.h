@@ -55,7 +55,7 @@
 - (void) setPlayers: (NSArray *) newPlayers;
 
 // Actions.
-- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *) delegate;
+- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 

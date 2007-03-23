@@ -5,7 +5,7 @@
 //
 
 #import "J3SocksMethodSelection.h"
-#import "J3Buffer.h"
+#import "J3WriteBuffer.h"
 #import "J3ByteSource.h"
 
 @implementation J3SocksMethodSelection
@@ -16,7 +16,7 @@
   [methods appendBytes: bytes length: 1];
 }
 
-- (void) appendToBuffer: (id <J3Buffer>) buffer;
+- (void) appendToBuffer: (id <J3WriteBuffer>) buffer;
 {
   const uint8_t *bytes;
   int i;

@@ -86,6 +86,6 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3LineBufferDelegate, J3TelnetConnectionDelegate> *) delegate;
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
 
 @end

@@ -39,6 +39,8 @@ NSString *MUGlobalTextColorDidChangeNotification = @"MUGlobalTextColorDidChangeN
 NSString *MUGlobalVisitedLinkColorDidChangeNotification = @"MUGlobalVisitedLinkColorDidChangeNotification";
 NSString *MUWorldsDidChangeNotification = @"MUWorldsDidChangeNotification";
 
+NSString *J3ReadBufferDidProvideStringNotification = @"J3ReadBufferDidProvideStringNotification";
+
 #pragma mark Toolbar item constants.
 
 NSString *MUAddWorldToolbarItem = @"MUAddWorldToolbarItem";

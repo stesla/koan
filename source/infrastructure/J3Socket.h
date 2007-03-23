@@ -17,7 +17,7 @@ typedef enum J3SocketStatus
   J3SocketStatusNotConnected,
   J3SocketStatusConnecting,
   J3SocketStatusConnected,
-  J3SocketStatusClosed,
+  J3SocketStatusClosed
 } J3SocketStatus;
 
 #pragma mark -
@@ -45,6 +45,7 @@ typedef enum J3SocketStatus
 }
 
 + (id) socketWithHostname: (NSString *) hostname port: (int) port;
+
 - (id) initWithHostname: (NSString *) hostname port: (int) port;
 
 - (void) close;
