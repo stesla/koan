@@ -6,5 +6,10 @@
 			<cocoa class="MUURLHandlerCommand"/>
 			<direct-parameter description="the URL to open" type="text"/>
 		</command>
+		<command name="open URL" code="WWW!OURL" description="open a URL">
+			<cocoa class="MUURLHandlerCommand"/>
+			<direct-parameter description="the URL to open" type="text"/>
+		</command>
 	</suite>
 </dictionary>
+
