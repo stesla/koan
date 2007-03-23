@@ -50,7 +50,7 @@
   return returnString;
 }
 
-- (void) addFilter: (id <J3Filtering>)filter
+- (void) addFilter: (id <J3Filtering>) filter
 {
   [filters addObject: filter];
 }

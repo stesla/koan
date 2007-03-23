@@ -13,6 +13,6 @@
 
 @interface J3ByteSource : NSObject
 
-+ (void) ensureBytesReadFromSource: (id <J3ByteSource>)byteSource intoBuffer: (uint8_t *) buffer ofLength: (unsigned) length;
++ (void) ensureBytesReadFromSource: (id <J3ByteSource>) byteSource intoBuffer: (uint8_t *) buffer ofLength: (unsigned) length;
 
 @end

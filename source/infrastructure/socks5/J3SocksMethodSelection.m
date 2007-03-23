@@ -16,7 +16,7 @@
   [methods appendBytes: bytes length: 1];
 }
 
-- (void) appendToBuffer: (id <J3Buffer>)buffer;
+- (void) appendToBuffer: (id <J3Buffer>) buffer;
 {
   const uint8_t *bytes;
   int i;
@@ -50,7 +50,7 @@
   return selectedMethod;
 }
 
-- (void) parseResponseFromByteSource: (id <J3ByteSource>)byteSource;
+- (void) parseResponseFromByteSource: (id <J3ByteSource>) byteSource;
 {
   uint8_t response[2] = {0, 0};
   

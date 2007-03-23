@@ -27,7 +27,7 @@
   [super dealloc];
 }
 
-- (void) appendToBuffer: (id <J3Buffer>)buffer
+- (void) appendToBuffer: (id <J3Buffer>) buffer
 {
   [buffer appendByte: J3SocksUsernamePasswordVersion];
   [buffer appendByte: [username length]];
@@ -41,7 +41,7 @@
   return authenticated;
 }
 
-- (void) parseReplyFromSource: (id <J3ByteSource>)source
+- (void) parseReplyFromSource: (id <J3ByteSource>) source
 {
   uint8_t reply[2] = {0,0};
   

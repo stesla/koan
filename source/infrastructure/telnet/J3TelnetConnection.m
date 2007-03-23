@@ -13,7 +13,7 @@
 @interface J3TelnetConnection (Private)
 
 - (void) fireTimer: (NSTimer *) timer;
-- (BOOL) isOnConnection: (id <J3Connection>)connection;
+- (BOOL) isOnConnection: (id <J3Connection>) connection;
 - (void) poll;
 - (void) removeAllTimers;
 - (void) scheduleInRunLoop: (NSRunLoop *) runLoop forMode: (NSString *) mode;
@@ -102,7 +102,7 @@
 #pragma mark -
 #pragma mark J3ConnectionDelegate protocol
 
-- (void) connectionIsConnecting: (id <J3Connection>)delegateConnection
+- (void) connectionIsConnecting: (id <J3Connection>) delegateConnection
 {
   if (![self isOnConnection: delegateConnection])
     return;
@@ -111,7 +111,7 @@
     [delegate telnetConnectionIsConnecting: self];
 }
 
-- (void) connectionIsConnected: (id <J3Connection>)delegateConnection
+- (void) connectionIsConnected: (id <J3Connection>) delegateConnection
 {
   if (![self isOnConnection: delegateConnection])
     return;
@@ -120,7 +120,7 @@
     [delegate telnetConnectionIsConnected: self];
 }
 
-- (void) connectionWasClosedByClient: (id <J3Connection>)delegateConnection
+- (void) connectionWasClosedByClient: (id <J3Connection>) delegateConnection
 {
   if (![self isOnConnection: delegateConnection])
     return;
@@ -130,7 +130,7 @@
     [delegate telnetConnectionWasClosedByClient: self];
 }
 
-- (void) connectionWasClosedByServer: (id <J3Connection>)delegateConnection
+- (void) connectionWasClosedByServer: (id <J3Connection>) delegateConnection
 {
   if (![self isOnConnection: delegateConnection])
     return;
@@ -140,7 +140,7 @@
     [delegate telnetConnectionWasClosedByServer: self];
 }
 
-- (void) connectionWasClosed: (id <J3Connection>)delegateConnection withError: (NSString *) errorMessage
+- (void) connectionWasClosed: (id <J3Connection>) delegateConnection withError: (NSString *) errorMessage
 {
   if (![self isOnConnection: delegateConnection])
     return;
@@ -161,7 +161,7 @@
   [self poll];
 }
 
-- (BOOL) isOnConnection: (id <J3Connection>)aConnection;
+- (BOOL) isOnConnection: (id <J3Connection>) aConnection;
 {
   return aConnection == connection;
 }

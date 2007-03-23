@@ -103,7 +103,7 @@
   [super dealloc];
 }
 
-- (BOOL) validateMenuItem: (id <NSMenuItem>)anItem
+- (BOOL) validateMenuItem: (id <NSMenuItem>) anItem
 {
   if ([anItem isEqual: useProxyMenuItem])
     [useProxyMenuItem setState: [[J3ConnectionFactory defaultFactory] useProxy]?NSOnState: NSOffState];

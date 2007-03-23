@@ -17,8 +17,8 @@
 }
 
 - (void) addMethod: (J3SocksMethod)method;
-- (void) appendToBuffer: (id <J3Buffer>)buffer;
+- (void) appendToBuffer: (id <J3Buffer>) buffer;
 - (J3SocksMethod) method;
-- (void) parseResponseFromByteSource: (id <J3ByteSource>)byteSource;
+- (void) parseResponseFromByteSource: (id <J3ByteSource>) byteSource;
 
 @end

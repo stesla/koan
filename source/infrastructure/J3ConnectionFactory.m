@@ -59,10 +59,10 @@ static J3ConnectionFactory *defaultFactory = nil;
 }
 
 - (J3TelnetConnection *) lineAtATimeTelnetWithHostname: (NSString *) hostname
-                                        port: (int) port
-                                    delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
-                          lineBufferDelegate: (NSObject <J3LineBufferDelegate> *) lineBufferDelegate
-{  
+                                                  port: (int) port
+                                              delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+                                    lineBufferDelegate: (NSObject <J3LineBufferDelegate> *) lineBufferDelegate
+{
   J3LineBuffer *buffer = [J3LineBuffer buffer];
   
   [buffer setDelegate: lineBufferDelegate];
@@ -71,9 +71,9 @@ static J3ConnectionFactory *defaultFactory = nil;
 }
 
 - (J3TelnetConnection *) telnetWithHostname: (NSString *) hostname
-                             port: (int) port
-                      inputBuffer: (NSObject <J3Buffer> *) buffer
-                         delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+                                       port: (int) port
+                                inputBuffer: (NSObject <J3Buffer> *) buffer
+                                   delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
   J3TelnetEngine *engine;
   J3Socket *socket;

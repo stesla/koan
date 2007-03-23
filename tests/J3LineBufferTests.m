@@ -2,7 +2,7 @@
 // J3LineBufferTests.m
 //
 // Copyright (c) 2005, 2006 3James Software
-//
+// telnet://cajun.targonia.com:7373/
 
 #import "J3LineBufferTests.h"
 

@@ -26,7 +26,7 @@
   [super dealloc];
 }
 
-- (void) appendToBuffer: (id <J3Buffer>)buffer
+- (void) appendToBuffer: (id <J3Buffer>) buffer
 {
   [buffer appendByte: J3SocksVersion];
   [buffer appendByte: J3SocksConnect];
@@ -38,7 +38,7 @@
   [buffer appendByte: (0x00FF & port)]; //least significant byte of port
 }
 
-- (void) parseReplyFromByteSource: (id <J3ByteSource>)source
+- (void) parseReplyFromByteSource: (id <J3ByteSource>) source
 {
   uint8_t buffer[261];
   unsigned bytesRead = 0;

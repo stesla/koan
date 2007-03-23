@@ -46,6 +46,13 @@
       
       origin += span + 1;
       offset += span + 1;
+      
+      if (bytes[span + 1] == (uint8_t) '\r')
+      {
+        span++;
+        origin++;
+        offset++;
+      }
     }
   }
   

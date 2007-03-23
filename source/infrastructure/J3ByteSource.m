@@ -8,7 +8,7 @@
 
 @implementation J3ByteSource
 
-+ (void) ensureBytesReadFromSource: (id <J3ByteSource>)byteSource intoBuffer: (uint8_t *) buffer ofLength: (unsigned) length;
++ (void) ensureBytesReadFromSource: (id <J3ByteSource>) byteSource intoBuffer: (uint8_t *) buffer ofLength: (unsigned) length;
 {
   unsigned bytesRead = 0;
   int i;
