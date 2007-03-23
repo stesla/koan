@@ -8,7 +8,6 @@
 
 @protocol J3Buffer;
 @protocol J3ByteDestination;
-@class J3TelnetByteDestination;
 @class J3TelnetState;
 @class J3WriteBuffer; 
 
@@ -17,7 +16,6 @@
   NSObject <J3Buffer> *inputBuffer;
   J3WriteBuffer *outputBuffer;
   J3TelnetState *state;
-  J3TelnetByteDestination *telnetByteDestination;
 }
 
 + (id) engine;
