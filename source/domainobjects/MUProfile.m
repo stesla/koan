@@ -213,6 +213,11 @@
   [self didChangeValueForKey: @"effectiveBackgroundColor"];
 }
 
+- (BOOL) hasLoginInformation;
+{
+  return [self loginString] != nil;
+}
+
 - (NSColor *) linkColor
 {
   return linkColor;

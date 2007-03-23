@@ -64,6 +64,7 @@
 - (void) setTextColor: (NSColor *) newTextColor;
 - (NSColor *) backgroundColor;
 - (void) setBackgroundColor: (NSColor *) newBackgroundColor;
+- (BOOL) hasLoginInformation;
 - (NSColor *) linkColor;
 - (void) setLinkColor: (NSColor *) newLinkColor;
 - (NSColor *) visitedLinkColor;

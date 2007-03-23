@@ -9,22 +9,29 @@
 
 @implementation MUProfileTests
 
-- (void) testUniqueIdentifer
+- (void) testUniqueIdentifer;
 {
-  MUWorld *world = nil;
-  MUPlayer *player = nil;
-  MUProfile *profile = nil;
-  
-  world = [[[MUWorld alloc] init] autorelease];
+  MUWorld *world = [[[MUWorld alloc] init] autorelease];
   [world setName: @"Test World"];
   
-  profile = [MUProfile profileWithWorld: world];
+  MUProfile *profile = [MUProfile profileWithWorld: world];
   [self assert: [profile uniqueIdentifier] equals: @"test.world"];
   
-  player = [MUPlayer playerWithName: @"User" password: @"" world: world];
+  MUPlayer *player = [MUPlayer playerWithName: @"User" password: @"" world: world];
   
   profile = [MUProfile profileWithWorld: world player: player];
   [self assert: [profile uniqueIdentifier] equals: @"test.world.user"];
+}
+
+- (void) testHasLoginInformation;
+{
+  MUWorld *world = [[[MUWorld alloc] init] autorelease];
+  [world setName: @"Test world"];
+  MUProfile *profile = [MUProfile profileWithWorld: world];
+  [self assertFalse: [profile hasLoginInformation] message: @"no login info"];
+  MUPlayer *player = [MUPlayer playerWithName: @"User" password: @"foo" world: world];
+  [profile setPlayer: player];
+  [self assertTrue: [profile hasLoginInformation] message: @"has login info"];
 }
 
 @end

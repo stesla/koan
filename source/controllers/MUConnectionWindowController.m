@@ -342,7 +342,8 @@ enum MUSearchDirections
   [self displayString: @"\n"];
   [MUGrowlService connectionOpenedForTitle: [profile windowTitle]];
   
-  [telnetConnection writeLine: [profile loginString]];
+  if ([profile hasLoginInformation])
+    [telnetConnection writeLine: [profile loginString]];
 }
 
 - (void) telnetConnectionWasClosedByClient: (J3TelnetConnection *) telnet
