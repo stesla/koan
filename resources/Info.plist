@@ -4,6 +4,17 @@
 <dict>
   <key>CFBundleDevelopmentRegion</key>
   <string>English</string>
+  <key>CFBundleDocumentTypes</key>
+  <array>             
+    <dict>                 
+      <key>LSItemContentTypes</key>                 
+      <array>             
+        <string>com.3james.Koan.log.plain-text</string>                 
+      </array>   
+      <key>CFBundleTypeRole</key>                 
+      <string>None</string>                 
+    </dict>
+  </array>
   <key>CFBundleExecutable</key>
   <string>Koan</string>
   <key>CFBundleIconFile</key>
@@ -16,56 +27,44 @@
   <string>APPL</string>
   <key>CFBundleSignature</key>
   <string>3jKO</string>
-  <key>CFBundleVersion</key>
-  <string>VERSION</string>
-  <key>NSAppleScriptEnabled</key>
-  <string>YES</string>
   <key>CFBundleURLTypes</key>
   <array>
   	<dict>
   		<key>CFBundleURLSchemes</key>
   		<array>
+  			<string>koan</string>
   			<string>telnet</string>
   		</array>
   	</dict>
   </array>
+  <key>CFBundleVersion</key>
+  <string>VERSION</string>
+  <key>NSAppleScriptEnabled</key>
+  <string>YES</string>
   <key>NSMainNibFile</key>
   <string>MUMainMenu</string>
   <key>NSPrincipalClass</key>
   <string>NSApplication</string>
+  <key>OSAScriptingDefinition</key>
+  <string>Koan.sdef</string>
   <key>UTExportedTypeDeclarations</key>
-  <array>             
-    <dict>                 
-      <key>UTTypeIdentifier</key>                 
-      <string>com.3james.Koan.log.plain-text</string>                 
-
-      <key>UTTypeDescription</key>                 
-      <string>Koan log files</string>          
-              
-      <key>UTTypeConformsTo</key>                 
-      <array>                     
-        <string>public.plain-text</string>                     
+  <array>
+    <dict>
+      <key>UTTypeIdentifier</key>
+      <string>com.3james.Koan.log.plain-text</string>
+      <key>UTTypeDescription</key>
+      <string>Koan plain-text log files</string>
+      <key>UTTypeConformsTo</key>
+      <array>
+        <string>public.plain-text</string>
       </array>
-
-      <key>UTTypeTagSpecification</key>                 
+      <key>UTTypeTagSpecification</key>
       <dict>
-        <key>public.filename-extension</key>                 
+        <key>public.filename-extension</key>
         <array>
-          <string>koanlog</string>                     
+          <string>koanlog</string>
         </array>
       </dict>
-    </dict>
-  </array>
-  <key>CFBundleDocumentTypes</key>
-  <array>             
-    <dict>                 
-      <key>LSItemContentTypes</key>                 
-        <array>             
-          <string>com.3james.Koan.log.plain-text</string>                 
-        </array>             
-
-      <key>CFBundleTypeRole</key>                 
-      <string>None</string>                 
     </dict>
   </array>
 </dict>

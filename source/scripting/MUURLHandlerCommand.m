@@ -1,7 +1,7 @@
 //
 // MUURLHandlerCommand.m
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2005, 2007 3James Software
 //
 
 #import "MUURLHandlerCommand.h"
@@ -12,12 +12,7 @@
 
 - (id) performDefaultImplementation
 {
-  MUApplicationController *appController = [NSApp delegate];
-  NSURL *url;
-  
-  url = [NSURL URLWithString:[self directParameter]];
-  
-  [appController connectToURL:url];
+  [[NSApp delegate] connectToURL: [NSURL URLWithString: [self directParameter]]];
   
   return nil;
 }

@@ -45,6 +45,8 @@
 
 /* Begin PBXBuildFile section */
 		2F42D0E30BB2618F0056C27A /* NSString (NDUtilities).m in Sources */ = {isa = PBXBuildFile; fileRef = 2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */; };
+		2F6C71F40BB460CA00709320 /* MUURLHandlerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6C71F20BB460CA00709320 /* MUURLHandlerCommand.m */; };
+		2F6C72AA0BB46BD000709320 /* Koan.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C72A90BB46BD000709320 /* Koan.sdef */; };
 		2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC93E290BB103C500149459 /* J3TelnetEngine.m */; };
 		2FDF39610ADB3D1A00EDD48A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
 		2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
@@ -237,6 +239,9 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2F42D0E00BB2618F0056C27A /* NSString (NDUtilities).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString (NDUtilities).h"; sourceTree = "<group>"; };
 		2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString (NDUtilities).m"; sourceTree = "<group>"; };
+		2F6C71F10BB460CA00709320 /* MUURLHandlerCommand.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUURLHandlerCommand.h; sourceTree = "<group>"; };
+		2F6C71F20BB460CA00709320 /* MUURLHandlerCommand.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUURLHandlerCommand.m; sourceTree = "<group>"; };
+		2F6C72A90BB46BD000709320 /* Koan.sdef */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.sdef; path = Koan.sdef; sourceTree = "<group>"; };
 		2FC93E280BB103C500149459 /* J3TelnetEngine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetEngine.h; sourceTree = "<group>"; };
 		2FC93E290BB103C500149459 /* J3TelnetEngine.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetEngine.m; sourceTree = "<group>"; };
 		2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -342,7 +347,6 @@
 		E6055FB6074929F3007A13BD /* Koan-Tests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Tests-Prefix.pch"; sourceTree = "<group>"; };
 		E60DDB83076CE889009870E4 /* FontNameToDisplayNameTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontNameToDisplayNameTransformer.h; sourceTree = "<group>"; };
 		E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontNameToDisplayNameTransformer.m; sourceTree = "<group>"; };
-		E60F8DC6080E0801009A2C58 /* com.3james.Koan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = com.3james.Koan.plist; sourceTree = "<group>"; };
 		E615A3C607D3B2FE00FC7F6B /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../Growl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61C3C6E07B7312B00519A89 /* RBSplitView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RBSplitView.framework; path = ../RBSplitView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E622A550074231A60069335B /* MUConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUConstants.h; sourceTree = "<group>"; };
@@ -502,6 +506,7 @@
 				E6E7BF6C0788FE180065EDD6 /* Controls */,
 				E6E7BF500788FDA40065EDD6 /* Domain Objects */,
 				E6E7BF540788FDED0065EDD6 /* Infrastructure */,
+				2F6C71F00BB460CA00709320 /* scripting */,
 				32CA4F630368D1EE00C91783 /* Koan-Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* Main.m */,
 				7E231039079A374B00E7CBA6 /* MUCodingService.h */,
@@ -526,8 +531,8 @@
 			isa = PBXGroup;
 			children = (
 				E6B5E3AA06A6EE0C00F53EBB /* Nibs */,
+				2F6C72A90BB46BD000709320 /* Koan.sdef */,
 				E65CE071075438F9003A796A /* Koan.icns */,
-				E60F8DC6080E0801009A2C58 /* com.3james.Koan.plist */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				E6B5E3B706A6EEA600F53EBB /* InfoPlist.strings */,
 				E62C909E07422669005662BC /* Localizable.strings */,
@@ -558,6 +563,15 @@
 			name = Frameworks;
 			path = frameworks;
 			sourceTree = SOURCE_ROOT;
+		};
+		2F6C71F00BB460CA00709320 /* scripting */ = {
+			isa = PBXGroup;
+			children = (
+				2F6C71F10BB460CA00709320 /* MUURLHandlerCommand.h */,
+				2F6C71F20BB460CA00709320 /* MUURLHandlerCommand.m */,
+			);
+			path = scripting;
+			sourceTree = "<group>";
 		};
 		7E0152D80BA79967004BB9B8 /* Products */ = {
 			isa = PBXGroup;
@@ -932,6 +946,7 @@
 				E6C9D4EE077C0FA3007BB2C1 /* badge-5.png in Resources */,
 				E6E7BF0E07867F080065EDD6 /* finger-cursor.png in Resources */,
 				7E13B9AD09AE87D800508460 /* MUProxySettings.nib in Resources */,
+				2F6C72AA0BB46BD000709320 /* Koan.sdef in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1091,6 +1106,7 @@
 				7E5103BD0AD1E22D00142EF3 /* MUProfileFormatting.m in Sources */,
 				2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */,
 				2F42D0E30BB2618F0056C27A /* NSString (NDUtilities).m in Sources */,
+				2F6C71F40BB460CA00709320 /* MUURLHandlerCommand.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -129,7 +129,8 @@
 
 - (IBAction) connectToURL: (NSURL *) url
 {
-  if (![[url scheme] isEqualToString: @"telnet"])
+  if (!([[url scheme] isEqualToString: @"telnet"]
+        || [[url scheme] isEqualToString: @"koan"]))
     return;
   
   MUWorld *world = [MUWorld worldWithName: [url host]

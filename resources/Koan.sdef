@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dictionary SYSTEM "file://localhost/System/Library/DTDs/sdef.dtd">
+<dictionary title="Koan Terminology">
+	<suite name="Koan Suite" code="3jKO">
+		<command name="get URL" code="GURLGURL" description="open a URL">
+			<cocoa class="MUURLHandlerCommand"/>
+			<direct-parameter description="the URL to open" type="text"/>
+		</command>
+	</suite>
+</dictionary>
