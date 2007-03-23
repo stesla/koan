@@ -91,12 +91,7 @@
 {
   [outputBuffer appendLine: line];
   [outputBuffer flush];
-}
-
-- (void) writeString: (NSString *) string
-{
-  [outputBuffer appendString: string];
-  [outputBuffer flush];
+  [engine goAhead];
 }
 
 #pragma mark -

@@ -34,7 +34,6 @@
 - (void) open;
 - (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object;
 - (void) writeLine: (NSString *) line;
-- (void) writeString: (NSString *) string;
 
 @end
 
