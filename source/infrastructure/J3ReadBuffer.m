@@ -33,7 +33,7 @@
 
 - (void) dealloc
 {
-  [[NSNotificationCenter defaultCenter] removeObserver: nil name: nil object: self];
+  [[NSNotificationCenter defaultCenter] removeObserver: delegate name: nil object: self];
   [dataBuffer release];
   [super dealloc];
 }
