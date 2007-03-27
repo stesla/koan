@@ -47,16 +47,14 @@ enum MUSearchDirections
 
 - (id) initWithProfile: (MUProfile*) newProfile;
 {
-  J3ANSIFormattingFilter *formattingFilter;
-  
   if (![super initWithWindowNibName: @"MUConnectionWindow"])
     return nil;
   
   profile = [newProfile retain];
     
   historyRing = [[J3HistoryRing alloc] init];
-    
   filterQueue = [[J3FilterQueue alloc] init];
+  
   [filterQueue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [profile formatting]]];
   [filterQueue addFilter: [J3NaiveURLFilter filter]];
   [filterQueue addFilter: [self createLogger]];
@@ -175,12 +173,10 @@ enum MUSearchDirections
 
 - (void) windowWillClose: (NSNotification *) notification
 {
-  NSWindow *window = [notification object];
-  
-  if (window == [self window])
+  if ([notification object] == [self window])
   {
   	[splitView saveState: YES];
-  	[window setDelegate: nil];
+  	[[self window] setDelegate: nil];
   
   	[self postConnectionWindowControllerWillCloseNotification];
   }
@@ -196,6 +192,9 @@ enum MUSearchDirections
 
 - (void) setDelegate: (id) newDelegate
 {
+  if (delegate == newDelegate)
+    return;
+  
   [[NSNotificationCenter defaultCenter] removeObserver: delegate
                                                   name: nil
                                                 object: self];
@@ -227,13 +226,11 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark Actions
 
-- (void) confirmClose: (SEL)callback 
+- (void) confirmClose: (SEL) callback
 {
-  NSString *title = [NSString stringWithFormat: _(MULConfirmCloseTitle), [profile windowTitle]];
-  
   [[self window] makeKeyAndOrderFront: nil];
   
-  NSBeginAlertSheet (title,
+  NSBeginAlertSheet ([NSString stringWithFormat: _(MULConfirmCloseTitle), [profile windowTitle]],
                      _(MULOK),
                      _(MULCancel),
                      nil,
@@ -256,7 +253,7 @@ enum MUSearchDirections
   if (![self isConnected])
   {
     telnetConnection = [[profile createNewTelnetConnectionWithDelegate: self] retain];
-    //TODO:  if (!telnetConnection) { //ERROR! }
+    // TODO: if (!telnetConnection) { //ERROR! }
     
     [telnetConnection open];
     
@@ -290,10 +287,8 @@ enum MUSearchDirections
 
 - (IBAction) sendInputText: (id) sender
 {
-  NSString *input = [inputView string];
-  
-  [telnetConnection writeLine: input];
-  [historyRing saveString: input];
+  [telnetConnection writeLine: [inputView string]];
+  [historyRing saveString: [inputView string]];
   [inputView setString: @""];
   
   [[self window] makeFirstResponder: inputView];
@@ -316,8 +311,7 @@ enum MUSearchDirections
 
 - (void) readBufferDidProvideString: (NSNotification *) notification
 {
-  NSString *readString = [[notification userInfo] objectForKey: @"string"];
-  [self displayString: readString];
+  [self displayString: [[notification userInfo] objectForKey: @"string"]];
 }
 
 #pragma mark -
@@ -328,8 +322,8 @@ enum MUSearchDirections
   if (![self isUsingTelnet: telnet])
     return;
   
-  [self displayString: _(MULConnectionOpening)];  
-  [self displayString: @"\n"];  
+  [self displayString: _(MULConnectionOpening)];
+  [self displayString: @"\n"];
 }
 
 - (void) telnetConnectionIsConnected: (J3TelnetConnection *) telnet
@@ -381,25 +375,23 @@ enum MUSearchDirections
 #pragma mark -
 #pragma mark NSTextView delegate
 
-- (BOOL) textView: (NSTextView *) textView doCommandBySelector: (SEL)commandSelector
+- (BOOL) textView: (NSTextView *) textView doCommandBySelector: (SEL) commandSelector
 {
-  NSEvent *event = [NSApp currentEvent];
-  
   if (textView == receivedTextView)
   {
-    if ([event type] != NSKeyDown ||
-        commandSelector == @selector (moveUp:) ||
-        commandSelector == @selector (moveDown:) ||
-        commandSelector == @selector (scrollPageUp:) ||
-        commandSelector == @selector (scrollPageDown:) ||
-        commandSelector == @selector (scrollToBeginningOfDocument:) ||
-        commandSelector == @selector (scrollToEndOfDocument:))
+    if ([[NSApp currentEvent] type] != NSKeyDown
+        || commandSelector == @selector (moveUp:)
+        || commandSelector == @selector (moveDown:)
+        || commandSelector == @selector (scrollPageUp:)
+        || commandSelector == @selector (scrollPageDown:)
+        || commandSelector == @selector (scrollToBeginningOfDocument:)
+        || commandSelector == @selector (scrollToEndOfDocument:))
     {
       return NO;
     }
-    else if (commandSelector == @selector (insertNewline:) ||
-             commandSelector == @selector (insertTab:) ||
-             commandSelector == @selector (insertBacktab:))
+    else if (commandSelector == @selector (insertNewline:)
+             || commandSelector == @selector (insertTab:)
+             || commandSelector == @selector (insertBacktab:))
     {
       [[self window] makeFirstResponder: inputView];
       return YES;
@@ -413,7 +405,7 @@ enum MUSearchDirections
   }
   else if (textView == inputView)
   {
-    if ([event type] != NSKeyDown)
+    if ([[NSApp currentEvent] type] != NSKeyDown)
     {
       return NO;
     }
@@ -431,8 +423,8 @@ enum MUSearchDirections
     {
       unichar key = 0;
       
-      if ([[event charactersIgnoringModifiers] length])
-        key = [[event charactersIgnoringModifiers] characterAtIndex: 0];
+      if ([[[NSApp currentEvent] charactersIgnoringModifiers] length] > 0)
+        key = [[[NSApp currentEvent] charactersIgnoringModifiers] characterAtIndex: 0];
       
       [self endCompletion];
       
@@ -446,13 +438,13 @@ enum MUSearchDirections
     {
       unichar key = 0;
       
-      if ([[event charactersIgnoringModifiers] length])
-        key = [[event charactersIgnoringModifiers] characterAtIndex: 0];
+      if ([[[NSApp currentEvent] charactersIgnoringModifiers] length] > 0)
+        key = [[[NSApp currentEvent] charactersIgnoringModifiers] characterAtIndex: 0];
       
       [self endCompletion];
       
-      if ([textView selectedRange].location == 0 &&
-          key == NSUpArrowFunctionKey)
+      if ([textView selectedRange].location == 0
+          && key == NSUpArrowFunctionKey)
       {
         [self previousCommand: self];
         [textView setSelectedRange: NSMakeRange (0, 0)];
@@ -463,13 +455,13 @@ enum MUSearchDirections
     {
       unichar key = 0;
       
-      if ([[event charactersIgnoringModifiers] length])
-        key = [[event charactersIgnoringModifiers] characterAtIndex: 0];
+      if ([[[NSApp currentEvent] charactersIgnoringModifiers] length] > 0)
+        key = [[[NSApp currentEvent] charactersIgnoringModifiers] characterAtIndex: 0];
       
       [self endCompletion];
       
-      if ([textView selectedRange].location == [[textView textStorage] length] &&
-          key == NSDownArrowFunctionKey)
+      if ([textView selectedRange].location == [[textView textStorage] length]
+          && key == NSDownArrowFunctionKey)
       {
         [self nextCommand: self];
         [textView setSelectedRange: NSMakeRange ([[textView textStorage] length], 0)];
@@ -581,31 +573,32 @@ enum MUSearchDirections
 }
 
 - (void) displayString: (NSString *) string
-{
-  NSMutableDictionary *typingAttributes =
-    [NSMutableDictionary dictionaryWithDictionary: [receivedTextView typingAttributes]];
-  NSAttributedString *unfilteredString;
-  NSAttributedString *filteredString;
-  NSTextStorage *textStorage;
-  float scrollerPosition;
-  
-  if (!string)
+{  
+  if (!string || [string length] == 0)
     return;
   
-  textStorage = [receivedTextView textStorage];
-  scrollerPosition = [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
+  NSTextStorage *textStorage = [receivedTextView textStorage];
+  float scrollerPosition = [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
+  
+  NSMutableDictionary *typingAttributes =
+    [NSMutableDictionary dictionaryWithDictionary: [receivedTextView typingAttributes]];
   
   [typingAttributes removeObjectForKey: NSLinkAttributeName];
   [typingAttributes removeObjectForKey: NSUnderlineStyleAttributeName];
   [typingAttributes setObject: [[profile formatting] foreground] forKey: NSForegroundColorAttributeName];
   [typingAttributes setObject: [[profile formatting] background] forKey: NSBackgroundColorDocumentAttribute];
   
-  unfilteredString = [NSAttributedString attributedStringWithString: string attributes: typingAttributes];  
-  filteredString = [filterQueue processAttributedString: unfilteredString]; 
+  NSAttributedString *unfilteredString = [NSAttributedString attributedStringWithString: string attributes: typingAttributes];
+  NSAttributedString *filteredString = [filterQueue processAttributedString: unfilteredString];
+  
   [textStorage replaceCharactersInRange: NSMakeRange ([textStorage length], 0) withAttributedString: filteredString];
   [[receivedTextView window] invalidateCursorRectsForView: receivedTextView];
+  
+  // Scroll to the bottom of the text window, but only if we were previously at the bottom.
+  
   if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
     [receivedTextView scrollRangeToVisible: NSMakeRange ([textStorage length], 0)];
+  
   [self postConnectionWindowControllerDidReceiveTextNotification];
 }
 
@@ -642,7 +635,7 @@ enum MUSearchDirections
   return [NSString stringWithFormat: @"%@.split", [profile uniqueIdentifier]];
 }
 
-- (void) tabCompleteWithDirection: (enum MUSearchDirections)direction
+- (void) tabCompleteWithDirection: (enum MUSearchDirections) direction
 {
   NSString *currentPrefix;
   NSString *foundString;
@@ -687,7 +680,7 @@ enum MUSearchDirections
     [[self window] close];
 
     if (contextInfo)
-      ((void (*) (id, SEL, BOOL) ) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, YES);
+      ((void (*) (id, SEL, BOOL)) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, YES);
   }
 }
 

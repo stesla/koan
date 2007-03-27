@@ -13,7 +13,7 @@
 @interface MUProfileRegistryTests (Private)
 
 - (void) assertProfile: (MUProfile *) profile
-                 world: (MUWorld *) world 
+                 world: (MUWorld *) world
                 player: (MUPlayer *) player;
 
 - (MUWorld *) testWorld;
@@ -130,7 +130,7 @@
 @implementation MUProfileRegistryTests (Private)
 
 - (void) assertProfile: (MUProfile *) profile
-                 world: (MUWorld *) world 
+                 world: (MUWorld *) world
                 player: (MUPlayer *) player
 {
   [self assertNotNil: profile];

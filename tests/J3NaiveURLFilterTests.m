@@ -20,7 +20,7 @@
 
 - (void) assertInput: (NSString *) input producesLink: (NSURL *) link forRange: (NSRange)range
 {
-  NSAttributedString *attributedInput = 
+  NSAttributedString *attributedInput =
   [NSAttributedString attributedStringWithString: input];
   NSAttributedString *attributedOutput =
     [queue processAttributedString: attributedInput];

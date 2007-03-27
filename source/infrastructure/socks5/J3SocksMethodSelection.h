@@ -10,7 +10,7 @@
 @protocol J3ByteSource;
 @protocol J3WriteBuffer;
 
-@interface J3SocksMethodSelection : NSObject 
+@interface J3SocksMethodSelection : NSObject
 {
   NSMutableData *methods;
   J3SocksMethod selectedMethod;

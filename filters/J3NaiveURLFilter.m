@@ -118,13 +118,13 @@
   if ([string hasPrefix: @"ftp."])
     return [NSURL URLWithString: [@"ftp: //" stringByAppendingString: string]];
   
-  if ([string hasSuffix: @".com"] ||
-      [string hasSuffix: @".net"] ||
-      [string hasSuffix: @".org"] ||
-      [string hasSuffix: @".edu"] ||
-      [string hasSuffix: @".de"] ||
-      [string hasSuffix: @".uk"] ||
-      [string hasSuffix: @".cc"])
+  if ([string hasSuffix: @".com"]
+      || [string hasSuffix: @".net"]
+      || [string hasSuffix: @".org"]
+      || [string hasSuffix: @".edu"]
+      || [string hasSuffix: @".de"]
+      || [string hasSuffix: @".uk"]
+      || [string hasSuffix: @".cc"])
   {
     if ([string rangeOfString: @"@"].length != 0)
       return [NSURL URLWithString: [@"mailto: " stringByAppendingString: string]];

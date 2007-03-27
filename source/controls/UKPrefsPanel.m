@@ -115,7 +115,7 @@
 
 -(void) mapTabsToToolbar
 {
-    // Create a new toolbar instance, and attach it to our document window 
+    // Create a new toolbar instance, and attach it to our document window
     NSToolbar  	*toolbar =[[tabView window] toolbar];
   int				itemCount = 0,
   				x = 0;
@@ -124,7 +124,7 @@
   if( toolbar == nil )   // No toolbar yet? Create one!
   	toolbar = [[[NSToolbar alloc] initWithIdentifier:  [NSString stringWithFormat:  @"%@.prefspanel.toolbar", autosaveName]] autorelease];
   
-    // Set up toolbar properties:  Allow customization, give a default display mode, and remember state in user defaults 
+    // Set up toolbar properties:  Allow customization, give a default display mode, and remember state in user defaults
     [toolbar setAllowsUserCustomization:  YES];
     [toolbar setAutosavesConfiguration:  YES];
     [toolbar setDisplayMode:  NSToolbarDisplayModeIconAndLabel];
@@ -146,7 +146,7 @@
     // We are the delegate
     [toolbar setDelegate:  self];
     
-    // Attach the toolbar to the document window 
+    // Attach the toolbar to the document window
     [[tabView window] setToolbar:  toolbar];
   
   // Set up window title:
@@ -217,30 +217,30 @@
 
 -(NSToolbarItem *) toolbar:  (NSToolbar *) toolbar itemForItemIdentifier:  (NSString *) itemIdent willBeInsertedIntoToolbar: (BOOL) willBeInserted
 {
-    // Required delegate method:   Given an item identifier, this method returns an item 
-    // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself 
+    // Required delegate method:   Given an item identifier, this method returns an item
+    // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself
     NSToolbarItem   *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:  itemIdent] autorelease];
     NSString*  	itemLabel;
   
     if( (itemLabel = [itemsList objectForKey: itemIdent]) != nil )
   {
-  	// Set the text label to be displayed in the toolbar and customization palette 
+  	// Set the text label to be displayed in the toolbar and customization palette
   	[toolbarItem setLabel:  itemLabel];
   	[toolbarItem setPaletteLabel:  itemLabel];
   	[toolbarItem setTag: [tabView indexOfTabViewItemWithIdentifier: itemIdent]];
   	
-  	// Set up a reasonable tooltip, and image   Note, these aren't localized, but you will likely want to localize many of the item's properties 
+  	// Set up a reasonable tooltip, and image   Note, these aren't localized, but you will likely want to localize many of the item's properties
   	[toolbarItem setToolTip:  itemLabel];
   	[toolbarItem setImage:  [NSImage imageNamed: itemIdent]];
   	
-  	// Tell the item what message to send when it is clicked 
+  	// Tell the item what message to send when it is clicked
   	[toolbarItem setTarget:  self];
   	[toolbarItem setAction:  @selector (changePanes:)];
     }
   else
   {
-  	// itemIdent refered to a toolbar item that is not provide or supported by us or cocoa 
-  	// Returning nil will inform the toolbar this kind of item is not supported 
+  	// itemIdent refered to a toolbar item that is not provide or supported by us or cocoa
+  	// Returning nil will inform the toolbar this kind of item is not supported
   	toolbarItem = nil;
     }
   

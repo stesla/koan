@@ -7,7 +7,7 @@
 #import <Cocoa/Cocoa.h>
 
 @protocol J3ReadBuffer;
-@protocol J3WriteBuffer; 
+@protocol J3WriteBuffer;
 @class J3TelnetState;
 
 @interface J3TelnetEngine : NSObject

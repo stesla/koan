@@ -11,7 +11,7 @@
 
 @class J3ProxySettings;
 
-@interface J3ConnectionFactory : NSObject 
+@interface J3ConnectionFactory : NSObject
 {
   BOOL useProxy;
   J3ProxySettings *proxySettings;

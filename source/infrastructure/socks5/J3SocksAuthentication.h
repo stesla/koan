@@ -9,7 +9,7 @@
 @protocol J3ByteSource;
 @protocol J3WriteBuffer;
 
-@interface J3SocksAuthentication : NSObject 
+@interface J3SocksAuthentication : NSObject
 {
   NSString *username;
   NSString *password;

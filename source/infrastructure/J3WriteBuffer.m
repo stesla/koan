@@ -226,7 +226,7 @@
 
 - (void) write
 {
-  unsigned bytesWritten; 
+  unsigned bytesWritten;
   
   if (!destination)
     @throw [J3WriteBufferException exceptionWithName: @"" reason: @"Must provide destination" userInfo: nil];

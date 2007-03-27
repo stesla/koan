@@ -10,7 +10,7 @@
 @class MUProfile;
 @class MUPlayer;
 
-@interface MUProfileRegistry : NSObject 
+@interface MUProfileRegistry : NSObject
 {
   NSMutableDictionary *profiles;
 }

@@ -34,8 +34,8 @@ enum MUProfilesEditingReturnValues
 - (IBAction) removePlayer: (MUPlayer *) player;
 - (IBAction) removeWorld: (MUWorld *) world;
 - (void) updateProfilesForWorld: (MUWorld *) world withWorld: (MUWorld *) newWorld;
-- (void) updateProfileForWorld: (MUWorld *) world 
-                        player: (MUPlayer *) player 
+- (void) updateProfileForWorld: (MUWorld *) world
+                        player: (MUPlayer *) player
                     withPlayer: (MUPlayer *) newPlayer;
 - (MUWorld *) worldFromSheetWithPlayers: (NSArray *) players;
 - (void) worldSheetDidEndAdding: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
@@ -80,8 +80,8 @@ enum MUProfilesEditingReturnValues
   {
   	return YES;
   }
-  else if (toolbarItemAction == @selector (addPlayer:) ||
-  				 toolbarItemAction == @selector (editProfileForSelectedRow:))
+  else if (toolbarItemAction == @selector (addPlayer:)
+  				 || toolbarItemAction == @selector (editProfileForSelectedRow:))
   {
   	if ([worldsAndPlayersOutlineView numberOfSelectedRows] == 0)
   		return NO;
@@ -821,7 +821,7 @@ enum MUProfilesEditingReturnValues
   [worldsAndPlayersOutlineView reloadData];
 }
 
-- (void) updateProfilesForWorld: (MUWorld *) world 
+- (void) updateProfilesForWorld: (MUWorld *) world
                       withWorld: (MUWorld *) newWorld
 {
   MUProfile *profile = nil;
@@ -850,8 +850,8 @@ enum MUProfilesEditingReturnValues
   [profile release];
 }
 
-- (void) updateProfileForWorld: (MUWorld *) world 
-                        player: (MUPlayer *) player 
+- (void) updateProfileForWorld: (MUWorld *) world
+                        player: (MUPlayer *) player
                     withPlayer: (MUPlayer *) newPlayer
 {
   MUProfileRegistry *registry = [MUServices profileRegistry];

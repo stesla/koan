@@ -112,7 +112,7 @@
 {
   [self assertState: C(J3TelnetDoState) givenByte: 'a' outputsNegtiationCommandWithThatByte: J3TelnetWont];
   [self assertState: C(J3TelnetWillState) givenByte: 'a' outputsNegtiationCommandWithThatByte: J3TelnetDont];  
-  [self assertStateHasNoOutputGivenAnyByte: C(J3TelnetDontState)]; 
+  [self assertStateHasNoOutputGivenAnyByte: C(J3TelnetDontState)];
   [self assertStateHasNoOutputGivenAnyByte: C(J3TelnetWontState)];
 }
 #endif

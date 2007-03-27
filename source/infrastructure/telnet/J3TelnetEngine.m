@@ -27,7 +27,7 @@
 {
   if (![super init])
     return nil;
-  state = [[J3TelnetTextState state] retain]; 
+  state = [[J3TelnetTextState state] retain];
   return self;
 }
 

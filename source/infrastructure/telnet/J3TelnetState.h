@@ -8,7 +8,7 @@
 
 @class J3TelnetEngine;
 
-@interface J3TelnetState : NSObject 
+@interface J3TelnetState : NSObject
 
 + (id) state;
 

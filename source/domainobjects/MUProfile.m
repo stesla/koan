@@ -44,7 +44,7 @@
   	return YES;
 }
 
-+ (MUProfile *) profileWithWorld: (MUWorld *) newWorld 
++ (MUProfile *) profileWithWorld: (MUWorld *) newWorld
                           player: (MUPlayer *) newPlayer
                      autoconnect: (BOOL) newAutoconnect
 {
@@ -55,7 +55,7 @@
 
 + (MUProfile *) profileWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer
 {
-  return [[[self alloc] initWithWorld: newWorld 
+  return [[[self alloc] initWithWorld: newWorld
                                player: newPlayer] autorelease];
 }
 
@@ -64,7 +64,7 @@
   return [[[self alloc] initWithWorld: newWorld] autorelease];
 }
 
-- (id) initWithWorld: (MUWorld *) newWorld 
+- (id) initWithWorld: (MUWorld *) newWorld
               player: (MUPlayer *) newPlayer
          autoconnect: (BOOL) newAutoconnect
   							font: (NSFont *) newFont
@@ -90,7 +90,7 @@
   return self;
 }
 
-- (id) initWithWorld: (MUWorld *) newWorld 
+- (id) initWithWorld: (MUWorld *) newWorld
               player: (MUPlayer *) newPlayer
          autoconnect: (BOOL) newAutoconnect
 {
@@ -106,8 +106,8 @@
 
 - (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer
 {
-  return [self initWithWorld: newWorld 
-                      player: newPlayer 
+  return [self initWithWorld: newWorld
+                      player: newPlayer
                  autoconnect: NO];
 }
 
@@ -366,7 +366,7 @@
   if (player)
   {
     // FIXME:  Consider offloading the generation of a unique name for the player on MUPlayer.
-    rval = [NSString stringWithFormat: @"%@.%@", 
+    rval = [NSString stringWithFormat: @"%@.%@",
       [world uniqueIdentifier], [[player name] lowercaseString]];
   }
   else

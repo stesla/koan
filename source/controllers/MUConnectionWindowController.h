@@ -40,7 +40,7 @@
 - (id) delegate;
 - (void) setDelegate: (id) delegate;
 
-- (void) confirmClose: (SEL)callback;
+- (void) confirmClose: (SEL) callback;
 - (IBAction) connect: (id) sender;
 - (IBAction) disconnect: (id) sender;
 - (IBAction) goToWorldURL: (id) sender;

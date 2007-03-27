@@ -9,7 +9,7 @@
 
 @class J3WriteBuffer;
 
-@interface J3TestSocksPrimitives : J3TestCase 
+@interface J3TestSocksPrimitives : J3TestCase
 {
   J3WriteBuffer *buffer;
   NSString *readString;

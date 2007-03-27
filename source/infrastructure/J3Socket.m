@@ -88,12 +88,12 @@
 
 - (BOOL) hasDataAvailable
 {
-  return hasDataAvailable; 
+  return hasDataAvailable;
 }
 
 - (BOOL) hasSpaceAvailable
 {
-  return YES; 
+  return YES;
 }
 
 - (BOOL) isClosed

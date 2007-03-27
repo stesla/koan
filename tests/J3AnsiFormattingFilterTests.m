@@ -51,7 +51,7 @@
 - (void) assertString: (NSAttributedString *) string hasValue: (id) value forAttribute: (NSString *) attribute atIndex: (int) index message: (NSString *) message;
 {
   NSDictionary * attributes = [string attributesAtIndex: index effectiveRange: NULL];
-  [self assert: [attributes valueForKey: attribute] equals: value message: message]; 
+  [self assert: [attributes valueForKey: attribute] equals: value message: message];
 }
 
 - (void) assertString: (NSAttributedString *) string hasTrait: (NSFontTraitMask)trait atIndex: (int) index message: (NSString *) message;
@@ -148,7 +148,7 @@
 
 - (void) testEmptyString
 {
-  [self assertInput: @"" 
+  [self assertInput: @""
           hasOutput: @""];
 }
 
@@ -170,7 +170,7 @@
 
 - (void) testLongString
 {
-  NSString *longString = 
+  NSString *longString =
     @"        #@@N         (@@)     (@@@)        J@@@@F      @@@@@@@L";
   [self assertInput: longString
           hasOutput: longString];
@@ -244,7 +244,7 @@
 - (void) testBoldWithBoldAlreadyOn;
 {
   NSMutableAttributedString * input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
-  NSAttributedString * output; 
+  NSAttributedString * output;
   NSFont * boldFont = [[J3Formatting testingFont] fontWithTrait: NSBoldFontMask];
   
   [queue clearFilters];

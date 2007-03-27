@@ -15,7 +15,7 @@
   [self assertTrue: [[actualString string] isEqualToString: expectedString] message: message];  
 }
 
-- (void) assertAttributedString: (NSAttributedString *) actualString 
+- (void) assertAttributedString: (NSAttributedString *) actualString
                    equalsString: (NSString *) expected
 {
   [self assertAttributedString: actualString equalsString: expected message: nil];

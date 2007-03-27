@@ -7,6 +7,6 @@
 #import <Cocoa/Cocoa.h>
 #import "J3TelnetState.h"
 
-@interface J3TelnetDontState : J3TelnetState 
+@interface J3TelnetDontState : J3TelnetState
 
 @end

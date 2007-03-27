@@ -10,7 +10,7 @@
 @protocol J3ByteSource;
 @protocol J3WriteBuffer;
 
-@interface J3SocksRequest : NSObject 
+@interface J3SocksRequest : NSObject
 {
   NSString *hostname;
   int port;

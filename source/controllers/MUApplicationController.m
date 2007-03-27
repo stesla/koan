@@ -25,8 +25,9 @@
 - (void) openConnectionWithController: (MUConnectionWindowController *) controller;
 - (void) playNotificationSound;
 - (void) rebuildConnectionsMenuWithAutoconnect: (BOOL) autoconnect;
-- (void) updateApplicationBadge;
+- (void) recursivelyConfirmClose: (BOOL) cont;
 - (BOOL) shouldPlayNotificationSound;
+- (void) updateApplicationBadge;
 - (void) worldsDidChange: (NSNotification *) notification;
 
 @end
@@ -40,10 +41,6 @@
   NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
   NSMutableDictionary *initialValues = [NSMutableDictionary dictionary];
   NSValueTransformer *transformer = [[FontNameToDisplayNameTransformer alloc] init];
-  NSData *archivedLightGray = [NSArchiver archivedDataWithRootObject: [NSColor lightGrayColor]];
-  NSData *archivedBlack = [NSArchiver archivedDataWithRootObject: [NSColor blackColor]];
-  NSData *archivedBlue = [NSArchiver archivedDataWithRootObject: [NSColor blueColor]];
-  NSData *archivedPurple = [NSArchiver archivedDataWithRootObject: [NSColor purpleColor]];
   NSFont *fixedFont = [NSFont userFixedPitchFontOfSize: [NSFont smallSystemFontSize]];
   
   [NSValueTransformer setValueTransformer: transformer forName: @"FontNameToDisplayNameTransformer"];
@@ -52,12 +49,12 @@
   
   [[NSUserDefaults standardUserDefaults] registerDefaults: defaults];
   
-  [initialValues setObject: archivedBlack forKey: MUPBackgroundColor];
+  [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor blackColor]] forKey: MUPBackgroundColor];
   [initialValues setObject: [fixedFont fontName] forKey: MUPFontName];
   [initialValues setObject: [NSNumber numberWithFloat: [fixedFont pointSize]] forKey: MUPFontSize];
-  [initialValues setObject: archivedBlue forKey: MUPLinkColor];
-  [initialValues setObject: archivedLightGray forKey: MUPTextColor];
-  [initialValues setObject: archivedPurple forKey: MUPVisitedLinkColor];
+  [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor blueColor]] forKey: MUPLinkColor];
+  [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor lightGrayColor]] forKey: MUPTextColor];
+  [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor purpleColor]] forKey: MUPVisitedLinkColor];
   [initialValues setObject: [NSNumber numberWithBool: YES] forKey: MUPPlaySounds];
   [initialValues setObject: [NSNumber numberWithBool: NO] forKey: MUPPlayWhenActive];
   [initialValues setObject: @"Blow" forKey: MUPSoundChoice];
@@ -106,7 +103,7 @@
 - (BOOL) validateMenuItem: (id <NSMenuItem>) anItem
 {
   if ([anItem isEqual: useProxyMenuItem])
-    [useProxyMenuItem setState: [[J3ConnectionFactory defaultFactory] useProxy]?NSOnState: NSOffState];
+    [useProxyMenuItem setState: ([[J3ConnectionFactory defaultFactory] useProxy] ? NSOnState : NSOffState)];
   return YES;
 }
 
@@ -116,11 +113,10 @@
 - (IBAction) chooseNewFont: (id) sender
 {
   NSDictionary *values = [[NSUserDefaultsController sharedUserDefaultsController] values];
-  NSString *fontName = [values valueForKey: MUPFontName];
-  int fontSize = [[values valueForKey: MUPFontSize] floatValue];
-  NSFont *font = [NSFont fontWithName: fontName size: fontSize];
+  NSFont *font = [NSFont fontWithName: [values valueForKey: MUPFontName]
+                                 size: [[values valueForKey: MUPFontSize] floatValue]];
   
-  if (font == nil)
+  if (!font)
     font = [NSFont systemFontOfSize: [NSFont systemFontSize]];
   
   [[NSFontManager sharedFontManager] setSelectedFont: font isMultiple: NO];
@@ -138,6 +134,7 @@
   													port: [url port]
   													 URL: @""
   											 players: nil];
+  
   MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld: world];
   
   [self openConnectionWithController: controller];
@@ -152,10 +149,11 @@
   																	 port: [NSNumber numberWithInt: [newConnectionPortField intValue]]
   																		URL: @""
   																players: nil];
-  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld: world];
   
   if ([newConnectionSaveWorldButton state] == NSOnState)
   	[[MUServices worldRegistry] insertObject: world inWorldsAtIndex: [[MUServices worldRegistry] count]];
+  
+  MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld: world];
   
   [self openConnectionWithController: controller];
   [newConnectionPanel close];
@@ -165,7 +163,7 @@
 
 - (IBAction) openBugsWebPage: (id) sender
 {
-  [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: @"http: //bugs.3james.com/"]];
+  [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: @"http://svn.thoughtlocker.net/trac/koan/"]];
 }
 
 - (IBAction) openNewConnectionPanel: (id) sender
@@ -175,26 +173,6 @@
   [newConnectionSaveWorldButton setState: NSOffState];
   [newConnectionPanel makeFirstResponder: newConnectionHostnameField];
   [newConnectionPanel makeKeyAndOrderFront: self];
-}
-
-- (void) recursivelyConfirmClose: (BOOL) cont
-{
-  if (cont)
-  {
-    unsigned count = [connectionWindowControllers count];
-
-    while (count--)
-    {
-      MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex: count];
-      if (controller && [controller isConnected])
-      {
-        [controller confirmClose: @selector (recursivelyConfirmClose:)];
-        return;
-      }
-    }
-  }
-  
-  [NSApp replyToApplicationShouldTerminate: cont];
 }
 
 - (IBAction) showPreferencesPanel: (id) sender
@@ -306,7 +284,7 @@
     [self playNotificationSound];
   if (![NSApp isActive])
   {
-    [NSApp requestUserAttention: NSInformationalRequest];   
+    [NSApp requestUserAttention: NSInformationalRequest];
     unreadCount++;
     [self updateApplicationBadge];
   }
@@ -350,25 +328,16 @@
 
 - (void) playNotificationSound;
 {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSSound *sound = [NSSound soundNamed: [defaults stringForKey: MUPSoundChoice]];
-  [sound play];  
-}
-
-- (BOOL) shouldPlayNotificationSound;
-{
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  BOOL result = [defaults boolForKey: MUPPlaySounds];
-  if ([NSApp isActive])
-    result = result && [defaults boolForKey: MUPPlayWhenActive];
-  return result;
+  [[NSSound soundNamed: [[NSUserDefaults standardUserDefaults] stringForKey: MUPSoundChoice]] play];
 }
 
 - (void) rebuildConnectionsMenuWithAutoconnect: (BOOL) autoconnect
 {
   MUWorldRegistry *registry = [MUServices worldRegistry];
   MUProfileRegistry *profiles = [MUServices profileRegistry];
-  int i, worldsCount = [registry count], menuCount = [openConnectionMenu numberOfItems];
+  int i;
+  unsigned worldsCount = [registry count];
+  unsigned menuCount = [openConnectionMenu numberOfItems];
   
   for (i = menuCount - 1; i >= 0; i--)
   {
@@ -389,7 +358,7 @@
     
     [connectItem setTarget: self];
     [connectItem setRepresentedObject: profile];
-
+    
     if (autoconnect)
     {
       [profile setWorld: world];
@@ -401,7 +370,7 @@
     {
       MUPlayer *player = [players objectAtIndex: j];
       profile = [profiles profileForWorld: world player: player];
-    
+      
       NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle: [player name]
                                                           action: @selector (openConnection:)
                                                    keyEquivalent: @""];
@@ -433,6 +402,32 @@
     [worldMenu release];
     [connectItem release];
   }
+}
+
+- (void) recursivelyConfirmClose: (BOOL) cont
+{
+  if (cont)
+  {
+    unsigned count = [connectionWindowControllers count];
+    
+    while (count--)
+    {
+      MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex: count];
+      if (controller && [controller isConnected])
+      {
+        [controller confirmClose: @selector (recursivelyConfirmClose:)];
+        return;
+      }
+    }
+  }
+  
+  [NSApp replyToApplicationShouldTerminate: cont];
+}
+
+- (BOOL) shouldPlayNotificationSound;
+{
+  return ([[NSUserDefaults standardUserDefaults] boolForKey: MUPPlaySounds]
+          && (![NSApp isActive] || [[NSUserDefaults standardUserDefaults] boolForKey: MUPPlayWhenActive]));
 }
 
 - (void) updateApplicationBadge

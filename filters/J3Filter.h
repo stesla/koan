@@ -12,7 +12,7 @@
 
 @end
 
-@interface J3Filter : NSObject <J3Filtering> 
+@interface J3Filter : NSObject <J3Filtering>
 
 + (id) filter;
 

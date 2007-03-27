@@ -22,7 +22,7 @@
 
 @end
 
-@interface J3TelnetStateMachineTests : J3TestCase 
+@interface J3TelnetStateMachineTests : J3TestCase
 {
   J3TelnetState * state;
   J3MockTelnetEngine * engine;

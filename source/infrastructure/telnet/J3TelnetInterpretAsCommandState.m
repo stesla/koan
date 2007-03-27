@@ -37,7 +37,7 @@
       break;
 
     case J3TelnetInterpretAsCommand:
-      [parser bufferInputByte: J3TelnetInterpretAsCommand]; 
+      [parser bufferInputByte: J3TelnetInterpretAsCommand];
       // Fallthrough.
       
     default:

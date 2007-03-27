@@ -9,7 +9,7 @@
 
 @class MUProfileRegistry;
 
-@interface MUProfileRegistryTests : J3TestCase 
+@interface MUProfileRegistryTests : J3TestCase
 {
   MUProfileRegistry *registry;
 }

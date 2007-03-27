@@ -7,7 +7,7 @@
 #import <Cocoa/Cocoa.h>
 #import <J3Testing/J3Testcase.h>
 
-#import "J3ByteDestination.h" 
+#import "J3ByteDestination.h"
 
 @class J3WriteBuffer;
 
