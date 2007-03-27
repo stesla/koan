@@ -194,6 +194,13 @@
     codeRange.length = [self scanThruEndOfCodeAt: codeRange.location
                                         inString: [editString string]];
     
+    if (codeRange.length == NSNotFound)
+    {
+      codeRange.length = [editString length]  - codeRange.location;
+      [editString deleteCharactersInRange: codeRange];
+      return NO;
+    }
+    
     if (codeRange.location < [editString length])
     {
       [editString deleteCharactersInRange: codeRange];
@@ -289,6 +296,9 @@
 
 - (int) scanThruEndOfCodeAt: (int) index inString: (NSString *) string
 {
+  if (index >= [string length] - 1)
+    return NSNotFound;
+  
   NSScanner *scanner = [NSScanner scannerWithString: string];
   [scanner setScanLocation: index];
   [scanner setCharactersToBeSkipped:
@@ -298,11 +308,13 @@
     [NSCharacterSet characterSetWithCharactersInString:
       @"m"];
 
-  //TODO:  Figure out how to do this with a nil intoString:  parameter
-  //like I do above with scanUpToCodeInString:
   ansiCode = @"";
   [scanner scanUpToCharactersFromSet: resumeSet intoString: &ansiCode];
-  return [ansiCode length] + 1;
+
+  if ([scanner scanLocation] == [string length])
+    return NSNotFound;
+  else
+    return [ansiCode length] + 1;
 }
 
 - (void) setAttributesInString: (NSMutableAttributedString *) string atPosition: (int) start;

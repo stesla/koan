@@ -158,6 +158,16 @@
           hasOutput: @""];
 }
 
+- (void) testEscapeAtEnd;
+{
+  [self assertInput: @"\x1B" hasOutput: @""];
+}
+
+- (void) testIncompleteCodeAtEnd;
+{
+  [self assertInput: @"\x1B[1" hasOutput: @""];
+}
+
 - (void) testLongString
 {
   NSString *longString = 
