@@ -10,7 +10,6 @@
 
 - (void) appendByte: (uint8_t) byte;
 - (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length;
-
 - (const uint8_t *) bytes;
 - (void) clear;
 - (NSData *) dataByConsumingBytesToIndex: (unsigned) index;

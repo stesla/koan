@@ -27,6 +27,7 @@
     return nil;
   
   dataBuffer = [[NSMutableData alloc] init];
+  delegate = nil;
   
   return self;
 }
@@ -34,6 +35,7 @@
 - (void) dealloc
 {
   [[NSNotificationCenter defaultCenter] removeObserver: delegate name: nil object: self];
+  [[NSNotificationCenter defaultCenter] removeObserver: nil name: nil object: self];
   [dataBuffer release];
   [super dealloc];
 }
@@ -45,6 +47,9 @@
 
 - (void) setDelegate: (NSObject *) newDelegate
 {
+  if (delegate == newDelegate)
+    return;
+  
   if (delegate)
     [[NSNotificationCenter defaultCenter] removeObserver: delegate name: nil object: self];
   

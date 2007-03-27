@@ -1,7 +1,7 @@
 //
 // J3Filter.h
 //
-// Copyright (c) 2004, 2005, 2006 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import <Cocoa/Cocoa.h>
@@ -14,7 +14,7 @@
 
 @interface J3Filter : NSObject <J3Filtering> 
 
-+ (J3Filter *) filter;
++ (id) filter;
 
 @end
 

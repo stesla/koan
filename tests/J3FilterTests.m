@@ -47,7 +47,7 @@
 - (void) testQueue
 {
   J3FilterQueue *queue = [[J3FilterQueue alloc] init];
-  J3UpperCaseFilter *filter = [[J3UpperCaseFilter alloc] init];
+  J3UpperCaseFilter *filter = [J3UpperCaseFilter filter];
   [queue addFilter: filter];
   
   NSAttributedString *input = [NSAttributedString attributedStringWithString: @"Foo"];

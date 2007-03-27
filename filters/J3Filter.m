@@ -1,14 +1,14 @@
 //
 // J3Filter.m
 //
-// Copyright (c) 2004, 2005, 2006 3James Software
+// Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
 #import "J3Filter.h"
 
 @implementation J3Filter
 
-+ (J3Filter *) filter
++ (id) filter
 {
   return [[[self alloc] init] autorelease];
 }
