@@ -326,7 +326,7 @@
     [NSCharacterSet characterSetWithCharactersInString:
       @"m"];
 
-  NSString *charactersFromThisScan;
+  NSString *charactersFromThisScan = @"";
   [scanner scanUpToCharactersFromSet: resumeSet intoString: &charactersFromThisScan];
   ansiCode = [NSString stringWithFormat: @"%@%@",ansiCode,charactersFromThisScan];
   

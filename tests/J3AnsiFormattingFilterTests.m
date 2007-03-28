@@ -164,6 +164,12 @@
   [self assertInput: @"36m" hasOutput: @""];
 }
 
+- (void) testCodeWithJustTerminatorInSecondString;
+{
+  [self assertInput: @"\x1B[36" hasOutput: @""];
+  [self assertInput: @"m" hasOutput: @""];
+}
+
 - (void) testLongString
 {
   NSString *longString =
