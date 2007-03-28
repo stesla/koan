@@ -158,14 +158,10 @@
           hasOutput: @""];
 }
 
-- (void) testEscapeAtEnd;
+- (void) testCodeSplitOverTwoStrings;
 {
-  [self assertInput: @"\x1B" hasOutput: @""];
-}
-
-- (void) testIncompleteCodeAtEnd;
-{
-  [self assertInput: @"\x1B[1" hasOutput: @""];
+  [self assertInput: @"\x1B[" hasOutput: @""];
+  [self assertInput: @"36m" hasOutput: @""];
 }
 
 - (void) testLongString
@@ -271,6 +267,16 @@
   [self assertString: output hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 2 message: @"c"];
   [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 3 message: @"d"];
   [self assertString: output hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 4 message: @"e"];  
+}
+
+- (void) testFormattingOverTwoLines;
+{
+  NSAttributedString * input1 = [self makeString: @"a\x1B["];  
+  NSAttributedString * input2 = [self makeString: @"4mb"];  
+  [queue processAttributedString: input1];
+  NSAttributedString * output = [queue processAttributedString: input2];
+   
+  [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 0 message: @"b"];
 }
 
 @end

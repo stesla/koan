@@ -11,6 +11,7 @@
 
 @interface J3ANSIFormattingFilter : J3Filter
 {
+  BOOL inCode;
   NSString *ansiCode;
   NSObject <J3Formatting> *formatting;
   NSMutableDictionary *currentAttributes;

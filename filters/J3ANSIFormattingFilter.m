@@ -58,7 +58,8 @@
   
   if (!format)
     return nil;
-  
+
+  inCode = false;
   [self at: &formatting put: format];
   [self at: &currentAttributes put: [NSMutableDictionary dictionary]];
   [currentAttributes setValue: [formatting font] forKey: NSFontAttributeName];
@@ -191,10 +192,17 @@
 {
   NSRange codeRange;
   
-  codeRange.location = [self scanUpToCodeInString: [editString string]];
-  
-  if (codeRange.location != NSNotFound)
+  if (!inCode)
   {
+    codeRange.location = [self scanUpToCodeInString: [editString string]];
+    ansiCode = @"";    
+  }
+  else
+    codeRange.location = 0;
+
+  if (inCode || codeRange.location != NSNotFound)
+  {
+    inCode = YES;
     codeRange.length = [self scanThruEndOfCodeAt: codeRange.location
                                         inString: [editString string]];
     
@@ -207,6 +215,7 @@
     
     if (codeRange.location < [editString length])
     {
+      inCode = NO;
       [editString deleteCharactersInRange: codeRange];
       [self setAttributesInString: editString atPosition: codeRange.location];
       return YES;
@@ -308,9 +317,6 @@
 
 - (int) scanThruEndOfCodeAt: (int) index inString: (NSString *) string
 {
-  if (index >= [string length] - 1)
-    return NSNotFound;
-  
   NSScanner *scanner = [NSScanner scannerWithString: string];
   [scanner setScanLocation: index];
   [scanner setCharactersToBeSkipped:
@@ -320,13 +326,14 @@
     [NSCharacterSet characterSetWithCharactersInString:
       @"m"];
 
-  ansiCode = @"";
-  [scanner scanUpToCharactersFromSet: resumeSet intoString: &ansiCode];
-
+  NSString *charactersFromThisScan;
+  [scanner scanUpToCharactersFromSet: resumeSet intoString: &charactersFromThisScan];
+  ansiCode = [NSString stringWithFormat: @"%@%@",ansiCode,charactersFromThisScan];
+  
   if ([scanner scanLocation] == [string length])
     return NSNotFound;
   else
-    return [ansiCode length] + 1;
+    return [charactersFromThisScan length] + 1;
 }
 
 - (void) setAttributesInString: (NSMutableAttributedString *) string atPosition: (int) start
