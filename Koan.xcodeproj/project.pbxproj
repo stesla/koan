@@ -13,8 +13,8 @@
 			buildPhases = (
 			);
 			dependencies = (
-				7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */,
 				7E4AFBE80BA7D2CA0050B5AE /* PBXTargetDependency */,
+				7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */,
 			);
 			name = "All Tests";
 			productName = "All Tests";
