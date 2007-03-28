@@ -409,11 +409,6 @@ enum MUSearchDirections
     {
       return NO;
     }
-    if (commandSelector == @selector (insertTab:))
-    {
-      [self tabCompleteWithDirection: MUBackwardSearch];
-      return YES;
-    }
     else if (commandSelector == @selector (insertBacktab:))
     {
       [self tabCompleteWithDirection: MUForwardSearch];
@@ -434,22 +429,10 @@ enum MUSearchDirections
         return YES;
       }
     }
-    else if (commandSelector == @selector (moveUp:))
+    else if (commandSelector == @selector (insertTab:))
     {
-      unichar key = 0;
-      
-      if ([[[NSApp currentEvent] charactersIgnoringModifiers] length] > 0)
-        key = [[[NSApp currentEvent] charactersIgnoringModifiers] characterAtIndex: 0];
-      
-      [self endCompletion];
-      
-      if ([textView selectedRange].location == 0
-          && key == NSUpArrowFunctionKey)
-      {
-        [self previousCommand: self];
-        [textView setSelectedRange: NSMakeRange (0, 0)];
-        return YES;
-      }
+      [self tabCompleteWithDirection: MUBackwardSearch];
+      return YES;
     }
     else if (commandSelector == @selector (moveDown:))
     {
@@ -467,6 +450,31 @@ enum MUSearchDirections
         [textView setSelectedRange: NSMakeRange ([[textView textStorage] length], 0)];
         return YES;
       }
+    }
+    else if (commandSelector == @selector (moveUp:))
+    {
+      unichar key = 0;
+      
+      if ([[[NSApp currentEvent] charactersIgnoringModifiers] length] > 0)
+        key = [[[NSApp currentEvent] charactersIgnoringModifiers] characterAtIndex: 0];
+      
+      [self endCompletion];
+      
+      if ([textView selectedRange].location == 0
+          && key == NSUpArrowFunctionKey)
+      {
+        [self previousCommand: self];
+        [textView setSelectedRange: NSMakeRange (0, 0)];
+        return YES;
+      }
+    }
+    else if (commandSelector == @selector (scrollPageDown:)
+             || commandSelector == @selector (scrollPageUp:)
+             || commandSelector == @selector (scrollToBeginningOfDocument:)
+             || commandSelector == @selector (scrollToEndOfDocument:))
+    {
+      [receivedTextView doCommandBySelector: commandSelector];
+      return YES;
     }
   }
   return NO;
@@ -556,7 +564,7 @@ enum MUSearchDirections
   if (returnCode == NSAlertAlternateReturn) /* Cancel. */
   {
     if (contextInfo)
-      ((void (*) (id, SEL, BOOL) ) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, NO);
+      ((void (*) (id, SEL, BOOL)) objc_msgSend) ([NSApp delegate], (SEL) contextInfo, NO);
   }
 }
 
