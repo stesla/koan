@@ -285,4 +285,12 @@
   [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 0 message: @"b"];
 }
 
+- (void) testRetainsPartialCode;
+{
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  [self assertInput: @"\x1B[" hasOutput: @""];
+  [pool release];
+  [self assertInput: @"m" hasOutput: @""];
+}
+
 @end

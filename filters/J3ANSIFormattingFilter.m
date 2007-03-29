@@ -195,7 +195,7 @@
   if (!inCode)
   {
     codeRange.location = [self scanUpToCodeInString: [editString string]];
-    ansiCode = @"";    
+    [self at: &ansiCode put: @""];    
   }
   else
     codeRange.location = 0;
@@ -328,7 +328,7 @@
 
   NSString *charactersFromThisScan = @"";
   [scanner scanUpToCharactersFromSet: resumeSet intoString: &charactersFromThisScan];
-  ansiCode = [NSString stringWithFormat: @"%@%@",ansiCode,charactersFromThisScan];
+  [self at: &ansiCode put: [NSString stringWithFormat: @"%@%@",ansiCode,charactersFromThisScan]];
   
   if ([scanner scanLocation] == [string length])
     return NSNotFound;
