@@ -89,7 +89,7 @@
 {
   [outputBuffer appendLine: line];
   [outputBuffer flush];
-  [engine goAhead];
+  // [engine goAhead]; //TODO: Removed as a temporary fix for #26
 }
 
 #pragma mark -
