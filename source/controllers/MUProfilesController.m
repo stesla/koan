@@ -186,12 +186,12 @@ enum MUProfilesEditingReturnValues
   	else if ([selectedItem isKindOfClass: [MUPlayer class]])
   	{
   		MUPlayer *selectedPlayer = (MUPlayer *) selectedItem;
-  		int index = [[selectedPlayer world] indexOfPlayer: selectedPlayer] + 1;
+  		int playerIndex = [[selectedPlayer world] indexOfPlayer: selectedPlayer] + 1;
   		
-  		if (index < 0)
+  		if (playerIndex < 0)
   			return;
   		
-  		insertionIndex = (unsigned) index;
+  		insertionIndex = (unsigned) playerIndex;
   		insertionWorld = [selectedPlayer world];
   	}
   	else
@@ -226,17 +226,19 @@ enum MUProfilesEditingReturnValues
   	insertionIndex = [[MUServices worldRegistry] count];
   else
   {
-  	id selectedItem;
-  	MUWorld *selectedWorld;
-  	
-  	selectedItem = [worldsAndPlayersOutlineView itemAtRow: selectedRow];
+  	id selectedItem = [worldsAndPlayersOutlineView itemAtRow: selectedRow];
+    
+  	MUWorld *selectedWorld = nil;
   	
   	if ([selectedItem isKindOfClass: [MUWorld class]])
   		selectedWorld = (MUWorld *) selectedItem;
   	else if ([selectedItem isKindOfClass: [MUPlayer class]])
   		selectedWorld = [(MUPlayer *) selectedItem world];
   	
-  	insertionIndex = [[MUServices worldRegistry] indexOfWorld: selectedWorld] + 1;
+    if (selectedWorld)
+      insertionIndex = [[MUServices worldRegistry] indexOfWorld: selectedWorld] + 1;
+    else
+      insertionIndex = [[MUServices worldRegistry] count];
   }
   
   [NSApp beginSheet: worldEditorSheet
@@ -425,12 +427,12 @@ enum MUProfilesEditingReturnValues
 #pragma mark -
 #pragma mark NSOutlineView data source
 
-- (id) outlineView: (NSOutlineView *) outlineView child: (int) index ofItem: (id) item
+- (id) outlineView: (NSOutlineView *) outlineView child: (int) itemIndex ofItem: (id) item
 {
   if (item)
-  	return [[(MUWorld *) item players] objectAtIndex: index];
+  	return [[(MUWorld *) item players] objectAtIndex: itemIndex];
   else
-  	return [[MUServices worldRegistry] worldAtIndex: index];
+  	return [[MUServices worldRegistry] worldAtIndex: itemIndex];
 }
 
 - (BOOL) outlineView: (NSOutlineView *) outlineView isItemExpandable: (id) item
@@ -570,8 +572,6 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editPlayer: (MUPlayer *) player
 {
-  MUWorld *world = [player world];
-  
   [playerNameField setStringValue: [player name]];
   [playerPasswordField setStringValue: [player password]];
   

@@ -47,9 +47,9 @@
 - (void) addPlayer: (MUPlayer *) player;
 - (BOOL) containsPlayer: (MUPlayer *) player;
 - (int) indexOfPlayer: (MUPlayer *) player;
-- (void) insertObject: (MUPlayer *) player inPlayersAtIndex: (unsigned) index;
+- (void) insertObject: (MUPlayer *) player inPlayersAtIndex: (unsigned) playerIndex;
 - (NSMutableArray *) players;
-- (void) removeObjectFromPlayersAtIndex: (unsigned) index;
+- (void) removeObjectFromPlayersAtIndex: (unsigned) playerIndex;
 - (void) removePlayer: (MUPlayer *) player;
 - (void) replacePlayer: (MUPlayer *) oldPlayer withPlayer: (MUPlayer *) newPlayer;
 - (void) setPlayers: (NSArray *) newPlayers;

@@ -36,7 +36,7 @@
   for (i = 0; i < count; ++i, ++current)
   {
     superClass = *current;
-    while (superClass = (superClass)->super_class)
+    while ((superClass = (superClass)->super_class))
     {
       if (superClass == thisClass)
       {

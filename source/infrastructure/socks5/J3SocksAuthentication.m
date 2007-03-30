@@ -43,7 +43,7 @@
 
 - (void) parseReplyFromSource: (id <J3ByteSource>) source
 {
-  uint8_t reply[2] = {0,0};
+  uint8_t reply[2] = {0, 0};
   
   [J3ByteSource ensureBytesReadFromSource: source intoBuffer: reply ofLength: 2];
   authenticated = reply[1] == 0 ? YES : NO;

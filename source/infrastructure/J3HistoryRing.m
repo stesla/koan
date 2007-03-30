@@ -36,18 +36,18 @@
   return [ring count];
 }
 
-- (NSString *) stringAtIndex: (unsigned) index
+- (NSString *) stringAtIndex: (int) ringIndex
 {
-  if (index == -1)
+  if (ringIndex == -1)
     return buffer == nil ? @"" : buffer;
   else
   {
-    NSString *string = [updates objectForKey: [NSNumber numberWithInt: index]];
+    NSString *string = [updates objectForKey: [NSNumber numberWithInt: ringIndex]];
     
     if (string)
       return string;
     else
-      return [ring objectAtIndex: index];
+      return [ring objectAtIndex: ringIndex];
   }
 }
 
@@ -60,7 +60,7 @@
   
   [updates removeObjectForKey: [NSNumber numberWithInt: cursor]];
   
-  if (!((cursor != -1) && (cursor == [self count] - 1) && [string isEqualToString: [ring objectAtIndex: cursor]]))
+  if (!(cursor != -1 && cursor == (int) ([self count] - 1) && [string isEqualToString: [ring objectAtIndex: cursor]]))
   {
     [ring addObject: copy];
   }
@@ -94,7 +94,7 @@
 {
   cursor++;
   
-  if (cursor >= [self count] || cursor < -1)
+  if (cursor >= (int) [self count] || cursor < -1)
     cursor = -1;
   
   searchCursor = cursor;
@@ -108,7 +108,7 @@
   
   if (cursor == -2)
     cursor = [self count] - 1;
-  else if (cursor >= [self count] || cursor < -2)
+  else if (cursor >= (int) [self count] || cursor < -2)
     cursor = -1;
   
   searchCursor = cursor;
@@ -129,7 +129,7 @@
   
   searchCursor = 0;
   
-  while (searchCursor < [self count])
+  while (searchCursor < (int) [self count])
   {
     NSString *candidate = [self stringAtIndex: searchCursor];
     
@@ -162,7 +162,7 @@
   
   while (searchCursor != originalSearchCursor)
   {
-    if (searchCursor > [self count] - 1)
+    if (searchCursor > (int) ([self count] - 1))
     {
       searchCursor = -1;
       if (originalSearchCursor == -1)
@@ -199,7 +199,7 @@
     if (searchCursor < 0)
     {
       searchCursor = [self count] - 1;
-      if (originalSearchCursor == [self count] - 1)
+      if (originalSearchCursor == (int) ([self count] - 1))
         return nil;
     }
     

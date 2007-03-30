@@ -16,7 +16,7 @@
 }
 
 - (unsigned) count;
-- (NSString *) stringAtIndex: (unsigned) index;
+- (NSString *) stringAtIndex: (int) ringIndex;
 
 // These methods are all O(1).
 

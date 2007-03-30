@@ -25,7 +25,7 @@
 
 - (void) insertText: (id) string
 {
-  BOOL result;
+  BOOL result = NO;
   
   if ([[self delegate] respondsToSelector: @selector (textView:insertText:)])
     result = [[self delegate] textView: self insertText: string];
@@ -41,7 +41,7 @@
 
 - (IBAction) pasteAsPlainText: (id) sender
 {
-  BOOL result;
+  BOOL result = NO;
   
   if ([[self delegate] respondsToSelector: @selector (textView:pasteAsPlainText:)])
     result = [[self delegate] textView: self pasteAsPlainText: sender];

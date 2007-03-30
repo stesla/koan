@@ -185,7 +185,7 @@
   NSEnumerator *keys = [timers keyEnumerator];
   NSString *key;
   
-  while (key = [keys nextObject])
+  while ((key = [keys nextObject]))
   {
     NSTimer *timer = [timers objectForKey: key];
     

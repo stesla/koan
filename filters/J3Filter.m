@@ -41,8 +41,8 @@
   NSAttributedString *returnString = string;
   
   id <J3Filtering> filter = nil;
-  int i;
-  for (i = 0; i < [filters count]; i++)
+  
+  for (unsigned i = 0; i < [filters count]; i++)
   {
     filter = (id <J3Filtering>) [filters objectAtIndex: i];
     returnString = [filter filter: returnString];

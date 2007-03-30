@@ -186,7 +186,6 @@
   while (position > 0 && [blocks count] > 0)
   {
     id lowestBlock = [blocks objectAtIndex: 0];
-    unsigned MONITOR = [lowestBlock length];
     
     if (position >= [lowestBlock length])
     {

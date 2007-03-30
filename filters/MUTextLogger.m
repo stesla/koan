@@ -13,7 +13,7 @@
 
 - (void) log: (NSAttributedString *) editString;
 - (void) initializeFileAtPath: (NSString *) path withHeaders: (NSDictionary *) headers;
-- (void) writeToStream: (NSOutputStream *) stream withFormat: (NSString *) format,...;
+- (void) writeToStream: (NSOutputStream *) stream withFormat: (NSString *) format, ...;
 
 @end
 
@@ -119,7 +119,7 @@
     {
       NSString *value = [headers objectForKey: key];
       if ([value length] > 0)
-        [self writeToStream: stream withFormat: @"%@:  %@\n",key,[headers objectForKey: key]];
+        [self writeToStream: stream withFormat: @"%@:  %@\n", key, [headers objectForKey: key]];
     }
     [self writeToStream: stream withFormat: @"\n"];      
   }

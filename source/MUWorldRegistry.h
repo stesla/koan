@@ -18,15 +18,15 @@
 
 - (NSMutableArray *) worlds;
 - (void) setWorlds: (NSArray *) newWorlds;
-- (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) index;
-- (void) removeObjectFromWorldsAtIndex: (unsigned) index;
+- (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) worldIndex;
+- (void) removeObjectFromWorldsAtIndex: (unsigned) worldIndex;
 
 - (unsigned) count;
 - (int) indexOfWorld: (MUWorld *) world;
 - (void) removeWorld: (MUWorld *) world;
 - (void) replaceWorld: (MUWorld *) oldWorld withWorld: (MUWorld *) newWorld;
 - (void) saveWorlds;
-- (MUWorld *) worldAtIndex: (unsigned) index;
+- (MUWorld *) worldAtIndex: (unsigned) worldIndex;
 - (MUWorld *) worldForUniqueIdentifier: (NSString *) identifier;
 
 @end

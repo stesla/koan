@@ -48,8 +48,9 @@
     NSRange scannedRange;
     NSURL *foundURL;
     NSDictionary *linkAttributes;
-    unsigned index, length;
-    int skipScanLocation = [scanner scanLocation];
+    unsigned characterIndex;
+    unsigned length;
+    unsigned skipScanLocation = [scanner scanLocation];
     
     while (skipScanLocation < [sourceString length])
     {
@@ -66,28 +67,28 @@
     [scanner scanUpToCharactersFromSet: whitespace intoString: &scannedString];
     scannedRange.length = [scanner scanLocation] - scannedRange.location;
     
-    index = 0;
+    characterIndex = 0;
     length = [scannedString length];
     
-    while (index < length && [skips characterIsMember: [scannedString characterAtIndex: index]])
+    while (characterIndex < length && [skips characterIsMember: [scannedString characterAtIndex: characterIndex]])
     {
-      index++;
+      characterIndex++;
       scannedRange.location++;
       scannedRange.length--;
     }
     
     scannedString = [sourceString substringWithRange: scannedRange];
-    index = [scannedString length];
+    characterIndex = [scannedString length];
     
-    while (index > 0 && [skips characterIsMember: [scannedString characterAtIndex: index - 1]])
+    while (characterIndex > 0 && [skips characterIsMember: [scannedString characterAtIndex: characterIndex - 1]])
     {
-      index--;
+      characterIndex--;
       scannedRange.length--;
     }
     
     scannedString = [sourceString substringWithRange: scannedRange];
     
-    if (foundURL = [self normalizedURLForString: scannedString])
+    if ((foundURL = [self normalizedURLForString: scannedString]))
     {
       linkAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
         foundURL, NSLinkAttributeName,

@@ -64,14 +64,14 @@ static J3ConnectionFactory *defaultFactory = nil;
 {
   J3TelnetEngine *engine = [J3TelnetEngine engine];
   J3ReadBuffer *buffer = [J3ReadBuffer buffer];
-  J3Socket *socket = [self makeSocketWithHostname: hostname port: port];
+  J3Socket *telnetSocket = [self makeSocketWithHostname: hostname port: port];
   J3TelnetConnection *telnetConnection;
 
   [buffer setDelegate: delegate];
   [engine setInputBuffer: buffer];
   
-  telnetConnection = [[[J3TelnetConnection alloc] initWithConnection: socket engine: engine delegate: delegate] autorelease];
-  [socket setDelegate: telnetConnection];
+  telnetConnection = [[[J3TelnetConnection alloc] initWithConnection: telnetSocket engine: engine delegate: delegate] autorelease];
+  [telnetSocket setDelegate: telnetConnection];
   
   return telnetConnection;
 }

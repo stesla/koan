@@ -19,12 +19,12 @@
 - (void) appendToBuffer: (id <J3WriteBuffer>) buffer;
 {
   const uint8_t *bytes;
-  int i;
   
   [buffer appendByte: J3SocksVersion];
   [buffer appendByte: [methods length]];
   bytes = [methods bytes];
-  for (i = 0; i < [methods length]; i++)
+  
+  for (unsigned i = 0; i < [methods length]; i++)
     [buffer appendByte: bytes[i]];
 }
 

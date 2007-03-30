@@ -154,15 +154,15 @@
   return -1;
 }
 
-- (void) insertObject: (MUPlayer *) player inPlayersAtIndex: (unsigned) index
+- (void) insertObject: (MUPlayer *) player inPlayersAtIndex: (unsigned) playerIndex
 {
-  [players insertObject: player atIndex: index];
+  [players insertObject: player atIndex: playerIndex];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) removeObjectFromPlayersAtIndex: (unsigned) index
+- (void) removeObjectFromPlayersAtIndex: (unsigned) playerIndex
 {
-  [players removeObjectAtIndex: index];
+  [players removeObjectAtIndex: playerIndex];
   [self postWorldsDidChangeNotification];
 }
 
@@ -222,11 +222,9 @@
 
   if ([tokens count] > 0)
   {
-    int i = 0;
+    [result appendFormat: @"%@", [[tokens objectAtIndex: 0] lowercaseString]];
     
-    [result appendFormat: @"%@", [[tokens objectAtIndex: i] lowercaseString]];
-    
-    for (i = 1; i < [tokens count]; i++)
+    for (unsigned i = 1; i < [tokens count]; i++)
       [result appendFormat: @".%@", [[tokens objectAtIndex: i] lowercaseString]];
   }
   return result;

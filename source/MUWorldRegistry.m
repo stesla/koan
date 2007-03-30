@@ -69,15 +69,15 @@ static MUWorldRegistry *defaultRegistry = nil;
   [self postWorldsDidChangeNotification];
 }
 
-- (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) index
+- (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) worldIndex
 {
-  [worlds insertObject: world atIndex: index];
+  [worlds insertObject: world atIndex: worldIndex];
   [self postWorldsDidChangeNotification];
 }
 
-- (void) removeObjectFromWorldsAtIndex: (unsigned) index
+- (void) removeObjectFromWorldsAtIndex: (unsigned) worldIndex
 {
-  [worlds removeObjectAtIndex: index];
+  [worlds removeObjectAtIndex: worldIndex];
   [self postWorldsDidChangeNotification];
 }
 
@@ -134,9 +134,9 @@ static MUWorldRegistry *defaultRegistry = nil;
   [self writeWorldsToUserDefaults];
 }
 
-- (MUWorld *) worldAtIndex: (unsigned) index
+- (MUWorld *) worldAtIndex: (unsigned) worldIndex
 {
-  return [worlds objectAtIndex: index];
+  return [worlds objectAtIndex: worldIndex];
 }
 
 - (MUWorld *) worldForUniqueIdentifier: (NSString *) identifier

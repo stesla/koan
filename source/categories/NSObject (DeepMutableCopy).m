@@ -59,7 +59,7 @@
   id enumerator = [self keyEnumerator];
   id key;
   
-  while (key = [enumerator nextObject])
+  while ((key = [enumerator nextObject]))
   {
     id currentObject = [self objectForKey: key];
     

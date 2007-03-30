@@ -41,7 +41,7 @@
   NSMutableDictionary *defaults = [NSMutableDictionary dictionary];
   NSMutableDictionary *initialValues = [NSMutableDictionary dictionary];
   NSValueTransformer *transformer = [[FontNameToDisplayNameTransformer alloc] init];
-  NSFont *fixedFont = [NSFont userFixedPitchFontOfSize: [NSFont smallSystemFontSize]];
+  NSFont *fixedPitchFont = [NSFont userFixedPitchFontOfSize: [NSFont smallSystemFontSize]];
   
   [NSValueTransformer setValueTransformer: transformer forName: @"FontNameToDisplayNameTransformer"];
   
@@ -50,8 +50,8 @@
   [[NSUserDefaults standardUserDefaults] registerDefaults: defaults];
   
   [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor blackColor]] forKey: MUPBackgroundColor];
-  [initialValues setObject: [fixedFont fontName] forKey: MUPFontName];
-  [initialValues setObject: [NSNumber numberWithFloat: [fixedFont pointSize]] forKey: MUPFontSize];
+  [initialValues setObject: [fixedPitchFont fontName] forKey: MUPFontName];
+  [initialValues setObject: [NSNumber numberWithFloat: [fixedPitchFont pointSize]] forKey: MUPFontSize];
   [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor blueColor]] forKey: MUPLinkColor];
   [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor lightGrayColor]] forKey: MUPTextColor];
   [initialValues setObject: [NSArchiver archivedDataWithRootObject: [NSColor purpleColor]] forKey: MUPVisitedLinkColor];
@@ -214,7 +214,6 @@
 {
   unsigned count = [connectionWindowControllers count];
   unsigned openConnections = 0;
-  int choice;
   
   while (count--)
   {
@@ -335,16 +334,15 @@
 {
   MUWorldRegistry *registry = [MUServices worldRegistry];
   MUProfileRegistry *profiles = [MUServices profileRegistry];
-  int i;
   unsigned worldsCount = [registry count];
   unsigned menuCount = [openConnectionMenu numberOfItems];
   
-  for (i = menuCount - 1; i >= 0; i--)
+  for (int menuItemIndex = menuCount - 1; menuItemIndex >= 0; menuItemIndex--)
   {
-    [openConnectionMenu removeItemAtIndex: i];
+    [openConnectionMenu removeItemAtIndex: menuItemIndex];
   }
   
-  for (i = 0; i < worldsCount; i++)
+  for (unsigned i = 0; i < worldsCount; i++)
   {
     MUWorld *world = [registry worldAtIndex: i];
     MUProfile *profile = [profiles profileForWorld: world];
@@ -354,7 +352,7 @@
     NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle: _(MULConnectWithoutLogin)
                                                          action: @selector (openConnection:)
                                                   keyEquivalent: @""];
-    int j, playersCount = [players count];
+    unsigned playersCount = [players count];
     
     [connectItem setTarget: self];
     [connectItem setRepresentedObject: profile];
@@ -366,7 +364,7 @@
         [self openConnection: connectItem];
     }
     
-    for (j = 0; j < playersCount; j++)
+    for (unsigned j = 0; j < playersCount; j++)
     {
       MUPlayer *player = [players objectAtIndex: j];
       profile = [profiles profileForWorld: world player: player];

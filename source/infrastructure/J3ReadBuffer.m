@@ -96,11 +96,11 @@
   [dataBuffer setData: [NSData data]];
 }
 
-- (NSData *) dataByConsumingBytesToIndex: (unsigned) index
+- (NSData *) dataByConsumingBytesToIndex: (unsigned) byteIndex
 {
-  NSData *subdata = [dataBuffer subdataWithRange: NSMakeRange (0, index)];
+  NSData *subdata = [dataBuffer subdataWithRange: NSMakeRange (0, byteIndex)];
   
-  [dataBuffer setData: [dataBuffer subdataWithRange: NSMakeRange (index, [self length] - index)]];
+  [dataBuffer setData: [dataBuffer subdataWithRange: NSMakeRange (byteIndex, [self length] - byteIndex)]];
   
   return subdata;
 }
