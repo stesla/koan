@@ -12,6 +12,7 @@
 
 @interface J3TelnetEngine (Private)
 
+- (void) parseByte: (uint8_t) byte;
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
 
 @end
@@ -103,15 +104,10 @@
   }
 }
 
-- (void) parse: (uint8_t) byte
+- (void) parseData: (NSData *) data
 {
-  [self at: &state put: [state parse: byte forParser: self]];
-}
-
-- (void) parse: (uint8_t *) bytes length: (int) count
-{
-  for (int i = 0; i < count; i++)
-    [self parse: bytes[i]];
+  for (unsigned i = 0; i < [data length]; ++i)
+    [self parseByte: ((uint8_t *)[data bytes])[i]];
 }
 
 - (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer
@@ -133,6 +129,11 @@
 @end
 
 @implementation J3TelnetEngine (Private)
+
+- (void) parseByte: (uint8_t) byte
+{
+  [self at: &state put: [state parse: byte forParser: self]];
+}
 
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
 {

@@ -169,10 +169,7 @@
   
   [connection poll];
   if ([connection hasDataAvailable])
-  {
-    NSData *data = [connection readUpToLength: TELNET_READ_BUFFER_SIZE];
-    [engine parse: (uint8_t *)[data bytes] length: [data length]];
-  }
+    [engine parseData: [connection readUpToLength: TELNET_READ_BUFFER_SIZE]];
   else
     [engine handleEndOfReceivedData];
 }

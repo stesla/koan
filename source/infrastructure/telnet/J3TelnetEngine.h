@@ -27,8 +27,7 @@
 - (void) handleEndOfReceivedData;
 - (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *)buffer;
 - (void) goAhead;
-- (void) parse: (uint8_t) byte;
-- (void) parse: (uint8_t *) bytes length: (int) count;
+- (void) parseData: (NSData *) data;
 - (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
 - (void) setOutputBuffer: (NSObject <J3WriteBuffer> *) buffer;
 - (void) wont: (uint8_t) byte;
