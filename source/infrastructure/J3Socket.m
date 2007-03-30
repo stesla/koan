@@ -149,7 +149,7 @@
 
 - (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object
 {
-  [self at: &delegate put: object];
+  delegate = object;
 }
 
 - (J3SocketStatus) status

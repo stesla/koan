@@ -82,7 +82,7 @@
 
 - (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object
 {
-  [self at: &delegate put: object];
+  delegate = object;
 }
 
 - (void) writeLine: (NSString *) line
