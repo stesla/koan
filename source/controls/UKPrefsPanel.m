@@ -39,14 +39,12 @@
 
 -(id) init
 {
-  if( self = [super init] )
-  {
-  	tabView = nil;
-  	itemsList = [[NSMutableDictionary alloc] init];
-  	baseWindowName = [@"" retain];
-  	autosaveName = [@"com.ulikusterer" retain];
-  }
-  
+  if (![super init])
+    return nil;
+  tabView = nil;
+  itemsList = [[NSMutableDictionary alloc] init];
+  baseWindowName = [@"" retain];
+  autosaveName = [@"com.ulikusterer" retain];
   return self;
 }
 
