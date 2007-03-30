@@ -237,6 +237,7 @@
 		29B97316FDCFA39411CA2CEA /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2F2D76E90BBB1C8400BBB71A /* Characteristics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Characteristics.txt; sourceTree = "<group>"; };
 		2F42D0E00BB2618F0056C27A /* NSString (NDUtilities).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString (NDUtilities).h"; sourceTree = "<group>"; };
 		2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString (NDUtilities).m"; sourceTree = "<group>"; };
 		2F6C71F10BB460CA00709320 /* MUURLHandlerCommand.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUURLHandlerCommand.h; sourceTree = "<group>"; };
@@ -741,6 +742,7 @@
 			isa = PBXGroup;
 			children = (
 				E62F2B9F07CD4EC400DC8C1B /* Backlog.txt */,
+				2F2D76E90BBB1C8400BBB71A /* Characteristics.txt */,
 				E65055A9077EBA820016F30E /* Credits.rtf */,
 				E6505ABF07820CC00016F30E /* User Stories.rtf */,
 			);
@@ -1471,6 +1473,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
+				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
+				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
+				GCC_WARN_MISSING_PARENTHESES = YES;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				OBJROOT = "$(SYMROOT)";
 				SYMROOT = "$(PROJECT_DIR)/build";
 			};
