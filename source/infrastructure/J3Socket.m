@@ -86,16 +86,6 @@
   [self setStatusClosedByClient];    
 }
 
-- (BOOL) hasDataAvailable
-{
-  return hasDataAvailable;
-}
-
-- (BOOL) hasSpaceAvailable
-{
-  return YES;
-}
-
 - (BOOL) isClosed
 {
   return status == J3SocketStatusClosed;
@@ -157,16 +147,6 @@
   }
 }
 
-- (unsigned) read: (uint8_t *) bytes maxLength: (unsigned) length
-{
-  ssize_t result;
-  errno = 0;
-  result = read (socketfd, bytes, length);
-  if (result < 0)
-    [self handleReadWriteError];
-  return result;
-}
-
 - (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object
 {
   [self at: &delegate put: object];
@@ -178,7 +158,40 @@
 }
 
 #pragma mark -
+#pragma mark J3ByteSource protocol
+
+- (BOOL) hasDataAvailable
+{
+  return hasDataAvailable;
+}
+
+- (NSData *) readUpToLength: (unsigned) length
+{
+  uint8_t *bytes = malloc (length);
+  if (!bytes)
+  {
+    @throw [NSException exceptionWithName: NSMallocException reason: @"Could not allocate socket read buffer" userInfo: nil];    
+  }
+
+  errno = 0;
+  ssize_t bytesRead = read (socketfd, bytes, length);
+  
+  if (bytesRead < 0)
+  {
+    free (bytes);
+    [self handleReadWriteError];
+  }
+  
+  return [NSData dataWithBytesNoCopy: bytes length: bytesRead];
+}
+
+#pragma mark -
 #pragma mark J3ByteDestination protocol
+
+- (BOOL) hasSpaceAvailable
+{
+  return YES;
+}
 
 - (unsigned) write: (NSData *) data
 {

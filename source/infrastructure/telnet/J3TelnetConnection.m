@@ -161,9 +161,6 @@
 
 - (void) poll
 {
-  uint8_t bytes[TELNET_READ_BUFFER_SIZE];
-  unsigned bytesRead = 0;
-  
   // It is possible for the connection to have been released but for there to
   // be a pending timer fire that was registered before the timers were
   // invalidated.
@@ -173,8 +170,8 @@
   [connection poll];
   if ([connection hasDataAvailable])
   {
-    bytesRead = [connection read: bytes maxLength: TELNET_READ_BUFFER_SIZE];
-    [engine parse: bytes length: bytesRead];
+    NSData *data = [connection readUpToLength: TELNET_READ_BUFFER_SIZE];
+    [engine parse: (uint8_t *)[data bytes] length: [data length]];
   }
   else
     [engine handleEndOfReceivedData];

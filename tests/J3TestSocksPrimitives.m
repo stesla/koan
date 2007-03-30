@@ -32,15 +32,13 @@
   return [self length] > 0;
 }
 
-- (unsigned) read: (uint8_t *) buffer maxLength: (unsigned) length;
+- (NSData *) readUpToLength: (unsigned) length
 {
   unsigned lengthToRead = length;
   if (bytesToRead > 0)
     lengthToRead = length < bytesToRead ? length : bytesToRead;
   
-  [[self dataByConsumingBytesToIndex: lengthToRead] getBytes: buffer length: lengthToRead];
-  
-  return [self length] > lengthToRead ? lengthToRead : [self length];
+  return [self dataByConsumingBytesToIndex: lengthToRead];
 }
 
 - (void) setBytesToRead: (unsigned) value;
