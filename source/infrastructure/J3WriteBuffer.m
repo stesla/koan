@@ -230,7 +230,7 @@
   if (!destination)
     @throw [J3WriteBufferException exceptionWithName: @"" reason: @"Must provide destination" userInfo: nil];
   
-  bytesWritten = [destination write: (uint8_t *) [self bytes] length: [self length]];
+  bytesWritten = [destination write: [self dataValue]];
   
   if (bytesWritten == [self length])
     [self clear];

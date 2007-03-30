@@ -180,14 +180,14 @@
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length
+- (unsigned) write: (NSData *) data
 {
   ssize_t result;
   errno = 0;
-  result = write (socketfd, bytes, length);
+  result = write (socketfd, [data bytes], [data length]);
   if (result < 0)
     [self handleReadWriteError];
-  return result;
+  return result;  
 }
 
 @end

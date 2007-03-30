@@ -57,13 +57,10 @@
   return YES;
 }
 
-- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length
+- (unsigned) write: (NSData *) data
 {
-  line = [[NSString alloc] initWithBytes: bytes
-                                  length: length
-                                encoding: NSASCIIStringEncoding];
-  
-  return length;
+  line = [[NSString alloc] initWithData: data encoding: NSASCIIStringEncoding];
+  return [data length];
 }
 
 @end

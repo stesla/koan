@@ -109,10 +109,10 @@
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (unsigned) write: (const uint8_t *) bytes length: (unsigned) length;
+- (unsigned) write: (NSData *) data
 {
-  unsigned lengthToWrite = maxBytesPerWrite < length ? maxBytesPerWrite : length;
-  [output appendBytes: bytes length: lengthToWrite];
+  unsigned lengthToWrite = maxBytesPerWrite < [data length] ? maxBytesPerWrite : [data length];
+  [output appendBytes: [data bytes] length: lengthToWrite];
   numberOfWrites++;
   return lengthToWrite;
 }
