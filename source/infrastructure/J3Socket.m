@@ -65,9 +65,12 @@
 {
   if (![super init])
     return nil;
-  hostname = [newHostname retain];
+  
+  [self at: &hostname put: [newHostname retain]];
   port = newPort;
   status = J3SocketStatusNotConnected;
+  server = NULL;
+  
   return self;
 }
 
@@ -75,6 +78,10 @@
 {
   delegate = nil;
   [hostname release];
+  
+  if (server)
+    free (server);
+  
   [super dealloc];
 }
 
@@ -82,7 +89,9 @@
 {
   if (![self isConnected])
     return;
-  close(socketfd);
+  
+  close (socketfd);
+  socketfd = -1;
   [self setStatusClosedByClient];    
 }
 
@@ -103,8 +112,9 @@
 
 - (void) open
 {  
-  if ([self isConnected] || [self isConnecting] || [self isClosed])
+  if ([self isConnected] || [self isConnecting])
     return;
+  
   @try
   {
     [self setStatusConnecting];
@@ -115,7 +125,7 @@
     [self performPostConnectNegotiation];
     [self setStatusConnected];    
   }
-  @catch(J3SocketException *socketException)
+  @catch (J3SocketException *socketException)
   {
     [self setStatusClosedWithError: [socketException reason]];
   }
@@ -123,11 +133,10 @@
 
 - (void) poll
 {
+  hasDataAvailable = NO;
+  
   fd_set read_set;
   struct timeval tval;
-  int result;
-  
-  hasDataAvailable = NO;
   
   memset (&tval, 0, sizeof (struct timeval));
   tval.tv_usec = 100;
@@ -135,7 +144,7 @@
   [self initializeDescriptorSet: &read_set];
   errno = 0;
   
-  result = select (socketfd + 1, &read_set, NULL, NULL, &tval);  
+  int result = select (socketfd + 1, &read_set, NULL, NULL, &tval);  
   
   if (result < 0)
     [J3SocketException socketErrorWithErrno];
@@ -170,7 +179,7 @@
   uint8_t *bytes = malloc (length);
   if (!bytes)
   {
-    @throw [NSException exceptionWithName: NSMallocException reason: @"Could not allocate socket read buffer" userInfo: nil];    
+    @throw [NSException exceptionWithName: NSMallocException reason: @"Could not allocate socket read buffer" userInfo: nil];
   }
 
   errno = 0;
@@ -236,9 +245,8 @@
 
 - (void) connectSocket
 {
-  int result;
   errno = 0;
-  result = connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr));
+  int result = connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr));
   if (result < 0)
     [J3SocketException socketErrorWithErrno];
 }
@@ -255,8 +263,9 @@
 {
   if (![self isConnected] && ![self isConnecting])
     return;
-  if ((errno == EBADF) || (errno == EPIPE))
+  if (errno == EBADF || errno == EPIPE)
     [self setStatusClosedByServer];
+  
   [J3SocketException socketErrorWithErrno];
 }
 
@@ -274,12 +283,27 @@
 - (void) resolveHostname
 {
   h_errno = 0;
-  const char *error;
-  server = gethostbyname ([hostname cString]);
+  
+  if (server)
+    return;
+  
+  server = malloc (sizeof (struct hostent));
   if (!server)
+    @throw [NSException exceptionWithName: NSMallocException reason: @"Could not allocate struct hostent for socket" userInfo: nil];
+  
+  @synchronized ([self class])
   {
-    error = hstrerror (h_errno);
-    [J3SocketException socketError: [NSString stringWithFormat: @"%s", error]];
+    struct hostent *hostent = gethostbyname ([hostname cString]);
+    
+    if (hostent)
+      memcpy (server, hostent, sizeof (struct hostent));
+    else
+    {
+      free (server);
+      server = NULL;
+      const char *error = hstrerror (h_errno);
+      [J3SocketException socketError: [NSString stringWithFormat: @"%s", error]];
+    }
   }
 }
 

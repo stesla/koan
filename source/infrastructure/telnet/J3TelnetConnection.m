@@ -12,7 +12,6 @@
 
 @interface J3TelnetConnection (Private)
 
-- (void) cleanUpConnection;
 - (void) cleanUpPollTimer;
 - (void) fireTimer: (NSTimer *) timer;
 - (BOOL) isOnConnection: (id <J3Connection>) connection;
@@ -47,8 +46,10 @@
 - (void) dealloc
 {
   delegate = nil;
+  
   [self close];
   [self cleanUpPollTimer];
+  
   [engine release];
   [outputBuffer release];
   [connection release];
@@ -115,7 +116,6 @@
     return;
   
   [self cleanUpPollTimer];
-  [self cleanUpConnection];
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByClient:)])
     [delegate telnetConnectionWasClosedByClient: self];
@@ -127,7 +127,6 @@
     return;
   
   [self cleanUpPollTimer];
-  [self cleanUpConnection];
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByServer:)])
     [delegate telnetConnectionWasClosedByServer: self];
@@ -139,7 +138,6 @@
     return;
   
   [self cleanUpPollTimer];
-  [self cleanUpConnection];
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosed: withError:)])
     [delegate telnetConnectionWasClosed: self withError: errorMessage];
@@ -150,12 +148,6 @@
 #pragma mark -
 
 @implementation J3TelnetConnection (Private)
-
-- (void) cleanUpConnection
-{
-  [connection release];
-  connection = nil;
-}
 
 - (void) cleanUpPollTimer
 {

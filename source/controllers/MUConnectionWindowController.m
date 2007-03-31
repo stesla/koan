@@ -22,13 +22,10 @@ enum MUSearchDirections
 @interface MUConnectionWindowController (Private)
 
 - (BOOL) canCloseWindow;
-- (void) cleanUp;
 - (void) cleanUpPingTimer;
-- (void) cleanUpTelnetConnection;
 - (J3Filter *) createLogger;
 - (void) didEndCloseSheet: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
 - (void) disconnect;
-- (void) disconnectAndCleanUp;
 - (void) displayString: (NSString *) string;
 - (void) endCompletion;
 - (BOOL) isUsingTelnet: (J3TelnetConnection *) telnet;
@@ -123,10 +120,11 @@ enum MUSearchDirections
 
 - (void) dealloc
 {
-  [self disconnectAndCleanUp];
+  [self disconnect];
   
   [[NSNotificationCenter defaultCenter] removeObserver: nil name: nil object: self];
   
+  [telnetConnection release];
   [filterQueue release];
   [historyRing release];
   [profile release];
@@ -252,7 +250,8 @@ enum MUSearchDirections
 {
   if (![self isConnected])
   {
-    telnetConnection = [[profile createNewTelnetConnectionWithDelegate: self] retain];
+    if (!telnetConnection)
+      telnetConnection = [[profile createNewTelnetConnectionWithDelegate: self] retain];
     // TODO: if (!telnetConnection) { //ERROR! }
     
     [telnetConnection open];
@@ -277,7 +276,7 @@ enum MUSearchDirections
 
 - (IBAction) disconnect: (id) sender
 {
-  [self disconnectAndCleanUp];
+  [self disconnect];
 }
 
 - (IBAction) goToWorldURL: (id) sender
@@ -344,7 +343,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet: telnet])
     return;
   
-  [self cleanUp];
+  [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosed)];
   [self displayString: @"\n"];
   [MUGrowlService connectionClosedForTitle: [profile windowTitle]];
@@ -355,7 +354,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet: telnet])
     return;
   
-  [self cleanUp];
+  [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosedByServer)];
   [self displayString: @"\n"];
   [MUGrowlService connectionClosedByServerForTitle: [profile windowTitle]];
@@ -366,7 +365,7 @@ enum MUSearchDirections
   if (![self isUsingTelnet: telnet])
     return;
   
-  [self cleanUp];
+  [self cleanUpPingTimer];
   [self displayString: [NSString stringWithFormat: _(MULConnectionClosedByError), errorMessage]];
   [self displayString: @"\n"];
   [MUGrowlService connectionClosedByErrorForTitle: [profile windowTitle] error: errorMessage];
@@ -532,23 +531,11 @@ enum MUSearchDirections
   return YES;
 }
 
-- (void) cleanUp;
-{
-  [self cleanUpPingTimer];
-  [self cleanUpTelnetConnection];
-}
-
 - (void) cleanUpPingTimer;
 {
   [pingTimer invalidate];
   [pingTimer release];
   pingTimer = nil;  
-}
-
-- (void) cleanUpTelnetConnection;
-{
-  [telnetConnection release];
-  telnetConnection = nil;  
 }
 
 - (J3Filter *) createLogger
@@ -572,12 +559,6 @@ enum MUSearchDirections
 {
   if (telnetConnection)
     [telnetConnection close];
-}
-
-- (void) disconnectAndCleanUp
-{
-  [self disconnect];
-  [self cleanUp];
 }
 
 - (void) displayString: (NSString *) string
@@ -683,7 +664,7 @@ enum MUSearchDirections
   if (returnCode == NSAlertDefaultReturn) /* Close. */
   {
     if ([self isConnected])
-      [self disconnectAndCleanUp];
+      [self disconnect];
     
     [[self window] close];
 
