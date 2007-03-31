@@ -15,6 +15,8 @@
 
 @interface J3WriteBuffer (Private)
 
+- (void) ensureLastBlockIsBinary;
+- (void) ensureLastBlockIsString;
 - (void) removeDataUpTo: (unsigned) position;
 - (void) setBlocks: (NSArray *) newBlocks;
 - (void) write;
@@ -60,31 +62,22 @@
 
 - (void) appendByte: (uint8_t) byte
 {
+  [self ensureLastBlockIsBinary];
   uint8_t bytes[1] = {byte};
-  [self appendBytes: bytes length: 1];
-}
-
-- (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length;
-{
-  [self appendData: [NSData dataWithBytes: bytes length: length]];
-}
-
-- (void) appendData: (NSData *) data
-{
-  if (!lastBlock || !lastBlockIsBinary)
-  {
-    lastBlock = [NSMutableData data];
-    [blocks addObject: lastBlock];
-    lastBlockIsBinary = YES;
-  }
-  
-  [lastBlock appendData: [NSData dataWithData: data]];
-  totalLength += [data length];  
+  [lastBlock appendBytes: bytes length: 1];
+  totalLength++;
 }
 
 - (void) appendCharacter: (unichar) character
 {
   [self appendString: [NSString stringWithCharacters: &character length: 1]];
+}
+
+- (void) appendData: (NSData *) data
+{
+  [self ensureLastBlockIsBinary];
+  [lastBlock appendData: data];
+  totalLength += [data length];  
 }
 
 - (void) appendLine: (NSString *) line
@@ -96,14 +89,7 @@
 {
   if (!string)
     return;
-  
-  if (!lastBlock || lastBlockIsBinary)
-  {
-    lastBlock = [NSMutableString string];
-    [blocks addObject: lastBlock];
-    lastBlockIsBinary = NO;
-  }
-  
+  [self ensureLastBlockIsString];
   [lastBlock appendString: string];
   totalLength += [string length];
 }
@@ -185,6 +171,26 @@
 #pragma mark -
 
 @implementation J3WriteBuffer (Private)
+
+- (void) ensureLastBlockIsBinary
+{
+  if (!lastBlock || !lastBlockIsBinary)
+  {
+    lastBlock = [NSMutableData data];
+    [blocks addObject: lastBlock];
+    lastBlockIsBinary = YES;
+  }
+}
+
+- (void) ensureLastBlockIsString
+{
+  if (!lastBlock || lastBlockIsBinary)
+  {
+    lastBlock = [NSMutableString string];
+    [blocks addObject: lastBlock];
+    lastBlockIsBinary = NO;
+  }  
+}
 
 - (void) removeDataUpTo: (unsigned) position
 {
