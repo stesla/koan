@@ -6,7 +6,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "J3ReadBuffer.h"
-#import "J3LineBuffer.h"
 #import "J3TelnetConnection.h"
 
 @class J3ProxySettings;

@@ -7,7 +7,6 @@
 #import <Cocoa/Cocoa.h>
 #import <RBSplitView/RBSplitView.h>
 
-#import "J3LineBuffer.h"
 #import "J3Filter.h"
 #import "MUDisplayTextView.h"
 #import "J3HistoryRing.h"
