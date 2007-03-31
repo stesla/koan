@@ -1,5 +1,5 @@
 //
-// J3TestSocksPrimitives.h
+// J3SOCKSPrimitiveTests.h
 //
 // Copyright (c) 2005, 2006 3James Software
 //
@@ -9,7 +9,7 @@
 
 @class J3WriteBuffer;
 
-@interface J3TestSocksPrimitives : J3TestCase
+@interface J3SOCKSPrimitiveTests : J3TestCase
 {
   J3WriteBuffer *buffer;
   NSString *readString;

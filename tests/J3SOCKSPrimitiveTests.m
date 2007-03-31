@@ -1,10 +1,10 @@
 //
-// J3TestSocksPrimitives.m
+// J3SOCKSPrimitiveTests.m
 //
 // Copyright (c) 2005, 2006, 2007 3James Software
 //
 
-#import "J3TestSocksPrimitives.h"
+#import "J3SOCKSPrimitiveTests.h"
 
 #import "J3ByteSource.h"
 #import "J3ReadBuffer.h"
@@ -50,7 +50,7 @@
 
 #pragma mark -
 
-@interface J3TestSocksPrimitives (Private)
+@interface J3SOCKSPrimitiveTests (Private)
 
 - (void) assertObject: (id) selection writes: (NSString *) output;
 - (void) setReadString: (NSString *) newString;
@@ -59,7 +59,7 @@
 
 #pragma mark -
 
-@implementation J3TestSocksPrimitives
+@implementation J3SOCKSPrimitiveTests
 
 - (void) setUp
 {
@@ -229,7 +229,7 @@
 
 #pragma mark -
 
-@implementation J3TestSocksPrimitives (Private)
+@implementation J3SOCKSPrimitiveTests (Private)
 
 - (void) assertObject: (id) object writes: (NSString *) output;
 {
