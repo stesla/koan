@@ -10,10 +10,10 @@
 
 - (void) appendByte: (uint8_t) byte;
 - (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length;
+- (void) appendData: (NSData *) data;
 - (void) appendCharacter: (unichar) character;
 - (void) appendLine: (NSString *) line;
 - (void) appendString: (NSString *) string;
-- (const uint8_t *) bytes;
 - (void) clear;
 - (void) flush;
 - (BOOL) isEmpty;

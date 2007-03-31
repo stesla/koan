@@ -35,8 +35,7 @@
 
 - (uint8_t) outputByteAtIndex: (unsigned) index;
 {
-  const uint8_t * bytes = [output bytes];
-  return bytes[index];
+  return ((uint8_t *)[[output dataValue] bytes])[index];
 }
 
 - (unsigned) outputLength;

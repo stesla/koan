@@ -66,6 +66,11 @@
 
 - (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length;
 {
+  [self appendData: [NSData dataWithBytes: bytes length: length]];
+}
+
+- (void) appendData: (NSData *) data
+{
   if (!lastBlock || !lastBlockIsBinary)
   {
     lastBlock = [NSMutableData data];
@@ -73,8 +78,8 @@
     lastBlockIsBinary = YES;
   }
   
-  [lastBlock appendData: [NSData dataWithBytes: bytes length: length]];
-  totalLength += length;
+  [lastBlock appendData: [NSData dataWithData: data]];
+  totalLength += [data length];  
 }
 
 - (void) appendCharacter: (unichar) character
