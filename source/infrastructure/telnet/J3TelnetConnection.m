@@ -4,6 +4,8 @@
 // Copyright (c) 2005, 2006, 2007 3James Software
 //
 
+#import "J3ConnectionFactory.h"
+#import "J3Socket.h"
 #import "J3TelnetConnection.h"
 
 #define TELNET_READ_BUFFER_SIZE 512
@@ -14,6 +16,7 @@
 
 - (void) cleanUpPollTimer;
 - (void) fireTimer: (NSTimer *) timer;
+- (void) initializeSocket;
 - (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket;
 - (void) poll;
 - (void) schedulePollTimer;
@@ -24,22 +27,22 @@
 
 @implementation J3TelnetConnection
 
-- (id) initWithSocket: (NSObject <J3Socket, J3ByteDestination, J3ByteSource> *) newSocket
-               engine: (J3TelnetEngine *) newEngine
-             delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate
+- (id) initWithFactory: (J3ConnectionFactory *) factory
+              hostname: (NSString *) newHostname
+                  port: (int) newPort
+                engine: (J3TelnetEngine *) newEngine
+              delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
 {
   if (![super init])
     return nil;
-  
-  [self setDelegate: newDelegate];
-  [self at: &socket put: newSocket];
+  [self at: &connectionFactory put: factory];
+  [self at: &hostname put: newHostname];
+  port = newPort;
   [self at: &engine put: newEngine];
+  [self setDelegate: newDelegate];
   [self at: &outputBuffer put: [J3WriteBuffer buffer]];
-  [outputBuffer setByteDestination: socket];
-  [engine setOutputBuffer: outputBuffer];
-  
+  [engine setOutputBuffer: outputBuffer]; 
   pollTimer = nil;
-  
   return self;
 }
 
@@ -73,6 +76,7 @@
 
 - (void) open
 {
+  [self initializeSocket];
   [self schedulePollTimer];
   [socket open];
 }
@@ -160,7 +164,14 @@
   [self poll];
 }
 
-- (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket;
+- (void) initializeSocket
+{
+  [self at: &socket put: [connectionFactory makeSocketWithHostname: hostname port: port]];
+  [socket setDelegate: self];
+  [outputBuffer setByteDestination: socket];
+}
+
+- (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket
 {
   return possibleSocket == socket;
 }

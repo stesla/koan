@@ -18,8 +18,6 @@ static J3ConnectionFactory *defaultFactory = nil;
 - (void) loadProxySettingsFromDefaults;
 - (void) writeProxySettingsToDefaults;
 
-- (J3Socket *) makeSocketWithHostname: (NSString *) hostname port: (int) port;
-
 @end
 
 #pragma mark -
@@ -58,22 +56,25 @@ static J3ConnectionFactory *defaultFactory = nil;
   [super dealloc];
 }
 
+- (J3Socket *) makeSocketWithHostname: (NSString *) hostname port: (int) port
+{
+  if (useProxy)
+    return [J3ProxySocket socketWithHostname: hostname port: port proxySettings: proxySettings];
+  else
+    return [J3Socket socketWithHostname: hostname port: port];
+}
+
 - (J3TelnetConnection *) telnetWithHostname: (NSString *) hostname
                                        port: (int) port
                                    delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
   J3TelnetEngine *engine = [J3TelnetEngine engine];
   J3ReadBuffer *buffer = [J3ReadBuffer buffer];
-  J3Socket *telnetSocket = [self makeSocketWithHostname: hostname port: port];
-  J3TelnetConnection *telnetConnection;
 
   [buffer setDelegate: delegate];
   [engine setInputBuffer: buffer];
-  
-  telnetConnection = [[[J3TelnetConnection alloc] initWithSocket: telnetSocket engine: engine delegate: delegate] autorelease];
-  [telnetSocket setDelegate: telnetConnection];
-  
-  return telnetConnection;
+
+  return [[[J3TelnetConnection alloc] initWithFactory: self hostname: hostname port: port engine: engine delegate: delegate] autorelease];
 }
 
 - (J3ProxySettings *) proxySettings
@@ -126,14 +127,6 @@ static J3ConnectionFactory *defaultFactory = nil;
   
   [[NSUserDefaults standardUserDefaults] setObject: proxySettingsData forKey: MUPProxySettings];  
   [[NSUserDefaults standardUserDefaults] setObject: useProxyData forKey: MUPUseProxy];
-}
-
-- (J3Socket *) makeSocketWithHostname: (NSString *) hostname port: (int) port
-{
-  if (useProxy)
-    return [J3ProxySocket socketWithHostname: hostname port: port proxySettings: proxySettings];
-  else
-    return [J3Socket socketWithHostname: hostname port: port];
 }
 
 @end

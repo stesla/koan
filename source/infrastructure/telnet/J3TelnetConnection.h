@@ -13,20 +13,26 @@
 #import "J3WriteBuffer.h"
 #import "J3TelnetEngine.h"
 
+@class J3ConnectionFactory;
 @protocol J3TelnetConnectionDelegate;
 
 @interface J3TelnetConnection : NSObject <J3SocketDelegate>
 {
-  NSObject <J3Socket, J3ByteDestination, J3ByteSource> *socket;
+  J3ConnectionFactory *connectionFactory;
+  NSString *hostname;
+  int port;
+  J3Socket *socket;
   J3WriteBuffer *outputBuffer;
   J3TelnetEngine *engine;
   NSTimer *pollTimer;
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
-- (id) initWithSocket: (NSObject <J3Socket, J3ByteDestination, J3ByteSource> *) newSocket
-               engine: (J3TelnetEngine *) newParser
-             delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
+- (id) initWithFactory: (J3ConnectionFactory *) factory
+              hostname: (NSString *) hostname
+                  port: (int) port
+                engine: (J3TelnetEngine *) newParser
+              delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
 
 - (void) close;
 - (BOOL) isConnected;

@@ -18,6 +18,7 @@
 
 + (J3ConnectionFactory *) defaultFactory;
 
+- (J3Socket *) makeSocketWithHostname: (NSString *) hostname port: (int) port;
 - (J3TelnetConnection *) telnetWithHostname: (NSString *) hostname
                                        port: (int) port
                                    delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
