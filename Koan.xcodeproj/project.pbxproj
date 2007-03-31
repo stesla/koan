@@ -254,7 +254,6 @@
 		7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SocksMethodSelection.m; sourceTree = "<group>"; };
 		7E070B260933D32B000A36CF /* J3SocksConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocksConstants.h; sourceTree = "<group>"; };
 		7E070B270933D32B000A36CF /* J3SocksConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SocksConstants.m; sourceTree = "<group>"; };
-		7E0A2B23092F72140081D871 /* J3Connection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Connection.h; sourceTree = "<group>"; };
 		7E13B9AC09AE87D800508460 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MUProxySettings.nib; sourceTree = "<group>"; };
 		7E13B9B409AE8B7600508460 /* MUProxySettingsController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUProxySettingsController.h; sourceTree = "<group>"; };
 		7E13B9B509AE8B7600508460 /* MUProxySettingsController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUProxySettingsController.m; sourceTree = "<group>"; };
@@ -792,7 +791,6 @@
 				7E68DCD4092AC77D004554BD /* J3ByteDestination.h */,
 				7EC61429092EFF72004DF3CD /* J3ByteSource.h */,
 				7EC10C4009AFAC4B00D840A1 /* J3ByteSource.m */,
-				7E0A2B23092F72140081D871 /* J3Connection.h */,
 				7E87735109AD44DE00A883BC /* J3ConnectionFactory.h */,
 				7E87735209AD44DE00A883BC /* J3ConnectionFactory.m */,
 				E6E7A6210749693A007005AC /* J3HistoryRing.h */,
@@ -1473,6 +1471,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
@@ -1497,6 +1497,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

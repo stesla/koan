@@ -70,7 +70,7 @@ static J3ConnectionFactory *defaultFactory = nil;
   [buffer setDelegate: delegate];
   [engine setInputBuffer: buffer];
   
-  telnetConnection = [[[J3TelnetConnection alloc] initWithConnection: telnetSocket engine: engine delegate: delegate] autorelease];
+  telnetConnection = [[[J3TelnetConnection alloc] initWithSocket: telnetSocket engine: engine delegate: delegate] autorelease];
   [telnetSocket setDelegate: telnetConnection];
   
   return telnetConnection;

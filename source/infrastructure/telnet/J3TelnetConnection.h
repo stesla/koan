@@ -9,24 +9,24 @@
 #import "J3ReadBuffer.h"
 #import "J3ByteDestination.h"
 #import "J3ByteSource.h"
-#import "J3Connection.h"
+#import "J3Socket.h"
 #import "J3WriteBuffer.h"
 #import "J3TelnetEngine.h"
 
 @protocol J3TelnetConnectionDelegate;
 
-@interface J3TelnetConnection : NSObject <J3ConnectionDelegate>
+@interface J3TelnetConnection : NSObject <J3SocketDelegate>
 {
-  NSObject <J3ByteDestination, J3ByteSource, J3Connection> *connection;
+  NSObject <J3Socket, J3ByteDestination, J3ByteSource> *socket;
   J3WriteBuffer *outputBuffer;
   J3TelnetEngine *engine;
   NSTimer *pollTimer;
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
-- (id) initWithConnection: (NSObject <J3ByteDestination, J3ByteSource, J3Connection> *) newConnection
-                   engine: (J3TelnetEngine *) newParser
-                 delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
+- (id) initWithSocket: (NSObject <J3Socket, J3ByteDestination, J3ByteSource> *) newSocket
+               engine: (J3TelnetEngine *) newParser
+             delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
 
 - (void) close;
 - (BOOL) isConnected;

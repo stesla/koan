@@ -14,7 +14,7 @@
 
 - (void) cleanUpPollTimer;
 - (void) fireTimer: (NSTimer *) timer;
-- (BOOL) isOnConnection: (id <J3Connection>) connection;
+- (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket;
 - (void) poll;
 - (void) schedulePollTimer;
 
@@ -24,18 +24,18 @@
 
 @implementation J3TelnetConnection
 
-- (id) initWithConnection: (NSObject <J3ByteDestination, J3ByteSource, J3Connection> *) newConnection
-                   engine: (J3TelnetEngine *) newEngine
-                 delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate
+- (id) initWithSocket: (NSObject <J3Socket, J3ByteDestination, J3ByteSource> *) newSocket
+               engine: (J3TelnetEngine *) newEngine
+             delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate
 {
   if (![super init])
     return nil;
   
   [self setDelegate: newDelegate];
-  [self at: &connection put: newConnection];
+  [self at: &socket put: newSocket];
   [self at: &engine put: newEngine];
   [self at: &outputBuffer put: [J3WriteBuffer buffer]];
-  [outputBuffer setByteDestination: connection];
+  [outputBuffer setByteDestination: socket];
   [engine setOutputBuffer: outputBuffer];
   
   pollTimer = nil;
@@ -52,13 +52,13 @@
   
   [engine release];
   [outputBuffer release];
-  [connection release];
+  [socket release];
   [super dealloc];
 }
 
 - (void) close
 {
-  [connection close];
+  [socket close];
 }
 
 - (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
@@ -68,13 +68,13 @@
 
 - (BOOL) isConnected
 {
-  return [connection isConnected];
+  return [socket isConnected];
 }
 
 - (void) open
 {
   [self schedulePollTimer];
-  [connection open];
+  [socket open];
 }
 
 - (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object
@@ -92,27 +92,27 @@
 #pragma mark -
 #pragma mark J3ConnectionDelegate protocol
 
-- (void) connectionIsConnecting: (id <J3Connection>) delegateConnection
+- (void) socketIsConnecting: (NSObject <J3Socket> *) possibleSocket
 {
-  if (![self isOnConnection: delegateConnection])
+  if (![self isUsingSocket: possibleSocket])
     return;
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnecting:)])
     [delegate telnetConnectionIsConnecting: self];
 }
 
-- (void) connectionIsConnected: (id <J3Connection>) delegateConnection
+- (void) socketIsConnected: (NSObject <J3Socket> *) possibleSocket
 {
-  if (![self isOnConnection: delegateConnection])
+  if (![self isUsingSocket: possibleSocket])
     return;
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnected:)])
     [delegate telnetConnectionIsConnected: self];
 }
 
-- (void) connectionWasClosedByClient: (id <J3Connection>) delegateConnection
+- (void) socketWasClosedByClient: (NSObject <J3Socket> *) possibleSocket
 {
-  if (![self isOnConnection: delegateConnection])
+  if (![self isUsingSocket: possibleSocket])
     return;
   
   [self cleanUpPollTimer];
@@ -121,9 +121,9 @@
     [delegate telnetConnectionWasClosedByClient: self];
 }
 
-- (void) connectionWasClosedByServer: (id <J3Connection>) delegateConnection
+- (void) socketWasClosedByServer: (NSObject <J3Socket> *) possibleSocket
 {
-  if (![self isOnConnection: delegateConnection])
+  if (![self isUsingSocket: possibleSocket])
     return;
   
   [self cleanUpPollTimer];
@@ -132,9 +132,9 @@
     [delegate telnetConnectionWasClosedByServer: self];
 }
 
-- (void) connectionWasClosed: (id <J3Connection>) delegateConnection withError: (NSString *) errorMessage
+- (void) socketWasClosed: (NSObject <J3Socket> *) possibleSocket withError: (NSString *) errorMessage
 {
-  if (![self isOnConnection: delegateConnection])
+  if (![self isUsingSocket: possibleSocket])
     return;
   
   [self cleanUpPollTimer];
@@ -160,9 +160,9 @@
   [self poll];
 }
 
-- (BOOL) isOnConnection: (id <J3Connection>) aConnection;
+- (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket;
 {
-  return aConnection == connection;
+  return possibleSocket == socket;
 }
 
 - (void) poll
@@ -170,12 +170,12 @@
   // It is possible for the connection to have been released but for there to
   // be a pending timer fire that was registered before the timers were
   // invalidated.
-  if (!connection || ![connection isConnected])
+  if (!socket || ![socket isConnected])
     return;
   
-  [connection poll];
-  if ([connection hasDataAvailable])
-    [engine parseData: [connection readUpToLength: TELNET_READ_BUFFER_SIZE]];
+  [socket poll];
+  if ([socket hasDataAvailable])
+    [engine parseData: [socket readUpToLength: TELNET_READ_BUFFER_SIZE]];
   else
     [engine handleEndOfReceivedData];
 }
