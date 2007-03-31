@@ -20,7 +20,7 @@
   NSObject <J3ByteDestination, J3ByteSource, J3Connection> *connection;
   J3WriteBuffer *outputBuffer;
   J3TelnetEngine *engine;
-  NSMutableDictionary *timers;
+  NSTimer *pollTimer;
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
