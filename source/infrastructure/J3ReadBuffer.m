@@ -78,17 +78,12 @@
 - (void) appendByte: (uint8_t) byte
 {
   uint8_t bytes[1] = {byte};
-  [self appendBytes: bytes length: 1];
+  [dataBuffer appendBytes: bytes length: 1];
 }
 
-- (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length;
+- (void) appendData: (NSData *) data;
 {
-  [dataBuffer appendData: [NSData dataWithBytes: bytes length: length]];
-}
-
-- (const uint8_t *) bytes
-{
-  return [[self dataValue] bytes];
+  [dataBuffer appendData: data];
 }
 
 - (void) clear
@@ -114,9 +109,7 @@
 {
   if ([self length] > 0)
   {
-    [self postDidProvideStringNotificationWithString: [[[NSString alloc] initWithBytes: [self bytes]
-                                                                                length: [self length]
-                                                                              encoding: NSASCIIStringEncoding] autorelease]];
+    [self postDidProvideStringNotificationWithString: [[[NSString alloc] initWithData: [self dataValue] encoding: NSASCIIStringEncoding] autorelease]];
     [self clear];
   }
 }

@@ -27,6 +27,11 @@
 
 @implementation J3MockByteSource
 
+- (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length
+{
+  [self appendData: [NSData dataWithBytes: bytes length: length]];
+}
+
 - (BOOL) hasDataAvailable;
 {
   return [self length] > 0;

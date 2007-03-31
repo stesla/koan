@@ -9,8 +9,7 @@
 @protocol J3ReadBuffer
 
 - (void) appendByte: (uint8_t) byte;
-- (void) appendBytes: (const uint8_t *) bytes length: (unsigned) length;
-- (const uint8_t *) bytes;
+- (void) appendData: (NSData *) data;
 - (void) clear;
 - (NSData *) dataByConsumingBytesToIndex: (unsigned) index;
 - (NSData *) dataValue;
