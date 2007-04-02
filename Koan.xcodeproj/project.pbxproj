@@ -19,17 +19,6 @@
 			name = "All Tests";
 			productName = "All Tests";
 		};
-		E659F6D00770D4DA00534D1B /* Update plist */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = E69E222C0854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Update plist" */;
-			buildPhases = (
-				E659F6CF0770D4DA00534D1B /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = "Update plist";
-			productName = "Update plist";
-		};
 		E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = E69E22280854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Unpack Frameworks" */;
@@ -198,13 +187,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = E6967A18078F5C7A0033A4C8;
 			remoteInfo = "Unpack Frameworks";
-		};
-		E659F6DE0770D52800534D1B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E659F6D00770D4DA00534D1B;
-			remoteInfo = "Update plist";
 		};
 		E6967A19078F5CC60033A4C8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -851,13 +833,13 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				16D5FA0A075434F9007C5F34 /* CopyFiles */,
-				7E01530B0BA79ACE004BB9B8 /* ShellScript */,
+				7E01530B0BA79ACE004BB9B8 /* Copy Importer */,
+				2F50909E0BC0D88D006A08C6 /* Set Version */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				E6967A1A078F5CC60033A4C8 /* PBXTargetDependency */,
-				E659F6DF0770D52800534D1B /* PBXTargetDependency */,
 				7E0153260BA79D71004BB9B8 /* PBXTargetDependency */,
 			);
 			name = Koan;
@@ -885,7 +867,6 @@
 				8D1107260486CEB800E47090 /* Koan */,
 				7E4AFBE40BA7D2C10050B5AE /* All Tests */,
 				E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */,
-				E659F6D00770D4DA00534D1B /* Update plist */,
 				7E87751709AD558700A883BC /* Unit Tests */,
 			);
 		};
@@ -946,7 +927,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7E01530B0BA79ACE004BB9B8 /* ShellScript */ = {
+		2F50909E0BC0D88D006A08C6 /* Set Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Set Version";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = "/usr/bin/perl -w";
+			shellScript = "# Xcode auto-versioning script for Subversion\n# by Axel Andersson, modified by Daniel Jalkut to add\n# \"--revision HEAD\" to the svn info line, which allows\n# the latest revision to always be used.\n        \nuse strict;\n        \ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n        \n# Get the current subversion revision number and use it to set the CFBundleVersion value\nmy $REV = `/usr/local/bin/svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n        \nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n        \nopen(FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join(\"\", <FH>);\nclose(FH);\n        \n$info =~ s/SVNREVISION/$version/;\n        \nopen(FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose(FH);\n";
+		};
+		7E01530B0BA79ACE004BB9B8 /* Copy Importer */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -954,6 +949,7 @@
 			inputPaths = (
 				"$(PROJECT_DIR)/KoanLogImporter/build/$(CONFIGURATION)/KoanLogImporter.mdimporter",
 			);
+			name = "Copy Importer";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(WRAPPER_NAME)/Contents/Library/Spotlight/KoanLogImporter.mdimporter",
 			);
@@ -973,20 +969,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-		E659F6CF0770D4DA00534D1B /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-				$SOURCE_ROOT/resources/Info.plist,
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# shell script goes here\n\nexport PATH=/opt/local/bin:/opt/bin:/usr/local/bin:/sw/bin:$PATH\n\ncd \"$SOURCE_ROOT/resources/\"\n\nokay=`./update-svnversion.plx < Info.plist > Info.plist~`\n\n[ -d \"$TEMP_ROOT/Koan.build/Development/Koan.build/\" ] && cp Info.plist~ \"$TEMP_ROOT/Koan.build/Development/Koan.build/Info.plist\"\n[ -d \"$TEMP_ROOT/Koan.build/Deployment/Koan.build/\" ] && cp Info.plist~ \"$TEMP_ROOT/Koan.build/Deployment/Koan.build/Info.plist\"\n[ -d \"$TEMP_ROOT/Koan.build/Koan.build/\" ] && cp Info.plist~ \"$TEMP_ROOT/Koan.build/Koan.build/Info.plist\"\nrm Info.plist~\n\nexit $okay";
 		};
 		E6967A17078F5C7A0033A4C8 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1128,11 +1110,6 @@
 			isa = PBXTargetDependency;
 			target = E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */;
 			targetProxy = 7EDB35580BA64EA0008EE7D9 /* PBXContainerItemProxy */;
-		};
-		E659F6DF0770D52800534D1B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E659F6D00770D4DA00534D1B /* Update plist */;
-			targetProxy = E659F6DE0770D52800534D1B /* PBXContainerItemProxy */;
 		};
 		E6967A1A078F5CC60033A4C8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1344,50 +1321,10 @@
 			};
 			name = Release;
 		};
-		E69E222D0854FB100055BCF5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Update plist";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				ZERO_LINK = NO;
-			};
-			name = Debug;
-		};
-		E69E222E0854FB100055BCF5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
-				PRODUCT_NAME = "Update plist";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		E69E22310854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_VERSION = 1.0a3;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
@@ -1400,15 +1337,19 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
+				GCC_USE_GCC3_PFE_SUPPORT = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
 					./externals,
 				);
 				INFOPLIST_FILE = resources/Info.plist;
-				INSTALL_PATH = "$(USER_APPS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
+				INSTALL_PATH = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_4";
 				OTHER_LDFLAGS = "-lSystem";
 				OTHER_LDFLAGS_ppc = "-prebind";
 				PREBINDING = NO;
@@ -1422,6 +1363,7 @@
 		E69E22320854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_VERSION = 1.0a3;
 				ARCHS = (
 					ppc,
 					i386,
@@ -1436,15 +1378,19 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
+				GCC_USE_GCC3_PFE_SUPPORT = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_SHADOW = YES;
+				GCC_WARN_SIGN_COMPARE = NO;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
 					./externals,
 				);
 				INFOPLIST_FILE = resources/Info.plist;
-				INSTALL_PATH = "$(USER_APPS_DIR)";
-				MACOSX_DEPLOYMENT_TARGET = 10.3;
-				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=1030";
+				INSTALL_PATH = "";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_4";
 				OTHER_LDFLAGS = "-lSystem";
 				OTHER_LDFLAGS_ppc = "-prebind";
 				PREBINDING = NO;
@@ -1538,15 +1484,6 @@
 			buildConfigurations = (
 				E69E22290854FB100055BCF5 /* Debug */,
 				E69E222A0854FB100055BCF5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		E69E222C0854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Update plist" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E69E222D0854FB100055BCF5 /* Debug */,
-				E69E222E0854FB100055BCF5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

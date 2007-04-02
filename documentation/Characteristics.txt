@@ -3,21 +3,23 @@ Telnet characteristics for various codebases:
 MUSH
 ====
 
-Rhost <need versions>:
+RhostMUSH version 3.2.4RL(A) patchlevel 18-32U #20 [03/09/2006]:
   no telnet option negotiation
-  think version() ==> RhostMUSH version 3.2.4RL(A) patchlevel 18-32U #20 [03/09/2006]
+  supports basically nothing
 
-TinyMUX 2.4.3.32:
+MUX 2.4.3.32 #1 [2006-OCT-20]:
   server asks for telnet options: WILL EOR, DO EOR, DO SGA, DO NAWS
-  think version() ==> MUX 2.4.3.32 #1 [2006-OCT-20]
 
 TinyMUSH 3.(?):
   no telnet option negotiation
 
-PennMUSH 1.8.1:
+PennMUSH 1.7.*:
+  supports IAC NOP keepalives wrong? (see bugreport forum for Atlantis)
+
+PennMUSH 1.8.1 (need version):
+PennMUSH version 1.8.3 patchlevel 1 [03/11/2007]:
   server asks for telnet options: DO LINEMODE, DO NAWS, DO TERMINAL-TYPE
 
 LambdaMOO 1.8.3:
   no telnet option negotiation
   possibly supports MCP?
-
