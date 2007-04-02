@@ -89,10 +89,10 @@
 {
   if (![self isConnected])
     return;
-  
   close (socketfd);
   socketfd = -1;
-  [self setStatusClosedByClient];    
+
+  [self setStatusClosedByClient];
 }
 
 - (BOOL) isClosed
@@ -111,7 +111,7 @@
 }
 
 - (void) open
-{  
+{
   if ([self isConnected] || [self isConnecting])
     return;
   

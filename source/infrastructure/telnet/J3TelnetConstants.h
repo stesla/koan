@@ -37,7 +37,7 @@ enum J3TelnetOptions
   
   // MUD Client Compression Protocol
   // The MCCP extension is defined at <http://mccp.afkmud.com/protocol.html>.
-  J3TelnetMCCP1 = 85, //
+  J3TelnetMCCP1 = 85,
   J3TelnetMCCP2 = 86,
   
   // MUD eXtension Protocol and MUD Sound Protocol
