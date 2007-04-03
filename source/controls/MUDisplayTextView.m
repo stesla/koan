@@ -77,7 +77,7 @@
   
   NSRange attributeRange = NSMakeRange (visibleCharacterRange.location, 0);
   
-  while (NSMaxRange (attributeRange) < NSMaxRange (visibleCharRange))
+  while (NSMaxRange (attributeRange) < NSMaxRange (visibleCharacterRange))
   {
     NSString *linkObject = [[self textStorage] attribute: NSLinkAttributeName
                                                  atIndex: NSMaxRange (attributeRange)
