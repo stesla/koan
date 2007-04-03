@@ -38,26 +38,19 @@
 			remoteGlobalIDString = 7E87751809AD558700A883BC;
 			remoteInfo = "Unit Tests";
 		};
-		7E4AFB510BA7CDB10050B5AE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7E4AFB450BA7CDB10050B5AE /* Koan.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7E87752109AD55A900A883BC;
-			remoteInfo = "test-stub";
-		};
-		7E4AFB530BA7CDB90050B5AE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7E4AFB450BA7CDB10050B5AE /* Koan.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7E87752009AD55A900A883BC;
-			remoteInfo = "test-stub";
-		};
 		7E4AFB670BA7CE440050B5AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7E4AFB450BA7CDB10050B5AE /* Koan.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = E6967A18078F5C7A0033A4C8;
 			remoteInfo = "Unpack Frameworks";
+		};
+		7ED3978E0BC2E22B0062F292 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D57630D048677EA00EA77CD /* KoanLogImporter */;
+			remoteInfo = KoanLogImporter;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -166,7 +159,6 @@
 			children = (
 				7E4AFB4E0BA7CDB10050B5AE /* Koan.app */,
 				7E4AFB500BA7CDB10050B5AE /* Unit Tests.octest */,
-				7E4AFB520BA7CDB10050B5AE /* test-stub */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -206,8 +198,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				7E4AFB540BA7CDB90050B5AE /* PBXTargetDependency */,
 				7E4AFB680BA7CE440050B5AE /* PBXTargetDependency */,
+				7ED3978F0BC2E22B0062F292 /* PBXTargetDependency */,
 			);
 			name = "Unit Tests";
 			productName = "Unit Tests";
@@ -269,13 +261,6 @@
 			fileType = wrapper.cfbundle;
 			path = "Unit Tests.octest";
 			remoteRef = 7E4AFB4F0BA7CDB10050B5AE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7E4AFB520BA7CDB10050B5AE /* test-stub */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "test-stub";
-			remoteRef = 7E4AFB510BA7CDB10050B5AE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -349,15 +334,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7E4AFB540BA7CDB90050B5AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "test-stub";
-			targetProxy = 7E4AFB530BA7CDB90050B5AE /* PBXContainerItemProxy */;
-		};
 		7E4AFB680BA7CE440050B5AE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Unpack Frameworks";
 			targetProxy = 7E4AFB670BA7CE440050B5AE /* PBXContainerItemProxy */;
+		};
+		7ED3978F0BC2E22B0062F292 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8D57630D048677EA00EA77CD /* KoanLogImporter */;
+			targetProxy = 7ED3978E0BC2E22B0062F292 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -396,7 +381,7 @@
 				PRODUCT_NAME = KoanLogImporter;
 				SYMROOT = build;
 				WRAPPER_EXTENSION = mdimporter;
-				ZERO_LINK = YES;
+				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
@@ -416,6 +401,7 @@
 				PRODUCT_NAME = KoanLogImporter;
 				SYMROOT = build;
 				WRAPPER_EXTENSION = mdimporter;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -463,7 +449,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Unit Tests";
-				TEST_HOST = "$(PROJECT_DIR)/../build/$(CONFIGURATION)/test-stub";
+				TEST_HOST = "";
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
@@ -491,7 +477,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = "Unit Tests";
-				TEST_HOST = "$(PROJECT_DIR)/../build/$(CONFIGURATION)/test-stub";
+				TEST_HOST = "";
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
 			};
