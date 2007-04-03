@@ -1,327 +1,220 @@
-/* =============================================================================
-  FILE: 		UKPrefsPanel.h
-  
-  AUTHORS: 	M. Uli Kusterer (UK), (c) Copyright 2003, all rights reserved.
-  
-  DIRECTIONS:
-  	UKPrefsPanel is ridiculously easy to use:  Create a tabless NSTabView,
-  	where the name of each tab is the name for the toolbar item, and the
-  	identifier of each tab is the identifier to be used for the toolbar
-  	item to represent it. Then create image files with the identifier as
-  	their names to be used as icons in the toolbar.
-  
-  	Finally, drag UKPrefsPanel.h into the NIB with the NSTabView,
-  	instantiate a UKPrefsPanel and connect its tabView outlet to your
-  	NSTabView. When you open the window, the UKPrefsPanel will
-  	automatically add a toolbar to the window with all tabs represented by
-  	a toolbar item, and clicking an item will switch between the tab view's
-  	items.
-
-  
-  REVISIONS:
-  	2003-08-13	UK	Added auto-save, fixed bug with empty window titles.
-  	2003-07-22  UK  Added Panther stuff, documented.
-  	2003-06-30  UK  Created.
-   ========================================================================== */
-
-/* -----------------------------------------------------------------------------
-  Headers:
-   -------------------------------------------------------------------------- */
+//
+// UKPrefsPanel.h
+//
+// Copyright (c) 2003-2005 M. Uli Kusterer. All rights reserved.
+//
+// License:
+//
+//   You may redistribute, modify, use in commercial products free of charge,
+//   however distributing modified copies requires that you clearly mark them
+//   as having been modified by you, while maintaining the original markings
+//   and copyrights. I don't like getting bug reports about code I wasn't
+//   involved in.
+//
+//   I'd also appreciate if you gave credit in your app's about screen or a
+//   similar place. A simple "Thanks to M. Uli Kusterer" is quite sufficient.
+//   Also, I rarely turn down any postcards, gifts, complementary copies of
+//   applications etc.
+//
+// Modified version by Tyler Berry.
+// Copyright (c) 2007 3James Software
+//
 
 #import "UKPrefsPanel.h"
 
+@interface UKPrefsPanel (Private)
+
+- (IBAction) changePanes: (id) sender;
+- (void) mapTabsToToolbar;
+
+@end
+
+#pragma mark -
 
 @implementation UKPrefsPanel
 
-/* -----------------------------------------------------------------------------
-  Constructor:
-   -------------------------------------------------------------------------- */
-
--(id) init
+- (id) init
 {
   if (![super init])
     return nil;
+  
   tabView = nil;
   itemsList = [[NSMutableDictionary alloc] init];
-  baseWindowName = [@"" retain];
-  autosaveName = [@"com.ulikusterer" retain];
+  baseWindowName = [@"" copy];
+  autosaveName = [@"com.ulikusterer" copy];
+  
   return self;
 }
 
-
-/* -----------------------------------------------------------------------------
-  Destructor:
-   -------------------------------------------------------------------------- */
-
--(void)  dealloc
+- (void) dealloc
 {
   [itemsList release];
   [baseWindowName release];
   [autosaveName release];
-    [super dealloc];
+  [super dealloc];
 }
 
-
-/* -----------------------------------------------------------------------------
-  awakeFromNib:
-  	This object and all others in the NIB have been created and hooked up.
-  	Fetch the window name so we can modify it to indicate the current
-  	page, and add our toolbar to the window.
-  	
-  	This method is the great obstacle to making UKPrefsPanel an NSTabView
-  	subclass. When the tab view's awakeFromNib method is called, the
-  	individual tabs aren't set up yet, meaning mapTabsToToolbar gives us an
-  	empty toolbar. ... bummer.
-  	
-  	If anybody knows how to fix this, you're welcome to tell me.
-   -------------------------------------------------------------------------- */
-
--(void)  awakeFromNib
+- (void) awakeFromNib
 {
-  NSString*		key;
-  int				index = 0;
-  NSString*		wndTitle = nil;
-  
-  // Generate a string containing the window's title so we can display the original window title plus the selected pane:
-  wndTitle = [[tabView window] title];
-  if( [wndTitle length] > 0 )
+  NSString *windowTitle = [[tabView window] title];
+  if ([windowTitle length] > 0)
   {
   	[baseWindowName release];
-  	baseWindowName = [[NSString stringWithFormat:  @"%@ : ", wndTitle] retain];
+  	baseWindowName = [[NSString stringWithFormat: @"%@ : ", windowTitle] retain];
   }
   
-  // Make sure our autosave-name is based on the one of our prefs window:
-  [self setAutosaveName:  [[tabView window] frameAutosaveName]];
+  [self setAutosaveName: [[tabView window] frameAutosaveName]];
   
-  // Select the preferences page the user last had selected when this window was opened:
-  key = [NSString stringWithFormat:  @"%@.prefspanel.recentpage", autosaveName];
-  index = [[NSUserDefaults standardUserDefaults] integerForKey:  key];
-  [tabView selectTabViewItemAtIndex:  index];
+  NSString *key = [NSString stringWithFormat: @"%@.prefspanel.recentpage", autosaveName];
+  int tabIndex = [[NSUserDefaults standardUserDefaults] integerForKey: key];
+  [tabView selectTabViewItemAtIndex: tabIndex];
   
-  // Actually hook up our toolbar and the tabs:
   [self mapTabsToToolbar];
 }
 
+#pragma mark -
+#pragma mark Accessors
 
-/* -----------------------------------------------------------------------------
-  mapTabsToToolbar:
-  	Create a toolbar based on our tab control.
-  	
-  	Tab title		-   Name for toolbar item.
-  	Tab identifier  -	Image file name and toolbar item identifier.
-   -------------------------------------------------------------------------- */
-
--(void) mapTabsToToolbar
-{
-    // Create a new toolbar instance, and attach it to our document window
-    NSToolbar  	*toolbar =[[tabView window] toolbar];
-  int				itemCount = 0,
-  				x = 0;
-  NSTabViewItem	*currPage = nil;
-  
-  if( toolbar == nil )   // No toolbar yet? Create one!
-  	toolbar = [[[NSToolbar alloc] initWithIdentifier:  [NSString stringWithFormat:  @"%@.prefspanel.toolbar", autosaveName]] autorelease];
-  
-    // Set up toolbar properties:  Allow customization, give a default display mode, and remember state in user defaults
-    [toolbar setAllowsUserCustomization:  YES];
-    [toolbar setAutosavesConfiguration:  YES];
-    [toolbar setDisplayMode:  NSToolbarDisplayModeIconAndLabel];
-  
-  // Set up item list based on Tab View:
-  itemCount = [tabView numberOfTabViewItems];
-  
-  [itemsList removeAllObjects];	// In case we already had a toolbar.
-  
-  for( x = 0; x < itemCount; x++ )
-  {
-  	NSTabViewItem*		theItem = [tabView tabViewItemAtIndex: x];
-  	NSString*			theIdentifier = [theItem identifier];
-  	NSString*			theLabel = [theItem label];
-  	
-  	[itemsList setObject: theLabel forKey: theIdentifier];
-  }
-    
-    // We are the delegate
-    [toolbar setDelegate:  self];
-    
-    // Attach the toolbar to the document window
-    [[tabView window] setToolbar:  toolbar];
-  
-  // Set up window title:
-  currPage = [tabView selectedTabViewItem];
-  if( currPage == nil )
-  	currPage = [tabView tabViewItemAtIndex: 0];
-  [[tabView window] setTitle:  [baseWindowName stringByAppendingString:  [currPage label]]];
-  
-  #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
-  if( [toolbar respondsToSelector:  @selector (setSelectedItemIdentifier:)] )
-  	[toolbar setSelectedItemIdentifier:  [currPage identifier]];
-  #endif
-}
-
-
-/* -----------------------------------------------------------------------------
-  orderFrontPrefsPanel:
-  	IBAction to assign to "Preferences..." menu item.
-   -------------------------------------------------------------------------- */
-
--(IBAction)  	orderFrontPrefsPanel:  (id) sender
-{
-  [[tabView window] makeKeyAndOrderFront: sender];
-}
-
-
-/* -----------------------------------------------------------------------------
-  setTabView:
-  	Accessor for specifying the tab view to query.
-   -------------------------------------------------------------------------- */
-
--(void)  		setTabView:  (NSTabView*) tv
-{
-  tabView = tv;
-}
-
-
--(NSTabView*)   tabView
+- (NSTabView *) tabView
 {
   return tabView;
 }
 
-
-/* -----------------------------------------------------------------------------
-  setAutosaveName:
-  	Name used for saving state of prefs window.
-   -------------------------------------------------------------------------- */
-
--(void)  		setAutosaveName:  (NSString*) name
+- (void) setTabView: (NSTabView *) view
 {
-  [name retain];
-  [autosaveName release];
-  autosaveName = name;
+  tabView = view;
 }
 
-
--(NSString*)  autosaveName
+- (NSString *) autosaveName
 {
   return autosaveName;
 }
 
-
-/* -----------------------------------------------------------------------------
-  toolbar: itemForItemIdentifier: willBeInsertedIntoToolbar:
-  	Create an item with the proper image and name based on our list
-  	of tabs for the specified identifier.
-   -------------------------------------------------------------------------- */
-
--(NSToolbarItem *) toolbar:  (NSToolbar *) toolbar itemForItemIdentifier:  (NSString *) itemIdent willBeInsertedIntoToolbar: (BOOL) willBeInserted
+- (void) setAutosaveName: (NSString *) name
 {
-    // Required delegate method:   Given an item identifier, this method returns an item
-    // The toolbar will use this method to obtain toolbar items that can be displayed in the customization sheet, or in the toolbar itself
-    NSToolbarItem   *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:  itemIdent] autorelease];
-    NSString*  	itemLabel;
-  
-    if( (itemLabel = [itemsList objectForKey: itemIdent]) != nil )
-  {
-  	// Set the text label to be displayed in the toolbar and customization palette
-  	[toolbarItem setLabel:  itemLabel];
-  	[toolbarItem setPaletteLabel:  itemLabel];
-  	[toolbarItem setTag: [tabView indexOfTabViewItemWithIdentifier: itemIdent]];
-  	
-  	// Set up a reasonable tooltip, and image   Note, these aren't localized, but you will likely want to localize many of the item's properties
-  	[toolbarItem setToolTip:  itemLabel];
-  	[toolbarItem setImage:  [NSImage imageNamed: itemIdent]];
-  	
-  	// Tell the item what message to send when it is clicked
-  	[toolbarItem setTarget:  self];
-  	[toolbarItem setAction:  @selector (changePanes:)];
-    }
-  else
-  {
-  	// itemIdent refered to a toolbar item that is not provide or supported by us or cocoa
-  	// Returning nil will inform the toolbar this kind of item is not supported
-  	toolbarItem = nil;
-    }
-  
-    return toolbarItem;
+  if (autosaveName == name)
+    return;
+  [autosaveName release];
+  autosaveName = [name retain];
 }
 
+#pragma mark -
+#pragma mark Actions
 
-/* -----------------------------------------------------------------------------
-  toolbarSelectableItemIdentifiers:
-  	Make sure all our custom items can be selected. NSToolbar will
-  	automagically select the appropriate item when it is clicked.
-   -------------------------------------------------------------------------- */
+- (IBAction) orderFrontPrefsPanel: (id) sender
+{
+  [[tabView window] makeKeyAndOrderFront: sender];
+}
+
+#pragma mark -
+#pragma mark NSToolbar delegate
+
+- (NSToolbarItem *) toolbar: (NSToolbar *) toolbar
+      itemForItemIdentifier: (NSString *) itemIdentifier
+  willBeInsertedIntoToolbar: (BOOL) willBeInserted
+{
+  NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier: itemIdentifier] autorelease];
+  NSString *itemLabel = [itemsList objectForKey: itemIdentifier];
+  
+  if (itemLabel)
+  {
+  	[toolbarItem setLabel: itemLabel];
+  	[toolbarItem setPaletteLabel: itemLabel];
+  	[toolbarItem setTag: [tabView indexOfTabViewItemWithIdentifier: itemIdentifier]];
+  	
+  	[toolbarItem setToolTip: itemLabel];
+  	[toolbarItem setImage: [NSImage imageNamed: itemIdentifier]];
+  	
+  	[toolbarItem setTarget: self];
+  	[toolbarItem setAction: @selector (changePanes:)];
+  }
+  else
+  	toolbarItem = nil;
+  
+  return toolbarItem;
+}
 
 #if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
--(NSArray*) toolbarSelectableItemIdentifiers:  (NSToolbar*) toolbar
+- (NSArray *) toolbarSelectableItemIdentifiers: (NSToolbar *) toolbar
 {
   return [itemsList allKeys];
 }
 #endif
 
-
-/* -----------------------------------------------------------------------------
-  changePanes:
-  	Action for our custom toolbar items that causes the window title to
-  	reflect the current pane and the proper pane to be shown in response to
-  	a click.
-   -------------------------------------------------------------------------- */
-
--(IBAction)  changePanes:  (id) sender
+- (NSArray *) toolbarDefaultItemIdentifiers: (NSToolbar *) toolbar
 {
-  NSString*		key;
+  NSMutableArray *defaultItems = [NSMutableArray array];
   
-  [tabView selectTabViewItemAtIndex:  [sender tag]];
-  [[tabView window] setTitle:  [baseWindowName stringByAppendingString:  [sender label]]];
-  
-  key = [NSString stringWithFormat:  @"%@.prefspanel.recentpage", autosaveName];
-  [[NSUserDefaults standardUserDefaults] setInteger: [sender tag] forKey: key];
-}
-
-
-/* -----------------------------------------------------------------------------
-  toolbarDefaultItemIdentifiers:
-  	Return the identifiers for all toolbar items that will be shown by
-  	default.
-  	This is simply a list of all tab view items in order.
-   -------------------------------------------------------------------------- */
-
--(NSArray*) toolbarDefaultItemIdentifiers:  (NSToolbar *) toolbar
-{
-  int					itemCount = [tabView numberOfTabViewItems],
-  					x;
-  NSTabViewItem*		theItem = [tabView tabViewItemAtIndex: 0];
-  //NSMutableArray*	defaultItems = [NSMutableArray arrayWithObjects:  [theItem identifier], NSToolbarSeparatorItemIdentifier, nil];
-  NSMutableArray*	defaultItems = [NSMutableArray array];
-  
-  for( x = 0; x < itemCount; x++ )
+  for (unsigned i = 0; i < (unsigned) [tabView numberOfTabViewItems]; i++)
   {
-  	theItem = [tabView tabViewItemAtIndex: x];
-  	
-  	[defaultItems addObject:  [theItem identifier]];
+  	[defaultItems addObject: [[tabView tabViewItemAtIndex: i] identifier]];
   }
   
   return defaultItems;
 }
 
-
-/* -----------------------------------------------------------------------------
-  toolbarAllowedItemIdentifiers:
-  	Return the identifiers for all toolbar items that *can* be put in this
-  	toolbar. We allow a couple more items (flexible space, separator lines
-  	etc.) in addition to our custom items.
-   -------------------------------------------------------------------------- */
-
--(NSArray*) toolbarAllowedItemIdentifiers:  (NSToolbar *) toolbar
+- (NSArray*) toolbarAllowedItemIdentifiers: (NSToolbar *) toolbar
 {
-    NSMutableArray*  	allowedItems = [[itemsList allKeys] mutableCopy];
+  NSMutableArray *allowedItems = [[itemsList allKeys] mutableCopy];
   
-  [allowedItems addObjectsFromArray:  [NSArray arrayWithObjects:  NSToolbarSeparatorItemIdentifier,
-  			NSToolbarSpaceItemIdentifier, NSToolbarFlexibleSpaceItemIdentifier,
-  			NSToolbarCustomizeToolbarItemIdentifier, nil] ];
+  [allowedItems addObjectsFromArray: [NSArray arrayWithObjects:
+    NSToolbarSeparatorItemIdentifier,
+    NSToolbarSpaceItemIdentifier,
+    NSToolbarFlexibleSpaceItemIdentifier,
+    NSToolbarCustomizeToolbarItemIdentifier,
+    nil]];
   
   return allowedItems;
 }
 
+@end
+
+#pragma mark -
+
+@implementation UKPrefsPanel (Private)
+
+- (IBAction) changePanes: (id) sender
+{
+  [tabView selectTabViewItemAtIndex: [sender tag]];
+  [[tabView window] setTitle: [baseWindowName stringByAppendingString: [sender label]]];
+  
+  NSString *key = [NSString stringWithFormat:  @"%@.prefspanel.recentpage", autosaveName];
+  [[NSUserDefaults standardUserDefaults] setInteger: [sender tag] forKey: key];
+}
+
+- (void) mapTabsToToolbar
+{
+  NSToolbar *toolbar = [[tabView window] toolbar];
+  
+  if (!toolbar)
+  	toolbar = [[[NSToolbar alloc] initWithIdentifier: [NSString stringWithFormat: @"%@.prefspanel.toolbar", autosaveName]] autorelease];
+  
+  [toolbar setAllowsUserCustomization: YES];
+  [toolbar setAutosavesConfiguration: YES];
+  [toolbar setDisplayMode: NSToolbarDisplayModeIconAndLabel];
+  
+  [itemsList removeAllObjects];
+  
+  for (unsigned i = 0; i < (unsigned) [tabView numberOfTabViewItems]; i++)
+  {
+  	[itemsList setObject: [[tabView tabViewItemAtIndex: i] label]
+                  forKey: [[tabView tabViewItemAtIndex: i] identifier]];
+  }
+  
+  [toolbar setDelegate: self];
+  
+  [[tabView window] setToolbar: toolbar];
+  
+  NSTabViewItem	*currentTab = [tabView selectedTabViewItem];
+  if (currentTab == nil)
+  	currentTab = [tabView tabViewItemAtIndex: 0];
+  
+  [[tabView window] setTitle: [baseWindowName stringByAppendingString: [currentTab label]]];
+  
+#if MAC_OS_X_VERSION_MAX_ALLOWED >= MAC_OS_X_VERSION_10_3
+  if ([toolbar respondsToSelector: @selector (setSelectedItemIdentifier:)])
+  	[toolbar setSelectedItemIdentifier: [currentTab identifier]];
+#endif
+}
 
 @end
