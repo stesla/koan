@@ -64,20 +64,6 @@ static J3ConnectionFactory *defaultFactory = nil;
     return [J3Socket socketWithHostname: hostname port: port];
 }
 
-- (J3TelnetConnection *) telnetWithHostname: (NSString *) hostname
-                                       port: (int) port
-                                   delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
-{
-  J3TelnetEngine *engine = [J3TelnetEngine engine];
-  J3ReadBuffer *buffer = [J3ReadBuffer buffer];
-
-  [buffer setDelegate: delegate];
-  [engine setInputBuffer: buffer];
-  J3TelnetConnection *result = [[[J3TelnetConnection alloc] initWithFactory: self hostname: hostname port: port engine: engine delegate: delegate] autorelease];
-  [engine setDelegate: result];
-  return result;
-}
-
 - (J3ProxySettings *) proxySettings
 {
   return proxySettings;

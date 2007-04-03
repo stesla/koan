@@ -27,10 +27,24 @@
 
 @implementation J3TelnetConnection
 
++ (id) telnetWithFactory: (J3ConnectionFactory *) factory
+                hostname: (NSString *) hostname
+                    port: (int) port
+                delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+{
+  return [[[self alloc] initWithFactory: factory hostname: hostname port: port delegate: delegate] autorelease];
+}
+
++ (id) telnetWithHostname: (NSString *) hostname
+                     port: (int) port
+                 delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+{
+  return [self telnetWithFactory: [J3ConnectionFactory defaultFactory] hostname: hostname port: port delegate: delegate];
+}
+
 - (id) initWithFactory: (J3ConnectionFactory *) factory
               hostname: (NSString *) newHostname
                   port: (int) newPort
-                engine: (J3TelnetEngine *) newEngine
               delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
 {
   if (![super init])
@@ -38,8 +52,12 @@
   [self at: &connectionFactory put: factory];
   [self at: &hostname put: newHostname];
   port = newPort;
-  [self at: &engine put: newEngine];
+  [self at: &engine put: [J3TelnetEngine engine]];
   [self setDelegate: newDelegate];
+  [self at: &inputBuffer put: [J3ReadBuffer buffer]];
+  [inputBuffer setDelegate: newDelegate];
+  [engine setInputBuffer: inputBuffer];
+  [engine setDelegate: self];
   [self at: &outputBuffer put: [J3WriteBuffer buffer]];
   pollTimer = nil;
   return self;
@@ -52,9 +70,10 @@
   [self close];
   [self cleanUpPollTimer];
   
-  [engine release];
-  [outputBuffer release];
   [socket release];
+  [outputBuffer release];
+  [inputBuffer release];
+  [engine release];
   [super dealloc];
 }
 

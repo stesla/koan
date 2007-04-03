@@ -204,9 +204,7 @@
 
 - (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
-  return [[J3ConnectionFactory defaultFactory] telnetWithHostname: [self hostname]
-                                                             port: [[self port] intValue]
-                                                         delegate: delegate];
+  return [J3TelnetConnection telnetWithHostname: [self hostname] port: [[self port] intValue] delegate: delegate];
 }
 
 - (NSString *) uniqueIdentifier

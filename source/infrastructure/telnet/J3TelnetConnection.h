@@ -23,17 +23,25 @@
   NSString *hostname;
   int port;
   J3Socket *socket;
+  J3ReadBuffer *inputBuffer;
   J3WriteBuffer *outputBuffer;
   J3TelnetEngine *engine;
   NSTimer *pollTimer;
   NSObject <J3TelnetConnectionDelegate> *delegate;
 }
 
++ (id) telnetWithFactory: (J3ConnectionFactory *) factory
+                hostname: (NSString *) hostname
+                    port: (int) port
+                delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
++ (id) telnetWithHostname: (NSString *) hostname
+                     port: (int) port
+                 delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
+
 - (id) initWithFactory: (J3ConnectionFactory *) factory
               hostname: (NSString *) hostname
                   port: (int) port
-                engine: (J3TelnetEngine *) newParser
-              delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
+              delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
 
 - (void) close;
 - (BOOL) isConnected;
