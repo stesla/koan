@@ -124,13 +124,10 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 - (void) removeAllProfilesForWorld: (MUWorld *) world
 {
-  NSArray *players = [world players];
-  int i, count = [players count];
-  
-  for (i = 0; i < count; i++)
+  for (unsigned i = 0; i < [[world players] count]; i++)
   {
     [self removeProfileForWorld: world
-                         player: [players objectAtIndex: i]];
+                         player: [[world players] objectAtIndex: i]];
   }
   
   [self removeProfileForWorld: world];

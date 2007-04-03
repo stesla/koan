@@ -141,13 +141,9 @@
 
 - (int) indexOfPlayer: (MUPlayer *) player
 {
-  unsigned i;
-  
-  for (i = 0; i < [players count]; i++)
+  for (unsigned i = 0; i < [players count]; i++)
   {
-  	MUPlayer *iteratedPlayer = [players objectAtIndex: i];
-  	
-  	if (player == iteratedPlayer)
+  	if (player == [players objectAtIndex: i])
   		return (int) i;
   }
   
@@ -190,9 +186,7 @@
 
 - (void) replacePlayer: (MUPlayer *) oldPlayer withPlayer: (MUPlayer *) newPlayer
 {
-  unsigned i;
-  
-  for (i = 0; i < [players count]; i++)
+  for (unsigned i = 0; i < [players count]; i++)
   {
   	MUPlayer *player = [players objectAtIndex: i];
   	

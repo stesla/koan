@@ -106,8 +106,8 @@
 
 - (void) parseData: (NSData *) data
 {
-  for (unsigned i = 0; i < [data length]; ++i)
-    [self parseByte: ((uint8_t *)[data bytes])[i]];
+  for (unsigned i = 0; i < [data length]; i++)
+    [self parseByte: ((uint8_t *) [data bytes])[i]];
 }
 
 - (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer

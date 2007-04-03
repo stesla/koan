@@ -824,29 +824,24 @@ enum MUProfilesEditingReturnValues
 - (void) updateProfilesForWorld: (MUWorld *) world
                       withWorld: (MUWorld *) newWorld
 {
-  MUProfile *profile = nil;
-  MUProfileRegistry *registry = [MUServices profileRegistry];
-  NSArray *players = [world players];
-  int i, count = [players count];
-  
-  for (i = 0; i < count; i++)
+  for (unsigned i = 0; i < [[world players] count]; i++)
   {
-    MUPlayer *player = [players objectAtIndex: i];
-    profile = [registry profileForWorld: world
-                                 player: player];
+    MUPlayer *player = [[world players] objectAtIndex: i];
+    MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world
+                                                                player: player];
     [profile retain];
-    [registry removeProfile: profile];
+    [[MUServices profileRegistry] removeProfile: profile];
     [profile setWorld: newWorld];
     [player setWorld: newWorld];
-    [registry profileForProfile: profile];
+    [[MUServices profileRegistry] profileForProfile: profile];
     [profile release];
   }
   
-  profile = [registry profileForWorld: world];
+  MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world];
   [profile retain];
-  [registry removeProfile: profile];
+  [[MUServices profileRegistry] removeProfile: profile];
   [profile setWorld: newWorld];
-  [registry profileForProfile: profile];
+  [[MUServices profileRegistry] profileForProfile: profile];
   [profile release];
 }
 
@@ -854,13 +849,12 @@ enum MUProfilesEditingReturnValues
                         player: (MUPlayer *) player
                     withPlayer: (MUPlayer *) newPlayer
 {
-  MUProfileRegistry *registry = [MUServices profileRegistry];
-  MUProfile *profile = [registry profileForWorld: world
-                                          player: player];
+  MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world
+                                                              player: player];
   [profile retain];
-  [registry removeProfile: profile];
+  [[MUServices profileRegistry] removeProfile: profile];
   [profile setPlayer: newPlayer];
-  [registry profileForProfile: profile];
+  [[MUServices profileRegistry] profileForProfile: profile];
   [profile release];
 }
 

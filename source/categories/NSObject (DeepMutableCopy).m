@@ -12,22 +12,22 @@
 
 - (id) deepMutableCopy
 {
-  return [(id) self deepMutableCopyWithZone: NSDefaultMallocZone()];
+  return [(id) self deepMutableCopyWithZone: NSDefaultMallocZone ()];
 }
 
 @end
+
+#pragma mark -
 
 @implementation NSArray (DeepMutableCopy)
 
 - (id) deepMutableCopyWithZone: (NSZone *) zone
 {
   NSMutableArray *mutableCopy = [[NSMutableArray allocWithZone: zone] initWithCapacity: [self count]];
-  int i, count = [self count];
-  id currentObject;
   
-  for (i = 0; i < count; i++)
+  for (unsigned i = 0; i < [self count]; i++)
   {
-    currentObject = [self objectAtIndex: i];
+    id currentObject = [self objectAtIndex: i];
     
     if ([currentObject respondsToSelector: @selector (deepMutableCopyWithZone:)])
     {
@@ -43,13 +43,15 @@
     }
     else
     {
-      [mutableCopy addObject: currentObject];
+      [mutableCopy addObject: [currentObject retain]];
     }
   }
   return mutableCopy;
 }
 
 @end
+
+#pragma mark -
 
 @implementation NSDictionary (DeepMutableCopy)
 

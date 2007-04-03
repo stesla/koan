@@ -13,32 +13,26 @@
 
 + (NSArray *) subclasses;
 {
-  NSMutableArray *subclasses;
-  struct objc_class *superClass;
-  Class *classes = NULL;
-  Class *current = NULL;
-  const Class thisClass = [self class];
-  int count, i;
+  NSMutableArray *subclasses = [NSMutableArray array];
   
-  subclasses = [NSMutableArray array];
-  
-  count = objc_getClassList (NULL, 0);
-  if (!count)
+  int classCount = objc_getClassList (NULL, 0);
+  if (classCount == 0)
     return subclasses;
 
-  classes = malloc (sizeof (Class) * count);
+  Class *classes = malloc (sizeof (Class) * classCount);
   NSAssert (classes != NULL, @"Memory allocation failed in [NSObject +subclasses]");
-  (void) objc_getClassList (classes, count);
+  
+  (void) objc_getClassList (classes, classCount);
   if (!classes)
     return subclasses;
   
-  current = classes;
-  for (i = 0; i < count; ++i, ++current)
+  Class *current = classes;
+  for (unsigned i = 0; i < (unsigned) classCount; i++, current++)
   {
-    superClass = *current;
+    struct objc_class *superClass = *current;
     while ((superClass = (superClass)->super_class))
     {
-      if (superClass == thisClass)
+      if (superClass == [self class])
       {
         [subclasses addObject: *current];
         break;
