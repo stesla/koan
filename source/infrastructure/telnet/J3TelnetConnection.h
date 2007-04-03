@@ -15,8 +15,9 @@
 
 @class J3ConnectionFactory;
 @protocol J3TelnetConnectionDelegate;
+@protocol J3TelnetEngineDelegate;
 
-@interface J3TelnetConnection : NSObject <J3SocketDelegate>
+@interface J3TelnetConnection : NSObject <J3SocketDelegate, J3TelnetEngineDelegate>
 {
   J3ConnectionFactory *connectionFactory;
   NSString *hostname;

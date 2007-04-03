@@ -10,10 +10,17 @@
 @protocol J3WriteBuffer;
 @class J3TelnetState;
 
+@protocol J3TelnetEngineDelegate
+
+- (void) bufferOutputByte: (uint8_t) byte;
+- (void) flushOutput;
+
+@end
+
 @interface J3TelnetEngine : NSObject
 {
+  NSObject <J3TelnetEngineDelegate> *delegate;
   NSObject <J3ReadBuffer> *inputBuffer;
-  NSObject <J3WriteBuffer> *outputBuffer;
   J3TelnetState *state;
 }
 
@@ -28,8 +35,8 @@
 - (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *)buffer;
 - (void) goAhead;
 - (void) parseData: (NSData *) data;
+- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
 - (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
-- (void) setOutputBuffer: (NSObject <J3WriteBuffer> *) buffer;
 - (void) wont: (uint8_t) byte;
 
 @end

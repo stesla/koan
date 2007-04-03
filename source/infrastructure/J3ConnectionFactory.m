@@ -73,8 +73,9 @@ static J3ConnectionFactory *defaultFactory = nil;
 
   [buffer setDelegate: delegate];
   [engine setInputBuffer: buffer];
-
-  return [[[J3TelnetConnection alloc] initWithFactory: self hostname: hostname port: port engine: engine delegate: delegate] autorelease];
+  J3TelnetConnection *result = [[[J3TelnetConnection alloc] initWithFactory: self hostname: hostname port: port engine: engine delegate: delegate] autorelease];
+  [engine setDelegate: result];
+  return result;
 }
 
 - (J3ProxySettings *) proxySettings

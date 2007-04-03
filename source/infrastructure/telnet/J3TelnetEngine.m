@@ -39,7 +39,7 @@
 
 - (void) bufferOutputByte: (uint8_t) byte
 {
-  [outputBuffer appendByte: byte];
+  [delegate bufferOutputByte: byte];
 }
 
 - (void) dont: (uint8_t) byte;
@@ -50,9 +50,9 @@
 
 - (void) goAhead;
 {
-  [outputBuffer appendByte: J3TelnetInterpretAsCommand];
-  [outputBuffer appendByte: J3TelnetGoAhead];
-  [outputBuffer flush];
+  [self bufferOutputByte: J3TelnetInterpretAsCommand];
+  [self bufferOutputByte: J3TelnetGoAhead];
+  [delegate flushOutput];
 }
 
 - (void) handleEndOfReceivedData
@@ -110,14 +110,14 @@
     [self parseByte: ((uint8_t *) [data bytes])[i]];
 }
 
+- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
+{
+  delegate = object;
+}
+
 - (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer
 {
   [self at: &inputBuffer put: buffer];
-}
-
-- (void) setOutputBuffer: (NSObject <J3WriteBuffer> *) buffer
-{
-  [self at: &outputBuffer put: buffer];
 }
 
 - (void) wont: (uint8_t) byte;
@@ -140,7 +140,7 @@
   [self bufferOutputByte: J3TelnetInterpretAsCommand];
   [self bufferOutputByte: command];
   [self bufferOutputByte: byte];
-  [outputBuffer flush];  
+  [delegate flushOutput];
 }
 
 @end

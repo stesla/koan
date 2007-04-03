@@ -41,7 +41,6 @@
   [self at: &engine put: newEngine];
   [self setDelegate: newDelegate];
   [self at: &outputBuffer put: [J3WriteBuffer buffer]];
-  [engine setOutputBuffer: outputBuffer]; 
   pollTimer = nil;
   return self;
 }
@@ -145,6 +144,19 @@
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosed: withError:)])
     [delegate telnetConnectionWasClosed: self withError: errorMessage];
+}
+
+#pragma mark -
+#pragma mark J3TelnetEngineDelegate
+
+- (void) bufferOutputByte: (uint8_t) byte
+{
+  [outputBuffer appendByte: byte];
+}
+
+- (void) flushOutput
+{
+  [outputBuffer flush];
 }
 
 @end
