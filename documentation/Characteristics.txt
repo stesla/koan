@@ -1,25 +1,80 @@
 Telnet characteristics for various codebases:
 
-MUSH
+LambdaMOO
+=========
+
+LambdaMOO 1.8.3:
+  error response to INFO
+  
+VERSION output:
+
+The MOO is currently running version 1.8.3 of the LambdaMOO server code.
+
+  no telnet option negotiation
+  possibly supports MCP?
+
+RhostMUSH
 ====
 
-RhostMUSH version 3.2.4RL(A) patchlevel 18-32U #20 [03/09/2006]:
-  no telnet option negotiation
-  supports basically nothing
+* RhostMUSH version 3.2.4RL(A) patchlevel 18-32U #20 [03/09/2006]:
+
+INFO output:
+
+### Begin INFO 1
+Name: Cajun Nights MUSH
+Uptime: Thu Feb  8 22:14:31 2007
+
+Connected: 15
+Size: 9819
+Version: RhostMUSH 3.2.4RL(A).p18-32U
+### End INFO
+
+no telnet option negotiation
+supports basically nothing
+
+* RhostMUSH version 3.9*:
+  according to Ashen-Shugar, supports Latin-1, and UCS4 is in the works. (UTF-8 encoded?)
+
+TinyMUX
+=======
+
+< TinyMUX 2.4.0.23:
+  no telnet option support, doesn't understand AYT, NOP, EC, etc.
+  <http://lists.tcp.com/pipermail/tinyfugue/2005-November/001730.html>
 
 MUX 2.4.3.32 #1 [2006-OCT-20]:
+
+INFO output:
+
+### Begin INFO 1
+Name: LMX
+Uptime: Sun Apr 01 13:17:56 2007
+Connected: 0
+Size: 35
+Version: MUX 2.4.3.32
+### End INFO
+
   server asks for telnet options: WILL EOR, DO EOR, DO SGA, DO NAWS
+
+TinyMUSH 3
+==========
 
 TinyMUSH 3.(?):
   no telnet option negotiation
 
-PennMUSH 1.7.*:
-  supports IAC NOP keepalives wrong? (see bugreport forum for Atlantis)
+PennMUSH
+========
+
+< PennMUSH 1.7.7-patch29:
+  doesn't understand AYT, NOP, EC, etc.
+  <http://www.pennmush.org/archives/pennmush-announce/2004/000093.html>
 
 PennMUSH 1.8.1 (need version):
 PennMUSH version 1.8.3 patchlevel 1 [03/11/2007]:
   server asks for telnet options: DO LINEMODE, DO NAWS, DO TERMINAL-TYPE
 
-LambdaMOO 1.8.3:
-  no telnet option negotiation
-  possibly supports MCP?
+ProtoMUCK
+=========
+
+ProtoMUCK (version needed):
+  no response to INFO or VERSION
