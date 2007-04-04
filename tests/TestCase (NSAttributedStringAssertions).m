@@ -1,7 +1,7 @@
 //
 // J3TestCase (NSAttributedStringAssertions).m
 //
-// Copyright (c) 2007 3James Software. All rights reserved.
+// Copyright (c) 2007 3James Software.
 //
 
 #import "TestCase (NSAttributedStringAssertions).h"

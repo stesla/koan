@@ -1,7 +1,7 @@
 //
 // MUServices.m
 //
-// Copyright (c) 2007 3James Software. All rights reserved.
+// Copyright (c) 2007 3James Software.
 //
 
 #import "MUServices.h"

@@ -1,7 +1,7 @@
 //
 // MUPlayer.h
 //
-// Copyright (c) 2007 3James Software. All rights reserved.
+// Copyright (c) 2007 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
