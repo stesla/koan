@@ -53,11 +53,10 @@
   [self at: &hostname put: newHostname];
   port = newPort;
   [self at: &engine put: [J3TelnetEngine engine]];
+  [engine setDelegate: self];
   [self setDelegate: newDelegate];
   [self at: &inputBuffer put: [J3ReadBuffer buffer]];
   [inputBuffer setDelegate: newDelegate];
-  [engine setInputBuffer: inputBuffer];
-  [engine setDelegate: self];
   [self at: &outputBuffer put: [J3WriteBuffer buffer]];
   pollTimer = nil;
   return self;
@@ -84,7 +83,7 @@
 
 - (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
 {
-  return [engine hasInputBuffer: buffer];
+  return inputBuffer == buffer;
 }
 
 - (BOOL) isConnected
@@ -168,6 +167,11 @@
 #pragma mark -
 #pragma mark J3TelnetEngineDelegate
 
+- (void) bufferInputByte: (uint8_t) byte;
+{
+  [inputBuffer appendByte: byte];
+}
+
 - (void) bufferOutputByte: (uint8_t) byte
 {
   [outputBuffer appendByte: byte];
@@ -219,7 +223,7 @@
   if ([socket hasDataAvailable])
     [engine parseData: [socket readUpToLength: TELNET_READ_BUFFER_SIZE]];
   else
-    [engine handleEndOfReceivedData];
+    [inputBuffer interpretBufferAsString];
 }
 
 - (void) schedulePollTimer

@@ -28,18 +28,24 @@
 {
   if (![super init])
     return nil;
-  state = [[J3TelnetTextState state] retain];
+  [self at: &state put: [J3TelnetTextState state]];
   return self;
 }
 
 - (void) bufferInputByte: (uint8_t) byte
 {
-  [inputBuffer appendByte: byte];
+  [delegate bufferInputByte: byte];
 }
 
 - (void) bufferOutputByte: (uint8_t) byte
 {
   [delegate bufferOutputByte: byte];
+}
+
+- (void) dealloc
+{
+  [state release];
+  [super dealloc];
 }
 
 - (void) dont: (uint8_t) byte;
@@ -53,16 +59,6 @@
   [self bufferOutputByte: J3TelnetInterpretAsCommand];
   [self bufferOutputByte: J3TelnetGoAhead];
   [delegate flushOutput];
-}
-
-- (void) handleEndOfReceivedData
-{
-  [inputBuffer interpretBufferAsString];
-}
-
-- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *)buffer;
-{
-  return buffer == inputBuffer;
 }
 
 - (NSString *) optionNameForByte: (uint8_t) byte
@@ -113,11 +109,6 @@
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
 {
   delegate = object;
-}
-
-- (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer
-{
-  [self at: &inputBuffer put: buffer];
 }
 
 - (void) wont: (uint8_t) byte;

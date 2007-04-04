@@ -12,6 +12,7 @@
 
 @protocol J3TelnetEngineDelegate
 
+- (void) bufferInputByte: (uint8_t) byte;
 - (void) bufferOutputByte: (uint8_t) byte;
 - (void) flushOutput;
 
@@ -20,7 +21,6 @@
 @interface J3TelnetEngine : NSObject
 {
   NSObject <J3TelnetEngineDelegate> *delegate;
-  NSObject <J3ReadBuffer> *inputBuffer;
   J3TelnetState *state;
 }
 
@@ -31,12 +31,9 @@
 - (void) bufferInputByte: (uint8_t) byte;
 - (void) bufferOutputByte: (uint8_t) byte;
 - (void) dont: (uint8_t) byte;
-- (void) handleEndOfReceivedData;
-- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *)buffer;
 - (void) goAhead;
 - (void) parseData: (NSData *) data;
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
-- (void) setInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
 - (void) wont: (uint8_t) byte;
 
 @end
