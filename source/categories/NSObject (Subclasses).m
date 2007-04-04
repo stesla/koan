@@ -1,7 +1,7 @@
 //
 // NSObject (Subclasses).m
 //
-// Copyright (c) 2005 3James Software
+// Copyright (c) 2007 3James Software. All rights reserved.
 //
 // This file is in the public domain.
 //

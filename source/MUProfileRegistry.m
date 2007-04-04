@@ -1,7 +1,7 @@
 //
 // MUProfileRegistry.m
 //
-// Copyright (c) 2005, 2006 3James Software
+// Copyright (c) 2007 3James Software. All rights reserved.
 //
 
 #import "MUProfileRegistry.h"

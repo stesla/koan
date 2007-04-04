@@ -1,7 +1,7 @@
 //
 // MUProxySettingsController.m
 //
-// Copyright (c) 2006, 2007 3James Software
+// Copyright (c) 2007 3James Software. All rights reserved.
 //
 
 #import "MUProxySettingsController.h"

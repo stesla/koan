@@ -1,7 +1,7 @@
 //
 // MUTextView.m
 //
-// Copyright (c) 2005, 2007 3James Software
+// Copyright (c) 2007 3James Software. All rights reserved.
 //
 
 #import "MUTextView.h"

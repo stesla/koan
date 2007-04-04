@@ -9,7 +9,7 @@
 // my name (Nathan Day) within the source code, especially if you make your
 // source code public with my code in it."
 //
-// Copyright (c) 2007 3James Software
+// Copyright (c) 2007 3James Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

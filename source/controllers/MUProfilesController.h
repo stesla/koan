@@ -1,7 +1,7 @@
 //
 // MUProfilesController.h
 //
-// Copyright (c) 2004, 2005 3James Software
+// Copyright (c) 2007 3James Software. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

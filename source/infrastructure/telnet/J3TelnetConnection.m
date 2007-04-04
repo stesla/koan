@@ -1,7 +1,7 @@
 //
 // J3TelnetConnection.m
 //
-// Copyright (c) 2005, 2006, 2007 3James Software
+// Copyright (c) 2007 3James Software. All rights reserved.
 //
 
 #import "J3SocketFactory.h"
