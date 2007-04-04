@@ -4,7 +4,7 @@
 // Copyright (c) 2005, 2006, 2007 3James Software
 //
 
-#import "J3ConnectionFactory.h"
+#import "J3SocketFactory.h"
 #import "J3Socket.h"
 #import "J3TelnetConnection.h"
 
@@ -27,29 +27,29 @@
 
 @implementation J3TelnetConnection
 
-+ (id) telnetWithFactory: (J3ConnectionFactory *) factory
-                hostname: (NSString *) hostname
-                    port: (int) port
-                delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
++ (id) telnetWithSocketFactory: (J3SocketFactory *) factory
+                      hostname: (NSString *) hostname
+                          port: (int) port
+                      delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
-  return [[[self alloc] initWithFactory: factory hostname: hostname port: port delegate: delegate] autorelease];
+  return [[[self alloc] initWithSocketFactory: factory hostname: hostname port: port delegate: delegate] autorelease];
 }
 
 + (id) telnetWithHostname: (NSString *) hostname
                      port: (int) port
                  delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
-  return [self telnetWithFactory: [J3ConnectionFactory defaultFactory] hostname: hostname port: port delegate: delegate];
+  return [self telnetWithSocketFactory: [J3SocketFactory defaultFactory] hostname: hostname port: port delegate: delegate];
 }
 
-- (id) initWithFactory: (J3ConnectionFactory *) factory
-              hostname: (NSString *) newHostname
-                  port: (int) newPort
-              delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
+- (id) initWithSocketFactory: (J3SocketFactory *) factory
+                    hostname: (NSString *) newHostname
+                        port: (int) newPort
+                    delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
 {
   if (![super init])
     return nil;
-  [self at: &connectionFactory put: factory];
+  [self at: &socketFactory put: factory];
   [self at: &hostname put: newHostname];
   port = newPort;
   [self at: &engine put: [J3TelnetEngine engine]];
@@ -197,7 +197,7 @@
 
 - (void) initializeSocket
 {
-  [self at: &socket put: [connectionFactory makeSocketWithHostname: hostname port: port]];
+  [self at: &socket put: [socketFactory makeSocketWithHostname: hostname port: port]];
   [socket setDelegate: self];
   [outputBuffer setByteDestination: socket];
 }

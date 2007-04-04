@@ -4,7 +4,7 @@
 // Copyright (c) 2004, 2005, 2006, 2007 3James Software
 //
 
-#import "J3ConnectionFactory.h"
+#import "J3SocketFactory.h"
 #import "MUWorld.h"
 #import "MUConstants.h"
 #import "MUPlayer.h"

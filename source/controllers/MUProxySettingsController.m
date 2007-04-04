@@ -5,7 +5,7 @@
 //
 
 #import "MUProxySettingsController.h"
-#import "J3ConnectionFactory.h"
+#import "J3SocketFactory.h"
 #import "J3PortFormatter.h"
 #import "J3ProxySettings.h"
 
@@ -25,7 +25,7 @@
 
 - (J3ProxySettings *) proxySettings;
 {
-  return [[J3ConnectionFactory defaultFactory] proxySettings];
+  return [[J3SocketFactory defaultFactory] proxySettings];
 }
 
 @end

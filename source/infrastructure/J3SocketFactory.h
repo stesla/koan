@@ -1,5 +1,5 @@
 //
-// J3ConnectionFactory.h
+// J3SocketFactory.h
 //
 // Copyright (c) 2006, 2007 3James Software
 //
@@ -10,13 +10,13 @@
 
 @class J3ProxySettings;
 
-@interface J3ConnectionFactory : NSObject
+@interface J3SocketFactory : NSObject
 {
   BOOL useProxy;
   J3ProxySettings *proxySettings;
 }
 
-+ (J3ConnectionFactory *) defaultFactory;
++ (J3SocketFactory *) defaultFactory;
 
 - (J3Socket *) makeSocketWithHostname: (NSString *) hostname port: (int) port;
 - (J3ProxySettings *) proxySettings;

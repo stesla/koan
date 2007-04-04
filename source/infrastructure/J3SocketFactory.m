@@ -1,18 +1,18 @@
 //
-// J3ConnectionFactory.m
+// J3SocketFactory.m
 //
 // Copyright (c) 2006, 2007 3James Software
 //
 
-#import "J3ConnectionFactory.h"
+#import "J3SocketFactory.h"
 #import "J3ProxySettings.h"
 #import "J3ProxySocket.h"
 #import "J3Socket.h"
 #import "J3TelnetEngine.h"
 
-static J3ConnectionFactory *defaultFactory = nil;
+static J3SocketFactory *defaultFactory = nil;
 
-@interface J3ConnectionFactory (Private)
+@interface J3SocketFactory (Private)
 
 - (void) cleanUpDefaultFactory: (NSNotification *) notification;
 - (void) loadProxySettingsFromDefaults;
@@ -22,9 +22,9 @@ static J3ConnectionFactory *defaultFactory = nil;
 
 #pragma mark -
 
-@implementation J3ConnectionFactory
+@implementation J3SocketFactory
 
-+ (J3ConnectionFactory *) defaultFactory
++ (J3SocketFactory *) defaultFactory
 {
   if (!defaultFactory)
   {
@@ -88,7 +88,7 @@ static J3ConnectionFactory *defaultFactory = nil;
 
 #pragma mark -
 
-@implementation J3ConnectionFactory (Private)
+@implementation J3SocketFactory (Private)
 
 - (void) cleanUpDefaultFactory: (NSNotification *) notification
 {

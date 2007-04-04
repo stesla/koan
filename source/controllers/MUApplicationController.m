@@ -14,7 +14,7 @@
 #import "MUProfilesController.h"
 #import "MUProxySettingsController.h"
 #import "MUServices.h"
-#import "J3ConnectionFactory.h"
+#import "J3SocketFactory.h"
 #import "MUWorld.h"
 
 @interface MUApplicationController (Private)
@@ -103,7 +103,7 @@
 - (BOOL) validateMenuItem: (id <NSMenuItem>) anItem
 {
   if ([anItem isEqual: useProxyMenuItem])
-    [useProxyMenuItem setState: ([[J3ConnectionFactory defaultFactory] useProxy] ? NSOnState : NSOffState)];
+    [useProxyMenuItem setState: ([[J3SocketFactory defaultFactory] useProxy] ? NSOnState : NSOffState)];
   return YES;
 }
 
@@ -198,7 +198,7 @@
 
 - (IBAction) toggleUseProxy: (id) sender;
 {
-  [[J3ConnectionFactory defaultFactory] toggleUseProxy];
+  [[J3SocketFactory defaultFactory] toggleUseProxy];
 }
 
 #pragma mark -
@@ -262,7 +262,7 @@
   
   [[MUServices worldRegistry] saveWorlds];
   [[MUServices profileRegistry] saveProfiles];
-  [[J3ConnectionFactory defaultFactory] saveProxySettings];
+  [[J3SocketFactory defaultFactory] saveProxySettings];
 }
 
 #pragma mark -
