@@ -7,12 +7,12 @@
 @protocol J3ByteSource
 
 - (BOOL) hasDataAvailable;
-- (NSData *) readUpToLength: (unsigned) length;
+- (NSData *) readUpToLength: (size_t) length;
 
 @end
 
 @interface J3ByteSource : NSObject
 
-+ (void) ensureBytesReadFromSource: (id <J3ByteSource>) byteSource intoBuffer: (uint8_t *) buffer ofLength: (unsigned) length;
++ (void) ensureBytesReadFromSource: (id <J3ByteSource>) byteSource intoBuffer: (uint8_t *) buffer ofLength: (size_t) length;
 
 @end

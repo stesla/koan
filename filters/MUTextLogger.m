@@ -110,6 +110,7 @@
   
   stream = [NSOutputStream outputStreamToFileAtPath: path append: YES];
   [stream open];
+  
   @try
   {
     NSEnumerator *keyEnumerator = [headers keyEnumerator];

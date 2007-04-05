@@ -182,7 +182,7 @@
   return hasDataAvailable;
 }
 
-- (NSData *) readUpToLength: (unsigned) length
+- (NSData *) readUpToLength: (size_t) length
 {
   uint8_t *bytes = malloc (length);
   if (!bytes)
@@ -191,8 +191,15 @@
   }
 
   errno = 0;
-  ssize_t bytesRead = read (socketfd, bytes, length);
   
+  ssize_t bytesRead;
+  
+  do
+  {
+    bytesRead = read (socketfd, bytes, length);
+  }
+  while (bytesRead < 0 && errno == EINTR);
+    
   if (bytesRead < 0)
   {
     free (bytes);
@@ -210,14 +217,23 @@
   return YES;
 }
 
-- (unsigned) write: (NSData *) data
+- (ssize_t) write: (NSData *) data
 {
-  ssize_t result;
+  ssize_t bytesWritten;
   errno = 0;
-  result = write (socketfd, [data bytes], [data length]);
-  if (result < 0)
+  
+  do
+  {
+    bytesWritten = write (socketfd, [data bytes], (size_t) [data length]);
+  }
+  while (bytesWritten < 0 && errno == EINTR);
+  
+  if (bytesWritten < 0)
+  {
     [self handleReadWriteError];
-  return result;  
+  }
+  
+  return bytesWritten;  
 }
 
 @end

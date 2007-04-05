@@ -10,10 +10,10 @@
 @interface J3WriteBufferTests (Private)
 
 - (NSString *) output;
-- (void) setMaxBytesPerWrite: (unsigned) numberOfBytes;
+- (void) setMaxBytesPerWrite: (size_t) numberOfBytes;
 - (void) assertNumberOfWrites: (unsigned) number;
 - (void) assertOutputAfterFlushIsString: (NSString *) string;
-- (void) assertOutputAfterFlushIsString: (NSString *) string maxBytesPerFlush: (unsigned) length;
+- (void) assertOutputAfterFlushIsString: (NSString *) string maxBytesPerFlush: (size_t) length;
 
 @end
 
@@ -129,7 +129,7 @@
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (unsigned) write: (NSData *) data
+- (ssize_t) write: (NSData *) data
 {
   unsigned lengthToWrite = maxBytesPerWrite < [data length] ? maxBytesPerWrite : [data length];
   [output appendBytes: [data bytes] length: lengthToWrite];
@@ -150,18 +150,18 @@
 
 - (void) assertOutputAfterFlushIsString: (NSString *) string
 {
-  [self assertOutputAfterFlushIsString: string maxBytesPerFlush: [string length]];
+  [self assertOutputAfterFlushIsString: string maxBytesPerFlush: (size_t) [string length]];
   [self assertNumberOfWrites: 1];
 }
 
-- (void) assertOutputAfterFlushIsString: (NSString *) string maxBytesPerFlush: (unsigned) length
+- (void) assertOutputAfterFlushIsString: (NSString *) string maxBytesPerFlush: (size_t) length
 {
   [self setMaxBytesPerWrite: length];
   [buffer flush];
   [self assert: [self output] equals: string];
 }
 
-- (void) setMaxBytesPerWrite: (unsigned) numberOfBytes
+- (void) setMaxBytesPerWrite: (size_t) numberOfBytes
 {
   maxBytesPerWrite = numberOfBytes;
 }

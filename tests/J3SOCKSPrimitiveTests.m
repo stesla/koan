@@ -37,7 +37,7 @@
   return [self length] > 0;
 }
 
-- (NSData *) readUpToLength: (unsigned) length
+- (NSData *) readUpToLength: (size_t) length
 {
   unsigned lengthToRead = length;
   if (bytesToRead > 0)
