@@ -24,7 +24,6 @@
   int port;
   J3Socket *socket;
   J3ReadBuffer *inputBuffer;
-  J3WriteBuffer *outputBuffer;
   J3TelnetEngine *engine;
   NSTimer *pollTimer;
   NSObject <J3TelnetConnectionDelegate> *delegate;

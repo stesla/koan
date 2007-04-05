@@ -57,7 +57,6 @@
   [self setDelegate: newDelegate];
   [self at: &inputBuffer put: [J3ReadBuffer buffer]];
   [inputBuffer setDelegate: newDelegate];
-  [self at: &outputBuffer put: [J3WriteBuffer buffer]];
   pollTimer = nil;
   return self;
 }
@@ -70,7 +69,6 @@
   [self cleanUpPollTimer];
   
   [socket release];
-  [outputBuffer release];
   [inputBuffer release];
   [engine release];
   [super dealloc];
@@ -105,8 +103,8 @@
 
 - (void) writeLine: (NSString *) line
 {
-  [outputBuffer appendLine: line];
-  [outputBuffer flush];
+  NSString *lineWithLineEnding = [NSString stringWithFormat: @"%@\r\n",line];
+  [socket write: [lineWithLineEnding dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES]];
   // [engine goAhead]; //TODO: Removed as a temporary fix for #26
 }
 
@@ -180,7 +178,7 @@
 
 - (void) writeDataWithPriority: (NSData *) data
 {
-  [outputBuffer writeDataWithPriority: data];
+  [socket write: data];
 }
 
 @end
@@ -204,7 +202,6 @@
 {
   [self at: &socket put: [socketFactory makeSocketWithHostname: hostname port: port]];
   [socket setDelegate: self];
-  [outputBuffer setByteDestination: socket];
 }
 
 - (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket
