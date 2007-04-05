@@ -29,25 +29,25 @@ enum J3TelnetOptions
 {
   // These options are defined by RFC.
   
-  J3TelnetEcho = 1,
-  J3TelnetSuppressGoAhead = 3,
-  J3TelnetStatus = 5,
-  J3TelnetTerminalType = 24,
-  J3TelnetEndOfRecord = 25,
-  J3TelnetNegotiateAboutWindowSize = 31,
-  J3TelnetTerminalSpeed = 32,
-  J3TelnetToggleFlowControl = 33,
-  J3TelnetLineMode = 34,
-  J3TelnetXDisplayLocation = 35,
-  J3TelnetNewEnviron = 39,
+  J3TelnetOptionEcho = 1,
+  J3TelnetOptionSuppressGoAhead = 3,
+  J3TelnetOptionStatus = 5,
+  J3TelnetOptionTerminalType = 24,
+  J3TelnetOptionEndOfRecord = 25,
+  J3TelnetOptionNegotiateAboutWindowSize = 31,
+  J3TelnetOptionTerminalSpeed = 32,
+  J3TelnetOptionToggleFlowControl = 33,
+  J3TelnetOptionLineMode = 34,
+  J3TelnetOptionXDisplayLocation = 35,
+  J3TelnetOptionNewEnviron = 39,
   
   // MUD Client Compression Protocol
   // The MCCP extension is defined at <http://mccp.afkmud.com/protocol.html>.
-  J3TelnetMCCP1 = 85,
-  J3TelnetMCCP2 = 86,
+  J3TelnetOptionMCCP1 = 85,
+  J3TelnetOptionMCCP2 = 86,
   
   // MUD eXtension Protocol and MUD Sound Protocol
   // The MXP extension is defined at <http://www.zuggsoft.com/zmud/mxp.htm>.
-  J3TelnetMSP = 90,
-  J3TelnetMXP = 91
+  J3TelnetOptionMSP = 90,
+  J3TelnetOptionMXP = 91
 };

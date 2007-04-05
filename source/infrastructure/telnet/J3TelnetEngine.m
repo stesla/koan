@@ -69,49 +69,49 @@
 {
   switch (byte)
   {
-    case J3TelnetEcho:
+    case J3TelnetOptionEcho:
       return @"ECHO";
       
-    case J3TelnetStatus:
+    case J3TelnetOptionStatus:
       return @"STATUS";
     
-  	case J3TelnetSuppressGoAhead:
+  	case J3TelnetOptionSuppressGoAhead:
   		return @"SUPPRESS-GO-AHEAD";
   		
-  	case J3TelnetTerminalType:
+  	case J3TelnetOptionTerminalType:
   		return @"TERMINAL-TYPE";
   		
-  	case J3TelnetEndOfRecord:
+  	case J3TelnetOptionEndOfRecord:
   		return @"END-OF-RECORD";
   		
-  	case J3TelnetNegotiateAboutWindowSize:
+  	case J3TelnetOptionNegotiateAboutWindowSize:
   		return @"NAWS";
       
-    case J3TelnetTerminalSpeed:
+    case J3TelnetOptionTerminalSpeed:
       return @"TERMINAL-SPEED";
       
-    case J3TelnetToggleFlowControl:
+    case J3TelnetOptionToggleFlowControl:
       return @"TOGGLE-FLOW-CONTROL";
   		
-  	case J3TelnetLineMode:
+  	case J3TelnetOptionLineMode:
   		return @"LINEMODE";
       
-    case J3TelnetXDisplayLocation:
+    case J3TelnetOptionXDisplayLocation:
       return @"X-DISPLAY-LOCATION";
       
-    case J3TelnetNewEnviron:
+    case J3TelnetOptionNewEnviron:
       return @"NEW-ENVIRON";
   		
-  	case J3TelnetMCCP1:
+  	case J3TelnetOptionMCCP1:
   		return @"COMPRESS (MCCP1)";
   		
-  	case J3TelnetMCCP2:
+  	case J3TelnetOptionMCCP2:
   		return @"COMPRESS2 (MCCP2)";
   		
-    case J3TelnetMSP:
+    case J3TelnetOptionMSP:
       return @"MSP";
       
-    case J3TelnetMXP:
+    case J3TelnetOptionMXP:
       return @"MXP";
       
   	default:
