@@ -6,6 +6,7 @@
 
 enum J3TelnetCommands
 {
+  J3TelnetEndOfRecord = 239,
   J3TelnetEndSubnegotiation = 240,
   J3TelnetNoOperation = 241,
   J3TelnetDataMark = 242,
