@@ -17,7 +17,6 @@
 @interface J3Socket (Private)
 
 - (void) checkRemoteConnection;
-- (void) configureSocket;
 - (void) connectSocket;
 - (void) createSocket;
 - (void) handleReadWriteError;
@@ -75,6 +74,7 @@
     return nil;
   
   [self at: &hostname put: [newHostname retain]];
+  socketfd = -1;
   port = newPort;
   status = J3SocketStatusNotConnected;
   server = NULL;
@@ -97,10 +97,19 @@
 {
   if (![self isConnected])
     return;
-  close (socketfd);
+  
+  errno = 0;
+  
+  // Note that looping on EINTR is specifically wrong for close(2), since the
+  // underlying fd will be closed either way; EINTR here tends to indicate that
+  // a final flush was interrupted and we may have lost data.
+  int result = close (socketfd);
+  
   socketfd = -1;
-
   [self setStatusClosedByClient];
+  
+  // TODO: handle result == -1 in some way. We could throw an exception, return
+  // it up from here, but it should be noted and handled.
 }
 
 - (BOOL) isClosed
@@ -128,7 +137,6 @@
     [self setStatusConnecting];
     [self resolveHostname];
     [self createSocket];
-    [self configureSocket];
     [self connectSocket];
     [self performPostConnectNegotiation];
     [self setStatusConnected];    
@@ -193,7 +201,6 @@
   errno = 0;
   
   ssize_t bytesRead;
-  
   do
   {
     bytesRead = read (socketfd, bytes, length);
@@ -260,16 +267,15 @@
   }
 }
 
-- (void) configureSocket
-{
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons (port);
-  memcpy (&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);    
-}
-
 - (void) connectSocket
 {
   errno = 0;
+  
+  struct sockaddr_in server_addr;
+  
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = htons (port);
+  memcpy (&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);   
   
   if (connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr)) == -1)
   {
@@ -315,7 +321,7 @@
 {  
   errno = 0;
   socketfd = socket (AF_INET, SOCK_STREAM, 0);
-  if (socketfd < 0)
+  if (socketfd == -1)
     [J3SocketException socketErrorWithErrno];
 }
 
@@ -362,7 +368,7 @@
       free (server);
       server = NULL;
       const char *error = hstrerror (h_errno);
-      [J3SocketException socketError: [NSString stringWithFormat: @"%s", error]];
+      [J3SocketException socketErrorWithFormat: @"%s", error];
     }
   }
 }
