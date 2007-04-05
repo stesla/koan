@@ -19,12 +19,13 @@
 
 + (id) engine;
 
-- (NSString *) optionNameForByte: (uint8_t) byte;
 
 - (void) bufferInputByte: (uint8_t) byte;
 - (void) dont: (uint8_t) byte;
 - (void) goAhead;
+- (NSString *) optionNameForByte: (uint8_t) byte;
 - (void) parseData: (NSData *) data;
+- (NSData *) preprocessOutput: (NSData *) data;
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
 - (void) wont: (uint8_t) byte;
 

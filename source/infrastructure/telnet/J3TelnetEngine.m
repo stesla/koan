@@ -100,6 +100,19 @@
     [self parseByte: ((uint8_t *) [data bytes])[i]];
 }
 
+- (NSData *) preprocessOutput: (NSData *) data;
+{
+  const uint8_t *bytes = [data bytes];
+  NSMutableData *result = [NSMutableData dataWithCapacity: [data length]];
+  for (unsigned i = 0; i < [data length]; ++i)
+  {
+    if (bytes[i] == J3TelnetInterpretAsCommand)
+      [result appendBytes:  bytes + i length: 1];
+    [result appendBytes: bytes + i length: 1];
+  }
+  return result;
+}
+
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
 {
   delegate = object;
