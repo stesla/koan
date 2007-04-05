@@ -37,11 +37,6 @@
   [delegate bufferInputByte: byte];
 }
 
-- (void) bufferOutputByte: (uint8_t) byte
-{
-  [delegate bufferOutputByte: byte];
-}
-
 - (void) dealloc
 {
   [state release];
@@ -56,9 +51,8 @@
 
 - (void) goAhead;
 {
-  [self bufferOutputByte: J3TelnetInterpretAsCommand];
-  [self bufferOutputByte: J3TelnetGoAhead];
-  [delegate flushOutput];
+  uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
+  [delegate writeDataWithPriority: [NSData dataWithBytes: bytes length: 2]];
 }
 
 - (NSString *) optionNameForByte: (uint8_t) byte
@@ -128,10 +122,8 @@
 
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
 {
-  [self bufferOutputByte: J3TelnetInterpretAsCommand];
-  [self bufferOutputByte: command];
-  [self bufferOutputByte: byte];
-  [delegate flushOutput];
+  uint8_t bytes[] = {J3TelnetInterpretAsCommand, command, byte};
+  [delegate writeDataWithPriority: [NSData dataWithBytes: bytes length: 3]];
 }
 
 @end

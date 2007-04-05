@@ -6,17 +6,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-@protocol J3ReadBuffer;
-@protocol J3WriteBuffer;
 @class J3TelnetState;
-
-@protocol J3TelnetEngineDelegate
-
-- (void) bufferInputByte: (uint8_t) byte;
-- (void) bufferOutputByte: (uint8_t) byte;
-- (void) flushOutput;
-
-@end
+@protocol J3ReadBuffer;
+@protocol J3TelnetEngineDelegate;
+@protocol J3WriteBuffer;
 
 @interface J3TelnetEngine : NSObject
 {
@@ -29,11 +22,19 @@
 - (NSString *) optionNameForByte: (uint8_t) byte;
 
 - (void) bufferInputByte: (uint8_t) byte;
-- (void) bufferOutputByte: (uint8_t) byte;
 - (void) dont: (uint8_t) byte;
 - (void) goAhead;
 - (void) parseData: (NSData *) data;
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
 - (void) wont: (uint8_t) byte;
+
+@end
+
+#pragma mark -
+
+@protocol J3TelnetEngineDelegate
+
+- (void) bufferInputByte: (uint8_t) byte;
+- (void) writeDataWithPriority: (NSData *) data;
 
 @end

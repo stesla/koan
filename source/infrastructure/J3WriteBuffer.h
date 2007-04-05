@@ -17,6 +17,7 @@
 - (void) flush;
 - (BOOL) isEmpty;
 - (unsigned) length;
+- (void) writeDataWithPriority: (NSData *) data;
 
 // Both of these are pretty expensive in J3WriteBuffer currently.
 - (NSData *) dataValue;

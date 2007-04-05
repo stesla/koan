@@ -172,14 +172,9 @@
   [inputBuffer appendByte: byte];
 }
 
-- (void) bufferOutputByte: (uint8_t) byte
+- (void) writeDataWithPriority: (NSData *) data
 {
-  [outputBuffer appendByte: byte];
-}
-
-- (void) flushOutput
-{
-  [outputBuffer flush];
+  [outputBuffer writeDataWithPriority: data];
 }
 
 @end

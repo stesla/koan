@@ -166,6 +166,15 @@
   return accumulator;
 }
 
+- (void) writeDataWithPriority: (NSData *) data
+{
+  unsigned bytesWritten = 0;
+  while (bytesWritten < [data length])
+  {   
+    bytesWritten += [destination write: [NSData dataWithBytes: [data bytes] + bytesWritten length: [data length] - bytesWritten]];
+  }
+}
+
 @end
 
 #pragma mark -

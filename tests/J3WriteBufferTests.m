@@ -12,8 +12,8 @@
 - (NSString *) output;
 - (void) setMaxBytesPerWrite: (unsigned) numberOfBytes;
 - (void) assertNumberOfWrites: (unsigned) number;
-- (void) assertOutputIsString: (NSString *) string;
-- (void) assertOutputIsString: (NSString *) string maxBytesPerFlush: (unsigned) length;
+- (void) assertOutputAfterFlushIsString: (NSString *) string;
+- (void) assertOutputAfterFlushIsString: (NSString *) string maxBytesPerFlush: (unsigned) length;
 
 @end
 
@@ -29,6 +29,7 @@
 - (void) setUp
 {
   numberOfWrites = 0;
+  [self setMaxBytesPerWrite: UINT_MAX];
   buffer = [[J3WriteBuffer buffer] retain];
   [buffer setByteDestination: self];
   output = [[NSMutableData data] retain];
@@ -43,7 +44,7 @@
 - (void) testWriteNil
 {
   [buffer appendString: nil];
-  [self assertOutputIsString: @"" maxBytesPerFlush: 1];
+  [self assertOutputAfterFlushIsString: @"" maxBytesPerFlush: 1];
   [self assertNumberOfWrites: 0];
 }
 
@@ -51,7 +52,7 @@
 {
   [buffer appendString: @"foo"];
   [buffer appendString: @"bar"];
-  [self assertOutputIsString: @"foobar"];
+  [self assertOutputAfterFlushIsString: @"foobar"];
 }
 
 - (void) testWriteMultipleTimesWithInterspersedNil
@@ -59,14 +60,14 @@
   [buffer appendString: @"foo"];
   [buffer appendString: nil];
   [buffer appendString: @"bar"];
-  [self assertOutputIsString: @"foobar"];
+  [self assertOutputAfterFlushIsString: @"foobar"];
 }
 
 - (void) testClearBufferAndWrite
 {
   [buffer appendString: @"foo"];
   [buffer clear];
-  [self assertOutputIsString: @"" maxBytesPerFlush: 1];
+  [self assertOutputAfterFlushIsString: @"" maxBytesPerFlush: 1];
   [self assertNumberOfWrites: 0];
 }
 
@@ -75,7 +76,7 @@
   [buffer appendString: @"foo"];
   [buffer clear];
   [buffer appendString: @"bar"];
-  [self assertOutputIsString: @"bar"];
+  [self assertOutputAfterFlushIsString: @"bar"];
 }
 
 #ifdef TYLER_WILL_FIX
@@ -83,27 +84,46 @@
 {
   [buffer appendString: @"foop"];
   [buffer removeLastCharacter];
-  [self assertOutputIsString: @"foo"];
+  [self assertOutputAfterFlushIsString: @"foo"];
 }
 #endif
 
 - (void) testWriteAll
 {
   [buffer appendString: @"foo"];
-  [self assertOutputIsString: @"foo"];
+  [self assertOutputAfterFlushIsString: @"foo"];
 }
 
 - (void) testWriteSome
 {
   [buffer appendString: @"123456"];
-  [self assertOutputIsString: @"123456" maxBytesPerFlush: 3];
+  [self assertOutputAfterFlushIsString: @"123456" maxBytesPerFlush: 3];
   [self assertNumberOfWrites: 2];
 }
 
 - (void) testWriteLine
 {
   [buffer appendLine: @"foo"];
-  [self assertOutputIsString: @"foo\n"];
+  [self assertOutputAfterFlushIsString: @"foo\n"];
+}
+
+- (void) testWriteBytesWithPriority
+{
+  [buffer appendString: @"foo"];
+  [buffer writeDataWithPriority: [NSData dataWithBytes: (uint8_t *)"ab" length: 2]];
+  [self assert: [self output] equals: @"ab"];
+  [buffer flush];
+  [self assert: [self output] equals: @"abfoo"];
+}
+
+- (void) testsWriteBytesWithPriorityWithMultipleWrites
+{
+  [self setMaxBytesPerWrite: 1];
+  [buffer appendString: @"foo"];
+  [buffer writeDataWithPriority: [NSData dataWithBytes: (uint8_t *)"ab" length: 2]];
+  [self assert: [self output] equals: @"ab"];
+  [buffer flush];
+  [self assert: [self output] equals: @"abfoo"]; 
 }
 
 #pragma mark -
@@ -128,13 +148,13 @@
   [self assertInt: (int) numberOfWrites equals: (int) number];
 }
 
-- (void) assertOutputIsString: (NSString *) string
+- (void) assertOutputAfterFlushIsString: (NSString *) string
 {
-  [self assertOutputIsString: string maxBytesPerFlush: [string length]];
+  [self assertOutputAfterFlushIsString: string maxBytesPerFlush: [string length]];
   [self assertNumberOfWrites: 1];
 }
 
-- (void) assertOutputIsString: (NSString *) string maxBytesPerFlush: (unsigned) length
+- (void) assertOutputAfterFlushIsString: (NSString *) string maxBytesPerFlush: (unsigned) length
 {
   [self setMaxBytesPerWrite: length];
   [buffer flush];
