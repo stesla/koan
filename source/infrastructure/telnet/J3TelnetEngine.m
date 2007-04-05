@@ -43,16 +43,26 @@
   [super dealloc];
 }
 
-- (void) dont: (uint8_t) byte;
+- (void) dont: (uint8_t) byte
 {
-  NSLog (@"    Sent: IAC DONT %@", [self optionNameForByte: byte]);
+  [self log: @"    Sent: IAC DONT %@", [self optionNameForByte: byte]];
   [self sendCommand: J3TelnetDont withByte: byte];
 }
 
-- (void) goAhead;
+- (void) goAhead
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
   [delegate writeDataWithPriority: [NSData dataWithBytes: bytes length: 2]];
+}
+
+- (void) log: (NSString *) message, ...
+{
+  va_list args;
+  va_start (args, message);
+  
+  [delegate log: message arguments: args];
+  
+  va_end (args);
 }
 
 - (NSString *) optionNameForByte: (uint8_t) byte
@@ -115,7 +125,7 @@
     [self parseByte: ((uint8_t *) [data bytes])[i]];
 }
 
-- (NSData *) preprocessOutput: (NSData *) data;
+- (NSData *) preprocessOutput: (NSData *) data
 {
   const uint8_t *bytes = [data bytes];
   NSMutableData *result = [NSMutableData dataWithCapacity: [data length]];
@@ -133,9 +143,9 @@
   delegate = object;
 }
 
-- (void) wont: (uint8_t) byte;
+- (void) wont: (uint8_t) byte
 {
-  NSLog (@"    Sent: IAC WONT %@", [self optionNameForByte: byte]);
+  [self log: @"    Sent: IAC WONT %@", [self optionNameForByte: byte]];
   [self sendCommand: J3TelnetWont withByte: byte];
 }
 
@@ -148,7 +158,7 @@
   [self at: &state put: [state parse: byte forParser: self]];
 }
 
-- (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
+- (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, command, byte};
   [delegate writeDataWithPriority: [NSData dataWithBytes: bytes length: 3]];

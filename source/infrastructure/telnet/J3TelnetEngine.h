@@ -23,6 +23,7 @@
 - (void) bufferInputByte: (uint8_t) byte;
 - (void) dont: (uint8_t) byte;
 - (void) goAhead;
+- (void) log: (NSString *) message, ...;
 - (NSString *) optionNameForByte: (uint8_t) byte;
 - (void) parseData: (NSData *) data;
 - (NSData *) preprocessOutput: (NSData *) data;
@@ -36,6 +37,7 @@
 @protocol J3TelnetEngineDelegate
 
 - (void) bufferInputByte: (uint8_t) byte;
+- (void) log: (NSString *) message arguments: (va_list) args;
 - (void) writeDataWithPriority: (NSData *) data;
 
 @end

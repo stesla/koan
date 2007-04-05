@@ -172,6 +172,12 @@
   [inputBuffer appendByte: byte];
 }
 
+- (void) log: (NSString *) message arguments: (va_list) args
+{
+  NSLog ([[[NSString alloc] initWithFormat: [NSString stringWithFormat: @"[%@:%d] %@", hostname, port, message]
+                                 arguments: args] autorelease]);
+}
+
 - (void) writeDataWithPriority: (NSData *) data
 {
   [outputBuffer writeDataWithPriority: data];

@@ -49,6 +49,10 @@
 {
 }
 
+- (void) log: (NSString *) message arguments: (va_list) args
+{
+}
+
 - (void) writeDataWithPriority: (NSData *) data;
 {
   [buffer appendData: data];
