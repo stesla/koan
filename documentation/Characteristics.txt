@@ -73,6 +73,16 @@ PennMUSH 1.8.1 (need version):
 PennMUSH version 1.8.3 patchlevel 1 [03/11/2007]:
   server asks for telnet options: DO LINEMODE, DO NAWS, DO TERMINAL-TYPE
 
+INFO output:
+
+### Begin INFO 1.1
+Name: Shoujo-Ai MUSH
+Uptime: Wed Mar 14 06:03:52 2007
+Connected: 49
+Size: 19938
+Version: PennMUSH 1.8.3p1
+### End INFO
+
 ProtoMUCK
 =========
 
