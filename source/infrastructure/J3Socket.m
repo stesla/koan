@@ -271,13 +271,13 @@
 {
   errno = 0;
   
-  struct sockaddr_in server_addr;
+  struct sockaddr_in serverAddress;
   
-  server_addr.sin_family = AF_INET;
-  server_addr.sin_port = htons (port);
-  memcpy (&(server_addr.sin_addr.s_addr), server->h_addr, server->h_length);   
+  serverAddress.sin_family = AF_INET;
+  serverAddress.sin_port = htons (port);
+  memcpy (&serverAddress.sin_addr.s_addr, server->h_addr, server->h_length);   
   
-  if (connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr)) == -1)
+  if (connect (socketfd, (struct sockaddr *) &serverAddress, sizeof (struct sockaddr)) == -1)
   {
     if (errno != EINTR)
     {
@@ -285,11 +285,11 @@
       return;
     }
     
-    struct pollfd socket_status;
-    socket_status.fd = socketfd;
-    socket_status.events = POLLOUT;
+    struct pollfd socketStatus;
+    socketStatus.fd = socketfd;
+    socketStatus.events = POLLOUT;
     
-    while (poll (&socket_status, 1, -1) == -1)
+    while (poll (&socketStatus, 1, -1) == -1)
     {
       if (errno != EINTR)
       {
@@ -298,18 +298,18 @@
       }
     }
     
-    int connect_error;
-    socklen_t error_length = sizeof (connect_error);
+    int connectError;
+    socklen_t connectErrorLength = sizeof (connectError);
     
-    if (getsockopt (socketfd, SOL_SOCKET, SO_ERROR, &connect_error, &error_length) == -1)
+    if (getsockopt (socketfd, SOL_SOCKET, SO_ERROR, &connectError, &connectErrorLength) == -1)
     {
       [J3SocketException socketErrorWithErrno];
       return;
     }
     
-    if (connect_error != 0)
+    if (connectError != 0)
     {
-      [J3SocketException socketError: [NSString stringWithCString: strerror (connect_error)]];
+      [J3SocketException socketError: [NSString stringWithCString: strerror (connectError)]];
       return;
     }
     
