@@ -160,7 +160,7 @@
   
   [self cleanUpPollTimer];
   
-  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosed: withError:)])
+  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosed:withError:)])
     [delegate telnetConnectionWasClosed: self withError: errorMessage];
 }
 
