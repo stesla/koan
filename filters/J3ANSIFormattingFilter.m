@@ -30,6 +30,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3ANSIFormattingFilter
 
 + (J3Filter *) filterWithFormatting: (NSObject <J3Formatting> *) format
@@ -73,6 +75,8 @@
 }
 
 @end
+
+#pragma mark -
 
 @implementation J3ANSIFormattingFilter (Private)
 

@@ -186,8 +186,8 @@
 
 - (void) testForegroundColor;
 {
-  NSAttributedString * input = [self makeString: @"a\x1B[36mbc\x1B[35md\x1B[39me"];
-  NSAttributedString * output = [queue processAttributedString: input];
+  NSAttributedString *input = [self makeString: @"a\x1B[36mbc\x1B[35md\x1B[39me"];
+  NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: nil forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"a"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b"];
@@ -198,8 +198,8 @@
 
 - (void) testBackgroundColor;
 {
-  NSAttributedString * input = [self makeString: @"a\x1B[46mbc\x1B[45md\x1B[49me"];
-  NSAttributedString * output = [queue processAttributedString: input];
+  NSAttributedString *input = [self makeString: @"a\x1B[46mbc\x1B[45md\x1B[49me"];
+  NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: nil forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"a"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b"];
@@ -208,10 +208,10 @@
   [self assertString: output hasValue: [J3Formatting testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 4 message: @"e"];
 }
 
-- (void) testResetForeAndBack;
+- (void) testResetDisplayMode
 {
-  NSAttributedString * input = [self makeString: @"a\x1B[36m\x1B[46mb\x1B[0mc"];
-  NSAttributedString * output = [queue processAttributedString: input];
+  NSAttributedString *input = [self makeString: @"a\x1B[36m\x1B[46mb\x1B[0mc"];
+  NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b foreground"];
@@ -219,11 +219,22 @@
   [self assertString: output hasValue: [J3Formatting testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"];  
 }
 
+- (void) testShortFormOfResetDisplayMode
+{
+  NSAttributedString *input = [self makeString: @"a\x1B[36m\x1B[46mb\x1B[mc"];
+  NSAttributedString *output = [queue processAttributedString: input];
+  
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b foreground"];
+  [self assertString: output hasValue: [J3Formatting testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c background"];  
+  [self assertString: output hasValue: [J3Formatting testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"]; 
+}
+
 - (void) testPersistColorsBetweenLines;
 {
-  NSAttributedString * firstInput = [self makeString: @"a\x1B[36mb"];
-  NSAttributedString * secondInput = [self makeString: @"c"];
-  NSAttributedString * output;
+  NSAttributedString *firstInput = [self makeString: @"a\x1B[36mb"];
+  NSAttributedString *secondInput = [self makeString: @"c"];
+  NSAttributedString *output;
   
   [queue processAttributedString: firstInput];
   output = [queue processAttributedString: secondInput];
@@ -233,8 +244,8 @@
 
 - (void) testBold;
 {
-  NSAttributedString * input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
-  NSAttributedString * output = [queue processAttributedString: input];
+  NSAttributedString *input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSAttributedString *output = [queue processAttributedString: input];
 
   [self assertString: output hasTrait: NSUnboldFontMask atIndex: 0 message: @"a"];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 1 message: @"b"];
@@ -245,9 +256,9 @@
 
 - (void) testBoldWithBoldAlreadyOn;
 {
-  NSMutableAttributedString * input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
-  NSAttributedString * output;
-  NSFont * boldFont = [[J3Formatting testingFont] fontWithTrait: NSBoldFontMask];
+  NSMutableAttributedString *input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSAttributedString *output;
+  NSFont *boldFont = [[J3Formatting testingFont] fontWithTrait: NSBoldFontMask];
   
   [queue clearFilters];
   [queue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [J3Formatting formattingWithForegroundColor: [J3Formatting testingForeground] backgroundColor: [J3Formatting testingBackground] font: boldFont]]];
@@ -265,8 +276,8 @@
 
 - (void) testUnderline;
 {
-  NSAttributedString * input = [self makeString: @"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me"];  
-  NSAttributedString * output = [queue processAttributedString: input];
+  NSAttributedString *input = [self makeString: @"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me"];  
+  NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: nil forAttribute: NSUnderlineStyleAttributeName atIndex: 0 message: @"a"];
   [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 1 message: @"b"];
@@ -277,10 +288,11 @@
 
 - (void) testFormattingOverTwoLines;
 {
-  NSAttributedString * input1 = [self makeString: @"a\x1B["];  
-  NSAttributedString * input2 = [self makeString: @"4mb"];  
+  NSAttributedString *input1 = [self makeString: @"a\x1B["];  
+  NSAttributedString *input2 = [self makeString: @"4mb"];  
   [queue processAttributedString: input1];
-  NSAttributedString * output = [queue processAttributedString: input2];
+  
+  NSAttributedString *output = [queue processAttributedString: input2];
    
   [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 0 message: @"b"];
 }
