@@ -30,10 +30,15 @@ enum J3TelnetOptions
   
   J3TelnetEcho = 1,
   J3TelnetSuppressGoAhead = 3,
+  J3TelnetStatus = 5,
   J3TelnetTerminalType = 24,
   J3TelnetEndOfRecord = 25,
   J3TelnetNegotiateAboutWindowSize = 31,
+  J3TelnetTerminalSpeed = 32,
+  J3TelnetToggleFlowControl = 33,
   J3TelnetLineMode = 34,
+  J3TelnetXDisplayLocation = 35,
+  J3TelnetNewEnviron = 39,
   
   // MUD Client Compression Protocol
   // The MCCP extension is defined at <http://mccp.afkmud.com/protocol.html>.

@@ -61,6 +61,9 @@
   {
     case J3TelnetEcho:
       return @"ECHO";
+      
+    case J3TelnetStatus:
+      return @"STATUS";
     
   	case J3TelnetSuppressGoAhead:
   		return @"SUPPRESS-GO-AHEAD";
@@ -73,9 +76,21 @@
   		
   	case J3TelnetNegotiateAboutWindowSize:
   		return @"NAWS";
+      
+    case J3TelnetTerminalSpeed:
+      return @"TERMINAL-SPEED";
+      
+    case J3TelnetToggleFlowControl:
+      return @"TOGGLE-FLOW-CONTROL";
   		
   	case J3TelnetLineMode:
   		return @"LINEMODE";
+      
+    case J3TelnetXDisplayLocation:
+      return @"X-DISPLAY-LOCATION";
+      
+    case J3TelnetNewEnviron:
+      return @"NEW-ENVIRON";
   		
   	case J3TelnetMCCP1:
   		return @"COMPRESS (MCCP1)";
