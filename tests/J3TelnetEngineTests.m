@@ -35,7 +35,8 @@
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand};
   NSData *data = [NSData dataWithBytes: bytes length: 1];
-  buffer = [engine preprocessOutput: data];
+  
+  [buffer setData: [engine preprocessOutput: data]];
   [self assertInt: [buffer length] equals: 2 message: @"length"];
   [self assertInt: ((uint8_t *)[buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC1"];
   [self assertInt: ((uint8_t *)[buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC2"];  
