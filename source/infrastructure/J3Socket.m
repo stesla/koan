@@ -10,6 +10,8 @@
 #import <sys/socket.h>
 #import <errno.h>
 #import <netdb.h>
+#import <poll.h>
+#import <stdarg.h>
 #import <unistd.h>
 
 @interface J3Socket (Private)
@@ -39,9 +41,15 @@
   @throw [J3SocketException exceptionWithName: @"" reason: errorMessage userInfo: nil];
 }
 
-+ (void) socketErrorFormat: (NSString *) format arguments: (va_list)args
++ (void) socketErrorWithFormat: (NSString *) format, ...
 {
+  va_list args;
+  va_start (args, format);
+  
   NSString *message = [[[NSString alloc] initWithFormat: format arguments: args] autorelease];
+  
+  va_end (args);
+  
   [self socketError: message];
 }
 
@@ -246,9 +254,45 @@
 - (void) connectSocket
 {
   errno = 0;
-  int result = connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr));
-  if (result < 0)
-    [J3SocketException socketErrorWithErrno];
+  
+  if (connect (socketfd, (struct sockaddr *) &server_addr, sizeof (struct sockaddr)) == -1)
+  {
+    if (errno != EINTR)
+    {
+      [J3SocketException socketErrorWithErrno];
+      return;
+    }
+    
+    struct pollfd socket_status;
+    socket_status.fd = socketfd;
+    socket_status.events = POLLOUT;
+    
+    while (poll (&socket_status, 1, -1) == -1)
+    {
+      if (errno != EINTR)
+      {
+        [J3SocketException socketErrorWithErrno];
+        return;
+      }
+    }
+    
+    int connect_error;
+    socklen_t error_length = sizeof (connect_error);
+    
+    if (getsockopt (socketfd, SOL_SOCKET, SO_ERROR, &connect_error, &error_length) == -1)
+    {
+      [J3SocketException socketErrorWithErrno];
+      return;
+    }
+    
+    if (connect_error != 0)
+    {
+      [J3SocketException socketError: [NSString stringWithCString: strerror (connect_error)]];
+      return;
+    }
+    
+    // If we reach this point, the socket has successfully connected. =p
+  }
 }
 
 - (void) createSocket

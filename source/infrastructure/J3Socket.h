@@ -6,6 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <netinet/in.h>
+
 #import "J3ByteDestination.h"
 #import "J3ByteSource.h"
 
@@ -24,7 +25,7 @@ typedef enum J3SocketStatus
 @interface J3SocketException : NSException
 
 + (void) socketError: (NSString *) errorMessage;
-+ (void) socketErrorFormat: (NSString *) format arguments: (va_list)args;
++ (void) socketErrorWithFormat: (NSString *) format, ...;
 
 @end
 
