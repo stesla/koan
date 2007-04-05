@@ -168,16 +168,7 @@
 
 - (void) writeDataWithPriority: (NSData *) data
 {
-  unsigned totalWritten = 0;
-  
-  while (totalWritten < [data length])
-  {
-    ssize_t bytesWritten = [destination write: [NSData dataWithBytes: [data bytes] + totalWritten
-                                                              length: [data length] - totalWritten]];
-    
-    // TODO: handle that bytesWritten will be -1 if there was an error on the write.
-    totalWritten += bytesWritten;
-  }
+  [destination write: data];
 }
 
 @end
@@ -250,22 +241,15 @@
 
 - (void) write
 {
-  ssize_t bytesWritten;
-  
   if (!destination)
-    @throw [J3WriteBufferException exceptionWithName: @"" reason: @"Must provide destination" userInfo: nil];
+  {
+    @throw [J3WriteBufferException exceptionWithName: @"" 
+                                              reason: @"Must provide destination" 
+                                            userInfo: nil];
+  }
   
-  bytesWritten = [destination write: [self dataValue]];
-  
-  // TODO: handle -1 bytesWritten, indicating an error on write.
-  // The warning this is currently generating is meaningful because we are not
-  // handling this possibility, although we are throwing an exception. If
-  // exceptions are the way we're going to handle -1 bytesWritten, that's cool
-  // but we need to actually do it, e.g. with @try / @catch blocks here.
-  if (bytesWritten == [self length])
-    [self clear];
-  else
-    [self removeDataUpTo: bytesWritten];
+  [destination write: [self dataValue]];
+  [self clear];
 }
 
 @end

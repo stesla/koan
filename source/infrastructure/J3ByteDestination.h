@@ -6,7 +6,6 @@
 
 @protocol J3ByteDestination
 
-- (BOOL) hasSpaceAvailable;
-- (ssize_t) write: (NSData *) data;
+- (void) write: (NSData *) data;
 
 @end

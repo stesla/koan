@@ -14,6 +14,14 @@
 #import <stdarg.h>
 #import <unistd.h>
 
+#pragma mark -
+#pragma mark C Function Prototypes
+
+static inline ssize_t fullWrite(int fileDescriptor, const void *bytes, size_t length);
+static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t length);
+
+#pragma mark -
+
 @interface J3Socket (Private)
 
 - (void) checkRemoteConnection;
@@ -103,7 +111,7 @@
   // Note that looping on EINTR is specifically wrong for close(2), since the
   // underlying fd will be closed either way; EINTR here tends to indicate that
   // a final flush was interrupted and we may have lost data.
-  int result = close (socketfd);
+  /* int result = */ close (socketfd);
   
   socketfd = -1;
   [self setStatusClosedByClient];
@@ -219,28 +227,12 @@
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (BOOL) hasSpaceAvailable
+- (void) write: (NSData *) data
 {
-  return YES;
-}
-
-- (ssize_t) write: (NSData *) data
-{
-  ssize_t bytesWritten;
   errno = 0;
-  
-  do
-  {
-    bytesWritten = write (socketfd, [data bytes], (size_t) [data length]);
-  }
-  while (bytesWritten < 0 && errno == EINTR);
-  
-  if (bytesWritten < 0)
-  {
+  ssize_t result = fullWrite (socketfd, [data bytes], (size_t) [data length]);
+  if (result < 0)
     [self handleReadWriteError];
-  }
-  
-  return bytesWritten;  
 }
 
 @end
@@ -409,3 +401,36 @@
 }
 
 @end
+
+#pragma mark -
+#pragma mark C Functions
+
+static inline ssize_t fullWrite(int fileDescriptor, const void *bytes, size_t length)
+{
+  ssize_t bytesWritten;
+  ssize_t totalBytesWritten = 0;
+  
+  while (length > 0)
+  {
+    bytesWritten = safeWrite (fileDescriptor, bytes, length);
+    if (bytesWritten < 0)
+      return bytesWritten;
+    totalBytesWritten += bytesWritten;
+    bytes = ((const uint8_t *) bytes) + bytesWritten;
+    length -= bytesWritten;
+  }
+  
+  return totalBytesWritten;
+}
+
+static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t length)
+{
+  ssize_t bytesWritten;
+  do
+  {
+    bytesWritten = write (fileDescriptor, bytes, length);
+  }
+  while (bytesWritten < 0 && errno == EINTR);  
+  return bytesWritten;  
+}
+

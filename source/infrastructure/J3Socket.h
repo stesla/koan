@@ -62,7 +62,6 @@ typedef enum J3SocketStatus
 - (id) initWithHostname: (NSString *) hostname port: (int) port;
 
 - (BOOL) hasDataAvailable;
-- (BOOL) hasSpaceAvailable;
 - (BOOL) isConnecting;
 - (void) setDelegate: (NSObject <J3SocketDelegate> *) object;
 - (J3SocketStatus) status;
