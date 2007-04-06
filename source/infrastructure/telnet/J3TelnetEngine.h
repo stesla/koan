@@ -38,6 +38,6 @@
 
 - (void) bufferInputByte: (uint8_t) byte;
 - (void) log: (NSString *) message arguments: (va_list) args;
-- (void) writeDataWithPriority: (NSData *) data;
+- (void) writeData: (NSData *) data;
 
 @end

@@ -52,7 +52,7 @@
 - (void) goAhead
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
-  [delegate writeDataWithPriority: [NSData dataWithBytes: bytes length: 2]];
+  [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
 }
 
 - (void) log: (NSString *) message, ...
@@ -161,7 +161,7 @@
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, command, byte};
-  [delegate writeDataWithPriority: [NSData dataWithBytes: bytes length: 3]];
+  [delegate writeData: [NSData dataWithBytes: bytes length: 3]];
 }
 
 @end

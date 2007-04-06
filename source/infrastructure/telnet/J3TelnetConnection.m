@@ -20,6 +20,7 @@
 - (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket;
 - (void) poll;
 - (void) schedulePollTimer;
+- (void) writeDataWithPreprocessing: (NSData *) data;
 
 @end
 
@@ -105,7 +106,7 @@
 {
   NSString *lineWithLineEnding = [NSString stringWithFormat: @"%@\r\n",line];
   NSData *encodedData = [lineWithLineEnding dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES];
-  [socket write: [engine preprocessOutput: encodedData]];
+  [self writeDataWithPreprocessing: encodedData];
   // [engine goAhead]; //TODO: Removed as a temporary fix for #26
 }
 
@@ -177,7 +178,7 @@
                                  arguments: args] autorelease]);
 }
 
-- (void) writeDataWithPriority: (NSData *) data
+- (void) writeData: (NSData *) data
 {
   [socket write: data];
 }
@@ -232,6 +233,11 @@
                                              selector: @selector (fireTimer:)
                                              userInfo: nil
                                               repeats: YES];
+}
+
+- (void) writeDataWithPreprocessing: (NSData *) data
+{
+  [self writeData: [engine preprocessOutput: data]];
 }
 
 @end

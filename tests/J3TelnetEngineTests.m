@@ -53,7 +53,7 @@
 {
 }
 
-- (void) writeDataWithPriority: (NSData *) data;
+- (void) writeData: (NSData *) data;
 {
   [buffer appendData: data];
 }
