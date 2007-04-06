@@ -10,6 +10,7 @@
 #import "J3TelnetInterpretAsCommandState.h"
 #import "J3TelnetEngine.h"
 #import "J3TelnetState.h"
+#import "J3TelnetSubnegotiationState.h"
 #import "J3TelnetTextState.h"
 #import "J3TelnetWillState.h"
 #import "J3TelnetWontState.h"
@@ -36,8 +37,10 @@
       [parser bufferInputByte: J3TelnetInterpretAsCommand];
       return [J3TelnetTextState state];
       
+    case J3TelnetBeginSubnegotiation:
+      return [J3TelnetSubnegotiationState state];
+        
     default:
-      
       return [J3TelnetTextState state];
   }
 }

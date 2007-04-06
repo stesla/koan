@@ -10,6 +10,9 @@
 #import "J3TelnetTextState.h"
 #import "J3TelnetDoState.h"
 #import "J3TelnetDontState.h"
+#import "J3TelnetOptionMCCP1State.h"
+#import "J3TelnetSubnegotiationInterpretAsCommandState.h"
+#import "J3TelnetSubnegotiationState.h"
 #import "J3TelnetWillState.h"
 #import "J3TelnetWontState.h"
 #import "J3WriteBuffer.h"
@@ -88,6 +91,7 @@
   [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetDont producesState: C(J3TelnetDontState)];
   [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetWill producesState: C(J3TelnetWillState)];
   [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetWont producesState: C(J3TelnetWontState)];  
+  [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetBeginSubnegotiation producesState: C(J3TelnetSubnegotiationState)];
 }
   
 - (void) testDoWontWillWontStateTransitions
@@ -98,13 +102,11 @@
   [self assertState: C(J3TelnetWontState) givenAnyByteProducesState: C(J3TelnetTextState)];
 }
 
-#ifdef TYLER_WILL_FIX
 - (void) testInput
 {
   [self assertState: C(J3TelnetTextState) givenByte: 'a' inputsByte: 'a'];
   [self assertState: C(J3TelnetInterpretAsCommandState) givenByte: J3TelnetInterpretAsCommand inputsByte: J3TelnetInterpretAsCommand];
 }
-#endif
 
 #ifdef TYLER_WILL_FIX
 - (void) testNegotiationAlwaysNVT
@@ -115,6 +117,20 @@
   [self assertStateHasNoOutputGivenAnyByte: C(J3TelnetWontState)];
 }
 #endif
+
+- (void) testSubnegotiationStateTransitions
+{
+  [self assertState: C(J3TelnetSubnegotiationState) givenAnyByteProducesState: C(J3TelnetSubnegotiationState)];
+  [self assertState: C(J3TelnetSubnegotiationState) givenByte: J3TelnetInterpretAsCommand producesState: C(J3TelnetSubnegotiationInterpretAsCommandState)];
+  [self assertState: C(J3TelnetSubnegotiationInterpretAsCommandState) givenAnyByteProducesState: C(J3TelnetSubnegotiationState)];
+  [self assertState: C(J3TelnetSubnegotiationInterpretAsCommandState) givenByte: J3TelnetEndSubnegotiation producesState: C(J3TelnetTextState)];
+}
+
+- (void) testMCCP1NegotiationStateTransitions
+{
+  [self assertState: C(J3TelnetSubnegotiationState) givenByte: J3TelnetOptionMCCP1 producesState: C(J3TelnetOptionMCCP1State)];
+  [self assertState: C(J3TelnetOptionMCCP1State) givenByte: J3TelnetWill producesState: C(J3TelnetSubnegotiationInterpretAsCommandState)];
+}
 
 @end
 
