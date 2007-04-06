@@ -22,25 +22,22 @@
   {
     case J3TelnetDo:
       return [J3TelnetDoState state];
-      break;
       
     case J3TelnetDont:
       return [J3TelnetDontState state];
-      break;
     
     case J3TelnetWill:
       return [J3TelnetWillState state];
-      break;
     
     case J3TelnetWont:
       return [J3TelnetWontState state];
-      break;
 
     case J3TelnetInterpretAsCommand:
       [parser bufferInputByte: J3TelnetInterpretAsCommand];
-      // Fallthrough.
+      return [J3TelnetTextState state];
       
     default:
+      
       return [J3TelnetTextState state];
   }
 }

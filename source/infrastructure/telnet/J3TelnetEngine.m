@@ -17,6 +17,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3TelnetEngine
 
 + (id) engine
@@ -150,6 +152,8 @@
 }
 
 @end
+
+#pragma mark -
 
 @implementation J3TelnetEngine (Private)
 

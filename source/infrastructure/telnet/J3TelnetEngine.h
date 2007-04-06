@@ -19,7 +19,6 @@
 
 + (id) engine;
 
-
 - (void) bufferInputByte: (uint8_t) byte;
 - (void) dont: (uint8_t) byte;
 - (void) goAhead;
