@@ -104,7 +104,8 @@
 - (void) writeLine: (NSString *) line
 {
   NSString *lineWithLineEnding = [NSString stringWithFormat: @"%@\r\n",line];
-  [socket write: [lineWithLineEnding dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES]];
+  NSData *encodedData = [lineWithLineEnding dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES];
+  [socket write: [engine preprocessOutput: encodedData]];
   // [engine goAhead]; //TODO: Removed as a temporary fix for #26
 }
 
