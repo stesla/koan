@@ -17,8 +17,9 @@
 #pragma mark -
 #pragma mark C Function Prototypes
 
-static inline ssize_t fullWrite(int fileDescriptor, const void *bytes, size_t length);
-static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t length);
+static inline ssize_t full_write (int file_descriptor, const void *bytes, size_t length);
+static inline ssize_t safe_read (int file_descriptor, void *bytes, size_t length);
+static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t length);
 
 #pragma mark -
 
@@ -27,7 +28,6 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
 - (void) checkRemoteConnection;
 - (void) connectSocket;
 - (void) createSocket;
-- (void) handleReadWriteError;
 - (void) initializeDescriptorSet: (fd_set *) set;
 - (void) performPostConnectNegotiation;
 - (void) resolveHostname;
@@ -60,9 +60,9 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
   [self socketError: message];
 }
 
-+ (void) socketErrorWithErrno;
++ (void) socketErrorWithErrnoForFunction: (NSString *) functionName;
 {
-  [J3SocketException socketError: [NSString stringWithCString: strerror (errno)]];
+  [J3SocketException socketError: [NSString stringWithFormat: @"%@: %s", functionName, strerror (errno)]];
 }
 
 @end
@@ -171,7 +171,7 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
   int result = select (socketfd + 1, &read_set, NULL, NULL, &tval);  
   
   if (result < 0)
-    [J3SocketException socketErrorWithErrno];
+    [J3SocketException socketErrorWithErrnoForFunction: @"select"];
   
   if (FD_ISSET (socketfd, &read_set))
   {
@@ -208,17 +208,20 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
 
   errno = 0;
   
-  ssize_t bytesRead;
-  do
-  {
-    bytesRead = read (socketfd, bytes, length);
-  }
-  while (bytesRead < 0 && errno == EINTR);
+  ssize_t bytesRead = safe_read (socketfd, bytes, length);
     
   if (bytesRead < 0)
   {
     free (bytes);
-    [self handleReadWriteError];
+    
+    // TODO: is this correct?
+    if (!([self isConnected] || [self isConnecting]))
+      return nil;
+    
+    if (errno == EBADF || errno == EPIPE)
+      [self setStatusClosedByServer];
+    
+    [J3SocketException socketErrorWithErrnoForFunction: @"read"];
   }
   
   return [NSData dataWithBytesNoCopy: bytes length: bytesRead];
@@ -227,12 +230,25 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (void) write: (NSData *) data
+- (ssize_t) write: (NSData *) data
 {
   errno = 0;
-  ssize_t result = fullWrite (socketfd, [data bytes], (size_t) [data length]);
+  
+  ssize_t result = full_write (socketfd, [data bytes], (size_t) [data length]);
+  
   if (result < 0)
-    [self handleReadWriteError];
+  {
+    // TODO: is this correct?
+    if (!([self isConnected] || [self isConnecting]))
+      return nil;
+    
+    if (errno == EBADF || errno == EPIPE)
+      [self setStatusClosedByServer];
+    
+    [J3SocketException socketErrorWithErrnoForFunction: @"write"];
+  }
+  
+  return result;
 }
 
 @end
@@ -249,7 +265,7 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
   if (result < 0)
   {
     hasDataAvailable = NO;
-    [J3SocketException socketErrorWithErrno];
+    [J3SocketException socketErrorWithErrnoForFunction: @"ioctl"];
   }
   if (!nread)
   {
@@ -263,45 +279,45 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
 {
   errno = 0;
   
-  struct sockaddr_in serverAddress;
+  struct sockaddr_in server_address;
   
-  serverAddress.sin_family = AF_INET;
-  serverAddress.sin_port = htons (port);
-  memcpy (&serverAddress.sin_addr.s_addr, server->h_addr, server->h_length);   
+  server_address.sin_family = AF_INET;
+  server_address.sin_port = htons (port);
+  memcpy (&server_address.sin_addr.s_addr, server->h_addr, server->h_length);   
   
-  if (connect (socketfd, (struct sockaddr *) &serverAddress, sizeof (struct sockaddr)) == -1)
+  if (connect (socketfd, (struct sockaddr *) &server_address, sizeof (struct sockaddr)) == -1)
   {
     if (errno != EINTR)
     {
-      [J3SocketException socketErrorWithErrno];
+      [J3SocketException socketErrorWithErrnoForFunction: @"connect"];
       return;
     }
     
-    struct pollfd socketStatus;
-    socketStatus.fd = socketfd;
-    socketStatus.events = POLLOUT;
+    struct pollfd socket_status;
+    socket_status.fd = socketfd;
+    socket_status.events = POLLOUT;
     
-    while (poll (&socketStatus, 1, -1) == -1)
+    while (poll (&socket_status, 1, -1) == -1)
     {
       if (errno != EINTR)
       {
-        [J3SocketException socketErrorWithErrno];
+        [J3SocketException socketErrorWithErrnoForFunction: @"poll"];
         return;
       }
     }
     
-    int connectError;
-    socklen_t connectErrorLength = sizeof (connectError);
+    int connect_error;
+    socklen_t connect_error_length = sizeof (connect_error);
     
-    if (getsockopt (socketfd, SOL_SOCKET, SO_ERROR, &connectError, &connectErrorLength) == -1)
+    if (getsockopt (socketfd, SOL_SOCKET, SO_ERROR, &connect_error, &connect_error_length) == -1)
     {
-      [J3SocketException socketErrorWithErrno];
+      [J3SocketException socketErrorWithErrnoForFunction: @"getsockopt"];
       return;
     }
     
-    if (connectError != 0)
+    if (connect_error != 0)
     {
-      [J3SocketException socketError: [NSString stringWithCString: strerror (connectError)]];
+      [J3SocketException socketError: [NSString stringWithFormat: @"delayed connect: %s", strerror (connect_error)]];
       return;
     }
     
@@ -314,17 +330,7 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
   errno = 0;
   socketfd = socket (AF_INET, SOCK_STREAM, 0);
   if (socketfd == -1)
-    [J3SocketException socketErrorWithErrno];
-}
-
-- (void) handleReadWriteError;
-{
-  if (![self isConnected] && ![self isConnecting])
-    return;
-  if (errno == EBADF || errno == EPIPE)
-    [self setStatusClosedByServer];
-  
-  [J3SocketException socketErrorWithErrno];
+    [J3SocketException socketErrorWithErrnoForFunction: @"socket"];
 }
 
 - (void) initializeDescriptorSet: (fd_set *) set
@@ -405,32 +411,46 @@ static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t le
 #pragma mark -
 #pragma mark C Functions
 
-static inline ssize_t fullWrite(int fileDescriptor, const void *bytes, size_t length)
+static inline ssize_t
+full_write (int file_descriptor, const void *bytes, size_t length)
 {
-  ssize_t bytesWritten;
-  ssize_t totalBytesWritten = 0;
+  ssize_t bytes_written;
+  ssize_t total_bytes_written = 0;
   
   while (length > 0)
   {
-    bytesWritten = safeWrite (fileDescriptor, bytes, length);
-    if (bytesWritten < 0)
-      return bytesWritten;
-    totalBytesWritten += bytesWritten;
-    bytes = ((const uint8_t *) bytes) + bytesWritten;
-    length -= bytesWritten;
+    bytes_written = safe_write (file_descriptor, bytes, length);
+    if (bytes_written < 0)
+      return bytes_written;
+    total_bytes_written += bytes_written;
+    bytes = (const uint8_t *) bytes + bytes_written;
+    length -= bytes_written;
   }
   
-  return totalBytesWritten;
+  return total_bytes_written;
 }
 
-static inline ssize_t safeWrite(int fileDescriptor, const void *bytes, size_t length)
+static inline ssize_t
+safe_read (int file_descriptor, void *bytes, size_t length)
 {
-  ssize_t bytesWritten;
+  ssize_t bytes_read;
   do
   {
-    bytesWritten = write (fileDescriptor, bytes, length);
+    bytes_read = read (file_descriptor, bytes, length);
   }
-  while (bytesWritten < 0 && errno == EINTR);  
-  return bytesWritten;  
+  while (bytes_read < 0 && errno == EINTR);
+  return bytes_read;
+}
+
+static inline ssize_t
+safe_write (int file_descriptor, const void *bytes, size_t length)
+{
+  ssize_t bytes_written;
+  do
+  {
+    bytes_written = write (file_descriptor, bytes, length);
+  }
+  while (bytes_written < 0 && errno == EINTR);  
+  return bytes_written;  
 }
 
