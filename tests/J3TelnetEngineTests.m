@@ -27,8 +27,8 @@
 {
   [engine goAhead];
   [self assertInt: [buffer length] equals: 2 message: @"length"];
-  [self assertInt: ((uint8_t *)[buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC"];
-  [self assertInt: ((uint8_t *)[buffer bytes])[1] equals: J3TelnetGoAhead message: @"GA"];
+  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC"];
+  [self assertInt: ((uint8_t *) [buffer bytes])[1] equals: J3TelnetGoAhead message: @"GA"];
 }
 
 - (void) testIACEscapedInData
@@ -38,8 +38,8 @@
   
   [buffer setData: [engine preprocessOutput: data]];
   [self assertInt: [buffer length] equals: 2 message: @"length"];
-  [self assertInt: ((uint8_t *)[buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC1"];
-  [self assertInt: ((uint8_t *)[buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC2"];  
+  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC1"];
+  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC2"];  
 }
 
 #pragma mark -
