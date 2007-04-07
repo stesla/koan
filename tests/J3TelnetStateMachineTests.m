@@ -36,9 +36,9 @@
   return lastByteInput;
 }
 
-- (uint8_t) outputByteAtIndex: (unsigned) index;
+- (uint8_t) outputByteAtIndex: (unsigned) byteIndex;
 {
-  return ((uint8_t *)[[output dataValue] bytes])[index];
+  return ((uint8_t *)[[output dataValue] bytes])[byteIndex];
 }
 
 - (unsigned) outputLength;

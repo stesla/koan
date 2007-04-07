@@ -47,10 +47,10 @@
 - (void) assertAttribute: (NSString *) attributeName
                   equals: (id) expectedValue
       inAttributedString: (NSAttributedString *) string
-                 atIndex: (int) index
+                 atIndex: (int) characterIndex
                  message: (NSString *) message
 {
-  NSDictionary *attributes = [string attributesAtIndex: index
+  NSDictionary *attributes = [string attributesAtIndex: characterIndex
                                         effectiveRange: NULL];
   [self assert: [attributes objectForKey: attributeName]
         equals: expectedValue
@@ -60,12 +60,12 @@
 - (void) assertAttribute: (NSString *) attributeName
                   equals: (id) expectedValue
       inAttributedString: (NSAttributedString *) string
-                 atIndex: (int) index
+                 atIndex: (int) characterIndex
 {
   [self assertAttribute: attributeName
                  equals: expectedValue
      inAttributedString: string
-                atIndex: index
+                atIndex: characterIndex
                 message: nil];
 }
 

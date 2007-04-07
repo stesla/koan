@@ -10,13 +10,23 @@
 #import "NSFont (Traits).h"
 
 @interface J3ANSIFormattingFilterTests (Private)
+
 - (void) assertInput: (NSString *) input hasOutput: (NSString *) output;
-- (void) assertInput: (NSString *) input hasOutput: (NSString *) output
+- (void) assertInput: (NSString *) input
+           hasOutput: (NSString *) output
              message: (NSString *) message;
 - (void) assertFinalCharacter: (unsigned char)finalChar;
-- (void) assertString: (NSAttributedString *) string hasValue: (id) value forAttribute: (NSString *) attribute atIndex: (int) index message: (NSString *) message;
-- (void) assertString: (NSAttributedString *) string hasTrait: (NSFontTraitMask)trait atIndex: (int) index message: (NSString *) message;
+- (void) assertString: (NSAttributedString *) string
+             hasValue: (id) value
+         forAttribute: (NSString *) attribute
+              atIndex: (int) characterIndex
+              message: (NSString *) message;
+- (void) assertString: (NSAttributedString *) string
+             hasTrait: (NSFontTraitMask) trait
+              atIndex: (int) characterIndex
+              message: (NSString *) message;
 - (NSMutableAttributedString *) makeString: (NSString *) string;
+
 @end
 
 #pragma mark -
@@ -41,26 +51,33 @@
   [self assert: actualOutput equals: attributedExpectedOutput message: message];  
 }
 
-- (void) assertFinalCharacter: (unsigned char)finalChar
+- (void) assertFinalCharacter: (unsigned char) finalChar
 {
   [self assertInput: [NSString stringWithFormat: @"F\x1B[%coo", finalChar]
           hasOutput: @"Foo"
             message: [NSString stringWithFormat: @"[%X]", finalChar]];
 }
 
-- (void) assertString: (NSAttributedString *) string hasValue: (id) value forAttribute: (NSString *) attribute atIndex: (int) index message: (NSString *) message;
+- (void) assertString: (NSAttributedString *) string
+             hasValue: (id) value
+         forAttribute: (NSString *) attribute
+              atIndex: (int) characterIndex
+              message: (NSString *) message
 {
-  NSDictionary * attributes = [string attributesAtIndex: index effectiveRange: NULL];
+  NSDictionary * attributes = [string attributesAtIndex: characterIndex effectiveRange: NULL];
   [self assert: [attributes valueForKey: attribute] equals: value message: message];
 }
 
-- (void) assertString: (NSAttributedString *) string hasTrait: (NSFontTraitMask)trait atIndex: (int) index message: (NSString *) message;
+- (void) assertString: (NSAttributedString *) string
+             hasTrait: (NSFontTraitMask) trait
+              atIndex: (int) characterIndex
+              message: (NSString *) message
 {
-  NSFont * font = [string attribute: NSFontAttributeName atIndex: index effectiveRange: NULL];
+  NSFont * font = [string attribute: NSFontAttributeName atIndex: characterIndex effectiveRange: NULL];
   [self assertTrue: [font hasTrait: trait] message: message];
 }
 
-- (NSMutableAttributedString *) makeString: (NSString *) string;
+- (NSMutableAttributedString *) makeString: (NSString *) string
 {
   NSFont * font = [NSFont systemFontOfSize: [NSFont systemFontSize]];
   NSMutableDictionary * attributes = [NSMutableDictionary dictionary];
@@ -158,13 +175,13 @@
           hasOutput: @""];
 }
 
-- (void) testCodeSplitOverTwoStrings;
+- (void) testCodeSplitOverTwoStrings
 {
   [self assertInput: @"\x1B[" hasOutput: @""];
   [self assertInput: @"36m" hasOutput: @""];
 }
 
-- (void) testCodeWithJustTerminatorInSecondString;
+- (void) testCodeWithJustTerminatorInSecondString
 {
   [self assertInput: @"\x1B[36" hasOutput: @""];
   [self assertInput: @"m" hasOutput: @""];
@@ -178,13 +195,13 @@
           hasOutput: longString];
 }
 
-- (void) testOnlyWhitespaceBeforeCodeAndNothingAfterIt;
+- (void) testOnlyWhitespaceBeforeCodeAndNothingAfterIt
 {
   [self assertInput: @" \x1B[1m"
           hasOutput: @" "];
 }
 
-- (void) testForegroundColor;
+- (void) testForegroundColor
 {
   NSAttributedString *input = [self makeString: @"a\x1B[36mbc\x1B[35md\x1B[39me"];
   NSAttributedString *output = [queue processAttributedString: input];
@@ -196,7 +213,7 @@
   [self assertString: output hasValue: [J3Formatting testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 4 message: @"e"];
 }
 
-- (void) testBackgroundColor;
+- (void) testBackgroundColor
 {
   NSAttributedString *input = [self makeString: @"a\x1B[46mbc\x1B[45md\x1B[49me"];
   NSAttributedString *output = [queue processAttributedString: input];
@@ -230,7 +247,7 @@
   [self assertString: output hasValue: [J3Formatting testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"]; 
 }
 
-- (void) testPersistColorsBetweenLines;
+- (void) testPersistColorsBetweenLines
 {
   NSAttributedString *firstInput = [self makeString: @"a\x1B[36mb"];
   NSAttributedString *secondInput = [self makeString: @"c"];
@@ -242,7 +259,7 @@
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"c"];
 }
 
-- (void) testBold;
+- (void) testBold
 {
   NSAttributedString *input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString *output = [queue processAttributedString: input];
@@ -254,7 +271,7 @@
   [self assertString: output hasTrait: NSUnboldFontMask atIndex: 4 message: @"e"];
 }
 
-- (void) testBoldWithBoldAlreadyOn;
+- (void) testBoldWithBoldAlreadyOn
 {
   NSMutableAttributedString *input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString *output;
@@ -274,7 +291,7 @@
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 0 message: @"a2"];
 }
 
-- (void) testUnderline;
+- (void) testUnderline
 {
   NSAttributedString *input = [self makeString: @"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me"];  
   NSAttributedString *output = [queue processAttributedString: input];
@@ -286,7 +303,7 @@
   [self assertString: output hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 4 message: @"e"];  
 }
 
-- (void) testFormattingOverTwoLines;
+- (void) testFormattingOverTwoLines
 {
   NSAttributedString *input1 = [self makeString: @"a\x1B["];  
   NSAttributedString *input2 = [self makeString: @"4mb"];  
@@ -297,7 +314,7 @@
   [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 0 message: @"b"];
 }
 
-- (void) testRetainsPartialCode;
+- (void) testRetainsPartialCode
 {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   [self assertInput: @"\x1B[" hasOutput: @""];

@@ -1235,6 +1235,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
@@ -1279,6 +1280,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
@@ -1452,6 +1454,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OBJROOT = "$(SYMROOT)";
 				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				SYMROOT = "$(PROJECT_DIR)/build";
 			};
 			name = Debug;
@@ -1459,6 +1462,10 @@
 		E69E223A0854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -1483,6 +1490,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OBJROOT = "$(SYMROOT)";
 				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				SYMROOT = "$(PROJECT_DIR)/build";
 				ZERO_LINK = NO;
 			};
