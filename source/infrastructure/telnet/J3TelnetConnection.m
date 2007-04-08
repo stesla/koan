@@ -80,7 +80,7 @@
   [socket close];
 }
 
-- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
+- (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer
 {
   return inputBuffer == buffer;
 }
@@ -167,7 +167,7 @@
 #pragma mark -
 #pragma mark J3TelnetEngineDelegate
 
-- (void) bufferInputByte: (uint8_t) byte;
+- (void) bufferInputByte: (uint8_t) byte
 {
   [inputBuffer appendByte: byte];
 }

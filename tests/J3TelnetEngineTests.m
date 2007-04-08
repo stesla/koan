@@ -53,7 +53,7 @@
 {
 }
 
-- (void) writeData: (NSData *) data;
+- (void) writeData: (NSData *) data
 {
   [buffer appendData: data];
 }

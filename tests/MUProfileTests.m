@@ -9,7 +9,7 @@
 
 @implementation MUProfileTests
 
-- (void) testUniqueIdentifer;
+- (void) testUniqueIdentifer
 {
   MUWorld *world = [[[MUWorld alloc] init] autorelease];
   [world setName: @"Test World"];
@@ -23,7 +23,7 @@
   [self assert: [profile uniqueIdentifier] equals: @"test.world.user"];
 }
 
-- (void) testHasLoginInformation;
+- (void) testHasLoginInformation
 {
   MUWorld *world = [[[MUWorld alloc] init] autorelease];
   [world setName: @"Test world"];

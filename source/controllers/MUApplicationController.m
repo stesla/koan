@@ -188,7 +188,7 @@
     [profilesController showWindow: self];
 }
 
-- (IBAction) showProxySettings: (id) sender;
+- (IBAction) showProxySettings: (id) sender
 {
   if (!proxySettingsController)
     proxySettingsController = [[MUProxySettingsController alloc] init];
@@ -196,7 +196,7 @@
     [proxySettingsController showWindow: self];
 }
 
-- (IBAction) toggleUseProxy: (id) sender;
+- (IBAction) toggleUseProxy: (id) sender
 {
   [[J3SocketFactory defaultFactory] toggleUseProxy];
 }
@@ -325,7 +325,7 @@
   [controller connect: nil];
 }
 
-- (void) playNotificationSound;
+- (void) playNotificationSound
 {
   [[NSSound soundNamed: [[NSUserDefaults standardUserDefaults] stringForKey: MUPSoundChoice]] play];
 }
@@ -422,7 +422,7 @@
   [NSApp replyToApplicationShouldTerminate: cont];
 }
 
-- (BOOL) shouldPlayNotificationSound;
+- (BOOL) shouldPlayNotificationSound
 {
   return ([[NSUserDefaults standardUserDefaults] boolForKey: MUPPlaySounds]
           && (![NSApp isActive] || [[NSUserDefaults standardUserDefaults] boolForKey: MUPPlayWhenActive]));

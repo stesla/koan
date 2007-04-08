@@ -55,7 +55,7 @@
   [filters addObject: filter];
 }
 
-- (void) clearFilters;
+- (void) clearFilters
 {
   [self at: &filters put: [NSMutableArray array]];
 }

@@ -81,7 +81,7 @@
   [dataBuffer appendBytes: bytes length: 1];
 }
 
-- (void) appendData: (NSData *) data;
+- (void) appendData: (NSData *) data
 {
   [dataBuffer appendData: data];
 }

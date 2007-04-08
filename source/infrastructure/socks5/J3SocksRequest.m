@@ -10,7 +10,7 @@
 
 @implementation J3SocksRequest
 
-- (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue;
+- (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue
 {
   if (![super init])
     return nil;

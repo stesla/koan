@@ -10,13 +10,13 @@
 
 @implementation J3SocksMethodSelection
 
-- (void) addMethod: (J3SocksMethod)method;
+- (void) addMethod: (J3SocksMethod)method
 {
   char bytes[1] = {method};
   [methods appendBytes: bytes length: 1];
 }
 
-- (void) appendToBuffer: (id <J3WriteBuffer>) buffer;
+- (void) appendToBuffer: (id <J3WriteBuffer>) buffer
 {
   const uint8_t *bytes;
   
@@ -28,13 +28,13 @@
     [buffer appendByte: bytes[i]];
 }
 
-- (void) dealloc;
+- (void) dealloc
 {
   [methods release];
   [super dealloc];
 }
 
-- (id) init;
+- (id) init
 {
   if (![super init])
     return nil;
@@ -45,12 +45,12 @@
   return self;
 }
 
-- (J3SocksMethod) method;
+- (J3SocksMethod) method
 {
   return selectedMethod;
 }
 
-- (void) parseResponseFromByteSource: (id <J3ByteSource>) byteSource;
+- (void) parseResponseFromByteSource: (id <J3ByteSource>) byteSource
 {
   uint8_t response[2] = {0, 0};
   

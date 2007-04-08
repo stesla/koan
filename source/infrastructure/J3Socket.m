@@ -339,7 +339,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   FD_SET (socketfd, set);
 }
 
-- (void) performPostConnectNegotiation;
+- (void) performPostConnectNegotiation
 {
   // Override in subclass to do something after connecting but before changing status
 }

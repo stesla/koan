@@ -42,7 +42,7 @@ enum MUSearchDirections
 
 @implementation MUConnectionWindowController
 
-- (id) initWithProfile: (MUProfile*) newProfile;
+- (id) initWithProfile: (MUProfile*) newProfile
 {
   if (![super initWithWindowNibName: @"MUConnectionWindow"])
     return nil;
@@ -59,7 +59,7 @@ enum MUSearchDirections
   return self;
 }
 
-- (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer;
+- (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer
 {
   return [self initWithProfile: [MUProfile profileWithWorld: newWorld player: newPlayer]];
 }
@@ -531,7 +531,7 @@ enum MUSearchDirections
   return YES;
 }
 
-- (void) cleanUpPingTimer;
+- (void) cleanUpPingTimer
 {
   [pingTimer invalidate];
   [pingTimer release];
@@ -555,7 +555,7 @@ enum MUSearchDirections
   }
 }
 
-- (void) disconnect;
+- (void) disconnect
 {
   if (telnetConnection)
     [telnetConnection close];

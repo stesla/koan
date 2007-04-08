@@ -213,7 +213,7 @@
   [self didChangeValueForKey: @"effectiveBackgroundColor"];
 }
 
-- (BOOL) hasLoginInformation;
+- (BOOL) hasLoginInformation
 {
   return [self loginString] != nil;
 }
@@ -250,7 +250,7 @@
   [self didChangeValueForKey: @"effectiveVisitedLinkColor"];
 }
 
-- (NSObject <J3Formatting> *) formatting;
+- (NSObject <J3Formatting> *) formatting
 {
   return [[[MUProfileFormatting alloc] initWithProfile: self] autorelease];
 }
@@ -339,7 +339,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (NSString *) hostname;
+- (NSString *) hostname
 {
   return [world hostname];
 }

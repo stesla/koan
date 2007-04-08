@@ -32,7 +32,7 @@
   [self appendData: [NSData dataWithBytes: bytes length: length]];
 }
 
-- (BOOL) hasDataAvailable;
+- (BOOL) hasDataAvailable
 {
   return [self length] > 0;
 }
@@ -46,7 +46,7 @@
   return [self dataByConsumingBytesToIndex: lengthToRead];
 }
 
-- (void) setBytesToRead: (unsigned) value;
+- (void) setBytesToRead: (unsigned) value
 {
   bytesToRead = value;
 }
@@ -78,7 +78,7 @@
   [readString release];
 }
 
-- (void) testMethodSelection;
+- (void) testMethodSelection
 {
   J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
   const char expected1[] = {0x05, 0x01, 0x00};
@@ -100,7 +100,7 @@
     [self assertInt: (int) [output characterAtIndex: j] equals: expected2[j]];
 }
 
-- (void) testSelectMethod;
+- (void) testSelectMethod
 {
   J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
@@ -113,7 +113,7 @@
   [self assertInt: [selection method] equals: J3SocksUsernamePassword];
 }
 
-- (void) testSelectMethodOneByteAtATime;
+- (void) testSelectMethodOneByteAtATime
 {
   J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
@@ -126,7 +126,7 @@
   [self assertInt: [selection method] equals: J3SocksUsernamePassword];  
 }
 
-- (void) testRequest;
+- (void) testRequest
 {
   J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname: @"example.com" port: 0xABCD] autorelease];
   uint8_t expected[18] = {J3SocksVersion, J3SocksConnect, 0, 3, 11, 'e', 'x', 'a', 'm', 'p', 'l', 'e', '.', 'c', 'o', 'm', 0xAB, 0xCD};
@@ -140,7 +140,7 @@
     [self assertInt: ((uint8_t *) [data bytes])[i] equals: expected[i]];
 }
 
-- (void) testReplyWithDomainName;
+- (void) testReplyWithDomainName
 {
   J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname: @"example.com" port: 0xABCD] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
@@ -156,7 +156,7 @@
   [self assertInt: [request reply] equals: J3SocksConnectionNotAllowed];
 }
 
-- (void) testReplyWithIPV4;
+- (void) testReplyWithIPV4
 {
   J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname: @"example.com" port: 0xABCD] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
@@ -172,7 +172,7 @@
   [self assertInt: [request reply] equals: J3SocksConnectionNotAllowed];
 }
 
-- (void) testReplyWithIPV6;
+- (void) testReplyWithIPV6
 {
   J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname: @"example.com" port: 0xABCD] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
@@ -188,7 +188,7 @@
   [self assertInt: [request reply] equals: J3SocksConnectionNotAllowed];
 }
 
-- (void) testAuthentication;
+- (void) testAuthentication
 {
   J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername: @"bob" password: @"barfoo"] autorelease];
   uint8_t expected[12] = {J3SocksUsernamePasswordVersion, 3, 'b', 'o', 'b', 6, 'b', 'a', 'r', 'f', 'o', 'o'};
@@ -202,7 +202,7 @@
     [self assertInt: ((uint8_t *) [data bytes])[i] equals: expected[i]];
 }
 
-- (void) testAuthenticationReply;
+- (void) testAuthenticationReply
 {
   J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername: @"bob" password: @"barfoo"] autorelease];
   J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
@@ -233,7 +233,7 @@
 
 @implementation J3SOCKSPrimitiveTests (Private)
 
-- (void) assertObject: (id) object writes: (NSString *) output;
+- (void) assertObject: (id) object writes: (NSString *) output
 {
   [buffer clear];
   [object appendToBuffer: buffer];

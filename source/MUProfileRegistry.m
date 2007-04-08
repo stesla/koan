@@ -95,7 +95,7 @@ static MUProfileRegistry *defaultRegistry = nil;
   return [self containsProfileForUniqueIdentifier: [profile uniqueIdentifier]];
 }
 
-- (BOOL) containsProfileForUniqueIdentifier: (NSString *) identifier;
+- (BOOL) containsProfileForUniqueIdentifier: (NSString *) identifier
 {
   return [self profileForUniqueIdentifier: identifier] != nil;  
 }
