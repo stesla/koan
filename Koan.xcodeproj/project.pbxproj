@@ -7,17 +7,6 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
-		7E4AFBE40BA7D2C10050B5AE /* All Tests */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 7E4AFBEF0BA7D2ED0050B5AE /* Build configuration list for PBXAggregateTarget "All Tests" */;
-			buildPhases = (
-			);
-			dependencies = (
-				7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */,
-			);
-			name = "All Tests";
-			productName = "All Tests";
-		};
 		E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = E69E22280854FB100055BCF5 /* Build configuration list for PBXAggregateTarget "Unpack Frameworks" */;
@@ -156,7 +145,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 2FE367F00BCAD3730068A6AA /* Spotlight Importer */;
+			remoteGlobalIDString = 2FE367F00BCAD3730068A6AA;
 			remoteInfo = "Spotlight Importer";
 		};
 		7E3F47310BB2061F00D2947F /* PBXContainerItemProxy */ = {
@@ -165,13 +154,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D1107260486CEB800E47090;
 			remoteInfo = Koan;
-		};
-		7E4AFBE50BA7D2C60050B5AE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7E87751709AD558700A883BC;
-			remoteInfo = "Unit Tests";
 		};
 		7EDB35580BA64EA0008EE7D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -934,7 +916,6 @@
 			projectDirPath = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Koan */,
-				7E4AFBE40BA7D2C10050B5AE /* All Tests */,
 				E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */,
 				2FE367F00BCAD3730068A6AA /* Spotlight Importer */,
 				7E87751709AD558700A883BC /* Unit Tests */,
@@ -1152,11 +1133,6 @@
 			target = 8D1107260486CEB800E47090 /* Koan */;
 			targetProxy = 7E3F47310BB2061F00D2947F /* PBXContainerItemProxy */;
 		};
-		7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7E87751709AD558700A883BC /* Unit Tests */;
-			targetProxy = 7E4AFBE50BA7D2C60050B5AE /* PBXContainerItemProxy */;
-		};
 		7EDB35590BA64EA0008EE7D9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */;
@@ -1271,28 +1247,6 @@
 				PREBINDING = NO;
 				PRODUCT_NAME = KoanLogImporter;
 				WRAPPER_EXTENSION = mdimporter;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		7E4AFBF00BA7D2ED0050B5AE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "All Tests";
-			};
-			name = Debug;
-		};
-		7E4AFBF10BA7D2ED0050B5AE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				PRODUCT_NAME = "All Tests";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1581,15 +1535,6 @@
 			buildConfigurations = (
 				2FE367F40BCAD3740068A6AA /* Debug */,
 				2FE367F50BCAD3740068A6AA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
-		};
-		7E4AFBEF0BA7D2ED0050B5AE /* Build configuration list for PBXAggregateTarget "All Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7E4AFBF00BA7D2ED0050B5AE /* Debug */,
-				7E4AFBF10BA7D2ED0050B5AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
