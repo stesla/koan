@@ -12,6 +12,8 @@
   NSString *content;
 }
 
+- (id) mockInitWithString: (NSString *) string;
+
 - (NSString *) content;
 - (void) fillDictionaryWithMetadata: (NSMutableDictionary *) dictionary;
 - (NSString *) headerForKey: (id) key;

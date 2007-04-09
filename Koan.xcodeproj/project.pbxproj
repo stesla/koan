@@ -13,7 +13,6 @@
 			buildPhases = (
 			);
 			dependencies = (
-				7E4AFBE80BA7D2CA0050B5AE /* PBXTargetDependency */,
 				7E4AFBE60BA7D2C60050B5AE /* PBXTargetDependency */,
 			);
 			name = "All Tests";
@@ -40,9 +39,17 @@
 		2F7B4FB90BCAC1FD00C1586D /* MUDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FB70BCAC1FD00C1586D /* MUDocumentController.m */; };
 		2F7B4FED0BCAC40F00C1586D /* MUTextLogDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */; };
 		2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC93E290BB103C500149459 /* J3TelnetEngine.m */; };
+		2FCFEF3E0BCADEB40061FB6B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		2FCFEF720BCADF970061FB6B /* KoanLogImporter.mdimporter in Copy Importer */ = {isa = PBXBuildFile; fileRef = 2FE367F10BCAD3730068A6AA /* KoanLogImporter.mdimporter */; };
+		2FCFEFDD0BCAE36D0061FB6B /* MUTextLogDocumentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCFEFDC0BCAE36D0061FB6B /* MUTextLogDocumentTests.m */; };
 		2FDF39610ADB3D1A00EDD48A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
-		2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
+		2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
 		2FE366750BCAC9820068A6AA /* UKPrefsPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE366730BCAC9820068A6AA /* UKPrefsPanel.m */; };
+		2FE368160BCAD4F00068A6AA /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE367EB0BCAD35E0068A6AA /* GetMetadataForFile.m */; };
+		2FE368170BCAD4F30068A6AA /* Main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FE367EC0BCAD35E0068A6AA /* Main.c */; };
+		2FE368180BCAD5010068A6AA /* MUTextLogDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */; };
+		2FE368440BCAD5DB0068A6AA /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FE368420BCAD5DB0068A6AA /* schema.xml */; };
+		2FE3691F0BCAD8370068A6AA /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3691E0BCAD8370068A6AA /* schema.strings */; };
 		7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
 		7E070B2A0933D32B000A36CF /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
 		7E13B9AD09AE87D800508460 /* MUProxySettings.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7E13B9AB09AE87D800508460 /* MUProxySettings.nib */; };
@@ -100,9 +107,9 @@
 		E6055F7F07492729007A13BD /* NSAttributedString (Allocating).m in Sources */ = {isa = PBXBuildFile; fileRef = E6055F7D07492729007A13BD /* NSAttributedString (Allocating).m */; };
 		E60DDB86076CE889009870E4 /* FontNameToDisplayNameTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */; };
 		E615A3C707D3B2FE00FC7F6B /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E615A3C607D3B2FE00FC7F6B /* Growl.framework */; };
-		E615A40607D3B38C00FC7F6B /* Growl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E615A3C607D3B2FE00FC7F6B /* Growl.framework */; };
+		E615A40607D3B38C00FC7F6B /* Growl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E615A3C607D3B2FE00FC7F6B /* Growl.framework */; };
 		E61C3C7107B7312B00519A89 /* RBSplitView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E61C3C6E07B7312B00519A89 /* RBSplitView.framework */; };
-		E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E61C3C6E07B7312B00519A89 /* RBSplitView.framework */; };
+		E61C3C9C07B7314E00519A89 /* RBSplitView.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E61C3C6E07B7312B00519A89 /* RBSplitView.framework */; };
 		E622A553074231A60069335B /* MUConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = E622A551074231A60069335B /* MUConstants.m */; };
 		E62C8FBE07421D83005662BC /* MUConnectionToolbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E62C8FBC07421D83005662BC /* MUConnectionToolbarController.m */; };
 		E62C905D07422595005662BC /* MUApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E62C905B07422595005662BC /* MUApplicationController.m */; };
@@ -145,19 +152,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7E0152DB0BA79967004BB9B8 /* PBXContainerItemProxy */ = {
+		2FCFEF6C0BCADF680061FB6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D576316048677EA00EA77CD;
-			remoteInfo = KoanLogImporter;
-		};
-		7E0153250BA79D71004BB9B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
-			remoteInfo = KoanLogImporter;
+			remoteGlobalIDString = 2FE367F00BCAD3730068A6AA /* Spotlight Importer */;
+			remoteInfo = "Spotlight Importer";
 		};
 		7E3F47310BB2061F00D2947F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -166,25 +166,11 @@
 			remoteGlobalIDString = 8D1107260486CEB800E47090;
 			remoteInfo = Koan;
 		};
-		7E4AFB2C0BA7CD0D0050B5AE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7E4AFB170BA7CC990050B5AE;
-			remoteInfo = "Unit Tests";
-		};
 		7E4AFBE50BA7D2C60050B5AE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 7E87751709AD558700A883BC;
-			remoteInfo = "Unit Tests";
-		};
-		7E4AFBE70BA7D2CA0050B5AE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7E4AFB160BA7CC990050B5AE;
 			remoteInfo = "Unit Tests";
 		};
 		7EDB35580BA64EA0008EE7D9 /* PBXContainerItemProxy */ = {
@@ -204,16 +190,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		16D5FA0A075434F9007C5F34 /* CopyFiles */ = {
+		16D5FA0A075434F9007C5F34 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E615A40607D3B38C00FC7F6B /* Growl.framework in CopyFiles */,
-				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in CopyFiles */,
-				2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in CopyFiles */,
+				E615A40607D3B38C00FC7F6B /* Growl.framework in Copy Frameworks */,
+				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in Copy Frameworks */,
+				2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FCFEF6E0BCADF7E0061FB6B /* Copy Importer */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/Spotlight;
+			dstSubfolderSpec = 1;
+			files = (
+				2FCFEF720BCADF970061FB6B /* KoanLogImporter.mdimporter in Copy Importer */,
+			);
+			name = "Copy Importer";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -237,11 +235,18 @@
 		2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUTextLogDocument.m; sourceTree = "<group>"; };
 		2FC93E280BB103C500149459 /* J3TelnetEngine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetEngine.h; sourceTree = "<group>"; };
 		2FC93E290BB103C500149459 /* J3TelnetEngine.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetEngine.m; sourceTree = "<group>"; };
+		2FCFEFDB0BCAE36D0061FB6B /* MUTextLogDocumentTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUTextLogDocumentTests.h; sourceTree = "<group>"; };
+		2FCFEFDC0BCAE36D0061FB6B /* MUTextLogDocumentTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUTextLogDocumentTests.m; sourceTree = "<group>"; };
 		2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FE366720BCAC9820068A6AA /* UKPrefsPanel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UKPrefsPanel.h; sourceTree = "<group>"; };
 		2FE366730BCAC9820068A6AA /* UKPrefsPanel.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = UKPrefsPanel.m; sourceTree = "<group>"; };
+		2FE367EB0BCAD35E0068A6AA /* GetMetadataForFile.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
+		2FE367EC0BCAD35E0068A6AA /* Main.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = Main.c; sourceTree = "<group>"; };
+		2FE367F10BCAD3730068A6AA /* KoanLogImporter.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KoanLogImporter.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FE368010BCAD4630068A6AA /* Importer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Importer-Info.plist"; sourceTree = "<group>"; };
+		2FE368420BCAD5DB0068A6AA /* schema.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = schema.xml; sourceTree = "<group>"; };
+		2FE369180BCAD8290068A6AA /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Koan-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Prefix.pch"; sourceTree = "<group>"; };
-		7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = KoanLogImporter.xcodeproj; path = KoanLogImporter/KoanLogImporter.xcodeproj; sourceTree = "<group>"; };
 		7E070ACD0933CD81000A36CF /* J3SOCKSPrimitiveTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SOCKSPrimitiveTests.h; sourceTree = "<group>"; };
 		7E070ACE0933CD81000A36CF /* J3SOCKSPrimitiveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SOCKSPrimitiveTests.m; sourceTree = "<group>"; };
 		7E070AFC0933D01E000A36CF /* J3SocksMethodSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocksMethodSelection.h; sourceTree = "<group>"; };
@@ -424,6 +429,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2FE367EF0BCAD3730068A6AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FCFEF3E0BCADEB40061FB6B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E87751509AD558700A883BC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -472,6 +485,7 @@
 			children = (
 				8D1107320486CEB800E47090 /* Koan.app */,
 				7E87751809AD558700A883BC /* Unit Tests.octest */,
+				2FE367F10BCAD3730068A6AA /* KoanLogImporter.mdimporter */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -479,15 +493,14 @@
 		29B97314FDCFA39411CA2CEA /* Koan */ = {
 			isa = PBXGroup;
 			children = (
-				7E2B447D0855639900769ED6 /* Externals */,
 				29B97315FDCFA39411CA2CEA /* Source */,
 				E6D0A56C0745518A002DA041 /* Filters */,
+				2FE367E60BCAD3230068A6AA /* Spotlight Importer */,
 				E6B5E40A06A6F28400F53EBB /* Tests */,
 				E6B5E42906A6F36300F53EBB /* Documentation */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
 			);
 			name = Koan;
 			sourceTree = "<group>";
@@ -592,13 +605,17 @@
 			path = thirdparty;
 			sourceTree = "<group>";
 		};
-		7E0152D80BA79967004BB9B8 /* Products */ = {
+		2FE367E60BCAD3230068A6AA /* Spotlight Importer */ = {
 			isa = PBXGroup;
 			children = (
-				7E0152DC0BA79967004BB9B8 /* KoanLogImporter.mdimporter */,
-				7E4AFB2D0BA7CD0D0050B5AE /* Unit Tests.octest */,
+				2FE3691E0BCAD8370068A6AA /* schema.strings */,
+				2FE368420BCAD5DB0068A6AA /* schema.xml */,
+				2FE367EB0BCAD35E0068A6AA /* GetMetadataForFile.m */,
+				2FE368010BCAD4630068A6AA /* Importer-Info.plist */,
+				2FE367EC0BCAD35E0068A6AA /* Main.c */,
 			);
-			name = Products;
+			name = "Spotlight Importer";
+			path = importer;
 			sourceTree = "<group>";
 		};
 		7E0709EF09339A1E000A36CF /* SOCKS5 */ = {
@@ -615,14 +632,6 @@
 			);
 			name = SOCKS5;
 			path = socks5;
-			sourceTree = "<group>";
-		};
-		7E2B447D0855639900769ED6 /* Externals */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Externals;
-			path = externals;
 			sourceTree = "<group>";
 		};
 		7E68DC33092AC2FB004554BD /* Telnet */ = {
@@ -738,6 +747,8 @@
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
 				7E070ACD0933CD81000A36CF /* J3SOCKSPrimitiveTests.h */,
 				7E070ACE0933CD81000A36CF /* J3SOCKSPrimitiveTests.m */,
+				7EFACED00BC4BEFD007AE743 /* J3TelnetEngineTests.h */,
+				7EFACED10BC4BEFD007AE743 /* J3TelnetEngineTests.m */,
 				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
 				7E68DC2D092AC2AF004554BD /* J3TelnetStateMachineTests.m */,
 				7EC301B0092B78DE00AFA5C7 /* J3WriteBufferTests.h */,
@@ -748,6 +759,8 @@
 				E696783D078F55590033A4C8 /* MUProfileRegistryTests.m */,
 				7EDD3E3F078A4AFB00138CD1 /* MUProfileTests.h */,
 				7EDD3E40078A4AFB00138CD1 /* MUProfileTests.m */,
+				2FCFEFDB0BCAE36D0061FB6B /* MUTextLogDocumentTests.h */,
+				2FCFEFDC0BCAE36D0061FB6B /* MUTextLogDocumentTests.m */,
 				E6E7A63D0749698F007005AC /* MUTextLoggerTests.h */,
 				E6E7A63E0749698F007005AC /* MUTextLoggerTests.m */,
 				7E13FA590788C75F0071D30C /* MUWorldTests.h */,
@@ -756,8 +769,6 @@
 				7EA5BB1F07A76A98002336EE /* TestCase (NSAttributedStringAssertions).m */,
 				E648B8E906B03FBC0070F73E /* Tests-Info.plist */,
 				E6055FB6074929F3007A13BD /* Tests-Prefix.pch */,
-				7EFACED00BC4BEFD007AE743 /* J3TelnetEngineTests.h */,
-				7EFACED10BC4BEFD007AE743 /* J3TelnetEngineTests.m */,
 			);
 			name = Tests;
 			path = tests;
@@ -853,11 +864,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2FE367F00BCAD3730068A6AA /* Spotlight Importer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FE367F30BCAD3740068A6AA /* Build configuration list for PBXNativeTarget "Spotlight Importer" */;
+			buildPhases = (
+				2FE367ED0BCAD3730068A6AA /* Resources */,
+				2FE367EE0BCAD3730068A6AA /* Sources */,
+				2FE367EF0BCAD3730068A6AA /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Spotlight Importer";
+			productName = "Text Log Importer";
+			productReference = 2FE367F10BCAD3730068A6AA /* KoanLogImporter.mdimporter */;
+			productType = "com.apple.product-type.bundle";
+		};
 		7E87751709AD558700A883BC /* Unit Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7E87751A09AD558700A883BC /* Build configuration list for PBXNativeTarget "Unit Tests" */;
 			buildPhases = (
-				7E87751309AD558700A883BC /* Resources */,
 				7E87751409AD558700A883BC /* Sources */,
 				7E87751509AD558700A883BC /* Frameworks */,
 				7E87751609AD558700A883BC /* ShellScript */,
@@ -880,15 +907,15 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				16D5FA0A075434F9007C5F34 /* CopyFiles */,
-				7E01530B0BA79ACE004BB9B8 /* Copy Importer */,
+				16D5FA0A075434F9007C5F34 /* Copy Frameworks */,
+				2FCFEF6E0BCADF7E0061FB6B /* Copy Importer */,
 				2F50909E0BC0D88D006A08C6 /* Set Version */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				E6967A1A078F5CC60033A4C8 /* PBXTargetDependency */,
-				7E0153260BA79D71004BB9B8 /* PBXTargetDependency */,
+				2FCFEF6D0BCADF680061FB6B /* PBXTargetDependency */,
 			);
 			name = Koan;
 			productInstallPath = "$(HOME)/Applications";
@@ -905,43 +932,23 @@
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Koan */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 7E0152D80BA79967004BB9B8 /* Products */;
-					ProjectRef = 7E0151870BA7931D004BB9B8 /* KoanLogImporter.xcodeproj */;
-				},
-			);
 			targets = (
 				8D1107260486CEB800E47090 /* Koan */,
 				7E4AFBE40BA7D2C10050B5AE /* All Tests */,
 				E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */,
+				2FE367F00BCAD3730068A6AA /* Spotlight Importer */,
 				7E87751709AD558700A883BC /* Unit Tests */,
 			);
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		7E0152DC0BA79967004BB9B8 /* KoanLogImporter.mdimporter */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = KoanLogImporter.mdimporter;
-			remoteRef = 7E0152DB0BA79967004BB9B8 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		7E4AFB2D0BA7CD0D0050B5AE /* Unit Tests.octest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Unit Tests.octest";
-			remoteRef = 7E4AFB2C0BA7CD0D0050B5AE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
-		7E87751309AD558700A883BC /* Resources */ = {
+		2FE367ED0BCAD3730068A6AA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FE368440BCAD5DB0068A6AA /* schema.xml in Resources */,
+				2FE3691F0BCAD8370068A6AA /* schema.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -989,22 +996,6 @@
 			shellPath = "/usr/bin/perl -w";
 			shellScript = "# Xcode auto-versioning script for Subversion\n# Based on versions by Axel Andersson and Daniel Jalkut\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Get the current subversion revision number and use it to set Info.plist values\nmy $REV = `/usr/local/bin/svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n\nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n\nopen (FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join (\"\", <FH>);\nclose (FH);\n\n$info =~ s/SVNREVISION/$version/g;\n\nopen (FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose (FH);\n";
 		};
-		7E01530B0BA79ACE004BB9B8 /* Copy Importer */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(PROJECT_DIR)/KoanLogImporter/build/$(CONFIGURATION)/KoanLogImporter.mdimporter",
-			);
-			name = "Copy Importer";
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(WRAPPER_NAME)/Contents/Library/Spotlight/KoanLogImporter.mdimporter",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "SOURCE=\"${PROJECT_DIR}/KoanLogImporter/build/${CONFIGURATION}/KoanLogImporter.mdimporter\"\nDEST_DIR=\"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Contents/Library/Spotlight\"\nDEST=\"${DEST_DIR}/KoanLogImporter.mdimporter\"\nif [ ! -d ${DEST_DIR} ]; then\n\tmkdir -p ${DEST_DIR}\nfi\ncp -r ${SOURCE} ${DEST}";
-		};
 		7E87751609AD558700A883BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1042,6 +1033,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2FE367EE0BCAD3730068A6AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FE368170BCAD4F30068A6AA /* Main.c in Sources */,
+				2FE368160BCAD4F00068A6AA /* GetMetadataForFile.m in Sources */,
+				2FE368180BCAD5010068A6AA /* MUTextLogDocument.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E87751409AD558700A883BC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1061,6 +1062,7 @@
 				7E87757109AD62E400A883BC /* TestCase (NSAttributedStringAssertions).m in Sources */,
 				7E43C1EE0ACB1C0900A8E677 /* J3ANSIFormattingFilterTests.m in Sources */,
 				7EFACED20BC4BEFD007AE743 /* J3TelnetEngineTests.m in Sources */,
+				2FCFEFDD0BCAE36D0061FB6B /* MUTextLogDocumentTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1140,10 +1142,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7E0153260BA79D71004BB9B8 /* PBXTargetDependency */ = {
+		2FCFEF6D0BCADF680061FB6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = KoanLogImporter;
-			targetProxy = 7E0153250BA79D71004BB9B8 /* PBXContainerItemProxy */;
+			target = 2FE367F00BCAD3730068A6AA /* Spotlight Importer */;
+			targetProxy = 2FCFEF6C0BCADF680061FB6B /* PBXContainerItemProxy */;
 		};
 		7E3F47320BB2061F00D2947F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1154,11 +1156,6 @@
 			isa = PBXTargetDependency;
 			target = 7E87751709AD558700A883BC /* Unit Tests */;
 			targetProxy = 7E4AFBE50BA7D2C60050B5AE /* PBXContainerItemProxy */;
-		};
-		7E4AFBE80BA7D2CA0050B5AE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Unit Tests";
-			targetProxy = 7E4AFBE70BA7D2CA0050B5AE /* PBXContainerItemProxy */;
 		};
 		7EDB35590BA64EA0008EE7D9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1173,6 +1170,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2FE3691E0BCAD8370068A6AA /* schema.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FE369180BCAD8290068A6AA /* English */,
+			);
+			name = schema.strings;
+			sourceTree = "<group>";
+		};
 		7E13B9AB09AE87D800508460 /* MUProxySettings.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1224,6 +1229,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2FE367F40BCAD3740068A6AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				INFOPLIST_FILE = "importer/Importer-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Spotlight";
+				LIBRARY_STYLE = Bundle;
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = KoanLogImporter;
+				WRAPPER_EXTENSION = mdimporter;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		2FE367F50BCAD3740068A6AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				INFOPLIST_FILE = "importer/Importer-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Spotlight";
+				LIBRARY_STYLE = Bundle;
+				OTHER_LDFLAGS = "";
+				PREBINDING = NO;
+				PRODUCT_NAME = KoanLogImporter;
+				WRAPPER_EXTENSION = mdimporter;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		7E4AFBF00BA7D2ED0050B5AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1458,6 +1509,7 @@
 		E69E22390854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -1490,6 +1542,7 @@
 					ppc,
 					i386,
 				);
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -1523,6 +1576,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2FE367F30BCAD3740068A6AA /* Build configuration list for PBXNativeTarget "Spotlight Importer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FE367F40BCAD3740068A6AA /* Debug */,
+				2FE367F50BCAD3740068A6AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		7E4AFBEF0BA7D2ED0050B5AE /* Build configuration list for PBXAggregateTarget "All Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

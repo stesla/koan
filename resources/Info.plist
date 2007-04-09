@@ -7,18 +7,22 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeName</key>
+			<string>Koan text log</string>
 			<key>CFBundleTypeRole</key>
-			<string>None</string>
+			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.3james.Koan.log.plain-text</string>
 			</array>
+			<key>NSDocumentClass</key>
+			<string>MUTextLogDocument</string>
 		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-  <key>CFBundleGetInfoString</key>
-  <string>${EXECUTABLE_NAME} ${APPLICATION_VERSION}, Copyright © 2007 3James Software</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${EXECUTABLE_NAME} ${APPLICATION_VERSION}, Copyright © 2007 3James Software</string>
 	<key>CFBundleIconFile</key>
 	<string>Koan.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -29,8 +33,8 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-  <key>CFBundleShortVersionString</key>
-  <string>${APPLICATION_VERSION}</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${APPLICATION_VERSION}</string>
 	<key>CFBundleSignature</key>
 	<string>3jKO</string>
 	<key>CFBundleURLTypes</key>

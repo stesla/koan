@@ -17,14 +17,16 @@
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
-	<key>CFBundleIconFile</key>
-	<string></string>
+  <key>CFBundleGetInfoString</key>
+  <string>Koan Spotlight Importer version 1.0, Copyright (c) 2007 3James Software.</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.3james.KoanLogImporter</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
+  <key>CFBundleShortVersionString</key>
+  <string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>CFPlugInDynamicRegisterFunction</key>

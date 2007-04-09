@@ -32,6 +32,20 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
   return self;
 }
 
+- (id) mockInitWithString: (NSString *) string
+{
+  if (![self init])
+    return nil;
+  
+  if (![self parse: string])
+  {
+    [self release];
+    return nil;
+  }
+  
+  return self;
+}
+
 - (void) dealloc
 {
   [content release];
