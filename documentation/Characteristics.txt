@@ -38,7 +38,7 @@ supports basically nothing
 TinyMUX
 =======
 
-< TinyMUX 2.4.0.23:
+* TinyMUX 2.4.0.23:
   no telnet option support, doesn't understand AYT, NOP, EC, etc.
   <http://lists.tcp.com/pipermail/tinyfugue/2005-November/001730.html>
 
@@ -65,12 +65,12 @@ TinyMUSH 3.(?):
 PennMUSH
 ========
 
-< PennMUSH 1.7.7-patch29:
+* PennMUSH 1.7.7-patch29:
   doesn't understand AYT, NOP, EC, etc.
   <http://www.pennmush.org/archives/pennmush-announce/2004/000093.html>
 
-PennMUSH 1.8.1 (need version):
-PennMUSH version 1.8.3 patchlevel 1 [03/11/2007]:
+* PennMUSH 1.8.1 (need version):
+* PennMUSH version 1.8.3 patchlevel 1 [03/11/2007]:
   server asks for telnet options: DO LINEMODE, DO NAWS, DO TERMINAL-TYPE
 
 INFO output:
