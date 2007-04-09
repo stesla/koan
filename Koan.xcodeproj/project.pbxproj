@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2F0A203E0BCAEC2600E833AD /* MULogBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */; };
 		2F42D0E30BB2618F0056C27A /* NSString (NDUtilities).m in Sources */ = {isa = PBXBuildFile; fileRef = 2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */; };
 		2F6C71F40BB460CA00709320 /* MUURLHandlerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6C71F20BB460CA00709320 /* MUURLHandlerCommand.m */; };
 		2F6C72AA0BB46BD000709320 /* Koan.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C72A90BB46BD000709320 /* Koan.sdef */; };
@@ -39,6 +40,7 @@
 		2FE368180BCAD5010068A6AA /* MUTextLogDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */; };
 		2FE368440BCAD5DB0068A6AA /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FE368420BCAD5DB0068A6AA /* schema.xml */; };
 		2FE3691F0BCAD8370068A6AA /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FE3691E0BCAD8370068A6AA /* schema.strings */; };
+		2FFE38270BCAF0FD00F4F3AF /* MULogBrowser.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2FFE38260BCAF0FD00F4F3AF /* MULogBrowser.nib */; };
 		7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
 		7E070B2A0933D32B000A36CF /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
 		7E13B9AD09AE87D800508460 /* MUProxySettings.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7E13B9AB09AE87D800508460 /* MUProxySettings.nib */; };
@@ -228,6 +230,7 @@
 		2FE368010BCAD4630068A6AA /* Importer-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = "Importer-Info.plist"; sourceTree = "<group>"; };
 		2FE368420BCAD5DB0068A6AA /* schema.xml */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; path = schema.xml; sourceTree = "<group>"; };
 		2FE369180BCAD8290068A6AA /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.xml; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; };
+		2FFE38220BCAF0F900F4F3AF /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MULogBrowser.nib; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Koan-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Koan-Prefix.pch"; sourceTree = "<group>"; };
 		7E070ACD0933CD81000A36CF /* J3SOCKSPrimitiveTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SOCKSPrimitiveTests.h; sourceTree = "<group>"; };
 		7E070ACE0933CD81000A36CF /* J3SOCKSPrimitiveTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SOCKSPrimitiveTests.m; sourceTree = "<group>"; };
@@ -707,6 +710,7 @@
 		E6B5E3AA06A6EE0C00F53EBB /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
+				2FFE38260BCAF0FD00F4F3AF /* MULogBrowser.nib */,
 				E6EB62C007569D33009F47D5 /* MUConnectionWindow.nib */,
 				E6EB62BE07569D2E009F47D5 /* MUMainMenu.nib */,
 				E6F3A713077A1ABD0011A461 /* MUProfiles.nib */,
@@ -957,6 +961,7 @@
 				E6E7BF0E07867F080065EDD6 /* finger-cursor.png in Resources */,
 				7E13B9AD09AE87D800508460 /* MUProxySettings.nib in Resources */,
 				2F6C72AA0BB46BD000709320 /* Koan.sdef in Resources */,
+				2FFE38270BCAF0FD00F4F3AF /* MULogBrowser.nib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1026,7 @@
 				2FE368170BCAD4F30068A6AA /* Main.c in Sources */,
 				2FE368160BCAD4F00068A6AA /* GetMetadataForFile.m in Sources */,
 				2FE368180BCAD5010068A6AA /* MUTextLogDocument.m in Sources */,
+				2F0A203E0BCAEC2600E833AD /* MULogBrowserWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1152,6 +1158,14 @@
 				2FE369180BCAD8290068A6AA /* English */,
 			);
 			name = schema.strings;
+			sourceTree = "<group>";
+		};
+		2FFE38260BCAF0FD00F4F3AF /* MULogBrowser.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FFE38220BCAF0F900F4F3AF /* English */,
+			);
+			name = MULogBrowser.nib;
 			sourceTree = "<group>";
 		};
 		7E13B9AB09AE87D800508460 /* MUProxySettings.nib */ = {

@@ -8,7 +8,9 @@
 
 @interface MULogBrowserWindowController : NSWindowController
 {
-
+  IBOutlet NSTextView *textView;
 }
+
++ (id) sharedLogBrowserWindowController;
 
 @end

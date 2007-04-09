@@ -5,6 +5,7 @@
 //
 
 #import "MUTextLogDocument.h"
+#import "MULogBrowserWindowController.h"
 
 static NSString *MUKoanLogWorld = @"com_3james_koan_log_world";
 static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
@@ -94,7 +95,9 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
 
 - (void) makeWindowControllers
 {
-  // TODO: hook this document up into the singleton MULogBrowserWindowController.
+  MULogBrowserWindowController *controller = [MULogBrowserWindowController sharedLogBrowserWindowController];
+  
+  [controller setDocument: self];
 }
 
 - (BOOL) readFromData: (NSData *) data ofType: (NSString *) typeName error: (NSError **) error

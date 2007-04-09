@@ -7,14 +7,20 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>koanlog</string>
+			</array>
 			<key>CFBundleTypeName</key>
-			<string>Koan text log</string>
+			<string>Koan plain-text log</string>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>Editor</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.3james.Koan.log.plain-text</string>
 			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
 			<key>NSDocumentClass</key>
 			<string>MUTextLogDocument</string>
 		</dict>
@@ -65,7 +71,7 @@
 				<string>public.plain-text</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Koan plain-text log files</string>
+			<string>Koan plain-text log</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.3james.Koan.log.plain-text</string>
 			<key>UTTypeTagSpecification</key>

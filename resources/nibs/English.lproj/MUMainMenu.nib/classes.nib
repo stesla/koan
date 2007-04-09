@@ -54,6 +54,11 @@
             SUPERCLASS = NSObject; 
         }, 
         {
+            CLASS = MUDocumentController; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSDocumentController; 
+        }, 
+        {
             ACTIONS = {connect = id; disconnect = id; writeLine = id; }; 
             CLASS = MUMainWindowController; 
             LANGUAGE = ObjC; 

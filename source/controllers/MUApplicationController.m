@@ -210,6 +210,11 @@
   [self updateApplicationBadge];
 }
 
+- (BOOL) applicationShouldOpenUntitledFile: (NSApplication *) sender
+{
+  return NO;
+}
+
 - (NSApplicationTerminateReply) applicationShouldTerminate: (NSApplication *) application
 {
   unsigned count = [connectionWindowControllers count];
