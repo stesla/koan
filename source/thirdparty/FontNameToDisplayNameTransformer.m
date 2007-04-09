@@ -1,7 +1,7 @@
 //
 // FontNameToDisplayNameTransformer.m
 //
-// Copyright (c) 2004, Apple Computer, Inc. All rights reserved.
+// Copyright (c) 2004 Apple Computer, Inc. All rights reserved.
 //
 // License:
 //
@@ -47,8 +47,23 @@
 // Copyright (c) 2007 3James Software.
 //
 
-#import <Foundation/Foundation.h>
+#import "FontNameToDisplayNameTransformer.h"
 
-@interface FontNameToDisplayNameTransformer : NSValueTransformer
+@implementation FontNameToDisplayNameTransformer
+
++ (Class) transformedValueClass
+{
+  return [NSString class];
+}
+
++ (BOOL) allowsReverseTransformation
+{
+  return NO;
+}
+
+- (id) transformedValue: (id) value
+{
+  return [[NSFont fontWithName: value size: 12] displayName];
+}
 
 @end

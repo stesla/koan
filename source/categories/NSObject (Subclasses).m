@@ -29,7 +29,7 @@
 
 @implementation NSObject (Subclasses)
 
-+ (NSArray *) subclasses;
++ (NSArray *) subclasses
 {
   NSMutableArray *subclasses = [NSMutableArray array];
   

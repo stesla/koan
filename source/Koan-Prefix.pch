@@ -13,7 +13,6 @@
 #import "categories/NSFont (FullDisplayName).h"
 #import "categories/NSObject (Accessing).h"
 #import "categories/NSObject (BetterHashing).h"
-#import "categories/NSObject (DeepMutableCopy).h"
 #import "categories/NSString (NDUtilities).h"
 
 #define _(name) NSLocalizedString (name, nil)

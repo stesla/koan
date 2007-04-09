@@ -42,7 +42,7 @@ enum MUSearchDirections
 
 @implementation MUConnectionWindowController
 
-- (id) initWithProfile: (MUProfile*) newProfile
+- (id) initWithProfile: (MUProfile *) newProfile
 {
   if (![super initWithWindowNibName: @"MUConnectionWindow"])
     return nil;
