@@ -7,18 +7,14 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>koanlog</string>
 			</array>
 			<key>CFBundleTypeName</key>
-			<string>Koan plain-text log</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.3james.Koan.log.plain-text</string>
-			</array>
+			<string>com.3james.Koan.log.plain-text</string>
 			<key>LSTypeIsPackage</key>
 			<false/>
 			<key>NSDocumentClass</key>
