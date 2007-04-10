@@ -32,11 +32,17 @@
   [self assert: [logDocument content] equals: @"Body: text\nIs cool\n"];
 }
 
-- (void) testHeadersWithoutColon;
+- (void) testHeadersWithoutColon
 {
   MUTextLogDocument *logDocument = [[[MUTextLogDocument alloc] mockInitWithString: @"Foo\nBar\n\nBaz"] autorelease];
   
   [self assertNil: logDocument];
+}
+
+- (void) testTrimLeadingAndTrailingSpaces
+{
+  MUTextLogDocument *logDocument = [[[MUTextLogDocument alloc] mockInitWithString: @"Header:  Value  \n\nText"] autorelease];  
+  [self assert: [logDocument headerForKey: @"Header"] equals: @"Value"];
 }
 
 @end

@@ -15,6 +15,7 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
 - (unsigned) findEndOfHeaderLocation: (NSString *)string lineEnding: (NSString **) lineEnding;
 - (BOOL) addKeyValuePairFromString: (NSString *) string toDictionary: (NSMutableDictionary *) dictionary;
 - (BOOL) parse: (NSString *) string;
+- (NSString *) spotlightDisplayName;
 
 @end
 
@@ -76,6 +77,7 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
     [dictionary setObject: [NSDate dateWithNaturalLanguageString: [self headerForKey: @"Date"]]
                    forKey: (NSString *) kMDItemContentCreationDate];
   
+  [dictionary setObject: [self spotlightDisplayName] forKey: (NSString *) kMDItemDisplayName];
   [dictionary setObject: [self content] forKey: (NSString *) kMDItemTextContent];  
 }
 
@@ -126,7 +128,10 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
   
   BOOL result = [string length] > [header length];
   if (result)
-    [dictionary setObject: [string substringFromIndex: [scanner scanLocation] + 2] forKey: header]; 
+  {
+    NSString *value = [[string substringFromIndex: [scanner scanLocation] + 2] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    [dictionary setObject: value forKey: header];     
+  }
   return result;
 }
 
@@ -187,6 +192,25 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
   content = [[string substringFromIndex: endOfHeaders + (2 * [lineEnding length])] copy];
   
   return YES;
+}
+
+- (NSString *) spotlightDisplayName;
+{
+  /* This string should be of the format "Player on Date" unless there is no player header
+   * in which case it should be "World on Date" unless there is none, and then it should be
+   * "Koan Log on Date".  If there is no date header, then we should just return nil to 
+   * indicate that we don't want to override the setting
+   */
+
+  NSString *date = [self headerForKey: @"Date"];
+  if (!date)
+    return nil;
+  NSString *name = [self headerForKey: @"Player"];
+  if (!name)
+    name = [self headerForKey: @"World"];
+  if (!name)
+    name = @"Koan Log";
+  return [NSString stringWithFormat: @"%@ on %@", name, date];
 }
 
 @end
