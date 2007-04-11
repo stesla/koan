@@ -1,5 +1,5 @@
 //
-//  J3TelnetSubnegotiationInterpretAsCommandState.m
+//  J3TelnetSubnegotiationIACState.m
 //  Koan
 //
 //  Created by Samuel Tesla on 4/5/07.
@@ -7,12 +7,12 @@
 //
 
 #import "J3TelnetConstants.h"
-#import "J3TelnetSubnegotiationInterpretAsCommandState.h"
+#import "J3TelnetSubnegotiationIACState.h"
 #import "J3TelnetSubnegotiationState.h"
 #import "J3TelnetTextState.h"
 
 
-@implementation J3TelnetSubnegotiationInterpretAsCommandState
+@implementation J3TelnetSubnegotiationIACState
 
 - (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
 {

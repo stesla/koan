@@ -7,7 +7,7 @@
 //
 
 #import "J3TelnetSubnegotiationState.h"
-#import "J3TelnetSubnegotiationInterpretAsCommandState.h"
+#import "J3TelnetSubnegotiationIACState.h"
 #import "J3TelnetConstants.h"
 #import "J3TelnetOptionMCCP1State.h"
 
@@ -18,7 +18,7 @@
   switch (byte)
   {
     case J3TelnetInterpretAsCommand:
-      return [J3TelnetSubnegotiationInterpretAsCommandState state];
+      return [J3TelnetSubnegotiationIACState state];
       
     case J3TelnetOptionMCCP1:
       return [J3TelnetOptionMCCP1State state];

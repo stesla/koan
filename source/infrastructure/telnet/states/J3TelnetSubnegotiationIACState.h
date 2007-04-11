@@ -1,5 +1,5 @@
 //
-//  J3TelnetSubnegotiationInterpretAsCommandState.h
+//  J3TelnetSubnegotiationIACState.h
 //  Koan
 //
 //  Created by Samuel Tesla on 4/5/07.
@@ -9,6 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "J3TelnetState.h"
 
-@interface J3TelnetSubnegotiationInterpretAsCommandState : J3TelnetState
+@interface J3TelnetSubnegotiationIACState : J3TelnetState
 
 @end

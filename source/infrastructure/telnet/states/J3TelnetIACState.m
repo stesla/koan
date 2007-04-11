@@ -1,5 +1,5 @@
 //
-// J3TelnetInterpretAsCommandState.m
+// J3TelnetIACState.m
 //
 // Copyright (c) 2007 3James Software.
 //
@@ -7,7 +7,7 @@
 #import "J3TelnetConstants.h"
 #import "J3TelnetDoState.h"
 #import "J3TelnetDontState.h"
-#import "J3TelnetInterpretAsCommandState.h"
+#import "J3TelnetIACState.h"
 #import "J3TelnetEngine.h"
 #import "J3TelnetState.h"
 #import "J3TelnetSubnegotiationState.h"
@@ -15,7 +15,7 @@
 #import "J3TelnetWillState.h"
 #import "J3TelnetWontState.h"
 
-@implementation J3TelnetInterpretAsCommandState
+@implementation J3TelnetIACState
 
 - (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
 {

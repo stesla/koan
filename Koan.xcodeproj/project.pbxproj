@@ -56,14 +56,14 @@
 		7E4FB2790BCC877B007BC40F /* J3TelnetDontState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB2650BCC877B007BC40F /* J3TelnetDontState.m */; };
 		7E4FB27A0BCC877B007BC40F /* J3TelnetDoState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB2660BCC877B007BC40F /* J3TelnetDoState.h */; };
 		7E4FB27B0BCC877B007BC40F /* J3TelnetDoState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB2670BCC877B007BC40F /* J3TelnetDoState.m */; };
-		7E4FB27C0BCC877B007BC40F /* J3TelnetInterpretAsCommandState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB2680BCC877B007BC40F /* J3TelnetInterpretAsCommandState.h */; };
-		7E4FB27D0BCC877B007BC40F /* J3TelnetInterpretAsCommandState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB2690BCC877B007BC40F /* J3TelnetInterpretAsCommandState.m */; };
+		7E4FB27C0BCC877B007BC40F /* J3TelnetIACState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB2680BCC877B007BC40F /* J3TelnetIACState.h */; };
+		7E4FB27D0BCC877B007BC40F /* J3TelnetIACState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB2690BCC877B007BC40F /* J3TelnetIACState.m */; };
 		7E4FB27E0BCC877B007BC40F /* J3TelnetOptionMCCP1State.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB26A0BCC877B007BC40F /* J3TelnetOptionMCCP1State.h */; };
 		7E4FB27F0BCC877B007BC40F /* J3TelnetOptionMCCP1State.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB26B0BCC877B007BC40F /* J3TelnetOptionMCCP1State.m */; };
 		7E4FB2800BCC877B007BC40F /* J3TelnetState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB26C0BCC877B007BC40F /* J3TelnetState.h */; };
 		7E4FB2810BCC877B007BC40F /* J3TelnetState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB26D0BCC877B007BC40F /* J3TelnetState.m */; };
-		7E4FB2820BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB26E0BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.h */; };
-		7E4FB2830BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB26F0BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.m */; };
+		7E4FB2820BCC877B007BC40F /* J3TelnetSubnegotiationIACState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB26E0BCC877B007BC40F /* J3TelnetSubnegotiationIACState.h */; };
+		7E4FB2830BCC877B007BC40F /* J3TelnetSubnegotiationIACState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB26F0BCC877B007BC40F /* J3TelnetSubnegotiationIACState.m */; };
 		7E4FB2840BCC877B007BC40F /* J3TelnetSubnegotiationState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB2700BCC877B007BC40F /* J3TelnetSubnegotiationState.h */; };
 		7E4FB2850BCC877B007BC40F /* J3TelnetSubnegotiationState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E4FB2710BCC877B007BC40F /* J3TelnetSubnegotiationState.m */; };
 		7E4FB2860BCC877B007BC40F /* J3TelnetTextState.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4FB2720BCC877B007BC40F /* J3TelnetTextState.h */; };
@@ -195,10 +195,10 @@
 				2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in Copy Frameworks */,
 				7E4FB2780BCC877B007BC40F /* J3TelnetDontState.h in Copy Frameworks */,
 				7E4FB27A0BCC877B007BC40F /* J3TelnetDoState.h in Copy Frameworks */,
-				7E4FB27C0BCC877B007BC40F /* J3TelnetInterpretAsCommandState.h in Copy Frameworks */,
+				7E4FB27C0BCC877B007BC40F /* J3TelnetIACState.h in Copy Frameworks */,
 				7E4FB27E0BCC877B007BC40F /* J3TelnetOptionMCCP1State.h in Copy Frameworks */,
 				7E4FB2800BCC877B007BC40F /* J3TelnetState.h in Copy Frameworks */,
-				7E4FB2820BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.h in Copy Frameworks */,
+				7E4FB2820BCC877B007BC40F /* J3TelnetSubnegotiationIACState.h in Copy Frameworks */,
 				7E4FB2840BCC877B007BC40F /* J3TelnetSubnegotiationState.h in Copy Frameworks */,
 				7E4FB2860BCC877B007BC40F /* J3TelnetTextState.h in Copy Frameworks */,
 				7E4FB2880BCC877B007BC40F /* J3TelnetWillState.h in Copy Frameworks */,
@@ -281,14 +281,14 @@
 		7E4FB2650BCC877B007BC40F /* J3TelnetDontState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetDontState.m; sourceTree = "<group>"; };
 		7E4FB2660BCC877B007BC40F /* J3TelnetDoState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetDoState.h; sourceTree = "<group>"; };
 		7E4FB2670BCC877B007BC40F /* J3TelnetDoState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetDoState.m; sourceTree = "<group>"; };
-		7E4FB2680BCC877B007BC40F /* J3TelnetInterpretAsCommandState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetInterpretAsCommandState.h; sourceTree = "<group>"; };
-		7E4FB2690BCC877B007BC40F /* J3TelnetInterpretAsCommandState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetInterpretAsCommandState.m; sourceTree = "<group>"; };
+		7E4FB2680BCC877B007BC40F /* J3TelnetIACState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetIACState.h; sourceTree = "<group>"; };
+		7E4FB2690BCC877B007BC40F /* J3TelnetIACState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetIACState.m; sourceTree = "<group>"; };
 		7E4FB26A0BCC877B007BC40F /* J3TelnetOptionMCCP1State.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetOptionMCCP1State.h; sourceTree = "<group>"; };
 		7E4FB26B0BCC877B007BC40F /* J3TelnetOptionMCCP1State.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetOptionMCCP1State.m; sourceTree = "<group>"; };
 		7E4FB26C0BCC877B007BC40F /* J3TelnetState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetState.h; sourceTree = "<group>"; };
 		7E4FB26D0BCC877B007BC40F /* J3TelnetState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetState.m; sourceTree = "<group>"; };
-		7E4FB26E0BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetSubnegotiationInterpretAsCommandState.h; sourceTree = "<group>"; };
-		7E4FB26F0BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetSubnegotiationInterpretAsCommandState.m; sourceTree = "<group>"; };
+		7E4FB26E0BCC877B007BC40F /* J3TelnetSubnegotiationIACState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetSubnegotiationIACState.h; sourceTree = "<group>"; };
+		7E4FB26F0BCC877B007BC40F /* J3TelnetSubnegotiationIACState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetSubnegotiationIACState.m; sourceTree = "<group>"; };
 		7E4FB2700BCC877B007BC40F /* J3TelnetSubnegotiationState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetSubnegotiationState.h; sourceTree = "<group>"; };
 		7E4FB2710BCC877B007BC40F /* J3TelnetSubnegotiationState.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetSubnegotiationState.m; sourceTree = "<group>"; };
 		7E4FB2720BCC877B007BC40F /* J3TelnetTextState.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetTextState.h; sourceTree = "<group>"; };
@@ -646,14 +646,14 @@
 				7E4FB2650BCC877B007BC40F /* J3TelnetDontState.m */,
 				7E4FB2660BCC877B007BC40F /* J3TelnetDoState.h */,
 				7E4FB2670BCC877B007BC40F /* J3TelnetDoState.m */,
-				7E4FB2680BCC877B007BC40F /* J3TelnetInterpretAsCommandState.h */,
-				7E4FB2690BCC877B007BC40F /* J3TelnetInterpretAsCommandState.m */,
+				7E4FB2680BCC877B007BC40F /* J3TelnetIACState.h */,
+				7E4FB2690BCC877B007BC40F /* J3TelnetIACState.m */,
 				7E4FB26A0BCC877B007BC40F /* J3TelnetOptionMCCP1State.h */,
 				7E4FB26B0BCC877B007BC40F /* J3TelnetOptionMCCP1State.m */,
 				7E4FB26C0BCC877B007BC40F /* J3TelnetState.h */,
 				7E4FB26D0BCC877B007BC40F /* J3TelnetState.m */,
-				7E4FB26E0BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.h */,
-				7E4FB26F0BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.m */,
+				7E4FB26E0BCC877B007BC40F /* J3TelnetSubnegotiationIACState.h */,
+				7E4FB26F0BCC877B007BC40F /* J3TelnetSubnegotiationIACState.m */,
 				7E4FB2700BCC877B007BC40F /* J3TelnetSubnegotiationState.h */,
 				7E4FB2710BCC877B007BC40F /* J3TelnetSubnegotiationState.m */,
 				7E4FB2720BCC877B007BC40F /* J3TelnetTextState.h */,
@@ -1143,10 +1143,10 @@
 				2FE366750BCAC9820068A6AA /* UKPrefsPanel.m in Sources */,
 				7E4FB2790BCC877B007BC40F /* J3TelnetDontState.m in Sources */,
 				7E4FB27B0BCC877B007BC40F /* J3TelnetDoState.m in Sources */,
-				7E4FB27D0BCC877B007BC40F /* J3TelnetInterpretAsCommandState.m in Sources */,
+				7E4FB27D0BCC877B007BC40F /* J3TelnetIACState.m in Sources */,
 				7E4FB27F0BCC877B007BC40F /* J3TelnetOptionMCCP1State.m in Sources */,
 				7E4FB2810BCC877B007BC40F /* J3TelnetState.m in Sources */,
-				7E4FB2830BCC877B007BC40F /* J3TelnetSubnegotiationInterpretAsCommandState.m in Sources */,
+				7E4FB2830BCC877B007BC40F /* J3TelnetSubnegotiationIACState.m in Sources */,
 				7E4FB2850BCC877B007BC40F /* J3TelnetSubnegotiationState.m in Sources */,
 				7E4FB2870BCC877B007BC40F /* J3TelnetTextState.m in Sources */,
 				7E4FB2890BCC877B007BC40F /* J3TelnetWillState.m in Sources */,
