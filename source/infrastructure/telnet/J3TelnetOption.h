@@ -31,8 +31,15 @@ typedef enum J3TelnetQ {
 
 - (id) initWithOption: (int) option delegate: (id <J3TelnetOptionDelegate>) object;
 
+// Options on our end
 - (void) weDo;
 - (void) weDont;
+- (void) weWill;
+- (void) weWont;
+
+// Options on the other end
+- (void) heDo;
+- (void) heDont;
 - (void) heWill;
 - (void) heWont;
 

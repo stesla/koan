@@ -19,9 +19,10 @@ typedef int QMethodTable[QSTATES][3];
 
 @interface J3TelnetOptionTests (Private)
 
-- (void) assertQMethodTable: (QMethodTable) table forSelector: (SEL) selector;
+- (void) assertQMethodTable: (QMethodTable) table forSelector: (SEL) selector forHimOrUs: (SEL) himOrUs;
 - (void) assertWhenSelector: (SEL) selector
           isCalledFromState: (J3TelnetQState) startState
+                 forHimOrUs: (SEL) himOrUs
         theResultingStateIs: (J3TelnetQState) endState
                    andCalls: (char) flags;
 - (void) clearFlags;
@@ -56,7 +57,20 @@ typedef int QMethodTable[QSTATES][3];
     {J3TelnetQWantYesEmpty,     J3TelnetQNo,            0},
     {J3TelnetQWantYesOpposite,  J3TelnetQNo,            0},
   };
-  [self assertQMethodTable: table forSelector: @selector(heWont)];
+  [self assertQMethodTable: table forSelector: @selector (heWont) forHimOrUs: @selector (him)];
+}
+
+- (void) testHeDont
+{
+  QMethodTable table = {
+    {J3TelnetQNo,               J3TelnetQNo,            0},
+    {J3TelnetQYes,              J3TelnetQNo,            WONT},
+    {J3TelnetQWantNoEmpty,      J3TelnetQNo,            0},
+    {J3TelnetQWantNoOpposite,   J3TelnetQWantYesEmpty,  WILL},
+    {J3TelnetQWantYesEmpty,     J3TelnetQNo,            0},
+    {J3TelnetQWantYesOpposite,  J3TelnetQNo,            0},
+  };
+  [self assertQMethodTable: table forSelector: @selector (heDont) forHimOrUs: @selector (us)];
 }
 
 #pragma mark -
@@ -88,12 +102,13 @@ typedef int QMethodTable[QSTATES][3];
 
 @implementation J3TelnetOptionTests (Private)
 
-- (void) assertQMethodTable: (QMethodTable) table forSelector: (SEL) selector
+- (void) assertQMethodTable: (QMethodTable) table forSelector: (SEL) selector forHimOrUs: (SEL) himOrUs
 {
   for (unsigned i = 0; i < QSTATES; ++i)
   {
     [self assertWhenSelector: selector
            isCalledFromState: table[i][0]
+                  forHimOrUs: himOrUs
          theResultingStateIs: table[i][1]
                     andCalls: table[i][2]];
   }  
@@ -101,14 +116,18 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) assertWhenSelector: (SEL) selector
           isCalledFromState: (J3TelnetQState) startState
+                 forHimOrUs: (SEL) himOrUs
         theResultingStateIs: (J3TelnetQState) endState
                    andCalls: (char) expectedFlags;
 {
   NSString *message = [self qStateName: startState];
   [self clearFlags];
-  [option setHim: startState];
+  if (himOrUs == @selector (him))
+    [option setHim: startState];
+  else
+    [option setUs: startState];
   [option performSelector: selector];
-  [self assertInt: [option him] equals: endState message: [NSString stringWithFormat: @"%@ ending state",message]];
+  [self assertInt: (int) [option performSelector: himOrUs] equals: endState message: [NSString stringWithFormat: @"%@ ending state",message]];
   [self assertInt: flags equals: expectedFlags message: [NSString stringWithFormat: @"%@ flags",message]];
 }
 
