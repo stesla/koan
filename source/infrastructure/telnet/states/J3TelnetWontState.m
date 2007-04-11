@@ -14,6 +14,7 @@
 - (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
   [engine log: @"Received: IAC WONT %@", [engine optionNameForByte: byte]];
+  [engine receivedWont: byte];
   return [J3TelnetTextState state];
 }
 

@@ -45,12 +45,6 @@
   [super dealloc];
 }
 
-- (void) dont: (uint8_t) byte
-{
-  [self log: @"    Sent: IAC DONT %@", [self optionNameForByte: byte]];
-  [self sendCommand: J3TelnetDont withByte: byte];
-}
-
 - (void) goAhead
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
@@ -140,15 +134,29 @@
   return result;
 }
 
-- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
-{
-  delegate = object;
-}
-
-- (void) wont: (uint8_t) byte
+- (void) receivedDo: (uint8_t) byte
 {
   [self log: @"    Sent: IAC WONT %@", [self optionNameForByte: byte]];
   [self sendCommand: J3TelnetWont withByte: byte];
+}
+
+- (void) receivedDont: (uint8_t) byte
+{
+}
+
+- (void) receivedWill: (uint8_t) byte
+{
+  [self log: @"    Sent: IAC DONT %@", [self optionNameForByte: byte]];
+  [self sendCommand: J3TelnetDont withByte: byte];
+}
+
+- (void) receivedWont: (uint8_t) byte
+{
+}
+
+- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
+{
+  delegate = object;
 }
 
 @end

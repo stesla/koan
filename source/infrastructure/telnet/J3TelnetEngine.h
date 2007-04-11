@@ -20,14 +20,16 @@
 + (id) engine;
 
 - (void) bufferInputByte: (uint8_t) byte;
-- (void) dont: (uint8_t) byte;
 - (void) goAhead;
 - (void) log: (NSString *) message, ...;
 - (NSString *) optionNameForByte: (uint8_t) byte;
 - (void) parseData: (NSData *) data;
 - (NSData *) preprocessOutput: (NSData *) data;
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
-- (void) wont: (uint8_t) byte;
+- (void) receivedDo: (uint8_t) byte;
+- (void) receivedDont: (uint8_t) byte;
+- (void) receivedWill: (uint8_t) byte;
+- (void) receivedWont: (uint8_t) byte;
 
 @end
 
