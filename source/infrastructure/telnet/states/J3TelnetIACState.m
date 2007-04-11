@@ -17,7 +17,7 @@
 
 @implementation J3TelnetIACState
 
-- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
+- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
   switch (byte)
   {
@@ -34,7 +34,7 @@
       return [J3TelnetWontState state];
 
     case J3TelnetInterpretAsCommand:
-      [parser bufferInputByte: J3TelnetInterpretAsCommand];
+      [engine bufferInputByte: J3TelnetInterpretAsCommand];
       return [J3TelnetTextState state];
       
     case J3TelnetBeginSubnegotiation:

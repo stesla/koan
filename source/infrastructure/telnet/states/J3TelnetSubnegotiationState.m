@@ -13,7 +13,7 @@
 
 @implementation J3TelnetSubnegotiationState
 
-- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
+- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
   switch (byte)
   {

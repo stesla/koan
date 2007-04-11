@@ -11,10 +11,10 @@
 
 @implementation J3TelnetDoState
 
-- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
+- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
-  [parser log: @"Received: IAC DO %@", [parser optionNameForByte: byte]];
-  [parser wont: byte];
+  [engine log: @"Received: IAC DO %@", [engine optionNameForByte: byte]];
+  [engine wont: byte];
   return [J3TelnetTextState state];
 }
 

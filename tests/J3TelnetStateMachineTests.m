@@ -147,7 +147,7 @@
 {
   J3TelnetState * nextState;
   [self setStateClass: stateClass];
-  nextState = [state parse: byte forParser: nil];
+  nextState = [state parse: byte forEngine: nil];
   [self assert: [nextState class] equals: nextStateClass];  
 }
 
@@ -181,7 +181,7 @@
 {
   [self setStateClass: stateClass];
   engine = [J3MockTelnetEngine engine];
-  [state parse: byte forParser: engine];  
+  [state parse: byte forEngine: engine];  
 }
 
 - (void) setStateClass: (Class) stateClass

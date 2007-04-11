@@ -14,7 +14,7 @@
 
 @implementation J3TelnetSubnegotiationIACState
 
-- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
+- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
   if (byte == J3TelnetEndSubnegotiation)
     return [J3TelnetTextState state];

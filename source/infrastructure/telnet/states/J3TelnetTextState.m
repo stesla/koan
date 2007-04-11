@@ -11,13 +11,13 @@
 
 @implementation J3TelnetTextState
 
-- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
+- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
   if (byte == J3TelnetInterpretAsCommand)
     return [J3TelnetIACState state];
   else
   {
-    [parser bufferInputByte: byte];
+    [engine bufferInputByte: byte];
     return self;
   }
 }

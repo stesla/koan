@@ -12,7 +12,7 @@
 
 @implementation J3TelnetOptionMCCP1State
 
-- (J3TelnetState *) parse: (uint8_t) byte forParser: (J3TelnetEngine *) parser
+- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
   if (byte == J3TelnetWill)
     return [J3TelnetSubnegotiationIACState state];

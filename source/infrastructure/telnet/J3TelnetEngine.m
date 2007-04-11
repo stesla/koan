@@ -159,7 +159,7 @@
 
 - (void) parseByte: (uint8_t) byte
 {
-  [self at: &state put: [state parse: byte forParser: self]];
+  [self at: &state put: [state parse: byte forEngine: self]];
 }
 
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte
