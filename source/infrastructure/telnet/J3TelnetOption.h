@@ -27,9 +27,12 @@ typedef enum J3TelnetQ {
   int option;
   J3TelnetQState him;
   J3TelnetQState us;
+  BOOL shouldEnable;
 }
 
 - (id) initWithOption: (int) option delegate: (id <J3TelnetOptionDelegate>) object;
+
+- (void) setShouldEnable: (BOOL) value;
 
 // Options on the other end
 - (void) receivedDo;
