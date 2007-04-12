@@ -47,7 +47,7 @@ typedef int QMethodTable[QSTATES][3];
   [super tearDown];
 }
 
-- (void) testHeWont
+- (void) testReceivedWont
 {
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQNo,            0},
@@ -60,7 +60,7 @@ typedef int QMethodTable[QSTATES][3];
   [self assertQMethodTable: table forSelector: @selector (receivedWont) forHimOrUs: @selector (him)];
 }
 
-- (void) testHeDont
+- (void) testReceivedDont
 {
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQNo,            0},
@@ -73,7 +73,7 @@ typedef int QMethodTable[QSTATES][3];
   [self assertQMethodTable: table forSelector: @selector (receivedDont) forHimOrUs: @selector (us)];
 }
 
-- (void) testHeWillButWeDoNotWantTo
+- (void) testReceivedWillButWeDoNotWantTo
 {
   [option setShouldEnable: NO];
   QMethodTable table = {
@@ -87,7 +87,7 @@ typedef int QMethodTable[QSTATES][3];
   [self assertQMethodTable: table forSelector: @selector (receivedWill) forHimOrUs: @selector (him)];  
 }
 
-- (void) testHeWillAndWeDoWantTo
+- (void) testReceivedWillAndWeDoWantTo
 {
   [option setShouldEnable: YES];
   QMethodTable table = {
