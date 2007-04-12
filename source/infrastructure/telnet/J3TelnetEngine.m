@@ -5,13 +5,14 @@
 //
 
 #import "J3ReadBuffer.h"
-#import "J3TelnetConstants.h"
 #import "J3TelnetEngine.h"
 #import "J3TelnetTextState.h"
 #import "J3WriteBuffer.h"
 
 @interface J3TelnetEngine (Private)
 
+- (void) deallocOptions;
+- (void) initializeOptions;
 - (void) parseByte: (uint8_t) byte;
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
 
@@ -31,6 +32,7 @@
   if (![super init])
     return nil;
   [self at: &state put: [J3TelnetTextState state]];
+  [self initializeOptions];
   return self;
 }
 
@@ -41,6 +43,7 @@
 
 - (void) dealloc
 {
+  [self deallocOptions];
   [state release];
   [super dealloc];
 }
@@ -136,20 +139,22 @@
 
 - (void) receivedDo: (uint8_t) option
 {
-  [self wont: option];
+  [options[option] receivedDo];
 }
 
 - (void) receivedDont: (uint8_t) option
 {
+  [options[option] receivedDont];
 }
 
 - (void) receivedWill: (uint8_t) option
 {
-  [self dont: option];
+  [options[option] receivedWill];
 }
 
 - (void) receivedWont: (uint8_t) option
 {
+  [options[option] receivedWont];
 }
 
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
@@ -189,6 +194,18 @@
 #pragma mark -
 
 @implementation J3TelnetEngine (Private)
+
+- (void) deallocOptions;
+{
+  for (unsigned i = 0; i < TELNET_OPTION_MAX; ++i)
+    [options[i] release];
+}
+
+- (void) initializeOptions;
+{
+  for (unsigned i = 0; i < TELNET_OPTION_MAX; ++i)
+    options[i] = [[J3TelnetOption alloc] initWithOption: i delegate: self];
+}
 
 - (void) parseByte: (uint8_t) byte
 {

@@ -5,6 +5,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "J3TelnetConstants.h"
 #import "J3TelnetOption.h"
 
 @class J3TelnetState;
@@ -16,6 +17,7 @@
 {
   NSObject <J3TelnetEngineDelegate> *delegate;
   J3TelnetState *state;
+  J3TelnetOption *options[TELNET_OPTION_MAX];
 }
 
 + (id) engine;

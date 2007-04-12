@@ -54,6 +54,8 @@
   option = newOption;
   delegate = object;
   shouldEnable = NO;
+  him = J3TelnetQNo;
+  us = J3TelnetQNo;
   return self;
 }
 

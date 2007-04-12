@@ -25,6 +25,8 @@ enum J3TelnetCommands
   J3TelnetInterpretAsCommand = 255
 };
 
+#define TELNET_OPTION_MAX UINT8_MAX
+
 enum J3TelnetOptions
 {
   // These options are defined by RFC.
