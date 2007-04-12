@@ -31,38 +31,22 @@
   return self;
 }
 
-- (void) weDo
+- (void) receivedDo
 {
 }
 
-- (void) weDont
-{
-}
-
-- (void) weWill
-{
-}
-
-- (void) weWont
-{
-}
-
-- (void) heDo
-{
-}
-
-- (void) heDont
+- (void) receivedDont
 {
   [self demandDisableState: &us 
              ifAcknowledge: @selector (sendWont) 
                    ifAllow: @selector (sendWill)];
 }
 
-- (void) heWill
+- (void) receivedWill
 {
 }
 
-- (void) heWont
+- (void) receivedWont
 {
   [self demandDisableState: &him 
              ifAcknowledge: @selector (sendDont) 

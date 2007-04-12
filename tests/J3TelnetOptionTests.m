@@ -57,7 +57,7 @@ typedef int QMethodTable[QSTATES][3];
     {J3TelnetQWantYesEmpty,     J3TelnetQNo,            0},
     {J3TelnetQWantYesOpposite,  J3TelnetQNo,            0},
   };
-  [self assertQMethodTable: table forSelector: @selector (heWont) forHimOrUs: @selector (him)];
+  [self assertQMethodTable: table forSelector: @selector (receivedWont) forHimOrUs: @selector (him)];
 }
 
 - (void) testHeDont
@@ -70,7 +70,7 @@ typedef int QMethodTable[QSTATES][3];
     {J3TelnetQWantYesEmpty,     J3TelnetQNo,            0},
     {J3TelnetQWantYesOpposite,  J3TelnetQNo,            0},
   };
-  [self assertQMethodTable: table forSelector: @selector (heDont) forHimOrUs: @selector (us)];
+  [self assertQMethodTable: table forSelector: @selector (receivedDont) forHimOrUs: @selector (us)];
 }
 
 #pragma mark -

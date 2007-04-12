@@ -31,17 +31,11 @@ typedef enum J3TelnetQ {
 
 - (id) initWithOption: (int) option delegate: (id <J3TelnetOptionDelegate>) object;
 
-// Options on our end
-- (void) weDo;
-- (void) weDont;
-- (void) weWill;
-- (void) weWont;
-
 // Options on the other end
-- (void) heDo;
-- (void) heDont;
-- (void) heWill;
-- (void) heWont;
+- (void) receivedDo;
+- (void) receivedDont;
+- (void) receivedWill;
+- (void) receivedWont;
 
 // These are for testing purposes.  Normal users of this object should not
 // even be interested in calling these methods.
