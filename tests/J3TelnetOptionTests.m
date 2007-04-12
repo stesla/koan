@@ -73,7 +73,7 @@ typedef int QMethodTable[QSTATES][3];
   [self assertQMethodTable: table forSelector: @selector (receivedDont) forHimOrUs: @selector (us)];
 }
 
-- (void) testReceivedWillButWeDoNotWantTo
+- (void) testReceivedWillAndWeDoNotWantTo
 {
   [option setShouldEnable: NO];
   QMethodTable table = {
