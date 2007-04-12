@@ -134,29 +134,54 @@
   return result;
 }
 
-- (void) receivedDo: (uint8_t) byte
+- (void) receivedDo: (uint8_t) option
 {
-  [self log: @"    Sent: IAC WONT %@", [self optionNameForByte: byte]];
-  [self sendCommand: J3TelnetWont withByte: byte];
+  [self wont: option];
 }
 
-- (void) receivedDont: (uint8_t) byte
+- (void) receivedDont: (uint8_t) option
 {
 }
 
-- (void) receivedWill: (uint8_t) byte
+- (void) receivedWill: (uint8_t) option
 {
-  [self log: @"    Sent: IAC DONT %@", [self optionNameForByte: byte]];
-  [self sendCommand: J3TelnetDont withByte: byte];
+  [self dont: option];
 }
 
-- (void) receivedWont: (uint8_t) byte
+- (void) receivedWont: (uint8_t) option
 {
 }
 
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
 {
   delegate = object;
+}
+
+#pragma mark -
+#pragma mark J3TelnetOptionDelegate protocol
+
+- (void) do: (uint8_t) option
+{
+  [self log: @"    Sent: IAC DO %@", [self optionNameForByte: option]];
+  [self sendCommand: J3TelnetDo withByte: option];    
+}
+
+- (void) dont: (uint8_t) option
+{
+  [self log: @"    Sent: IAC DONT %@", [self optionNameForByte: option]];
+  [self sendCommand: J3TelnetDont withByte: option];  
+}
+
+- (void) will: (uint8_t) option
+{
+  [self log: @"    Sent: IAC WILL %@", [self optionNameForByte: option]];
+  [self sendCommand: J3TelnetWill withByte: option];    
+}
+
+- (void) wont: (uint8_t) option
+{
+  [self log: @"    Sent: IAC WONT %@", [self optionNameForByte: option]];
+  [self sendCommand: J3TelnetWont withByte: option];  
 }
 
 @end
