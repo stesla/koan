@@ -34,13 +34,15 @@ typedef enum J3TelnetQ {
 
 - (void) setShouldEnable: (BOOL) value;
 
-// Options on the other end
+// Negotiation we respond to
 - (void) receivedDo;
 - (void) receivedDont;
 - (void) receivedWill;
 - (void) receivedWont;
 
-// Us requesting options from our end
+// Negotiation we start
+- (void) disableHim;
+- (void) disableUs;
 - (void) enableHim;
 - (void) enableUs;
 
