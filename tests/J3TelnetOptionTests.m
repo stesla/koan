@@ -129,6 +129,32 @@ typedef int QMethodTable[QSTATES][3];
   [self assertQMethodTable: table forSelector: @selector (receivedDo) forHimOrUs: @selector (us)];    
 }
 
+- (void) testEnableHimWithQueue
+{
+  QMethodTable table = {
+    {J3TelnetQNo,               J3TelnetQWantYesEmpty,    DO},
+    {J3TelnetQYes,              J3TelnetQYes,             0},   // error
+    {J3TelnetQWantNoEmpty,      J3TelnetQWantNoOpposite,  0},   
+    {J3TelnetQWantNoOpposite,   J3TelnetQWantNoOpposite,  0},   // error
+    {J3TelnetQWantYesEmpty,     J3TelnetQWantYesEmpty,    0},   // error
+    {J3TelnetQWantYesOpposite,  J3TelnetQWantYesEmpty,    0},
+  };
+  [self assertQMethodTable: table forSelector: @selector (enableHim) forHimOrUs: @selector (him)];    
+}
+
+- (void) testEnableUsWithQueue
+{
+  QMethodTable table = {
+    {J3TelnetQNo,               J3TelnetQWantYesEmpty,    WILL},
+    {J3TelnetQYes,              J3TelnetQYes,             0},   // error
+    {J3TelnetQWantNoEmpty,      J3TelnetQWantNoOpposite,  0},   
+    {J3TelnetQWantNoOpposite,   J3TelnetQWantNoOpposite,  0},   // error
+    {J3TelnetQWantYesEmpty,     J3TelnetQWantYesEmpty,    0},   // error
+    {J3TelnetQWantYesOpposite,  J3TelnetQWantYesEmpty,    0},
+  };
+  [self assertQMethodTable: table forSelector: @selector (enableUs) forHimOrUs: @selector (us)];    
+}
+
 #pragma mark -
 #pragma mark J3TelnetOptionDelegate protocol
 

@@ -40,6 +40,10 @@ typedef enum J3TelnetQ {
 - (void) receivedWill;
 - (void) receivedWont;
 
+// Us requesting options from our end
+- (void) enableHim;
+- (void) enableUs;
+
 // These are for testing purposes.  Normal users of this object should not
 // even be interested in calling these methods.
 - (J3TelnetQState) him;

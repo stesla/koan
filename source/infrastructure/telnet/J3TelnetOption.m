@@ -16,6 +16,7 @@
 - (void) receivedEnableRequestForState: (J3TelnetQState *) state
                               ifAccept: (SEL) accept
                               ifReject: (SEL) reject;
+- (void) requestEnableFor: (J3TelnetQState *) state withSelector: (SEL) selector;
 - (void) sendDo;
 - (void) sendDont;
 - (void) sendWill;
@@ -71,6 +72,16 @@
   [self receivedDisableDemandForState: &him 
                         ifAcknowledge: @selector (sendDont) 
                               ifAllow: @selector (sendDo)];
+}
+
+- (void) enableHim;
+{
+  [self requestEnableFor: &him withSelector: @selector (sendDo)];
+}
+
+- (void) enableUs;
+{
+  [self requestEnableFor: &us withSelector: @selector (sendWill)];
 }
 
 - (void) setShouldEnable: (BOOL) value
@@ -152,6 +163,30 @@
     case J3TelnetQWantYesOpposite:
       *state = J3TelnetQWantNoEmpty;
       [self performSelector: reject];
+      break;
+  }
+}
+
+- (void) requestEnableFor: (J3TelnetQState *) state withSelector: (SEL) selector;
+{
+  switch (*state)
+  {
+    case J3TelnetQNo:
+      *state = J3TelnetQWantYesEmpty;
+      [self performSelector: selector];
+      break;
+      
+    case J3TelnetQYes:
+      break;
+      
+    case J3TelnetQWantNoEmpty:
+    case J3TelnetQWantNoOpposite:
+      *state = J3TelnetQWantNoOpposite;
+      break;
+      
+    case J3TelnetQWantYesEmpty: 
+    case J3TelnetQWantYesOpposite:
+      *state = J3TelnetQWantYesEmpty;
       break;
   }
 }
