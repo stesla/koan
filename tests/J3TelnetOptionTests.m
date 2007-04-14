@@ -30,6 +30,15 @@ typedef int QMethodTable[QSTATES][3];
 
 @end
 
+@interface J3TelnetOption (TestAccessors)
+
+- (J3TelnetQState) him;
+- (void) setHim: (J3TelnetQState) state;
+- (J3TelnetQState) us;
+- (void) setUs: (J3TelnetQState) state;
+
+@end
+
 #pragma mark -
 
 @implementation J3TelnetOptionTests
@@ -38,7 +47,7 @@ typedef int QMethodTable[QSTATES][3];
 {
   [super setUp];
   [self clearFlags];
-  option = [[J3TelnetOption alloc] initWithOption: J3TelnetOptionEcho delegate: self];
+  option = [[J3TelnetOption alloc] initWithOption: 0 delegate: self];
 }
 
 - (void) tearDown
@@ -75,7 +84,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedWillAndWeDoNotWantTo
 {
-  [option setShouldEnable: NO];
+  [option shouldEnableIfHeAsks: NO];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQNo,            DONT},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -89,7 +98,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedWillAndWeDoWantTo
 {
-  [option setShouldEnable: YES];
+  [option shouldEnableIfHeAsks: YES];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQYes,           DO},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -103,7 +112,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedDoAndWeDoNotWantTo
 {
-  [option setShouldEnable: NO];
+  [option shouldEnableIfHeAsks: NO];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQNo,            WONT},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -117,7 +126,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedDoAndWeDoWantTo
 {
-  [option setShouldEnable: YES];
+  [option shouldEnableIfHeAsks: YES];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQYes,           WILL},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -179,6 +188,32 @@ typedef int QMethodTable[QSTATES][3];
     {J3TelnetQWantYesOpposite,  J3TelnetQWantYesOpposite, 0},   // error
   };
   [self assertQMethodTable: table forSelector: @selector (disableUs) forHimOrUs: @selector (us)];    
+}
+
+- (void) testHeIsEnabled
+{
+  J3TelnetQState noStates[5] = {J3TelnetQNo, J3TelnetQWantNoEmpty, J3TelnetQWantNoOpposite,
+    J3TelnetQWantYesEmpty, J3TelnetQWantYesOpposite};
+  for (unsigned i = 0; i < 5; ++i)
+  {
+    [option setHim: noStates[i]];
+    [self assertFalse: [option heIsEnabled]  message: [self qStateName: noStates[i]]];
+  }
+  [option setHim: J3TelnetQYes];
+  [self assertTrue: [option heIsEnabled]];
+}
+
+- (void) testWeAreEnabled
+{
+  J3TelnetQState noStates[5] = {J3TelnetQNo, J3TelnetQWantNoEmpty, J3TelnetQWantNoOpposite,
+    J3TelnetQWantYesEmpty, J3TelnetQWantYesOpposite};
+  for (unsigned i = 0; i < 5; ++i)
+  {
+    [option setUs: noStates[i]];
+    [self assertFalse: [option weAreEnabled] message: [self qStateName: noStates[i]]];
+  }
+  [option setUs: J3TelnetQYes];
+  [self assertTrue: [option weAreEnabled]];
 }
 
 #pragma mark -
@@ -263,6 +298,30 @@ typedef int QMethodTable[QSTATES][3];
     default:
       return @"Unknown";
   }
+}
+
+@end
+
+@implementation J3TelnetOption (TestAccessors)
+
+- (J3TelnetQState) him
+{
+  return him;
+}
+
+- (void) setHim: (J3TelnetQState) state
+{
+  him = state;
+}
+
+- (J3TelnetQState) us
+{
+  return us;
+}
+
+- (void) setUs: (J3TelnetQState) state
+{
+  us = state;
 }
 
 @end

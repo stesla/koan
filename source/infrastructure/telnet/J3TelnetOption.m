@@ -37,14 +37,9 @@
   [self demandDisableFor: &us withSelector: @selector(sendWont)];
 }
 
-- (J3TelnetQState) him
+- (BOOL) heIsEnabled
 {
-  return him;
-}
-
-- (void) setHim: (J3TelnetQState) state
-{
-  him = state;
+  return him == J3TelnetQYes;
 }
 
 - (id) initWithOption: (int) newOption delegate: (id <J3TelnetOptionDelegate>) object
@@ -97,19 +92,14 @@
   [self requestEnableFor: &us withSelector: @selector (sendWill)];
 }
 
-- (void) setShouldEnable: (BOOL) value
+- (void) shouldEnableIfHeAsks: (BOOL) value
 {
   shouldEnable = value;
 }
 
-- (J3TelnetQState) us
+- (BOOL) weAreEnabled
 {
-  return us;
-}
-
-- (void) setUs: (J3TelnetQState) state
-{
-  us = state;
+  return us == J3TelnetQYes;
 }
 
 @end

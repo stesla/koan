@@ -32,8 +32,6 @@ typedef enum J3TelnetQ {
 
 - (id) initWithOption: (int) option delegate: (id <J3TelnetOptionDelegate>) object;
 
-- (void) setShouldEnable: (BOOL) value;
-
 // Negotiation we respond to
 - (void) receivedDo;
 - (void) receivedDont;
@@ -46,12 +44,10 @@ typedef enum J3TelnetQ {
 - (void) enableHim;
 - (void) enableUs;
 
-// These are for testing purposes.  Normal users of this object should not
-// even be interested in calling these methods.
-- (J3TelnetQState) him;
-- (void) setHim: (J3TelnetQState) state;
-- (J3TelnetQState) us;
-- (void) setUs: (J3TelnetQState) state;
+// Determining if options should be or are enabled
+- (BOOL) heIsEnabled;
+- (void) shouldEnableIfHeAsks: (BOOL) value;
+- (BOOL) weAreEnabled;
 
 @end
 
