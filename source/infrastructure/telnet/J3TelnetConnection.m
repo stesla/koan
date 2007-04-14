@@ -95,6 +95,7 @@
   [self initializeSocket];
   [self schedulePollTimer];
   [socket open];
+  [engine negotiateOptions];
 }
 
 - (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object
@@ -107,7 +108,7 @@
   NSString *lineWithLineEnding = [NSString stringWithFormat: @"%@\r\n",line];
   NSData *encodedData = [lineWithLineEnding dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES];
   [self writeDataWithPreprocessing: encodedData];
-  // [engine goAhead]; //TODO: Removed as a temporary fix for #26
+  [engine goAhead];
 }
 
 #pragma mark -

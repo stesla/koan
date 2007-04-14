@@ -48,8 +48,20 @@
   [super dealloc];
 }
 
+- (void) enableOptionForHim: (uint8_t) option
+{
+  [options[option] enableHim];
+}
+
+- (void) enableOptionForUs: (uint8_t) option
+{
+  [options[option] enableUs];
+}
+
 - (void) goAhead
 {
+  if ([self optionEnabledForUs: J3TelnetOptionSuppressGoAhead])
+    return;
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
   [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
 }
@@ -62,6 +74,22 @@
   [delegate log: message arguments: args];
   
   va_end (args);
+}
+
+- (void) negotiateOptions
+{
+  [self enableOptionForUs: J3TelnetOptionSuppressGoAhead];
+  [self enableOptionForHim: J3TelnetOptionSuppressGoAhead];
+}
+
+- (BOOL) optionEnabledForHim: (uint8_t) option
+{
+  return [options[option] heIsEnabled];
+}
+
+- (BOOL) optionEnabledForUs: (uint8_t) option
+{
+  return [options[option] weAreEnabled];
 }
 
 - (NSString *) optionNameForByte: (uint8_t) byte
@@ -155,6 +183,12 @@
 - (void) receivedWont: (uint8_t) option
 {
   [options[option] receivedWont];
+}
+
+
+- (void) shouldEnableOption: (uint8_t) option IfHeAsks: (BOOL) value
+{
+  [options[option] shouldEnableIfHeAsks: value];
 }
 
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object

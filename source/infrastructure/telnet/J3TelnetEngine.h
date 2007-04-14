@@ -24,10 +24,16 @@
 
 - (void) bufferInputByte: (uint8_t) byte;
 - (void) goAhead;
+- (void) enableOptionForHim: (uint8_t) option;
+- (void) enableOptionForUs: (uint8_t) option;
+- (void) negotiateOptions;
 - (void) log: (NSString *) message, ...;
+- (BOOL) optionEnabledForHim: (uint8_t) option;
+- (BOOL) optionEnabledForUs: (uint8_t) option;
 - (NSString *) optionNameForByte: (uint8_t) byte;
 - (void) parseData: (NSData *) data;
 - (NSData *) preprocessOutput: (NSData *) data;
+- (void) shouldEnableOption: (uint8_t) option IfHeAsks: (BOOL) value;
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
 - (void) receivedDo: (uint8_t) option;
 - (void) receivedDont: (uint8_t) option;
