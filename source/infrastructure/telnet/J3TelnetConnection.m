@@ -50,6 +50,7 @@
 {
   if (![super init])
     return nil;
+  
   [self at: &socketFactory put: factory];
   [self at: &hostname put: newHostname];
   port = newPort;
