@@ -55,12 +55,18 @@ Version: MUX 2.4.3.32
 ### End INFO
 
   server asks for telnet options: WILL EOR, DO EOR, DO SGA, DO NAWS
+  
+  seems to have a weird reply to our IAC DO SUPPRESS-GO-AHEAD:
+    2007-04-14 04:05:35.008 Koan[5066] [xia.thoughtlocker.net:2861]     Sent: IAC DO SUPPRESS-GO-AHEAD
+    2007-04-14 04:05:35.067 Koan[5066] [xia.thoughtlocker.net:2861] Received: IAC WONT SUPPRESS-GO-AHEAD
+    2007-04-14 04:05:35.079 Koan[5066] [xia.thoughtlocker.net:2861] Received: IAC WONT SUPPRESS-GO-AHEAD
 
 TinyMUSH 3
 ==========
 
 TinyMUSH 3.(?):
   no telnet option negotiation
+  ignored telnet option requests
 
 PennMUSH
 ========
@@ -72,7 +78,8 @@ PennMUSH
 * PennMUSH 1.8.1 (need version):
 * PennMUSH version 1.8.3 patchlevel 1 [03/11/2007]:
   server asks for telnet options: DO LINEMODE, DO NAWS, DO TERMINAL-TYPE
-
+  server does not advertise SGA but accepts it both WILL and DO
+  
 INFO output:
 
 ### Begin INFO 1.1
