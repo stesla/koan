@@ -47,17 +47,17 @@
   [engine negotiateOptions];
   const uint8_t expected[] = {
     J3TelnetInterpretAsCommand, J3TelnetWill, J3TelnetOptionSuppressGoAhead,
-    J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionSuppressGoAhead,
     0};
-  [self assertInt: [buffer length] equals: strlen((const char *) expected) message: @"length"];
-  for (unsigned i = 0; i < [buffer length]; ++i)
-    [self assertInt: ((uint8_t *)[buffer bytes])[i] equals: expected[i]];
+  [self assertInt: [buffer length] equals: strlen ((const char *) expected) message: @"length"];
+  for (unsigned i = 0; i < [buffer length]; i++)
+    [self assertInt: ((uint8_t *) [buffer bytes])[i] equals: expected[i]];
 }
 
 - (void) testSuppressGoAhead
 {
   [engine enableOptionForUs: J3TelnetOptionSuppressGoAhead];
   [buffer setData: [NSData data]];
+  
   const uint8_t response[] = {J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionSuppressGoAhead};
   [engine parseData: [NSData dataWithBytes: response length: 3]];
   [engine goAhead];
