@@ -15,6 +15,7 @@
                          ifAcknowledge: (SEL) acknowledge
                                ifAllow: (SEL) allow;
 - (void) receivedEnableRequestForState: (J3TelnetQState *) state
+                      shouldEnableFlag: (BOOL *) flag
                               ifAccept: (SEL) accept
                               ifReject: (SEL) reject;
 - (void) requestEnableFor: (J3TelnetQState *) state withSelector: (SEL) selector;
@@ -37,7 +38,7 @@
   [self demandDisableFor: &us withSelector: @selector(sendWont)];
 }
 
-- (BOOL) heIsEnabled
+- (BOOL) heIsYes
 {
   return him == J3TelnetQYes;
 }
@@ -48,7 +49,8 @@
     return nil;
   option = newOption;
   delegate = object;
-  shouldEnable = NO;
+  heIsAllowed = NO;
+  weAreAllowed = NO;
   him = J3TelnetQNo;
   us = J3TelnetQNo;
   return self;
@@ -57,6 +59,7 @@
 - (void) receivedDo
 {
   [self receivedEnableRequestForState: &us 
+                     shouldEnableFlag: &weAreAllowed
                              ifAccept: @selector (sendWill) 
                              ifReject: @selector (sendWont)];  
 }
@@ -71,6 +74,7 @@
 - (void) receivedWill
 {
   [self receivedEnableRequestForState: &him 
+                     shouldEnableFlag: &heIsAllowed
                              ifAccept: @selector (sendDo) 
                              ifReject: @selector (sendDont)];
 }
@@ -92,14 +96,19 @@
   [self requestEnableFor: &us withSelector: @selector (sendWill)];
 }
 
-- (void) shouldEnableIfHeAsks: (BOOL) value
+- (void) heIsAllowedToUse: (BOOL) value
 {
-  shouldEnable = value;
+  heIsAllowed = value;
 }
 
-- (BOOL) weAreEnabled
+- (BOOL) weAreYes
 {
   return us == J3TelnetQYes;
+}
+
+- (void) weAreAllowedToUse: (BOOL) value
+{
+  weAreAllowed = value;
 }
 
 @end
@@ -160,13 +169,14 @@
 }
 
 - (void) receivedEnableRequestForState: (J3TelnetQState *) state
+                      shouldEnableFlag: (BOOL *) flag
                               ifAccept: (SEL) accept
                               ifReject: (SEL) reject
 {
   switch (*state)
   {
     case J3TelnetQNo:
-      if (shouldEnable)
+      if (*flag)
       {
         *state = J3TelnetQYes;
         [self performSelector: accept];

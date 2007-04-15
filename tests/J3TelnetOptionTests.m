@@ -84,7 +84,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedWillAndWeDoNotWantTo
 {
-  [option shouldEnableIfHeAsks: NO];
+  [option heIsAllowedToUse: NO];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQNo,            DONT},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -98,7 +98,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedWillAndWeDoWantTo
 {
-  [option shouldEnableIfHeAsks: YES];
+  [option heIsAllowedToUse: YES];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQYes,           DO},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -112,7 +112,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedDoAndWeDoNotWantTo
 {
-  [option shouldEnableIfHeAsks: NO];
+  [option weAreAllowedToUse: NO];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQNo,            WONT},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -126,7 +126,7 @@ typedef int QMethodTable[QSTATES][3];
 
 - (void) testReceivedDoAndWeDoWantTo
 {
-  [option shouldEnableIfHeAsks: YES];
+  [option weAreAllowedToUse: YES];
   QMethodTable table = {
     {J3TelnetQNo,               J3TelnetQYes,           WILL},
     {J3TelnetQYes,              J3TelnetQYes,           0},
@@ -197,10 +197,10 @@ typedef int QMethodTable[QSTATES][3];
   for (unsigned i = 0; i < 5; ++i)
   {
     [option setHim: noStates[i]];
-    [self assertFalse: [option heIsEnabled]  message: [self qStateName: noStates[i]]];
+    [self assertFalse: [option heIsYes]  message: [self qStateName: noStates[i]]];
   }
   [option setHim: J3TelnetQYes];
-  [self assertTrue: [option heIsEnabled]];
+  [self assertTrue: [option heIsYes]];
 }
 
 - (void) testWeAreEnabled
@@ -210,10 +210,10 @@ typedef int QMethodTable[QSTATES][3];
   for (unsigned i = 0; i < 5; ++i)
   {
     [option setUs: noStates[i]];
-    [self assertFalse: [option weAreEnabled] message: [self qStateName: noStates[i]]];
+    [self assertFalse: [option weAreYes] message: [self qStateName: noStates[i]]];
   }
   [option setUs: J3TelnetQYes];
-  [self assertTrue: [option weAreEnabled]];
+  [self assertTrue: [option weAreYes]];
 }
 
 #pragma mark -

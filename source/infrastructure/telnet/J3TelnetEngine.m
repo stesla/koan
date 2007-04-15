@@ -48,6 +48,16 @@
   [super dealloc];
 }
 
+- (void) disableOptionForHim: (uint8_t) option
+{
+  [options[option] disableHim];
+}
+
+- (void) disableOptionForUs: (uint8_t) option
+{
+  [options[option] disableUs];
+}
+
 - (void) enableOptionForHim: (uint8_t) option
 {
   [options[option] enableHim];
@@ -58,9 +68,17 @@
   [options[option] enableUs];
 }
 
+- (void) endOfRecord;
+{
+  if (![self optionYesForUs: J3TelnetOptionEndOfRecord])
+    return;
+  uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetEndOfRecord};
+  [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
+}
+
 - (void) goAhead
 {
-  if ([self optionEnabledForUs: J3TelnetOptionSuppressGoAhead])
+  if ([self optionYesForUs: J3TelnetOptionSuppressGoAhead])
     return;
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
   [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
@@ -81,14 +99,14 @@
   [self enableOptionForUs: J3TelnetOptionSuppressGoAhead];
 }
 
-- (BOOL) optionEnabledForHim: (uint8_t) option
+- (BOOL) optionYesForHim: (uint8_t) option
 {
-  return [options[option] heIsEnabled];
+  return [options[option] heIsYes];
 }
 
-- (BOOL) optionEnabledForUs: (uint8_t) option
+- (BOOL) optionYesForUs: (uint8_t) option
 {
-  return [options[option] weAreEnabled];
+  return [options[option] weAreYes];
 }
 
 - (NSString *) optionNameForByte: (uint8_t) byte
@@ -184,10 +202,14 @@
   [options[option] receivedWont];
 }
 
-
-- (void) shouldEnableOption: (uint8_t) option IfHeAsks: (BOOL) value
+- (void) shouldHeEnableOption: (uint8_t) option IfHeAsks: (BOOL) value
 {
-  [options[option] shouldEnableIfHeAsks: value];
+  [options[option] heIsAllowedToUse: value];
+}
+
+- (void) shouldWeEnableOption: (uint8_t) option IfHeAsks: (BOOL) value
+{
+  [options[option] weAreAllowedToUse: value];
 }
 
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
@@ -238,6 +260,8 @@
 {
   for (unsigned i = 0; i < TELNET_OPTION_MAX; ++i)
     options[i] = [[J3TelnetOption alloc] initWithOption: i delegate: self];
+  [self shouldHeEnableOption: J3TelnetOptionEndOfRecord IfHeAsks: YES];
+  [self shouldWeEnableOption: J3TelnetOptionEndOfRecord IfHeAsks: YES];
 }
 
 - (void) parseByte: (uint8_t) byte

@@ -64,6 +64,37 @@
   [self assertInt: [buffer length] equals: 0];
 }
 
+- (void) testDoEndOfRecord
+{
+  const uint8_t doRequest[] = {J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionEndOfRecord};
+  [engine parseData: [NSData dataWithBytes: doRequest length: 3]];
+  [self assertTrue: [engine optionYesForUs: J3TelnetOptionEndOfRecord]];
+}
+
+- (void) testWillEndOfRecord
+{
+  const uint8_t willRequest[] = {J3TelnetInterpretAsCommand, J3TelnetWill, J3TelnetOptionEndOfRecord};
+  [engine parseData: [NSData dataWithBytes: willRequest length: 3]];
+  [self assertTrue: [engine optionYesForHim: J3TelnetOptionEndOfRecord]];
+}
+
+- (void) testEndOfRecordOff
+{
+  [engine endOfRecord];
+  [self assertInt: [buffer length] equals: 0];
+}
+
+- (void) testEndOfRecordOn
+{
+  const uint8_t doRequest[] = {J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionEndOfRecord};
+  [engine parseData: [NSData dataWithBytes: doRequest length: 3]];
+  [buffer setData: [NSData data]];
+  [engine endOfRecord];
+  [self assertInt: [buffer length] equals: 2 message: @"length"];
+  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC"];
+  [self assertInt: ((uint8_t *) [buffer bytes])[1] equals: J3TelnetEndOfRecord message: @"EOR"];  
+}
+
 #pragma mark -
 #pragma mark J3TelnetEngineDelegate Protocol
 
