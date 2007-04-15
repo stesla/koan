@@ -79,7 +79,6 @@
 - (void) negotiateOptions
 {
   [self enableOptionForUs: J3TelnetOptionSuppressGoAhead];
-  [self enableOptionForHim: J3TelnetOptionSuppressGoAhead];
 }
 
 - (BOOL) optionEnabledForHim: (uint8_t) option
