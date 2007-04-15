@@ -15,6 +15,7 @@
 - (void) initializeOptions;
 - (void) parseByte: (uint8_t) byte;
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
+- (void) sendEscapedByte: (uint8_t) byte;
 
 @end
 
@@ -72,16 +73,14 @@
 {
   if (![self optionYesForUs: J3TelnetOptionEndOfRecord])
     return;
-  uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetEndOfRecord};
-  [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
+  [self sendEscapedByte: J3TelnetEndOfRecord];
 }
 
 - (void) goAhead
 {
   if ([self optionYesForUs: J3TelnetOptionSuppressGoAhead])
     return;
-  uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
-  [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
+  [self sendEscapedByte: J3TelnetGoAhead];
 }
 
 - (void) log: (NSString *) message, ...
@@ -273,6 +272,12 @@
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, command, byte};
   [delegate writeData: [NSData dataWithBytes: bytes length: 3]];
+}
+
+- (void) sendEscapedByte: (uint8_t) byte
+{
+  uint8_t bytes[] = {J3TelnetInterpretAsCommand, byte};
+  [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
 }
 
 @end

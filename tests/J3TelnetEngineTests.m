@@ -9,6 +9,15 @@
 #import "J3TelnetEngineTests.h"
 #import "J3TelnetConstants.h"
 
+@interface J3TelnetEngineTests (Private)
+
+- (void) assertBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes;
+- (void) clearBuffer;
+- (void) simulateDo: (uint8_t) option;
+- (void) simulateWill: (uint8_t) option;
+
+@end
+
 @implementation J3TelnetEngineTests
 
 - (void) setUp
@@ -26,55 +35,46 @@
 - (void) testGoAhead
 {
   [engine goAhead];
-  [self assertInt: [buffer length] equals: 2 message: @"length"];
-  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC"];
-  [self assertInt: ((uint8_t *) [buffer bytes])[1] equals: J3TelnetGoAhead message: @"GA"];
+  const uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead, 0};
+  [self assertBufferHasBytesWithZeroTerminator: bytes];
 }
 
 - (void) testIACEscapedInData
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand};
   NSData *data = [NSData dataWithBytes: bytes length: 1];
-  
   [buffer setData: [engine preprocessOutput: data]];
-  [self assertInt: [buffer length] equals: 2 message: @"length"];
-  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC1"];
-  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC2"];  
+  const uint8_t expected[] = {J3TelnetInterpretAsCommand, J3TelnetInterpretAsCommand, 0};
+  [self assertBufferHasBytesWithZeroTerminator: expected];
 }
 
 - (void) testNegotiateOptions
 {
   [engine negotiateOptions];
-  const uint8_t expected[] = {
+  const uint8_t bytes[] = {
     J3TelnetInterpretAsCommand, J3TelnetWill, J3TelnetOptionSuppressGoAhead,
     0};
-  [self assertInt: [buffer length] equals: strlen ((const char *) expected) message: @"length"];
-  for (unsigned i = 0; i < [buffer length]; i++)
-    [self assertInt: ((uint8_t *) [buffer bytes])[i] equals: expected[i]];
+  [self assertBufferHasBytesWithZeroTerminator: bytes];
 }
 
 - (void) testSuppressGoAhead
 {
   [engine enableOptionForUs: J3TelnetOptionSuppressGoAhead];
-  [buffer setData: [NSData data]];
-  
-  const uint8_t response[] = {J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionSuppressGoAhead};
-  [engine parseData: [NSData dataWithBytes: response length: 3]];
+  [self clearBuffer];
+  [self simulateDo: J3TelnetOptionSuppressGoAhead];
   [engine goAhead];
   [self assertInt: [buffer length] equals: 0];
 }
 
 - (void) testDoEndOfRecord
 {
-  const uint8_t doRequest[] = {J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionEndOfRecord};
-  [engine parseData: [NSData dataWithBytes: doRequest length: 3]];
+  [self simulateDo: J3TelnetOptionEndOfRecord];
   [self assertTrue: [engine optionYesForUs: J3TelnetOptionEndOfRecord]];
 }
 
 - (void) testWillEndOfRecord
 {
-  const uint8_t willRequest[] = {J3TelnetInterpretAsCommand, J3TelnetWill, J3TelnetOptionEndOfRecord};
-  [engine parseData: [NSData dataWithBytes: willRequest length: 3]];
+  [self simulateWill: J3TelnetOptionEndOfRecord];
   [self assertTrue: [engine optionYesForHim: J3TelnetOptionEndOfRecord]];
 }
 
@@ -86,13 +86,11 @@
 
 - (void) testEndOfRecordOn
 {
-  const uint8_t doRequest[] = {J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionEndOfRecord};
-  [engine parseData: [NSData dataWithBytes: doRequest length: 3]];
-  [buffer setData: [NSData data]];
+  [self simulateDo: J3TelnetOptionEndOfRecord];
+  [self clearBuffer];
   [engine endOfRecord];
-  [self assertInt: [buffer length] equals: 2 message: @"length"];
-  [self assertInt: ((uint8_t *) [buffer bytes])[0] equals: J3TelnetInterpretAsCommand message: @"IAC"];
-  [self assertInt: ((uint8_t *) [buffer bytes])[1] equals: J3TelnetEndOfRecord message: @"EOR"];  
+  const uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetEndOfRecord, 0};
+  [self assertBufferHasBytesWithZeroTerminator: bytes];
 }
 
 #pragma mark -
@@ -109,6 +107,32 @@
 - (void) writeData: (NSData *) data
 {
   [buffer appendData: data];
+}
+
+@end
+
+@implementation J3TelnetEngineTests (Private)
+
+- (void) assertBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes
+{
+  [self assert: buffer equals: [NSData dataWithBytes: bytes length: strlen((const char *) bytes)]];
+}
+
+- (void) clearBuffer
+{
+  [buffer setData: [NSData data]]; 
+}
+
+- (void) simulateDo: (uint8_t) option
+{
+  const uint8_t doRequest[] = {J3TelnetInterpretAsCommand, J3TelnetDo, option};
+  [engine parseData: [NSData dataWithBytes: doRequest length: 3]];
+}
+
+- (void) simulateWill: (uint8_t) option
+{
+  const uint8_t doRequest[] = {J3TelnetInterpretAsCommand, J3TelnetWill, option};
+  [engine parseData: [NSData dataWithBytes: doRequest length: 3]];
 }
 
 @end
