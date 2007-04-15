@@ -265,8 +265,6 @@
   unreadCount = 0;
   [self updateApplicationBadge];
   
-  [[MUServices worldRegistry] saveWorlds];
-  [[MUServices profileRegistry] saveProfiles];
   [[J3SocketFactory defaultFactory] saveProxySettings];
 }
 

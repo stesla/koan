@@ -25,7 +25,6 @@
 - (int) indexOfWorld: (MUWorld *) world;
 - (void) removeWorld: (MUWorld *) world;
 - (void) replaceWorld: (MUWorld *) oldWorld withWorld: (MUWorld *) newWorld;
-- (void) saveWorlds;
 - (MUWorld *) worldAtIndex: (unsigned) worldIndex;
 - (MUWorld *) worldForUniqueIdentifier: (NSString *) identifier;
 

@@ -42,7 +42,7 @@ static MUWorldRegistry *defaultRegistry = nil;
   if (![super init])
     return nil;
   
-  [self setWorlds: [NSArray array]];
+  worlds = [[NSMutableArray alloc] init];
   
   return self;
 }
@@ -68,19 +68,23 @@ static MUWorldRegistry *defaultRegistry = nil;
   
   [worlds release];
   worlds = [newWorlds mutableCopy];
+  
   [self postWorldsDidChangeNotification];
+  [self writeWorldsToUserDefaults];
 }
 
 - (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) worldIndex
 {
   [worlds insertObject: world atIndex: worldIndex];
   [self postWorldsDidChangeNotification];
+  [self writeWorldsToUserDefaults];
 }
 
 - (void) removeObjectFromWorldsAtIndex: (unsigned) worldIndex
 {
   [worlds removeObjectAtIndex: worldIndex];
   [self postWorldsDidChangeNotification];
+  [self writeWorldsToUserDefaults];
 }
 
 #pragma mark -
@@ -108,6 +112,7 @@ static MUWorldRegistry *defaultRegistry = nil;
 {
   [worlds removeObject: world];
   [self postWorldsDidChangeNotification];
+  [self writeWorldsToUserDefaults];
 }
 
 - (void) replaceWorld: (MUWorld *) oldWorld withWorld: (MUWorld *) newWorld
@@ -117,15 +122,11 @@ static MUWorldRegistry *defaultRegistry = nil;
   	if (oldWorld == [worlds objectAtIndex: i])
   	{
   		[worlds replaceObjectAtIndex: i withObject: newWorld];
-  		[self postWorldsDidChangeNotification];
+      [self postWorldsDidChangeNotification];
+      [self writeWorldsToUserDefaults];
   		break;
   	}
   }
-}
-
-- (void) saveWorlds
-{
-  [self writeWorldsToUserDefaults];
 }
 
 - (MUWorld *) worldAtIndex: (unsigned) worldIndex
@@ -191,9 +192,10 @@ static MUWorldRegistry *defaultRegistry = nil;
 
 - (void) writeWorldsToUserDefaults
 {
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject: worlds];
+  [[NSUserDefaults standardUserDefaults] setObject: [NSKeyedArchiver archivedDataWithRootObject: worlds]
+                                            forKey: MUPWorlds];
   
-  [[NSUserDefaults standardUserDefaults] setObject: data forKey: MUPWorlds];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

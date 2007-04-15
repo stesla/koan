@@ -69,7 +69,8 @@ static MUProfileRegistry *defaultRegistry = nil;
   if (!rval)
   {
     rval = profile;
-    [profiles setObject: rval forKey: [rval uniqueIdentifier]];    
+    [profiles setObject: rval forKey: [rval uniqueIdentifier]];
+    [self writeProfilesToUserDefaults];
   }
   return rval;
 }
@@ -120,6 +121,7 @@ static MUProfileRegistry *defaultRegistry = nil;
 - (void) removeProfileForUniqueIdentifier: (NSString *) identifier
 {
   [profiles removeObjectForKey: identifier];  
+  [self writeProfilesToUserDefaults];
 }
 
 - (void) removeAllProfilesForWorld: (MUWorld *) world
@@ -133,11 +135,6 @@ static MUProfileRegistry *defaultRegistry = nil;
   [self removeProfileForWorld: world];
 }
 
-- (void) saveProfiles
-{
-  [self writeProfilesToUserDefaults];
-}
-
 - (NSDictionary *) profiles
 {
   return profiles;
@@ -145,9 +142,13 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 - (void) setProfiles: (NSDictionary *) newProfiles
 {
-  NSMutableDictionary *copy = [newProfiles mutableCopy];
+  if (profiles == newProfiles)
+    return;
+  
   [profiles release];
-  profiles = copy;
+  profiles = [newProfiles mutableCopy];
+  
+  [self writeProfilesToUserDefaults];
 }
 
 @end
@@ -164,21 +165,18 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 - (void) readProfilesFromUserDefaults
 {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSData *profilesData = [defaults dataForKey: MUPProfiles];
+  NSData *profilesData = [[NSUserDefaults standardUserDefaults] dataForKey: MUPProfiles];
   
   if (profilesData)
-  {
-    [self setProfiles:
-      [NSKeyedUnarchiver unarchiveObjectWithData: profilesData]];
-  }
+    [self setProfiles: [NSKeyedUnarchiver unarchiveObjectWithData: profilesData]];
 }
 
 - (void) writeProfilesToUserDefaults
 {
-  NSData *data = [NSKeyedArchiver archivedDataWithRootObject: profiles];
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject: data forKey: MUPProfiles];
+  [[NSUserDefaults standardUserDefaults] setObject: [NSKeyedArchiver archivedDataWithRootObject: profiles]
+                                            forKey: MUPProfiles];
+  
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

@@ -36,6 +36,4 @@
 - (void) removeProfileForUniqueIdentifier: (NSString *) identifier;
 - (void) removeAllProfilesForWorld: (MUWorld *) world;
 
-- (void) saveProfiles;
-
 @end
