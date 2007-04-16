@@ -22,27 +22,33 @@
 
 + (id) engine;
 
+- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
+- (void) log: (NSString *) message, ...;
+
+// Parsing
 - (void) bufferInputByte: (uint8_t) byte;
+- (void) parseData: (NSData *) data;
+- (NSData *) preprocessOutput: (NSData *) data;
+
+// Output
+- (void) endOfRecord;
+- (void) goAhead;
+
+// Option Negotation
 - (void) disableOptionForHim: (uint8_t) option;
 - (void) disableOptionForUs: (uint8_t) option;
 - (void) enableOptionForHim: (uint8_t) option;
 - (void) enableOptionForUs: (uint8_t) option;
-- (void) endOfRecord;
-- (void) goAhead;
-- (void) log: (NSString *) message, ...;
 - (void) negotiateOptions;
+- (NSString *) optionNameForByte: (uint8_t) byte;
 - (BOOL) optionYesForHim: (uint8_t) option;
 - (BOOL) optionYesForUs: (uint8_t) option;
-- (NSString *) optionNameForByte: (uint8_t) byte;
-- (void) parseData: (NSData *) data;
-- (NSData *) preprocessOutput: (NSData *) data;
-- (void) shouldAllowDo: (BOOL) value forOption: (uint8_t) option;
-- (void) shouldAllowWill: (BOOL) value forOption: (uint8_t) option;
-- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
 - (void) receivedDo: (uint8_t) option;
 - (void) receivedDont: (uint8_t) option;
 - (void) receivedWill: (uint8_t) option;
 - (void) receivedWont: (uint8_t) option;
+- (void) shouldAllowDo: (BOOL) value forOption: (uint8_t) option;
+- (void) shouldAllowWill: (BOOL) value forOption: (uint8_t) option;
 
 @end
 
