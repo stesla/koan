@@ -57,6 +57,18 @@
   [self assertBufferHasBytesWithZeroTerminator: bytes];
 }
 
+- (void) testDoSuppressGoAhead
+{
+  [self simulateDo: J3TelnetOptionSuppressGoAhead];
+  [self assertTrue: [engine optionYesForUs: J3TelnetOptionSuppressGoAhead]];
+}
+
+- (void) testWillSuppressGoAhead
+{
+  [self simulateWill: J3TelnetOptionSuppressGoAhead];
+  [self assertTrue: [engine optionYesForHim: J3TelnetOptionSuppressGoAhead]];
+}
+
 - (void) testSuppressGoAhead
 {
   [engine enableOptionForUs: J3TelnetOptionSuppressGoAhead];

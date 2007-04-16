@@ -12,6 +12,7 @@
 @interface J3TelnetEngine (Private)
 
 - (void) deallocOptions;
+- (void) forOption: (uint8_t) option allowWill: (BOOL) willValue allowDo: (BOOL) doValue;
 - (void) initializeOptions;
 - (void) parseByte: (uint8_t) byte;
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
@@ -201,12 +202,12 @@
   [options[option] receivedWont];
 }
 
-- (void) shouldHeEnableOption: (uint8_t) option IfHeAsks: (BOOL) value
+- (void) shouldAllowWill: (BOOL) value forOption: (uint8_t) option;
 {
   [options[option] heIsAllowedToUse: value];
 }
 
-- (void) shouldWeEnableOption: (uint8_t) option IfHeAsks: (BOOL) value
+- (void) shouldAllowDo: (BOOL) value forOption: (uint8_t) option;
 {
   [options[option] weAreAllowedToUse: value];
 }
@@ -255,12 +256,18 @@
     [options[i] release];
 }
 
+- (void) forOption: (uint8_t) option allowWill: (BOOL) willValue allowDo: (BOOL) doValue
+{
+  [self shouldAllowWill: willValue forOption: option];
+  [self shouldAllowDo: doValue forOption: option];
+}
+
 - (void) initializeOptions;
 {
   for (unsigned i = 0; i < TELNET_OPTION_MAX; ++i)
     options[i] = [[J3TelnetOption alloc] initWithOption: i delegate: self];
-  [self shouldHeEnableOption: J3TelnetOptionEndOfRecord IfHeAsks: YES];
-  [self shouldWeEnableOption: J3TelnetOptionEndOfRecord IfHeAsks: YES];
+  [self forOption: J3TelnetOptionEndOfRecord allowWill: YES allowDo: YES];
+  [self forOption: J3TelnetOptionSuppressGoAhead allowWill: YES allowDo: YES];
 }
 
 - (void) parseByte: (uint8_t) byte

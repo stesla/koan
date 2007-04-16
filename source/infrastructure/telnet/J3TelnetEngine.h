@@ -36,8 +36,8 @@
 - (NSString *) optionNameForByte: (uint8_t) byte;
 - (void) parseData: (NSData *) data;
 - (NSData *) preprocessOutput: (NSData *) data;
-- (void) shouldHeEnableOption: (uint8_t) option IfHeAsks: (BOOL) value;
-- (void) shouldWeEnableOption: (uint8_t) option IfHeAsks: (BOOL) value;
+- (void) shouldAllowDo: (BOOL) value forOption: (uint8_t) option;
+- (void) shouldAllowWill: (BOOL) value forOption: (uint8_t) option;
 - (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
 - (void) receivedDo: (uint8_t) option;
 - (void) receivedDont: (uint8_t) option;
