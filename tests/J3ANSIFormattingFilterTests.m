@@ -15,7 +15,7 @@
 - (void) assertInput: (NSString *) input
            hasOutput: (NSString *) output
              message: (NSString *) message;
-- (void) assertFinalCharacter: (unsigned char)finalChar;
+- (void) assertFinalCharacter: (unsigned char) finalChar;
 - (void) assertString: (NSAttributedString *) string
              hasValue: (id) value
          forAttribute: (NSString *) attribute

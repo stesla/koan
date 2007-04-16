@@ -194,13 +194,12 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
   return YES;
 }
 
-- (NSString *) spotlightDisplayName;
+- (NSString *) spotlightDisplayName
 {
-  /* This string should be of the format "Player on Date" unless there is no player header
-   * in which case it should be "World on Date" unless there is none, and then it should be
-   * "Koan Log on Date".  If there is no date header, then we should just return nil to 
-   * indicate that we don't want to override the setting
-   */
+  // This string should be of the format "Player on Date" unless there is no player header
+  // in which case it should be "World on Date" unless there is none, and then it should be
+  // "Koan Log on Date".  If there is no date header, then we should just return nil to 
+  // indicate that we don't want to override the setting.
 
   NSString *date = [self headerForKey: @"Date"];
   if (!date)

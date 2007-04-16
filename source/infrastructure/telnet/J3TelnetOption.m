@@ -86,12 +86,12 @@
                               ifAllow: @selector (sendDo)];
 }
 
-- (void) enableHim;
+- (void) enableHim
 {
   [self requestEnableFor: &him withSelector: @selector (sendDo)];
 }
 
-- (void) enableUs;
+- (void) enableUs
 {
   [self requestEnableFor: &us withSelector: @selector (sendWill)];
 }

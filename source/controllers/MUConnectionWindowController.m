@@ -420,6 +420,9 @@ enum MUSearchDirections
       if ([[[NSApp currentEvent] charactersIgnoringModifiers] length] > 0)
         key = [[[NSApp currentEvent] charactersIgnoringModifiers] characterAtIndex: 0];
       
+      if ([[[NSApp currentEvent] charactersIgnoringModifiers] length] > 1)
+        NSLog (@"Speculative log for #49: length = %d", [[[NSApp currentEvent] charactersIgnoringModifiers] length]);
+      
       [self endCompletion];
       
       if (key == NSCarriageReturnCharacter || key == NSEnterCharacter)

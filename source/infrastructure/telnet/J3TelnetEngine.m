@@ -70,7 +70,7 @@
   [options[option] enableUs];
 }
 
-- (void) endOfRecord;
+- (void) endOfRecord
 {
   if (![self optionYesForUs: J3TelnetOptionEndOfRecord])
     return;
@@ -250,7 +250,7 @@
 
 @implementation J3TelnetEngine (Private)
 
-- (void) deallocOptions;
+- (void) deallocOptions
 {
   for (unsigned i = 0; i < TELNET_OPTION_MAX; ++i)
     [options[i] release];
@@ -262,10 +262,11 @@
   [self shouldAllowDo: doValue forOption: option];
 }
 
-- (void) initializeOptions;
+- (void) initializeOptions
 {
   for (unsigned i = 0; i < TELNET_OPTION_MAX; ++i)
     options[i] = [[J3TelnetOption alloc] initWithOption: i delegate: self];
+  
   [self forOption: J3TelnetOptionEndOfRecord allowWill: YES allowDo: YES];
   [self forOption: J3TelnetOptionSuppressGoAhead allowWill: YES allowDo: YES];
 }
