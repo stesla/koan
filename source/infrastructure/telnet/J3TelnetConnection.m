@@ -96,7 +96,6 @@
   [self initializeSocket];
   [self schedulePollTimer];
   [socket open];
-  [engine negotiateOptions];
 }
 
 - (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object

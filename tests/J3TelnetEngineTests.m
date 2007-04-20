@@ -13,6 +13,7 @@
 
 - (void) assertBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes;
 - (void) clearBuffer;
+- (void) resetEngine;
 - (void) simulateDo: (uint8_t) option;
 - (void) simulateWill: (uint8_t) option;
 
@@ -22,9 +23,9 @@
 
 - (void) setUp
 {
-  buffer = [[NSMutableData data] retain];
-  engine = [[J3TelnetEngine engine] retain];
-  [engine setDelegate: self];
+  [self resetEngine];
+  [engine confirmTelnet];
+  [self at: &buffer put: [NSMutableData data]]; 
 }
 
 - (void) tearDown
@@ -46,15 +47,6 @@
   [buffer setData: [engine preprocessOutput: data]];
   const uint8_t expected[] = {J3TelnetInterpretAsCommand, J3TelnetInterpretAsCommand, 0};
   [self assertBufferHasBytesWithZeroTerminator: expected];
-}
-
-- (void) testNegotiateOptions
-{
-  [engine negotiateOptions];
-  const uint8_t bytes[] = {
-    J3TelnetInterpretAsCommand, J3TelnetWill, J3TelnetOptionSuppressGoAhead,
-    0};
-  [self assertBufferHasBytesWithZeroTerminator: bytes];
 }
 
 - (void) testDoSuppressGoAhead
@@ -107,11 +99,24 @@
 
 - (void) testConfirmTelnet
 {
+  [self resetEngine];
   [self assertFalse: [engine telnetConfirmed] message: @"before confirmation"];
   [engine confirmTelnet];
   [self assertTrue: [engine telnetConfirmed] message: @"after confirmation"];
   [engine confirmTelnet];
   [self assertTrue: [engine telnetConfirmed] message: @"after re-confirmation"];
+}
+
+- (void) testTelnetNotSentWhenNotConfirmed
+{
+  [self resetEngine];
+  [engine goAhead];
+  [engine endOfRecord];
+  [engine enableOptionForUs: 0];
+  [engine enableOptionForHim: 0];
+  [engine disableOptionForUs: 0];
+  [engine disableOptionForHim: 0];
+  [self assert: buffer equals: [NSData data] message: @"telnet was written"];
 }
 
 #pragma mark -
@@ -142,6 +147,12 @@
 - (void) clearBuffer
 {
   [buffer setData: [NSData data]]; 
+}
+
+- (void) resetEngine
+{
+  [self at: &engine put: [J3TelnetEngine engine]];
+  [engine setDelegate: self];  
 }
 
 - (void) simulateDo: (uint8_t) option

@@ -93,7 +93,8 @@ PennMUSH
 * PennMUSH 1.8.1 (need version):
 * PennMUSH version 1.8.3 patchlevel 1 [03/11/2007]:
   server asks for telnet options: DO LINEMODE, DO NAWS, DO TERMINAL-TYPE
-  server does not advertise SGA but accepts it both WILL and DO
+  server does not advertise SGA and ignores WILL SGA by itself, but accepts DO SGA
+  server will request the client DO SGA after the client negotiates DO SGA with the server
   
 INFO output:
 

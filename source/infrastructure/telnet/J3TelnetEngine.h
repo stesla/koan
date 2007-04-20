@@ -41,7 +41,6 @@
 - (void) disableOptionForUs: (uint8_t) option;
 - (void) enableOptionForHim: (uint8_t) option;
 - (void) enableOptionForUs: (uint8_t) option;
-- (void) negotiateOptions;
 - (NSString *) optionNameForByte: (uint8_t) byte;
 - (BOOL) optionYesForHim: (uint8_t) option;
 - (BOOL) optionYesForUs: (uint8_t) option;

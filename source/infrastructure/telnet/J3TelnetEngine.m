@@ -14,6 +14,7 @@
 - (void) deallocOptions;
 - (void) forOption: (uint8_t) option allowWill: (BOOL) willValue allowDo: (BOOL) doValue;
 - (void) initializeOptions;
+- (void) negotiateOptions;
 - (void) parseByte: (uint8_t) byte;
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
 - (void) sendEscapedByte: (uint8_t) byte;
@@ -63,36 +64,38 @@
 
 - (void) disableOptionForHim: (uint8_t) option
 {
-  [options[option] disableHim];
+  if (telnetConfirmed)
+    [options[option] disableHim];
 }
 
 - (void) disableOptionForUs: (uint8_t) option
 {
-  [options[option] disableUs];
+  if (telnetConfirmed)
+    [options[option] disableUs];
 }
 
 - (void) enableOptionForHim: (uint8_t) option
 {
-  [options[option] enableHim];
+  if (telnetConfirmed)
+    [options[option] enableHim];
 }
 
 - (void) enableOptionForUs: (uint8_t) option
 {
-  [options[option] enableUs];
+  if (telnetConfirmed)
+    [options[option] enableUs];
 }
 
 - (void) endOfRecord
 {
-  if (![self optionYesForUs: J3TelnetOptionEndOfRecord])
-    return;
-  [self sendEscapedByte: J3TelnetEndOfRecord];
+  if ([self optionYesForUs: J3TelnetOptionEndOfRecord])
+    [self sendEscapedByte: J3TelnetEndOfRecord];
 }
 
 - (void) goAhead
 {
-  if ([self optionYesForUs: J3TelnetOptionSuppressGoAhead])
-    return;
-  [self sendEscapedByte: J3TelnetGoAhead];
+  if (telnetConfirmed && ![self optionYesForUs: J3TelnetOptionSuppressGoAhead])
+    [self sendEscapedByte: J3TelnetGoAhead];
 }
 
 - (void) log: (NSString *) message, ...
@@ -103,11 +106,6 @@
   [delegate log: message arguments: args];
   
   va_end (args);
-}
-
-- (void) negotiateOptions
-{
-  [self enableOptionForUs: J3TelnetOptionSuppressGoAhead];
 }
 
 - (BOOL) optionYesForHim: (uint8_t) option
@@ -176,8 +174,11 @@
 
 - (void) parseData: (NSData *) data
 {
+  BOOL wasConfirmed = telnetConfirmed;
   for (unsigned i = 0; i < [data length]; i++)
     [self parseByte: ((uint8_t *) [data bytes])[i]];
+  if (!wasConfirmed && telnetConfirmed)
+    [self negotiateOptions];
 }
 
 - (NSData *) preprocessOutput: (NSData *) data
@@ -285,6 +286,15 @@
   
   [self forOption: J3TelnetOptionEndOfRecord allowWill: YES allowDo: YES];
   [self forOption: J3TelnetOptionSuppressGoAhead allowWill: YES allowDo: YES];
+}
+
+- (void) negotiateOptions
+{
+  [self enableOptionForUs: J3TelnetOptionSuppressGoAhead];
+  // PennMUSH does not respond well to IAC GA, but it ignores
+  // IAC WILL SGA.  If we send IAC DO SGA it will request that
+  // we also IAC DO SGA, so that results in a good set of options.
+  [self enableOptionForHim: J3TelnetOptionSuppressGoAhead];
 }
 
 - (void) parseByte: (uint8_t) byte
