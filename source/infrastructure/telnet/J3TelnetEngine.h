@@ -15,14 +15,16 @@
 
 @interface J3TelnetEngine : NSObject <J3TelnetOptionDelegate>
 {
-  NSObject <J3TelnetEngineDelegate> *delegate;
+  id <J3TelnetEngineDelegate> delegate;
   J3TelnetState *state;
   J3TelnetOption *options[TELNET_OPTION_MAX];
+  BOOL telnetConfirmed;
 }
 
 + (id) engine;
 
-- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object;
+- (id <J3TelnetEngineDelegate>) delegate;
+- (void) setDelegate: (id <J3TelnetEngineDelegate>) object;
 - (void) log: (NSString *) message, ...;
 
 // Parsing
@@ -49,6 +51,10 @@
 - (void) receivedWont: (uint8_t) option;
 - (void) shouldAllowDo: (BOOL) value forOption: (uint8_t) option;
 - (void) shouldAllowWill: (BOOL) value forOption: (uint8_t) option;
+
+// Telnet Confirmation
+- (void) confirmTelnet;
+- (BOOL) telnetConfirmed;
 
 @end
 

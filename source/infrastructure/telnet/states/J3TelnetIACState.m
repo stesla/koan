@@ -9,11 +9,18 @@
 #import "J3TelnetDontState.h"
 #import "J3TelnetIACState.h"
 #import "J3TelnetEngine.h"
+#import "J3TelnetNotTelnetState.h"
 #import "J3TelnetState.h"
 #import "J3TelnetSubnegotiationState.h"
 #import "J3TelnetTextState.h"
 #import "J3TelnetWillState.h"
 #import "J3TelnetWontState.h"
+
+@interface J3TelnetIACState (Private)
+
+- (J3TelnetState *) notTelnetFromByte: (uint8_t) byte forEngine: (J3TelnetEngine *) engine;
+
+@end
 
 @implementation J3TelnetIACState
 
@@ -32,38 +39,50 @@
     case J3TelnetEraseCharacter:
     case J3TelnetEraseLine:
     case J3TelnetGoAhead:
-      // TODO: these complete a valid telnet command.
+      [engine confirmTelnet];
       return [J3TelnetTextState state];
-      
-    case J3TelnetBeginSubnegotiation:
-      // TODO: subnegotiations are valid telnet if and only if we've negotiated
-      // to use the corresponding option.
-      return [J3TelnetSubnegotiationState state];
-      
+           
     case J3TelnetWill:
-      // TODO: for all the option state modifiers, whatever follows is valid,
-      // since we want to allow for unsupported options that we don't know about
-      // without bailing on telnet.
+      [engine confirmTelnet];
       return [J3TelnetWillState state];
       
     case J3TelnetWont:
+      [engine confirmTelnet];
       return [J3TelnetWontState state];
       
     case J3TelnetDo:
+      [engine confirmTelnet];
       return [J3TelnetDoState state];
       
     case J3TelnetDont:
+      [engine confirmTelnet];
       return [J3TelnetDontState state];
       
     case J3TelnetInterpretAsCommand:
-      [engine bufferInputByte: J3TelnetInterpretAsCommand];
+      [[engine delegate] bufferInputByte: J3TelnetInterpretAsCommand];
       return [J3TelnetTextState state];
-      
+
+    case J3TelnetBeginSubnegotiation:
+      if ([engine telnetConfirmed])
+        return [J3TelnetSubnegotiationState state];
     case J3TelnetEndSubnegotiation:
     default:
-      // TODO: this is invalid telnet.
-      return [J3TelnetTextState state];
+      return [self notTelnetFromByte: byte forEngine: engine];
   }
 }
 
 @end
+
+#pragma mark -
+
+@implementation J3TelnetIACState (Private)
+
+- (J3TelnetState *) notTelnetFromByte: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
+{
+  uint8_t bytes[] = {J3TelnetInterpretAsCommand, byte};
+  [[engine delegate] writeData: [NSData dataWithBytes: bytes length: 2]];
+  return [J3TelnetNotTelnetState state];
+}
+
+@end
+

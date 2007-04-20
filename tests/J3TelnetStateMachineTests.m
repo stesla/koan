@@ -11,6 +11,7 @@
 #import "J3TelnetTextState.h"
 #import "J3TelnetDoState.h"
 #import "J3TelnetDontState.h"
+#import "J3TelnetNotTelnetState.h"
 #import "J3TelnetOptionMCCP1State.h"
 #import "J3TelnetSubnegotiationIACState.h"
 #import "J3TelnetSubnegotiationState.h"
@@ -20,56 +21,16 @@
 
 #define C(x) ([x class])
 
-#pragma mark -
-
-@implementation J3MockTelnetEngine
-
-- (id) init
-{
-  if (![super init])
-    return nil;
-  [self at: &output put: [J3WriteBuffer buffer]];
-  return self;
-}
-
-- (uint8_t) lastByteInput
-{
-  return lastByteInput;
-}
-
-- (uint8_t) outputByteAtIndex: (unsigned) byteIndex
-{
-  return ((uint8_t *) [[output dataValue] bytes])[byteIndex];
-}
-
-- (unsigned) outputLength
-{
-  return [output length];
-}
-
-- (void) bufferInputByte: (uint8_t) byte
-{
-  lastByteInput = byte;
-}
-
-- (void) bufferOutputByte: (uint8_t) byte
-{
-  [output appendByte: byte];
-}
-
-@end
-
-#pragma mark -
-
 @interface J3TelnetStateMachineTests (Private)
 
+- (void) assertByteConfirmsTelnet: (uint8_t) byte;
+- (void) assertByteInvalidatesTelnet: (uint8_t) byte;
 - (void) assertState: (Class) stateClass givenAnyByteProducesState: (Class) nextStateClass;
 - (void) assertState: (Class) stateClass givenAnyByteProducesState: (Class) nextStateClass exceptForThoseInSet: (J3ByteSet *) exclusions;
 - (void) assertState: (Class) stateClass givenByte: (uint8_t) byte producesState: (Class) nextStateClass;
 - (void) assertState: (Class) stateClass givenByte: (uint8_t) givenByte inputsByte: (uint8_t) inputsByte;
-- (void) assertState: (Class) stateClass givenByte: (uint8_t) givenByte outputsNegotiationCommandWithThatByte: (uint8_t) outputsCommand;
 - (void) giveStateClass: (Class) stateClass byte: (uint8_t) byte;
-- (void) setStateClass: (Class) stateClass;
+- (void) resetEngine;
 
 @end
 
@@ -77,20 +38,82 @@
 
 @implementation J3TelnetStateMachineTests
 
+- (void) setUp
+{
+  [self resetEngine];
+  lastByteInput = -1;
+  [self at: &output put: [NSMutableData data]];
+}
+
+- (void) tearDown
+{
+  [output release];
+  [engine release];
+}
+
 - (void) testTextStateTransitions
 {
   [self assertState: C(J3TelnetTextState) givenAnyByteProducesState: C(J3TelnetTextState) exceptForThoseInSet: [J3ByteSet byteSetWithBytes: J3TelnetInterpretAsCommand, -1]];
   [self assertState: C(J3TelnetTextState) givenByte: J3TelnetInterpretAsCommand producesState: C(J3TelnetIACState)];
 }
 
-- (void) testInterpretAsCommandStateTransitions
+- (void) testIACTransitionsThatIndicateNonTelnet
 {
-  [self assertState: C(J3TelnetIACState) givenAnyByteProducesState: C(J3TelnetTextState) exceptForThoseInSet: [J3ByteSet byteSetWithBytes: J3TelnetDo, J3TelnetDont, J3TelnetWill, J3TelnetWont, J3TelnetBeginSubnegotiation, -1]];
+  [self assertState: C(J3TelnetIACState) givenAnyByteProducesState: C(J3TelnetNotTelnetState) exceptForThoseInSet: [J3TelnetState telnetCommandBytes]];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetBeginSubnegotiation producesState: C(J3TelnetNotTelnetState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetEndSubnegotiation producesState: C(J3TelnetNotTelnetState)];
+}
+
+- (void) testTransitionToNotTelnetWritesTwoBytesThatGotThere
+{
+  [self assertByteInvalidatesTelnet: J3TelnetBeginSubnegotiation];
+  [self assertByteInvalidatesTelnet: J3TelnetEndSubnegotiation]; 
+  J3ByteSet *commands = [J3TelnetState telnetCommandBytes];
+  for (unsigned i = 0; i <= UINT8_MAX; ++i)
+  {
+    if ([commands containsByte: i])
+      continue;
+    [self assertByteInvalidatesTelnet: i];
+  }
+}
+
+- (void) testIACTransitionsThatConfirmTelnet
+{
+  [self assertByteConfirmsTelnet: J3TelnetEndOfRecord];
+  [self assertByteConfirmsTelnet: J3TelnetNoOperation];
+  [self assertByteConfirmsTelnet: J3TelnetDataMark];
+  [self assertByteConfirmsTelnet: J3TelnetBreak];
+  [self assertByteConfirmsTelnet: J3TelnetInterruptProcess];
+  [self assertByteConfirmsTelnet: J3TelnetAbortOutput];
+  [self assertByteConfirmsTelnet: J3TelnetAreYouThere];
+  [self assertByteConfirmsTelnet: J3TelnetEraseCharacter];
+  [self assertByteConfirmsTelnet: J3TelnetEraseLine];
+  [self assertByteConfirmsTelnet: J3TelnetGoAhead];
+  [self assertByteConfirmsTelnet: J3TelnetDo];
+  [self assertByteConfirmsTelnet: J3TelnetDont];
+  [self assertByteConfirmsTelnet: J3TelnetWill];
+  [self assertByteConfirmsTelnet: J3TelnetWont];
+}
+  
+- (void) testIACTransitionsOnceConfirmed
+{
+  [engine confirmTelnet];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetEndOfRecord producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetNoOperation producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetDataMark producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetBreak producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetInterruptProcess producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetAbortOutput producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetAreYouThere producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetEraseCharacter producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetEraseLine producesState: C(J3TelnetTextState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetGoAhead producesState: C(J3TelnetTextState)];
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetDo producesState: C(J3TelnetDoState)];
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetDont producesState: C(J3TelnetDontState)];
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetWill producesState: C(J3TelnetWillState)];
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetWont producesState: C(J3TelnetWontState)];  
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetBeginSubnegotiation producesState: C(J3TelnetSubnegotiationState)];
+  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetInterpretAsCommand producesState: C(J3TelnetTextState)];
 }
   
 - (void) testDoWontWillWontStateTransitions
@@ -121,11 +144,43 @@
   [self assertState: C(J3TelnetOptionMCCP1State) givenByte: J3TelnetWill producesState: C(J3TelnetSubnegotiationIACState)];
 }
 
+#pragma mark -
+#pragma mark J3TelnetEngineDelegate
+
+- (void) bufferInputByte: (uint8_t) byte
+{
+  lastByteInput = byte;
+}
+
+- (void) log: (NSString *) message arguments: (va_list) args;
+{
+}
+
+- (void) writeData: (NSData *) data;
+{
+  [output setData: data];
+}
+
 @end
 
 #pragma mark -
 
 @implementation J3TelnetStateMachineTests (Private)
+
+- (void) assertByteConfirmsTelnet: (uint8_t) byte;
+{
+  [self resetEngine];
+  [[J3TelnetIACState state] parse: byte forEngine: engine];
+  [self assertTrue: [engine telnetConfirmed] message: [NSString stringWithFormat: @"%d did not confirm telnet", byte]];
+}
+
+- (void) assertByteInvalidatesTelnet: (uint8_t) byte
+{
+  uint8_t bytes[] = {J3TelnetInterpretAsCommand, byte};
+  [self giveStateClass: C(J3TelnetIACState) byte: byte];
+  [self assert: output equals: [NSData dataWithBytes: bytes length: 2]];  
+}
+
 
 - (void) assertState: (Class) stateClass givenAnyByteProducesState: (Class) nextStateClass
 {
@@ -144,37 +199,25 @@
 
 - (void) assertState: (Class) stateClass givenByte: (uint8_t) byte producesState: (Class) nextStateClass
 {
-  J3TelnetState * nextState;
-  [self setStateClass: stateClass];
-  nextState = [state parse: byte forEngine: nil];
+  J3TelnetState * nextState = [[[[stateClass alloc] init] autorelease] parse: byte forEngine: engine];
   [self assert: [nextState class] equals: nextStateClass];  
 }
 
 - (void) assertState: (Class) stateClass givenByte: (uint8_t) givenByte inputsByte: (uint8_t) inputsByte
 {
   [self giveStateClass: stateClass byte: givenByte];
-  [self assertInt: [engine lastByteInput] equals: inputsByte];
-}
-
-- (void) assertState: (Class) stateClass givenByte: (uint8_t) givenByte outputsNegotiationCommandWithThatByte: (uint8_t) outputsCommand
-{
-  [self giveStateClass: stateClass byte: givenByte];
-  [self assertInt: [engine outputLength] equals: 3];
-  [self assertInt: [engine outputByteAtIndex: 0] equals: J3TelnetInterpretAsCommand];
-  [self assertInt: [engine outputByteAtIndex: 1] equals: outputsCommand];
-  [self assertInt: [engine outputByteAtIndex: 2] equals: givenByte];
+  [self assertInt: lastByteInput equals: inputsByte];
 }
 
 - (void) giveStateClass: (Class) stateClass byte: (uint8_t) byte
 {
-  [self setStateClass: stateClass];
-  engine = [J3MockTelnetEngine engine];
-  [state parse: byte forEngine: engine];  
+  [[[[stateClass alloc] init] autorelease] parse: byte forEngine: engine];  
 }
 
-- (void) setStateClass: (Class) stateClass
+- (void) resetEngine
 {
-  state = [[[stateClass alloc] init] autorelease];  
+  [self at: &engine put: [J3TelnetEngine engine]];
+  [engine setDelegate: self];
 }
 
 @end

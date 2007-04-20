@@ -35,7 +35,13 @@
     return nil;
   [self at: &state put: [J3TelnetTextState state]];
   [self initializeOptions];
+  telnetConfirmed = NO;
   return self;
+}
+
+- (void) confirmTelnet
+{
+  telnetConfirmed = YES;
 }
 
 - (void) bufferInputByte: (uint8_t) byte
@@ -48,6 +54,11 @@
   [self deallocOptions];
   [state release];
   [super dealloc];
+}
+
+- (id <J3TelnetEngineDelegate>) delegate
+{
+  return delegate;
 }
 
 - (void) disableOptionForHim: (uint8_t) option
@@ -212,9 +223,14 @@
   [options[option] weAreAllowedToUse: value];
 }
 
-- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
+- (void) setDelegate: (id <J3TelnetEngineDelegate>) object
 {
   delegate = object;
+}
+
+- (BOOL) telnetConfirmed
+{
+  return telnetConfirmed;
 }
 
 #pragma mark -

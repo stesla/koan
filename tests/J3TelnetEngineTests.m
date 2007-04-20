@@ -105,6 +105,15 @@
   [self assertBufferHasBytesWithZeroTerminator: bytes];
 }
 
+- (void) testConfirmTelnet
+{
+  [self assertFalse: [engine telnetConfirmed] message: @"before confirmation"];
+  [engine confirmTelnet];
+  [self assertTrue: [engine telnetConfirmed] message: @"after confirmation"];
+  [engine confirmTelnet];
+  [self assertTrue: [engine telnetConfirmed] message: @"after re-confirmation"];
+}
+
 #pragma mark -
 #pragma mark J3TelnetEngineDelegate Protocol
 
