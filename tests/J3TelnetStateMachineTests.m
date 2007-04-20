@@ -57,42 +57,25 @@
   [self assertState: C(J3TelnetTextState) givenByte: J3TelnetInterpretAsCommand producesState: C(J3TelnetIACState)];
 }
 
-- (void) testIACTransitionsThatIndicateNonTelnet
+- (void) testIACTransitionsThatInvalidateTelnet
 {
-  [self assertState: C(J3TelnetIACState) givenAnyByteProducesState: C(J3TelnetNotTelnetState) exceptForThoseInSet: [J3TelnetState telnetCommandBytes]];
-  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetBeginSubnegotiation producesState: C(J3TelnetNotTelnetState)];
-  [self assertState: C(J3TelnetIACState) givenByte: J3TelnetEndSubnegotiation producesState: C(J3TelnetNotTelnetState)];
-}
-
-- (void) testTransitionToNotTelnetWritesTwoBytesThatGotThere
-{
-  [self assertByteInvalidatesTelnet: J3TelnetBeginSubnegotiation];
-  [self assertByteInvalidatesTelnet: J3TelnetEndSubnegotiation]; 
-  J3ByteSet *commands = [J3TelnetState telnetCommandBytes];
-  for (unsigned i = 0; i <= UINT8_MAX; ++i)
-  {
-    if ([commands containsByte: i])
-      continue;
-    [self assertByteInvalidatesTelnet: i];
-  }
+  J3ByteSet *byteSet = [[J3TelnetState telnetCommandBytes] inverseSet];
+  [byteSet addByte: J3TelnetBeginSubnegotiation];
+  [byteSet addByte: J3TelnetEndSubnegotiation];
+  NSData *bytes = [byteSet dataValue];
+  for (unsigned i = 0; i < [bytes length]; ++i)
+    [self assertByteInvalidatesTelnet: ((uint8_t *)[bytes bytes])[i]];
 }
 
 - (void) testIACTransitionsThatConfirmTelnet
 {
-  [self assertByteConfirmsTelnet: J3TelnetEndOfRecord];
-  [self assertByteConfirmsTelnet: J3TelnetNoOperation];
-  [self assertByteConfirmsTelnet: J3TelnetDataMark];
-  [self assertByteConfirmsTelnet: J3TelnetBreak];
-  [self assertByteConfirmsTelnet: J3TelnetInterruptProcess];
-  [self assertByteConfirmsTelnet: J3TelnetAbortOutput];
-  [self assertByteConfirmsTelnet: J3TelnetAreYouThere];
-  [self assertByteConfirmsTelnet: J3TelnetEraseCharacter];
-  [self assertByteConfirmsTelnet: J3TelnetEraseLine];
-  [self assertByteConfirmsTelnet: J3TelnetGoAhead];
-  [self assertByteConfirmsTelnet: J3TelnetDo];
-  [self assertByteConfirmsTelnet: J3TelnetDont];
-  [self assertByteConfirmsTelnet: J3TelnetWill];
-  [self assertByteConfirmsTelnet: J3TelnetWont];
+  J3ByteSet *byteSet = [J3TelnetState telnetCommandBytes];
+  [byteSet removeByte: J3TelnetBeginSubnegotiation];
+  [byteSet removeByte: J3TelnetEndSubnegotiation];
+  [byteSet removeByte: J3TelnetInterpretAsCommand];
+  NSData *bytes = [byteSet dataValue];
+  for (unsigned i = 0; i < [bytes length]; ++i)
+    [self assertByteConfirmsTelnet: ((uint8_t *)[bytes bytes])[i]];
 }
   
 - (void) testIACTransitionsOnceConfirmed
@@ -177,7 +160,7 @@
 - (void) assertByteInvalidatesTelnet: (uint8_t) byte
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, byte};
-  [self giveStateClass: C(J3TelnetIACState) byte: byte];
+  [self assertState: C(J3TelnetIACState) givenByte: byte producesState: C(J3TelnetNotTelnetState)];
   [self assert: output equals: [NSData dataWithBytes: bytes length: 2]];  
 }
 
@@ -189,12 +172,9 @@
 
 - (void) assertState: (Class) stateClass givenAnyByteProducesState: (Class) nextStateClass exceptForThoseInSet: (J3ByteSet *) exclusions
 {
-  for (unsigned i = 0; i <= UINT8_MAX; ++i)
-  {
-    if ([exclusions containsByte: i])
-      continue;
-    [self assertState: stateClass givenByte: i producesState: nextStateClass];
-  }
+  NSData *bytes = [[exclusions inverseSet] dataValue];
+  for (unsigned i = 0; i < [bytes length]; ++i)
+    [self assertState: stateClass givenByte: ((uint8_t *)[bytes bytes])[i] producesState: nextStateClass];
 }
 
 - (void) assertState: (Class) stateClass givenByte: (uint8_t) byte producesState: (Class) nextStateClass

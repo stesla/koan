@@ -39,4 +39,32 @@
   [self assertTrue: [byteSet containsByte: 5] message: @"Expected to contain 5"];
 }
 
+- (void) testInverseSet
+{
+  J3ByteSet *byteSet = [J3ByteSet byteSetWithBytes: 42, 71, -1];
+  J3ByteSet *inverse = [byteSet inverseSet];
+  for (unsigned i = 0; i <= UINT8_MAX; ++i)
+  {
+    if ([byteSet containsByte: i])
+      [self assertFalse: [inverse containsByte: i] message: [NSString stringWithFormat: @"Inverse should not contain %d", i]];
+    else
+      [self assertTrue: [inverse containsByte: i] message: [NSString stringWithFormat: @"Inverse should contain %d", i]];
+  }
+}
+
+- (void) testDataValue
+{
+  uint8_t bytes[] = {31, 47, 73};
+  J3ByteSet *byteSet = [J3ByteSet byteSetWithBytes: bytes length: 3];
+  [self assert: [byteSet dataValue] equals: [NSData dataWithBytes: bytes length: 3]];
+}
+
+- (void) testRemoveByte
+{
+  J3ByteSet *bytes = [J3ByteSet byteSetWithBytes: 42, 53, -1];
+  [bytes removeByte: 42];
+  [self assertTrue: [bytes containsByte: 53] message: @"53 was removed"];
+  [self assertFalse: [bytes containsByte: 42] message: @"42 was not removed"];
+}
+
 @end
