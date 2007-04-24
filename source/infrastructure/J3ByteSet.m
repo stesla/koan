@@ -60,10 +60,14 @@
 - (NSData *) dataValue
 {
   NSMutableData *result = [NSMutableData data];
+  uint8_t byte[1];
   for (unsigned i = 0; i <= UINT8_MAX; ++i)
   {
     if (contains[i])
-      [result appendBytes: &i length: 1];
+    {
+      byte[0] = i;
+      [result appendBytes: byte length: 1];
+    }
   }
   return result;
 }
