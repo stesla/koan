@@ -8,10 +8,6 @@
 #import "J3Socket.h"
 #import "J3TelnetConnection.h"
 
-#define TELNET_READ_BUFFER_SIZE (size_t) 512
-
-#pragma mark -
-
 @interface J3TelnetConnection (Private)
 
 - (void) cleanUpPollTimer;

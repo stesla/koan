@@ -119,7 +119,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   socketfd = -1;
   [self setStatusClosedByClient];
   
-  close (kq);
+  /* int result = */ close (kq);
   
   // TODO: handle result == -1 in some way. We could throw an exception, return
   // it up from here, but it should be noted and handled.
@@ -361,6 +361,9 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
     result = kevent (kq, &socket_event, 1, NULL, 0, NULL);
   }
   while (result == -1 && errno == EINTR);
+  
+  if (result == -1)
+    [J3SocketException socketErrorWithErrnoForFunction: @"kevent"];
 }
 
 - (void) performPostConnectNegotiation
