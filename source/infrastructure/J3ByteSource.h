@@ -6,6 +6,7 @@
 
 @protocol J3ByteSource
 
+- (unsigned) availableBytes;
 - (BOOL) hasDataAvailable;
 - (NSData *) readUpToLength: (size_t) length;
 

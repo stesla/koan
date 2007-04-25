@@ -222,7 +222,7 @@
   
   [socket poll];
   if ([socket hasDataAvailable])
-    [engine parseData: [socket readUpToLength: TELNET_READ_BUFFER_SIZE]];
+    [engine parseData: [socket readUpToLength: [socket availableBytes]]];
   else
     [inputBuffer interpretBufferAsString];
 }

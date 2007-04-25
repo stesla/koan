@@ -32,6 +32,11 @@
   [self appendData: [NSData dataWithBytes: bytes length: length]];
 }
 
+- (unsigned) availableBytes
+{
+  return [self length];
+}
+
 - (BOOL) hasDataAvailable
 {
   return [self length] > 0;

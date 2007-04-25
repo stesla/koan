@@ -56,6 +56,8 @@
 {
   [self performMethodSpecificNegotiation: [self selectMethod]];
   [self makeRequest];
+  
+  availableBytes = 0;
 }
 
 @end

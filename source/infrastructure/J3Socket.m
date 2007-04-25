@@ -6,13 +6,15 @@
 
 #import "J3Socket.h"
 
-#import <sys/ioctl.h>
-#import <sys/socket.h>
-#import <errno.h>
-#import <netdb.h>
-#import <poll.h>
-#import <stdarg.h>
-#import <unistd.h>
+#include <errno.h>
+#include <netdb.h>
+#include <poll.h>
+#include <stdarg.h>
+#include <sys/event.h>
+#include <sys/ioctl.h>
+#include <sys/socket.h>
+#include <sys/time.h>
+#include <unistd.h>
 
 #pragma mark -
 #pragma mark C Function Prototypes
@@ -25,10 +27,10 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 @interface J3Socket (Private)
 
-- (void) checkRemoteConnection;
 - (void) connectSocket;
 - (void) createSocket;
 - (void) initializeDescriptorSet: (fd_set *) set;
+- (void) initializeKernelQueue;
 - (void) performPostConnectNegotiation;
 - (void) resolveHostname;
 - (void) setStatusConnected;
@@ -92,6 +94,8 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) dealloc
 {
+  [self close];
+  
   delegate = nil;
   [hostname release];
   
@@ -112,9 +116,10 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   // underlying fd will be closed either way; EINTR here tends to indicate that
   // a final flush was interrupted and we may have lost data.
   /* int result = */ close (socketfd);
-  
   socketfd = -1;
   [self setStatusClosedByClient];
+  
+  close (kq);
   
   // TODO: handle result == -1 in some way. We could throw an exception, return
   // it up from here, but it should be noted and handled.
@@ -157,26 +162,34 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) poll
 {
-  hasDataAvailable = NO;
-  
-  fd_set read_set;
-  struct timeval tval;
-  
-  memset (&tval, 0, sizeof (struct timeval));
-  tval.tv_usec = 100;
-  
-  [self initializeDescriptorSet: &read_set];
+  struct timespec timeout = {0, 0};
+  struct kevent triggered_event;
   errno = 0;
   
-  int result = select (socketfd + 1, &read_set, NULL, NULL, &tval);  
+  int result;
   
-  if (result < 0)
-    [J3SocketException socketErrorWithErrnoForFunction: @"select"];
-  
-  if (FD_ISSET (socketfd, &read_set))
+  do
   {
-    hasDataAvailable = YES;
-    [self checkRemoteConnection];
+    result = kevent (kq, NULL, 0, &triggered_event, 1, &timeout);
+  }
+  while (result == -1 && errno == EINTR);
+  
+  if (result == -1)
+    [J3SocketException socketErrorWithErrnoForFunction: @"kevent"];
+  
+  if (result == 0)
+    return;
+  
+  if (triggered_event.flags & EV_EOF)
+  {
+    [self setStatusClosedByServer];
+    return;
+  }
+  
+  if ((int) triggered_event.ident == socketfd
+      && triggered_event.data > 0)
+  {
+    availableBytes += triggered_event.data;
   }
 }
 
@@ -193,9 +206,14 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 #pragma mark -
 #pragma mark J3ByteSource protocol
 
+- (unsigned) availableBytes
+{
+  return availableBytes;
+}
+
 - (BOOL) hasDataAvailable
 {
-  return hasDataAvailable;
+  return availableBytes > 0;
 }
 
 - (NSData *) readUpToLength: (size_t) length
@@ -210,7 +228,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   
   ssize_t bytesRead = safe_read (socketfd, bytes, length);
     
-  if (bytesRead < 0)
+  if (bytesRead == -1)
   {
     free (bytes);
     
@@ -224,6 +242,8 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
     [J3SocketException socketErrorWithErrnoForFunction: @"read"];
   }
   
+  availableBytes -= bytesRead;
+  
   return [NSData dataWithBytesNoCopy: bytes length: bytesRead];
 }
 
@@ -234,9 +254,9 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 {
   errno = 0;
   
-  ssize_t result = full_write (socketfd, [data bytes], (size_t) [data length]);
+  ssize_t bytes_written = full_write (socketfd, [data bytes], (size_t) [data length]);
   
-  if (result < 0)
+  if (bytes_written == -1)
   {
     // TODO: is this correct?
     if (!([self isConnected] || [self isConnecting]))
@@ -248,7 +268,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
     [J3SocketException socketErrorWithErrnoForFunction: @"write"];
   }
   
-  return result;
+  return bytes_written;
 }
 
 @end
@@ -257,27 +277,10 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 @implementation J3Socket (Private)
 
-- (void) checkRemoteConnection
-{
-  char *nread;
-  int result = ioctl (socketfd, FIONREAD, &nread);
-  
-  if (result < 0)
-  {
-    hasDataAvailable = NO;
-    [J3SocketException socketErrorWithErrnoForFunction: @"ioctl"];
-  }
-  if (!nread)
-  {
-    close (socketfd);
-    hasDataAvailable = NO;
-    [self setStatusClosedByServer];
-  }
-}
-
 - (void) connectSocket
 {
   errno = 0;
+  availableBytes = 0;
   
   struct sockaddr_in server_address;
   
@@ -323,6 +326,8 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
     
     // If we reach this point, the socket has successfully connected. =p
   }
+  
+  [self initializeKernelQueue];
 }
 
 - (void) createSocket
@@ -337,6 +342,25 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 {
   FD_ZERO (set);
   FD_SET (socketfd, set);
+}
+
+- (void) initializeKernelQueue
+{
+  errno = 0;
+  kq = kqueue ();
+  if (kq == -1)
+    [J3SocketException socketErrorWithErrnoForFunction: @"kqueue"];
+  
+  struct kevent socket_event;
+  
+  EV_SET (&socket_event, socketfd, EVFILT_READ, EV_ADD, 0, 0, 0);
+  
+  int result;
+  do
+  {
+    result = kevent (kq, &socket_event, 1, NULL, 0, NULL);
+  }
+  while (result == -1 && errno == EINTR);
 }
 
 - (void) performPostConnectNegotiation
@@ -420,7 +444,7 @@ full_write (int file_descriptor, const void *bytes, size_t length)
   while (length > 0)
   {
     bytes_written = safe_write (file_descriptor, bytes, length);
-    if (bytes_written < 0)
+    if (bytes_written == -1)
       return bytes_written;
     total_bytes_written += bytes_written;
     bytes = (const uint8_t *) bytes + bytes_written;
@@ -438,7 +462,7 @@ safe_read (int file_descriptor, void *bytes, size_t length)
   {
     bytes_read = read (file_descriptor, bytes, length);
   }
-  while (bytes_read < 0 && errno == EINTR);
+  while (bytes_read == -1 && errno == EINTR);
   return bytes_read;
 }
 
@@ -450,7 +474,7 @@ safe_write (int file_descriptor, const void *bytes, size_t length)
   {
     bytes_written = write (file_descriptor, bytes, length);
   }
-  while (bytes_written < 0 && errno == EINTR);  
+  while (bytes_written == -1 && errno == EINTR);  
   return bytes_written;  
 }
 
