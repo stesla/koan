@@ -216,6 +216,13 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   }
 }
 
+- (NSData *) readExactlyLength: (size_t) length;
+{
+  while (([self isConnected] || [self isConnecting]) && [self availableBytes] < length)
+    [self poll];
+  return [self readUpToLength: length];
+}
+
 - (NSData *) readUpToLength: (size_t) length
 {
   uint8_t *bytes = malloc (length);

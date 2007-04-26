@@ -40,34 +40,26 @@
 
 - (void) parseReplyFromByteSource: (id <J3ByteSource>) source
 {
-  uint8_t buffer[261];
-  unsigned bytesRead = 0;
-
-  memset (buffer, 0, sizeof (uint8_t) * 261);
-
-  [J3ByteSource ensureBytesReadFromSource: source intoBuffer: buffer ofLength: 4];
-  bytesRead = 4;
+  NSData *data = [source readExactlyLength: 4];
+  const uint8_t *buffer = (uint8_t *)[data bytes];
   switch (buffer[3])
   {
     case J3SocksIPV4:
-      [J3ByteSource ensureBytesReadFromSource: source intoBuffer: buffer+bytesRead ofLength: 4];
-      bytesRead += 4;
+      [source readExactlyLength: 4];
       break;
       
     case J3SocksDomainName:
-      [J3ByteSource ensureBytesReadFromSource: source intoBuffer: buffer+bytesRead ofLength: 1];
-      bytesRead += 1;
-      [J3ByteSource ensureBytesReadFromSource: source intoBuffer: buffer+bytesRead ofLength: buffer[4]];
-      bytesRead += buffer[4];
+    {
+      NSData *lengthData = [source readExactlyLength: 1];
+      [source readExactlyLength: ((uint8_t *)[lengthData bytes])[0]];
       break;
+    }
       
     case J3SocksIPV6:
-      [J3ByteSource ensureBytesReadFromSource: source intoBuffer: buffer+bytesRead ofLength: 16];
-      bytesRead += 16;
+      [source readExactlyLength: 16];
       break;
   }
-  [J3ByteSource ensureBytesReadFromSource: source intoBuffer: buffer+bytesRead ofLength: 2];
-  
+  [source readExactlyLength: 2];
   reply = buffer[1];
 }
 

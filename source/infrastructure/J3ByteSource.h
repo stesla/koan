@@ -8,13 +8,8 @@
 
 - (unsigned) availableBytes;
 - (BOOL) hasDataAvailable;
+- (NSData *) readExactlyLength: (size_t) length;
 - (NSData *) readUpToLength: (size_t) length;
 - (void) poll;
-
-@end
-
-@interface J3ByteSource : NSObject
-
-+ (void) ensureBytesReadFromSource: (id <J3ByteSource>) byteSource intoBuffer: (uint8_t *) buffer ofLength: (size_t) length;
 
 @end

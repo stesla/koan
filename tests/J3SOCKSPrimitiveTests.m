@@ -16,11 +16,7 @@
 
 @interface J3MockByteSource : J3ReadBuffer <J3ByteSource>
 {
-  unsigned availableBytes;
-  unsigned bytesToRead;
 }
-
-- (void) setBytesToRead: (unsigned) value;
 
 @end
 
@@ -35,38 +31,26 @@
 
 - (unsigned) availableBytes
 {
-  return availableBytes;
+  return [self length];
 }
 
 - (BOOL) hasDataAvailable
 {
-  return availableBytes > 0;
-}
-
-- (id) init
-{
-  if (![super init])
-    return nil;
-  bytesToRead = UINT_MAX;
-  return self;
+  return [self availableBytes] > 0;
 }
 
 - (void) poll
 {
-  if (availableBytes >= [self length])
-    return;
-  unsigned newBytes = [self length] - availableBytes;
-  availableBytes += MIN (bytesToRead, newBytes);
+}
+
+- (NSData *) readExactlyLength: (size_t) length;
+{
+  return [self readUpToLength: length];
 }
 
 - (NSData *) readUpToLength: (size_t) length
 {
   return [self dataByConsumingBytesToIndex: length];
-}
-
-- (void) setBytesToRead: (unsigned) value
-{
-  bytesToRead = value;
 }
 
 @end
@@ -129,19 +113,6 @@
   [source appendBytes: (uint8_t *) "\x05\x02" length: 2];
   [selection parseResponseFromByteSource: source];
   [self assertInt: [selection method] equals: J3SocksUsernamePassword];
-}
-
-- (void) testSelectMethodOneByteAtATime
-{
-  J3SocksMethodSelection *selection = [[[J3SocksMethodSelection alloc] init] autorelease];
-  J3MockByteSource *source = [[[J3MockByteSource alloc] init] autorelease];
-  
-  [source setDelegate: self];
-  [selection addMethod: J3SocksUsernamePassword];
-  [source appendBytes: (uint8_t *) "\x05\x02" length: 2];
-  [source setBytesToRead: 1];
-  [selection parseResponseFromByteSource: source];
-  [self assertInt: [selection method] equals: J3SocksUsernamePassword];  
 }
 
 - (void) testRequest

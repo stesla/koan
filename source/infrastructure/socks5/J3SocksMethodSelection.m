@@ -52,10 +52,8 @@
 
 - (void) parseResponseFromByteSource: (id <J3ByteSource>) byteSource
 {
-  uint8_t response[2] = {0, 0};
-  
-  [J3ByteSource ensureBytesReadFromSource: byteSource intoBuffer: response ofLength: 2];
-  selectedMethod = response[1];    
+  NSData *reply = [byteSource readExactlyLength: 2];
+  selectedMethod = ((uint8_t *)[reply bytes])[1];    
 }
 
 @end
