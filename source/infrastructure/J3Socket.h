@@ -31,21 +31,9 @@ typedef enum J3SocketStatus
 
 #pragma mark -
 
-@protocol J3Socket
-
-- (void) close;
-- (BOOL) isClosed;
-- (BOOL) isConnected;
-- (void) open;
-- (void) poll;
-
-@end
-
-#pragma mark -
-
 @protocol J3SocketDelegate;
 
-@interface J3Socket : NSObject <J3Socket, J3ByteDestination, J3ByteSource>
+@interface J3Socket : NSObject <J3ByteDestination, J3ByteSource>
 {
   NSString *hostname;
   int port;
@@ -62,7 +50,12 @@ typedef enum J3SocketStatus
 
 - (id) initWithHostname: (NSString *) hostname port: (int) port;
 
+- (void) close;
+- (BOOL) isClosed;
+- (BOOL) isConnected;
 - (BOOL) isConnecting;
+- (void) poll;
+- (void) open;
 - (void) setDelegate: (NSObject <J3SocketDelegate> *) object;
 - (J3SocketStatus) status;
 
@@ -72,10 +65,10 @@ typedef enum J3SocketStatus
 
 @protocol J3SocketDelegate
 
-- (void) socketIsConnecting: (NSObject <J3Socket> *) socket;
-- (void) socketIsConnected: (NSObject <J3Socket> *) socket;
-- (void) socketWasClosedByClient: (NSObject <J3Socket> *) socket;
-- (void) socketWasClosedByServer: (NSObject <J3Socket> *) socket;
-- (void) socketWasClosed: (NSObject <J3Socket> *) connection withError: (NSString *) errorMessage;
+- (void) socketIsConnecting: (J3Socket *) socket;
+- (void) socketIsConnected: (J3Socket *) socket;
+- (void) socketWasClosedByClient: (J3Socket *) socket;
+- (void) socketWasClosedByServer: (J3Socket *) socket;
+- (void) socketWasClosed: (J3Socket *) connection withError: (NSString *) errorMessage;
 
 @end

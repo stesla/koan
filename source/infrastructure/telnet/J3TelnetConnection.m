@@ -13,7 +13,7 @@
 - (void) cleanUpPollTimer;
 - (void) fireTimer: (NSTimer *) timer;
 - (void) initializeSocket;
-- (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket;
+- (BOOL) isUsingSocket: (J3Socket *) possibleSocket;
 - (void) poll;
 - (void) schedulePollTimer;
 - (void) writeDataWithPreprocessing: (NSData *) data;
@@ -110,7 +110,7 @@
 #pragma mark -
 #pragma mark J3ConnectionDelegate protocol
 
-- (void) socketIsConnecting: (NSObject <J3Socket> *) possibleSocket
+- (void) socketIsConnecting: (J3Socket *) possibleSocket
 {
   if (![self isUsingSocket: possibleSocket])
     return;
@@ -119,7 +119,7 @@
     [delegate telnetConnectionIsConnecting: self];
 }
 
-- (void) socketIsConnected: (NSObject <J3Socket> *) possibleSocket
+- (void) socketIsConnected: (J3Socket *) possibleSocket
 {
   if (![self isUsingSocket: possibleSocket])
     return;
@@ -128,7 +128,7 @@
     [delegate telnetConnectionIsConnected: self];
 }
 
-- (void) socketWasClosedByClient: (NSObject <J3Socket> *) possibleSocket
+- (void) socketWasClosedByClient: (J3Socket *) possibleSocket
 {
   if (![self isUsingSocket: possibleSocket])
     return;
@@ -139,7 +139,7 @@
     [delegate telnetConnectionWasClosedByClient: self];
 }
 
-- (void) socketWasClosedByServer: (NSObject <J3Socket> *) possibleSocket
+- (void) socketWasClosedByServer: (J3Socket *) possibleSocket
 {
   if (![self isUsingSocket: possibleSocket])
     return;
@@ -150,7 +150,7 @@
     [delegate telnetConnectionWasClosedByServer: self];
 }
 
-- (void) socketWasClosed: (NSObject <J3Socket> *) possibleSocket withError: (NSString *) errorMessage
+- (void) socketWasClosed: (J3Socket *) possibleSocket withError: (NSString *) errorMessage
 {
   if (![self isUsingSocket: possibleSocket])
     return;
@@ -203,7 +203,7 @@
   [socket setDelegate: self];
 }
 
-- (BOOL) isUsingSocket: (NSObject <J3Socket> *) possibleSocket
+- (BOOL) isUsingSocket: (J3Socket *) possibleSocket
 {
   return possibleSocket == socket;
 }
