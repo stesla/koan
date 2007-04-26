@@ -160,6 +160,29 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   }
 }
 
+- (void) setDelegate: (NSObject <J3SocketDelegate> *) object
+{
+  delegate = object;
+}
+
+- (J3SocketStatus) status
+{
+  return status;
+}
+
+#pragma mark -
+#pragma mark J3ByteSource protocol
+
+- (unsigned) availableBytes
+{
+  return availableBytes;
+}
+
+- (BOOL) hasDataAvailable
+{
+  return availableBytes > 0;
+}
+
 - (void) poll
 {
   struct timespec timeout = {0, 0};
@@ -191,29 +214,6 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   {
     availableBytes += triggered_event.data;
   }
-}
-
-- (void) setDelegate: (NSObject <J3SocketDelegate> *) object
-{
-  delegate = object;
-}
-
-- (J3SocketStatus) status
-{
-  return status;
-}
-
-#pragma mark -
-#pragma mark J3ByteSource protocol
-
-- (unsigned) availableBytes
-{
-  return availableBytes;
-}
-
-- (BOOL) hasDataAvailable
-{
-  return availableBytes > 0;
 }
 
 - (NSData *) readUpToLength: (size_t) length

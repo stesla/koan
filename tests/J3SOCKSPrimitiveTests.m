@@ -16,6 +16,7 @@
 
 @interface J3MockByteSource : J3ReadBuffer <J3ByteSource>
 {
+  unsigned availableBytes;
   unsigned bytesToRead;
 }
 
@@ -34,21 +35,33 @@
 
 - (unsigned) availableBytes
 {
-  return [self length];
+  return availableBytes;
 }
 
 - (BOOL) hasDataAvailable
 {
-  return [self length] > 0;
+  return availableBytes > 0;
+}
+
+- (id) init
+{
+  if (![super init])
+    return nil;
+  bytesToRead = UINT_MAX;
+  return self;
+}
+
+- (void) poll
+{
+  if (availableBytes >= [self length])
+    return;
+  unsigned newBytes = [self length] - availableBytes;
+  availableBytes += MIN (bytesToRead, newBytes);
 }
 
 - (NSData *) readUpToLength: (size_t) length
 {
-  unsigned lengthToRead = length;
-  if (bytesToRead > 0)
-    lengthToRead = length < bytesToRead ? length : bytesToRead;
-  
-  return [self dataByConsumingBytesToIndex: lengthToRead];
+  return [self dataByConsumingBytesToIndex: length];
 }
 
 - (void) setBytesToRead: (unsigned) value

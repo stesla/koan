@@ -9,6 +9,7 @@
 - (unsigned) availableBytes;
 - (BOOL) hasDataAvailable;
 - (NSData *) readUpToLength: (size_t) length;
+- (void) poll;
 
 @end
 
