@@ -54,7 +54,7 @@ enum MUSearchDirections
   filterQueue = [[J3FilterQueue alloc] init];
   
   [filterQueue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [profile formatting]]];
-  [filterQueue addFilter: [MUFugueEditFilter filter]];
+  [filterQueue addFilter: [MUFugueEditFilter filterWithDelegate: self]];
   [filterQueue addFilter: [J3NaiveURLFilter filter]];
   [filterQueue addFilter: [self createLogger]];
   
@@ -305,6 +305,14 @@ enum MUSearchDirections
 {
   [historyRing updateString: [inputView string]];
   [inputView setString: [historyRing previousString]];
+}
+
+#pragma mark -
+#pragma mark Filter delegate methods
+
+- (void) setInputViewString: (NSString *) string
+{
+  [inputView setString: string];
 }
 
 #pragma mark -

@@ -8,6 +8,35 @@
 
 @implementation MUFugueEditFilter
 
++ (id) filterWithDelegate: (id) newDelegate
+{
+  return [[[self alloc] initWithDelegate: newDelegate] autorelease];
+}
+
+- (id) initWithDelegate: (id) newDelegate
+{
+  if (![super init])
+    return nil;
+  
+  [self setDelegate: newDelegate];
+  return self;
+}
+
+- (id) init
+{
+  return [self initWithDelegate: nil];
+}
+
+- (id) delegate
+{
+  return delegate;
+}
+
+- (void) setDelegate: (id) newDelegate
+{
+  delegate = newDelegate;
+}
+
 - (NSAttributedString *) filter: (NSAttributedString *) string
 {
   NSString *plainString = [string string];
@@ -15,7 +44,9 @@
   
   if ([plainString hasPrefix: fugueEditPrefix])
   {
-    NSString *editString = [plainString substringFromIndex: [fugueEditPrefix length]];
+    if ([delegate respondsToSelector: @selector (setInputViewString:)])
+      [delegate setInputViewString: [[plainString substringFromIndex: [fugueEditPrefix length]] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+    
     return [NSAttributedString attributedStringWithString: @""];
   }
   else

@@ -7,5 +7,10 @@
 #import "J3FilterTestCase.h"
 
 @interface MUFugueEditFilterTests : J3FilterTestCase
+{
+  NSString *editString;
+}
+
+- (void) setInputViewString: (NSString *) string;
 
 @end
