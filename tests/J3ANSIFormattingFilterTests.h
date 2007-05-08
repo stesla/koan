@@ -4,14 +4,8 @@
 // Copyright (c) 2007 3James Software.
 //
 
-#import <Cocoa/Cocoa.h>
-#import <J3Testing/J3Testcase.h>
+#import "J3FilterTestCase.h"
 
-#import "J3Filter.h"
-
-@interface J3ANSIFormattingFilterTests : J3TestCase
-{
-  J3FilterQueue *queue;
-}
+@interface J3ANSIFormattingFilterTests : J3FilterTestCase
 
 @end

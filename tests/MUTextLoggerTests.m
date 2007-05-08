@@ -7,9 +7,11 @@
 #import "MUTextLoggerTests.h"
 
 @interface MUTextLoggerTests (Private)
+
 - (void) assertFilter: (id) object;
 - (void) assertFilterString: (NSString *) string;
 - (void) assertLoggedOutput: (NSString *) string;
+
 @end
 
 #pragma mark -

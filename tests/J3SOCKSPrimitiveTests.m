@@ -15,8 +15,6 @@
 #import "J3WriteBuffer.h"
 
 @interface J3MockByteSource : J3ReadBuffer <J3ByteSource>
-{
-}
 
 @end
 
@@ -41,6 +39,7 @@
 
 - (void) poll
 {
+  ;
 }
 
 - (NSData *) readExactlyLength: (size_t) length;
@@ -187,7 +186,7 @@
   
   NSData *data = [buffer dataValue];
   [self assertInt: [data length] equals: 12]; // same as expected length above
-  for (unsigned i = 0; i < 12; ++i)
+  for (unsigned i = 0; i < 12; i++)
     [self assertInt: ((uint8_t *) [data bytes])[i] equals: expected[i]];
 }
 

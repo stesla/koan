@@ -11,10 +11,6 @@
 
 @interface J3ANSIFormattingFilterTests (Private)
 
-- (void) assertInput: (NSString *) input hasOutput: (NSString *) output;
-- (void) assertInput: (NSString *) input
-           hasOutput: (NSString *) output
-             message: (NSString *) message;
 - (void) assertFinalCharacter: (unsigned char) finalChar;
 - (void) assertString: (NSAttributedString *) string
              hasValue: (id) value
@@ -25,31 +21,12 @@
              hasTrait: (NSFontTraitMask) trait
               atIndex: (int) characterIndex
               message: (NSString *) message;
-- (NSMutableAttributedString *) makeString: (NSString *) string;
 
 @end
 
 #pragma mark -
 
 @implementation J3ANSIFormattingFilterTests (Private)
-
-- (void) assertInput: (NSString *) input hasOutput: (NSString *) output
-{
-  [self assertInput: input hasOutput: output message: nil];
-}
-
-- (void) assertInput: (NSString *) input hasOutput: (NSString *) output
-             message: (NSString *) message
-{
-  NSAttributedString *attributedInput = [self makeString: input];
-  NSAttributedString *attributedExpectedOutput = [NSAttributedString attributedStringWithString: output];
-  NSMutableAttributedString *actualOutput = [NSMutableAttributedString attributedStringWithAttributedString: [queue processAttributedString: attributedInput]];
-  NSRange range;
-  range.location = 0;
-  range.length = [actualOutput length];
-  [actualOutput setAttributes: [NSDictionary dictionary] range: range];
-  [self assert: actualOutput equals: attributedExpectedOutput message: message];  
-}
 
 - (void) assertFinalCharacter: (unsigned char) finalChar
 {
@@ -65,6 +42,7 @@
               message: (NSString *) message
 {
   NSDictionary * attributes = [string attributesAtIndex: characterIndex effectiveRange: NULL];
+  
   [self assert: [attributes valueForKey: attribute] equals: value message: message];
 }
 
@@ -73,16 +51,9 @@
               atIndex: (int) characterIndex
               message: (NSString *) message
 {
-  NSFont * font = [string attribute: NSFontAttributeName atIndex: characterIndex effectiveRange: NULL];
+  NSFont *font = [string attribute: NSFontAttributeName atIndex: characterIndex effectiveRange: NULL];
+  
   [self assertTrue: [font hasTrait: trait] message: message];
-}
-
-- (NSMutableAttributedString *) makeString: (NSString *) string
-{
-  NSFont * font = [NSFont systemFontOfSize: [NSFont systemFontSize]];
-  NSMutableDictionary * attributes = [NSMutableDictionary dictionary];
-  [attributes setValue: font forKey: NSFontAttributeName];
-  return [NSMutableAttributedString attributedStringWithString: string attributes: attributes];
 }
 
 @end
@@ -203,7 +174,7 @@
 
 - (void) testForegroundColor
 {
-  NSAttributedString *input = [self makeString: @"a\x1B[36mbc\x1B[35md\x1B[39me"];
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[36mbc\x1B[35md\x1B[39me"];
   NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: nil forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"a"];
@@ -215,7 +186,7 @@
 
 - (void) testBackgroundColor
 {
-  NSAttributedString *input = [self makeString: @"a\x1B[46mbc\x1B[45md\x1B[49me"];
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[46mbc\x1B[45md\x1B[49me"];
   NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: nil forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"a"];
@@ -227,7 +198,7 @@
 
 - (void) testResetDisplayMode
 {
-  NSAttributedString *input = [self makeString: @"a\x1B[36m\x1B[46mb\x1B[0mc"];
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[36m\x1B[46mb\x1B[0mc"];
   NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
@@ -238,7 +209,7 @@
 
 - (void) testShortFormOfResetDisplayMode
 {
-  NSAttributedString *input = [self makeString: @"a\x1B[36m\x1B[46mb\x1B[mc"];
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[36m\x1B[46mb\x1B[mc"];
   NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
@@ -249,8 +220,8 @@
 
 - (void) testPersistColorsBetweenLines
 {
-  NSAttributedString *firstInput = [self makeString: @"a\x1B[36mb"];
-  NSAttributedString *secondInput = [self makeString: @"c"];
+  NSAttributedString *firstInput = [self constructAttributedStringForString: @"a\x1B[36mb"];
+  NSAttributedString *secondInput = [self constructAttributedStringForString: @"c"];
   NSAttributedString *output;
   
   [queue processAttributedString: firstInput];
@@ -261,7 +232,7 @@
 
 - (void) testBold
 {
-  NSAttributedString *input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString *output = [queue processAttributedString: input];
 
   [self assertString: output hasTrait: NSUnboldFontMask atIndex: 0 message: @"a"];
@@ -273,7 +244,7 @@
 
 - (void) testBoldWithBoldAlreadyOn
 {
-  NSMutableAttributedString *input = [self makeString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSMutableAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString *output;
   NSFont *boldFont = [[J3Formatting testingFont] fontWithTrait: NSBoldFontMask];
   
@@ -293,7 +264,7 @@
 
 - (void) testUnderline
 {
-  NSAttributedString *input = [self makeString: @"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me"];  
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me"];  
   NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: nil forAttribute: NSUnderlineStyleAttributeName atIndex: 0 message: @"a"];
@@ -305,8 +276,8 @@
 
 - (void) testFormattingOverTwoLines
 {
-  NSAttributedString *input1 = [self makeString: @"a\x1B["];  
-  NSAttributedString *input2 = [self makeString: @"4mb"];  
+  NSAttributedString *input1 = [self constructAttributedStringForString: @"a\x1B["];  
+  NSAttributedString *input2 = [self constructAttributedStringForString: @"4mb"];  
   [queue processAttributedString: input1];
   
   NSAttributedString *output = [queue processAttributedString: input2];
