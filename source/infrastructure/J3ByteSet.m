@@ -61,7 +61,7 @@
 {
   NSMutableData *result = [NSMutableData data];
   uint8_t byte[1];
-  for (unsigned i = 0; i <= UINT8_MAX; ++i)
+  for (unsigned i = 0; i <= UINT8_MAX; i++)
   {
     if (contains[i])
     {
@@ -76,42 +76,47 @@
 {
   if (![super init])
     return nil;
-  for (unsigned i = 0; i <= UINT8_MAX; ++i)
+  
+  for (unsigned i = 0; i <= UINT8_MAX; i++)
     contains[i] = NO;
+  
   return self;
 }
 
 - (id) initWithBytes: (const uint8_t *) bytes length: (size_t) length
 {
-  id result = [self init];
-  if (!result)
+  if (![self init])
     return nil;
-  for (unsigned i = 0; i < length; ++i)
-    [result addByte: bytes[i]];
-  return result;
+  
+  for (unsigned i = 0; i < length; i++)
+    [self addByte: bytes[i]];
+  
+  return self;
 }
 
 - (id) initWithFirstByte: (int) first remainingBytes: (va_list) bytes
 {
-  id result = [self init];
-  if (!result)
+  if (![self init])
     return nil;
-  [result addFirstByte: first remainingBytes: bytes];
-  return result;
+
+  [self addFirstByte: first remainingBytes: bytes];
+  
+  return self;
 }
 
 - (J3ByteSet *) inverseSet
 {
-  J3ByteSet *result = [J3ByteSet byteSet];
-  for (unsigned i = 0; i <= UINT8_MAX; ++i)
-    result->contains[i] = !contains[i];
-  return result;
+  J3ByteSet *set = [J3ByteSet byteSet];
+  
+  for (unsigned i = 0; i <= UINT8_MAX; i++)
+    set->contains[i] = !contains[i];
+  
+  return set;
 }
 
 - (void) removeByte: (uint8_t) byte
 {
   contains[byte] = NO;
 }
-
 
 @end

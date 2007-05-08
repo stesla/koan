@@ -216,10 +216,12 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   }
 }
 
-- (NSData *) readExactlyLength: (size_t) length;
+- (NSData *) readExactlyLength: (size_t) length
 {
-  while (([self isConnected] || [self isConnecting]) && [self availableBytes] < length)
+  while (([self isConnected] || [self isConnecting])
+         && [self availableBytes] < length)
     [self poll];
+  
   return [self readUpToLength: length];
 }
 
@@ -380,8 +382,6 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) resolveHostname
 {
-  h_errno = 0;
-  
   if (server)
     return;
   
@@ -391,6 +391,8 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   
   @synchronized ([self class])
   {
+    h_errno = 0;
+    
     struct hostent *hostent = gethostbyname ([hostname cString]);
     
     if (hostent)
@@ -399,8 +401,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
     {
       free (server);
       server = NULL;
-      const char *error = hstrerror (h_errno);
-      [J3SocketException socketErrorWithFormat: @"%s", error];
+      [J3SocketException socketErrorWithFormat: @"%s", hstrerror (h_errno)];
     }
   }
 }

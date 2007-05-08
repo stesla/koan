@@ -41,7 +41,7 @@
 - (void) parseReplyFromByteSource: (id <J3ByteSource>) source
 {
   NSData *data = [source readExactlyLength: 4];
-  const uint8_t *buffer = (uint8_t *)[data bytes];
+  const uint8_t *buffer = (uint8_t *) [data bytes];
   switch (buffer[3])
   {
     case J3SocksIPV4:
@@ -51,7 +51,7 @@
     case J3SocksDomainName:
     {
       NSData *lengthData = [source readExactlyLength: 1];
-      [source readExactlyLength: ((uint8_t *)[lengthData bytes])[0]];
+      [source readExactlyLength: ((uint8_t *) [lengthData bytes])[0]];
       break;
     }
       

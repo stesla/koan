@@ -9,6 +9,7 @@
 
 #import "J3ANSIFormattingFilter.h"
 #import "J3NaiveURLFilter.h"
+#import "MUFugueEditFilter.h"
 #import "MUTextLogger.h"
 
 #import <objc/objc-runtime.h>
@@ -48,11 +49,12 @@ enum MUSearchDirections
     return nil;
   
   profile = [newProfile retain];
-    
+  
   historyRing = [[J3HistoryRing alloc] init];
   filterQueue = [[J3FilterQueue alloc] init];
   
   [filterQueue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [profile formatting]]];
+  [filterQueue addFilter: [MUFugueEditFilter filter]];
   [filterQueue addFilter: [J3NaiveURLFilter filter]];
   [filterQueue addFilter: [self createLogger]];
   

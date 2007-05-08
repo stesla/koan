@@ -21,11 +21,6 @@
 
 @implementation MUTextLogger
 
-+ (J3Filter *) filter
-{
-  return [[[self alloc] init] autorelease];
-}
-
 + (J3Filter *) filterWithWorld: (MUWorld *) world
 {
   return [[[self alloc] initWithWorld: world] autorelease];
