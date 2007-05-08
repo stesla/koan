@@ -1,9 +1,7 @@
 //
-//  J3FilterTestCase.m
-//  Koan
+// J3FilterTestCase.m
 //
-//  Created by Tyler on 5/8/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software.
 //
 
 #import "J3FilterTestCase.h"
