@@ -18,6 +18,7 @@
   id <J3TelnetEngineDelegate> delegate;
   J3TelnetState *state;
   J3TelnetOption *options[TELNET_OPTION_MAX];
+  BOOL receivedCR;
   BOOL telnetConfirmed;
 }
 
@@ -28,7 +29,7 @@
 - (void) log: (NSString *) message, ...;
 
 // Parsing
-- (void) bufferInputByte: (uint8_t) byte;
+- (void) bufferTextInputByte: (uint8_t) byte;
 - (void) parseData: (NSData *) data;
 - (NSData *) preprocessOutput: (NSData *) data;
 

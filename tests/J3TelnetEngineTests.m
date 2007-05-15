@@ -11,8 +11,13 @@
 
 @interface J3TelnetEngineTests (Private)
 
-- (void) assertBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes;
-- (void) clearBuffer;
+- (void) assertInputBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes;
+- (void) assertInputBufferHasCString: (const char *) string;
+- (void) assertOutputBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes;
+- (void) clearInputBuffer;
+- (void) clearOutputBuffer;
+- (void) parseBytesWithZeroTerminator: (const uint8_t *) bytes;
+- (void) parseCString: (const char *) string;
 - (void) resetEngine;
 - (void) simulateDo: (uint8_t) option;
 - (void) simulateWill: (uint8_t) option;
@@ -25,7 +30,8 @@
 {
   [self resetEngine];
   [engine confirmTelnet];
-  [self at: &buffer put: [NSMutableData data]]; 
+  [self at: &inputBuffer put: [NSMutableData data]];
+  [self at: &outputBuffer put: [NSMutableData data]]; 
 }
 
 - (void) tearDown
@@ -37,16 +43,16 @@
 {
   [engine goAhead];
   const uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead, 0};
-  [self assertBufferHasBytesWithZeroTerminator: bytes];
+  [self assertOutputBufferHasBytesWithZeroTerminator: bytes];
 }
 
 - (void) testIACEscapedInData
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand};
   NSData *data = [NSData dataWithBytes: bytes length: 1];
-  [buffer setData: [engine preprocessOutput: data]];
+  [outputBuffer setData: [engine preprocessOutput: data]];
   const uint8_t expected[] = {J3TelnetInterpretAsCommand, J3TelnetInterpretAsCommand, 0};
-  [self assertBufferHasBytesWithZeroTerminator: expected];
+  [self assertOutputBufferHasBytesWithZeroTerminator: expected];
 }
 
 - (void) testDoSuppressGoAhead
@@ -64,10 +70,10 @@
 - (void) testSuppressGoAhead
 {
   [engine enableOptionForUs: J3TelnetOptionSuppressGoAhead];
-  [self clearBuffer];
+  [self clearOutputBuffer];
   [self simulateDo: J3TelnetOptionSuppressGoAhead];
   [engine goAhead];
-  [self assertInt: [buffer length] equals: 0];
+  [self assertInt: [outputBuffer length] equals: 0];
 }
 
 - (void) testDoEndOfRecord
@@ -85,16 +91,16 @@
 - (void) testEndOfRecordOff
 {
   [engine endOfRecord];
-  [self assertInt: [buffer length] equals: 0];
+  [self assertInt: [outputBuffer length] equals: 0];
 }
 
 - (void) testEndOfRecordOn
 {
   [self simulateDo: J3TelnetOptionEndOfRecord];
-  [self clearBuffer];
+  [self clearOutputBuffer];
   [engine endOfRecord];
   const uint8_t bytes[] = {J3TelnetInterpretAsCommand, J3TelnetEndOfRecord, 0};
-  [self assertBufferHasBytesWithZeroTerminator: bytes];
+  [self assertOutputBufferHasBytesWithZeroTerminator: bytes];
 }
 
 - (void) testConfirmTelnet
@@ -116,7 +122,83 @@
   [engine enableOptionForHim: 0];
   [engine disableOptionForUs: 0];
   [engine disableOptionForHim: 0];
-  [self assert: buffer equals: [NSData data] message: @"telnet was written"];
+  [self assert: outputBuffer equals: [NSData data] message: @"telnet was written"];
+}
+
+- (void) testParsePlainText
+{
+  [self parseCString: "foo"];
+  [self assertInputBufferHasCString: "foo"];
+}
+
+- (void) testParseLF
+{
+  [self parseCString: "\n"];
+  [self assertInputBufferHasCString: "\n"];
+}
+
+- (void) testParseCRLF
+{
+  [self parseCString: "\r\n"];
+  [self assertInputBufferHasCString: "\n"];
+}
+
+- (void) testParseCRNUL
+{
+  [engine parseData: [NSData dataWithBytes: "\r\0" length: 2]];
+  [self assertInputBufferHasCString: "\r"];
+}
+
+- (void) testCRSomethingElse
+{
+  uint8_t bytes[2] = {'\r', 0};
+  for (unsigned i = 1; i < UINT8_MAX; ++i)
+  {
+    if (i == '\n' || i == '\r')
+      continue;
+    bytes[1] = i;
+    [self clearInputBuffer];
+    [engine parseData: [NSData dataWithBytes: bytes length: 2]];
+    [self assert: inputBuffer equals: [NSData dataWithBytes: bytes + 1 length: 1]];
+  }
+}
+
+- (void) testCRWithSomeTelnetThrownIn
+{
+  uint8_t bytes[4] = {'\r', J3TelnetInterpretAsCommand, J3TelnetNoOperation, 0};
+  [engine parseData: [NSData dataWithBytes: bytes length: 4]];
+  [self assertInputBufferHasCString: "\r"];
+}
+
+- (void) testCRIACIAC
+{
+  uint8_t bytes[4] = {'\r', J3TelnetInterpretAsCommand, J3TelnetInterpretAsCommand, 0};
+  [self parseCString: (const char *) bytes];
+  [self assertInputBufferHasCString: (const char *) bytes + 2];
+}
+
+- (void) testLFCRNUL
+{
+  [engine parseData: [NSData dataWithBytes: "\n\r\0" length: 3]];
+  [self assertInputBufferHasCString: "\n\r"];
+}
+
+- (void) testLFCRLFCR
+{
+  [self parseCString: "\n\r\n\r"];
+  [self assertInputBufferHasCString: "\n\n"];
+}
+
+- (void) testCRCRLF
+{
+  [self parseCString: "\r\r\n"];
+  [self assertInputBufferHasCString: "\n"];
+}
+
+- (void) testCRCRNUL
+{
+  [engine parseData: [NSData dataWithBytes: "\r\r\0" length: 3]];
+  [self assertInputBufferHasCString: "\r"];
 }
 
 #pragma mark -
@@ -124,6 +206,7 @@
 
 - (void) bufferInputByte: (uint8_t) byte
 {
+  [inputBuffer appendBytes: &byte length: 1];
 }
 
 - (void) log: (NSString *) message arguments: (va_list) args
@@ -132,21 +215,46 @@
 
 - (void) writeData: (NSData *) data
 {
-  [buffer appendData: data];
+  [outputBuffer appendData: data];
 }
 
 @end
 
 @implementation J3TelnetEngineTests (Private)
 
-- (void) assertBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes
+- (void) assertInputBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes
 {
-  [self assert: buffer equals: [NSData dataWithBytes: bytes length: strlen((const char *) bytes)]];
+  [self assert: inputBuffer equals: [NSData dataWithBytes: bytes length: strlen ((const char *) bytes)]];
 }
 
-- (void) clearBuffer
+- (void) assertInputBufferHasCString: (const char *) string
 {
-  [buffer setData: [NSData data]]; 
+  [self assertInputBufferHasBytesWithZeroTerminator: (const uint8_t *) string];
+}
+
+- (void) assertOutputBufferHasBytesWithZeroTerminator: (const uint8_t *) bytes
+{
+  [self assert: outputBuffer equals: [NSData dataWithBytes: bytes length: strlen ((const char *) bytes)]];
+}
+
+- (void) clearInputBuffer
+{
+  [inputBuffer setData: [NSData data]];
+}
+
+- (void) clearOutputBuffer
+{
+  [outputBuffer setData: [NSData data]]; 
+}
+
+- (void) parseBytesWithZeroTerminator: (const uint8_t *) bytes
+{
+  [engine parseData: [NSData dataWithBytes: bytes length: strlen ((const char *) bytes)]];
+}
+
+- (void) parseCString: (const char *) string
+{
+  [self parseBytesWithZeroTerminator: (const uint8_t *) string];
 }
 
 - (void) resetEngine

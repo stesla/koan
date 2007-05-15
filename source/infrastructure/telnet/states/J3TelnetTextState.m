@@ -17,7 +17,7 @@
     return [J3TelnetIACState state];
   else
   {
-    [[engine delegate] bufferInputByte: byte];
+    [engine bufferTextInputByte: byte];
     return self;
   }
 }

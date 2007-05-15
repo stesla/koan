@@ -12,7 +12,8 @@
 @interface J3TelnetEngineTests : J3TestCase <J3TelnetEngineDelegate>
 {
   J3TelnetEngine *engine;
-  NSMutableData *buffer;
+  NSMutableData *inputBuffer;
+  NSMutableData *outputBuffer;
 }
 
 @end

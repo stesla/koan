@@ -45,9 +45,20 @@
   telnetConfirmed = YES;
 }
 
-- (void) bufferInputByte: (uint8_t) byte
+- (void) bufferTextInputByte: (uint8_t) byte
 {
-  [delegate bufferInputByte: byte];
+  if (receivedCR && byte != '\r')
+  {
+    receivedCR = NO;
+    if (byte == '\0')
+      [delegate bufferInputByte: '\r'];
+    else
+      [delegate bufferInputByte: byte];
+  } 
+  else if (byte == '\r')
+    receivedCR = YES;
+  else
+    [delegate bufferInputByte: byte];
 }
 
 - (void) dealloc
