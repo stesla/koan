@@ -109,10 +109,7 @@
 {
   if ([self length] > 0)
   {
-    NSString *receivedString = [[[NSString alloc] initWithData: [self dataValue] encoding: NSASCIIStringEncoding] autorelease];
-    NSData *lossyData = [receivedString dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES];
-    NSString *lossyString = [[[NSString alloc] initWithData: lossyData encoding: NSASCIIStringEncoding] autorelease];
-    [self postDidProvideStringNotificationWithString: lossyString];
+    [self postDidProvideStringNotificationWithString: [[[NSString alloc] initWithData: [self dataValue] encoding: NSASCIIStringEncoding] autorelease]];
     [self clear];
   }
 }
