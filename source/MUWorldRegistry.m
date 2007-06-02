@@ -14,6 +14,7 @@ static MUWorldRegistry *defaultRegistry = nil;
 - (void) cleanUpDefaultRegistry: (NSNotification *) notification;
 - (void) postWorldsDidChangeNotification;
 - (void) readWorldsFromUserDefaults;
+- (void) worldsDidChange: (NSNotification *) notification;
 - (void) writeWorldsToUserDefaults;
 
 @end
@@ -28,6 +29,11 @@ static MUWorldRegistry *defaultRegistry = nil;
   {
     defaultRegistry = [[MUWorldRegistry alloc] init];
     [defaultRegistry readWorldsFromUserDefaults];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: defaultRegistry
+                                             selector: @selector (worldsDidChange:)
+                                                 name: MUWorldsDidChangeNotification
+                                               object: nil];
     
     [[NSNotificationCenter defaultCenter] addObserver: defaultRegistry
                                              selector: @selector (cleanUpDefaultRegistry:)
@@ -70,21 +76,18 @@ static MUWorldRegistry *defaultRegistry = nil;
   worlds = [newWorlds mutableCopy];
   
   [self postWorldsDidChangeNotification];
-  [self writeWorldsToUserDefaults];
 }
 
 - (void) insertObject: (MUWorld *) world inWorldsAtIndex: (unsigned) worldIndex
 {
   [worlds insertObject: world atIndex: worldIndex];
   [self postWorldsDidChangeNotification];
-  [self writeWorldsToUserDefaults];
 }
 
 - (void) removeObjectFromWorldsAtIndex: (unsigned) worldIndex
 {
   [worlds removeObjectAtIndex: worldIndex];
   [self postWorldsDidChangeNotification];
-  [self writeWorldsToUserDefaults];
 }
 
 #pragma mark -
@@ -112,7 +115,6 @@ static MUWorldRegistry *defaultRegistry = nil;
 {
   [worlds removeObject: world];
   [self postWorldsDidChangeNotification];
-  [self writeWorldsToUserDefaults];
 }
 
 - (void) replaceWorld: (MUWorld *) oldWorld withWorld: (MUWorld *) newWorld
@@ -123,7 +125,6 @@ static MUWorldRegistry *defaultRegistry = nil;
   	{
   		[worlds replaceObjectAtIndex: i withObject: newWorld];
       [self postWorldsDidChangeNotification];
-      [self writeWorldsToUserDefaults];
   		break;
   	}
   }
@@ -188,6 +189,12 @@ static MUWorldRegistry *defaultRegistry = nil;
       [profile setPlayer: player];
     }
   }
+}
+
+
+- (void) worldsDidChange: (NSNotification *) notification;
+{
+  [self writeWorldsToUserDefaults];
 }
 
 - (void) writeWorldsToUserDefaults
