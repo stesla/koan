@@ -21,6 +21,10 @@
              hasTrait: (NSFontTraitMask) trait
               atIndex: (int) characterIndex
               message: (NSString *) message;
+- (void) assertString: (NSAttributedString *) string
+           hasntTrait: (NSFontTraitMask) trait
+              atIndex: (int) characterIndex
+              message: (NSString *) message;
 
 @end
 
@@ -54,6 +58,16 @@
   NSFont *font = [string attribute: NSFontAttributeName atIndex: characterIndex effectiveRange: NULL];
   
   [self assertTrue: [font hasTrait: trait] message: message];
+}
+
+- (void) assertString: (NSAttributedString *) string
+           hasntTrait: (NSFontTraitMask) trait
+              atIndex: (int) characterIndex
+              message: (NSString *) message
+{
+  NSFont *font = [string attribute: NSFontAttributeName atIndex: characterIndex effectiveRange: NULL];
+  
+  [self assertFalse: [font hasTrait: trait] message: message];
 }
 
 @end
@@ -235,11 +249,11 @@
   NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString *output = [queue processAttributedString: input];
 
-  [self assertString: output hasTrait: NSUnboldFontMask atIndex: 0 message: @"a"];
+  [self assertString: output hasntTrait: NSBoldFontMask atIndex: 0 message: @"a"];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 1 message: @"b"];
-  [self assertString: output hasTrait: NSUnboldFontMask atIndex: 2 message: @"c"];
+  [self assertString: output hasntTrait: NSBoldFontMask atIndex: 2 message: @"c"];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 3 message: @"d"];
-  [self assertString: output hasTrait: NSUnboldFontMask atIndex: 4 message: @"e"];
+  [self assertString: output hasntTrait: NSBoldFontMask atIndex: 4 message: @"e"];
 }
 
 - (void) testBoldWithBoldAlreadyOn
@@ -253,9 +267,9 @@
 
   output = [queue processAttributedString: input];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 0 message: @"a"];
-  [self assertString: output hasTrait: NSUnboldFontMask atIndex: 1 message: @"b"];
+  [self assertString: output hasntTrait: NSBoldFontMask atIndex: 1 message: @"b"];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 2 message: @"c"];
-  [self assertString: output hasTrait: NSUnboldFontMask atIndex: 3 message: @"d"];
+  [self assertString: output hasntTrait: NSBoldFontMask atIndex: 3 message: @"d"];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 4 message: @"e"];
   
   output = [queue processAttributedString: input];
