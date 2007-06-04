@@ -158,6 +158,7 @@ static MUWorldRegistry *defaultRegistry = nil;
 {
   [[NSNotificationCenter defaultCenter] removeObserver: defaultRegistry];
   [defaultRegistry release];
+  defaultRegistry = nil;
 }
 
 - (void) postWorldsDidChangeNotification

@@ -126,6 +126,7 @@ static MUGrowlService *defaultGrowlService;
 {
   [[NSNotificationCenter defaultCenter] removeObserver: defaultGrowlService];
   [defaultGrowlService release];
+  defaultGrowlService = nil;
 }
 
 - (void) notifyWithName: (NSString *) name
