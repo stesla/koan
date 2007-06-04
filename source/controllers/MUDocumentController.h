@@ -7,8 +7,5 @@
 #import <Cocoa/Cocoa.h>
 
 @interface MUDocumentController : NSDocumentController
-{
-
-}
 
 @end

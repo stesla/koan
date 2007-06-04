@@ -130,10 +130,10 @@
     return;
   
   MUWorld *world = [MUWorld worldWithName: [url host]
-  											hostname: [url host]
-  													port: [url port]
-  													 URL: @""
-  											 players: nil];
+                                 hostname: [url host]
+                                     port: [url port]
+                                      URL: @""
+                                  players: nil];
   
   MUConnectionWindowController *controller = [[MUConnectionWindowController alloc] initWithWorld: world];
   

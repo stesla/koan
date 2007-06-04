@@ -24,7 +24,7 @@ static MULogBrowserWindowController *sharedLogBrowserWindowController = nil;
   if (![super initWithWindowNibName: @"MULogBrowser"])
     return nil;
   
-  [self window];
+  (void) [self window];
   
   return self;
 }
