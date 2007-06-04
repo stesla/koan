@@ -101,23 +101,23 @@
 
 - (NSURL *) normalizedURLForString: (NSString *) string
 {
-  if ([string hasPrefix: @"http: "])
+  if ([string hasPrefix: @"http:"])
     return [NSURL URLWithString: string];
   
-  if ([string hasPrefix: @"https: "])
+  if ([string hasPrefix: @"https:"])
     return [NSURL URLWithString: string];
   
-  if ([string hasPrefix: @"ftp: "])
+  if ([string hasPrefix: @"ftp:"])
     return [NSURL URLWithString: string];
   
-  if ([string hasPrefix: @"mailto: "])
+  if ([string hasPrefix: @"mailto:"])
     return [NSURL URLWithString: string];
   
   if ([string hasPrefix: @"www."])
-    return [NSURL URLWithString: [@"http: //" stringByAppendingString: string]];
+    return [NSURL URLWithString: [@"http://" stringByAppendingString: string]];
   
   if ([string hasPrefix: @"ftp."])
-    return [NSURL URLWithString: [@"ftp: //" stringByAppendingString: string]];
+    return [NSURL URLWithString: [@"ftp://" stringByAppendingString: string]];
   
   if ([string hasSuffix: @".com"]
       || [string hasSuffix: @".net"]
@@ -128,9 +128,9 @@
       || [string hasSuffix: @".cc"])
   {
     if ([string rangeOfString: @"@"].length != 0)
-      return [NSURL URLWithString: [@"mailto: " stringByAppendingString: string]];
+      return [NSURL URLWithString: [@"mailto:" stringByAppendingString: string]];
     else
-      return [NSURL URLWithString: [@"http: //" stringByAppendingString: string]];
+      return [NSURL URLWithString: [@"http://" stringByAppendingString: string]];
   }
   
   return nil;

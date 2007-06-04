@@ -100,20 +100,20 @@
 
 - (void) testCanonicalLink
 {
-  NSString *input = @"http: //www.google.com/";
+  NSString *input = @"http://www.google.com/";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.google.com/"]
-           forRange: [input rangeOfString: @"http: //www.google.com/"]];
+       producesLink: [NSURL URLWithString: @"http://www.google.com/"]
+           forRange: [input rangeOfString: @"http://www.google.com/"]];
 }
 
 - (void) testSlashlessLink
 {
-  NSString *input = @"http: //www.google.com";
+  NSString *input = @"http://www.google.com";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.google.com"]
-           forRange: [input rangeOfString: @"http: //www.google.com"]];
+       producesLink: [NSURL URLWithString: @"http://www.google.com"]
+           forRange: [input rangeOfString: @"http://www.google.com"]];
 }
 
 - (void) testInformalLink
@@ -121,7 +121,7 @@
   NSString *input = @"www.google.com";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.google.com"]
+       producesLink: [NSURL URLWithString: @"http://www.google.com"]
            forRange: [input rangeOfString: @"www.google.com"]];
 }
 
@@ -130,7 +130,7 @@
   NSString *input = @"www.3james.com is the link";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.3james.com"]
+       producesLink: [NSURL URLWithString: @"http://www.3james.com"]
            forRange: [input rangeOfString: @"www.3james.com"]];
 }
 
@@ -139,7 +139,7 @@
   NSString *input = @"The link is www.3james.com";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.3james.com"]
+       producesLink: [NSURL URLWithString: @"http://www.3james.com"]
            forRange: [input rangeOfString: @"www.3james.com"]];
 }
 
@@ -148,7 +148,7 @@
   NSString *input = @"I heard that www.3james.com is the link";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.3james.com"]
+       producesLink: [NSURL URLWithString: @"http://www.3james.com"]
            forRange: [input rangeOfString: @"www.3james.com"]];
 }
 
@@ -157,7 +157,7 @@
   NSString *input = @" <www.google.com> ";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.google.com"]
+       producesLink: [NSURL URLWithString: @"http://www.google.com"]
            forRange: [input rangeOfString: @"www.google.com"]];
 }
 
@@ -166,17 +166,17 @@
   NSString *input = @"Is the link www.google.com?";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"http: //www.google.com"]
+       producesLink: [NSURL URLWithString: @"http://www.google.com"]
            forRange: [input rangeOfString: @"www.google.com"]];
 }
 
 - (void) testCanonicalEmail
 {
-  NSString *input = @"mailto: test@example.com";
+  NSString *input = @"mailto:test@example.com";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"mailto: test@example.com"]
-           forRange: [input rangeOfString: @"mailto: test@example.com"]];
+       producesLink: [NSURL URLWithString: @"mailto:test@example.com"]
+           forRange: [input rangeOfString: @"mailto:test@example.com"]];
 }
 
 - (void) testInformalEmail
@@ -184,7 +184,7 @@
   NSString *input = @"test@example.com";
   
   [self assertInput: input
-       producesLink: [NSURL URLWithString: @"mailto: test@example.com"]
+       producesLink: [NSURL URLWithString: @"mailto:test@example.com"]
            forRange: [input rangeOfString: @"test@example.com"]];
 }
 
