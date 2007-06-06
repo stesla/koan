@@ -2,6 +2,11 @@ require 'test/unit'
 require 'base32'
 
 class TestBase32 < Test::Unit::TestCase
+  # Rails seems to override these somewhere upstream from us,
+  # so we'll override them here and make them the NOPs we expect.
+  def setup; end
+  def teardown; end
+
   def test_empty_string
     assert_equal('', Base32.encode(''))
   end
