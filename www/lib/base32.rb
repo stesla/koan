@@ -28,8 +28,6 @@ class Base32
            when 5: ((@buffer[offset + 3] & 0x7C) >> 2)
            when 6: ((@buffer[offset + 3] & 0x03) << 3) + ((@buffer[offset + 4] & 0xE0) >> 5)
            when 7: @buffer[offset + 4] & 0x1F
-           else
-             0
            end
     %W(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 2 3 4 5 6 7)[bits]
   end
