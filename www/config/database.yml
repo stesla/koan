@@ -1,0 +1,20 @@
+development:
+  adapter: postgresql
+  database: store_development
+  username: store-dev
+  password: store-dev
+  host: localhost
+
+test:
+  adapter: postgresql
+  database: store_test
+  username: store-dev
+  password: store-dev
+  host: localhost
+
+production:
+  adapter: postgresql
+  database: store_development
+  username: store-dev
+  password: store-dev
+  host: localhost
