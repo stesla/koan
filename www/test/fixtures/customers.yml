@@ -3,3 +3,8 @@ one:
   id: 1
 two:
   id: 2
+first:
+  id: 3
+  first_name: Bob
+  last_name: Jones
+  email: bjones@example.com
