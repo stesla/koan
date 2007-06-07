@@ -7,3 +7,7 @@ two:
   id: 2
   customer_id: 2
   product_id: 2
+first:
+  id: 3
+  customer_id: 3
+  product_id: 3
