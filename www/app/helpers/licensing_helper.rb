@@ -1,4 +1,16 @@
 module LicensingHelper
+  def all_customers
+    Customer.find_all.collect do |customer|
+      [customer.fullname, customer.id.to_s]
+    end
+  end
+
+  def all_products
+    Product.find_all.collect do |product|
+      [product.name, product.id.to_s]
+    end
+  end
+
   def wrap_text(text, width)
     return '' if text.nil?
     length = text.length

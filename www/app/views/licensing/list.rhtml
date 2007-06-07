@@ -13,7 +13,6 @@
     <td><%= license.product.name %></td>
     <td><%= license.created_at.to_s %></td>
     <td><%= link_to 'Show', :action => 'show', :id => license %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => license %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => license }, :confirm => 'Are you sure?', :method => :post %></td>
   </tr>
 <% end %>

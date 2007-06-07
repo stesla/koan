@@ -30,20 +30,6 @@ class LicensingController < ApplicationController
     end
   end
 
-  def edit
-    @license = License.find(params[:id])
-  end
-
-  def update
-    @license = License.find(params[:id])
-    if @license.update_attributes(params[:license])
-      flash[:notice] = 'License was successfully updated.'
-      redirect_to :action => 'show', :id => @license
-    else
-      render :action => 'edit'
-    end
-  end
-
   def destroy
     License.find(params[:id]).destroy
     redirect_to :action => 'list'

@@ -1,7 +1,13 @@
-<h1>New license</h1>
+<%= error_messages_for 'license' %>
 
-<% form_tag :action => 'create' do %>
-  <%= render :partial => 'form' %>
+<h1>New license</h1>
+<% form_for :license, :url => { :action => :create } do |form| %>
+  <p><label for="customer_id">Customer ID</label><br/>
+  <%= form.select :customer_id, all_customers, :prompt => "Select a customer" %></p>
+
+  <p><label for="product_id">Product ID</label><br/>
+  <%= form.select :product_id, all_products, :prompt => "Select a product" %></p>
+
   <%= submit_tag "Create" %>
 <% end %>
 
