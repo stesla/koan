@@ -13,7 +13,7 @@ class LicensingController < ApplicationController
   end
 
   def show
-    @license = License.find(params[:id])
+    load_license
   end
 
   def new
@@ -33,5 +33,18 @@ class LicensingController < ApplicationController
   def destroy
     License.find(params[:id]).destroy
     redirect_to :action => 'list'
+  end
+
+  def xml
+    load_license
+    send_data(@license.to_xml,
+              :type => "application/xml",
+              :filename => "#{@license.customer.fullname}.koanlicense")
+  end
+
+  private
+
+  def load_license
+    @license = License.find(params[:id])
   end
 end

@@ -27,6 +27,25 @@ class License < ActiveRecord::Base
     Base32.encode(self.class.sign(digest))
   end
 
+  def to_xml
+    xml = Builder::XmlMarkup.new(:indent => 2)
+    xml.instruct!(:xml, :version => "1.0")
+    xml.declare!(:DOCTYPE, :plist,
+                 :PUBLIC, "-//Apple Computer//DTD PLIST 1.0//EN",
+                 "http://www.apple.com/DTDs/PropertyList-1.0.dtd")
+
+    xml.plist(:version => "1.0") do
+      xml.dict do
+        xml.key "DateCreated"
+        xml.string created_at.to_s(:long)
+        xml.key "Key"
+        xml.string key
+        xml.key "Owner"
+        xml.string customer.fullname
+      end
+    end
+  end
+
   protected
 
   def validate

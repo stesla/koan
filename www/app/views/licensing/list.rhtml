@@ -12,6 +12,7 @@
     <td><%= license.customer.fullname %></td>
     <td><%= license.product.name %></td>
     <td><%= license.created_at.to_s(:long) %></td>
+    <td><%= link_to 'XML', :action => 'xml', :id => license %></td>
     <td><%= link_to 'Show', :action => 'show', :id => license %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => license }, :confirm => 'Are you sure?', :method => :post %></td>
   </tr>
