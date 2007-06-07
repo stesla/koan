@@ -3,3 +3,7 @@ one:
   id: 1
 two:
   id: 2
+first:
+  id: 3
+  uuid: F4925BA1-5371-4F72-A904-20BFC0BEFCCE
+  price: 12.34
