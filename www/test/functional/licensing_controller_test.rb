@@ -60,22 +60,6 @@ class LicensingControllerTest < Test::Unit::TestCase
     assert_equal num_licenses + 1, License.count
   end
 
-  def test_edit
-    get :edit, :id => @first_id
-
-    assert_response :success
-    assert_template 'edit'
-
-    assert_not_nil assigns(:license)
-    assert assigns(:license).valid?
-  end
-
-  def test_update
-    post :update, :id => @first_id
-    assert_response :redirect
-    assert_redirected_to :action => 'show', :id => @first_id
-  end
-
   def test_destroy
     assert_nothing_raised {
       License.find(@first_id)

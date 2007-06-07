@@ -1,12 +1,12 @@
 module LicensingHelper
   def all_customers
-    Customer.find_all.collect do |customer|
+    Customer.find(:all).collect do |customer|
       [customer.fullname, customer.id.to_s]
     end
   end
 
   def all_products
-    Product.find_all.collect do |product|
+    Product.find(:all).collect do |product|
       [product.name, product.id.to_s]
     end
   end
