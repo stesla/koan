@@ -3,8 +3,8 @@ require File.dirname(__FILE__) + '/../test_helper'
 class CustomerTest < Test::Unit::TestCase
   fixtures :customers
 
-  # Replace this with your real tests.
-  def test_truth
-    assert true
+  def test_fullname
+    customer = Customer.new :first_name => 'Bob', :last_name => 'Jones'
+    assert_equal('Bob Jones', customer.fullname)
   end
 end

@@ -15,8 +15,6 @@ class CreateInitialSchema < ActiveRecord::Migration
     create_table :licenses do |t|
       t.column :customer_id, :integer, :null => false
       t.column :product_id, :integer, :null => false
-      t.column :digest, :string
-      t.column :key, :text
       t.column :created_at, :datetime
     end
   end

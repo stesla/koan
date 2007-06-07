@@ -2,16 +2,16 @@
 
 <table>
   <tr>
-  <% for column in License.content_columns %>
-    <th><%= column.human_name %></th>
-  <% end %>
+    <th>Customer</th>
+    <th>Product</th>
+    <th>Created At</th>
   </tr>
-  
+
 <% for license in @licenses %>
   <tr>
-  <% for column in License.content_columns %>
-    <td><%=h license.send(column.name) %></td>
-  <% end %>
+    <td><%= license.customer.fullname %></td>
+    <td><%= license.product.name %></td>
+    <td><%= license.created_at.to_s %></td>
     <td><%= link_to 'Show', :action => 'show', :id => license %></td>
     <td><%= link_to 'Edit', :action => 'edit', :id => license %></td>
     <td><%= link_to 'Destroy', { :action => 'destroy', :id => license }, :confirm => 'Are you sure?', :method => :post %></td>

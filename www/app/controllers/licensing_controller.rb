@@ -22,7 +22,7 @@ class LicensingController < ApplicationController
 
   def create
     @license = License.new(params[:license])
-    if @license.save
+    if @license && @license.save
       flash[:notice] = 'License was successfully created.'
       redirect_to :action => 'list'
     else

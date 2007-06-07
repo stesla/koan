@@ -1,8 +1,8 @@
-<% for column in License.content_columns %>
-<p>
-  <b><%= column.human_name %>:</b> <%=h @license.send(column.name) %>
-</p>
-<% end %>
+<p><b>Name:</b> <%= @license.customer.fullname %></p>
+<p><b>Product:</b> <%= @license.product.name %></p>
+<p><b>Created at:</b> <%= h @license.created_at %></p>
+<p><b>License Key:</b><br/>
+<pre><%= wrap_text(@license.key, 52) %></p></pre>
 
 <%= link_to 'Edit', :action => 'edit', :id => @license %> |
 <%= link_to 'Back', :action => 'list' %>

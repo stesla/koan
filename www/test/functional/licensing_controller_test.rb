@@ -5,7 +5,7 @@ require 'licensing_controller'
 class LicensingController; def rescue_action(e) raise e end; end
 
 class LicensingControllerTest < Test::Unit::TestCase
-  fixtures :licenses
+  fixtures :licenses, :customers, :products
 
   def setup
     @controller = LicensingController.new

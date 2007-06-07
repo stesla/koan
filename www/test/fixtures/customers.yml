@@ -1,8 +1,12 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 one:
   id: 1
+  first_name: one
+  last_name: one
 two:
   id: 2
+  first_name: two
+  last_name: two
 first:
   id: 3
   first_name: Bob
