@@ -35,6 +35,7 @@
                 connectUsingPanelInformation = id; 
                 openBugsWebPage = id; 
                 openNewConnectionPanel = id; 
+                showAboutPanel = id; 
                 showPreferencesPanel = id; 
                 showProfilesPanel = id; 
                 showProxySettings = id; 

@@ -1,5 +1,5 @@
 /*
- *  J3Gozer.h
+ *  MUGozer.h
  *  Koan
  *
  *  Created by Samuel Tesla on 6/6/07.
@@ -8,4 +8,7 @@
  */
 
 #include <Carbon/Carbon.h>
+#include <Cocoa/Cocoa.h>
 
+inline BOOL licensed (void);
+inline NSString *licensedOwner (void);

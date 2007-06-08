@@ -34,6 +34,7 @@
 - (IBAction) connectUsingPanelInformation: (id) sender;
 - (IBAction) openBugsWebPage: (id) sender;
 - (IBAction) openNewConnectionPanel: (id) sender;
+- (IBAction) showAboutPanel: (id) sender;
 - (IBAction) showPreferencesPanel: (id) sender;
 - (IBAction) showProfilesPanel: (id) sender;
 - (IBAction) showProxySettings: (id) sender;

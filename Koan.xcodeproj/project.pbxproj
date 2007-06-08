@@ -75,8 +75,8 @@
 		7E68DC59092AC2FB004554BD /* J3ReadBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC35092AC2FB004554BD /* J3ReadBuffer.m */; };
 		7E68DC5D092AC2FB004554BD /* J3Socket.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC39092AC2FB004554BD /* J3Socket.m */; };
 		7E68DC5F092AC2FB004554BD /* J3TelnetConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68DC3B092AC2FB004554BD /* J3TelnetConstants.m */; };
-		7E68E53E0C17BC180028588C /* J3Gozer.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E68E53C0C17BC180028588C /* J3Gozer.h */; };
-		7E68E53F0C17BC180028588C /* J3Gozer.c in Sources */ = {isa = PBXBuildFile; fileRef = 7E68E53D0C17BC180028588C /* J3Gozer.c */; };
+		7E68E53E0C17BC180028588C /* MUGozer.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E68E53C0C17BC180028588C /* MUGozer.h */; };
+		7E68E53F0C17BC180028588C /* MUGozer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E68E53D0C17BC180028588C /* MUGozer.m */; };
 		7E87735409AD44DE00A883BC /* J3SocketFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E87735209AD44DE00A883BC /* J3SocketFactory.m */; };
 		7E87756409AD62E400A883BC /* J3FilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE43B20749CB16002C7D48 /* J3FilterTests.m */; };
 		7E87756509AD62E400A883BC /* J3HistoryRingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A6CD074970FE007005AC /* J3HistoryRingTests.m */; };
@@ -192,7 +192,7 @@
 				E615A40607D3B38C00FC7F6B /* Growl.framework in Copy Frameworks */,
 				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in Copy Frameworks */,
 				2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in Copy Frameworks */,
-				7E68E53E0C17BC180028588C /* J3Gozer.h in Copy Frameworks */,
+				7E68E53E0C17BC180028588C /* MUGozer.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,8 +316,8 @@
 		7E68DC3A092AC2FB004554BD /* J3TelnetConstants.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetConstants.h; sourceTree = "<group>"; };
 		7E68DC3B092AC2FB004554BD /* J3TelnetConstants.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetConstants.m; sourceTree = "<group>"; };
 		7E68DCD4092AC77D004554BD /* J3ByteDestination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3ByteDestination.h; sourceTree = "<group>"; };
-		7E68E53C0C17BC180028588C /* J3Gozer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Gozer.h; sourceTree = "<group>"; };
-		7E68E53D0C17BC180028588C /* J3Gozer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = J3Gozer.c; sourceTree = "<group>"; };
+		7E68E53C0C17BC180028588C /* MUGozer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MUGozer.h; path = ../licensing/MUGozer.h; sourceTree = "<group>"; };
+		7E68E53D0C17BC180028588C /* MUGozer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MUGozer.m; path = ../licensing/MUGozer.m; sourceTree = "<group>"; };
 		7E87735109AD44DE00A883BC /* J3SocketFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3SocketFactory.h; sourceTree = "<group>"; };
 		7E87735209AD44DE00A883BC /* J3SocketFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3SocketFactory.m; sourceTree = "<group>"; };
 		7E87751809AD558700A883BC /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -650,8 +650,8 @@
 		7E1F95190C17BBC500230AF4 /* Licensing */ = {
 			isa = PBXGroup;
 			children = (
-				7E68E53C0C17BC180028588C /* J3Gozer.h */,
-				7E68E53D0C17BC180028588C /* J3Gozer.c */,
+				7E68E53C0C17BC180028588C /* MUGozer.h */,
+				7E68E53D0C17BC180028588C /* MUGozer.m */,
 			);
 			path = Licensing;
 			sourceTree = "<group>";
@@ -1191,7 +1191,7 @@
 				7E26CB300BD80AAF00FC3843 /* J3ByteSet.m in Sources */,
 				7EE11F3B0BD8284100C78D9C /* J3TelnetNotTelnetState.m in Sources */,
 				2FB40CDB0BF0FA3D004E13F8 /* MUFugueEditFilter.m in Sources */,
-				7E68E53F0C17BC180028588C /* J3Gozer.c in Sources */,
+				7E68E53F0C17BC180028588C /* MUGozer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

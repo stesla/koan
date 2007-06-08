@@ -16,11 +16,13 @@
 #import "MUServices.h"
 #import "J3SocketFactory.h"
 #import "MUWorld.h"
+#import "MUGozer.h"
 
 @interface MUApplicationController (Private)
 
 - (IBAction) changeFont: (id) sender;
 - (void) colorPanelColorDidChange: (NSNotification *) notification;
+- (id) infoValueForKey: (NSString *) key;
 - (IBAction) openConnection: (id) sender;
 - (void) openConnectionWithController: (MUConnectionWindowController *) controller;
 - (void) playNotificationSound;
@@ -175,6 +177,12 @@
   [newConnectionPanel makeKeyAndOrderFront: self];
 }
 
+- (IBAction) showAboutPanel: (id) sender;
+{
+  NSString *copyright = [NSString stringWithFormat:@"%@\n%@", [self infoValueForKey: @"NSHumanReadableCopyright"], licensed() ? licensedOwner() : @"Trial"];
+  [NSApp orderFrontStandardAboutPanelWithOptions: [NSDictionary dictionaryWithObjectsAndKeys: copyright, @"Copyright", nil]];
+}
+
 - (IBAction) showPreferencesPanel: (id) sender
 {
   [preferencesController showPreferencesPanel: sender];
@@ -306,6 +314,14 @@
 - (void) colorPanelColorDidChange: (NSNotification *) notification
 {
   [preferencesController colorPanelColorDidChange];
+}
+
+- (id) infoValueForKey: (NSString*) key
+{
+  if ([[[NSBundle mainBundle] localizedInfoDictionary] objectForKey: key])
+    return [[[NSBundle mainBundle] localizedInfoDictionary] objectForKey: key];
+  
+  return [[[NSBundle mainBundle] infoDictionary] objectForKey: key];
 }
 
 - (IBAction) openConnection: (id) sender
