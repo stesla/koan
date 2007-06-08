@@ -1,11 +1,8 @@
-/*
- *  MUGozer.h
- *  Koan
- *
- *  Created by Samuel Tesla on 6/6/07.
- *  Copyright 2007 __MyCompanyName__. All rights reserved.
- *
- */
+//
+// MUGozer.h
+//
+// Copyright (c) 2007 3James Software.
+//
 
 #include <Carbon/Carbon.h>
 #include <Cocoa/Cocoa.h>
