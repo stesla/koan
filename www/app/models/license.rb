@@ -20,11 +20,23 @@ class License < ActiveRecord::Base
   end
 
   def digest
-    Digest::SHA256.hexdigest(self.product.uuid + self.customer.fullname + self.created_at.to_s)
+    Digest::SHA256.hexdigest(product_code + owner + issued_date_string)
+  end
+
+  def issued_date_string
+    created_at.to_s(:long)
   end
 
   def key
     Base32.encode(self.class.sign(digest))
+  end
+
+  def owner
+    customer.fullname
+  end
+
+  def product_code
+    product.uuid
   end
 
   def to_xml
@@ -37,11 +49,11 @@ class License < ActiveRecord::Base
     xml.plist(:version => "1.0") do
       xml.dict do
         xml.key "DateCreated"
-        xml.string created_at.to_s(:long)
+        xml.string issued_date_string
         xml.key "Key"
         xml.string key
         xml.key "Owner"
-        xml.string customer.fullname
+        xml.string owner
       end
     end
   end

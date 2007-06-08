@@ -1,6 +1,6 @@
-<p><b>Name:</b> <%= @license.customer.fullname %></p>
+<p><b>Name:</b> <%= @license.owner %></p>
 <p><b>Product:</b> <%= @license.product.name %></p>
-<p><b>Created at:</b> <%= h @license.created_at.to_s(:long) %></p>
+<p><b>Created at:</b> <%= h @license.issued_date_string %></p>
 <p><b>License Key:</b><br/>
 <pre><%= wrap_text(@license.key, 52) %></p></pre>
 
