@@ -22,6 +22,7 @@
 
 - (IBAction) changeFont: (id) sender;
 - (void) colorPanelColorDidChange: (NSNotification *) notification;
+- (void) importKoanLicenseWithFile: (NSString *) fileName;
 - (id) infoValueForKey: (NSString *) key;
 - (IBAction) openConnection: (id) sender;
 - (void) openConnectionWithController: (MUConnectionWindowController *) controller;
@@ -214,6 +215,14 @@
 #pragma mark -
 #pragma mark NSApplication delegate
 
+- (BOOL) application: (NSApplication *) theApplication openFile: (NSString *) string
+{
+  if (![[[string pathExtension] lowercaseString] isEqualToString: @"koanlicense"])
+    return NO;
+  [self importKoanLicenseWithFile: string];
+  return YES;
+}
+
 - (void) applicationDidBecomeActive: (NSNotification *) notification
 {
   unreadCount = 0;
@@ -316,6 +325,31 @@
 - (void) colorPanelColorDidChange: (NSNotification *) notification
 {
   [preferencesController colorPanelColorDidChange];
+}
+
+- (void) importKoanLicenseWithFile: (NSString *) fileName
+{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if ([defaults valueForKey: MULicenseInfo] != nil)
+  {
+    int choice = NSRunAlertPanel (@"Are you sure you want to change your licensing?",
+                                  @"Koan is already unlocked, proceeding will license this copy to a different user.",
+                                  MULOK,
+                                  MULCancel,
+                                  nil);
+    if (choice != NSAlertDefaultReturn)
+      return;
+  }
+  
+  if (importLicenseFile(fileName))
+  {
+    NSDictionary *licenseInfo = [defaults valueForKey: MULicenseInfo];
+    NSRunAlertPanel(@"License imported successfully.", @"Koan is now registered to %@.", @"OK", nil, nil, [licenseInfo valueForKey: @"Owner"]);
+  }
+  else
+  {
+    NSRunAlertPanel(@"Unable to import license.", @"Please verify that it is a valid license.", MULOK, nil, nil);
+  }
 }
 
 - (id) infoValueForKey: (NSString*) key

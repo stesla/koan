@@ -28,6 +28,8 @@ extern NSString *MUPPlaySounds;
 extern NSString *MUPPlayWhenActive;
 extern NSString *MUPSoundChoice;
 
+extern NSString *MULicenseInfo;
+
 #pragma mark Notification constants.
 
 extern NSString *MUConnectionWindowControllerWillCloseNotification;

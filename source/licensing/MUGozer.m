@@ -5,7 +5,9 @@
 //
 
 
+#import "MUConstants.h"
 #import "MUGozer.h"
+#import "J3Base32.h"
 
 //static const char *gozer_uuid = "E463E475-DFB2-44D3-9A48-D30395AA0DFD";
 
@@ -37,6 +39,13 @@
 
 #pragma mark -
 #pragma mark Inline Functions
+
+inline BOOL importLicenseFile (NSString *fileName)
+{
+  NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile: fileName];
+  [[NSUserDefaults standardUserDefaults] setObject: dictionary forKey: MULicenseInfo];
+  return YES;
+}
 
 inline BOOL licensed (void)
 {

@@ -28,6 +28,8 @@ NSString *MUPPlaySounds = @"MUPPlaySounds";
 NSString *MUPPlayWhenActive = @"MUPPlayWhenActive";
 NSString *MUPSoundChoice = @"MUPSoundChoice";
 
+NSString *MULicenseInfo = @"MULicenseInfo";
+
 #pragma mark Notification constants.
 
 NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";
