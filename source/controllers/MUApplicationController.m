@@ -344,7 +344,7 @@
   if (importLicenseFile(fileName))
   {
     NSDictionary *licenseInfo = [defaults valueForKey: MULicenseInfo];
-    NSRunAlertPanel(@"License imported successfully.", @"Koan is now registered to %@.", @"OK", nil, nil, [licenseInfo valueForKey: @"Owner"]);
+    NSRunAlertPanel(@"License imported successfully.", @"Koan is now registered to %@.", MULOK, nil, nil, [licenseInfo valueForKey: MULicenseOwner]);
   }
   else
   {

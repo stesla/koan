@@ -1508,7 +1508,10 @@
 				INSTALL_PATH = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_4";
-				OTHER_LDFLAGS = "-lSystem";
+				OTHER_LDFLAGS = (
+					"-lSystem",
+					"-lcrypto",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Koan;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
@@ -1548,7 +1551,10 @@
 				INSTALL_PATH = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_4";
-				OTHER_LDFLAGS = "-lSystem";
+				OTHER_LDFLAGS = (
+					"-lSystem",
+					"-lcrypto",
+				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Koan;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;

@@ -5,11 +5,13 @@
 //
 
 
+#include <openssl/pem.h>
+#include <openssl/rsa.h>
+#include <openssl/bio.h>
+
 #import "MUConstants.h"
 #import "MUGozer.h"
 #import "J3Base32.h"
-
-//static const char *gozer_uuid = "E463E475-DFB2-44D3-9A48-D30395AA0DFD";
 
 #define PUBLIC_KEY \
 { 0x2D, 0x2D, 0x2D, 0x2D, 0x2D, 0x42, 0x45, 0x47, 0x49, 0x4E, 0x20, 0x50, 0x55,\
@@ -37,6 +39,11 @@
 
 #pragma mark Static Function Prototypes
 
+static void loadLicenseFromDefaults (void); 
+static BOOL validateLicense (void);
+
+static BOOL license_loaded = NO;
+
 #pragma mark -
 #pragma mark Inline Functions
 
@@ -49,8 +56,30 @@ inline BOOL importLicenseFile (NSString *fileName)
 
 inline BOOL licensed (void)
 {
-  return YES;
+  if (!license_loaded)
+    loadLicenseFromDefaults ();
+  return validateLicense ();
 }
 
 #pragma mark -
 #pragma mark Static Functions
+
+#define GOZER_KEY_LENGTH 130
+static uint8_t gozer_key[GOZER_KEY_LENGTH];
+static uint8_t gozer_identifier[SHA_DIGEST_LENGTH];
+
+static void loadLicenseFromDefaults (void)
+{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSDictionary *licenseInfo = [defaults valueForKey: MULicenseInfo];
+  NSData *data = [J3Base32 decodeString: [licenseInfo valueForKey: MULicenseKey]];
+  [data getBytes: gozer_key length: GOZER_KEY_LENGTH];
+  NSString *identifier = [NSString stringWithFormat: @"E463E475-DFB2-44D3-9A48-D30395AA0DFD%@%@", [licenseInfo valueForKey: MULicenseOwner], [licenseInfo valueForKey: MULicenseDateCreated]];
+  SHA1((unsigned char *) [identifier cStringUsingEncoding: NSASCIIStringEncoding], [identifier lengthOfBytesUsingEncoding: NSASCIIStringEncoding], gozer_identifier);
+  license_loaded = YES;
+}
+
+static BOOL validateLicense (void)
+{
+  return NO;
+}

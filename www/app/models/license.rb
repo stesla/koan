@@ -1,5 +1,5 @@
 require "base32"
-require "digest/sha2"
+require "digest/sha1"
 require "openssl"
 
 class License < ActiveRecord::Base
@@ -20,7 +20,7 @@ class License < ActiveRecord::Base
   end
 
   def digest
-    Digest::SHA256.hexdigest(product_code + owner + issued_date_string)
+    Digest::SHA1.hexdigest(product_code + owner + issued_date_string)
   end
 
   def issued_date_string
