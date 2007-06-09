@@ -11,87 +11,56 @@
 
 - (void) testEmptyString
 {
-  const uint8_t encodedString[] = "";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 0 message: @"count"];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData data]] equals: [NSData data]];
 }
 
 - (void) testDecode_a
 {
   const uint8_t encodedString[] = "ME======";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 1 message: @"count"];
-  [self assertInt: decodedString[0] equals: 'a'];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: "a" length: 1]];
 }
 
 - (void) testDecode_1
 {
   const uint8_t encodedString[] = "GE======";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 1 message: @"count"];
-  [self assertInt: decodedString[0] equals: '1' message: @"1"];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: "1" length: 1]];
 }
 
 - (void) testDecode_12
 {
   const uint8_t encodedString[] = "GEZA====";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 2 message: @"count"];
-  [self assertInt: decodedString[0] equals: '1' message: @"1"];
-  [self assertInt: decodedString[1] equals: '2' message: @"2"];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: "12" length: 2]];
 }
 
 - (void) testDecode_123
 {
   const uint8_t encodedString[] = "GEZDG===";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 3 message: @"count"];
-  [self assertInt: decodedString[0] equals: '1' message: @"1"];
-  [self assertInt: decodedString[1] equals: '2' message: @"2"];
-  [self assertInt: decodedString[2] equals: '3' message: @"3"];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: "123" length: 3]];
 }
 
 - (void) testDecode_1234
 {
   const uint8_t encodedString[] = "GEZDGNA=";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 4 message: @"count"];
-  [self assertInt: decodedString[0] equals: '1' message: @"1"];
-  [self assertInt: decodedString[1] equals: '2' message: @"2"];
-  [self assertInt: decodedString[2] equals: '3' message: @"3"];
-  [self assertInt: decodedString[3] equals: '4' message: @"4"];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: "1234" length: 4]];
 }
 
 - (void) testDecode_12345
 {
   const uint8_t encodedString[] = "GEZDGNBV";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 5 message: @"count"];
-  [self assertInt: decodedString[0] equals: '1' message: @"1"];
-  [self assertInt: decodedString[1] equals: '2' message: @"2"];
-  [self assertInt: decodedString[2] equals: '3' message: @"3"];
-  [self assertInt: decodedString[3] equals: '4' message: @"4"];
-  [self assertInt: decodedString[4] equals: '5' message: @"5"];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: "12345" length: 5]];
 }
 
 - (void) testDecode_abcde
 {
   const uint8_t encodedString[] = "MFRGGZDF";
-  uint8_t *decodedString = NULL;
-  [self assertInt: base32_decode (&decodedString, encodedString, strlen((char *)encodedString)) equals: 5 message: @"count"];
-  [self assertInt: decodedString[0] equals: 'a' message: @"a"];
-  [self assertInt: decodedString[1] equals: 'b' message: @"b"];
-  [self assertInt: decodedString[2] equals: 'c' message: @"c"];
-  [self assertInt: decodedString[3] equals: 'd' message: @"d"];
-  [self assertInt: decodedString[4] equals: 'e' message: @"e"];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: "abcde" length: 5]];
 }
 
 - (void) testDecodeConstitutionPreamble
@@ -111,11 +80,13 @@
     "OJZWK3DWMVZSAYLOMQQG65LSEBYG643UMVZGS5DZFQQGI3ZAN5ZGIYLJNYQGC3TEEBSXG5DB"
     "MJWGS43IEB2GQ2LTEBBW63TTORUXI5LUNFXW4IDGN5ZCA5DIMUQFK3TJORSWIICTORQXIZLT"
     "EBXWMICBNVSXE2LDMEXA====";
-  uint8_t *decodedString = NULL;
-  size_t length = base32_decode (&decodedString, encodedString, strlen ((char *)encodedString));
-  [self assertInt: length  equals: strlen ((char *)expectedString) message: @"count"];
-  for (unsigned i = 0; i < length; i++)
-    [self assertInt: decodedString[i] equals: expectedString[i] message: [NSString stringWithFormat:@"%c at position %d", expectedString[i], i]];
-  free(decodedString);
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: encodedString  length: strlen((char *) encodedString)]]
+        equals: [NSData dataWithBytes: expectedString length: strlen((char *) expectedString)]];
 }
+
+- (void) testWrongLengthText
+{
+  [self assert: [J3Base32 decodeData: [NSData dataWithBytes: "123456" length: 6]] equals: [NSData data]];  
+}
+
 @end

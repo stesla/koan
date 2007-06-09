@@ -94,7 +94,6 @@
 		7E90E1E90C18F9E900D7F3F1 /* J3Base32Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E90E1E80C18F9E900D7F3F1 /* J3Base32Tests.m */; };
 		7E90E1F60C18FABB00D7F3F1 /* J3Base32.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E90E1F40C18FABB00D7F3F1 /* J3Base32.h */; };
 		7E90E1F70C18FABB00D7F3F1 /* J3Base32.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E90E1F50C18FABB00D7F3F1 /* J3Base32.m */; };
-		7E90E27E0C18FF4D00D7F3F1 /* J3Base32.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E90E1F50C18FABB00D7F3F1 /* J3Base32.m */; };
 		7EBFDB0E09380B100077BA3A /* NSObject (Subclasses).m in Sources */ = {isa = PBXBuildFile; fileRef = 7EBFDB0C09380B100077BA3A /* NSObject (Subclasses).m */; };
 		7EC10AEC09AF947C00D840A1 /* J3SocksRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC10AE909AF947C00D840A1 /* J3SocksRequest.m */; };
 		7EC3030A092B978B00AFA5C7 /* J3TelnetConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */; };
@@ -1108,7 +1107,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7E90E27E0C18FF4D00D7F3F1 /* J3Base32.m in Sources */,
 				7E87764409AD6B3000A883BC /* MUConstants.m in Sources */,
 				7E87757309AD630E00A883BC /* J3TelnetStateMachineTests.m in Sources */,
 				7E87757209AD62FE00A883BC /* J3SOCKSPrimitiveTests.m in Sources */,

@@ -6,8 +6,113 @@
 
 #include "J3Base32.h"
 
+#pragma mark C Prototypes
+
+static inline size_t base32_buffer_size (const size_t encodedTextLength);
+static inline size_t base32_decode (uint8_t *output, const size_t outputLength, const uint8_t *input, const size_t inputLength);
+static inline uint8_t decode_bits (const uint8_t bits);
+
+#pragma mark -
+
+@implementation J3Base32
+
++ (NSData *) decodeData: (NSData *) data
+{
+  size_t buffer_size = base32_buffer_size([data length]);
+  if (buffer_size == 0)
+    return [NSData data];
+  
+  uint8_t *bytes = malloc(buffer_size);
+  if (bytes == NULL)
+  {
+    @throw [NSException exceptionWithName: NSMallocException reason: @"Could not allocate base32 buffer" userInfo: nil];
+  }
+      
+  size_t length = base32_decode (bytes, buffer_size, [data bytes], [data length]);
+  if (length == 0)
+  {
+    free(bytes);
+    return [NSData data];
+  }
+  else
+    return [NSData dataWithBytesNoCopy: bytes length: length];
+}
+
++ (NSData *) decodeString: (NSString *) string
+{
+  //The alphabet is [A-Z2-7], so getting data using 7-bit ASCII is fine.
+  return [self decodeData: [string dataUsingEncoding: NSASCIIStringEncoding allowLossyConversion: YES]];
+}
+
+@end
+
+#pragma mark -
+#pragma mark C Functions
+
+static inline size_t base32_buffer_size (const size_t encodedTextLength)
+{
+  if (encodedTextLength == 0 || encodedTextLength % 8 != 0)
+    return 0;
+  return encodedTextLength * 8 / 5;
+}
+
+static inline size_t 
+base32_decode (uint8_t *output, const size_t outputLength, const uint8_t *input, const size_t inputLength)
+{
+  if (outputLength == 0 || inputLength == 0 || inputLength % 8 != 0)
+    return 0;
+  
+  size_t bytes = 0;
+  uint8_t currentByte = 0;
+  for (unsigned offset = 0; offset < inputLength && bytes < outputLength; offset += 8)
+  {
+    output[bytes] = decode_bits (input[offset + 0]) << 3; 
+    currentByte = decode_bits (input[offset + 1]);
+    output[bytes] += currentByte >> 2;
+    output[bytes + 1] = (currentByte & 0x03) << 6;
+    
+    if (input[offset + 2] == '=')
+      return bytes + 1;
+    else
+      bytes++;
+    
+    output[bytes] += decode_bits (input[offset + 2]) << 1;
+    currentByte = decode_bits (input[offset + 3]);
+    output[bytes] += currentByte >> 4;
+    output[bytes + 1] = currentByte << 4;
+    
+    if (input[offset + 4] == '=')
+      return bytes + 1;
+    else
+      bytes++;
+    
+    currentByte = decode_bits (input[offset + 4]);
+    output[bytes] += currentByte >> 1;
+    output[bytes + 1] = currentByte << 7;
+
+    if (input[offset + 5] == '=')
+      return bytes + 1;
+    else
+      bytes++;
+    
+    output[bytes] += decode_bits (input[offset + 5]) << 2;
+    currentByte = decode_bits (input[offset + 6]);
+    output[bytes] +=  currentByte >> 3;
+    output[bytes + 1] = (currentByte & 0x07) << 5; 
+
+    if (input[offset + 7] == '=')
+      return bytes + 1;
+    else
+      bytes++;
+
+    output[bytes] += decode_bits (input[offset + 7]) & 0x1F;
+    bytes++;
+  }
+  return bytes;
+}
+
 static inline uint8_t
-decode_bits (uint8_t bits)
+decode_bits (const uint8_t bits)
 {
   uint8_t table[] = { 
     0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -31,67 +136,4 @@ decode_bits (uint8_t bits)
     0xFF, 0xFF, 0xFF, 0xFF
   };
   return table[bits];
-}
-
-size_t 
-base32_decode (uint8_t **decodedString, const uint8_t *encodedString, size_t length)
-{
-  if (length == 0 || length % 8 != 0)
-    return 0;
-  
-  size_t maxDecodedLength = length * 8 / 5;
-  uint8_t *output = malloc (maxDecodedLength);
-  if (output == NULL)
-    return 0;
-  *decodedString = output;
-  for (unsigned i = 0; i < maxDecodedLength; i++)
-    output[i] = 0;
-  
-  size_t bytes = 0;
-  uint8_t currentByte = 0;
-  for (unsigned offset = 0; offset < length; offset += 8)
-  {
-    output[bytes] = decode_bits (encodedString[offset + 0]) << 3; 
-    currentByte = decode_bits (encodedString[offset + 1]);
-    output[bytes] += currentByte >> 2;
-    output[bytes + 1] = (currentByte & 0x03) << 6;
-    
-    if (encodedString[offset + 2] == '=')
-      return bytes + 1;
-    else
-      bytes++;
-    
-    output[bytes] += decode_bits (encodedString[offset + 2]) << 1;
-    currentByte = decode_bits (encodedString[offset + 3]);
-    output[bytes] += currentByte >> 4;
-    output[bytes + 1] = currentByte << 4;
-    
-    if (encodedString[offset + 4] == '=')
-      return bytes + 1;
-    else
-      bytes++;
-    
-    currentByte = decode_bits (encodedString[offset + 4]);
-    output[bytes] += currentByte >> 1;
-    output[bytes + 1] = currentByte << 7;
-
-    if (encodedString[offset + 5] == '=')
-      return bytes + 1;
-    else
-      bytes++;
-    
-    output[bytes] += decode_bits (encodedString[offset + 5]) << 2;
-    currentByte = decode_bits (encodedString[offset + 6]);
-    output[bytes] +=  currentByte >> 3;
-    output[bytes + 1] = (currentByte & 0x07) << 5; 
-
-    if (encodedString[offset + 7] == '=')
-      return bytes + 1;
-    else
-      bytes++;
-
-    output[bytes] += decode_bits (encodedString[offset + 7]) & 0x1F;
-    bytes++;
-  }
-  return bytes;
 }

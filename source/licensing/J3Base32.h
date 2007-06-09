@@ -4,4 +4,11 @@
 // Copyright (c) 2007 3James Software.
 //
 
-extern size_t base32_decode (uint8_t **decodedString, const uint8_t *encodedString, size_t length);
+@interface J3Base32 : NSObject
+{
+}
+
++ (NSData *) decodeData: (NSData *) data;
++ (NSData *) decodeString: (NSString *) string;
+
+@end
