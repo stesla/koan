@@ -179,8 +179,10 @@
 
 - (IBAction) showAboutPanel: (id) sender;
 {
-  NSString *copyright = [NSString stringWithFormat:@"%@\n%@", [self infoValueForKey: @"NSHumanReadableCopyright"], licensed() ? licensedOwner() : @"Trial"];
-  [NSApp orderFrontStandardAboutPanelWithOptions: [NSDictionary dictionaryWithObjectsAndKeys: copyright, @"Copyright", nil]];
+  NSMutableDictionary *options = [NSMutableDictionary dictionary];
+  if (!licensed())
+    [options setObject: [[self infoValueForKey:@"CFBundleName"] stringByAppendingString: @" Trial"] forKey: @"ApplicationName"];
+  [NSApp orderFrontStandardAboutPanelWithOptions: options];
 }
 
 - (IBAction) showPreferencesPanel: (id) sender

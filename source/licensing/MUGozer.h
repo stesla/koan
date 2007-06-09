@@ -8,4 +8,3 @@
 #include <Cocoa/Cocoa.h>
 
 inline BOOL licensed (void);
-inline NSString *licensedOwner (void);

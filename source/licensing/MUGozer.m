@@ -40,12 +40,7 @@
 
 inline BOOL licensed (void)
 {
-  return NO;
-}
-
-inline NSString *licensedOwner (void)
-{
-  return @"Licensed to Constant User";
+  return YES;
 }
 
 #pragma mark -
