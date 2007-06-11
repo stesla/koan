@@ -5,8 +5,6 @@
 //
 
 @interface J3Base32 : NSObject
-{
-}
 
 + (NSData *) decodeData: (NSData *) data;
 + (NSData *) decodeString: (NSString *) string;

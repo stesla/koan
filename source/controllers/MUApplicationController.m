@@ -181,8 +181,8 @@
 - (IBAction) showAboutPanel: (id) sender;
 {
   NSMutableDictionary *options = [NSMutableDictionary dictionary];
-  if (!licensed())
-    [options setObject: [[self infoValueForKey:@"CFBundleName"] stringByAppendingString: @" Trial"] forKey: @"ApplicationName"];
+  if (!licensed ())
+    [options setObject: [[self infoValueForKey: @"CFBundleName"] stringByAppendingString: @" Trial"] forKey: @"ApplicationName"];
   [NSApp orderFrontStandardAboutPanelWithOptions: options];
 }
 
@@ -215,12 +215,15 @@
 #pragma mark -
 #pragma mark NSApplication delegate
 
-- (BOOL) application: (NSApplication *) theApplication openFile: (NSString *) string
+- (BOOL) application: (NSApplication *) application openFile: (NSString *) string
 {
-  if (![[[string pathExtension] lowercaseString] isEqualToString: @"koanlicense"])
-    return NO;
-  [self importKoanLicenseWithFile: string];
-  return YES;
+  if ([[[string pathExtension] lowercaseString] isEqualToString: @"koanlicense"])
+  {
+    [self importKoanLicenseWithFile: string];
+    return YES;
+  }
+  
+  return NO;
 }
 
 - (void) applicationDidBecomeActive: (NSNotification *) notification
@@ -329,26 +332,25 @@
 
 - (void) importKoanLicenseWithFile: (NSString *) fileName
 {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  if ([defaults valueForKey: MULicenseInfo] != nil)
+  if ([[NSUserDefaults standardUserDefaults] valueForKey: MULicenseInfo] != nil)
   {
     int choice = NSRunAlertPanel (@"Are you sure you want to change your licensing?",
                                   @"Koan is already unlocked, proceeding will license this copy to a different user.",
-                                  MULOK,
-                                  MULCancel,
+                                  _(MULOK),
+                                  _(MULCancel),
                                   nil);
     if (choice != NSAlertDefaultReturn)
       return;
   }
   
-  if (importLicenseFile(fileName))
+  if (import_license_file (fileName))
   {
-    NSDictionary *licenseInfo = [defaults valueForKey: MULicenseInfo];
-    NSRunAlertPanel(@"License imported successfully.", @"Koan is now registered to %@.", MULOK, nil, nil, [licenseInfo valueForKey: MULicenseOwner]);
+    NSDictionary *licenseInfo = [[NSUserDefaults standardUserDefaults] valueForKey: MULicenseInfo];
+    NSRunAlertPanel (@"License imported successfully.", @"Koan is now registered to %@.", _(MULOK), nil, nil, [licenseInfo valueForKey: MULicenseOwner]);
   }
   else
   {
-    NSRunAlertPanel(@"Unable to import license.", @"Please verify that it is a valid license.", MULOK, nil, nil);
+    NSRunAlertPanel (@"Unable to import license.", @"Please verify that it is a valid license.", _(MULOK), nil, nil);
   }
 }
 

@@ -987,10 +987,12 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = E69E22380854FB100055BCF5 /* Build configuration list for PBXProject "Koan" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Koan */;
 			projectDirPath = "";
 			projectRoot = "";
+			shouldCheckCompatibility = 1;
 			targets = (
 				8D1107260486CEB800E47090 /* Koan */,
 				E6967A18078F5C7A0033A4C8 /* Unpack Frameworks */,

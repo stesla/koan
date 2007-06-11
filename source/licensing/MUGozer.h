@@ -6,5 +6,7 @@
 
 #include <Cocoa/Cocoa.h>
 
-inline BOOL importLicenseFile (NSString *fileName);
-inline BOOL licensed (void);
+extern BOOL license_loaded;
+
+extern inline BOOL import_license_file (NSString *filename) __attribute__ ((always_inline));
+extern inline BOOL licensed (void) __attribute__ ((always_inline));

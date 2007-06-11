@@ -34,9 +34,7 @@ enum MUProfilesEditingReturnValues
 - (IBAction) removePlayer: (MUPlayer *) player;
 - (IBAction) removeWorld: (MUWorld *) world;
 - (void) updateProfilesForWorld: (MUWorld *) world withWorld: (MUWorld *) newWorld;
-- (void) updateProfileForWorld: (MUWorld *) world
-                        player: (MUPlayer *) player
-                    withPlayer: (MUPlayer *) newPlayer;
+- (void) updateProfileForWorld: (MUWorld *) world player: (MUPlayer *) player withPlayer: (MUPlayer *) newPlayer;
 - (MUWorld *) worldFromSheetWithPlayers: (NSArray *) players;
 - (void) worldSheetDidEndAdding: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
 - (void) worldSheetDidEndEditing: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;

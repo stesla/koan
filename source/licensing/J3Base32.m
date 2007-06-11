@@ -18,11 +18,11 @@ static inline uint8_t decode_bits (const uint8_t bits);
 
 + (NSData *) decodeData: (NSData *) data
 {
-  size_t buffer_size = base32_buffer_size([data length]);
+  size_t buffer_size = base32_buffer_size ([data length]);
   if (buffer_size == 0)
     return [NSData data];
   
-  uint8_t *bytes = malloc(buffer_size);
+  uint8_t *bytes = malloc (buffer_size);
   if (bytes == NULL)
   {
     @throw [NSException exceptionWithName: NSMallocException reason: @"Could not allocate base32 buffer" userInfo: nil];
@@ -31,7 +31,7 @@ static inline uint8_t decode_bits (const uint8_t bits);
   size_t length = base32_decode (bytes, buffer_size, [data bytes], [data length]);
   if (length == 0)
   {
-    free(bytes);
+    free (bytes);
     return [NSData data];
   }
   else
