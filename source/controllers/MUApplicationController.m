@@ -352,6 +352,7 @@
   {
     NSRunAlertPanel (@"Unable to import license.", @"Please verify that it is a valid license.  This copy of Koan is unregistered.", _(MULOK), nil, nil);
   }
+  [self rebuildConnectionsMenuWithAutoconnect: NO];
 }
 
 - (id) infoValueForKey: (NSString*) key
@@ -426,8 +427,9 @@
       MUPlayer *player = [players objectAtIndex: j];
       profile = [profiles profileForWorld: world player: player];
       
+      SEL action = j == 0 || licensed () ? @selector (openConnection:) : nil;
       NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle: [player name]
-                                                          action: @selector (openConnection:)
+                                                          action: action
                                                    keyEquivalent: @""];
       [playerItem setTarget: self];
       [playerItem setRepresentedObject: profile];
@@ -452,6 +454,7 @@
     [worldMenu addItem: connectItem];
     [worldItem setTitle: [world name]];
     [worldItem setSubmenu: worldMenu];
+    [worldItem setEnabled: i < 5 || licensed ()];
     [openConnectionMenu addItem: worldItem];
     [worldItem release];
     [worldMenu release];
