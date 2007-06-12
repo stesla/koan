@@ -350,7 +350,7 @@
   }
   else
   {
-    NSRunAlertPanel (@"Unable to import license.", @"Please verify that it is a valid license.", _(MULOK), nil, nil);
+    NSRunAlertPanel (@"Unable to import license.", @"Please verify that it is a valid license.  This copy of Koan is unregistered.", _(MULOK), nil, nil);
   }
 }
 

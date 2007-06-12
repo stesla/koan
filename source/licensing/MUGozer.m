@@ -49,10 +49,13 @@ BOOL license_loaded = NO;
 
 inline BOOL import_license_file (NSString *filename)
 {
+  license_loaded = NO;
   NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile: filename];
-  
   [[NSUserDefaults standardUserDefaults] setObject: dictionary forKey: MULicenseInfo];
-  return YES;
+  BOOL result = licensed ();
+  if (!result)
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: MULicenseInfo];
+  return result;
 }
 
 inline BOOL licensed (void)
@@ -82,5 +85,40 @@ inline void load_license_from_defaults (void)
 
 inline BOOL validate_license (void)
 {
+  uint8_t pem_public_key[] = PUBLIC_KEY;
+  BIO *bio = BIO_new_mem_buf (pem_public_key, sizeof (pem_public_key));
+  if (bio == NULL)
+    return NO;
+  @try
+  {
+    RSA *public_key = NULL;
+    public_key = PEM_read_bio_RSA_PUBKEY (bio, NULL, NULL, NULL);
+    if (public_key == NULL)
+      return NO;
+    @try
+    {
+      uint8_t *buffer = malloc (RSA_size (public_key));
+      @try
+      {
+        ssize_t length = RSA_public_decrypt (GOZER_KEY_LENGTH, gozer_key, buffer, public_key, RSA_PKCS1_PADDING);
+        if (length != SHA_DIGEST_LENGTH)
+          return NO;
+        else
+          return strncmp ((char *) gozer_identifier, (char *) buffer, SHA_DIGEST_LENGTH) == 0;
+      }
+      @finally
+      {
+        free(buffer);
+      }
+    }
+    @finally
+    {
+      RSA_free(public_key);
+    }
+  }
+  @finally
+  {
+    BIO_free(bio);
+  }
   return NO;
 }
