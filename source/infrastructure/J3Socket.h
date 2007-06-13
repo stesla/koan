@@ -44,6 +44,8 @@ typedef enum J3SocketStatus
   BOOL hasError;
   J3SocketStatus status;
   NSObject <J3SocketDelegate> *delegate;
+  NSMutableArray *dataToWrite;
+  NSObject *availableBytesLock;
 }
 
 + (id) socketWithHostname: (NSString *) hostname port: (int) port;

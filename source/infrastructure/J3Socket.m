@@ -25,12 +25,15 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 #pragma mark -
 
-@interface J3Socket (Private)
+@interface J3Socket (PrivateRunsInThread)
 
 - (void) connectSocket;
 - (void) createSocket;
-- (void) initializeDescriptorSet: (fd_set *) set;
 - (void) initializeKernelQueue;
+- (void) internalClose;
+- (void) internalOpen;
+- (void) internalRead;
+- (void) internalWrite;
 - (void) performPostConnectNegotiation;
 - (void) resolveHostname;
 - (void) setStatusConnected;
@@ -88,6 +91,8 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   port = newPort;
   status = J3SocketStatusNotConnected;
   server = NULL;
+  dataToWrite = [[NSMutableArray alloc] init];
+  availableBytesLock = [[NSObject alloc] init];
   
   return self;
 }
@@ -96,9 +101,11 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 {
   [self close];
   
+  [availableBytesLock release];
+  [dataToWrite release];
   delegate = nil;
   [hostname release];
-  
+ 
   if (server)
     free (server);
   
@@ -107,22 +114,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) close
 {
-  if (![self isConnected])
-    return;
-  
-  errno = 0;
-  
-  // Note that looping on EINTR is specifically wrong for close(2), since the
-  // underlying fd will be closed either way; EINTR here tends to indicate that
-  // a final flush was interrupted and we may have lost data.
-  /* int result = */ close (socketfd);
-  socketfd = -1;
-  [self setStatusClosedByClient];
-  
-  /* int result = */ close (kq);
-  
-  // TODO: handle result == -1 in some way. We could throw an exception, return
-  // it up from here, but it should be noted and handled.
+  [self internalClose];
 }
 
 - (BOOL) isClosed
@@ -142,22 +134,8 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) open
 {
-  if ([self isConnected] || [self isConnecting])
-    return;
-  
-  @try
-  {
-    [self setStatusConnecting];
-    [self resolveHostname];
-    [self createSocket];
-    [self connectSocket];
-    [self performPostConnectNegotiation];
-    [self setStatusConnected];    
-  }
-  @catch (J3SocketException *socketException)
-  {
-    [self setStatusClosedWithError: [socketException reason]];
-  }
+  // This is where we'll launch the thread
+  [self internalOpen];
 }
 
 - (void) setDelegate: (NSObject <J3SocketDelegate> *) object
@@ -185,41 +163,14 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) poll
 {
-  struct timespec timeout = {0, 0};
-  struct kevent triggered_event;
-  errno = 0;
-  
-  int result;
-  
-  do
-  {
-    result = kevent (kq, NULL, 0, &triggered_event, 1, &timeout);
-  }
-  while (result == -1 && errno == EINTR);
-  
-  if (result == -1)
-    [J3SocketException socketErrorWithErrnoForFunction: @"kevent"];
-  
-  if (result == 0)
-    return;
-  
-  if (triggered_event.flags & EV_EOF)
-  {
-    [self setStatusClosedByServer];
-    return;
-  }
-  
-  if ((int) triggered_event.ident == socketfd
-      && triggered_event.data > 0)
-  {
-    availableBytes += triggered_event.data;
-  }
+  [self internalWrite];
+  [self internalRead];
 }
 
 - (NSData *) readExactlyLength: (size_t) length
 {
   while (([self isConnected] || [self isConnecting])
-         && [self availableBytes] < length)
+         && availableBytes < length)
     [self poll];
   
   return [self readUpToLength: length];
@@ -251,7 +202,10 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
     [J3SocketException socketErrorWithErrnoForFunction: @"read"];
   }
   
-  availableBytes -= bytesRead;
+  @synchronized (availableBytesLock)
+  {
+    availableBytes -= bytesRead;
+  }
   
   return [NSData dataWithBytesNoCopy: bytes length: bytesRead];
 }
@@ -259,32 +213,19 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (ssize_t) write: (NSData *) data
+- (void) write: (NSData *) data
 {
-  errno = 0;
-  
-  ssize_t bytes_written = full_write (socketfd, [data bytes], (size_t) [data length]);
-  
-  if (bytes_written == -1)
+  @synchronized (dataToWrite)
   {
-    // TODO: is this correct?
-    if (!([self isConnected] || [self isConnecting]))
-      return nil;
-    
-    if (errno == EBADF || errno == EPIPE)
-      [self setStatusClosedByServer];
-    
-    [J3SocketException socketErrorWithErrnoForFunction: @"write"];
+    [dataToWrite addObject: data];
   }
-  
-  return bytes_written;
 }
 
 @end
 
 #pragma mark -
 
-@implementation J3Socket (Private)
+@implementation J3Socket (PrivateRunsInThread)
 
 - (void) connectSocket
 {
@@ -347,12 +288,6 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
     [J3SocketException socketErrorWithErrnoForFunction: @"socket"];
 }
 
-- (void) initializeDescriptorSet: (fd_set *) set
-{
-  FD_ZERO (set);
-  FD_SET (socketfd, set);
-}
-
 - (void) initializeKernelQueue
 {
   errno = 0;
@@ -373,6 +308,110 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   
   if (result == -1)
     [J3SocketException socketErrorWithErrnoForFunction: @"kevent"];
+}
+
+- (void) internalClose
+{
+  if (![self isConnected])
+    return;
+  
+  errno = 0;
+  
+  // Note that looping on EINTR is specifically wrong for close(2), since the
+  // underlying fd will be closed either way; EINTR here tends to indicate that
+  // a final flush was interrupted and we may have lost data.
+  /* int result = */ close (socketfd);
+  socketfd = -1;
+  [self setStatusClosedByClient];
+  
+  /* int result = */ close (kq);
+  
+  // TODO: handle result == -1 in some way. We could throw an exception, return
+  // it up from here, but it should be noted and handled.
+}  
+
+- (void) internalOpen
+{
+  if ([self isConnected] || [self isConnecting])
+    return;
+  
+  @try
+  {
+    [self setStatusConnecting];
+    [self resolveHostname];
+    [self createSocket];
+    [self connectSocket];
+    [self performPostConnectNegotiation];
+    [self setStatusConnected];    
+  }
+  @catch (J3SocketException *socketException)
+  {
+    [self setStatusClosedWithError: [socketException reason]];
+  }
+}
+
+- (void) internalRead
+{
+  struct timespec timeout = {0, 0};
+  struct kevent triggered_event;
+  errno = 0;
+  
+  int result;
+  
+  do
+  {
+    result = kevent (kq, NULL, 0, &triggered_event, 1, &timeout);
+  }
+  while (result == -1 && errno == EINTR);
+  
+  if (result == -1)
+    [J3SocketException socketErrorWithErrnoForFunction: @"kevent"];
+  
+  if (result == 0)
+    return;
+  
+  if (triggered_event.flags & EV_EOF)
+  {
+    [self setStatusClosedByServer];
+    return;
+  }
+  
+  if ((int) triggered_event.ident == socketfd
+      && triggered_event.data > 0)
+  {
+    @synchronized (availableBytesLock)
+    {
+      availableBytes += triggered_event.data;
+    }
+  }
+}
+
+- (void) internalWrite
+{
+  @synchronized (dataToWrite)
+  {
+    if ([dataToWrite count] == 0)
+      return;
+    
+    NSData *data = [[dataToWrite objectAtIndex: 0] retain];
+    [dataToWrite removeObjectAtIndex: 0];
+    
+    errno = 0; 
+    ssize_t bytes_written = full_write (socketfd, [data bytes], (size_t) [data length]);
+    [data release];
+    
+    if (bytes_written == -1)
+    {
+      // TODO: is this correct?
+      if (!([self isConnected] || [self isConnecting]))
+        return;
+      
+      if (errno == EBADF || errno == EPIPE)
+        [self setStatusClosedByServer];
+      
+      [J3SocketException socketErrorWithErrnoForFunction: @"write"];
+    }
+  }
 }
 
 - (void) performPostConnectNegotiation
