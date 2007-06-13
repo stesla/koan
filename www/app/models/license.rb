@@ -24,7 +24,7 @@ class License < ActiveRecord::Base
   end
 
   def digest
-    Digest::SHA1.digest(product_code + owner + issued_date_string)
+    Digest::SHA1.digest(identifier)
   end
 
   def hex_digest
