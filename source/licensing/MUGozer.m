@@ -13,6 +13,7 @@
 #import "MUGozer.h"
 #import "J3Base32.h"
 
+#define GOZER_KEY_LENGTH 130
 #define PUBLIC_KEY \
 { 0x2D, 0x2D, 0x2D, 0x2D, 0x2D, 0x42, 0x45, 0x47, 0x49, 0x4E, 0x20, 0x50, 0x55, \
   0x42, 0x4C, 0x49, 0x43, 0x20, 0x4B, 0x45, 0x59, 0x2D, 0x2D, 0x2D, 0x2D, 0x2D, \
@@ -37,53 +38,64 @@
   0x50, 0x55, 0x42, 0x4C, 0x49, 0x43, 0x20, 0x4B, 0x45, 0x59, 0x2D, 0x2D, 0x2D, \
   0x2D, 0x2D, 0x0A }
 
-#pragma mark Static Function Prototypes
+#pragma mark Prototypes Not Found In Header
 
-extern inline void load_license_from_defaults (void); 
-extern inline BOOL validate_license (void);
+// keymaster is a buffer into which the Base32 decoded key will be read
+//   it must be at least GOZER_KEY_LENGTH bytes long.
+// gatekeeper is a buffer into which the SHA1 hash of the validation information will be placed
+//   it must be at least SHA_DIGEST_LENGTH bytes long.
+extern inline void load_license (NSDictionary *licenseInfo, uint8_t *keymaster, uint8_t *gatekeeper); 
 
+// gozer is a GOZER_KEY_LENGTH sized buffer containing the raw bytes of the key
+// gozarian is a SHA_DIGEST_LENGTH sized buffer containing the SHA1 hash of the
+//   validation information
+extern inline BOOL validate_license (const uint8_t *gozer, const uint8_t *gozarian);
+
+uint8_t gozer_key[GOZER_KEY_LENGTH];
+uint8_t gozer_digest[SHA_DIGEST_LENGTH];
 BOOL license_loaded = NO;
 
 #pragma mark -
-#pragma mark Inline Functions
+#pragma mark Functions Found In Header
 
 inline BOOL import_license_file (NSString *filename)
 {
   license_loaded = NO;
-  NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile: filename];
+
+  NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile: filename]; 
+
+  uint8_t incoming_key[GOZER_KEY_LENGTH];
+  uint8_t incoming_digest[SHA_DIGEST_LENGTH];
+  load_license (dictionary, incoming_key, incoming_digest);
+  if (!validate_license (incoming_key, incoming_digest))
+    return NO;
+  
   [[NSUserDefaults standardUserDefaults] setObject: dictionary forKey: MULicenseInfo];
-  BOOL result = licensed ();
-  if (!result)
-    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: MULicenseInfo];
-  return result;
+  return YES;
 }
 
 inline BOOL licensed (void)
 {
   if (!license_loaded)
-    load_license_from_defaults ();
-  return validate_license ();
+  {
+    load_license ([[NSUserDefaults standardUserDefaults] valueForKey: MULicenseInfo], gozer_key, gozer_digest);
+    license_loaded = YES;
+  }
+  return validate_license (gozer_key, gozer_digest);
 }
 
 #pragma mark -
-#pragma mark Static Functions
+#pragma mark Imlepmentation of Prototypes Not Found In Header
 
-#define GOZER_KEY_LENGTH 130
-uint8_t gozer_key[GOZER_KEY_LENGTH];
-uint8_t gozer_identifier[SHA_DIGEST_LENGTH];
-
-inline void load_license_from_defaults (void)
+inline void load_license (NSDictionary *licenseInfo, uint8_t *keymaster, uint8_t *gatekeeper)
 {
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSDictionary *licenseInfo = [defaults valueForKey: MULicenseInfo];
   NSData *data = [J3Base32 decodeString: [licenseInfo valueForKey: MULicenseKey]];
-  [data getBytes: gozer_key length: GOZER_KEY_LENGTH];
+  [data getBytes: keymaster length: GOZER_KEY_LENGTH];
   NSString *identifier = [NSString stringWithFormat: @"E463E475-DFB2-44D3-9A48-D30395AA0DFD%@%@", [licenseInfo valueForKey: MULicenseOwner], [licenseInfo valueForKey: MULicenseDateCreated]];
-  SHA1 ((unsigned char *) [identifier cStringUsingEncoding: NSASCIIStringEncoding], [identifier lengthOfBytesUsingEncoding: NSASCIIStringEncoding], gozer_identifier);
-  license_loaded = YES;
+  SHA1 ((unsigned char *) [identifier cStringUsingEncoding: NSASCIIStringEncoding], [identifier lengthOfBytesUsingEncoding: NSASCIIStringEncoding], gatekeeper);
 }
 
-inline BOOL validate_license (void)
+inline BOOL validate_license (const uint8_t *gozer, const uint8_t *gozarian)
 {
   uint8_t pem_public_key[] = PUBLIC_KEY;
   BIO *bio = BIO_new_mem_buf (pem_public_key, sizeof (pem_public_key));
@@ -100,11 +112,17 @@ inline BOOL validate_license (void)
       uint8_t *buffer = malloc (RSA_size (public_key));
       @try
       {
-        ssize_t length = RSA_public_decrypt (GOZER_KEY_LENGTH, gozer_key, buffer, public_key, RSA_PKCS1_PADDING);
-        if (length != SHA_DIGEST_LENGTH)
+        ssize_t length = RSA_public_decrypt (GOZER_KEY_LENGTH, gozer, buffer, public_key, RSA_PKCS1_PADDING);
+        if (length < 0)
           return NO;
-        else
-          return strncmp ((char *) gozer_identifier, (char *) buffer, SHA_DIGEST_LENGTH) == 0;
+        if ((size_t) length != SHA_DIGEST_LENGTH)
+          return NO;
+        // Don't use strncmp here since it is probably linked in and easy to hack
+        for (int i = 0; i < length; i++)
+        {
+          if (gozarian[i] != buffer[i])
+            return NO;
+        }
       }
       @finally
       {
@@ -120,5 +138,5 @@ inline BOOL validate_license (void)
   {
     BIO_free(bio);
   }
-  return NO;
+  return YES;
 }

@@ -332,7 +332,7 @@
 
 - (void) importKoanLicenseWithFile: (NSString *) fileName
 {
-  if ([[NSUserDefaults standardUserDefaults] valueForKey: MULicenseInfo] != nil)
+  if (licensed ())
   {
     int choice = NSRunAlertPanel (@"Are you sure you want to change your licensing?",
                                   @"Koan is already unlocked, proceeding will license this copy to a different user.",
@@ -350,7 +350,7 @@
   }
   else
   {
-    NSRunAlertPanel (@"Unable to import license.", @"Please verify that it is a valid license.  This copy of Koan is unregistered.", _(MULOK), nil, nil);
+    NSRunAlertPanel (@"Unable to import license.", @"Please verify that it is a valid license.", _(MULOK), nil, nil);
   }
   [self rebuildConnectionsMenuWithAutoconnect: NO];
 }
