@@ -79,6 +79,12 @@ NSString *J3ConnectionErrorMessageKey = @"J3ConnectionErrorMessageKey";
   delegate = object;
 }
 
+@end
+
+#pragma mark -
+
+@implementation J3Connection (Protected)
+
 - (void) setStatusConnected
 {
   status = J3ConnectionStatusConnected;

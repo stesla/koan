@@ -30,7 +30,10 @@ typedef enum J3ConnectionStatus
 - (BOOL) isConnecting;
 - (void) open;
 
-// These are intended to be called by descendants
+@end
+
+@interface J3Connection (Protected)
+
 - (void) setStatusConnected;
 - (void) setStatusConnecting;
 - (void) setStatusClosedByClient;
