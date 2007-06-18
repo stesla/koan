@@ -12,12 +12,13 @@
 #import "J3Socket.h"
 #import "J3WriteBuffer.h"
 #import "J3TelnetEngine.h"
+#import "J3ConnectionDelegate.h"
 
 @class J3SocketFactory;
 @protocol J3TelnetConnectionDelegate;
 @protocol J3TelnetEngineDelegate;
 
-@interface J3TelnetConnection : NSObject <J3SocketDelegate, J3TelnetEngineDelegate>
+@interface J3TelnetConnection : NSObject <J3TelnetEngineDelegate, J3ConnectionDelegate>
 {
   J3SocketFactory *socketFactory;
   NSString *hostname;

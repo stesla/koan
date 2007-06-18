@@ -16,6 +16,8 @@
 #include <sys/time.h>
 #include <unistd.h>
 
+#include "J3ConnectionDelegate.h"
+
 #pragma mark -
 #pragma mark C Function Prototypes
 
@@ -35,6 +37,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 - (void) internalRead;
 - (void) internalWrite;
 - (void) performPostConnectNegotiation;
+- (void) removeNotificationFromDelegate: (NSString *) name selector: (SEL) selector andAddToObject: (id) object;
 - (void) resolveHostname;
 - (void) setStatusConnected;
 - (void) setStatusConnecting;
@@ -138,8 +141,27 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   [self internalOpen];
 }
 
-- (void) setDelegate: (NSObject <J3SocketDelegate> *) object
+- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object
 {
+  if (delegate == object)
+    return;
+  
+  [self removeNotificationFromDelegate: J3ConnectionDidConnectNotification 
+                              selector: @selector(connectionDidConnect:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionIsConnectingNotification 
+                              selector: @selector(connectionIsConnecting:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionWasClosedByClientNotification 
+                              selector: @selector(connectionWasClosedByClient:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionWasClosedByServerNotification 
+                              selector: @selector(connectionWasClosedByServer:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionWasClosedWithErrorNotification 
+                              selector: @selector(connectionWasClosedWithError:) 
+                        andAddToObject: object];
+  
   delegate = object;
 }
 
@@ -419,6 +441,13 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   // Override in subclass to do something after connecting but before changing status
 }
 
+- (void) removeNotificationFromDelegate: (NSString *) name selector: (SEL) selector andAddToObject: (id) object
+{
+  NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+  [notificationCenter addObserver: object selector: selector name: name object: self];
+  [notificationCenter removeObserver: delegate name: name  object: self];
+}
+
 - (void) resolveHostname
 {
   if (server)
@@ -448,36 +477,37 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 - (void) setStatusConnected
 {
   status = J3SocketStatusConnected;
-  if (delegate && [delegate respondsToSelector: @selector (socketIsConnected:)])
-    [delegate socketIsConnected: self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionDidConnectNotification
+                                                      object: self];
 }
 
 - (void) setStatusConnecting
 {
   status = J3SocketStatusConnecting;
-  if (delegate && [delegate respondsToSelector: @selector (socketIsConnecting:)])
-    [delegate socketIsConnecting: self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionIsConnectingNotification
+                                                      object: self];
 }
 
 - (void) setStatusClosedByClient
 {
   status = J3SocketStatusClosed;
-  if (delegate && [delegate respondsToSelector: @selector (socketWasClosedByClient:)])
-    [delegate socketWasClosedByClient: self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByClientNotification
+                                                      object: self];
 }
 
 - (void) setStatusClosedByServer
 {
   status = J3SocketStatusClosed;
-  if (delegate && [delegate respondsToSelector: @selector (socketWasClosedByServer:)])
-    [delegate socketWasClosedByServer: self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByServerNotification
+                                                      object: self];
 }
 
 - (void) setStatusClosedWithError: (NSString *) error
 {
   status = J3SocketStatusClosed;
-  if (delegate && [delegate respondsToSelector: @selector (socketWasClosed:withError:)])
-    [delegate socketWasClosed: self withError: error];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedWithErrorNotification
+                                                      object: self
+                                                    userInfo: [NSDictionary dictionaryWithObjectsAndKeys: error, J3ConnectionErrorMessageKey, nil]];
 }
 
 @end

@@ -110,56 +110,42 @@
 #pragma mark -
 #pragma mark J3ConnectionDelegate protocol
 
-- (void) socketIsConnecting: (J3Socket *) possibleSocket
+- (void) connectionIsConnecting: (NSNotification *) notification
 {
-  if (![self isUsingSocket: possibleSocket])
-    return;
-  
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnecting:)])
     [delegate telnetConnectionIsConnecting: self];
 }
 
-- (void) socketIsConnected: (J3Socket *) possibleSocket
+- (void) connectionDidConnect: (NSNotification *) notification
 {
-  if (![self isUsingSocket: possibleSocket])
-    return;
-  
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnected:)])
     [delegate telnetConnectionIsConnected: self];
 }
 
-- (void) socketWasClosedByClient: (J3Socket *) possibleSocket
+- (void) connectionWasClosedByClient: (NSNotification *) notification
 {
-  if (![self isUsingSocket: possibleSocket])
-    return;
-  
   [self cleanUpPollTimer];
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByClient:)])
     [delegate telnetConnectionWasClosedByClient: self];
 }
 
-- (void) socketWasClosedByServer: (J3Socket *) possibleSocket
+- (void) connectionWasClosedByServer: (NSNotification *) notification
 {
-  if (![self isUsingSocket: possibleSocket])
-    return;
-  
   [self cleanUpPollTimer];
   
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByServer:)])
     [delegate telnetConnectionWasClosedByServer: self];
 }
 
-- (void) socketWasClosed: (J3Socket *) possibleSocket withError: (NSString *) errorMessage
+- (void) connectionWasClosedWithError: (NSNotification *) notification
 {
-  if (![self isUsingSocket: possibleSocket])
-    return;
-  
   [self cleanUpPollTimer];
   
+  NSString *errorMessage = [[notification userInfo] valueForKey: J3ConnectionErrorMessageKey];
   if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosed:withError:)])
-    [delegate telnetConnectionWasClosed: self withError: errorMessage];
-}
+    [delegate telnetConnectionWasClosed: self withError: errorMessage]; 
+}  
 
 #pragma mark -
 #pragma mark J3TelnetEngineDelegate

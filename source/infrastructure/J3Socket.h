@@ -31,7 +31,7 @@ typedef enum J3SocketStatus
 
 #pragma mark -
 
-@protocol J3SocketDelegate;
+@protocol J3ConnectionDelegate;
 
 @interface J3Socket : NSObject <J3ByteDestination, J3ByteSource>
 {
@@ -43,7 +43,7 @@ typedef enum J3SocketStatus
   unsigned availableBytes;
   BOOL hasError;
   J3SocketStatus status;
-  NSObject <J3SocketDelegate> *delegate;
+  NSObject <J3ConnectionDelegate> *delegate;
   NSMutableArray *dataToWrite;
   NSObject *availableBytesLock;
 }
@@ -57,19 +57,7 @@ typedef enum J3SocketStatus
 - (BOOL) isConnected;
 - (BOOL) isConnecting;
 - (void) open;
-- (void) setDelegate: (NSObject <J3SocketDelegate> *) object;
+- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object;
 - (J3SocketStatus) status;
-
-@end
-
-#pragma mark -
-
-@protocol J3SocketDelegate
-
-- (void) socketIsConnecting: (J3Socket *) socket;
-- (void) socketIsConnected: (J3Socket *) socket;
-- (void) socketWasClosedByClient: (J3Socket *) socket;
-- (void) socketWasClosedByServer: (J3Socket *) socket;
-- (void) socketWasClosed: (J3Socket *) connection withError: (NSString *) errorMessage;
 
 @end
