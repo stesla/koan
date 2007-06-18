@@ -100,10 +100,9 @@
 #pragma mark -
 #pragma mark J3ByteDestination protocol
 
-- (ssize_t) write: (NSData *) data
+- (void) write: (NSData *) data
 {
   [output appendData: data];
-  return (ssize_t) [data length];
 }
 
 @end
