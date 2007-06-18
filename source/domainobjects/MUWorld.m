@@ -202,7 +202,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate
 {
   return [J3TelnetConnection telnetWithHostname: [self hostname] port: [[self port] intValue] delegate: delegate];
 }

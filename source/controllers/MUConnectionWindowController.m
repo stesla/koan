@@ -324,22 +324,16 @@ enum MUSearchDirections
 }
 
 #pragma mark -
-#pragma mark J3TelnetConnectionDelegate protocol
+#pragma mark J3ConnectionDelegate protocol
 
-- (void) telnetConnectionIsConnecting: (J3TelnetConnection *) telnet
+- (void) connectionDidConnect: (NSNotification *) notification
 {
-  if (![self isUsingTelnet: telnet])
-    return;
-  
   [self displayString: _(MULConnectionOpening)];
   [self displayString: @"\n"];
 }
 
-- (void) telnetConnectionIsConnected: (J3TelnetConnection *) telnet
+- (void) connectionIsConnecting: (NSNotification *) notification
 {
-  if (![self isUsingTelnet: telnet])
-    return;
-  
   [self displayString: _(MULConnectionOpen)];
   [self displayString: @"\n"];
   [MUGrowlService connectionOpenedForTitle: [profile windowTitle]];
@@ -348,33 +342,25 @@ enum MUSearchDirections
     [telnetConnection writeLine: [profile loginString]];
 }
 
-- (void) telnetConnectionWasClosedByClient: (J3TelnetConnection *) telnet
+- (void) connectionWasClosedByClient: (NSNotification *) notification
 {
-  if (![self isUsingTelnet: telnet])
-    return;
-  
   [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosed)];
   [self displayString: @"\n"];
   [MUGrowlService connectionClosedForTitle: [profile windowTitle]];
 }
 
-- (void) telnetConnectionWasClosedByServer: (J3TelnetConnection *) telnet
+- (void) connectionWasClosedByServer: (NSNotification *) notification
 {
-  if (![self isUsingTelnet: telnet])
-    return;
-  
   [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosedByServer)];
   [self displayString: @"\n"];
   [MUGrowlService connectionClosedByServerForTitle: [profile windowTitle]];
 }
 
-- (void) telnetConnectionWasClosed: (J3TelnetConnection *) telnet withError: (NSString *) errorMessage
+- (void) connectionWasClosedWithError: (NSNotification *) notification
 {
-  if (![self isUsingTelnet: telnet])
-    return;
-  
+  NSString *errorMessage = [[notification userInfo] valueForKey: J3ConnectionErrorMessageKey];
   [self cleanUpPingTimer];
   [self displayString: [NSString stringWithFormat: _(MULConnectionClosedByError), errorMessage]];
   [self displayString: @"\n"];

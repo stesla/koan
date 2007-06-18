@@ -381,7 +381,7 @@
   return (player ? [player windowTitle] : [world windowTitle]);
 }
 
-- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate
 {
   return [world newTelnetConnectionWithDelegate: delegate];
 }

@@ -16,6 +16,7 @@
 - (BOOL) isUsingSocket: (J3Socket *) possibleSocket;
 - (void) poll;
 - (void) schedulePollTimer;
+- (void) removeNotificationFromDelegate: (NSString *) name selector: (SEL) selector andAddToObject: (id) object;
 - (void) writeDataWithPreprocessing: (NSData *) data;
 
 @end
@@ -27,14 +28,14 @@
 + (id) telnetWithSocketFactory: (J3SocketFactory *) factory
                       hostname: (NSString *) hostname
                           port: (int) port
-                      delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+                      delegate: (NSObject <J3ConnectionDelegate> *) delegate
 {
   return [[[self alloc] initWithSocketFactory: factory hostname: hostname port: port delegate: delegate] autorelease];
 }
 
 + (id) telnetWithHostname: (NSString *) hostname
                      port: (int) port
-                 delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
+                 delegate: (NSObject <J3ConnectionDelegate> *) delegate
 {
   return [self telnetWithSocketFactory: [J3SocketFactory defaultFactory] hostname: hostname port: port delegate: delegate];
 }
@@ -42,7 +43,7 @@
 - (id) initWithSocketFactory: (J3SocketFactory *) factory
                     hostname: (NSString *) newHostname
                         port: (int) newPort
-                    delegate: (NSObject <J3TelnetConnectionDelegate> *) newDelegate;
+                    delegate: (NSObject <J3ConnectionDelegate> *) newDelegate;
 {
   if (![super init])
     return nil;
@@ -94,8 +95,27 @@
   [socket open];
 }
 
-- (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object
+- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object
 {
+  if (delegate == object)
+    return;
+  
+  [self removeNotificationFromDelegate: J3ConnectionDidConnectNotification 
+                              selector: @selector(connectionDidConnect:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionIsConnectingNotification 
+                              selector: @selector(connectionIsConnecting:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionWasClosedByClientNotification 
+                              selector: @selector(connectionWasClosedByClient:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionWasClosedByServerNotification 
+                              selector: @selector(connectionWasClosedByServer:) 
+                        andAddToObject: object];
+  [self removeNotificationFromDelegate: J3ConnectionWasClosedWithErrorNotification 
+                              selector: @selector(connectionWasClosedWithError:) 
+                        andAddToObject: object];
+  
   delegate = object;
 }
 
@@ -112,39 +132,36 @@
 
 - (void) connectionIsConnecting: (NSNotification *) notification
 {
-  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnecting:)])
-    [delegate telnetConnectionIsConnecting: self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionDidConnectNotification
+                                                      object: self];
 }
 
 - (void) connectionDidConnect: (NSNotification *) notification
 {
-  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionIsConnected:)])
-    [delegate telnetConnectionIsConnected: self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionIsConnectingNotification
+                                                      object: self];
 }
 
 - (void) connectionWasClosedByClient: (NSNotification *) notification
 {
-  [self cleanUpPollTimer];
-  
-  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByClient:)])
-    [delegate telnetConnectionWasClosedByClient: self];
+  [self cleanUpPollTimer]; 
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByClientNotification
+                                                      object: self];
 }
 
 - (void) connectionWasClosedByServer: (NSNotification *) notification
 {
   [self cleanUpPollTimer];
-  
-  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosedByServer:)])
-    [delegate telnetConnectionWasClosedByServer: self];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByServerNotification
+                                                      object: self];
 }
 
 - (void) connectionWasClosedWithError: (NSNotification *) notification
 {
   [self cleanUpPollTimer];
-  
-  NSString *errorMessage = [[notification userInfo] valueForKey: J3ConnectionErrorMessageKey];
-  if (delegate && [delegate respondsToSelector: @selector (telnetConnectionWasClosed:withError:)])
-    [delegate telnetConnectionWasClosed: self withError: errorMessage]; 
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedWithErrorNotification
+                                                      object: self
+                                                    userInfo: [notification userInfo]];
 }  
 
 #pragma mark -
@@ -207,6 +224,13 @@
     [engine parseData: [socket readUpToLength: [socket availableBytes]]];
   else
     [inputBuffer interpretBufferAsString];
+}
+
+- (void) removeNotificationFromDelegate: (NSString *) name selector: (SEL) selector andAddToObject: (id) object
+{
+  NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+  [notificationCenter addObserver: object selector: selector name: name object: self];
+  [notificationCenter removeObserver: delegate name: name  object: self];
 }
 
 - (void) schedulePollTimer

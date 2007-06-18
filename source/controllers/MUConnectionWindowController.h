@@ -12,7 +12,7 @@
 #import "J3HistoryRing.h"
 #import "MUProfile.h"
 
-@interface MUConnectionWindowController : NSWindowController <J3TelnetConnectionDelegate>
+@interface MUConnectionWindowController : NSWindowController <J3ConnectionDelegate>
 {
   IBOutlet MUDisplayTextView *receivedTextView;
   IBOutlet NSTextView *inputView;

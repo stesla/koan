@@ -15,7 +15,6 @@
 #import "J3ConnectionDelegate.h"
 
 @class J3SocketFactory;
-@protocol J3TelnetConnectionDelegate;
 @protocol J3TelnetEngineDelegate;
 
 @interface J3TelnetConnection : NSObject <J3TelnetEngineDelegate, J3ConnectionDelegate>
@@ -27,39 +26,27 @@
   J3ReadBuffer *inputBuffer;
   J3TelnetEngine *engine;
   NSTimer *pollTimer;
-  NSObject <J3TelnetConnectionDelegate> *delegate;
+  NSObject <J3ConnectionDelegate> *delegate;
 }
 
 + (id) telnetWithSocketFactory: (J3SocketFactory *) factory
                       hostname: (NSString *) hostname
                           port: (int) port
-                      delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
+                      delegate: (NSObject <J3ConnectionDelegate> *) delegate;
 + (id) telnetWithHostname: (NSString *) hostname
                      port: (int) port
-                 delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
+                 delegate: (NSObject <J3ConnectionDelegate> *) delegate;
 
 - (id) initWithSocketFactory: (J3SocketFactory *) factory
                     hostname: (NSString *) hostname
                         port: (int) port
-                    delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
+                    delegate: (NSObject <J3ConnectionDelegate> *) delegate;
 
 - (void) close;
 - (BOOL) isConnected;
 - (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
 - (void) open;
-- (void) setDelegate: (NSObject <J3TelnetConnectionDelegate> *) object;
+- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object;
 - (void) writeLine: (NSString *) line;
-
-@end
-
-#pragma mark -
-
-@protocol J3TelnetConnectionDelegate
-
-- (void) telnetConnectionIsConnecting: (J3TelnetConnection *) connection;
-- (void) telnetConnectionIsConnected: (J3TelnetConnection *) connection;
-- (void) telnetConnectionWasClosedByClient: (J3TelnetConnection *) connection;
-- (void) telnetConnectionWasClosedByServer: (J3TelnetConnection *) connection;
-- (void) telnetConnectionWasClosed: (J3TelnetConnection *) connection withError: (NSString *) errorMessage;
 
 @end

@@ -5,7 +5,6 @@
 //
 
 @protocol J3LineBufferDelegate;
-@protocol J3TelnetConnectionDelegate;
 
 #import <Cocoa/Cocoa.h>
 #import "J3Formatting.h"
@@ -86,6 +85,6 @@
 - (NSString *) uniqueIdentifier;
 - (NSString *) windowTitle;
 
-- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate;
 
 @end
