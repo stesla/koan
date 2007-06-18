@@ -168,7 +168,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
       return nil;
     
     if (errno == EBADF || errno == EPIPE)
-      [self setStatusClosedByServer];
+      [self performSelectorOnMainThread: @selector(setStatusClosedByServer) withObject: nil waitUntilDone: YES];
     
     [J3SocketException socketErrorWithErrnoForFunction: @"read"];
   }
@@ -293,7 +293,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   // a final flush was interrupted and we may have lost data.
   /* int result = */ close (socketfd);
   socketfd = -1;
-  [self setStatusClosedByClient];
+  [self performSelectorOnMainThread: @selector(setStatusClosedByClient) withObject: nil waitUntilDone: YES];
   
   /* int result = */ close (kq);
   
@@ -308,16 +308,16 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   
   @try
   {
-    [self setStatusConnecting];
+    [self performSelectorOnMainThread: @selector(setStatusConnecting) withObject: nil waitUntilDone: YES];
     [self resolveHostname];
     [self createSocket];
     [self connectSocket];
     [self performPostConnectNegotiation];
-    [self setStatusConnected];    
+    [self performSelectorOnMainThread: @selector(setStatusConnected) withObject: nil waitUntilDone: YES];
   }
   @catch (J3SocketException *socketException)
   {
-    [self setStatusClosedWithError: [socketException reason]];
+    [self performSelectorOnMainThread: @selector(setStatusClosedWithError:) withObject: [socketException reason] waitUntilDone: YES];
   }
 }
 
@@ -343,7 +343,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   
   if (triggered_event.flags & EV_EOF)
   {
-    [self setStatusClosedByServer];
+    [self performSelectorOnMainThread: @selector(setStatusClosedByServer) withObject: nil waitUntilDone: YES];
     return;
   }
   
@@ -378,7 +378,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
         return;
       
       if (errno == EBADF || errno == EPIPE)
-        [self setStatusClosedByServer];
+        [self performSelectorOnMainThread: @selector(setStatusClosedByServer) withObject: nil waitUntilDone: YES];
       
       [J3SocketException socketErrorWithErrnoForFunction: @"write"];
     }
