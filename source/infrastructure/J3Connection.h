@@ -8,12 +8,27 @@
 
 @protocol J3ConnectionDelegate;
 
+typedef enum J3ConnectionStatus
+{
+  J3ConnectionStatusNotConnected,
+  J3ConnectionStatusConnecting,
+  J3ConnectionStatusConnected,
+  J3ConnectionStatusClosed
+} J3ConnectionStatus;
+
 @interface J3Connection : NSObject
 {
   id <J3ConnectionDelegate> delegate;
+  J3ConnectionStatus status;
 }
 
 - (void) setDelegate: (id <J3ConnectionDelegate>) object;
+
+- (void) close;
+- (BOOL) isClosed;
+- (BOOL) isConnected;
+- (BOOL) isConnecting;
+- (void) open;
 
 // These are intended to be called by descendants
 - (void) setStatusConnected;

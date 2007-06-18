@@ -41,10 +41,7 @@
                         port: (int) port
                     delegate: (NSObject <J3ConnectionDelegate> *) delegate;
 
-- (void) close;
-- (BOOL) isConnected;
 - (BOOL) hasInputBuffer: (NSObject <J3ReadBuffer> *) buffer;
-- (void) open;
 - (void) writeLine: (NSString *) line;
 
 @end

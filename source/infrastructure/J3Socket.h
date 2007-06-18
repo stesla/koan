@@ -13,14 +13,6 @@
 
 NSString *J3SocketError;
 
-typedef enum J3SocketStatus
-{
-  J3SocketStatusNotConnected,
-  J3SocketStatusConnecting,
-  J3SocketStatusConnected,
-  J3SocketStatusClosed
-} J3SocketStatus;
-
 #pragma mark -
 
 @interface J3SocketException : NSException
@@ -41,7 +33,6 @@ typedef enum J3SocketStatus
   struct hostent *server;
   unsigned availableBytes;
   BOOL hasError;
-  J3SocketStatus status;
   NSMutableArray *dataToWrite;
   NSObject *availableBytesLock;
 }
@@ -49,12 +40,5 @@ typedef enum J3SocketStatus
 + (id) socketWithHostname: (NSString *) hostname port: (int) port;
 
 - (id) initWithHostname: (NSString *) hostname port: (int) port;
-
-- (void) close;
-- (BOOL) isClosed;
-- (BOOL) isConnected;
-- (BOOL) isConnecting;
-- (void) open;
-- (J3SocketStatus) status;
 
 @end

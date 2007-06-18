@@ -24,6 +24,37 @@ NSString *J3ConnectionErrorMessageKey = @"J3ConnectionErrorMessageKey";
 
 @implementation J3Connection
 
+- (void) close
+{
+}
+
+- (id) init
+{
+  if (![super init])
+    return nil;
+  status = J3ConnectionStatusNotConnected;
+  return self;
+}
+
+- (BOOL) isClosed
+{
+  return status == J3ConnectionStatusClosed;
+}
+
+- (BOOL) isConnected
+{
+  return status == J3ConnectionStatusConnected;
+}
+
+- (BOOL) isConnecting
+{
+  return status == J3ConnectionStatusConnecting;
+}
+
+- (void) open
+{
+}
+
 - (void) setDelegate: (id <J3ConnectionDelegate>) object
 {
   if (delegate == object)
@@ -50,30 +81,35 @@ NSString *J3ConnectionErrorMessageKey = @"J3ConnectionErrorMessageKey";
 
 - (void) setStatusConnected
 {
+  status = J3ConnectionStatusConnected;
   [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionDidConnectNotification
                                                       object: self];
 }
 
 - (void) setStatusConnecting
 {
+  status = J3ConnectionStatusConnecting;
   [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionIsConnectingNotification
                                                       object: self];
 }
 
 - (void) setStatusClosedByClient
 {
+  status = J3ConnectionStatusClosed;
   [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByClientNotification
                                                       object: self];
 }
 
 - (void) setStatusClosedByServer
 {
+  status = J3ConnectionStatusClosed;
   [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByServerNotification
                                                       object: self];
 }
 
 - (void) setStatusClosedWithError: (NSString *) error
 {
+  status = J3ConnectionStatusClosed;
   [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedWithErrorNotification
                                                       object: self
                                                     userInfo: [NSDictionary dictionaryWithObjectsAndKeys: error, J3ConnectionErrorMessageKey, nil]];

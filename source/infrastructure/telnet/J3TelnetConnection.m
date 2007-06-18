@@ -83,11 +83,6 @@
   return inputBuffer == buffer;
 }
 
-- (BOOL) isConnected
-{
-  return [socket isConnected];
-}
-
 - (void) open
 {
   [self initializeSocket];

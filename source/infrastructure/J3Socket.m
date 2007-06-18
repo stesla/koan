@@ -86,7 +86,6 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   [self at: &hostname put: [newHostname retain]];
   socketfd = -1;
   port = newPort;
-  status = J3SocketStatusNotConnected;
   server = NULL;
   dataToWrite = [[NSMutableArray alloc] init];
   availableBytesLock = [[NSObject alloc] init];
@@ -114,30 +113,10 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   [self internalClose];
 }
 
-- (BOOL) isClosed
-{
-  return status == J3SocketStatusClosed;
-}
-
-- (BOOL) isConnected
-{
-  return status == J3SocketStatusConnected;
-}
-
-- (BOOL) isConnecting
-{
-  return status == J3SocketStatusConnecting;
-}
-
 - (void) open
 {
   // This is where we'll launch the thread
   [self internalOpen];
-}
-
-- (J3SocketStatus) status
-{
-  return status;
 }
 
 #pragma mark -
@@ -435,36 +414,6 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
       [J3SocketException socketErrorWithFormat: @"%s", hstrerror (h_errno)];
     }
   }
-}
-
-- (void) setStatusConnected
-{
-  status = J3SocketStatusConnected;
-  [super setStatusConnected];
-}
-
-- (void) setStatusConnecting
-{
-  status = J3SocketStatusConnecting;
-  [super setStatusConnecting];
-}
-
-- (void) setStatusClosedByClient
-{
-  status = J3SocketStatusClosed;
-  [super setStatusClosedByClient];
-}
-
-- (void) setStatusClosedByServer
-{
-  status = J3SocketStatusClosed;
-  [super setStatusClosedByServer];
-}
-
-- (void) setStatusClosedWithError: (NSString *) error
-{
-  status = J3SocketStatusClosed;
-  [super setStatusClosedWithError: error];
 }
 
 @end
