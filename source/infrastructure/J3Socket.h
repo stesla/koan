@@ -9,6 +9,7 @@
 
 #import "J3ByteDestination.h"
 #import "J3ByteSource.h"
+#import "J3Connection.h"
 
 NSString *J3SocketError;
 
@@ -31,9 +32,7 @@ typedef enum J3SocketStatus
 
 #pragma mark -
 
-@protocol J3ConnectionDelegate;
-
-@interface J3Socket : NSObject <J3ByteDestination, J3ByteSource>
+@interface J3Socket : J3Connection <J3ByteDestination, J3ByteSource>
 {
   NSString *hostname;
   int port;
@@ -43,7 +42,6 @@ typedef enum J3SocketStatus
   unsigned availableBytes;
   BOOL hasError;
   J3SocketStatus status;
-  NSObject <J3ConnectionDelegate> *delegate;
   NSMutableArray *dataToWrite;
   NSObject *availableBytesLock;
 }
@@ -57,7 +55,6 @@ typedef enum J3SocketStatus
 - (BOOL) isConnected;
 - (BOOL) isConnecting;
 - (void) open;
-- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object;
 - (J3SocketStatus) status;
 
 @end

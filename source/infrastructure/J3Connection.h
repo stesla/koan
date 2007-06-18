@@ -1,11 +1,28 @@
 //
-// J3ConnectionDelegate.h
+// J3Connection.h
 //
 // Copyright (c) 2007 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
 
+@protocol J3ConnectionDelegate;
+
+@interface J3Connection : NSObject
+{
+  id <J3ConnectionDelegate> delegate;
+}
+
+- (void) setDelegate: (id <J3ConnectionDelegate>) object;
+
+// These are intended to be called by descendants
+- (void) setStatusConnected;
+- (void) setStatusConnecting;
+- (void) setStatusClosedByClient;
+- (void) setStatusClosedByServer;
+- (void) setStatusClosedWithError: (NSString *) error;
+
+@end
 
 extern NSString *J3ConnectionDidConnectNotification;
 extern NSString *J3ConnectionIsConnectingNotification;

@@ -95,30 +95,6 @@
   [socket open];
 }
 
-- (void) setDelegate: (NSObject <J3ConnectionDelegate> *) object
-{
-  if (delegate == object)
-    return;
-  
-  [self removeNotificationFromDelegate: J3ConnectionDidConnectNotification 
-                              selector: @selector(connectionDidConnect:) 
-                        andAddToObject: object];
-  [self removeNotificationFromDelegate: J3ConnectionIsConnectingNotification 
-                              selector: @selector(connectionIsConnecting:) 
-                        andAddToObject: object];
-  [self removeNotificationFromDelegate: J3ConnectionWasClosedByClientNotification 
-                              selector: @selector(connectionWasClosedByClient:) 
-                        andAddToObject: object];
-  [self removeNotificationFromDelegate: J3ConnectionWasClosedByServerNotification 
-                              selector: @selector(connectionWasClosedByServer:) 
-                        andAddToObject: object];
-  [self removeNotificationFromDelegate: J3ConnectionWasClosedWithErrorNotification 
-                              selector: @selector(connectionWasClosedWithError:) 
-                        andAddToObject: object];
-  
-  delegate = object;
-}
-
 - (void) writeLine: (NSString *) line
 {
   NSString *lineWithLineEnding = [NSString stringWithFormat: @"%@\r\n",line];
@@ -132,36 +108,30 @@
 
 - (void) connectionIsConnecting: (NSNotification *) notification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionDidConnectNotification
-                                                      object: self];
+  [self setStatusConnecting];
 }
 
 - (void) connectionDidConnect: (NSNotification *) notification
 {
-  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionIsConnectingNotification
-                                                      object: self];
+  [self setStatusConnected];
 }
 
 - (void) connectionWasClosedByClient: (NSNotification *) notification
 {
   [self cleanUpPollTimer]; 
-  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByClientNotification
-                                                      object: self];
+  [self setStatusClosedByClient];
 }
 
 - (void) connectionWasClosedByServer: (NSNotification *) notification
 {
   [self cleanUpPollTimer];
-  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedByServerNotification
-                                                      object: self];
+  [self setStatusClosedByServer];
 }
 
 - (void) connectionWasClosedWithError: (NSNotification *) notification
 {
   [self cleanUpPollTimer];
-  [[NSNotificationCenter defaultCenter] postNotificationName: J3ConnectionWasClosedWithErrorNotification
-                                                      object: self
-                                                    userInfo: [notification userInfo]];
+  [self setStatusClosedWithError: [[notification userInfo] valueForKey: J3ConnectionErrorMessageKey]];
 }  
 
 #pragma mark -
