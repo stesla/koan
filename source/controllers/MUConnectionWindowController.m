@@ -328,18 +328,18 @@ enum MUSearchDirections
 
 - (void) connectionDidConnect: (NSNotification *) notification
 {
-  [self displayString: _(MULConnectionOpening)];
-  [self displayString: @"\n"];
-}
-
-- (void) connectionIsConnecting: (NSNotification *) notification
-{
   [self displayString: _(MULConnectionOpen)];
   [self displayString: @"\n"];
   [MUGrowlService connectionOpenedForTitle: [profile windowTitle]];
   
   if ([profile hasLoginInformation])
     [telnetConnection writeLine: [profile loginString]];
+}
+
+- (void) connectionIsConnecting: (NSNotification *) notification
+{
+  [self displayString: _(MULConnectionOpening)];
+  [self displayString: @"\n"];
 }
 
 - (void) connectionWasClosedByClient: (NSNotification *) notification
