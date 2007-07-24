@@ -34,6 +34,7 @@ NSString *J3SocketError;
   unsigned availableBytes;
   BOOL hasError;
   NSMutableArray *dataToWrite;
+  NSObject *dataToWriteLock;
   NSObject *availableBytesLock;
 }
 

@@ -88,6 +88,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   port = newPort;
   server = NULL;
   dataToWrite = [[NSMutableArray alloc] init];
+  dataToWriteLock = [[NSObject alloc] init];
   availableBytesLock = [[NSObject alloc] init];
   
   return self;
@@ -98,6 +99,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   [self close];
   
   [availableBytesLock release];
+  [dataToWriteLock release];
   [dataToWrite release];
   delegate = nil;
   [hostname release];
@@ -186,9 +188,9 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) write: (NSData *) data
 {
-  @synchronized (dataToWrite)
+  @synchronized (dataToWriteLock)
   {
-    [dataToWrite addObject: data];
+    [dataToWrite insertObject: data atIndex: 0];
   }
 }
 
@@ -359,30 +361,31 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) internalWrite
 {
-  @synchronized (dataToWrite)
+  NSData *data;
+  @synchronized (dataToWriteLock)
   {
-    if ([dataToWrite count] == 0)
+    data = [[dataToWrite lastObject] retain];
+    if (data == nil)
+      return;    
+    [dataToWrite removeLastObject];
+  }
+    
+  errno = 0; 
+  ssize_t bytes_written = full_write (socketfd, [data bytes], (size_t) [data length]);
+  [data release];
+  
+  if (bytes_written == -1)
+  {
+    // TODO: is this correct?
+    if (!([self isConnected] || [self isConnecting]))
       return;
     
-    NSData *data = [[dataToWrite objectAtIndex: 0] retain];
-    [dataToWrite removeObjectAtIndex: 0];
+    if (errno == EBADF || errno == EPIPE)
+      [self performSelectorOnMainThread: @selector(setStatusClosedByServer) withObject: nil waitUntilDone: YES];
     
-    errno = 0; 
-    ssize_t bytes_written = full_write (socketfd, [data bytes], (size_t) [data length]);
-    [data release];
-    
-    if (bytes_written == -1)
-    {
-      // TODO: is this correct?
-      if (!([self isConnected] || [self isConnecting]))
-        return;
-      
-      if (errno == EBADF || errno == EPIPE)
-        [self performSelectorOnMainThread: @selector(setStatusClosedByServer) withObject: nil waitUntilDone: YES];
-      
-      [J3SocketException socketErrorWithErrnoForFunction: @"write"];
-    }
+    [J3SocketException socketErrorWithErrnoForFunction: @"write"];
   }
+
 }
 
 - (void) performPostConnectNegotiation
