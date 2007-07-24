@@ -44,6 +44,8 @@
 - (void) parseReplyFromSource: (id <J3ByteSource>) source
 {
   NSData *reply = [source readExactlyLength: 2];
+  if ([reply length] != 2)
+    return;
   authenticated = ((uint8_t *) [reply bytes])[1] == 0 ? YES : NO;
 }
 

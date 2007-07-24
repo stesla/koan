@@ -41,6 +41,8 @@
 - (void) parseReplyFromByteSource: (id <J3ByteSource>) source
 {
   NSData *data = [source readExactlyLength: 4];
+  if ([data length] != 4)
+    return;
   const uint8_t *buffer = (uint8_t *) [data bytes];
   switch (buffer[3])
   {
