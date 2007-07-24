@@ -38,6 +38,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 - (void) internalWrite;
 - (void) performPostConnectNegotiation;
 - (void) resolveHostname;
+- (void) runThread: (id) object;
 
 @end
 
@@ -117,8 +118,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) open
 {
-  // This is where we'll launch the thread
-  [self internalOpen];
+  [NSThread detachNewThreadSelector: @selector (runThread:) toTarget: self withObject: nil];
 }
 
 #pragma mark -
@@ -416,6 +416,19 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
       server = NULL;
       [J3SocketException socketErrorWithFormat: @"%s", hstrerror (h_errno)];
     }
+  }
+}
+
+- (void) runThread: (id) object
+{
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  @try
+  {
+    [self internalOpen];
+  }
+  @finally
+  {
+    [pool release];
   }
 }
 
