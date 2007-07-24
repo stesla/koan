@@ -1,3 +1,7 @@
+#
+# Copyright (c) 2007 3James Software.
+#
+
 class Base32
   class << self
     def encode(value)

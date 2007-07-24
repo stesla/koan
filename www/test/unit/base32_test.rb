@@ -1,3 +1,7 @@
+#
+# Copyright (c) 2007 3James Software.
+#
+
 require 'test/unit'
 require 'base32'
 
