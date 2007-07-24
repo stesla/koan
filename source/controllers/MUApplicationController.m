@@ -245,7 +245,7 @@
   while (count--)
   {
     MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex: count];
-    if (controller && [controller isConnected])
+    if (controller && [controller isConnectedOrConnecting])
       openConnections++;
   }
   
@@ -471,7 +471,7 @@
     while (count--)
     {
       MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex: count];
-      if (controller && [controller isConnected])
+      if (controller && [controller isConnectedOrConnecting])
       {
         [controller confirmClose: @selector (recursivelyConfirmClose:)];
         return;

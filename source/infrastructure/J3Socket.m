@@ -285,7 +285,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (void) internalClose
 {
-  if (![self isConnected])
+  if (!([self isConnected] || [self isConnecting]))
     return;
   
   errno = 0;

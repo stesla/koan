@@ -43,7 +43,7 @@
 - (IBAction) connect: (id) sender;
 - (IBAction) disconnect: (id) sender;
 - (IBAction) goToWorldURL: (id) sender;
-- (BOOL) isConnected;
+- (BOOL) isConnectedOrConnecting;
 - (IBAction) nextCommand: (id) sender;
 - (IBAction) previousCommand: (id) sender;
 - (IBAction) sendInputText: (id) sender;

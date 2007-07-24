@@ -139,7 +139,7 @@ enum MUSearchDirections
   
   if (menuItemAction == @selector (connectOrDisconnect:))
   {
-    if ([self isConnected])
+    if ([self isConnectedOrConnecting])
       [menuItem setTitle: _(MULDisconnect)];
     else
       [menuItem setTitle: _(MULConnect)];
@@ -218,9 +218,9 @@ enum MUSearchDirections
   }
 }
 
-- (BOOL) isConnected
+- (BOOL) isConnectedOrConnecting
 {
-  return [telnetConnection isConnected];
+  return [telnetConnection isConnected] || [telnetConnection isConnecting];
 }
 
 #pragma mark -
@@ -250,27 +250,26 @@ enum MUSearchDirections
 
 - (IBAction) connect: (id) sender
 {
-  if (![self isConnected])
-  {
-    if (!telnetConnection)
-      telnetConnection = [[profile createNewTelnetConnectionWithDelegate: self] retain];
-    // TODO: if (!telnetConnection) { //ERROR! }
-    
-    [telnetConnection open];
-    
-    pingTimer = [[NSTimer scheduledTimerWithTimeInterval: 60.0
-                                                  target: self
-                                                selector: @selector (sendPeriodicPing:)
-                                                userInfo: nil
-                                                 repeats: YES] retain];
-    
-    [[self window] makeFirstResponder: inputView];
-  }
+  if ([self isConnectedOrConnecting])
+    return;
+  if (!telnetConnection)
+    telnetConnection = [[profile createNewTelnetConnectionWithDelegate: self] retain];
+  // TODO: if (!telnetConnection) { //ERROR! }
+  
+  [telnetConnection open];
+  
+  pingTimer = [[NSTimer scheduledTimerWithTimeInterval: 60.0
+                                                target: self
+                                              selector: @selector (sendPeriodicPing:)
+                                              userInfo: nil
+                                               repeats: YES] retain];
+  
+  [[self window] makeFirstResponder: inputView];
 }
 
 - (IBAction) connectOrDisconnect: (id) sender
 {
-  if ([self isConnected])
+  if ([self isConnectedOrConnecting])
     [self disconnect: nil];
   else
     [self connect: nil];
@@ -521,7 +520,7 @@ enum MUSearchDirections
 
 - (BOOL) canCloseWindow
 {
-  if ([self isConnected])
+  if ([self isConnectedOrConnecting])
   {
     [self confirmClose: NULL];
     return NO;
@@ -662,7 +661,7 @@ enum MUSearchDirections
 {
   if (returnCode == NSAlertDefaultReturn) /* Close. */
   {
-    if ([self isConnected])
+    if ([self isConnectedOrConnecting])
       [self disconnect];
     
     [[self window] close];
