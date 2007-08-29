@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+#-*-Ruby-*-
+
+MY_DIR = File.dirname(__FILE__)
+require File.join(MY_DIR, '../www/lib/keymaker.rb')
+
+keymaker = Object.new
+class << keymaker
+  include KeyMaker
+
+  def created_at
+    DateTime.now
+  end
+
+  def owner
+    ARGV[0]
+  end
+
+  def private_key_path
+    File.join(MY_DIR, '../www/config/private.pem')
+  end
+
+  def product_code
+    "E463E475-DFB2-44D3-9A48-D30395AA0DFD"
+  end
+end
+puts keymaker.to_xml
