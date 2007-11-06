@@ -20,18 +20,6 @@
 			<key>NSDocumentClass</key>
 			<string>MUTextLogDocument</string>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>koanlicense</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>com.3james.Koan.license</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
 	</array>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
@@ -87,23 +75,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>koanlog</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>public.xml</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Koan license file</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.3james.Koan.llicense</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>koanlicense</string>
 				</array>
 			</dict>
 		</dict>

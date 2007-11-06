@@ -1,9 +1,0 @@
-<p><b>Name:</b> <%= @license.owner %></p>
-<p><b>Product:</b> <%= @license.product.name %></p>
-<p><b>Created at:</b> <%= h @license.issued_date_string %></p>
-<p><b>Digest:</b><br/>
-<pre><%= @license.hex_digest %></pre>
-<p><b>License Key:</b><br/>
-<pre><%= wrap_text(@license.key, 52) %></p></pre>
-
-<%= link_to 'Back', :action => 'list' %>

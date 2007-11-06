@@ -16,13 +16,11 @@
 #import "MUServices.h"
 #import "J3SocketFactory.h"
 #import "MUWorld.h"
-#import "MUGozer.h"
 
 @interface MUApplicationController (Private)
 
 - (IBAction) changeFont: (id) sender;
 - (void) colorPanelColorDidChange: (NSNotification *) notification;
-- (void) importKoanLicenseWithFile: (NSString *) fileName;
 - (id) infoValueForKey: (NSString *) key;
 - (IBAction) openConnection: (id) sender;
 - (void) openConnectionWithController: (MUConnectionWindowController *) controller;
@@ -180,10 +178,7 @@
 
 - (IBAction) showAboutPanel: (id) sender;
 {
-  NSMutableDictionary *options = [NSMutableDictionary dictionary];
-  if (!licensed ())
-    [options setObject: [[self infoValueForKey: @"CFBundleName"] stringByAppendingString: @" Trial"] forKey: @"ApplicationName"];
-  [NSApp orderFrontStandardAboutPanelWithOptions: options];
+  [NSApp orderFrontStandardAboutPanel: sender];
 }
 
 - (IBAction) showPreferencesPanel: (id) sender
@@ -217,12 +212,6 @@
 
 - (BOOL) application: (NSApplication *) application openFile: (NSString *) string
 {
-  if ([[[string pathExtension] lowercaseString] isEqualToString: @"koanlicense"])
-  {
-    [self importKoanLicenseWithFile: string];
-    return YES;
-  }
-  
   return NO;
 }
 
@@ -330,31 +319,6 @@
   [preferencesController colorPanelColorDidChange];
 }
 
-- (void) importKoanLicenseWithFile: (NSString *) fileName
-{
-  if (licensed ())
-  {
-    int choice = NSRunAlertPanel (@"Are you sure you want to change your licensing?",
-                                  @"Koan is already unlocked, proceeding will license this copy to a different user.",
-                                  _(MULOK),
-                                  _(MULCancel),
-                                  nil);
-    if (choice != NSAlertDefaultReturn)
-      return;
-  }
-  
-  if (import_license_file (fileName))
-  {
-    NSDictionary *licenseInfo = [[NSUserDefaults standardUserDefaults] valueForKey: MULicenseInfo];
-    NSRunAlertPanel (@"License imported successfully.", @"Koan is now registered to %@.", _(MULOK), nil, nil, [licenseInfo valueForKey: MULicenseOwner]);
-  }
-  else
-  {
-    NSRunAlertPanel (@"Unable to import license.", @"Please verify that it is a valid license.", _(MULOK), nil, nil);
-  }
-  [self rebuildConnectionsMenuWithAutoconnect: NO];
-}
-
 - (id) infoValueForKey: (NSString*) key
 {
   if ([[[NSBundle mainBundle] localizedInfoDictionary] objectForKey: key])
@@ -427,7 +391,7 @@
       MUPlayer *player = [players objectAtIndex: j];
       profile = [profiles profileForWorld: world player: player];
       
-      SEL action = j == 0 || licensed () ? @selector (openConnection:) : nil;
+      SEL action = @selector (openConnection:);
       NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle: [player name]
                                                           action: action
                                                    keyEquivalent: @""];
@@ -454,7 +418,6 @@
     [worldMenu addItem: connectItem];
     [worldItem setTitle: [world name]];
     [worldItem setSubmenu: worldMenu];
-    [worldItem setEnabled: i < 5 || licensed ()];
     [openConnectionMenu addItem: worldItem];
     [worldItem release];
     [worldMenu release];
