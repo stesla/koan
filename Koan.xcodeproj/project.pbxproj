@@ -967,6 +967,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = E69E22380854FB100055BCF5 /* Build configuration list for PBXProject "Koan" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Koan */;
 			projectDirPath = "";
@@ -1033,7 +1034,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/perl -w";
-			shellScript = "# Xcode auto-versioning script for Subversion\n# Based on versions by Axel Andersson and Daniel Jalkut\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Get the current subversion revision number and use it to set Info.plist values\nmy $REV = `/usr/local/bin/svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n\nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n\nopen (FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join (\"\", <FH>);\nclose (FH);\n\n$info =~ s/SVNREVISION/$version/g;\n\nopen (FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose (FH);\n";
+			shellScript = "# Xcode auto-versioning script for Subversion\n# Based on versions by Axel Andersson and Daniel Jalkut\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Get the current subversion revision number and use it to set Info.plist values\nmy $REV = `svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n\nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n\nopen (FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join (\"\", <FH>);\nclose (FH);\n\n$info =~ s/SVNREVISION/$version/g;\n\nopen (FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose (FH);\n";
 		};
 		7E87751609AD558700A883BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1333,7 +1334,10 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
-				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILD_ROOT)",
+					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = G5;
@@ -1378,7 +1382,10 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
-				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILD_ROOT)",
+					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_MODEL_TUNING = G5;
