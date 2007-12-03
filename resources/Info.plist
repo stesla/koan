@@ -31,8 +31,6 @@
 	<string>com.3james.Koan</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -51,6 +49,11 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>SVNREVISION</string>
+	<key>LSEnvironment</key>
+	<dict>
+		<key>MinimumSystemVersion</key>
+		<string>10.4.0</string>
+	</dict>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>
 	<key>NSMainNibFile</key>
@@ -59,6 +62,8 @@
 	<string>NSApplication</string>
 	<key>OSAScriptingDefinition</key>
 	<string>Koan.sdef</string>
+	<key>SUFeedURL</key>
+	<string>http://3james.com/appcasts/koan.rss</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

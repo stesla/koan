@@ -1034,7 +1034,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/perl -w";
-			shellScript = "# Xcode auto-versioning script for Subversion\n# Based on versions by Axel Andersson and Daniel Jalkut\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Get the current subversion revision number and use it to set Info.plist values\nmy $REV = `svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n\nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n\nopen (FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join (\"\", <FH>);\nclose (FH);\n\n$info =~ s/SVNREVISION/$version/g;\n\nopen (FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose (FH);\n";
+			shellScript = "# Xcode auto-versioning script for Subversion, based on version by Axel\n# Andersson and Daniel Jalkut.\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Get the current subversion revision number and use it to set Info.plist values\nmy $REV = `svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n\nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n\nopen (FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join (\"\", <FH>);\nclose (FH);\n\n$info =~ s/SVNREVISION/$version/g;\n\nopen (FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose (FH);\n";
 		};
 		7E87751609AD558700A883BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1285,23 +1285,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				INFOPLIST_FILE = "importer/Importer-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Spotlight";
 				LIBRARY_STYLE = Bundle;
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = KoanLogImporter;
 				WRAPPER_EXTENSION = mdimporter;
-				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
@@ -1309,21 +1297,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "";
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				INFOPLIST_FILE = "importer/Importer-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Spotlight";
 				LIBRARY_STYLE = Bundle;
-				OTHER_LDFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = KoanLogImporter;
 				WRAPPER_EXTENSION = mdimporter;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -1332,18 +1310,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Koan.app/Contents/MacOS/Koan";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(BUILD_ROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
 				);
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
@@ -1351,26 +1324,16 @@
 					./tests,
 				);
 				INFOPLIST_FILE = "resources/Unit Tests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_STYLE = BUNDLE;
 				OPTIMIZATION_CFLAGS = "-O0";
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
 					"-framework",
 					SenTestingKit,
 				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Unit Tests";
-				SECTORDER_FLAGS = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
@@ -1380,18 +1343,13 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Koan.app/Contents/MacOS/Koan";
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLD_FRAMEWORK_PATH = "$(DYLD_FRAMEWORK_PATH):$(PROJECT_DIR)/build";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(BUILD_ROOT)",
 					"$(DEVELOPER_FRAMEWORKS_DIR_QUOTED)",
 				);
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				GCC_WARN_UNINITIALIZED_AUTOS = NO;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
@@ -1399,26 +1357,16 @@
 					./tests,
 				);
 				INFOPLIST_FILE = "resources/Unit Tests-Info.plist";
-				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				LIBRARY_STYLE = BUNDLE;
 				OPTIMIZATION_CFLAGS = "-O0";
-				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
 					"-framework",
 					SenTestingKit,
 				);
-				OTHER_REZFLAGS = "";
-				PREBINDING = NO;
 				PRODUCT_NAME = "Unit Tests";
-				SECTORDER_FLAGS = "";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
 				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
@@ -1426,64 +1374,25 @@
 		E69E22290854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Unpack Frameworks";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
 		E69E222A0854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "";
-				OTHER_REZFLAGS = "";
 				PRODUCT_NAME = "Unpack Frameworks";
-				SECTORDER_FLAGS = "";
-				WARNING_CFLAGS = (
-					"-Wmost",
-					"-Wno-four-char-constants",
-					"-Wno-unknown-pragmas",
-				);
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
 		E69E22310854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_VERSION = 1.0a3;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_CPP_RTTI = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
 				GCC_USE_GCC3_PFE_SUPPORT = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = YES;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
@@ -1491,43 +1400,24 @@
 					./source/infrastructure,
 				);
 				INFOPLIST_FILE = resources/Info.plist;
-				INSTALL_PATH = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_4";
 				OTHER_LDFLAGS = (
 					"-lSystem",
 					"-lcrypto",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Koan;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
 		E69E22320854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_VERSION = 1.0a3;
-				ARCHS = (
-					ppc,
-					i386,
-				);
 				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
-				GCC_ENABLE_CPP_EXCEPTIONS = NO;
-				GCC_ENABLE_CPP_RTTI = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
 				GCC_USE_GCC3_PFE_SUPPORT = YES;
-				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
-				GCC_WARN_SHADOW = YES;
-				GCC_WARN_SIGN_COMPARE = NO;
 				HEADER_SEARCH_PATHS = (
 					./source,
 					./filters,
@@ -1535,28 +1425,25 @@
 					./source/infrastructure,
 				);
 				INFOPLIST_FILE = resources/Info.plist;
-				INSTALL_PATH = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_4";
 				OTHER_LDFLAGS = (
 					"-lSystem",
 					"-lcrypto",
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = Koan;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
 		E69E22390854FB100055BCF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				APPLICATION_VERSION = 1.0b1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
@@ -1572,21 +1459,19 @@
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				OBJROOT = "$(SYMROOT)";
-				PREBINDING = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				SYMROOT = "$(PROJECT_DIR)/build";
 			};
 			name = Debug;
 		};
 		E69E223A0854FB100055BCF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_VERSION = 1.0b1;
 				ARCHS = (
 					ppc,
 					i386,
 				);
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
@@ -1609,11 +1494,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				OBJROOT = "$(SYMROOT)";
-				PREBINDING = NO;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				SYMROOT = "$(PROJECT_DIR)/build";
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
