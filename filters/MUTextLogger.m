@@ -108,10 +108,7 @@
   
   @try
   {
-    NSEnumerator *keyEnumerator = [headers keyEnumerator];
-    NSString *key;
-    
-    while((key = [keyEnumerator nextObject]))
+    for (NSString *key in [headers allKeys])
     {
       NSString *value = [headers objectForKey: key];
       if ([value length] > 0)

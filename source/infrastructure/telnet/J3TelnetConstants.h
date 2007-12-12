@@ -41,7 +41,7 @@ enum J3TelnetOptions
   J3TelnetOptionToggleFlowControl = 33,
   J3TelnetOptionLineMode = 34,
   J3TelnetOptionXDisplayLocation = 35,
-  J3TelnetOptionNewEnviron = 39,
+  J3TelnetOptionNewEnvironment = 39,
   
   // MUD Client Compression Protocol
   // The MCCP extension is defined at <http://mccp.afkmud.com/protocol.html>.

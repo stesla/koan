@@ -1,12 +1,9 @@
 //
-//  J3TelnetSubnegotiationIACState.h
-//  Koan
+// J3TelnetSubnegotiationIACState.h
 //
-//  Created by Samuel Tesla on 4/5/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "J3TelnetState.h"
 
 @interface J3TelnetSubnegotiationIACState : J3TelnetState

@@ -1,14 +1,10 @@
 //
-//  J3TelnetNotTelnetState.h
-//  Koan
+// J3TelnetNotTelnetState.h
 //
-//  Created by Samuel Tesla on 4/19/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "J3TelnetState.h"
-
 
 @interface J3TelnetNotTelnetState : J3TelnetState
 

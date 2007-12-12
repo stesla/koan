@@ -1,12 +1,9 @@
 //
-//  J3TelnetOptionMCCP1State.h
-//  Koan
+// J3TelnetOptionMCCP1State.h
 //
-//  Created by Samuel Tesla on 4/5/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2007 3James Software.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
 #import "J3TelnetState.h"
 
 @interface J3TelnetOptionMCCP1State : J3TelnetState

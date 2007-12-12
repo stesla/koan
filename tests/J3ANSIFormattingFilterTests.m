@@ -45,7 +45,7 @@
               atIndex: (int) characterIndex
               message: (NSString *) message
 {
-  NSDictionary * attributes = [string attributesAtIndex: characterIndex effectiveRange: NULL];
+  NSDictionary *attributes = [string attributesAtIndex: characterIndex effectiveRange: NULL];
   
   [self assert: [attributes valueForKey: attribute] equals: value message: message];
 }

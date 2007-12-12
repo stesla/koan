@@ -52,7 +52,7 @@
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
-		<string>10.4.0</string>
+		<string>10.5</string>
 	</dict>
 	<key>NSAppleScriptEnabled</key>
 	<string>YES</string>

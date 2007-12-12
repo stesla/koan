@@ -7,7 +7,9 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h> 
 #include <Foundation/Foundation.h>
-#include "MUTextLogDocument.h"
+
+#import "MUTextLogDocument.h"
+#include "GetMetadataForFile.h"
 
 Boolean
 GetMetadataForFile (void *thisInterface,

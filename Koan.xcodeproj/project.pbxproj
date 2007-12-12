@@ -46,7 +46,6 @@
 		2FFE38270BCAF0FD00F4F3AF /* MULogBrowser.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2FFE38260BCAF0FD00F4F3AF /* MULogBrowser.nib */; };
 		7E070B000933D01E000A36CF /* J3SocksMethodSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070AFD0933D01E000A36CF /* J3SocksMethodSelection.m */; };
 		7E070B2A0933D32B000A36CF /* J3SocksConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E070B270933D32B000A36CF /* J3SocksConstants.m */; };
-		7E0EEC150C27140E0043FA91 /* J3Connection.h in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7E0EEC130C27140E0043FA91 /* J3Connection.h */; };
 		7E0EEC160C27140E0043FA91 /* J3Connection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E0EEC140C27140E0043FA91 /* J3Connection.m */; };
 		7E13B9AD09AE87D800508460 /* MUProxySettings.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7E13B9AB09AE87D800508460 /* MUProxySettings.nib */; };
 		7E13B9B709AE8B7600508460 /* MUProxySettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E13B9B509AE8B7600508460 /* MUProxySettingsController.m */; };
@@ -192,7 +191,6 @@
 				E615A40607D3B38C00FC7F6B /* Growl.framework in Copy Frameworks */,
 				E61C3C9C07B7314E00519A89 /* RBSplitView.framework in Copy Frameworks */,
 				2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in Copy Frameworks */,
-				7E0EEC150C27140E0043FA91 /* J3Connection.h in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -218,6 +216,7 @@
 		2F2D76E90BBB1C8400BBB71A /* Characteristics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Characteristics.txt; sourceTree = "<group>"; };
 		2F42D0E00BB2618F0056C27A /* NSString (NDUtilities).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString (NDUtilities).h"; sourceTree = "<group>"; };
 		2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString (NDUtilities).m"; sourceTree = "<group>"; };
+		2F4580150D0F586B001B8686 /* GetMetadataForFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
 		2F6C71F10BB460CA00709320 /* MUURLHandlerCommand.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUURLHandlerCommand.h; sourceTree = "<group>"; };
 		2F6C71F20BB460CA00709320 /* MUURLHandlerCommand.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUURLHandlerCommand.m; sourceTree = "<group>"; };
 		2F6C72A90BB46BD000709320 /* Koan.sdef */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.sdef; path = Koan.sdef; sourceTree = "<group>"; };
@@ -620,11 +619,12 @@
 		2FE367E60BCAD3230068A6AA /* Spotlight Importer */ = {
 			isa = PBXGroup;
 			children = (
-				2FE3691E0BCAD8370068A6AA /* schema.strings */,
-				2FE368420BCAD5DB0068A6AA /* schema.xml */,
+				2F4580150D0F586B001B8686 /* GetMetadataForFile.h */,
 				2FE367EB0BCAD35E0068A6AA /* GetMetadataForFile.m */,
 				2FE368010BCAD4630068A6AA /* Importer-Info.plist */,
 				2FE367EC0BCAD35E0068A6AA /* Main.c */,
+				2FE3691E0BCAD8370068A6AA /* schema.strings */,
+				2FE368420BCAD5DB0068A6AA /* schema.xml */,
 			);
 			name = "Spotlight Importer";
 			path = importer;
@@ -1417,15 +1417,13 @@
 				FRAMEWORK_SEARCH_PATHS = "$(BUILD_ROOT)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
-				GCC_USE_GCC3_PFE_SUPPORT = YES;
 				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
 					./externals,
+					./filters,
+					./source,
 					./source/infrastructure,
 				);
 				INFOPLIST_FILE = resources/Info.plist;
-				OTHER_CFLAGS = "-DMAC_OS_X_VERSION_MIN_REQUIRED=MAC_OS_X_VERSION_10_4";
 				OTHER_LDFLAGS = (
 					"-lSystem",
 					"-lcrypto",
@@ -1460,7 +1458,7 @@
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Debug;
 		};
@@ -1474,9 +1472,14 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = YES;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
 				GCC_WARN_EFFECTIVE_CPLUSPLUS_VIOLATIONS = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -1493,8 +1496,9 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.4;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				OTHER_CFLAGS = "";
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Release;
 		};

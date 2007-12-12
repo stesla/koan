@@ -13,7 +13,6 @@
 @interface MUApplicationController : NSObject
 {
   IBOutlet NSMenu *openConnectionMenu;
-  IBOutlet NSMenuItem *useProxyMenuItem;
   
   IBOutlet NSPanel *newConnectionPanel;
   IBOutlet NSTextField *newConnectionHostnameField;

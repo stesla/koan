@@ -22,6 +22,8 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3TelnetIACState
 
 - (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine

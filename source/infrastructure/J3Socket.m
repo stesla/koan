@@ -406,7 +406,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   {
     h_errno = 0;
     
-    struct hostent *hostent = gethostbyname ([hostname cString]);
+    struct hostent *hostent = gethostbyname ([hostname cStringUsingEncoding: NSASCIIStringEncoding]);
     
     if (hostent)
       memcpy (server, hostent, sizeof (struct hostent));

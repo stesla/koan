@@ -110,24 +110,13 @@
 
 - (NSArray *) systemSoundsArray
 {
-  NSEnumerator *libraryPathEnumerator;
-  NSString *libraryPath;
   NSMutableArray *foundPaths = [NSMutableArray array];
-  
-  libraryPathEnumerator =
-    [NSSearchPathForDirectoriesInDomains (NSLibraryDirectory, NSAllDomainsMask, YES) objectEnumerator];
-  
-  while ((libraryPath = [libraryPathEnumerator nextObject]))
+
+  for (NSString *libraryPath in NSSearchPathForDirectoriesInDomains (NSLibraryDirectory, NSAllDomainsMask, YES))
   {
-  	NSDirectoryEnumerator	*directoryEnumerator;
-  	NSString *filePath;
-    NSString *searchPath;
+    NSString *searchPath = [libraryPath stringByAppendingPathComponent: @"Sounds"];
   	
-  	searchPath = [libraryPath stringByAppendingPathComponent: @"Sounds"];
-  	
-  	directoryEnumerator = [[NSFileManager defaultManager] enumeratorAtPath: searchPath];
-  	
-  	while ((filePath = [directoryEnumerator nextObject]))
+  	for (NSString *filePath in [[NSFileManager defaultManager] contentsOfDirectoryAtPath: searchPath error: NULL])
   	{
       [foundPaths addObject: [filePath stringByDeletingPathExtension]];
   	}

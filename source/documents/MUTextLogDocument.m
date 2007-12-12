@@ -174,10 +174,8 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
     return NO;
   
   NSArray *headerLines = [[string substringToIndex:endOfHeaders] componentsSeparatedByString: lineEnding];
-  NSEnumerator *headerEnumerator = [headerLines objectEnumerator];
   
-  NSString *line;
-  while ((line = [headerEnumerator nextObject]))
+  for (NSString *line in headerLines)
   {
     if (![self addKeyValuePairFromString: line toDictionary: workingHeaders])
       return NO;

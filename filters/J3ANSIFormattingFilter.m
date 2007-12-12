@@ -288,18 +288,21 @@
 
 - (void) setAttribute: (NSString *) attribute toValue: (id) value inString: (NSMutableAttributedString *) string fromLocation: (unsigned) startLocation
 {
-  [string addAttribute: attribute value: value range: NSMakeRange (startLocation, [string length] - startLocation)];
+  [string addAttribute: attribute
+                 value: value
+                 range: NSMakeRange (startLocation, [string length] - startLocation)];
   [currentAttributes setObject: value forKey: attribute];
 }
 
 - (void) setAttributes: (NSDictionary *) attributes onString: (NSMutableAttributedString *) string fromLocation: (unsigned) startLocation
 {
-  NSDictionary * attributeCopy = [attributes copy];
-  NSEnumerator * keyEnumerator = [attributeCopy keyEnumerator];
-  NSString * key;
-  
-  while ((key = [keyEnumerator nextObject]))
-    [self setAttribute: key toValue: [attributeCopy valueForKey: key] inString: string fromLocation: startLocation];
+  for (NSString *key in [attributes allKeys])
+  {
+    [self setAttribute: key
+               toValue: [attributes valueForKey: key]
+              inString: string
+          fromLocation: startLocation];
+  }
 }
 
 - (int) scanUpToCodeInString: (NSString *) string

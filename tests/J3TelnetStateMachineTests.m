@@ -179,7 +179,7 @@
 
 - (void) assertState: (Class) stateClass givenByte: (uint8_t) byte producesState: (Class) nextStateClass
 {
-  J3TelnetState * nextState = [[[[stateClass alloc] init] autorelease] parse: byte forEngine: engine];
+  J3TelnetState *nextState = [[[[stateClass alloc] init] autorelease] parse: byte forEngine: engine];
   [self assert: [nextState class] equals: nextStateClass];  
 }
 

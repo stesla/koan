@@ -163,7 +163,7 @@
     case J3TelnetOptionXDisplayLocation:
       return @"X-DISPLAY-LOCATION";
       
-    case J3TelnetOptionNewEnviron:
+    case J3TelnetOptionNewEnvironment:
       return @"NEW-ENVIRON";
   		
   	case J3TelnetOptionMCCP1:
