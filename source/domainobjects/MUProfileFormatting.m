@@ -11,11 +11,11 @@
 
 - (id) initWithProfile: (MUProfile *) newProfile
 {
-  if (!(self = [super init]))
+  if (![super init])
     return nil;
-  if (!newProfile)
-    return nil;
+  
   [self at: &profile put: newProfile];
+  
   return self;
 }
 

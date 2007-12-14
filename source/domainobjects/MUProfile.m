@@ -73,7 +73,7 @@
   				 linkColor: (NSColor *) newLinkColor
   	visitedLinkColor: (NSColor *) newVisitedLinkColor
 {
-  if (!(newWorld && [super init]))
+  if (![super init]))
     return nil;
   
   [self setWorld: newWorld];
