@@ -230,7 +230,7 @@ enum MUSearchDirections
 {
   [[self window] makeKeyAndOrderFront: nil];
   
-  NSBeginAlertSheet ([NSString stringWithFormat: _(MULConfirmCloseTitle), [profile windowTitle]],
+  NSBeginAlertSheet ([NSString stringWithFormat: _(MULConfirmCloseTitle), profile.windowTitle],
                      _(MULOK),
                      _(MULCancel),
                      nil,
@@ -240,7 +240,7 @@ enum MUSearchDirections
                      @selector (didEndCloseSheet:returnCode:contextInfo:),
                      (void *) callback,
                      _(MULConfirmCloseMessage),
-                     [profile hostname]);
+                     profile.hostname);
 }
 
 - (IBAction) clearWindow: (id) sender
@@ -539,7 +539,7 @@ enum MUSearchDirections
 - (J3Filter *) createLogger
 {
   if (profile)
-    return [profile logger];
+    return [profile createLogger];
   else
     return [MUTextLogger filter];
 }

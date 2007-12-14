@@ -311,12 +311,7 @@
   return [world newTelnetConnectionWithDelegate: delegate];
 }
 
-- (NSString *) hostname
-{
-  return world.hostname;
-}
-
-- (J3Filter *) logger
+- (J3Filter *) createLogger
 {
   if (player)
     return [MUTextLogger filterWithWorld: world player: player];
@@ -326,6 +321,11 @@
 
 #pragma mark -
 #pragma mark Property method implementations
+
+- (NSString *) hostname
+{
+  return world.hostname;
+}
 
 - (NSString *) loginString
 {

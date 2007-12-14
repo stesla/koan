@@ -15,12 +15,12 @@
   world.name = @"Test World";
   
   MUProfile *profile = [MUProfile profileWithWorld: world];
-  [self assert: [profile uniqueIdentifier] equals: @"test.world"];
+  [self assert: profile.uniqueIdentifier equals: @"test.world"];
   
   MUPlayer *player = [MUPlayer playerWithName: @"User" password: @"" world: world];
   
   profile = [MUProfile profileWithWorld: world player: player];
-  [self assert: [profile uniqueIdentifier] equals: @"test.world.user"];
+  [self assert: profile.uniqueIdentifier equals: @"test.world.user"];
 }
 
 - (void) testHasLoginInformation

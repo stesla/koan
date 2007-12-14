@@ -31,6 +31,7 @@
 @property (retain) MUWorld *world;
 @property (retain) MUPlayer *player;
 @property (assign) BOOL autoconnect;
+@property (readonly) NSString *hostname;
 @property (readonly) NSString *loginString;
 @property (readonly) NSString *uniqueIdentifier;
 @property (readonly) NSString *windowTitle;
@@ -81,9 +82,7 @@
 - (NSData *) effectiveVisitedLinkColor;
 
 // Actions.
-- (NSString *) hostname;
-- (J3Filter *) logger;
-
+- (J3Filter *) createLogger;
 - (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate;
 
 @end
