@@ -24,7 +24,7 @@
 
 - (void) testUniqueIdentifier
 {
-  [world setName: @"Test World"];
+  world.name = @"Test World";
   [self assert: [world uniqueIdentifier] equals: @"test.world"];
 }
 
@@ -33,7 +33,7 @@
   [world addPlayer: player];
   [self assert: [[world players] objectAtIndex: 0]
         equals: player];
-  [self assert: [player world]
+  [self assert: player.world
         equals: world];
 }
 
@@ -55,7 +55,31 @@
   [world addPlayer: player];
   [world removePlayer: player];
   [self assertFalse: [world containsPlayer: player]];
-  [self assertNil: [player world]];
+  [self assertNil: player.world];
+}
+
+- (void) testReplacePlayer
+{
+  MUPlayer *otherPlayer = [[MUPlayer alloc] init];
+  @try
+  {
+    [world addPlayer: player];
+    [self assertTrue: [world containsPlayer: player]];
+    [self assert: player.world
+          equals: world];
+    
+    [world replacePlayer: player withPlayer: otherPlayer];
+    
+    [self assertFalse: [world containsPlayer: player]];
+    [self assertNil: player.world];
+    [self assertTrue: [world containsPlayer: otherPlayer]];
+    [self assert: otherPlayer.world
+          equals: world];
+  }
+  @finally
+  {
+    [otherPlayer release];
+  }
 }
 
 - (void) testNilPlayers

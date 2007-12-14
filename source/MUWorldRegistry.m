@@ -183,7 +183,7 @@ static MUWorldRegistry *defaultRegistry = nil;
     for (unsigned j = 0; j < [[world players] count]; j++)
     {
       MUPlayer *player = [[world players] objectAtIndex: j];
-      [player setWorld: world];
+      player.world = world;
       
       MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world player: player];
       [profile setWorld: world];

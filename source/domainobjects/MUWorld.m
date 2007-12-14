@@ -20,6 +20,8 @@
 
 @implementation MUWorld
 
+@synthesize name, hostname, port, url;
+
 + (MUWorld *) worldWithName: (NSString *) newName
   								 hostname: (NSString *) newHostname
   										 port: (NSNumber *) newPort
@@ -42,10 +44,10 @@
   if (![super init])
     return nil;
   
-  [self setName: newName];
-  [self setHostname: newHostname];
-  [self setPort: newPort];
-  [self setURL: newURL];
+  self.name = newName;
+  self.hostname = newHostname;
+  self.port = newPort;
+  self.url = newURL;
   [self setPlayers: (newPlayers ? newPlayers : [NSArray array])];
   
   return self;
@@ -71,59 +73,7 @@
 }
 
 #pragma mark -
-#pragma mark Accessors
-
-- (NSString *) name
-{
-  return name;
-}
-
-- (void) setName: (NSString *) newName
-{
-  if (name == newName)
-    return;
-  [name release];
-  name = [newName copy];
-}
-
-- (NSString *) hostname
-{
-  return hostname;
-}
-
-- (void) setHostname: (NSString *) newHostname
-{
-  if (hostname == newHostname)
-    return;
-  [hostname release];
-  hostname = [newHostname copy];
-}
-
-- (NSNumber *) port
-{
-  return port;
-}
-
-- (void) setPort: (NSNumber *) newPort
-{
-  if (port == newPort)
-    return;
-  [port release];
-  port = [newPort copy];
-}
-
-- (NSString *) URL
-{
-  return url;
-}
-
-- (void) setURL: (NSString *) newURL
-{
-  if (url == newURL)
-    return;
-  [url release];
-  url = [newURL copy];
-}
+#pragma mark Array-like accessors for players
 
 - (NSMutableArray *) players
 {
@@ -147,7 +97,7 @@
   		return (int) i;
   }
   
-  return -1;
+  return NSNotFound;
 }
 
 - (void) insertObject: (MUPlayer *) player inPlayersAtIndex: (unsigned) playerIndex
@@ -168,7 +118,7 @@
     return;
   
   [players addObject: player];
-  [player setWorld: self];
+  player.world = self;
   [self postWorldsDidChangeNotification];
 }
 
@@ -179,7 +129,7 @@
 
 - (void) removePlayer: (MUPlayer *) player
 {
-  [player setWorld: nil];
+  player.world = nil;
   [players removeObject: player];
   [self postWorldsDidChangeNotification];
 }
@@ -194,6 +144,8 @@
       continue;
     
     [players replaceObjectAtIndex: i withObject: newPlayer];
+    oldPlayer.world = nil;
+    newPlayer.world = self;
     [self postWorldsDidChangeNotification];
     break;
   }
@@ -204,12 +156,12 @@
 
 - (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate
 {
-  return [J3TelnetConnection telnetWithHostname: [self hostname] port: [[self port] intValue] delegate: delegate];
+  return [J3TelnetConnection telnetWithHostname: self.hostname port: [self.port intValue] delegate: delegate];
 }
 
 - (NSString *) uniqueIdentifier
 {
-  NSArray *tokens = [[self name] componentsSeparatedByString: @" "];
+  NSArray *tokens = [self.name componentsSeparatedByString: @" "];
   NSMutableString *result = [NSMutableString string];
 
   if ([tokens count] > 0)
@@ -224,7 +176,7 @@
 
 - (NSString *) windowTitle
 {
-  return [NSString stringWithFormat: @"%@", [self name]];
+  return [NSString stringWithFormat: @"%@", self.name];
 }
 
 #pragma mark -
@@ -249,11 +201,11 @@
 
 - (id) copyWithZone: (NSZone *) zone
 {
-  return [[MUWorld allocWithZone: zone] initWithName: [self name]
-                                           hostname: [self hostname]
-                                               port: [self port]
-                                                URL: [self URL]
-                                            players: [self players]];
+  return [[MUWorld allocWithZone: zone] initWithName: self.name
+                                            hostname: self.hostname
+                                                port: self.port
+                                                 URL: self.url
+                                             players: [self players]];
 }
 
 @end

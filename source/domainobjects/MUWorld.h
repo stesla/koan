@@ -20,6 +20,11 @@
   NSMutableArray *players;
 }
 
+@property (copy) NSString *name;
+@property (copy) NSString *hostname;
+@property (copy) NSNumber *port;
+@property (copy) NSString *url;
+
 + (MUWorld *) worldWithName: (NSString *) newName
   								 hostname: (NSString *) newHostname
   										 port: (NSNumber *) newPort
@@ -32,16 +37,6 @@
                port: (NSNumber *) newPort
                 URL: (NSString *) newURL
             players: (NSArray *) newPlayers;
-
-// Accessors.
-- (NSString *) name;
-- (void) setName: (NSString *) newName;
-- (NSString *) hostname;
-- (void) setHostname: (NSString *) newHostname;
-- (NSNumber *) port;
-- (void) setPort: (NSNumber *) newPort;
-- (NSString *) URL;
-- (void) setURL: (NSString *) newURL;
 
 // Array-like functions.
 - (void) addPlayer: (MUPlayer *) player;

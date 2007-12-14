@@ -66,11 +66,11 @@ static const int32_t currentProxyVersion = 2;
 {
   [encoder encodeInt32: currentWorldVersion forKey: @"version"];
   
-  [encoder encodeObject: [world name] forKey: @"name"];
-  [encoder encodeObject: [world hostname] forKey: @"hostname"];
-  [encoder encodeObject: [world port] forKey: @"port"];
+  [encoder encodeObject: world.name forKey: @"name"];
+  [encoder encodeObject: world.hostname forKey: @"hostname"];
+  [encoder encodeObject: world.port forKey: @"port"];
   [encoder encodeObject: [world players] forKey: @"players"];
-  [encoder encodeObject: [world URL] forKey: @"URL"];
+  [encoder encodeObject: world.url forKey: @"URL"];
 }
 
 + (void) decodeWorld: (MUWorld *) world withCoder: (NSCoder *) decoder
@@ -79,25 +79,25 @@ static const int32_t currentProxyVersion = 2;
   
   if (version >= 5)
   {
-    [world setName: [decoder decodeObjectForKey: @"name"]];
-    [world setHostname: [decoder decodeObjectForKey: @"hostname"]];
-    [world setPort: [decoder decodeObjectForKey: @"port"]];
+    world.name = [decoder decodeObjectForKey: @"name"];
+    world.hostname = [decoder decodeObjectForKey: @"hostname"];
+    world.port = [decoder decodeObjectForKey: @"port"];
   }
   else
   {
-    [world setName: [decoder decodeObjectForKey: @"worldName"]];
-    [world setHostname: [decoder decodeObjectForKey: @"worldHostname"]];
-    [world setPort: [decoder decodeObjectForKey: @"worldPort"]];
+    world.name = [decoder decodeObjectForKey: @"worldName"];
+    world.hostname = [decoder decodeObjectForKey: @"worldHostname"];
+    world.port = [decoder decodeObjectForKey: @"worldPort"];
   }
   
   [world setPlayers: [decoder decodeObjectForKey: @"players"]];
   
   if (version >= 5)
-    [world setURL: [decoder decodeObjectForKey: @"URL"]];
+    world.url = [decoder decodeObjectForKey: @"URL"];
   else if (version >= 1)
-    [world setURL: [decoder decodeObjectForKey: @"worldURL"]];
+    world.url = [decoder decodeObjectForKey: @"worldURL"];
   else
-    [world setURL: @""];
+    world.url = @"";
 }
 
 + (void) encodeProxySettings: (J3ProxySettings *) settings withCoder: (NSCoder *) encoder;

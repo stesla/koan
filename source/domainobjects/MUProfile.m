@@ -341,7 +341,7 @@
 
 - (NSString *) hostname
 {
-  return [world hostname];
+  return world.hostname;
 }
 
 - (J3Filter *) logger

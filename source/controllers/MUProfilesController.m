@@ -139,11 +139,11 @@ enum MUProfilesEditingReturnValues
       
   		if ([item isKindOfClass: [MUWorld class]])
       {
-        url = [(MUWorld *) item URL];
+        url = ((MUWorld *) item).url;
       }
   		else if ([item isKindOfClass: [MUPlayer class]])
   		{
-        url = [[(MUPlayer *) item world] URL];
+        url = ((MUPlayer *) item).world.url;
       }
       
       return (url && ![url isEqualToString: @""]);
@@ -184,13 +184,13 @@ enum MUProfilesEditingReturnValues
   	else if ([selectedItem isKindOfClass: [MUPlayer class]])
   	{
   		MUPlayer *selectedPlayer = (MUPlayer *) selectedItem;
-  		int playerIndex = [[selectedPlayer world] indexOfPlayer: selectedPlayer] + 1;
+  		int playerIndex = [selectedPlayer.world indexOfPlayer: selectedPlayer] + 1;
   		
   		if (playerIndex < 0)
   			return;
   		
   		insertionIndex = (unsigned) playerIndex;
-  		insertionWorld = [selectedPlayer world];
+  		insertionWorld = selectedPlayer.world;
   	}
   	else
   		return;
@@ -231,7 +231,7 @@ enum MUProfilesEditingReturnValues
   	if ([selectedItem isKindOfClass: [MUWorld class]])
   		selectedWorld = (MUWorld *) selectedItem;
   	else if ([selectedItem isKindOfClass: [MUPlayer class]])
-  		selectedWorld = [(MUPlayer *) selectedItem world];
+  		selectedWorld = ((MUPlayer *) selectedItem).world;
   	
     if (selectedWorld)
       insertionIndex = [[MUServices worldRegistry] indexOfWorld: selectedWorld] + 1;
@@ -293,8 +293,8 @@ enum MUProfilesEditingReturnValues
   if ([selectedItem isKindOfClass: [MUWorld class]])
   	[self editProfile: [[MUProfileRegistry defaultRegistry] profileForWorld: selectedItem]];
   else if ([selectedItem isKindOfClass: [MUPlayer class]])
-  	[self editProfile: [[MUProfileRegistry defaultRegistry] profileForWorld: [(MUPlayer *) selectedItem world]
-                                                                    player: selectedItem]];
+  	[self editProfile: [[MUProfileRegistry defaultRegistry] profileForWorld: ((MUPlayer *) selectedItem).world
+                                                                     player: selectedItem]];
 }
 
 - (IBAction) editSelectedRow: (id) sender
@@ -342,9 +342,9 @@ enum MUProfilesEditingReturnValues
   selectedItem = [worldsAndPlayersOutlineView itemAtRow: selectedRow];
   
   if ([selectedItem isKindOfClass: [MUWorld class]])
-  	[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: [(MUWorld *) selectedItem URL]]];
+  	[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: ((MUWorld *) selectedItem).url]];
   else if ([selectedItem isKindOfClass: [MUPlayer class]])
-  	[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: [[(MUPlayer *) selectedItem world] URL]]];
+  	[[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: ((MUPlayer *) selectedItem).world.url]];
 }
 
 - (IBAction) removeSelectedRow: (id) sender
@@ -612,10 +612,10 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editWorld: (MUWorld *) world
 {
-  [worldNameField setStringValue: [world name]];
-  [worldHostnameField setStringValue: [world hostname]];
-  [worldPortField setObjectValue: [world port]];
-  [worldURLField setStringValue: [world URL]];
+  [worldNameField setStringValue: world.name];
+  [worldHostnameField setStringValue: world.hostname];
+  [worldPortField setObjectValue: world.port];
+  [worldURLField setStringValue: world.url];
   
   [worldEditorSheet makeFirstResponder: worldNameField];
   
@@ -709,7 +709,7 @@ enum MUProfilesEditingReturnValues
   if (returnCode == MUEditOkay)
   {
   	MUPlayer *oldPlayer = (MUPlayer *) contextInfo;
-    MUWorld *oldWorld = [oldPlayer world];
+    MUWorld *oldWorld = oldPlayer.world;
     MUPlayer *newPlayer = [MUPlayer playerWithName: [playerNameField stringValue]
   																				password: [playerPasswordField stringValue]
   																					 world: oldWorld];
@@ -804,9 +804,9 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) removePlayer: (MUPlayer *) player
 {
-  [[MUServices profileRegistry] removeProfileForWorld: [player world]
+  [[MUServices profileRegistry] removeProfileForWorld: player.world
   																						 player: player];
-  [[player world] removePlayer: player];
+  [player.world removePlayer: player];
   
   [worldsAndPlayersOutlineView reloadData];
 }
@@ -825,18 +825,18 @@ enum MUProfilesEditingReturnValues
   for (unsigned i = 0; i < [[world players] count]; i++)
   {
     MUPlayer *player = [[world players] objectAtIndex: i];
-    MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world
-                                                                player: player];
-    [profile retain];
+    MUProfile *profile = [[[MUServices profileRegistry] profileForWorld: world
+                                                                 player: player] retain];
+    
     [[MUServices profileRegistry] removeProfile: profile];
     [profile setWorld: newWorld];
-    [player setWorld: newWorld];
+    player.world = newWorld;
     [[MUServices profileRegistry] profileForProfile: profile];
     [profile release];
   }
   
-  MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world];
-  [profile retain];
+  MUProfile *profile = [[[MUServices profileRegistry] profileForWorld: world] retain];
+  
   [[MUServices profileRegistry] removeProfile: profile];
   [profile setWorld: newWorld];
   [[MUServices profileRegistry] profileForProfile: profile];
@@ -847,9 +847,9 @@ enum MUProfilesEditingReturnValues
                         player: (MUPlayer *) player
                     withPlayer: (MUPlayer *) newPlayer
 {
-  MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world
-                                                              player: player];
-  [profile retain];
+  MUProfile *profile = [[[MUServices profileRegistry] profileForWorld: world
+                                                               player: player] retain];
+  
   [[MUServices profileRegistry] removeProfile: profile];
   [profile setPlayer: newPlayer];
   [[MUServices profileRegistry] profileForProfile: profile];

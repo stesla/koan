@@ -12,7 +12,7 @@
 - (void) testUniqueIdentifer
 {
   MUWorld *world = [[[MUWorld alloc] init] autorelease];
-  [world setName: @"Test World"];
+  world.name = @"Test World";
   
   MUProfile *profile = [MUProfile profileWithWorld: world];
   [self assert: [profile uniqueIdentifier] equals: @"test.world"];
@@ -26,7 +26,7 @@
 - (void) testHasLoginInformation
 {
   MUWorld *world = [[[MUWorld alloc] init] autorelease];
-  [world setName: @"Test world"];
+  world.name = @"Test World";
   MUProfile *profile = [MUProfile profileWithWorld: world];
   [self assertFalse: [profile hasLoginInformation] message: @"no login info"];
   MUPlayer *player = [MUPlayer playerWithName: @"User" password: @"foo" world: world];

@@ -73,12 +73,12 @@
 
 - (NSString *) uniqueIdentifier
 {
-  return [NSString stringWithFormat: @"%@.%@.%@", [self.world hostname], [self.world port], self.name];
+  return [NSString stringWithFormat: @"%@.%@.%@", self.world.hostname, self.world.port, self.name];
 }
 
 - (NSString *) windowTitle
 {
-  return [NSString stringWithFormat: @"%@ @ %@", self.name, [self.world name]];
+  return [NSString stringWithFormat: @"%@ @ %@", self.name, self.world.name];
 }
 
 #pragma mark -
