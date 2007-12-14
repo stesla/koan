@@ -24,6 +24,9 @@
 @property (copy) NSString *hostname;
 @property (copy) NSNumber *port;
 @property (copy) NSString *url;
+@property (readonly) NSString *uniqueIdentifier;
+@property (readonly) NSString *windowTitle;
+
 
 + (MUWorld *) worldWithName: (NSString *) newName
   								 hostname: (NSString *) newHostname
@@ -51,7 +54,5 @@
 
 // Actions.
 - (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate;
-- (NSString *) uniqueIdentifier;
-- (NSString *) windowTitle;
 
 @end

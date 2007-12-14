@@ -21,6 +21,7 @@
 @implementation MUWorld
 
 @synthesize name, hostname, port, url;
+@dynamic uniqueIdentifier, windowTitle;
 
 + (MUWorld *) worldWithName: (NSString *) newName
   								 hostname: (NSString *) newHostname
@@ -158,6 +159,9 @@
 {
   return [J3TelnetConnection telnetWithHostname: self.hostname port: [self.port intValue] delegate: delegate];
 }
+
+#pragma mark -
+#pragma mark Property method implementations
 
 - (NSString *) uniqueIdentifier
 {

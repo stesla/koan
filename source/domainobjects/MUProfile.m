@@ -362,23 +362,23 @@
 
 - (NSString *) uniqueIdentifier
 {
-  NSString *rval = nil;
+  NSString *identifier = nil;
   if (player)
   {
     // FIXME:  Consider offloading the generation of a unique name for the player on MUPlayer.
-    rval = [NSString stringWithFormat: @"%@.%@",
-      [world uniqueIdentifier], [player.name lowercaseString]];
+    identifier = [NSString stringWithFormat: @"%@.%@",
+                  world.uniqueIdentifier, [player.name lowercaseString]];
   }
   else
   {
-    rval = [world uniqueIdentifier];
+    identifier = world.uniqueIdentifier;
   }
-  return rval;
+  return identifier;
 }
 
 - (NSString *) windowTitle
 {
-  return (player ? player.windowTitle : [world windowTitle]);
+  return (player ? player.windowTitle : world.windowTitle);
 }
 
 - (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate

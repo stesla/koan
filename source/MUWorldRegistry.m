@@ -141,7 +141,7 @@ static MUWorldRegistry *defaultRegistry = nil;
   {
   	MUWorld *world = [worlds objectAtIndex: i];
   	
-  	if ([identifier isEqualToString: [world uniqueIdentifier]])
+  	if ([identifier isEqualToString: world.uniqueIdentifier])
   		return world;
   }
   

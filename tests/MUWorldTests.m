@@ -25,7 +25,7 @@
 - (void) testUniqueIdentifier
 {
   world.name = @"Test World";
-  [self assert: [world uniqueIdentifier] equals: @"test.world"];
+  [self assert: world.uniqueIdentifier equals: @"test.world"];
 }
 
 - (void) testAddPlayer
