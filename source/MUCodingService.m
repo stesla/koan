@@ -36,7 +36,7 @@ static const int32_t currentProxyVersion = 2;
 + (void) encodeProfile: (MUProfile *) profile withCoder: (NSCoder *) encoder
 {
   [encoder encodeInt32: currentProfileVersion forKey: @"version"];
-  [encoder encodeBool: [profile autoconnect] forKey: @"autoconnect"];
+  [encoder encodeBool: profile.autoconnect forKey: @"autoconnect"];
   [encoder encodeObject: [[profile font] fontName] forKey: @"fontName"];
   [encoder encodeFloat: [[profile font] pointSize] forKey: @"fontSize"];
   [encoder encodeObject: [NSArchiver archivedDataWithRootObject: [profile textColor]] forKey: @"textColor"];
@@ -49,7 +49,7 @@ static const int32_t currentProxyVersion = 2;
 {
   int32_t version = [decoder decodeInt32ForKey: @"version"];
   
-  [profile setAutoconnect: [decoder decodeBoolForKey: @"autoconnect"]];
+  profile.autoconnect = [decoder decodeBoolForKey: @"autoconnect"];
   
   if (version >= 2)
   {

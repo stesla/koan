@@ -381,8 +381,8 @@
     
     if (autoconnect)
     {
-      [profile setWorld: world];
-      if ([profile autoconnect])
+      profile.world = world;
+      if (profile.autoconnect)
         [self openConnection: connectItem];
     }
     
@@ -400,9 +400,9 @@
       
       if (autoconnect)
       {
-        [profile setWorld: world];
-        [profile setPlayer: player];
-        if ([profile autoconnect])
+        profile.world = world;
+        profile.player = player;
+        if (profile.autoconnect)
           [self openConnection: playerItem];
       }
       

@@ -30,7 +30,7 @@
   MUProfile *profile = [MUProfile profileWithWorld: world];
   [self assertFalse: [profile hasLoginInformation] message: @"no login info"];
   MUPlayer *player = [MUPlayer playerWithName: @"User" password: @"foo" world: world];
-  [profile setPlayer: player];
+  profile.player = player;
   [self assertTrue: [profile hasLoginInformation] message: @"has login info"];
 }
 

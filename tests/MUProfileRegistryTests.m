@@ -119,7 +119,7 @@
   [self assertFalse: [registry containsProfileForWorld: world]
             message: @"World only"];
   [self assertFalse: [registry containsProfileForWorld: world
-                                               player: player]
+                                                player: player]
             message: @"World and player"];
 }
 
@@ -134,8 +134,8 @@
                 player: (MUPlayer *) player
 {
   [self assertNotNil: profile];
-  [self assert: [profile world] equals: world];
-  [self assert: [profile player] equals: player];
+  [self assert: profile.world equals: world];
+  [self assert: profile.player equals: player];
 }
 
 - (MUWorld *) testWorld

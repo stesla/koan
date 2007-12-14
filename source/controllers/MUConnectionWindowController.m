@@ -158,7 +158,7 @@ enum MUSearchDirections
   
   if (toolbarItemAction == @selector (goToWorldURL:))
   {
-    NSString *url = [profile world].url;
+    NSString *url = profile.world.url;
     
     return (url && ![url isEqualToString: @""]);
   }
@@ -282,7 +282,7 @@ enum MUSearchDirections
 
 - (IBAction) goToWorldURL: (id) sender
 {
-  [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: [profile world].url]];
+  [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: profile.world.url]];
 }
 
 - (IBAction) sendInputText: (id) sender

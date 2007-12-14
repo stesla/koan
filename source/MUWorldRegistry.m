@@ -186,8 +186,8 @@ static MUWorldRegistry *defaultRegistry = nil;
       player.world = world;
       
       MUProfile *profile = [[MUServices profileRegistry] profileForWorld: world player: player];
-      [profile setWorld: world];
-      [profile setPlayer: player];
+      profile.world = world;
+      profile.player = player;
     }
   }
 }

@@ -17,9 +17,9 @@
 {
   MUWorld *world;
   MUPlayer *player;
+  BOOL autoconnect;
   
   BOOL loggedIn;
-  BOOL autoconnect;
   
   NSFont *font;
   NSColor *textColor;
@@ -27,6 +27,10 @@
   NSColor *linkColor;
   NSColor *visitedLinkColor;
 }
+
+@property (retain) MUWorld *world;
+@property (retain) MUPlayer *player;
+@property (assign) BOOL autoconnect;
 
 + (MUProfile *) profileWithWorld: (MUWorld *) newWorld
                           player: (MUPlayer *) newPlayer
@@ -52,12 +56,6 @@
 - (id) initWithWorld: (MUWorld *) newWorld;
 
 // Accessors.
-- (MUWorld *) world;
-- (void) setWorld: (MUWorld *) newWorld;
-- (MUPlayer *) player;
-- (void) setPlayer: (MUPlayer *) newPlayer;
-- (BOOL) autoconnect;
-- (void) setAutoconnect: (BOOL) newAutoconnect;
 - (NSFont *) font;
 - (void) setFont: (NSFont *) newFont;
 - (NSColor *) textColor;

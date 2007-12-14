@@ -22,6 +22,8 @@
 
 @implementation MUProfile
 
+@synthesize world, player, autoconnect;
+
 + (BOOL) automaticallyNotifiesObserversForKey: (NSString *) key
 {
   static NSArray *keyArray;
@@ -73,12 +75,12 @@
   				 linkColor: (NSColor *) newLinkColor
   	visitedLinkColor: (NSColor *) newVisitedLinkColor
 {
-  if (![super init]))
+  if (![super init])
     return nil;
   
-  [self setWorld: newWorld];
-  [self setPlayer: newPlayer];
-  [self setAutoconnect: newAutoconnect];
+  self.world = newWorld;
+  self.player = newPlayer;
+  self.autoconnect = newAutoconnect;
   [self setFont: newFont];
   [self setTextColor: newTextColor];
   [self setBackgroundColor: newBackgroundColor];
@@ -126,42 +128,6 @@
 
 #pragma mark -
 #pragma mark Accessors
-
-- (MUWorld *) world
-{
-  return world;
-}
-
-- (void) setWorld: (MUWorld *) newWorld
-{
-  if (world == newWorld)
-    return;
-  [world release];
-  world = [newWorld retain];
-}
-
-- (MUPlayer *) player
-{
-  return player;
-}
-
-- (void) setPlayer: (MUPlayer *) newPlayer
-{
-  if (player == newPlayer)
-    return;
-  [player release];
-  player = [newPlayer retain];
-}
-
-- (BOOL) autoconnect
-{
-  return autoconnect;
-}
-
-- (void) setAutoconnect: (BOOL) newAutoconnect
-{
-  autoconnect = newAutoconnect;
-}
 
 - (NSFont *) font
 {

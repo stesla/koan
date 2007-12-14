@@ -586,7 +586,7 @@ enum MUProfilesEditingReturnValues
 {
   editingProfile = [profile retain];
   
-  [profileAutoconnectButton setState: ([profile autoconnect] ? NSOnState : NSOffState)];
+  [profileAutoconnectButton setState: (profile.autoconnect ? NSOnState : NSOffState)];
   
   [profileFontField setStringValue: [profile effectiveFontDisplayName]];
   [profileFontUseGlobalButton setState: ([profile font] == nil ? NSOnState : NSOffState)];
@@ -730,7 +730,7 @@ enum MUProfilesEditingReturnValues
 {  
   if (returnCode == MUEditOkay)
   {
-    [editingProfile setAutoconnect: ([profileAutoconnectButton state] == NSOnState ? YES : NO)];
+    editingProfile.autoconnect = ([profileAutoconnectButton state] == NSOnState ? YES : NO);
     
     if ([profileBackgroundColorUseGlobalButton state] == NSOnState)
       [editingProfile setValue: nil forKey: @"backgroundColor"];
@@ -829,7 +829,7 @@ enum MUProfilesEditingReturnValues
                                                                  player: player] retain];
     
     [[MUServices profileRegistry] removeProfile: profile];
-    [profile setWorld: newWorld];
+    profile.world = newWorld;
     player.world = newWorld;
     [[MUServices profileRegistry] profileForProfile: profile];
     [profile release];
@@ -838,7 +838,7 @@ enum MUProfilesEditingReturnValues
   MUProfile *profile = [[[MUServices profileRegistry] profileForWorld: world] retain];
   
   [[MUServices profileRegistry] removeProfile: profile];
-  [profile setWorld: newWorld];
+  profile.world = newWorld;
   [[MUServices profileRegistry] profileForProfile: profile];
   [profile release];
 }
@@ -851,7 +851,7 @@ enum MUProfilesEditingReturnValues
                                                                player: player] retain];
   
   [[MUServices profileRegistry] removeProfile: profile];
-  [profile setPlayer: newPlayer];
+  profile.player = newPlayer;
   [[MUServices profileRegistry] profileForProfile: profile];
   [profile release];
 }
