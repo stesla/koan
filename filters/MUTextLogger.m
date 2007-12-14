@@ -56,13 +56,13 @@
 {
   NSString *todayString = [[NSCalendarDate calendarDate] descriptionWithCalendarFormat: @"%Y-%m-%d"];
   NSString *path = [[NSString stringWithFormat: @"~/Library/Logs/Koan/%@%@%@.koanlog",
-    (world ? [NSString stringWithFormat: @"%@-", [world name]] : @""),
-    (player ? [NSString stringWithFormat: @"%@-", [player name]] : @""),
-    todayString] stringByExpandingTildeInPath];
+                     (world ? [NSString stringWithFormat: @"%@-", [world name]] : @""),
+                     (player ? [NSString stringWithFormat: @"%@-", player.name] : @""),
+                     todayString] stringByExpandingTildeInPath];
   
   NSMutableDictionary *headers = [NSMutableDictionary dictionary];
   [headers setValue: (world ? [world name] : @"") forKey: @"World"];
-  [headers setValue: (player ? [player name] : @"") forKey: @"Player"];
+  [headers setValue: (player ? player.name : @"") forKey: @"Player"];
   [headers setValue: todayString forKey: @"Date"];
   
   [[NSFileManager defaultManager] createDirectoryAtPath: [path stringByDeletingLastPathComponent] attributes: nil recursive: YES];

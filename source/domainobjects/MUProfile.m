@@ -367,7 +367,7 @@
   {
     // FIXME:  Consider offloading the generation of a unique name for the player on MUPlayer.
     rval = [NSString stringWithFormat: @"%@.%@",
-      [world uniqueIdentifier], [[player name] lowercaseString]];
+      [world uniqueIdentifier], [player.name lowercaseString]];
   }
   else
   {

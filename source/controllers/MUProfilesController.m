@@ -464,7 +464,7 @@ enum MUProfilesEditingReturnValues
   if ([item isKindOfClass: [MUWorld class]])
   	return [(MUWorld *) item name];
   else if ([item isKindOfClass: [MUPlayer class]])
-  	return [(MUPlayer *) item name];
+  	return ((MUPlayer *) item).name;
   else
   	return item;
 }
@@ -570,8 +570,8 @@ enum MUProfilesEditingReturnValues
 
 - (IBAction) editPlayer: (MUPlayer *) player
 {
-  [playerNameField setStringValue: [player name]];
-  [playerPasswordField setStringValue: [player password]];
+  [playerNameField setStringValue: player.name];
+  [playerPasswordField setStringValue: player.password];
   
   [playerEditorSheet makeFirstResponder: playerNameField];
   

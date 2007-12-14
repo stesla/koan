@@ -392,7 +392,7 @@
       profile = [profiles profileForWorld: world player: player];
       
       SEL action = @selector (openConnection:);
-      NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle: [player name]
+      NSMenuItem *playerItem = [[NSMenuItem alloc] initWithTitle: player.name
                                                           action: action
                                                    keyEquivalent: @""];
       [playerItem setTarget: self];

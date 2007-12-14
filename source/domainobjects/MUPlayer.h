@@ -14,6 +14,10 @@
   MUWorld *world;
 }
 
+@property (copy) NSString *name;
+@property (copy) NSString *password;
+@property (retain) MUWorld *world;
+
 + (MUPlayer *) playerWithName: (NSString *) newName
   									 password: (NSString *) newPassword
   											world: (MUWorld *) world;
@@ -22,14 +26,6 @@
 - (id) initWithName: (NSString *) newName
            password: (NSString *) newPassword
               world: (MUWorld *) world;
-
-// Accessors.
-- (NSString *) name;
-- (void) setName: (NSString *) newName;
-- (NSString *) password;
-- (void) setPassword: (NSString *) newPassword;
-- (MUWorld *) world;
-- (void) setWorld: (MUWorld *) newWorld;
 
 // Actions.
 - (NSString *) loginString;

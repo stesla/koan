@@ -21,16 +21,16 @@ static const int32_t currentProxyVersion = 2;
 {
   [encoder encodeInt32: currentPlayerVersion forKey: @"version"];
   
-  [encoder encodeObject: [player name] forKey: @"name"];
-  [encoder encodeObject: [player password] forKey: @"password"];  
+  [encoder encodeObject: player.name forKey: @"name"];
+  [encoder encodeObject: player.password forKey: @"password"];  
 }
 
 + (void) decodePlayer: (MUPlayer *) player withCoder: (NSCoder *) decoder
 {
   // int32_t version = [decoder decodeInt32ForKey: @"version"];
   
-  [player setName: [decoder decodeObjectForKey: @"name"]];
-  [player setPassword: [decoder decodeObjectForKey: @"password"]];
+  player.name = [decoder decodeObjectForKey: @"name"];
+  player.password = [decoder decodeObjectForKey: @"password"];
 }
 
 + (void) encodeProfile: (MUProfile *) profile withCoder: (NSCoder *) encoder

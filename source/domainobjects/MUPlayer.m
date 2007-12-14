@@ -9,6 +9,8 @@
 
 @implementation MUPlayer
 
+@synthesize name, password, world;
+
 + (MUPlayer *) playerWithName: (NSString *) newName
   									 password: (NSString *) newPassword
   											world: (MUWorld *) newWorld
@@ -23,9 +25,9 @@
   if (![super init])
     return nil;
   
-  [self setName: newName];
-  [self setPassword: newPassword];
-  [self setWorld: newWorld];
+  self.name = newName;
+  self.password = newPassword;
+  self.world = newWorld;
   
   return self;
 }
@@ -39,46 +41,8 @@
 {
   [name release];
   [password release];
+  [world release];
   [super dealloc];
-}
-
-#pragma mark -
-#pragma mark Accessors
-
-- (NSString *) name
-{
-  return name;
-}
-
-- (void) setName: (NSString *) newName
-{
-  if (name == newName)
-    return;
-  [name release];
-  name = [newName copy];
-}
-
-- (NSString *) password
-{
-  return password;
-}
-
-- (void) setPassword: (NSString *) newPassword
-{
-  if (password == newPassword)
-    return;
-  [password release];
-  password = [newPassword copy];
-}
-
-- (MUWorld *) world
-{
-  return world;
-}
-
-- (void) setWorld: (MUWorld *) newWorld
-{
-  world = newWorld;
 }
 
 #pragma mark -
@@ -86,35 +50,35 @@
 
 - (NSString *) loginString
 {
-  if (![self name])
+  if (!self.name)
   	return nil;
 
-  NSRange whitespaceRange = [[self name] rangeOfCharacterFromSet: [NSCharacterSet whitespaceCharacterSet]];
+  NSRange whitespaceRange = [self.name rangeOfCharacterFromSet: [NSCharacterSet whitespaceCharacterSet]];
   
-  if ([self password] && [[self password] length] > 0)
+  if (self.password && [self.password length] > 0)
   {
   	if (whitespaceRange.location == NSNotFound)
-  		return [NSString stringWithFormat: @"connect %@ %@", [self name], [self password]];
+  		return [NSString stringWithFormat: @"connect %@ %@", self.name, self.password];
   	else
-  		return [NSString stringWithFormat: @"connect \"%@\" %@", [self name], [self password]];
+  		return [NSString stringWithFormat: @"connect \"%@\" %@", self.name, self.password];
   }
   else
   {
   	if (whitespaceRange.location == NSNotFound)
-  		return [NSString stringWithFormat: @"connect %@", [self name]];
+  		return [NSString stringWithFormat: @"connect %@", self.name];
   	else
-  		return [NSString stringWithFormat: @"connect \"%@\"", [self name]];
+  		return [NSString stringWithFormat: @"connect \"%@\"", self.name];
   }
 }
 
 - (NSString *) uniqueIdentifier
 {
-  return [NSString stringWithFormat: @"%@.%@.%@", [world hostname], [world port], [self name]];
+  return [NSString stringWithFormat: @"%@.%@.%@", [self.world hostname], [self.world port], self.name];
 }
 
 - (NSString *) windowTitle
 {
-  return [NSString stringWithFormat: @"%@ @ %@", [self name], [world name]];
+  return [NSString stringWithFormat: @"%@ @ %@", self.name, [self.world name]];
 }
 
 #pragma mark -
@@ -140,9 +104,9 @@
 
 - (id) copyWithZone: (NSZone *) zone
 {
-  return [[MUPlayer allocWithZone: zone] initWithName: [self name]
-                                            password: [self password]
-                                               world: [self world]];
+  return [[MUPlayer allocWithZone: zone] initWithName: self.name
+                                             password: self.password
+                                                world: self.world];
 }
 
 @end
