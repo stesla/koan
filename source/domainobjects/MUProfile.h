@@ -31,6 +31,9 @@
 @property (retain) MUWorld *world;
 @property (retain) MUPlayer *player;
 @property (assign) BOOL autoconnect;
+@property (readonly) NSString *loginString;
+@property (readonly) NSString *uniqueIdentifier;
+@property (readonly) NSString *windowTitle;
 
 + (MUProfile *) profileWithWorld: (MUWorld *) newWorld
                           player: (MUPlayer *) newPlayer
@@ -80,9 +83,6 @@
 // Actions.
 - (NSString *) hostname;
 - (J3Filter *) logger;
-- (NSString *) loginString;
-- (NSString *) uniqueIdentifier;
-- (NSString *) windowTitle;
 
 - (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate;
 

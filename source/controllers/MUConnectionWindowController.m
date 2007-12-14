@@ -108,9 +108,9 @@ enum MUSearchDirections
       withKeyPath: @"effectiveTextColor"
           options: bindingOptions];
   
-  [[self window] setTitle: [profile windowTitle]];
-  [[self window] setFrameAutosaveName: [profile uniqueIdentifier]];
-  [[self window] setFrameUsingName: [profile uniqueIdentifier]];
+  [[self window] setTitle: profile.windowTitle];
+  [[self window] setFrameAutosaveName: profile.uniqueIdentifier];
+  [[self window] setFrameUsingName: profile.uniqueIdentifier];
 
   [splitView setAutosaveName: [self splitViewAutosaveName]
                  recursively: YES];
@@ -329,10 +329,10 @@ enum MUSearchDirections
 {
   [self displayString: _(MULConnectionOpen)];
   [self displayString: @"\n"];
-  [MUGrowlService connectionOpenedForTitle: [profile windowTitle]];
+  [MUGrowlService connectionOpenedForTitle: profile.windowTitle];
   
   if ([profile hasLoginInformation])
-    [telnetConnection writeLine: [profile loginString]];
+    [telnetConnection writeLine: profile.loginString];
 }
 
 - (void) connectionIsConnecting: (NSNotification *) notification
@@ -346,7 +346,7 @@ enum MUSearchDirections
   [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosed)];
   [self displayString: @"\n"];
-  [MUGrowlService connectionClosedForTitle: [profile windowTitle]];
+  [MUGrowlService connectionClosedForTitle: profile.windowTitle];
 }
 
 - (void) connectionWasClosedByServer: (NSNotification *) notification
@@ -354,7 +354,7 @@ enum MUSearchDirections
   [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosedByServer)];
   [self displayString: @"\n"];
-  [MUGrowlService connectionClosedByServerForTitle: [profile windowTitle]];
+  [MUGrowlService connectionClosedByServerForTitle: profile.windowTitle];
 }
 
 - (void) connectionWasClosedWithError: (NSNotification *) notification
@@ -363,7 +363,7 @@ enum MUSearchDirections
   [self cleanUpPingTimer];
   [self displayString: [NSString stringWithFormat: _(MULConnectionClosedByError), errorMessage]];
   [self displayString: @"\n"];
-  [MUGrowlService connectionClosedByErrorForTitle: [profile windowTitle] error: errorMessage];
+  [MUGrowlService connectionClosedByErrorForTitle: profile.windowTitle error: errorMessage];
 }
 
 #pragma mark -
@@ -619,7 +619,7 @@ enum MUSearchDirections
 
 - (NSString *) splitViewAutosaveName
 {
-  return [NSString stringWithFormat: @"%@.split", [profile uniqueIdentifier]];
+  return [NSString stringWithFormat: @"%@.split", profile.uniqueIdentifier];
 }
 
 - (void) tabCompleteWithDirection: (enum MUSearchDirections) direction

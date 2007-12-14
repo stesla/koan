@@ -472,7 +472,7 @@ enum MUProfilesEditingReturnValues
 - (id) outlineView: (NSOutlineView *) outlineView persistentObjectForItem: (id) item
 {
   if ([item isKindOfClass: [MUWorld class]])
-  	return [(MUWorld *) item uniqueIdentifier];
+  	return ((MUWorld *) item).uniqueIdentifier;
   else
   	return nil;
 }

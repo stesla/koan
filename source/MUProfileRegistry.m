@@ -65,11 +65,11 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 - (MUProfile *) profileForProfile: (MUProfile *) profile
 {
-  MUProfile *rval = [self profileForUniqueIdentifier: [profile uniqueIdentifier]];
+  MUProfile *rval = [self profileForUniqueIdentifier: profile.uniqueIdentifier];
   if (!rval)
   {
     rval = profile;
-    [profiles setObject: rval forKey: [rval uniqueIdentifier]];
+    [profiles setObject: rval forKey: rval.uniqueIdentifier];
     [self writeProfilesToUserDefaults];
   }
   return rval;
@@ -93,7 +93,7 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 - (BOOL) containsProfile: (MUProfile *) profile
 {
-  return [self containsProfileForUniqueIdentifier: [profile uniqueIdentifier]];
+  return [self containsProfileForUniqueIdentifier: profile.uniqueIdentifier];
 }
 
 - (BOOL) containsProfileForUniqueIdentifier: (NSString *) identifier
@@ -103,7 +103,7 @@ static MUProfileRegistry *defaultRegistry = nil;
 
 - (void) removeProfile: (MUProfile *) profile
 {
-  [self removeProfileForUniqueIdentifier: [profile uniqueIdentifier]];
+  [self removeProfileForUniqueIdentifier: profile.uniqueIdentifier];
 }
 
 - (void) removeProfileForWorld: (MUWorld *) world

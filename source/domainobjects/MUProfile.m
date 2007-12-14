@@ -23,6 +23,7 @@
 @implementation MUProfile
 
 @synthesize world, player, autoconnect;
+@dynamic loginString, uniqueIdentifier, windowTitle;
 
 + (BOOL) automaticallyNotifiesObserversForKey: (NSString *) key
 {
@@ -305,6 +306,11 @@
 #pragma mark -
 #pragma mark Actions
 
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate
+{
+  return [world newTelnetConnectionWithDelegate: delegate];
+}
+
 - (NSString *) hostname
 {
   return world.hostname;
@@ -317,6 +323,9 @@
   else
     return [MUTextLogger filterWithWorld: world];
 }
+
+#pragma mark -
+#pragma mark Property method implementations
 
 - (NSString *) loginString
 {
@@ -345,11 +354,6 @@
 - (NSString *) windowTitle
 {
   return (player ? player.windowTitle : world.windowTitle);
-}
-
-- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate
-{
-  return [world newTelnetConnectionWithDelegate: delegate];
 }
 
 #pragma mark -
