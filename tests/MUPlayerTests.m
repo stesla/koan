@@ -15,7 +15,7 @@
   																	 password: @"password"
   																			world: nil];
   
-  [self assert: [player loginString]
+  [self assert: player.loginString
         equals: @"connect \"My User\" password"];
 }
 
@@ -24,7 +24,7 @@
   MUPlayer *player = [MUPlayer playerWithName: @"Bob"
   																	 password: @"drowssap"
   																			world: nil];
-  [self assert: [player loginString]
+  [self assert: player.loginString
         equals: @"connect Bob drowssap"];
 }
 
@@ -33,7 +33,7 @@
   MUPlayer *player = [MUPlayer playerWithName: @"guest"
   																	 password: nil
   																			world: nil];
-  [self assert: [player loginString]
+  [self assert: player.loginString
   			equals: @"connect guest"];
 }
 
@@ -42,7 +42,7 @@
   MUPlayer *player = [MUPlayer playerWithName: @"guest"
   																	 password: @""
   																			world: nil];
-  [self assert: [player loginString]
+  [self assert: player.loginString
   			equals: @"connect guest"];
 }
 
@@ -51,12 +51,12 @@
   MUPlayer *playerOne = [MUPlayer playerWithName: nil
   																			password: nil
   																				 world: nil];
-  [self assertNil: [playerOne loginString]];
+  [self assertNil: playerOne.loginString];
   
   MUPlayer *playerTwo = [MUPlayer playerWithName: nil
   																			password: @"nonsense"
   																				 world: nil];
-  [self assertNil: [playerTwo loginString]];
+  [self assertNil: playerTwo.loginString];
 }
 
 @end

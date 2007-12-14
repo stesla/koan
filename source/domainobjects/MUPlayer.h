@@ -17,6 +17,10 @@
 @property (copy) NSString *name;
 @property (copy) NSString *password;
 @property (retain) MUWorld *world;
+@property (readonly) NSString *loginString;
+@property (readonly) NSString *uniqueIdentifier;
+@property (readonly) NSString *windowTitle;
+
 
 + (MUPlayer *) playerWithName: (NSString *) newName
   									 password: (NSString *) newPassword
@@ -26,10 +30,5 @@
 - (id) initWithName: (NSString *) newName
            password: (NSString *) newPassword
               world: (MUWorld *) world;
-
-// Actions.
-- (NSString *) loginString;
-- (NSString *) uniqueIdentifier;
-- (NSString *) windowTitle;
 
 @end

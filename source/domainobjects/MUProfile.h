@@ -47,6 +47,7 @@
 - (id) initWithWorld: (MUWorld *) newWorld
               player: (MUPlayer *) newPlayer
          autoconnect: (BOOL) newAutoconnect;
+
 - (id) initWithWorld: (MUWorld *) newWorld player: (MUPlayer *) newPlayer;
 - (id) initWithWorld: (MUWorld *) newWorld;
 

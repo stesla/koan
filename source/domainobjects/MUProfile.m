@@ -355,7 +355,7 @@
 - (NSString *) loginString
 {
   if (player)
-    return [player loginString];
+    return player.loginString;
   else
     return nil;
 }
@@ -378,7 +378,7 @@
 
 - (NSString *) windowTitle
 {
-  return (player ? [player windowTitle] : [world windowTitle]);
+  return (player ? player.windowTitle : [world windowTitle]);
 }
 
 - (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate

@@ -10,6 +10,7 @@
 @implementation MUPlayer
 
 @synthesize name, password, world;
+@dynamic loginString, uniqueIdentifier, windowTitle;
 
 + (MUPlayer *) playerWithName: (NSString *) newName
   									 password: (NSString *) newPassword
@@ -46,7 +47,7 @@
 }
 
 #pragma mark -
-#pragma mark Actions
+#pragma mark Property method implementations
 
 - (NSString *) loginString
 {
