@@ -66,7 +66,6 @@
 - (void) setTextColor: (NSColor *) newTextColor;
 - (NSColor *) backgroundColor;
 - (void) setBackgroundColor: (NSColor *) newBackgroundColor;
-- (BOOL) hasLoginInformation;
 - (NSColor *) linkColor;
 - (void) setLinkColor: (NSColor *) newLinkColor;
 - (NSColor *) visitedLinkColor;
@@ -84,5 +83,6 @@
 // Actions.
 - (J3Filter *) createLogger;
 - (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate;
+- (BOOL) hasLoginInformation;
 
 @end

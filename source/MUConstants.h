@@ -9,7 +9,6 @@
 #pragma mark Application constants.
 
 extern NSString *MUApplicationName;
-extern NSString *MUUpdateURL;
 
 #pragma mark User defaults constants.
 

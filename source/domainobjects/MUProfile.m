@@ -180,11 +180,6 @@
   [self didChangeValueForKey: @"effectiveBackgroundColor"];
 }
 
-- (BOOL) hasLoginInformation
-{
-  return [self loginString] != nil;
-}
-
 - (NSColor *) linkColor
 {
   return linkColor;
@@ -317,6 +312,11 @@
     return [MUTextLogger filterWithWorld: world player: player];
   else
     return [MUTextLogger filterWithWorld: world];
+}
+
+- (BOOL) hasLoginInformation
+{
+  return [self loginString] != nil;
 }
 
 #pragma mark -

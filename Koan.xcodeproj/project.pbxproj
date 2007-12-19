@@ -1034,7 +1034,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = "/usr/bin/perl -w";
-			shellScript = "# Xcode auto-versioning script for Subversion, based on version by Axel\n# Andersson and Daniel Jalkut.\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Get the current subversion revision number and use it to set Info.plist values\nmy $REV = `svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n\nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n\nopen (FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join (\"\", <FH>);\nclose (FH);\n\n$info =~ s/SVNREVISION/$version/g;\n\nopen (FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose (FH);\n";
+			shellScript = "# Xcode auto-versioning script for Subversion, based on version by Axel\n# Andersson and Daniel Jalkut.\n\nuse strict;\n\ndie \"$0: Must be run from Xcode\" unless $ENV{\"BUILT_PRODUCTS_DIR\"};\n\n# Get the current subversion revision number and use it to set Info.plist values\nmy $REV = `svnversion -n ./`;\nmy $INFO = \"$ENV{BUILT_PRODUCTS_DIR}/$ENV{WRAPPER_NAME}/Contents/Info.plist\";\n\nmy $version = $REV;\ndie \"$0: No Subversion revision found\" unless $version;\n\nopen (FH, \"$INFO\") or die \"$0: $INFO: $!\";\nmy $info = join (\"\", <FH>);\nclose (FH);\n\n$info =~ s/([\\t ]+<key>CFBundleVersion<\\/key>\\n[\\t ]+<string>).*?(<\\/string>)/$1$version$2/;\n\nopen (FH, \">$INFO\") or die \"$0: $INFO: $!\";\nprint FH $info;\nclose (FH);\n";
 		};
 		7E87751609AD558700A883BC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
