@@ -37,6 +37,12 @@
 		2FCFEFDD0BCAE36D0061FB6B /* MUTextLogDocumentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCFEFDC0BCAE36D0061FB6B /* MUTextLogDocumentTests.m */; };
 		2FDF39610ADB3D1A00EDD48A /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
 		2FDF397C0ADB3D3800EDD48A /* Sparkle.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */; };
+		2FDFA14D0D67E85E007F0036 /* sparkle-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FDFA14C0D67E85E007F0036 /* sparkle-icon.png */; };
+		2FDFA14F0D67E86A007F0036 /* growl-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FDFA14E0D67E86A007F0036 /* growl-icon.png */; };
+		2FDFA1510D67E870007F0036 /* openssl-icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 2FDFA1500D67E870007F0036 /* openssl-icon.gif */; };
+		2FDFA1530D67E890007F0036 /* rbsplitview-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2FDFA1520D67E890007F0036 /* rbsplitview-icon.png */; };
+		2FDFA1560D67F630007F0036 /* MUAcknowledgementsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FDFA1550D67F630007F0036 /* MUAcknowledgementsController.m */; };
+		2FDFA15D0D67F960007F0036 /* MUAcknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FDFA15C0D67F960007F0036 /* MUAcknowledgements.xib */; };
 		2FE366750BCAC9820068A6AA /* UKPrefsPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE366730BCAC9820068A6AA /* UKPrefsPanel.m */; };
 		2FE368160BCAD4F00068A6AA /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FE367EB0BCAD35E0068A6AA /* GetMetadataForFile.m */; };
 		2FE368170BCAD4F30068A6AA /* Main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2FE367EC0BCAD35E0068A6AA /* Main.c */; };
@@ -237,6 +243,13 @@
 		2FCFEFDB0BCAE36D0061FB6B /* MUTextLogDocumentTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUTextLogDocumentTests.h; sourceTree = "<group>"; };
 		2FCFEFDC0BCAE36D0061FB6B /* MUTextLogDocumentTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUTextLogDocumentTests.m; sourceTree = "<group>"; };
 		2FDF39600ADB3D1A00EDD48A /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../Sparkle.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FDFA14C0D67E85E007F0036 /* sparkle-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sparkle-icon.png"; sourceTree = "<group>"; };
+		2FDFA14E0D67E86A007F0036 /* growl-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "growl-icon.png"; sourceTree = "<group>"; };
+		2FDFA1500D67E870007F0036 /* openssl-icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "openssl-icon.gif"; sourceTree = "<group>"; };
+		2FDFA1520D67E890007F0036 /* rbsplitview-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rbsplitview-icon.png"; sourceTree = "<group>"; };
+		2FDFA1540D67F630007F0036 /* MUAcknowledgementsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUAcknowledgementsController.h; sourceTree = "<group>"; };
+		2FDFA1550D67F630007F0036 /* MUAcknowledgementsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUAcknowledgementsController.m; sourceTree = "<group>"; };
+		2FDFA1590D67F956007F0036 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MUAcknowledgements.xib; sourceTree = "<group>"; };
 		2FE366720BCAC9820068A6AA /* UKPrefsPanel.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = UKPrefsPanel.h; sourceTree = "<group>"; };
 		2FE366730BCAC9820068A6AA /* UKPrefsPanel.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = UKPrefsPanel.m; sourceTree = "<group>"; };
 		2FE367EB0BCAD35E0068A6AA /* GetMetadataForFile.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
@@ -566,9 +579,13 @@
 				E6C9D449077BF6B5007BB2C1 /* add.png */,
 				E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */,
 				E6C9D44B077BF6B5007BB2C1 /* edit.png */,
+				E6E7BF0D07867F080065EDD6 /* finger-cursor.png */,
+				2FDFA14E0D67E86A007F0036 /* growl-icon.png */,
+				2FDFA1500D67E870007F0036 /* openssl-icon.gif */,
+				2FDFA1520D67E890007F0036 /* rbsplitview-icon.png */,
 				E6C9D44C077BF6B5007BB2C1 /* remove-pressed.png */,
 				E6C9D44D077BF6B5007BB2C1 /* remove.png */,
-				E6E7BF0D07867F080065EDD6 /* finger-cursor.png */,
+				2FDFA14C0D67E85E007F0036 /* sparkle-icon.png */,
 			);
 			name = Resources;
 			path = resources;
@@ -723,6 +740,8 @@
 		E670A81207420F8C00E2DAEB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2FDFA1540D67F630007F0036 /* MUAcknowledgementsController.h */,
+				2FDFA1550D67F630007F0036 /* MUAcknowledgementsController.m */,
 				E62C905A07422595005662BC /* MUApplicationController.h */,
 				E62C905B07422595005662BC /* MUApplicationController.m */,
 				E62C8FBB07421D83005662BC /* MUConnectionToolbarController.h */,
@@ -749,6 +768,7 @@
 		E6B5E3AA06A6EE0C00F53EBB /* Nibs */ = {
 			isa = PBXGroup;
 			children = (
+				2FDFA15C0D67F960007F0036 /* MUAcknowledgements.xib */,
 				2FFE38260BCAF0FD00F4F3AF /* MULogBrowser.nib */,
 				E6EB62C007569D33009F47D5 /* MUConnectionWindow.nib */,
 				E6EB62BE07569D2E009F47D5 /* MUMainMenu.nib */,
@@ -1016,6 +1036,11 @@
 				7E13B9AD09AE87D800508460 /* MUProxySettings.nib in Resources */,
 				2F6C72AA0BB46BD000709320 /* Koan.sdef in Resources */,
 				2FFE38270BCAF0FD00F4F3AF /* MULogBrowser.nib in Resources */,
+				2FDFA14D0D67E85E007F0036 /* sparkle-icon.png in Resources */,
+				2FDFA14F0D67E86A007F0036 /* growl-icon.png in Resources */,
+				2FDFA1510D67E870007F0036 /* openssl-icon.gif in Resources */,
+				2FDFA1530D67E890007F0036 /* rbsplitview-icon.png in Resources */,
+				2FDFA15D0D67F960007F0036 /* MUAcknowledgements.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1185,6 +1210,7 @@
 				7EE11F3B0BD8284100C78D9C /* J3TelnetNotTelnetState.m in Sources */,
 				2FB40CDB0BF0FA3D004E13F8 /* MUFugueEditFilter.m in Sources */,
 				7E0EEC160C27140E0043FA91 /* J3Connection.m in Sources */,
+				2FDFA1560D67F630007F0036 /* MUAcknowledgementsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1214,6 +1240,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2FDFA15C0D67F960007F0036 /* MUAcknowledgements.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2FDFA1590D67F956007F0036 /* English */,
+			);
+			name = MUAcknowledgements.xib;
+			sourceTree = "<group>";
+		};
 		2FE3691E0BCAD8370068A6AA /* schema.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1394,9 +1428,9 @@
 				GCC_PREFIX_HEADER = "source/Koan-Prefix.pch";
 				GCC_USE_GCC3_PFE_SUPPORT = YES;
 				HEADER_SEARCH_PATHS = (
-					./source,
-					./filters,
 					./externals,
+					./filters,
+					./source,
 					./source/infrastructure,
 				);
 				INFOPLIST_FILE = resources/Info.plist;

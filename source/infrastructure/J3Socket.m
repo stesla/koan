@@ -154,7 +154,9 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   uint8_t *bytes = malloc (length);
   if (!bytes)
   {
-    @throw [NSException exceptionWithName: NSMallocException reason: @"Could not allocate socket read buffer" userInfo: nil];
+    @throw [NSException exceptionWithName: NSMallocException
+                                   reason: @"Could not allocate socket read buffer"
+                                 userInfo: nil];
   }
 
   errno = 0;
@@ -170,7 +172,9 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
       return nil;
     
     if (errno == EBADF || errno == EPIPE)
-      [self performSelectorOnMainThread: @selector(setStatusClosedByServer) withObject: nil waitUntilDone: YES];
+      [self performSelectorOnMainThread: @selector (setStatusClosedByServer)
+                             withObject: nil
+                          waitUntilDone: YES];
     
     [J3SocketException socketErrorWithErrnoForFunction: @"read"];
   }

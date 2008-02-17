@@ -1,114 +1,159 @@
-{
-    IBClasses = (
-        {
-            ACTIONS = {clearWindow = id; connectOrDisconnect = id; }; 
-            CLASS = FirstResponder; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {
-                checkForUpdates = id; 
-                checkForUpdatesWithDialog = id; 
-                download = id; 
-                selectAutomaticCheckInterval = id; 
-                toggleAutomaticChecking = id; 
-            }; 
-            CLASS = J3UpdateController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                checkAutomaticallyButton = NSButton; 
-                checkAutomaticallyIntervalButton = NSPopUpButton; 
-                checkNowButton = NSButton; 
-                currentVersionField = NSTextField; 
-                downloadButton = NSButton; 
-                lastCheckedField = NSTextField; 
-                newestVersionField = NSTextField; 
-                progressIndicator = NSProgressIndicator; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {
-                chooseNewFont = id; 
-                connectToURL = id; 
-                connectUsingPanelInformation = id; 
-                openBugsWebPage = id; 
-                openNewConnectionPanel = id; 
-                showAboutPanel = id; 
-                showPreferencesPanel = id; 
-                showProfilesPanel = id; 
-                showProxySettings = id; 
-                toggleUseProxy = id; 
-            }; 
-            CLASS = MUApplicationController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                newConnectionHostnameField = NSTextField; 
-                newConnectionPanel = NSPanel; 
-                newConnectionPortField = NSTextField; 
-                newConnectionSaveWorldButton = NSButton; 
-                openConnectionMenu = NSMenu; 
-                preferencesController = MUPreferencesController; 
-                useProxyMenuItem = NSMenuItem; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            CLASS = MUDocumentController; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSDocumentController; 
-        }, 
-        {
-            ACTIONS = {connect = id; disconnect = id; writeLine = id; }; 
-            CLASS = MUMainWindowController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                connectButton = NSButton; 
-                disconnectButton = NSButton; 
-                hostNameField = NSTextField; 
-                inputField = NSTextField; 
-                portField = NSTextField; 
-                receivedTextView = NSTextView; 
-            }; 
-            SUPERCLASS = NSWindowController; 
-        }, 
-        {
-            ACTIONS = {playSelectedSound = id; showPreferencesPanel = id; }; 
-            CLASS = MUPreferencesController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                globalBackgroundColorWell = NSColorWell; 
-                globalLinkColorWell = NSColorWell; 
-                globalTextColorWell = NSColorWell; 
-                globalVisitedLinkColorWell = NSColorWell; 
-                preferencesPanel = NSPanel; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            CLASS = MUToolbarController; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {
-                searchItemView = NSView; 
-                window = NSWindow; 
-                windowController = NSWindowController; 
-            }; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {checkForUpdates = id; }; 
-            CLASS = SUUpdater; 
-            LANGUAGE = ObjC; 
-            SUPERCLASS = NSObject; 
-        }, 
-        {
-            ACTIONS = {changePanes = id; orderFrontPrefsPanel = id; }; 
-            CLASS = UKPrefsPanel; 
-            LANGUAGE = ObjC; 
-            OUTLETS = {tabView = NSTabView; }; 
-            SUPERCLASS = NSObject; 
-        }
-    ); 
-    IBVersion = 1; 
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IBClasses</key>
+	<array>
+		<dict>
+			<key>CLASS</key>
+			<string>NSObject</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>MUDocumentController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSDocumentController</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>checkForUpdates</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>SUUpdater</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>CLASS</key>
+			<string>NSURL</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>playSelectedSound</key>
+				<string>id</string>
+				<key>showPreferencesPanel</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>MUPreferencesController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>globalBackgroundColorWell</key>
+				<string>NSColorWell</string>
+				<key>globalLinkColorWell</key>
+				<string>NSColorWell</string>
+				<key>globalTextColorWell</key>
+				<string>NSColorWell</string>
+				<key>globalVisitedLinkColorWell</key>
+				<string>NSColorWell</string>
+				<key>preferencesPanel</key>
+				<string>NSPanel</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>chooseNewFont</key>
+				<string>id</string>
+				<key>connectToURL</key>
+				<string>NSURL</string>
+				<key>connectUsingPanelInformation</key>
+				<string>id</string>
+				<key>openBugsWebPage</key>
+				<string>id</string>
+				<key>openNewConnectionPanel</key>
+				<string>id</string>
+				<key>showAboutPanel</key>
+				<string>id</string>
+				<key>showAcknowledgementsWindow</key>
+				<string>id</string>
+				<key>showPreferencesPanel</key>
+				<string>id</string>
+				<key>showProfilesPanel</key>
+				<string>id</string>
+				<key>showProxySettings</key>
+				<string>id</string>
+				<key>toggleUseProxy</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>MUApplicationController</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>newConnectionHostnameField</key>
+				<string>NSTextField</string>
+				<key>newConnectionPanel</key>
+				<string>NSPanel</string>
+				<key>newConnectionPortField</key>
+				<string>NSTextField</string>
+				<key>newConnectionSaveWorldButton</key>
+				<string>NSButton</string>
+				<key>openConnectionMenu</key>
+				<string>NSMenu</string>
+				<key>preferencesController</key>
+				<string>MUPreferencesController</string>
+				<key>useProxyMenuItem</key>
+				<string>NSMenuItem</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>clearWindow</key>
+				<string>id</string>
+				<key>connectOrDisconnect</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>FirstResponder</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+		<dict>
+			<key>ACTIONS</key>
+			<dict>
+				<key>changePanes</key>
+				<string>id</string>
+				<key>orderFrontPrefsPanel</key>
+				<string>id</string>
+			</dict>
+			<key>CLASS</key>
+			<string>UKPrefsPanel</string>
+			<key>LANGUAGE</key>
+			<string>ObjC</string>
+			<key>OUTLETS</key>
+			<dict>
+				<key>tabView</key>
+				<string>NSTabView</string>
+			</dict>
+			<key>SUPERCLASS</key>
+			<string>NSObject</string>
+		</dict>
+	</array>
+	<key>IBVersion</key>
+	<string>1</string>
+</dict>
+</plist>

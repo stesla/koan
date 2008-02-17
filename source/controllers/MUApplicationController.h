@@ -1,11 +1,12 @@
 //
 // MUApplicationController.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2007, 2008 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
 
+@class MUAcknowledgementsController;
 @class MUPreferencesController;
 @class MUProfilesController;
 @class MUProxySettingsController;
@@ -24,6 +25,7 @@
   unsigned unreadCount;
   
   NSMutableArray *connectionWindowControllers;
+  MUAcknowledgementsController *acknowledgementsController;
   MUProfilesController *profilesController;
   MUProxySettingsController *proxySettingsController;
 }
@@ -34,6 +36,7 @@
 - (IBAction) openBugsWebPage: (id) sender;
 - (IBAction) openNewConnectionPanel: (id) sender;
 - (IBAction) showAboutPanel: (id) sender;
+- (IBAction) showAcknowledgementsWindow: (id) sender;
 - (IBAction) showPreferencesPanel: (id) sender;
 - (IBAction) showProfilesPanel: (id) sender;
 - (IBAction) showProxySettings: (id) sender;

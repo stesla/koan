@@ -6,6 +6,7 @@
 
 #import "FontNameToDisplayNameTransformer.h"
 #import "J3PortFormatter.h"
+#import "MUAcknowledgementsController.h"
 #import "MUApplicationController.h"
 #import "MUConnectionWindowController.h"
 #import "MUGrowlService.h"
@@ -179,6 +180,14 @@
 - (IBAction) showAboutPanel: (id) sender;
 {
   [NSApp orderFrontStandardAboutPanel: sender];
+}
+
+- (IBAction) showAcknowledgementsWindow: (id) sender
+{
+  if (!acknowledgementsController)
+    acknowledgementsController = [[MUAcknowledgementsController alloc] init];
+  if (acknowledgementsController)
+    [acknowledgementsController showWindow: self];
 }
 
 - (IBAction) showPreferencesPanel: (id) sender
