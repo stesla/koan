@@ -200,7 +200,7 @@
 
 - (void) schedulePollTimer
 {
-  pollTimer = [NSTimer scheduledTimerWithTimeInterval: 0.0
+  pollTimer = [NSTimer scheduledTimerWithTimeInterval: 0.05
                                                target: self
                                              selector: @selector (fireTimer:)
                                              userInfo: nil
