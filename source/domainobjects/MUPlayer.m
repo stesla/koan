@@ -1,7 +1,7 @@
 //
 // MUPlayer.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUPlayer.h"
@@ -23,7 +23,7 @@
            password: (NSString *) newPassword
               world: (MUWorld *) newWorld
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   self.name = newName;
@@ -92,7 +92,7 @@
 
 - (id) initWithCoder: (NSCoder *) decoder
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   [MUCodingService decodePlayer: self withCoder: decoder];

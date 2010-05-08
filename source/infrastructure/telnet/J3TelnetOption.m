@@ -1,9 +1,7 @@
 //
-//  J3TelnetOption.m
-//  Koan
+// J3TelnetOption.m
 //
-//  Created by Samuel Tesla on 4/10/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3TelnetOption.h"
@@ -43,9 +41,9 @@
   return him == J3TelnetQYes;
 }
 
-- (id) initWithOption: (int) newOption delegate: (id <J3TelnetOptionDelegate>) object
+- (id) initWithOption: (int) newOption delegate: (NSObject <J3TelnetOptionDelegate> *) object
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   option = newOption;
   delegate = object;

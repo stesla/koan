@@ -1,7 +1,7 @@
 //
 // J3SocksRequest.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3SocksRequest.h"
@@ -10,9 +10,14 @@
 
 @implementation J3SocksRequest
 
++ (id) socksRequestWithHostname: (NSString *) hostnameValue port: (int) portValue
+{
+  return [[[J3SocksRequest alloc] initWithHostname: hostnameValue port: portValue] autorelease];
+}
+
 - (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   [self at: &hostname put: hostnameValue];
   port = portValue;
@@ -26,7 +31,7 @@
   [super dealloc];
 }
 
-- (void) appendToBuffer: (id <J3WriteBuffer>) buffer
+- (void) appendToBuffer: (NSObject <J3WriteBuffer> *) buffer
 {
   [buffer appendByte: J3SocksVersion];
   [buffer appendByte: J3SocksConnect];
@@ -38,7 +43,7 @@
   [buffer appendByte: (0x00FF & port)]; //least significant byte of port
 }
 
-- (void) parseReplyFromByteSource: (id <J3ByteSource>) source
+- (void) parseReplyFromByteSource: (NSObject <J3ByteSource> *) source
 {
   NSData *data = [source readExactlyLength: 4];
   if ([data length] != 4)

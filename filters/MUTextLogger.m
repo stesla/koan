@@ -1,7 +1,7 @@
 //
 // MUTextLogger.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "categories/NSFileManager (Recursive).h"
@@ -33,7 +33,7 @@
 
 - (id) initWithOutputStream: (NSOutputStream *) stream
 {
-  if (!stream || ![super init])
+  if (!stream || !(self = [super init]))
     return nil;
   
   output = [stream retain];
@@ -56,17 +56,18 @@
 {
   NSString *todayString = [[NSCalendarDate calendarDate] descriptionWithCalendarFormat: @"%Y-%m-%d"];
   NSString *path = [[NSString stringWithFormat: @"~/Library/Logs/Koan/%@%@%@.koanlog",
-                     (world ? [NSString stringWithFormat: @"%@-", [world name]] : @""),
+                     (world ? [NSString stringWithFormat: @"%@-", world.name] : @""),
                      (player ? [NSString stringWithFormat: @"%@-", player.name] : @""),
                      todayString] stringByExpandingTildeInPath];
   
   NSMutableDictionary *headers = [NSMutableDictionary dictionary];
-  [headers setValue: (world ? [world name] : @"") forKey: @"World"];
+  [headers setValue: (world ? world.name : @"") forKey: @"World"];
   [headers setValue: (player ? player.name : @"") forKey: @"Player"];
   [headers setValue: todayString forKey: @"Date"];
   
   [[NSFileManager defaultManager] createDirectoryAtPath: [path stringByDeletingLastPathComponent] attributes: nil recursive: YES];
   [self initializeFileAtPath: path withHeaders: headers];
+  
   return [self initWithOutputStream: [NSOutputStream outputStreamToFileAtPath: path append: YES]];
 }
 

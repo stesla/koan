@@ -1,13 +1,14 @@
 //
 // J3TelnetSubnegotiationState.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3TelnetSubnegotiationState.h"
-#import "J3TelnetSubnegotiationIACState.h"
+
 #import "J3TelnetConstants.h"
-#import "J3TelnetOptionMCCP1State.h"
+#import "J3TelnetEngine.h"
+#import "J3TelnetSubnegotiationIACState.h"
 
 @implementation J3TelnetSubnegotiationState
 
@@ -16,12 +17,10 @@
   switch (byte)
   {
     case J3TelnetInterpretAsCommand:
-      return [J3TelnetSubnegotiationIACState state];
-      
-    case J3TelnetOptionMCCP1:
-      return [J3TelnetOptionMCCP1State state];
+      return [J3TelnetSubnegotiationIACState stateWithReturnState: [J3TelnetSubnegotiationState class]];
       
     default:
+      [engine bufferTextInputByte: byte];
       return self;
   }
 }

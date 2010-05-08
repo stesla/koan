@@ -1,7 +1,7 @@
 //
 // MUProfilesController.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUProfilesController.h"
@@ -47,7 +47,9 @@ enum MUProfilesEditingReturnValues
 
 - (id) init
 {
-  return [super initWithWindowNibName: @"MUProfiles"];
+  self = [super initWithWindowNibName: @"MUProfiles"];
+  
+  return self;
 }
 
 - (void) awakeFromNib

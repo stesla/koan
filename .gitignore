@@ -1,3 +1,40 @@
-build
-*.mode*
+# Mac OS X Finder metadata.
+
+.DS_Store
+profile
+
+# Other version-control metadata.
+
+.hg/
+.svn/
+CVS/
+
+# Automatic backup files.
+
+*.swp
+*~.nib
+*~.xib
+*~
+*(Autosaved).rtfd/
+Backup[ ]of[ ]*.pages/
+Backup[ ]of[ ]*.key/
+Backup[ ]of[ ]*.numbers/
+
+# Built products.
+
+build/
+*.[oa]
+*.pyc
+
+# Xcode per-user configuration files.
+
+*.mode1
+*.mode1v3
+*.mode2v3
 *.pbxuser
+*.perspective
+*.perspectivev3
+
+# Generated files.
+
+VersionX-revision.h

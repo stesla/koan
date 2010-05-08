@@ -1,16 +1,16 @@
 //
-// J3Formatting.m
+// J3Formatter.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
-#import "J3Formatting.h"
+#import "J3Formatter.h"
 
-@implementation J3Formatting
+@implementation J3Formatter
 
 + (id) formattingForTesting
 {
-  return [self formattingWithForegroundColor: [J3Formatting testingForeground] backgroundColor: [J3Formatting testingBackground] font: [J3Formatting testingFont]];
+  return [self formattingWithForegroundColor: [J3Formatter testingForeground] backgroundColor: [J3Formatter testingBackground] font: [J3Formatter testingFont]];
 }
 
 + (id) formattingWithForegroundColor: (NSColor *) fore backgroundColor: (NSColor *) back font: (NSFont *) font

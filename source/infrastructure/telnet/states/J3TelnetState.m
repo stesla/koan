@@ -1,7 +1,7 @@
 //
 // J3TelnetState.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3TelnetState.h"
@@ -27,9 +27,7 @@ static NSMutableDictionary *states;
     [states setObject: result forKey: self];
   }
   else
-  {
     result = [states objectForKey: self];
-  }
   
   return result;
 }
@@ -60,7 +58,7 @@ static NSMutableDictionary *states;
 - (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
   @throw [NSException exceptionWithName: @"SubclassResponsibility"
-                                 reason: @"Subclass failed to implement -parse: forengine: "
+                                 reason: @"Subclass failed to implement -[parse:forEngine:]"
                                userInfo: nil];
 }
 

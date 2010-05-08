@@ -1,7 +1,7 @@
 //
 // MULogBrowserWindowController.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MULogBrowserWindowController.h"
@@ -21,7 +21,7 @@ static MULogBrowserWindowController *sharedLogBrowserWindowController = nil;
 
 - (id) init
 {
-  if (![super initWithWindowNibName: @"MULogBrowser"])
+  if (!(self = [super initWithWindowNibName: @"MULogBrowser"]))
     return nil;
   
   (void) [self window];

@@ -1,7 +1,7 @@
 //
 // MUProfilesController.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUPreferencesController.h"
@@ -67,9 +67,9 @@
   [sound play];
 }
 
-- (void) showPreferencesPanel: (id) sender
+- (void) showPreferencesWindow: (id) sender
 {
-  [preferencesPanel makeKeyAndOrderFront: self];
+  [preferencesWindow makeKeyAndOrderFront: self];
 }
 
 @end

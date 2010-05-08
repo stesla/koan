@@ -1,7 +1,7 @@
 //
 // J3TelnetIACState.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3TelnetConstants.h"
@@ -11,7 +11,7 @@
 #import "J3TelnetEngine.h"
 #import "J3TelnetNotTelnetState.h"
 #import "J3TelnetState.h"
-#import "J3TelnetSubnegotiationState.h"
+#import "J3TelnetSubnegotiationOptionState.h"
 #import "J3TelnetTextState.h"
 #import "J3TelnetWillState.h"
 #import "J3TelnetWontState.h"
@@ -65,11 +65,25 @@
       return [J3TelnetTextState state];
 
     case J3TelnetBeginSubnegotiation:
-      if ([engine telnetConfirmed])
-        return [J3TelnetSubnegotiationState state];
+      if (![engine telnetConfirmed])
+      {
+        [engine log: @"Not telnet: IAC SB without receiving earlier telnet sequences."];
+        return [self notTelnetFromByte: byte forEngine: engine];
+      }
+      
+      [engine consumeReadBufferAsText];
+      return [J3TelnetSubnegotiationOptionState state];
+      
     case J3TelnetEndSubnegotiation:
     default:
-      return [self notTelnetFromByte: byte forEngine: engine];
+      if (![engine telnetConfirmed])
+      {
+        [engine log: @"Not telnet: IAC SE without receiving earlier telnet sequences."];
+        return [self notTelnetFromByte: byte forEngine: engine];
+      }
+      
+      [engine log: @"Telnet irregularity: IAC SE while not in subnegotiation."];
+      return [J3TelnetTextState state];
   }
 }
 

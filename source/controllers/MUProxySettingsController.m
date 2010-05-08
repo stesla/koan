@@ -1,7 +1,7 @@
 //
 // MUProxySettingsController.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUProxySettingsController.h"
@@ -20,7 +20,9 @@
 
 - (id) init
 {
-  return [super initWithWindowNibName: @"MUProxySettings"];
+  self = [super initWithWindowNibName: @"MUProxySettings"];
+  
+  return self;
 }
 
 - (J3ProxySettings *) proxySettings

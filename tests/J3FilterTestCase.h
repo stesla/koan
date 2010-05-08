@@ -1,7 +1,7 @@
 //
 // J3FilterTestCase.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <J3Testing/J3TestCase.h>

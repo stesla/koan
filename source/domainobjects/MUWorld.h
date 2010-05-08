@@ -1,15 +1,15 @@
 //
 // MUWorld.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
 
-@protocol J3LineBufferDelegate;
-@protocol J3ConnectionDelegate;
 @class J3TelnetConnection;
 @class MUPlayer;
+@protocol J3LineBufferDelegate;
+@protocol J3TelnetConnectionDelegate;
 
 @interface MUWorld : NSObject <NSCoding, NSCopying>
 {
@@ -26,7 +26,6 @@
 @property (copy) NSString *url;
 @property (readonly) NSString *uniqueIdentifier;
 @property (readonly) NSString *windowTitle;
-
 
 + (MUWorld *) worldWithName: (NSString *) newName
   								 hostname: (NSString *) newHostname
@@ -53,6 +52,6 @@
 - (void) setPlayers: (NSArray *) newPlayers;
 
 // Actions.
-- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate;
+- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
 
 @end

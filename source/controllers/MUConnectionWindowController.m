@@ -1,7 +1,7 @@
 //
 // MUConnectionWindowController.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUConnectionWindowController.h"
@@ -27,7 +27,6 @@ enum MUSearchDirections
 - (J3Filter *) createLogger;
 - (void) didEndCloseSheet: (NSWindow *) sheet returnCode: (int) returnCode contextInfo: (void *) contextInfo;
 - (void) disconnect;
-- (void) displayString: (NSString *) string;
 - (void) endCompletion;
 - (BOOL) isUsingTelnet: (J3TelnetConnection *) telnet;
 - (void) postConnectionWindowControllerDidReceiveTextNotification;
@@ -45,7 +44,7 @@ enum MUSearchDirections
 
 - (id) initWithProfile: (MUProfile *) newProfile
 {
-  if (![super initWithWindowNibName: @"MUConnectionWindow"])
+  if (!(self = [super initWithWindowNibName: @"MUConnectionWindow"]))
     return nil;
   
   profile = [newProfile retain];
@@ -315,17 +314,39 @@ enum MUSearchDirections
 }
 
 #pragma mark -
-#pragma mark J3ReadBuffer delegate
+#pragma mark J3TelnetConnectionDelegate protocol
 
-- (void) readBufferDidProvideString: (NSNotification *) notification
-{
-  [self displayString: [[notification userInfo] objectForKey: @"string"]];
+- (void) displayString: (NSString *) string
+{  
+  if (!string || [string length] == 0)
+    return;
+  
+  NSTextStorage *textStorage = [receivedTextView textStorage];
+  float scrollerPosition = [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
+  
+  NSMutableDictionary *typingAttributes =
+  [NSMutableDictionary dictionaryWithDictionary: [receivedTextView typingAttributes]];
+  
+  [typingAttributes removeObjectForKey: NSLinkAttributeName];
+  [typingAttributes removeObjectForKey: NSUnderlineStyleAttributeName];
+  [typingAttributes setObject: [[profile formatting] foreground] forKey: NSForegroundColorAttributeName];
+  [typingAttributes setObject: [[profile formatting] background] forKey: NSBackgroundColorDocumentAttribute];
+  
+  NSAttributedString *unfilteredString = [NSAttributedString attributedStringWithString: string attributes: typingAttributes];
+  NSAttributedString *filteredString = [filterQueue processAttributedString: unfilteredString];
+  
+  [textStorage replaceCharactersInRange: NSMakeRange ([textStorage length], 0) withAttributedString: filteredString];
+  [[receivedTextView window] invalidateCursorRectsForView: receivedTextView];
+  
+  // Scroll to the bottom of the text window, but only if we were previously at the bottom.
+  
+  if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
+    [receivedTextView scrollRangeToVisible: NSMakeRange ([textStorage length], 0)];
+  
+  [self postConnectionWindowControllerDidReceiveTextNotification];
 }
 
-#pragma mark -
-#pragma mark J3ConnectionDelegate protocol
-
-- (void) connectionDidConnect: (NSNotification *) notification
+- (void) telnetConnectionDidConnect: (NSNotification *) notification
 {
   [self displayString: _(MULConnectionOpen)];
   [self displayString: @"\n"];
@@ -335,13 +356,13 @@ enum MUSearchDirections
     [telnetConnection writeLine: profile.loginString];
 }
 
-- (void) connectionIsConnecting: (NSNotification *) notification
+- (void) telnetConnectionIsConnecting: (NSNotification *) notification
 {
   [self displayString: _(MULConnectionOpening)];
   [self displayString: @"\n"];
 }
 
-- (void) connectionWasClosedByClient: (NSNotification *) notification
+- (void) telnetConnectionWasClosedByClient: (NSNotification *) notification
 {
   [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosed)];
@@ -349,7 +370,7 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedForTitle: profile.windowTitle];
 }
 
-- (void) connectionWasClosedByServer: (NSNotification *) notification
+- (void) telnetConnectionWasClosedByServer: (NSNotification *) notification
 {
   [self cleanUpPingTimer];
   [self displayString: _(MULConnectionClosedByServer)];
@@ -357,9 +378,9 @@ enum MUSearchDirections
   [MUGrowlService connectionClosedByServerForTitle: profile.windowTitle];
 }
 
-- (void) connectionWasClosedWithError: (NSNotification *) notification
+- (void) telnetConnectionWasClosedWithError: (NSNotification *) notification
 {
-  NSString *errorMessage = [[notification userInfo] valueForKey: J3ConnectionErrorMessageKey];
+  NSString *errorMessage = [[notification userInfo] valueForKey: J3TelnetConnectionErrorMessageKey];
   [self cleanUpPingTimer];
   [self displayString: [NSString stringWithFormat: _(MULConnectionClosedByError), errorMessage]];
   [self displayString: @"\n"];
@@ -557,36 +578,6 @@ enum MUSearchDirections
 {
   if (telnetConnection)
     [telnetConnection close];
-}
-
-- (void) displayString: (NSString *) string
-{  
-  if (!string || [string length] == 0)
-    return;
-  
-  NSTextStorage *textStorage = [receivedTextView textStorage];
-  float scrollerPosition = [[[receivedTextView enclosingScrollView] verticalScroller] floatValue];
-  
-  NSMutableDictionary *typingAttributes =
-    [NSMutableDictionary dictionaryWithDictionary: [receivedTextView typingAttributes]];
-  
-  [typingAttributes removeObjectForKey: NSLinkAttributeName];
-  [typingAttributes removeObjectForKey: NSUnderlineStyleAttributeName];
-  [typingAttributes setObject: [[profile formatting] foreground] forKey: NSForegroundColorAttributeName];
-  [typingAttributes setObject: [[profile formatting] background] forKey: NSBackgroundColorDocumentAttribute];
-  
-  NSAttributedString *unfilteredString = [NSAttributedString attributedStringWithString: string attributes: typingAttributes];
-  NSAttributedString *filteredString = [filterQueue processAttributedString: unfilteredString];
-  
-  [textStorage replaceCharactersInRange: NSMakeRange ([textStorage length], 0) withAttributedString: filteredString];
-  [[receivedTextView window] invalidateCursorRectsForView: receivedTextView];
-  
-  // Scroll to the bottom of the text window, but only if we were previously at the bottom.
-  
-  if (1.0 - scrollerPosition < 0.000001) // Avoiding inaccuracy of == for floats.
-    [receivedTextView scrollRangeToVisible: NSMakeRange ([textStorage length], 0)];
-  
-  [self postConnectionWindowControllerDidReceiveTextNotification];
 }
 
 - (void) endCompletion

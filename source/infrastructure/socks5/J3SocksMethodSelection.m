@@ -1,7 +1,7 @@
 //
 // J3SocksMethodSelection.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3SocksMethodSelection.h"
@@ -10,13 +10,35 @@
 
 @implementation J3SocksMethodSelection
 
-- (void) addMethod: (J3SocksMethod)method
++ (id) socksMethodSelection
+{
+  return [[[J3SocksMethodSelection alloc] init] autorelease];
+}
+
+- (id) init
+{
+  if (!(self = [super init]))
+    return nil;
+  
+  methods = [[NSMutableData alloc] init];
+  [self addMethod: J3SocksNoAuthentication];
+  
+  return self;
+}
+
+- (void) dealloc
+{
+  [methods release];
+  [super dealloc];
+}
+
+- (void) addMethod: (J3SocksMethod) method
 {
   char bytes[1] = {method};
   [methods appendBytes: bytes length: 1];
 }
 
-- (void) appendToBuffer: (id <J3WriteBuffer>) buffer
+- (void) appendToBuffer: (NSObject <J3WriteBuffer> *) buffer
 {
   const uint8_t *bytes;
   
@@ -28,29 +50,12 @@
     [buffer appendByte: bytes[i]];
 }
 
-- (void) dealloc
-{
-  [methods release];
-  [super dealloc];
-}
-
-- (id) init
-{
-  if (![super init])
-    return nil;
-  
-  methods = [[NSMutableData alloc] init];
-  [self addMethod: J3SocksNoAuthentication];
-  
-  return self;
-}
-
 - (J3SocksMethod) method
 {
   return selectedMethod;
 }
 
-- (void) parseResponseFromByteSource: (id <J3ByteSource>) byteSource
+- (void) parseResponseFromByteSource: (NSObject <J3ByteSource> *) byteSource
 {
   NSData *reply = [byteSource readExactlyLength: 2];
   if ([reply length] != 2)

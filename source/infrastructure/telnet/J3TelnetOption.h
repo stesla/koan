@@ -1,9 +1,7 @@
 //
-//  J3TelnetOption.h
-//  Koan
+// J3TelnetOption.h
 //
-//  Created by Samuel Tesla on 4/10/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -23,7 +21,7 @@ typedef enum J3TelnetQ {
 
 @interface J3TelnetOption : NSObject 
 {
-  id <J3TelnetOptionDelegate> delegate;
+  NSObject <J3TelnetOptionDelegate> *delegate;
   int option;
   J3TelnetQState him;
   J3TelnetQState us;
@@ -31,7 +29,7 @@ typedef enum J3TelnetQ {
   BOOL weAreAllowed;
 }
 
-- (id) initWithOption: (int) option delegate: (id <J3TelnetOptionDelegate>) object;
+- (id) initWithOption: (int) option delegate: (NSObject <J3TelnetOptionDelegate> *) object;
 
 // Negotiation we respond to
 - (void) receivedDo;

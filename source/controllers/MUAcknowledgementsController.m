@@ -1,7 +1,7 @@
 //
 // MUAcknowledgementsController.m
 //
-// Copyright (c) 2008 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUAcknowledgementsController.h"
@@ -10,7 +10,7 @@
 
 - (id) init
 {
-  if (![super initWithWindowNibName: @"MUAcknowledgements"])
+  if (!(self = [super initWithWindowNibName: @"MUAcknowledgements"]))
     return nil;
 
   return self;
@@ -34,6 +34,11 @@
 - (IBAction) openSparkleWebPage: (id) sender
 {
   [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: @"http://sparkle.andymatuschak.org/"]];
+}
+
+- (IBAction) openUKPrefsPanelWebPage: (id) sender
+{
+  [[NSWorkspace sharedWorkspace] openURL: [NSURL URLWithString: @"http://zathras.de/angelweb/sourcecode.htm"]];
 }
 
 @end

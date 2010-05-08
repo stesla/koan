@@ -1,11 +1,11 @@
 //
 // J3ANSIFormattingFilter.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3ANSIFormattingFilter.h"
-#import "J3Formatting.h"
+#import "J3Formatter.h"
 #import "NSFont (Traits).h"
 
 @interface J3ANSIFormattingFilter (Private)
@@ -34,7 +34,7 @@
 
 @implementation J3ANSIFormattingFilter
 
-+ (J3Filter *) filterWithFormatting: (NSObject <J3Formatting> *) format
++ (J3Filter *) filterWithFormatting: (NSObject <J3Formatter> *) format
 {
   return [[[self alloc] initWithFormatting: format] autorelease];
 }
@@ -53,9 +53,9 @@
   return editString;
 }
 
-- (id) initWithFormatting: (NSObject <J3Formatting> *) format
+- (id) initWithFormatting: (NSObject <J3Formatter> *) format
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   if (!format)
@@ -71,7 +71,7 @@
 
 - (id) init
 {
-  return [self initWithFormatting: [J3Formatting formattingForTesting]];
+  return [self initWithFormatting: [J3Formatter formattingForTesting]];
 }
 
 @end

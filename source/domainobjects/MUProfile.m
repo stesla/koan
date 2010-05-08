@@ -1,7 +1,7 @@
 //
 // MUProfile.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUCodingService.h"
@@ -76,7 +76,7 @@
   				 linkColor: (NSColor *) newLinkColor
   	visitedLinkColor: (NSColor *) newVisitedLinkColor
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   self.world = newWorld;
@@ -212,7 +212,7 @@
   [self didChangeValueForKey: @"effectiveVisitedLinkColor"];
 }
 
-- (NSObject <J3Formatting> *) formatting
+- (NSObject <J3Formatter> *) formatting
 {
   return [[[MUProfileFormatting alloc] initWithProfile: self] autorelease];
 }
@@ -301,7 +301,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate
+- (J3TelnetConnection *) createNewTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
   return [world newTelnetConnectionWithDelegate: delegate];
 }

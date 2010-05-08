@@ -1,7 +1,7 @@
 //
 // MUTextLogDocument.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUTextLogDocument.h"
@@ -25,7 +25,7 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
 
 - (id) init
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   content = nil;
@@ -89,7 +89,7 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
 #pragma mark -
 #pragma mark NSDocument overrides
 
-- (NSData *) dataOfType: (NSString *) typeName error: (NSString **) error
+- (NSData *) dataOfType: (NSString *) typeName error: (NSError **) error
 {
   // TODO: should this be a read-only type?
   return nil;
@@ -109,7 +109,20 @@ static NSString *MUKoanLogPlayer = @"com_3james_koan_log_player";
   if ([self parse: fileDataAsString])
     return YES;
   
-  *error = @"TODO: give a reasonable error here";
+  /*
+   TODO: actually report an error here.
+   
+  if (error)
+  {
+    NSDictionary *errorDictionary = [NSDictionary dictionaryWithObject: @"Failed to create keyed archive for unknown reason."
+                                                                forKey: NSLocalizedDescriptionKey];
+    
+    *error = [NSError errorWithDomain: @"invalid.whatever"  
+                                 code: -1
+                             userInfo: errorDictionary];
+  }
+   */
+  
   return NO;
 }
 

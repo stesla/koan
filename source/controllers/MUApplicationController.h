@@ -1,7 +1,7 @@
 //
 // MUApplicationController.h
 //
-// Copyright (c) 2007, 2008 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -37,7 +37,7 @@
 - (IBAction) openNewConnectionPanel: (id) sender;
 - (IBAction) showAboutPanel: (id) sender;
 - (IBAction) showAcknowledgementsWindow: (id) sender;
-- (IBAction) showPreferencesPanel: (id) sender;
+- (IBAction) showPreferencesWindow: (id) sender;
 - (IBAction) showProfilesPanel: (id) sender;
 - (IBAction) showProxySettings: (id) sender;
 - (IBAction) toggleUseProxy: (id) sender;

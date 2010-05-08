@@ -1,7 +1,7 @@
 //
 // J3SocketFactory.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3SocketFactory.h"
@@ -41,7 +41,7 @@ static J3SocketFactory *defaultFactory = nil;
 
 - (id) init
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   useProxy = NO;

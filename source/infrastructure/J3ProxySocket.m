@@ -1,7 +1,7 @@
 //
 // J3ProxySocket.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3ProxySocket.h"
@@ -32,7 +32,7 @@
 
 - (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue proxySettings: (J3ProxySettings *) settings
 {
-  if (![super initWithHostname: [settings hostname] port: [[settings port] intValue]])
+  if (!(self = [super initWithHostname: [settings hostname] port: [[settings port] intValue]]))
     return nil;
   
   [self at: &realHostname put: hostnameValue];
@@ -66,7 +66,7 @@
 
 - (void) makeRequest
 {
-  J3SocksRequest *request = [[[J3SocksRequest alloc] initWithHostname: realHostname port: realPort] autorelease];
+  J3SocksRequest *request = [J3SocksRequest socksRequestWithHostname: realHostname port: realPort];
 
   [request appendToBuffer: outputBuffer];
   [outputBuffer flush];
@@ -85,7 +85,7 @@
 
 - (void) performUsernamePasswordNegotiation
 {
-  J3SocksAuthentication *auth = [[[J3SocksAuthentication alloc] initWithUsername: [proxySettings username] password: [proxySettings password]] autorelease];
+  J3SocksAuthentication *auth = [J3SocksAuthentication socksAuthenticationWithUsername: [proxySettings username] password: [proxySettings password]];
   
   [auth appendToBuffer: outputBuffer];
   [outputBuffer flush];
@@ -96,7 +96,7 @@
 
 - (J3SocksMethod) selectMethod
 {
-  J3SocksMethodSelection *methodSelection = [[[J3SocksMethodSelection alloc] init] autorelease];
+  J3SocksMethodSelection *methodSelection = [J3SocksMethodSelection socksMethodSelection];
 
   if ([proxySettings hasAuthentication])
     [methodSelection addMethod: J3SocksUsernamePassword];

@@ -1,7 +1,7 @@
 //
 // MUConstants.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUConstants.h"
@@ -32,7 +32,6 @@ NSString *MULicenseDateCreated = @"DateCreated";
 NSString *MULicenseKey = @"Key";
 NSString *MULicenseOwner = @"Owner";
 
-
 #pragma mark Notification constants.
 
 NSString *MUConnectionWindowControllerWillCloseNotification = @"MUConnectionWindowControllerWillCloseNotification";
@@ -43,8 +42,6 @@ NSString *MUGlobalLinkColorDidChangeNotification = @"MUGlobalLinkColorDidChangeN
 NSString *MUGlobalTextColorDidChangeNotification = @"MUGlobalTextColorDidChangeNotification";
 NSString *MUGlobalVisitedLinkColorDidChangeNotification = @"MUGlobalVisitedLinkColorDidChangeNotification";
 NSString *MUWorldsDidChangeNotification = @"MUWorldsDidChangeNotification";
-
-NSString *J3ReadBufferDidProvideStringNotification = @"J3ReadBufferDidProvideStringNotification";
 
 #pragma mark Toolbar item constants.
 

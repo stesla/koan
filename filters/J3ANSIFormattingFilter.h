@@ -1,25 +1,25 @@
 //
 // J3ANSIFormattingFilter.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
 #import "J3Filter.h"
 
-@protocol J3Formatting;
+@protocol J3Formatter;
 
 @interface J3ANSIFormattingFilter : J3Filter
 {
   BOOL inCode;
   NSString *ansiCode;
-  NSObject <J3Formatting> *formatting;
+  NSObject <J3Formatter> *formatting;
   NSMutableDictionary *currentAttributes;
 }
 
-+ (J3Filter *) filterWithFormatting: (NSObject <J3Formatting> *) format;
++ (J3Filter *) filterWithFormatting: (NSObject <J3Formatter> *) format;
 
-- (id) initWithFormatting: (NSObject <J3Formatting> *) format;
+- (id) initWithFormatting: (NSObject <J3Formatter> *) format;
 
 @end
 

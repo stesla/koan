@@ -1,7 +1,7 @@
 //
 // NSObject (Accessing).h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 // License:
 // 

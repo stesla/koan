@@ -1,12 +1,12 @@
 //
 // J3ANSIFormattingFilterTests.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3ANSIFormattingFilterTests.h"
 #import "J3ANSIFormattingFilter.h"
-#import "J3Formatting.h"
+#import "J3Formatter.h"
 #import "NSFont (Traits).h"
 
 @interface J3ANSIFormattingFilterTests (Private)
@@ -118,6 +118,12 @@
           hasOutput: @"Foaob"];
 }
 
+- (void) testCompoundCode
+{
+  [self assertInput: @"F\x1B[0;1;3;32;45moo"
+          hasOutput: @"Foo"];
+}
+
 - (void) testNewLine
 {
   [self assertInput: @"Foo\n"
@@ -195,7 +201,7 @@
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c"];
   [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSForegroundColorAttributeName atIndex: 3 message: @"d"];
-  [self assertString: output hasValue: [J3Formatting testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 4 message: @"e"];
+  [self assertString: output hasValue: [J3Formatter testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 4 message: @"e"];
 }
 
 - (void) testBackgroundColor
@@ -207,7 +213,7 @@
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c"];
   [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSBackgroundColorAttributeName atIndex: 3 message: @"d"];
-  [self assertString: output hasValue: [J3Formatting testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 4 message: @"e"];
+  [self assertString: output hasValue: [J3Formatter testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 4 message: @"e"];
 }
 
 - (void) testResetDisplayMode
@@ -217,8 +223,8 @@
   
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b foreground"];
-  [self assertString: output hasValue: [J3Formatting testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c background"];  
-  [self assertString: output hasValue: [J3Formatting testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"];  
+  [self assertString: output hasValue: [J3Formatter testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c background"];  
+  [self assertString: output hasValue: [J3Formatter testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"];  
 }
 
 - (void) testShortFormOfResetDisplayMode
@@ -228,8 +234,8 @@
   
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b foreground"];
-  [self assertString: output hasValue: [J3Formatting testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c background"];  
-  [self assertString: output hasValue: [J3Formatting testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"]; 
+  [self assertString: output hasValue: [J3Formatter testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c background"];  
+  [self assertString: output hasValue: [J3Formatter testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"]; 
 }
 
 - (void) testPersistColorsBetweenLines
@@ -260,10 +266,10 @@
 {
   NSMutableAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
   NSAttributedString *output;
-  NSFont *boldFont = [[J3Formatting testingFont] fontWithTrait: NSBoldFontMask];
+  NSFont *boldFont = [[J3Formatter testingFont] fontWithTrait: NSBoldFontMask];
   
   [queue clearFilters];
-  [queue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [J3Formatting formattingWithForegroundColor: [J3Formatting testingForeground] backgroundColor: [J3Formatting testingBackground] font: boldFont]]];
+  [queue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [J3Formatter formattingWithForegroundColor: [J3Formatter testingForeground] backgroundColor: [J3Formatter testingBackground] font: boldFont]]];
 
   output = [queue processAttributedString: input];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 0 message: @"a"];

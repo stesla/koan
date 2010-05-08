@@ -1,7 +1,7 @@
 //
 // J3SocksAuthentication.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3SocksAuthentication.h"
@@ -11,12 +11,18 @@
 
 @implementation J3SocksAuthentication
 
++ (id) socksAuthenticationWithUsername: (NSString *) usernameValue password: (NSString *) passwordValue
+{
+  return [[[J3SocksAuthentication alloc] initWithUsername: usernameValue password: passwordValue] autorelease];
+}
+
 - (id) initWithUsername: (NSString *) usernameValue password: (NSString *) passwordValue
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
-  [self at: &username put: usernameValue];
-  [self at: &password put: passwordValue];
+  
+  username = [usernameValue copy];
+  password = [passwordValue copy];
   return self;
 }
 
@@ -27,7 +33,7 @@
   [super dealloc];
 }
 
-- (void) appendToBuffer: (id <J3WriteBuffer>) buffer
+- (void) appendToBuffer: (NSObject <J3WriteBuffer> *) buffer
 {
   [buffer appendByte: J3SocksUsernamePasswordVersion];
   [buffer appendByte: [username length]];
@@ -41,7 +47,7 @@
   return authenticated;
 }
 
-- (void) parseReplyFromSource: (id <J3ByteSource>) source
+- (void) parseReplyFromSource: (NSObject <J3ByteSource> *) source
 {
   NSData *reply = [source readExactlyLength: 2];
   if ([reply length] != 2)

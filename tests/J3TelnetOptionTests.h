@@ -1,9 +1,7 @@
 //
-//  J3TelnetOptionTests.h
-//  Koan
+// J3TelnetOptionTests.h
 //
-//  Created by Samuel Tesla on 4/10/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <J3Testing/J3TestCase.h>

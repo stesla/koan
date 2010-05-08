@@ -1,12 +1,12 @@
 //
-// J3Formatting.h
+// J3Formatter.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
 
-@protocol J3Formatting
+@protocol J3Formatter
 
 - (NSColor *) background;
 - (NSFont *) font;
@@ -16,7 +16,7 @@
 
 #pragma mark -
 
-@interface J3Formatting : NSObject <J3Formatting>
+@interface J3Formatter : NSObject <J3Formatter>
 {
   NSColor *background;
   NSFont *font;

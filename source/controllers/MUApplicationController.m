@@ -1,7 +1,7 @@
 //
 // MUApplicationController.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "FontNameToDisplayNameTransformer.h"
@@ -190,9 +190,9 @@
     [acknowledgementsController showWindow: self];
 }
 
-- (IBAction) showPreferencesPanel: (id) sender
+- (IBAction) showPreferencesWindow: (id) sender
 {
-  [preferencesController showPreferencesPanel: sender];
+  [preferencesController showPreferencesWindow: sender];
 }
 
 - (IBAction) showProfilesPanel: (id) sender
@@ -379,7 +379,7 @@
     MUProfile *profile = [profiles profileForWorld: world];
     NSArray *players = [world players];
     NSMenuItem *worldItem = [[NSMenuItem alloc] init];
-    NSMenu *worldMenu = [[NSMenu alloc] initWithTitle: [world name]];
+    NSMenu *worldMenu = [[NSMenu alloc] initWithTitle: world.name];
     NSMenuItem *connectItem = [[NSMenuItem alloc] initWithTitle: _(MULConnectWithoutLogin)
                                                          action: @selector (openConnection:)
                                                   keyEquivalent: @""];
@@ -425,7 +425,7 @@
     }
     
     [worldMenu addItem: connectItem];
-    [worldItem setTitle: [world name]];
+    [worldItem setTitle: world.name];
     [worldItem setSubmenu: worldMenu];
     [openConnectionMenu addItem: worldItem];
     [worldItem release];

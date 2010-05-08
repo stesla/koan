@@ -1,7 +1,7 @@
 //
 // MUFugueEditFilter.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUFugueEditFilter.h"
@@ -15,7 +15,7 @@
 
 - (id) initWithDelegate: (id) newDelegate
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   [self setDelegate: newDelegate];

@@ -1,13 +1,10 @@
 //
-//  J3ByteSet.h
-//  Koan
+// J3ByteSet.h
 //
-//  Created by Samuel on 4/19/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
-
 
 @interface J3ByteSet : NSObject 
 {

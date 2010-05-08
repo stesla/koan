@@ -1,9 +1,7 @@
 //
-//  J3ByteSet.m
-//  Koan
+// J3ByteSet.m
 //
-//  Created by Samuel on 4/19/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3ByteSet.h"
@@ -74,7 +72,7 @@
 
 - (id) init
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   for (unsigned i = 0; i <= UINT8_MAX; i++)

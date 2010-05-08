@@ -1,7 +1,7 @@
 //
 // MUDocumentController.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUDocumentController.h"
@@ -16,6 +16,7 @@
 {
   // TODO: override this to handle closing the log browser.
   // See <http://www.cocoadev.com/index.pl?DocumentBasedAppWithOneWindowForAllDocuments>.
+  
   [super closeAllDocumentsWithDelegate: delegate didCloseAllSelector: didCloseAllSelector contextInfo: contextInfo];
 }
 

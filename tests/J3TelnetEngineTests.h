@@ -1,9 +1,7 @@
 //
-//  J3TelnetEngineTests.h
-//  Koan
+// J3TelnetEngineTests.h
 //
-//  Created by Samuel Tesla on 4/5/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <J3Testing/J3TestCase.h>
@@ -12,8 +10,9 @@
 @interface J3TelnetEngineTests : J3TestCase <J3TelnetEngineDelegate>
 {
   J3TelnetEngine *engine;
-  NSMutableData *inputBuffer;
+  NSMutableData *readBuffer;
   NSMutableData *outputBuffer;
+  NSMutableArray *dataSegments;
 }
 
 @end

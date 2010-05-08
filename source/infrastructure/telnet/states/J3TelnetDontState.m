@@ -1,7 +1,7 @@
 //
 // J3TelnetDontState.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3TelnetConstants.h"
@@ -13,7 +13,7 @@
 
 - (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
 {
-  [engine log: @"Received: IAC DONT %@", [engine optionNameForByte: byte]];
+  [engine log: @"Received: IAC DONT %@.", [engine optionNameForByte: byte]];
   [engine receivedDont: byte];
   return [J3TelnetTextState state];
 }

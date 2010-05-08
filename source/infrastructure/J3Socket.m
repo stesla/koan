@@ -1,7 +1,7 @@
 //
 // J3Socket.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3Socket.h"
@@ -17,6 +17,13 @@
 #include <unistd.h>
 
 #include "J3Connection.h"
+
+NSString *J3SocketDidConnectNotification = @"J3SocketDidConnectNotification";
+NSString *J3SocketIsConnectingNotification = @"J3SocketIsConnectingNotification";
+NSString *J3SocketWasClosedByClientNotification = @"J3SocketWasClosedByClientNotification";
+NSString *J3SocketWasClosedByServerNotification = @"J3SocketWasClosedByServerNotification";
+NSString *J3SocketWasClosedWithErrorNotification = @"J3SocketWasClosedWithErrorNotification";
+NSString *J3SocketErrorMessageKey = @"J3SocketErrorMessageKey";
 
 #pragma mark -
 #pragma mark C Function Prototypes
@@ -37,8 +44,10 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 - (void) internalRead;
 - (void) internalWrite;
 - (void) performPostConnectNegotiation;
+- (void) registerObjectForNotifications: (id) object;
 - (void) resolveHostname;
 - (void) runThread: (id) object;
+- (void) unregisterObjectForNotifications: (id) object;
 
 @end
 
@@ -81,7 +90,7 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 
 - (id) initWithHostname: (NSString *) newHostname port: (int) newPort
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   [self at: &hostname put: [newHostname retain]];
@@ -99,16 +108,34 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 {
   [self close];
   
+  [self unregisterObjectForNotifications: delegate];
+  delegate = nil;
+  
   [availableBytesLock release];
   [dataToWriteLock release];
   [dataToWrite release];
-  delegate = nil;
   [hostname release];
  
   if (server)
     free (server);
   
   [super dealloc];
+}
+
+- (NSObject <J3SocketDelegate> *) delegate
+{
+  return delegate;
+}
+
+- (void) setDelegate: (NSObject <J3SocketDelegate> *) object
+{
+  if (delegate == object)
+    return;
+  
+  [self unregisterObjectForNotifications: delegate];
+  [self registerObjectForNotifications: object];
+  
+  delegate = object;
 }
 
 - (void) close
@@ -119,6 +146,45 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
 - (void) open
 {
   [NSThread detachNewThreadSelector: @selector (runThread:) toTarget: self withObject: nil];
+}
+
+#pragma mark -
+#pragma mark J3Connection overrides
+
+- (void) setStatusConnected
+{
+  [super setStatusConnected];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3SocketDidConnectNotification
+                                                      object: self];
+}
+
+- (void) setStatusConnecting
+{
+  [super setStatusConnecting];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3SocketIsConnectingNotification
+                                                      object: self];
+}
+
+- (void) setStatusClosedByClient
+{
+  [super setStatusClosedByClient];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3SocketWasClosedByClientNotification
+                                                      object: self];
+}
+
+- (void) setStatusClosedByServer
+{
+  [super setStatusClosedByServer];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3SocketWasClosedByServerNotification
+                                                      object: self];
+}
+
+- (void) setStatusClosedWithError: (NSString *) error
+{
+  [super setStatusClosedWithError: error];
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3SocketWasClosedWithErrorNotification
+                                                      object: self
+                                                    userInfo: [NSDictionary dictionaryWithObjectsAndKeys: error, J3SocketErrorMessageKey, nil]];
 }
 
 #pragma mark -
@@ -397,6 +463,32 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   // Override in subclass to do something after connecting but before changing status
 }
 
+- (void) registerObjectForNotifications: (id) object
+{
+  NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+  
+  [notificationCenter addObserver: object
+                         selector: @selector(socketDidConnect:)
+                             name: J3SocketDidConnectNotification
+                           object: self];
+  [notificationCenter addObserver: object
+                         selector: @selector(socketIsConnecting:)
+                             name: J3SocketIsConnectingNotification
+                           object: self];
+  [notificationCenter addObserver: object
+                         selector: @selector(socketWasClosedByClient:)
+                             name: J3SocketWasClosedByClientNotification
+                           object: self];
+  [notificationCenter addObserver: object
+                         selector: @selector(socketWasClosedByServer:)
+                             name: J3SocketWasClosedByServerNotification
+                           object: self];
+  [notificationCenter addObserver: object
+                         selector: @selector(socketWasClosedWithError:)
+                             name: J3SocketWasClosedWithErrorNotification
+                           object: self];
+}
+
 - (void) resolveHostname
 {
   if (server)
@@ -434,6 +526,17 @@ static inline ssize_t safe_write (int file_descriptor, const void *bytes, size_t
   {
     [pool release];
   }
+}
+
+- (void) unregisterObjectForNotifications: (id) object
+{
+  NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+  
+  [notificationCenter removeObserver: object name: J3SocketDidConnectNotification object: self];
+  [notificationCenter removeObserver: object name: J3SocketIsConnectingNotification object: self];
+  [notificationCenter removeObserver: object name: J3SocketWasClosedByClientNotification object: self];
+  [notificationCenter removeObserver: object name: J3SocketWasClosedByServerNotification object: self];
+  [notificationCenter removeObserver: object name: J3SocketWasClosedWithErrorNotification object: self];
 }
 
 @end

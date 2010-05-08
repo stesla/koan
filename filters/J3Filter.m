@@ -1,7 +1,7 @@
 //
 // J3Filter.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3Filter.h"
@@ -24,7 +24,7 @@
 
 - (id) init
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   [self clearFilters];
   return self;
@@ -40,17 +40,17 @@
 {
   NSAttributedString *returnString = string;
   
-  id <J3Filtering> filter = nil;
+  NSObject <J3Filtering> *filter = nil;
   
   for (unsigned i = 0; i < [filters count]; i++)
   {
-    filter = (id <J3Filtering>) [filters objectAtIndex: i];
+    filter = (NSObject <J3Filtering> *) [filters objectAtIndex: i];
     returnString = [filter filter: returnString];
   }
   return returnString;
 }
 
-- (void) addFilter: (id <J3Filtering>) filter
+- (void) addFilter: (NSObject <J3Filtering> *) filter
 {
   [filters addObject: filter];
 }

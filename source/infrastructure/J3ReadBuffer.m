@@ -1,13 +1,17 @@
 //
 // J3ReadBuffer.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3ReadBuffer.h"
 
+NSString *J3ReadBufferDidProvideDataNotification = @"J3ReadBufferDidProvideDataNotification";
+NSString *J3ReadBufferDidProvideStringNotification = @"J3ReadBufferDidProvideStringNotification";
+
 @interface J3ReadBuffer (Private)
 
+- (void) postDidProvideDataNotificationWithData: (NSData *) data;
 - (void) postDidProvideStringNotificationWithString: (NSString *) string;
 
 @end
@@ -23,53 +27,18 @@
 
 - (id) init
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   dataBuffer = [[NSMutableData alloc] init];
-  delegate = nil;
   
   return self;
 }
 
 - (void) dealloc
 {
-  [[NSNotificationCenter defaultCenter] removeObserver: delegate name: nil object: self];
-  [[NSNotificationCenter defaultCenter] removeObserver: nil name: nil object: self];
   [dataBuffer release];
   [super dealloc];
-}
-
-- (NSObject *) delegate
-{
-  return delegate;
-}
-
-- (void) setDelegate: (NSObject *) newDelegate
-{
-  if (delegate == newDelegate)
-    return;
-  
-  if (delegate)
-    [[NSNotificationCenter defaultCenter] removeObserver: delegate name: nil object: self];
-  
-  delegate = newDelegate;
-  
-  if ([delegate respondsToSelector: @selector (readBufferDidProvideString:)])
-  {
-    [[NSNotificationCenter defaultCenter] addObserver: delegate
-                                             selector: @selector (readBufferDidProvideString:)
-                                                 name: J3ReadBufferDidProvideStringNotification
-                                               object: self];
-  }
-  else
-  {
-    NSLog (@"[%@ %@] Warning: object of class %@ doesn't respond to %@",
-           NSStringFromClass ([self class]),
-           NSStringFromSelector (_cmd),
-           NSStringFromClass ([newDelegate class]),
-           NSStringFromSelector (@selector (readBufferDidProvideString:)));
-  }
 }
 
 #pragma mark -
@@ -91,6 +60,13 @@
   [dataBuffer setData: [NSData data]];
 }
 
+- (NSData *) dataByConsumingBuffer
+{
+  NSData *data = [NSData dataWithData: dataBuffer];
+  [self clear];
+  return data;
+}
+
 - (NSData *) dataByConsumingBytesToIndex: (unsigned) byteIndex
 {
   NSData *subdata = [dataBuffer subdataWithRange: NSMakeRange (0, byteIndex)];
@@ -105,11 +81,11 @@
   return dataBuffer;
 }
 
-- (void) interpretBufferAsString
+- (void) postBufferAsData
 {
   if ([self length] > 0)
   {
-    [self postDidProvideStringNotificationWithString: [[[NSString alloc] initWithData: [self dataValue] encoding: NSASCIIStringEncoding] autorelease]];
+    [self postDidProvideDataNotificationWithData: [self dataValue]];
     [self clear];
   }
 }
@@ -124,11 +100,40 @@
   return [dataBuffer length];
 }
 
+- (NSString *) ASCIIStringByConsumingBuffer
+{
+  return [self stringByConsumingBufferWithEncoding: NSASCIIStringEncoding];
+}
+
+- (NSString *) ASCIIStringValue
+{
+  return [self stringValueWithEncoding: NSASCIIStringEncoding];
+}
+
+- (NSString *) stringByConsumingBufferWithEncoding: (NSStringEncoding) encoding
+{
+  NSString *string = [[[NSString alloc] initWithData: [self dataValue] encoding: encoding] autorelease];
+  [self clear];
+  return string;
+}
+
+- (NSString *) stringValueWithEncoding: (NSStringEncoding) encoding
+{
+  return [[[NSString alloc] initWithData: [self dataValue] encoding: encoding] autorelease];
+}
+
 @end
 
 #pragma mark -
 
 @implementation J3ReadBuffer (Private)
+
+- (void) postDidProvideDataNotificationWithData: (NSData *) data
+{
+  [[NSNotificationCenter defaultCenter] postNotificationName: J3ReadBufferDidProvideDataNotification
+                                                      object: self
+                                                    userInfo: [NSDictionary dictionaryWithObjectsAndKeys: data, @"data", nil]];
+}
 
 - (void) postDidProvideStringNotificationWithString: (NSString *) string
 {

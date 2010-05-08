@@ -1,7 +1,7 @@
 //
 // MUTextLoggerTests.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUTextLoggerTests.h"
@@ -30,7 +30,7 @@
 
 - (void) assertLoggedOutput: (NSString *) string
 {
-  NSString *outputString = [NSString stringWithCString: (const char *) outputBuffer];
+  NSString *outputString = [NSString stringWithUTF8String: (const char *) outputBuffer];
   
   [self assert: outputString equals: string];
 }

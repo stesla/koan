@@ -1,9 +1,7 @@
 //
-//  J3ByteSetTests.m
-//  Koan
+// J3ByteSetTests.m
 //
-//  Created by Samuel on 4/19/07.
-//  Copyright 2007 __MyCompanyName__. All rights reserved.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3ByteSetTests.h"
@@ -15,7 +13,7 @@
 {
   J3ByteSet *byteSet = [J3ByteSet byteSet];
   for (unsigned i = 0; i <= UINT8_MAX; ++i)
-    [self assertFalse: [byteSet containsByte: i] message: [NSString stringWithFormat:@"%d should not have been included",i]];
+    [self assertFalse: [byteSet containsByte: i] message: [NSString stringWithFormat: @"%d should not have been included",i]];
 }
 
 - (void) testAddByte

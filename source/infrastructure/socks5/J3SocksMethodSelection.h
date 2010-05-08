@@ -1,7 +1,7 @@
 //
 // J3SocksMethodSelection.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -16,9 +16,11 @@
   J3SocksMethod selectedMethod;
 }
 
-- (void) addMethod: (J3SocksMethod)method;
-- (void) appendToBuffer: (id <J3WriteBuffer>) buffer;
++ (id) socksMethodSelection;
+
+- (void) addMethod: (J3SocksMethod) method;
+- (void) appendToBuffer: (NSObject <J3WriteBuffer> *) buffer;
 - (J3SocksMethod) method;
-- (void) parseResponseFromByteSource: (id <J3ByteSource>) byteSource;
+- (void) parseResponseFromByteSource: (NSObject <J3ByteSource> *) byteSource;
 
 @end

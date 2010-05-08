@@ -1,7 +1,7 @@
 //
 // J3ProxySettings.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3ProxySettings.h"
@@ -16,7 +16,7 @@
 
 - (id) init
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   [self setHostname: @""];

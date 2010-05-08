@@ -1,14 +1,14 @@
 //
 // MUProfilesController.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
 
 @interface MUPreferencesController : NSObject
 {
-  IBOutlet NSPanel *preferencesPanel;
+  IBOutlet NSWindow *preferencesWindow;
   IBOutlet NSColorWell *globalTextColorWell;
   IBOutlet NSColorWell *globalBackgroundColorWell;
   IBOutlet NSColorWell *globalLinkColorWell;
@@ -18,6 +18,6 @@
 - (IBAction) changeFont;
 - (void) colorPanelColorDidChange;
 - (void) playSelectedSound: (id) sender;
-- (void) showPreferencesPanel: (id) sender;
+- (void) showPreferencesWindow: (id) sender;
 
 @end

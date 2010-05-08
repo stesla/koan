@@ -1,7 +1,7 @@
 //
 // J3Filter.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -24,7 +24,7 @@
 }
 
 - (NSAttributedString *) processAttributedString: (NSAttributedString *) string;
-- (void) addFilter: (id <J3Filtering>) filter;
+- (void) addFilter: (NSObject <J3Filtering> *) filter;
 - (void) clearFilters;
 
 @end

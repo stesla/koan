@@ -1,7 +1,7 @@
 //
 // J3SocksAuthentication.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -16,9 +16,12 @@
   BOOL authenticated;
 }
 
-- (id) initWithUsername: (NSString *) username password: (NSString *) password;
-- (void) appendToBuffer: (id <J3WriteBuffer>) buffer;
++ (id) socksAuthenticationWithUsername: (NSString *) usernameValue password: (NSString *) passwordValue;
+
+- (id) initWithUsername: (NSString *) usernameValue password: (NSString *) passwordValue;
+
+- (void) appendToBuffer: (NSObject <J3WriteBuffer> *) buffer;
 - (BOOL) authenticated;
-- (void) parseReplyFromSource: (id <J3ByteSource>) source;
+- (void) parseReplyFromSource: (NSObject <J3ByteSource> *) source;
 
 @end

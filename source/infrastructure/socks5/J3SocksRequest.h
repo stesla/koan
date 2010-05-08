@@ -1,7 +1,7 @@
 //
 // J3SocksRequest.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -17,9 +17,12 @@
   J3SocksReply reply;
 }
 
++ (id) socksRequestWithHostname: (NSString *) hostnameValue port: (int) portValue;
+
 - (id) initWithHostname: (NSString *) hostnameValue port: (int) portValue;
-- (void) appendToBuffer: (id <J3WriteBuffer>) buffer;
-- (void) parseReplyFromByteSource: (id <J3ByteSource>) source;
+
+- (void) appendToBuffer: (NSObject <J3WriteBuffer> *) buffer;
+- (void) parseReplyFromByteSource: (NSObject <J3ByteSource> *) source;
 - (J3SocksReply) reply;
 
 @end

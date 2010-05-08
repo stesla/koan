@@ -16,8 +16,8 @@
 //   Also, I rarely turn down any postcards, gifts, complementary copies of
 //   applications etc.
 //
-// Modified version by Tyler Berry.
-// Copyright (c) 2007 3James Software.
+// Modifications by Tyler Berry.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "UKPrefsPanel.h"
@@ -35,7 +35,7 @@
 
 - (id) init
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   tabView = nil;

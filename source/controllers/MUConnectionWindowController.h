@@ -1,18 +1,18 @@
 //
 // MUConnectionWindowController.h
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import <Cocoa/Cocoa.h>
-#import <RBSplitView/RBSplitView.h>
 
 #import "J3Filter.h"
-#import "MUDisplayTextView.h"
 #import "J3HistoryRing.h"
+#import "MUDisplayTextView.h"
 #import "MUProfile.h"
+#import "RBSplitView.h"
 
-@interface MUConnectionWindowController : NSWindowController <J3ConnectionDelegate>
+@interface MUConnectionWindowController : NSWindowController <J3TelnetConnectionDelegate>
 {
   IBOutlet MUDisplayTextView *receivedTextView;
   IBOutlet NSTextView *inputView;
@@ -40,15 +40,19 @@
 - (void) setDelegate: (id) delegate;
 
 - (void) confirmClose: (SEL) callback;
+
 - (IBAction) connect: (id) sender;
 - (IBAction) disconnect: (id) sender;
 - (IBAction) goToWorldURL: (id) sender;
-- (BOOL) isConnectedOrConnecting;
 - (IBAction) nextCommand: (id) sender;
 - (IBAction) previousCommand: (id) sender;
 - (IBAction) sendInputText: (id) sender;
 
+- (BOOL) isConnectedOrConnecting;
+
 @end
+
+#pragma mark -
 
 @interface NSObject (MUConnectionWindowControllerDelegate)
 

@@ -1,7 +1,7 @@
 //
 // MUWorld.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "J3SocketFactory.h"
@@ -42,7 +42,7 @@
                 URL: (NSString *) newURL
             players: (NSArray *) newPlayers
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   self.name = newName;
@@ -155,7 +155,7 @@
 #pragma mark -
 #pragma mark Actions
 
-- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3ConnectionDelegate> *) delegate
+- (J3TelnetConnection *) newTelnetConnectionWithDelegate: (NSObject <J3TelnetConnectionDelegate> *) delegate
 {
   return [J3TelnetConnection telnetWithHostname: self.hostname port: [self.port intValue] delegate: delegate];
 }
@@ -193,7 +193,7 @@
 
 - (id) initWithCoder: (NSCoder *) decoder
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
   [MUCodingService decodeWorld: self withCoder: decoder];

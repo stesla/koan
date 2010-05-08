@@ -1,7 +1,7 @@
 //
 // NSString (NDUtilities).m
 //
-// Copyright (c) 2002 Nathan Day
+// Copyright (c) 2002 Nathan Day.
 //
 // License:
 //
@@ -11,7 +11,8 @@
 //   my name (Nathan Day) within the source code, especially if you make your
 //   source code public with my code in it."
 //
-// Copyright (c) 2007 3James Software.
+// Modifications by Tyler Berry.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "NSString (NDUtilities).h"

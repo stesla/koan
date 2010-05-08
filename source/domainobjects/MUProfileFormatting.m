@@ -1,7 +1,7 @@
 //
 // MUProfileFormatting.m
 //
-// Copyright (c) 2007 3James Software.
+// Copyright (c) 2010 3James Software.
 //
 
 #import "MUProfileFormatting.h"
@@ -11,16 +11,22 @@
 
 - (id) initWithProfile: (MUProfile *) newProfile
 {
-  if (![super init])
+  if (!(self = [super init]))
     return nil;
   
-  [self at: &profile put: newProfile];
+  profile = [newProfile retain];
   
   return self;
 }
 
+- (void) dealloc
+{
+  [profile release];
+  [super dealloc];
+}
+
 #pragma mark -
-#pragma mark J3Formatting protocol
+#pragma mark J3Formatter protocol
 
 - (NSFont *) font
 {

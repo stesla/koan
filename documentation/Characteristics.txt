@@ -74,7 +74,12 @@ Version: MUX 2.6.2.21 Beta
 ### End INFO
 
   server asks for telnet options: WILL EOR, DO EOR, DO SGA, DO NAWS
+
+Mux 2.7+:
+
+  server asks for telnet options: WILL EOR, DO EOR, DO SGA, DO TTYPE, DO NAWS, DO NEW-ENVIRON, DO CHARSET
   
+  incorrect reply to CHARSET subnegotiation that doesn't matter - does not handle CHARSET REQUEST from client well.
 
 TinyMUSH 3
 ==========
@@ -104,6 +109,19 @@ Uptime: Wed Mar 14 06:03:52 2007
 Connected: 49
 Size: 19938
 Version: PennMUSH 1.8.3p1
+### End INFO
+
+* PennMUSH 1.8.3p13
+
+server asks for telnet options: 
+
+### Begin INFO 1.1
+Name: M*U*S*H
+Address: http://javelin.pennmush.org/mush
+Uptime: Wed Apr 14 07:44:21 2010
+Connected: 46
+Size: 11901
+Version: PennMUSH 1.8.3p13
 ### End INFO
 
 ProtoMUCK
