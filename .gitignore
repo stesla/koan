@@ -38,3 +38,6 @@ build/
 # Generated files.
 
 VersionX-revision.h
+
+# Project-specific files.
+frameworks/timestamp
