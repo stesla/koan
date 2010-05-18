@@ -18,7 +18,7 @@
 - (void) parseCString: (const char *) string;
 - (void) resetEngine;
 - (void) simulateDo: (uint8_t) option;
-- (void) simulateSubnegotation: (const uint8_t *) payload length: (unsigned) payloadLength;
+- (void) simulateIncomingSubnegotation: (const uint8_t *) payload length: (unsigned) payloadLength;
 - (void) simulateWill: (uint8_t) option;
 
 @end
@@ -251,26 +251,26 @@
 {
   [self simulateDo: J3TelnetOptionTerminalType];
   
-  const uint8_t requestTerminalType[2] = {J3TelnetOptionTerminalType, J3TelnetTerminalTypeSend};
+  const uint8_t terminalTypeRequest[2] = {J3TelnetOptionTerminalType, J3TelnetTerminalTypeSend};
   
-  const uint8_t koanReply[10] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, 0, 'K', 'O', 'A', 'N', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
+  const uint8_t koanReply[10] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, J3TelnetTerminalTypeIs, 'K', 'O', 'A', 'N', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
   
-  const uint8_t unknownReply[13] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, 0, 'U', 'N', 'K', 'N', 'O', 'W', 'N', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
+  const uint8_t unknownReply[13] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, J3TelnetTerminalTypeIs, 'U', 'N', 'K', 'N', 'O', 'W', 'N', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
   
   [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
+  [self simulateIncomingSubnegotation: terminalTypeRequest length: 2];
   [self assert: outputBuffer equals: [NSData dataWithBytes: koanReply length: 10]];
   
   [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
+  [self simulateIncomingSubnegotation: terminalTypeRequest length: 2];
   [self assert: outputBuffer equals: [NSData dataWithBytes: unknownReply length: 13]];
   
   [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
+  [self simulateIncomingSubnegotation: terminalTypeRequest length: 2];
   [self assert: outputBuffer equals: [NSData dataWithBytes: unknownReply length: 13]];
   
   [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
+  [self simulateIncomingSubnegotation: terminalTypeRequest length: 2];
   [self assert: outputBuffer equals: [NSData dataWithBytes: koanReply length: 10]];
 }
 
@@ -286,31 +286,74 @@
   [self assertTrue: [engine optionYesForHim: J3TelnetOptionCharset]];
 }
 
-- (void) testCharset
+- (void) testCharsetUTF8Accepted
 {
-  [self simulateDo: J3TelnetOptionTerminalType];
+  [self simulateWill: J3TelnetOptionTransmitBinary];
+  [self simulateDo: J3TelnetOptionTransmitBinary];
+  [self simulateWill: J3TelnetOptionCharset];
   
-  const uint8_t requestTerminalType[2] = {J3TelnetOptionTerminalType, J3TelnetTerminalTypeSend};
+  [self assertInt: [engine stringEncoding] equals: NSASCIIStringEncoding];
   
-  const uint8_t koanReply[10] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, 0, 'K', 'O', 'A', 'N', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
-  
-  const uint8_t unknownReply[13] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, 0, 'U', 'N', 'K', 'N', 'O', 'W', 'N', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
-  
-  [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
-  [self assert: outputBuffer equals: [NSData dataWithBytes: koanReply length: 10]];
+  const uint8_t charsetRequest[8] = {J3TelnetOptionCharset, J3TelnetCharsetRequest, ';', 'U', 'T', 'F', '-', '8'};
+  const uint8_t charsetReply[11] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionCharset, J3TelnetCharsetAccepted, 'U', 'T', 'F', '-', '8', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
   
   [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
-  [self assert: outputBuffer equals: [NSData dataWithBytes: unknownReply length: 13]];
+  [self simulateIncomingSubnegotation: charsetRequest length: 8];
+  [self assert: outputBuffer equals: [NSData dataWithBytes: charsetReply length: 11]];
+  
+  [self assertInt: [engine stringEncoding] equals: NSUTF8StringEncoding];
+}
+
+- (void) testCharsetLatin1Accepted
+{
+  [self simulateWill: J3TelnetOptionTransmitBinary];
+  [self simulateDo: J3TelnetOptionTransmitBinary];
+  [self simulateWill: J3TelnetOptionCharset];
+  
+  [self assertInt: [engine stringEncoding] equals: NSASCIIStringEncoding];
+  
+  const uint8_t charsetRequest[13] = {J3TelnetOptionCharset, J3TelnetCharsetRequest, ';', 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '1'};
+  const uint8_t charsetReply[16] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionCharset, J3TelnetCharsetAccepted, 'I', 'S', 'O', '-', '8', '8', '5', '9', '-', '1', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
   
   [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
-  [self assert: outputBuffer equals: [NSData dataWithBytes: unknownReply length: 13]];
+  [self simulateIncomingSubnegotation: charsetRequest length: 13];
+  [self assert: outputBuffer equals: [NSData dataWithBytes: charsetReply length: 16]];
+  
+  [self assertInt: [engine stringEncoding] equals: NSISOLatin1StringEncoding];
+}
+
+- (void) testCharsetRejected
+{
+  [self simulateWill: J3TelnetOptionTransmitBinary];
+  [self simulateDo: J3TelnetOptionTransmitBinary];
+  [self simulateWill: J3TelnetOptionCharset];
+  
+  [self assertInt: [engine stringEncoding] equals: NSASCIIStringEncoding];
+  
+  const uint8_t charsetRequest[10] = {J3TelnetOptionCharset, J3TelnetCharsetRequest, ';', 'I', 'N', 'V', 'A', 'L', 'I', 'D'};
+  const uint8_t charsetReply[6] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionCharset, J3TelnetCharsetRejected, J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
   
   [self clearOutputBuffer];
-  [self simulateSubnegotation: requestTerminalType length: 2];
-  [self assert: outputBuffer equals: [NSData dataWithBytes: koanReply length: 10]];
+  [self simulateIncomingSubnegotation: charsetRequest length: 10];
+  [self assert: outputBuffer equals: [NSData dataWithBytes: charsetReply length: 6]];
+  
+  [self assertInt: [engine stringEncoding] equals: NSASCIIStringEncoding];
+}
+
+- (void) testCharsetNonStandardBehavior
+{
+  [self simulateDo: J3TelnetOptionCharset];
+  
+  [self assertInt: [engine stringEncoding] equals: NSASCIIStringEncoding];
+  
+  const uint8_t charsetRequest[8] = {J3TelnetOptionCharset, J3TelnetCharsetRequest, ';', 'U', 'T', 'F', '-', '8'};
+  const uint8_t charsetReply[17] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionCharset, J3TelnetCharsetAccepted, 'U', 'T', 'F', '-', '8', J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation, J3TelnetInterpretAsCommand, J3TelnetWill, J3TelnetOptionTransmitBinary, J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionTransmitBinary};
+  
+  [self clearOutputBuffer];
+  [self simulateIncomingSubnegotation: charsetRequest length: 8];
+  [self assert: outputBuffer equals: [NSData dataWithBytes: charsetReply length: 17]];
+  
+  [self assertInt: [engine stringEncoding] equals: NSUTF8StringEncoding];
 }
 
 - (void) testDoEndOfRecord
@@ -415,7 +458,7 @@
   [engine parseData: [NSData dataWithBytes: doRequest length: 3]];
 }
 
-- (void) simulateSubnegotation: (const uint8_t *) payload length: (unsigned) payloadLength
+- (void) simulateIncomingSubnegotation: (const uint8_t *) payload length: (unsigned) payloadLength
 {
   const uint8_t header[] = {J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation};
   const uint8_t footer[] = {J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
