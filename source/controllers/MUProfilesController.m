@@ -437,7 +437,7 @@ enum MUProfilesEditingReturnValues
 
 - (BOOL) outlineView: (NSOutlineView *) outlineView isItemExpandable: (id) item
 {
-  if ([item isKindOfClass: [MUWorld class]])
+  if ([item isKindOfClass: [MUWorld class]] && [[(MUWorld *) item players] count] > 0)
   	return YES;
   else
   	return NO;
@@ -483,6 +483,14 @@ enum MUProfilesEditingReturnValues
 #pragma mark NSOutlineView delegate
 
 - (BOOL) outlineView: (NSOutlineView *) outlineView shouldEditTableColumn: (NSTableColumn *) tableColumn item: (id) item
+{
+  return NO;
+}
+
+#pragma mark -
+#pragma mark NSSplitView delegate
+
+- (BOOL) splitView: (NSSplitView *) splitView shouldAdjustSizeOfSubview: (NSView *) subview
 {
   return NO;
 }

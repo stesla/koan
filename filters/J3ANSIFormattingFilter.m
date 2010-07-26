@@ -39,7 +39,6 @@
   return [[[self alloc] initWithFormatting: format] autorelease];
 }
 
-
 - (NSAttributedString *) filter: (NSAttributedString *) string
 {
   NSMutableAttributedString *editString = [[NSMutableAttributedString alloc] initWithAttributedString: string];

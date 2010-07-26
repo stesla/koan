@@ -24,7 +24,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${EXECUTABLE_NAME} ${APPLICATION_VERSION}, Copyright © 2009 3James Software</string>
+	<string>${EXECUTABLE_NAME} ${APPLICATION_VERSION}, Copyright © 2010 3James Software</string>
 	<key>CFBundleIconFile</key>
 	<string>Koan.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -48,7 +48,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>SVNREVISION</string>
+	<string>GITREVISION</string>
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
