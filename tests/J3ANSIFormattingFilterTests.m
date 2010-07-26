@@ -252,7 +252,7 @@
 
 - (void) testBold
 {
-  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me\x1B[1mf\x1B[mg"];
   NSAttributedString *output = [queue processAttributedString: input];
 
   [self assertString: output hasntTrait: NSBoldFontMask atIndex: 0 message: @"a"];
@@ -260,11 +260,12 @@
   [self assertString: output hasntTrait: NSBoldFontMask atIndex: 2 message: @"c"];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 3 message: @"d"];
   [self assertString: output hasntTrait: NSBoldFontMask atIndex: 4 message: @"e"];
+  [self assertString: output hasTrait: NSBoldFontMask atIndex: 5 message: @"f"];
+  [self assertString: output hasntTrait: NSBoldFontMask atIndex: 6 message: @"g"];
 }
-
 - (void) testBoldWithBoldAlreadyOn
 {
-  NSMutableAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me"];
+  NSMutableAttributedString *input = [self constructAttributedStringForString: @"a\x1B[1mb\x1B[22mc\x1B[1md\x1B[0me\x1B[1mf\x1B[mg"];
   NSAttributedString *output;
   NSFont *boldFont = [[J3Formatter testingFont] fontWithTrait: NSBoldFontMask];
   
@@ -277,6 +278,8 @@
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 2 message: @"c"];
   [self assertString: output hasntTrait: NSBoldFontMask atIndex: 3 message: @"d"];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 4 message: @"e"];
+  [self assertString: output hasntTrait: NSBoldFontMask atIndex: 5 message: @"f"];
+  [self assertString: output hasTrait: NSBoldFontMask atIndex: 6 message: @"g"];
   
   output = [queue processAttributedString: input];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 0 message: @"a2"];
@@ -284,14 +287,50 @@
 
 - (void) testUnderline
 {
-  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me"];  
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[4mb\x1B[24mc\x1B[4md\x1B[0me\x1B[4mf\x1B[mg"];  
   NSAttributedString *output = [queue processAttributedString: input];
   
-  [self assertString: output hasValue: nil forAttribute: NSUnderlineStyleAttributeName atIndex: 0 message: @"a"];
-  [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 1 message: @"b"];
-  [self assertString: output hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 2 message: @"c"];
-  [self assertString: output hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 3 message: @"d"];
-  [self assertString: output hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle] forAttribute: NSUnderlineStyleAttributeName atIndex: 4 message: @"e"];  
+  [self assertString: output
+            hasValue: nil
+        forAttribute: NSUnderlineStyleAttributeName
+             atIndex: 0
+             message: @"a"];
+  
+  [self assertString: output
+            hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle]
+        forAttribute: NSUnderlineStyleAttributeName
+             atIndex: 1
+             message: @"b"];
+  
+  [self assertString: output
+            hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle]
+        forAttribute: NSUnderlineStyleAttributeName
+             atIndex: 2
+             message: @"c"];
+  
+  [self assertString: output
+            hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle]
+        forAttribute: NSUnderlineStyleAttributeName
+             atIndex: 3
+             message: @"d"];
+  
+  [self assertString: output
+            hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle]
+        forAttribute: NSUnderlineStyleAttributeName
+             atIndex: 4
+             message: @"e"];
+  
+  [self assertString: output
+            hasValue: [NSNumber numberWithInt: NSSingleUnderlineStyle]
+        forAttribute: NSUnderlineStyleAttributeName
+             atIndex: 5
+             message: @"f"];
+  
+  [self assertString: output
+            hasValue: [NSNumber numberWithInt: NSNoUnderlineStyle]
+        forAttribute: NSUnderlineStyleAttributeName
+             atIndex: 6
+             message: @"g"];
 }
 
 - (void) testFormattingOverTwoLines
