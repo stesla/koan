@@ -36,6 +36,7 @@
 		2F7B4F3B0BCAB87B00C1586D /* MULogBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */; };
 		2F7B4FB90BCAC1FD00C1586D /* MUDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FB70BCAC1FD00C1586D /* MUDocumentController.m */; };
 		2F7B4FED0BCAC40F00C1586D /* MUTextLogDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */; };
+		2F861FB811FD53F2007136D5 /* J3Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F861FB711FD53F2007136D5 /* J3Protocol.m */; };
 		2FA58B5111A2DFA200A9005A /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA58B5011A2DFA200A9005A /* BWToolkitFramework.framework */; };
 		2FA58B8611A2E13B00A9005A /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA58B5011A2DFA200A9005A /* BWToolkitFramework.framework */; };
 		2FB40CDB0BF0FA3D004E13F8 /* MUFugueEditFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FB40CD90BF0FA3D004E13F8 /* MUFugueEditFilter.m */; };
@@ -247,6 +248,8 @@
 		2F7B4FB70BCAC1FD00C1586D /* MUDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUDocumentController.m; sourceTree = "<group>"; };
 		2F7B4FEA0BCAC40F00C1586D /* MUTextLogDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUTextLogDocument.h; sourceTree = "<group>"; };
 		2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUTextLogDocument.m; sourceTree = "<group>"; };
+		2F861FB611FD53F2007136D5 /* J3Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Protocol.h; sourceTree = "<group>"; };
+		2F861FB711FD53F2007136D5 /* J3Protocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3Protocol.m; sourceTree = "<group>"; };
 		2FA58B5011A2DFA200A9005A /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = build/BWToolkitFramework.framework; sourceTree = SOURCE_ROOT; };
 		2FB40CD80BF0FA3D004E13F8 /* MUFugueEditFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUFugueEditFilter.h; sourceTree = "<group>"; };
 		2FB40CD90BF0FA3D004E13F8 /* MUFugueEditFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUFugueEditFilter.m; sourceTree = "<group>"; };
@@ -912,6 +915,8 @@
 				E6E7A62707496940007005AC /* J3HistoryRing.m */,
 				E64C9631076BF95E00D0D7C0 /* J3PortFormatter.h */,
 				E64C9632076BF95E00D0D7C0 /* J3PortFormatter.m */,
+				2F861FB611FD53F2007136D5 /* J3Protocol.h */,
+				2F861FB711FD53F2007136D5 /* J3Protocol.m */,
 				7E13BA1A09AE950600508460 /* J3ProxySettings.h */,
 				7E13BA1B09AE950600508460 /* J3ProxySettings.m */,
 				7E50AC1F09AEB90B00E0BFE7 /* J3ProxySocket.h */,
@@ -1236,6 +1241,7 @@
 				2F51E43711781DD400F6DF65 /* RBSplitSubview.m in Sources */,
 				2F51E43811781DD400F6DF65 /* RBSplitView.m in Sources */,
 				2FE366750BCAC9820068A6AA /* UKPrefsPanel.m in Sources */,
+				2F861FB811FD53F2007136D5 /* J3Protocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
