@@ -15,6 +15,8 @@
   int searchCursor;
 }
 
++ (id) historyRing;
+
 - (unsigned) count;
 - (NSString *) stringAtIndex: (int) ringIndex;
 

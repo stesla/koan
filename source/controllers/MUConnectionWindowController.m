@@ -49,8 +49,8 @@ enum MUSearchDirections
   
   profile = [newProfile retain];
   
-  historyRing = [[J3HistoryRing alloc] init];
-  filterQueue = [[J3FilterQueue alloc] init];
+  historyRing = [[J3HistoryRing historyRing] retain];
+  filterQueue = [[J3FilterQueue filterQueue] retain];
   
   [filterQueue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [profile formatting]]];
   [filterQueue addFilter: [MUFugueEditFilter filterWithDelegate: self]];

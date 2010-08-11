@@ -20,7 +20,14 @@
 
 @end
 
+#pragma mark -
+
 @implementation J3FilterQueue
+
++ (id) filterQueue
+{
+  return [[[self alloc] init] autorelease];
+}
 
 - (id) init
 {

@@ -8,6 +8,11 @@
 
 @implementation J3HistoryRing
 
++ (id) historyRing
+{
+  return [[[self alloc] init] autorelease];
+}
+
 - (id) init
 {
   if (!(self = [super init]))
