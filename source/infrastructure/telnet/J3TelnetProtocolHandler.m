@@ -40,6 +40,8 @@ static NSArray *offerableCharsets;
 - (void) sendCharsetTTableRejectedSubnegotiation;
 - (NSStringEncoding) stringEncodingForName: (NSString *) encodingName;
 
+- (void) handleMCCPSubnegotiation: (NSData *) subnegotiationData version: (uint8_t) versionByte;
+
 - (void) handleMSSPSubnegotiation: (NSData *) subnegotiationData;
 - (void) logMSSPVariableData: (NSData *) variableData valueData: (NSData *) valueData;
 
@@ -199,6 +201,14 @@ static NSArray *offerableCharsets;
       [self handleMSSPSubnegotiation: subnegotiationBuffer];
       break;
       
+    case J3TelnetOptionMCCP1:
+      [self handleMCCPSubnegotiation: subnegotiationBuffer version: J3TelnetOptionMCCP1];
+      break;
+      
+    case J3TelnetOptionMCCP2:
+      [self handleMCCPSubnegotiation: subnegotiationBuffer version: J3TelnetOptionMCCP2];
+      break;
+      
     default:
       [self log: @"Unknown subnegotation for option %@. [%@]", [self optionNameForByte: bytes[0]], subnegotiationBuffer];
       break;
@@ -300,6 +310,9 @@ static NSArray *offerableCharsets;
 - (void) receivedWill: (uint8_t) option
 {
   [options[option] receivedWill];
+  
+  if (option == J3TelnetOptionMCCP2)
+    [self forOption: J3TelnetOptionMCCP1 allowWill: NO allowDo: NO];
 }
 
 - (void) receivedWont: (uint8_t) option
@@ -419,6 +432,8 @@ static NSArray *offerableCharsets;
   [self forOption: J3TelnetOptionEndOfRecord allowWill: YES allowDo: YES];
   [self forOption: J3TelnetOptionCharset allowWill: YES allowDo: YES];
   [self forOption: J3TelnetOptionMSSP allowWill: YES allowDo: NO];
+  //[self forOption: J3TelnetOptionMCCP1 allowWill: YES allowDo: NO];
+  //[self forOption: J3TelnetOptionMCCP2 allowWill: YES allowDo: NO];
 }
 
 - (void) negotiateOptions
@@ -721,6 +736,38 @@ static NSArray *offerableCharsets;
   
   // There is no "invalid encoding" value, so default to NVT ASCII.
   else return NSASCIIStringEncoding;
+}
+
+#pragma mark -
+#pragma mark MCCP
+
+- (void) handleMCCPSubnegotiation: (NSData *) subnegotiationData version: (uint8_t) versionByte
+{
+  const uint8_t *bytes = [subnegotiationData bytes];
+  unsigned length = [subnegotiationData length];
+  
+  if (length != 1)
+  {
+    [self log: @"MCCP irregularity: %@ subnegotiation length is not 1. [%@]", [self optionNameForByte: versionByte], subnegotiationData];
+    return;
+  }
+  
+  if (bytes[0] != versionByte)
+  {
+    [self log: @"MCCP irregularity: First byte is not %@. [%@]", [self optionNameForByte: versionByte], subnegotiationData];
+    return;
+  }
+  
+  switch (versionByte)
+  {
+    case J3TelnetOptionMCCP1:
+      [self log: @"Received: IAC SB %@ WILL SE.", [self optionNameForByte: versionByte]];
+      break;
+      
+    case J3TelnetOptionMCCP2:
+      [self log: @"Received: IAC SB %@ IAC SE.", [self optionNameForByte: versionByte]];
+      break;
+  }
 }
 
 #pragma mark -
