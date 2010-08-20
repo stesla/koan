@@ -8,6 +8,7 @@
 #import "J3Socket.h"
 #import "J3TelnetConnection.h"
 #import "J3TelnetProtocolHandler.h"
+#import "MUMCCPProtocolHandler.h"
 
 NSString *J3TelnetConnectionDidConnectNotification = @"J3TelnetConnectionDidConnectNotification";
 NSString *J3TelnetConnectionIsConnectingNotification = @"J3TelnetConnectionIsConnectingNotification";
@@ -22,6 +23,7 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (void) fireTimer: (NSTimer *) timer;
 - (void) initializeSocket;
 - (BOOL) isUsingSocket: (J3Socket *) possibleSocket;
+- (void) log: (NSString *) message, ...;
 - (void) poll;
 - (void) registerObjectForNotifications: (id) object;
 - (void) schedulePollTimer;
@@ -69,6 +71,7 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
   J3TelnetProtocolHandler *handler = [J3TelnetProtocolHandler protocolHandlerWithConnectionState: state];
   [handler setDelegate: self];
   [protocolStack addProtocol: handler];
+  [protocolStack addProtocol: [MUMCCPProtocolHandler protocolHandler]];
   
   self.delegate = newDelegate;
   return self;
@@ -129,6 +132,7 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (void) setStatusConnected
 {
   [super setStatusConnected];
+  [self log: @"Connected to server."];
   [[NSNotificationCenter defaultCenter] postNotificationName: J3TelnetConnectionDidConnectNotification
                                                       object: self];
 }
@@ -143,6 +147,7 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (void) setStatusClosedByClient
 {
   [super setStatusClosedByClient];
+  [self log: @"Connection closed by client."];
   [[NSNotificationCenter defaultCenter] postNotificationName: J3TelnetConnectionWasClosedByClientNotification
                                                       object: self];
 }
@@ -150,6 +155,7 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (void) setStatusClosedByServer
 {
   [super setStatusClosedByServer];
+  [self log: @"Connection closed by server."];
   [[NSNotificationCenter defaultCenter] postNotificationName: J3TelnetConnectionWasClosedByServerNotification
                                                       object: self];
 }
@@ -157,6 +163,7 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (void) setStatusClosedWithError: (NSString *) error
 {
   [super setStatusClosedWithError: error];
+  [self log: @"Connection closed with error: %@.", error];
   [[NSNotificationCenter defaultCenter] postNotificationName: J3TelnetConnectionWasClosedWithErrorNotification
                                                       object: self
                                                     userInfo: [NSDictionary dictionaryWithObjectsAndKeys: error, J3TelnetConnectionErrorMessageKey, nil]];
@@ -232,6 +239,16 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (BOOL) isUsingSocket: (J3Socket *) possibleSocket
 {
   return possibleSocket == self.socket;
+}
+
+- (void) log: (NSString *) message, ...
+{
+  va_list args;
+  va_start (args, message);
+  
+  [self log: message arguments: args];
+  
+  va_end (args);
 }
 
 - (void) poll

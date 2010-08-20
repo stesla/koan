@@ -38,6 +38,7 @@
 		2F7B4F3B0BCAB87B00C1586D /* MULogBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */; };
 		2F7B4FB90BCAC1FD00C1586D /* MUDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FB70BCAC1FD00C1586D /* MUDocumentController.m */; };
 		2F7B4FED0BCAC40F00C1586D /* MUTextLogDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */; };
+		2F7CDB76121EFC22001B4879 /* MUMCCPProtocolHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7CDB75121EFC22001B4879 /* MUMCCPProtocolHandler.m */; };
 		2F861FB811FD53F2007136D5 /* J3Protocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F861FB711FD53F2007136D5 /* J3Protocol.m */; };
 		2FA58B5111A2DFA200A9005A /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA58B5011A2DFA200A9005A /* BWToolkitFramework.framework */; };
 		2FA58B8611A2E13B00A9005A /* BWToolkitFramework.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 2FA58B5011A2DFA200A9005A /* BWToolkitFramework.framework */; };
@@ -254,6 +255,8 @@
 		2F7B4FB70BCAC1FD00C1586D /* MUDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUDocumentController.m; sourceTree = "<group>"; };
 		2F7B4FEA0BCAC40F00C1586D /* MUTextLogDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUTextLogDocument.h; sourceTree = "<group>"; };
 		2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUTextLogDocument.m; sourceTree = "<group>"; };
+		2F7CDB74121EFC22001B4879 /* MUMCCPProtocolHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUMCCPProtocolHandler.h; sourceTree = "<group>"; };
+		2F7CDB75121EFC22001B4879 /* MUMCCPProtocolHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUMCCPProtocolHandler.m; sourceTree = "<group>"; };
 		2F861FB611FD53F2007136D5 /* J3Protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3Protocol.h; sourceTree = "<group>"; };
 		2F861FB711FD53F2007136D5 /* J3Protocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3Protocol.m; sourceTree = "<group>"; };
 		2FA58B5011A2DFA200A9005A /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = build/BWToolkitFramework.framework; sourceTree = SOURCE_ROOT; };
@@ -643,6 +646,16 @@
 			path = documents;
 			sourceTree = "<group>";
 		};
+		2F7CDB73121EFB39001B4879 /* MCCP */ = {
+			isa = PBXGroup;
+			children = (
+				2F7CDB74121EFC22001B4879 /* MUMCCPProtocolHandler.h */,
+				2F7CDB75121EFC22001B4879 /* MUMCCPProtocolHandler.m */,
+			);
+			name = MCCP;
+			path = mccp;
+			sourceTree = "<group>";
+		};
 		2FE366630BCAC8D40068A6AA /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -912,6 +925,7 @@
 		E6E7BF540788FDED0065EDD6 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				2F7CDB73121EFB39001B4879 /* MCCP */,
 				7E0709EF09339A1E000A36CF /* SOCKS5 */,
 				7E68DC33092AC2FB004554BD /* Telnet */,
 				7E68DCD4092AC77D004554BD /* J3ByteDestination.h */,
@@ -1254,6 +1268,7 @@
 				2F861FB811FD53F2007136D5 /* J3Protocol.m in Sources */,
 				2F2718EB12141166006710C7 /* J3TelnetConnectionState.m in Sources */,
 				2F0B277B12196B9C00AE6B62 /* J3TelnetStateMachine.m in Sources */,
+				2F7CDB76121EFC22001B4879 /* MUMCCPProtocolHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
