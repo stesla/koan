@@ -12,12 +12,11 @@
   id delegate;
 }
 
+@property (assign, nonatomic) id delegate;
+
 + (id) filterWithDelegate: (id) newDelegate;
 
 - (id) initWithDelegate: (id) newDelegate;
-
-- (id) delegate;
-- (void) setDelegate: (id) newDelegate;
 
 @end
 

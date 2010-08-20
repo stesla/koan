@@ -22,6 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		2F0A203E0BCAEC2600E833AD /* MULogBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */; };
+		2F0B277B12196B9C00AE6B62 /* J3TelnetStateMachine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F0B277A12196B9C00AE6B62 /* J3TelnetStateMachine.m */; };
+		2F2718EB12141166006710C7 /* J3TelnetConnectionState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F2718EA12141166006710C7 /* J3TelnetConnectionState.m */; };
 		2F42D0E30BB2618F0056C27A /* NSString (NDUtilities).m in Sources */ = {isa = PBXBuildFile; fileRef = 2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */; };
 		2F51E43711781DD400F6DF65 /* RBSplitSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F51E43511781DD400F6DF65 /* RBSplitSubview.m */; };
 		2F51E43811781DD400F6DF65 /* RBSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F51E43611781DD400F6DF65 /* RBSplitView.m */; };
@@ -42,7 +44,7 @@
 		2FB40CDB0BF0FA3D004E13F8 /* MUFugueEditFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FB40CD90BF0FA3D004E13F8 /* MUFugueEditFilter.m */; };
 		2FB40DE10BF10797004E13F8 /* MUFugueEditFilterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FB40D940BF10694004E13F8 /* MUFugueEditFilterTests.m */; };
 		2FB40E7B0BF10AA2004E13F8 /* J3FilterTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FB40E260BF10911004E13F8 /* J3FilterTestCase.m */; };
-		2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC93E290BB103C500149459 /* J3TelnetEngine.m */; };
+		2FC93E2B0BB103C500149459 /* J3TelnetProtocolHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FC93E290BB103C500149459 /* J3TelnetProtocolHandler.m */; };
 		2FCFEF3E0BCADEB40061FB6B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		2FCFEF720BCADF970061FB6B /* KoanLogImporter.mdimporter in Copy Importer */ = {isa = PBXBuildFile; fileRef = 2FE367F10BCAD3730068A6AA /* KoanLogImporter.mdimporter */; };
 		2FCFEFDD0BCAE36D0061FB6B /* MUTextLogDocumentTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FCFEFDC0BCAE36D0061FB6B /* MUTextLogDocumentTests.m */; };
@@ -115,7 +117,7 @@
 		7EE11F3B0BD8284100C78D9C /* J3TelnetNotTelnetState.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EE11F390BD8284100C78D9C /* J3TelnetNotTelnetState.m */; };
 		7EF77C940BCC945D0047CF5D /* J3TelnetOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EF77C920BCC945D0047CF5D /* J3TelnetOption.m */; };
 		7EF77CCB0BCC99E30047CF5D /* J3TelnetOptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EF77CCA0BCC99E30047CF5D /* J3TelnetOptionTests.m */; };
-		7EFACED20BC4BEFD007AE743 /* J3TelnetEngineTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EFACED10BC4BEFD007AE743 /* J3TelnetEngineTests.m */; };
+		7EFACED20BC4BEFD007AE743 /* J3TelnetProtocolHandlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EFACED10BC4BEFD007AE743 /* J3TelnetProtocolHandlerTests.m */; };
 		7EFE43870749C7CE002C7D48 /* J3Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EFE43830749C7CE002C7D48 /* J3Filter.m */; };
 		8D11072D0486CEB800E47090 /* Main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* Main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -224,6 +226,10 @@
 		29B97316FDCFA39411CA2CEA /* Main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2F0B277912196B9C00AE6B62 /* J3TelnetStateMachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TelnetStateMachine.h; sourceTree = "<group>"; };
+		2F0B277A12196B9C00AE6B62 /* J3TelnetStateMachine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TelnetStateMachine.m; sourceTree = "<group>"; };
+		2F2718E912141166006710C7 /* J3TelnetConnectionState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TelnetConnectionState.h; sourceTree = "<group>"; };
+		2F2718EA12141166006710C7 /* J3TelnetConnectionState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TelnetConnectionState.m; sourceTree = "<group>"; };
 		2F2D76E90BBB1C8400BBB71A /* Characteristics.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Characteristics.txt; sourceTree = "<group>"; };
 		2F42D0E00BB2618F0056C27A /* NSString (NDUtilities).h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString (NDUtilities).h"; sourceTree = "<group>"; };
 		2F42D0E10BB2618F0056C27A /* NSString (NDUtilities).m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString (NDUtilities).m"; sourceTree = "<group>"; };
@@ -257,8 +263,8 @@
 		2FB40D940BF10694004E13F8 /* MUFugueEditFilterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MUFugueEditFilterTests.m; sourceTree = "<group>"; };
 		2FB40E250BF10910004E13F8 /* J3FilterTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3FilterTestCase.h; sourceTree = "<group>"; };
 		2FB40E260BF10911004E13F8 /* J3FilterTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3FilterTestCase.m; sourceTree = "<group>"; };
-		2FC93E280BB103C500149459 /* J3TelnetEngine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetEngine.h; sourceTree = "<group>"; };
-		2FC93E290BB103C500149459 /* J3TelnetEngine.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetEngine.m; sourceTree = "<group>"; };
+		2FC93E280BB103C500149459 /* J3TelnetProtocolHandler.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetProtocolHandler.h; sourceTree = "<group>"; };
+		2FC93E290BB103C500149459 /* J3TelnetProtocolHandler.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetProtocolHandler.m; sourceTree = "<group>"; };
 		2FCFEFDB0BCAE36D0061FB6B /* MUTextLogDocumentTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUTextLogDocumentTests.h; sourceTree = "<group>"; };
 		2FCFEFDC0BCAE36D0061FB6B /* MUTextLogDocumentTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUTextLogDocumentTests.m; sourceTree = "<group>"; };
 		2FD06555117D704500B8BFDB /* ukprefspanel-icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "ukprefspanel-icon.gif"; sourceTree = "<group>"; };
@@ -380,8 +386,8 @@
 		7EF77C920BCC945D0047CF5D /* J3TelnetOption.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetOption.m; sourceTree = "<group>"; };
 		7EF77CC90BCC99E30047CF5D /* J3TelnetOptionTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3TelnetOptionTests.h; sourceTree = "<group>"; };
 		7EF77CCA0BCC99E30047CF5D /* J3TelnetOptionTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3TelnetOptionTests.m; sourceTree = "<group>"; };
-		7EFACED00BC4BEFD007AE743 /* J3TelnetEngineTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TelnetEngineTests.h; sourceTree = "<group>"; };
-		7EFACED10BC4BEFD007AE743 /* J3TelnetEngineTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TelnetEngineTests.m; sourceTree = "<group>"; };
+		7EFACED00BC4BEFD007AE743 /* J3TelnetProtocolHandlerTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3TelnetProtocolHandlerTests.h; sourceTree = "<group>"; };
+		7EFACED10BC4BEFD007AE743 /* J3TelnetProtocolHandlerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3TelnetProtocolHandlerTests.m; sourceTree = "<group>"; };
 		7EFE43820749C7CE002C7D48 /* J3Filter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3Filter.h; sourceTree = "<group>"; };
 		7EFE43830749C7CE002C7D48 /* J3Filter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = J3Filter.m; sourceTree = "<group>"; };
 		7EFE43B10749CB16002C7D48 /* J3FilterTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = J3FilterTests.h; sourceTree = "<group>"; };
@@ -722,12 +728,16 @@
 				7E4FB2630BCC877B007BC40F /* States */,
 				7EC30306092B978B00AFA5C7 /* J3TelnetConnection.h */,
 				7EC30307092B978B00AFA5C7 /* J3TelnetConnection.m */,
+				2F2718E912141166006710C7 /* J3TelnetConnectionState.h */,
+				2F2718EA12141166006710C7 /* J3TelnetConnectionState.m */,
 				7E68DC3A092AC2FB004554BD /* J3TelnetConstants.h */,
 				7E68DC3B092AC2FB004554BD /* J3TelnetConstants.m */,
-				2FC93E280BB103C500149459 /* J3TelnetEngine.h */,
-				2FC93E290BB103C500149459 /* J3TelnetEngine.m */,
+				2FC93E280BB103C500149459 /* J3TelnetProtocolHandler.h */,
+				2FC93E290BB103C500149459 /* J3TelnetProtocolHandler.m */,
 				7EF77C910BCC945D0047CF5D /* J3TelnetOption.h */,
 				7EF77C920BCC945D0047CF5D /* J3TelnetOption.m */,
+				2F0B277912196B9C00AE6B62 /* J3TelnetStateMachine.h */,
+				2F0B277A12196B9C00AE6B62 /* J3TelnetStateMachine.m */,
 			);
 			name = Telnet;
 			path = telnet;
@@ -820,8 +830,8 @@
 				E6505498077EA20E0016F30E /* J3NaiveURLFilterTests.m */,
 				7E070ACD0933CD81000A36CF /* J3SOCKSPrimitiveTests.h */,
 				7E070ACE0933CD81000A36CF /* J3SOCKSPrimitiveTests.m */,
-				7EFACED00BC4BEFD007AE743 /* J3TelnetEngineTests.h */,
-				7EFACED10BC4BEFD007AE743 /* J3TelnetEngineTests.m */,
+				7EFACED00BC4BEFD007AE743 /* J3TelnetProtocolHandlerTests.h */,
+				7EFACED10BC4BEFD007AE743 /* J3TelnetProtocolHandlerTests.m */,
 				7EF77CC90BCC99E30047CF5D /* J3TelnetOptionTests.h */,
 				7EF77CCA0BCC99E30047CF5D /* J3TelnetOptionTests.m */,
 				7E68DC2C092AC2AF004554BD /* J3TelnetStateMachineTests.h */,
@@ -1147,7 +1157,7 @@
 				7E87756509AD62E400A883BC /* J3HistoryRingTests.m in Sources */,
 				7E87756809AD62E400A883BC /* J3NaiveURLFilterTests.m in Sources */,
 				7E87757209AD62FE00A883BC /* J3SOCKSPrimitiveTests.m in Sources */,
-				7EFACED20BC4BEFD007AE743 /* J3TelnetEngineTests.m in Sources */,
+				7EFACED20BC4BEFD007AE743 /* J3TelnetProtocolHandlerTests.m in Sources */,
 				7EF77CCB0BCC99E30047CF5D /* J3TelnetOptionTests.m in Sources */,
 				7E87757309AD630E00A883BC /* J3TelnetStateMachineTests.m in Sources */,
 				7E87756B09AD62E400A883BC /* J3WriteBufferTests.m in Sources */,
@@ -1189,7 +1199,7 @@
 				7EC3030A092B978B00AFA5C7 /* J3TelnetConnection.m in Sources */,
 				7E4FB27B0BCC877B007BC40F /* J3TelnetDoState.m in Sources */,
 				7E4FB2790BCC877B007BC40F /* J3TelnetDontState.m in Sources */,
-				2FC93E2B0BB103C500149459 /* J3TelnetEngine.m in Sources */,
+				2FC93E2B0BB103C500149459 /* J3TelnetProtocolHandler.m in Sources */,
 				7E4FB27D0BCC877B007BC40F /* J3TelnetIACState.m in Sources */,
 				7E4FB27F0BCC877B007BC40F /* J3TelnetMCCP1SubnegotiationState.m in Sources */,
 				7EE11F3B0BD8284100C78D9C /* J3TelnetNotTelnetState.m in Sources */,
@@ -1242,6 +1252,8 @@
 				2F51E43811781DD400F6DF65 /* RBSplitView.m in Sources */,
 				2FE366750BCAC9820068A6AA /* UKPrefsPanel.m in Sources */,
 				2F861FB811FD53F2007136D5 /* J3Protocol.m in Sources */,
+				2F2718EB12141166006710C7 /* J3TelnetConnectionState.m in Sources */,
+				2F0B277B12196B9C00AE6B62 /* J3TelnetStateMachine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

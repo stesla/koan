@@ -5,6 +5,7 @@
 //
 
 #import "J3TelnetStateMachineTests.h"
+
 #import "J3ByteSet.h"
 #import "J3TelnetConstants.h"
 #import "J3TelnetIACState.h"
@@ -13,6 +14,7 @@
 #import "J3TelnetDontState.h"
 #import "J3TelnetNotTelnetState.h"
 #import "J3TelnetMCCP1SubnegotiationState.h"
+#import "J3TelnetStateMachine.h"
 #import "J3TelnetSubnegotiationIACState.h"
 #import "J3TelnetSubnegotiationOptionState.h"
 #import "J3TelnetSubnegotiationState.h"
@@ -33,7 +35,7 @@
 - (void) assertStateObject: (J3TelnetState *) state givenAnyByteProducesState: (Class) nextStateClass exceptForThoseInSet: (J3ByteSet *) exclusions;
 - (void) assertStateObject: (J3TelnetState *) state givenByte: (uint8_t) byte producesState: (Class) nextStateClass;
 - (void) giveStateClass: (Class) stateClass byte: (uint8_t) byte;
-- (void) resetEngine;
+- (void) resetStateMachine;
 
 @end
 
@@ -43,15 +45,15 @@
 
 - (void) setUp
 {
-  [self resetEngine];
+  [self resetStateMachine];
   lastByteInput = -1;
-  [self at: &output put: [NSMutableData data]];
+  output = [[NSMutableData data] retain];
 }
 
 - (void) tearDown
 {
   [output release];
-  [engine release];
+  [stateMachine release];
 }
 
 - (void) testTextStateTransitions
@@ -83,7 +85,7 @@
   
 - (void) testIACTransitionsOnceConfirmed
 {
-  [engine confirmTelnet];
+  [stateMachine confirmTelnet];
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetEndOfRecord producesState: C(J3TelnetTextState)];
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetNoOperation producesState: C(J3TelnetTextState)];
   [self assertState: C(J3TelnetIACState) givenByte: J3TelnetDataMark producesState: C(J3TelnetTextState)];
@@ -138,31 +140,52 @@
 }
 
 #pragma mark -
-#pragma mark J3TelnetEngineDelegate
+#pragma mark J3TelnetProtocolHandler protocol
 
-- (void) bufferInputByte: (uint8_t) byte
+- (void) bufferSubnegotiationByte: (uint8_t) byte
 {
   lastByteInput = byte;
 }
 
-- (void) log: (NSString *) message arguments: (va_list) args
+- (void) bufferTextByte: (uint8_t) byte
+{
+  [output appendBytes: &byte length: 1];
+  lastByteInput = byte;
+}
+
+- (void) handleBufferedSubnegotiation
 {
   return;
 }
 
-- (void) consumeReadBufferAsSubnegotiation
+- (void) log: (NSString *) message, ...
 {
   return;
 }
 
-- (void) consumeReadBufferAsText
+- (NSString *) optionNameForByte: (uint8_t) byte
+{
+  return nil;
+}
+
+- (void) receivedDo: (uint8_t) option
 {
   return;
 }
 
-- (void) writeData: (NSData *) data
+- (void) receivedDont: (uint8_t) option
 {
-  [output setData: data];
+  return;
+}
+
+- (void) receivedWill: (uint8_t) option
+{
+  return;
+}
+
+- (void) receivedWont: (uint8_t) option
+{
+  return;
 }
 
 @end
@@ -173,16 +196,19 @@
 
 - (void) assertByteConfirmsTelnet: (uint8_t) byte;
 {
-  [self resetEngine];
-  [[J3TelnetIACState state] parse: byte forEngine: engine];
-  [self assertTrue: [engine telnetConfirmed] message: [NSString stringWithFormat: @"%d did not confirm telnet", byte]];
+  [self resetStateMachine];
+  [[J3TelnetIACState state] parse: byte forStateMachine: stateMachine protocol: nil];
+  [self assertTrue: stateMachine.telnetConfirmed message: [NSString stringWithFormat: @"%d did not confirm telnet", byte]];
+  [output setLength: 0];
 }
 
 - (void) assertByteInvalidatesTelnet: (uint8_t) byte
 {
+  [self resetStateMachine];
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, byte};
   [self assertState: C(J3TelnetIACState) givenByte: byte producesState: C(J3TelnetNotTelnetState)];
-  [self assert: output equals: [NSData dataWithBytes: bytes length: 2]];  
+  [self assert: output equals: [NSData dataWithBytes: bytes length: 2]];
+  [output setLength: 0];
 }
 
 
@@ -216,19 +242,21 @@
 
 - (void) assertStateObject: (J3TelnetState *) state givenByte: (uint8_t) byte producesState: (Class) nextStateClass
 {
-  J3TelnetState *nextState = [state parse: byte forEngine: engine];
+  J3TelnetState *nextState = [state parse: byte forStateMachine: stateMachine protocol: self];
   [self assert: [nextState class] equals: nextStateClass];  
 }
 
 - (void) giveStateClass: (Class) stateClass byte: (uint8_t) byte
 {
-  [[[[stateClass alloc] init] autorelease] parse: byte forEngine: engine];  
+  [[[[stateClass alloc] init] autorelease] parse: byte forStateMachine: stateMachine protocol: self];  
 }
 
-- (void) resetEngine
+- (void) resetStateMachine
 {
-  [self at: &engine put: [J3TelnetEngine engine]];
-  [engine setDelegate: self];
+  if (stateMachine)
+    [stateMachine release];
+  
+  stateMachine = [[J3TelnetStateMachine stateMachine] retain];
 }
 
 @end

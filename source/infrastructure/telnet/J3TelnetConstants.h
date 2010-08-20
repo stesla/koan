@@ -74,7 +74,7 @@ enum J3TelnetTerminalTypeSubnegotiationCommands
 
 enum J3TelnetCharsetSubnegotiationCommands
 {
-  // These commands are defined in RFC 2066
+  // These commands are defined in RFC 2066.
   J3TelnetCharsetRequest = 1,
   J3TelnetCharsetAccepted = 2,
   J3TelnetCharsetRejected = 3,

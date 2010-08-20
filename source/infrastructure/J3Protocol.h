@@ -6,9 +6,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface J3Protocol : NSObject
+@interface J3ProtocolHandler : NSObject
 
-+ (id) protocol;
++ (id) protocolHandler;
+
+- (NSData *) parseData: (NSData *) data;
+- (NSData *) preprocessOutput: (NSData *) data;
 
 @end
 
@@ -16,11 +19,13 @@
 
 @interface J3ProtocolStack : NSObject
 {
-  NSMutableArray *protocols;
+  NSMutableArray *protocolHandlers;
 }
 
-- (NSAttributedString *) processAttributedString: (NSAttributedString *) string;
-- (void) addProtocol: (J3Protocol *) protocol;
+- (void) addProtocol: (J3ProtocolHandler *) protocol;
 - (void) clearProtocols;
+
+- (NSData *) parseData: (NSData *) data;
+- (NSData *) preprocessOutput: (NSData *) data;
 
 @end

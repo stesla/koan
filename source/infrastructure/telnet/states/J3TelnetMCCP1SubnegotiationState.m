@@ -5,13 +5,15 @@
 //
 
 #import "J3TelnetConstants.h"
-#import "J3TelnetEngine.h"
+#import "J3TelnetProtocolHandler.h"
 #import "J3TelnetMCCP1SubnegotiationState.h"
 #import "J3TelnetSubnegotiationIACState.h"
 
 @implementation J3TelnetMCCP1SubnegotiationState
 
-- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
+- (J3TelnetState *) parse: (uint8_t) byte
+          forStateMachine: (J3TelnetStateMachine *) stateMachine
+                 protocol: (NSObject <J3TelnetProtocolHandler> *) protocol
 {
   switch (byte)
   {
@@ -19,11 +21,11 @@
       return [J3TelnetSubnegotiationIACState stateWithReturnState: [J3TelnetMCCP1SubnegotiationState class]];
   
     case J3TelnetInterpretAsCommand:
-      [engine log: @"Telnet irregularity: Received IAC while subnegotiating %@ option; expected WILL.", [engine optionNameForByte: J3TelnetOptionMCCP1]];
+      [protocol log: @"Telnet irregularity: Received IAC while subnegotiating %@ option; expected WILL.", [protocol optionNameForByte: J3TelnetOptionMCCP1]];
       return [J3TelnetSubnegotiationIACState stateWithReturnState: [J3TelnetMCCP1SubnegotiationState class]];
 
     default:
-      [engine bufferTextInputByte: byte];
+      [protocol bufferTextByte: byte];
       return self;
   }
 }

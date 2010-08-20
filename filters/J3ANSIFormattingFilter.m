@@ -117,6 +117,7 @@
       return NSUnderlineStyleAttributeName;
       break;
   }
+  
   return nil;
 }
 
@@ -366,7 +367,7 @@
     @throw [NSException exceptionWithName: @"J3ANSIException" reason: @"Did not provide attributeValue" userInfo: nil];
 }
 
-- (NSFont *) setTrait: (NSFontTraitMask)trait onFont: (NSFont *) font
+- (NSFont *) setTrait: (NSFontTraitMask) trait onFont: (NSFont *) font
 {
   return [[NSFontManager sharedFontManager] convertFont: font toHaveTrait: trait];
 }

@@ -5,16 +5,18 @@
 //
 
 #import "J3TelnetConstants.h"
-#import "J3TelnetWillState.h"
-#import "J3TelnetEngine.h"
+#import "J3TelnetProtocolHandler.h"
 #import "J3TelnetTextState.h"
+#import "J3TelnetWillState.h"
 
 @implementation J3TelnetWillState
 
-- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
+- (J3TelnetState *) parse: (uint8_t) byte
+          forStateMachine: (J3TelnetStateMachine *) stateMachine
+                 protocol: (NSObject <J3TelnetProtocolHandler> *) protocol
 {
-  [engine log: @"Received: IAC WILL %@.", [engine optionNameForByte: byte]];
-  [engine receivedWill: byte];
+  [protocol log: @"Received: IAC WILL %@.", [protocol optionNameForByte: byte]];
+  [protocol receivedWill: byte];
   return [J3TelnetTextState state];
 }
 

@@ -8,8 +8,8 @@
 #import "J3TelnetDoState.h"
 #import "J3TelnetDontState.h"
 #import "J3TelnetIACState.h"
-#import "J3TelnetEngine.h"
 #import "J3TelnetNotTelnetState.h"
+#import "J3TelnetProtocolHandler.h"
 #import "J3TelnetState.h"
 #import "J3TelnetSubnegotiationOptionState.h"
 #import "J3TelnetTextState.h"
@@ -18,7 +18,9 @@
 
 @interface J3TelnetIACState (Private)
 
-- (J3TelnetState *) notTelnetFromByte: (uint8_t) byte forEngine: (J3TelnetEngine *) engine;
+- (J3TelnetState *) notTelnetFromByte: (uint8_t) byte
+                      forStateMachine: (J3TelnetStateMachine *) stateMachine
+                             protocol: (NSObject <J3TelnetProtocolHandler> *) protocol;
 
 @end
 
@@ -26,7 +28,9 @@
 
 @implementation J3TelnetIACState
 
-- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
+- (J3TelnetState *) parse: (uint8_t) byte
+          forStateMachine: (J3TelnetStateMachine *) stateMachine
+                 protocol: (NSObject <J3TelnetProtocolHandler> *) protocol
 {
   switch (byte)
   {
@@ -41,48 +45,47 @@
     case J3TelnetEraseCharacter:
     case J3TelnetEraseLine:
     case J3TelnetGoAhead:
-      [engine confirmTelnet];
+      [stateMachine confirmTelnet];
       return [J3TelnetTextState state];
            
     case J3TelnetWill:
-      [engine confirmTelnet];
+      [stateMachine confirmTelnet];
       return [J3TelnetWillState state];
       
     case J3TelnetWont:
-      [engine confirmTelnet];
+      [stateMachine confirmTelnet];
       return [J3TelnetWontState state];
       
     case J3TelnetDo:
-      [engine confirmTelnet];
+      [stateMachine confirmTelnet];
       return [J3TelnetDoState state];
       
     case J3TelnetDont:
-      [engine confirmTelnet];
+      [stateMachine confirmTelnet];
       return [J3TelnetDontState state];
       
     case J3TelnetInterpretAsCommand:
-      [[engine delegate] bufferInputByte: J3TelnetInterpretAsCommand];
+      [protocol bufferTextByte: J3TelnetInterpretAsCommand];
       return [J3TelnetTextState state];
 
     case J3TelnetBeginSubnegotiation:
-      if (![engine telnetConfirmed])
+      if (!stateMachine.telnetConfirmed)
       {
-        [engine log: @"Not telnet: IAC SB without receiving earlier telnet sequences."];
-        return [self notTelnetFromByte: byte forEngine: engine];
+        [protocol log: @"Not telnet: IAC SB without receiving earlier telnet sequences."];
+        return [self notTelnetFromByte: byte forStateMachine: stateMachine protocol: protocol];
       }
       
-      [engine consumeReadBufferAsText];
       return [J3TelnetSubnegotiationOptionState state];
       
     case J3TelnetEndSubnegotiation:
     default:
-      if (![engine telnetConfirmed])
+      if (!stateMachine.telnetConfirmed)
       {
-        [engine log: @"Not telnet: IAC SE without receiving earlier telnet sequences."];
-        return [self notTelnetFromByte: byte forEngine: engine];
+        [protocol log: @"Not telnet: IAC SE without receiving earlier telnet sequences."];
+        return [self notTelnetFromByte: byte forStateMachine: stateMachine protocol: protocol];
       }
       
-      [engine log: @"Telnet irregularity: IAC SE while not in subnegotiation."];
+      [protocol log: @"Telnet irregularity: IAC SE while not in subnegotiation."];
       return [J3TelnetTextState state];
   }
 }
@@ -93,10 +96,12 @@
 
 @implementation J3TelnetIACState (Private)
 
-- (J3TelnetState *) notTelnetFromByte: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
+- (J3TelnetState *) notTelnetFromByte: (uint8_t) byte
+                      forStateMachine: (J3TelnetStateMachine *) stateMachine
+                             protocol: (NSObject <J3TelnetProtocolHandler> *) protocol
 {
-  uint8_t bytes[] = {J3TelnetInterpretAsCommand, byte};
-  [[engine delegate] writeData: [NSData dataWithBytes: bytes length: 2]];
+  [protocol bufferTextByte: J3TelnetInterpretAsCommand];
+  [protocol bufferTextByte: byte];
   return [J3TelnetNotTelnetState state];
 }
 

@@ -7,7 +7,7 @@
 #import "J3TelnetSubnegotiationIACState.h"
 
 #import "J3TelnetConstants.h"
-#import "J3TelnetEngine.h"
+#import "J3TelnetProtocolHandler.h"
 #import "J3TelnetSubnegotiationState.h"
 #import "J3TelnetTextState.h"
 
@@ -28,20 +28,22 @@
   return self;
 }
 
-- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
+- (J3TelnetState *) parse: (uint8_t) byte
+          forStateMachine: (J3TelnetStateMachine *) stateMachine
+                 protocol: (NSObject <J3TelnetProtocolHandler> *) protocol
 {
   switch (byte)
   {
     case J3TelnetEndSubnegotiation:
-      [engine consumeReadBufferAsSubnegotiation];
+      [protocol handleBufferedSubnegotiation];
       return [J3TelnetTextState state];
 
     case J3TelnetInterpretAsCommand:
-      [engine bufferTextInputByte: byte];
+      [protocol bufferSubnegotiationByte: byte];
       return [returnState state];
 
     default:
-      [engine log: @"Telnet irregularity: IAC %u while in subnegotiation.", byte];
+      [protocol log: @"Telnet irregularity: IAC %u while in subnegotiation.", byte];
       return [returnState state];
   }
 }

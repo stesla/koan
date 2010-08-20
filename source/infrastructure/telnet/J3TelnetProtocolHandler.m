@@ -1,19 +1,20 @@
 //
-// J3TelnetEngine.m
+// J3TelnetProtocolHandler.m
 //
 // Copyright (c) 2010 3James Software.
 //
 
 #import "J3ReadBuffer.h"
-#import "J3TelnetEngine.h"
-#import "J3TelnetTextState.h"
+#import "J3TelnetProtocolHandler.h"
 #import "J3WriteBuffer.h"
 
 static NSArray *offerableTerminalTypes;
 static NSArray *acceptableCharsets;
 static NSArray *offerableCharsets;
 
-@interface J3TelnetEngine (Private)
+#pragma mark -
+
+@interface J3TelnetProtocolHandler (Private)
 
 - (void) deallocOptions;
 - (void) forOption: (uint8_t) option allowWill: (BOOL) willValue allowDo: (BOOL) doValue;
@@ -27,7 +28,7 @@ static NSArray *offerableCharsets;
 
 #pragma mark -
 
-@interface J3TelnetEngine (Subnegotiation)
+@interface J3TelnetProtocolHandler (Subnegotiation)
 
 - (void) sendSubnegotiationWithBytes: (const uint8_t *) payloadBytes length: (unsigned) payloadLength;
 - (void) sendSubnegotiationWithData: (NSData *) payloadData;
@@ -49,7 +50,9 @@ static NSArray *offerableCharsets;
 
 #pragma mark -
 
-@implementation J3TelnetEngine
+@implementation J3TelnetProtocolHandler
+
+@synthesize connectionState;
 
 + (void) initialize
 {
@@ -60,101 +63,60 @@ static NSArray *offerableCharsets;
   offerableCharsets = [[NSArray alloc] initWithObjects: @"UTF-8", @"ISO-8859-1", @"US-ASCII", nil];
 }
 
-+ (id) engine
++ (id) protocolHandlerWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState
 {
-  return [[[self alloc] init] autorelease];
+  return [[[self alloc] initWithConnectionState: telnetConnectionState] autorelease];
 }
 
-- (id) init
+- (id) initWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState
 {
   if (!(self = [super init]))
     return nil;
-  [self at: &state put: [J3TelnetTextState state]];
+  
+  textBuffer = nil;
+  subnegotiationBuffer = nil;
+  
+  connectionState = telnetConnectionState;
+  stateMachine = [[J3TelnetStateMachine stateMachine] retain];
+  
   [self initializeOptions];
-  telnetConfirmed = NO;
-  nextTerminalTypeIndex = 0;
-  charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
-  stringEncoding = NSASCIIStringEncoding;
   return self;
-}
-
-- (void) confirmTelnet
-{
-  telnetConfirmed = YES;
-}
-
-- (void) bufferTextInputByte: (uint8_t) byte
-{
-  if (receivedCR && byte != '\r')
-  {
-    receivedCR = NO;
-    if (byte == '\0')
-      [delegate bufferInputByte: '\r'];
-    else
-      [delegate bufferInputByte: byte];
-  } 
-  else if (byte == '\r')
-    receivedCR = YES;
-  else
-    [delegate bufferInputByte: byte];
 }
 
 - (void) dealloc
 {
   [self deallocOptions];
-  [state release];
+  [stateMachine release];
   [super dealloc];
 }
 
-- (NSObject <J3TelnetEngineDelegate> *) delegate
+- (NSObject <J3TelnetProtocolHandlerDelegate> *) delegate
 {
   return delegate;
 }
 
 - (void) disableOptionForHim: (uint8_t) option
 {
-  if (telnetConfirmed)
+  if (stateMachine.telnetConfirmed)
     [options[option] disableHim];
 }
 
 - (void) disableOptionForUs: (uint8_t) option
 {
-  if (telnetConfirmed)
+  if (stateMachine.telnetConfirmed)
     [options[option] disableUs];
 }
 
 - (void) enableOptionForHim: (uint8_t) option
 {
-  if (telnetConfirmed)
+  if (stateMachine.telnetConfirmed)
     [options[option] enableHim];
 }
 
 - (void) enableOptionForUs: (uint8_t) option
 {
-  if (telnetConfirmed)
+  if (stateMachine.telnetConfirmed)
     [options[option] enableUs];
-}
-
-- (void) endOfRecord
-{
-  if ([self optionYesForUs: J3TelnetOptionEndOfRecord])
-    [self sendEscapedByte: J3TelnetEndOfRecord];
-}
-
-- (void) goAhead
-{
-  if (telnetConfirmed && ![self optionYesForUs: J3TelnetOptionSuppressGoAhead])
-    [self sendEscapedByte: J3TelnetGoAhead];
-}
-
-- (void) log: (NSString *) message, ...
-{
-  va_list args;
-  va_start (args, message);
-  
-  [delegate log: message arguments: args];
-  
-  va_end (args);
 }
 
 - (BOOL) optionYesForHim: (uint8_t) option
@@ -165,6 +127,95 @@ static NSArray *offerableCharsets;
 - (BOOL) optionYesForUs: (uint8_t) option
 {
   return [options[option] weAreYes];
+}
+
+- (void) shouldAllowWill: (BOOL) value forOption: (uint8_t) option
+{
+  [options[option] heIsAllowedToUse: value];
+}
+
+- (void) shouldAllowDo: (BOOL) value forOption: (uint8_t) option
+{
+  [options[option] weAreAllowedToUse: value];
+}
+
+- (void) setDelegate: (NSObject <J3TelnetProtocolHandlerDelegate> *) object
+{
+  delegate = object;
+}
+
+- (BOOL) telnetConfirmed
+{
+  return stateMachine.telnetConfirmed;
+}
+
+#pragma mark -
+#pragma mark J3TelnetProtocolHandler protocol
+
+- (void) bufferSubnegotiationByte: (uint8_t) byte
+{
+  [subnegotiationBuffer appendBytes: &byte length: 1];
+}
+
+- (void) bufferTextByte: (uint8_t) byte
+{
+  if (receivedCR && byte != '\r')
+  {
+    receivedCR = NO;
+    if (byte == '\0')
+    {
+      uint8_t carriageReturnByte = '\r';
+      [textBuffer appendBytes: &carriageReturnByte length: 1];
+    }
+    else
+      [textBuffer appendBytes: &byte length: 1];
+  } 
+  else if (byte == '\r')
+    receivedCR = YES;
+  else
+    [textBuffer appendBytes: &byte length: 1];
+}
+
+- (void) handleBufferedSubnegotiation
+{
+  if ([subnegotiationBuffer length] == 0)
+  {
+    [self log: @"Telnet irregularity: Received zero-length subnegotiation."];
+  }
+  
+  const uint8_t *bytes = [subnegotiationBuffer bytes];
+  
+  switch (bytes[0])
+  {
+    case J3TelnetOptionTerminalType:
+      [self handleTerminalTypeSubnegotiation: subnegotiationBuffer];
+      break;
+      
+    case J3TelnetOptionCharset:
+      [self handleCharsetSubnegotiation: subnegotiationBuffer];
+      break;
+      
+    case J3TelnetOptionMSSP:
+      [self handleMSSPSubnegotiation: subnegotiationBuffer];
+      break;
+      
+    default:
+      [self log: @"Unknown subnegotation for option %@. [%@]", [self optionNameForByte: bytes[0]], subnegotiationBuffer];
+      break;
+  }
+  
+  [subnegotiationBuffer release];
+  subnegotiationBuffer = [[NSMutableData alloc] initWithCapacity: 64];
+}
+
+- (void) log: (NSString *) message, ...
+{
+  va_list args;
+  va_start (args, message);
+  
+  [delegate log: message arguments: args];
+  
+  va_end (args);
 }
 
 - (NSString *) optionNameForByte: (uint8_t) byte
@@ -233,69 +284,6 @@ static NSArray *offerableCharsets;
   }
 }
 
-- (void) parseData: (NSData *) data
-{
-  BOOL wasConfirmed = telnetConfirmed;
-  
-  for (unsigned i = 0; i < [data length]; i++)
-    [self parseByte: ((uint8_t *) [data bytes])[i]];
-  
-  if (!wasConfirmed && telnetConfirmed)
-    [self negotiateOptions];
-}
-
-- (void) consumeReadBufferAsSubnegotiation
-{
-  [delegate consumeReadBufferAsSubnegotiation];
-}
-
-- (void) consumeReadBufferAsText
-{
-  [delegate consumeReadBufferAsText];
-}
-
-- (void) handleIncomingSubnegotiation: (NSData *) subnegotiationData
-{
-  if ([subnegotiationData length] == 0)
-  {
-    [self log: @"Telnet irregularity: Received zero-length subnegotiation."];
-  }
-  
-  const uint8_t *bytes = [subnegotiationData bytes];
-  
-  switch (bytes[0])
-  {
-    case J3TelnetOptionTerminalType:
-      [self handleTerminalTypeSubnegotiation: subnegotiationData];
-      return;
-      
-    case J3TelnetOptionCharset:
-      [self handleCharsetSubnegotiation: subnegotiationData];
-      return;
-      
-    case J3TelnetOptionMSSP:
-      [self handleMSSPSubnegotiation: subnegotiationData];
-      return;
-      
-    default:
-      [self log: @"Unknown subnegotation for option %@. [%@]", [self optionNameForByte: bytes[0]], subnegotiationData];
-      return;
-  }
-}
-
-- (NSData *) preprocessOutput: (NSData *) data
-{
-  const uint8_t *bytes = [data bytes];
-  NSMutableData *result = [NSMutableData dataWithCapacity: [data length]];
-  for (unsigned i = 0; i < [data length]; ++i)
-  {
-    if (bytes[i] == J3TelnetInterpretAsCommand)
-      [result appendBytes: bytes + i length: 1];
-    [result appendBytes: bytes + i length: 1];
-  }
-  return result;
-}
-
 - (void) receivedDo: (uint8_t) option
 {
   [options[option] receivedDo];
@@ -319,29 +307,60 @@ static NSArray *offerableCharsets;
   [options[option] receivedWont];
 }
 
-- (void) shouldAllowWill: (BOOL) value forOption: (uint8_t) option
+#pragma mark -
+#pragma mark J3ProtocolHandler overrides
+
+- (NSData *) parseData: (NSData *) data
 {
-  [options[option] heIsAllowedToUse: value];
+  BOOL wasConfirmed = stateMachine.telnetConfirmed;
+  const uint8_t *bytes = [data bytes];
+  unsigned dataLength = [data length];
+  
+  textBuffer = [[NSMutableData alloc] initWithCapacity: dataLength];
+  subnegotiationBuffer = [[NSMutableData alloc] initWithCapacity: 64];
+  
+  for (unsigned i = 0; i < dataLength; i++)
+    [self parseByte: bytes[i]];
+  
+  if (!wasConfirmed && stateMachine.telnetConfirmed)
+    [self negotiateOptions];
+  
+  NSData *parsedData = textBuffer;
+  
+  [textBuffer autorelease];
+  textBuffer = nil;
+  
+  [subnegotiationBuffer release];
+  subnegotiationBuffer = nil;
+  
+  return parsedData;
 }
 
-- (void) shouldAllowDo: (BOOL) value forOption: (uint8_t) option
+- (NSData *) preprocessOutput: (NSData *) data
 {
-  [options[option] weAreAllowedToUse: value];
-}
-
-- (void) setDelegate: (NSObject <J3TelnetEngineDelegate> *) object
-{
-  delegate = object;
-}
-
-- (BOOL) telnetConfirmed
-{
-  return telnetConfirmed;
-}
-
-- (NSStringEncoding) stringEncoding
-{
-  return stringEncoding;
+  const uint8_t *bytes = [data bytes];
+  NSMutableData *processedOutput = [NSMutableData dataWithCapacity: [data length]];
+  
+  for (unsigned i = 0; i < [data length]; ++i)
+  {
+    if (bytes[i] == J3TelnetInterpretAsCommand)
+      [processedOutput appendBytes: bytes + i length: 1];
+    [processedOutput appendBytes: bytes + i length: 1];
+  }
+  
+  if ([self optionYesForUs: J3TelnetOptionEndOfRecord])
+  {
+    uint8_t endOfRecordBytes[] = {J3TelnetInterpretAsCommand, J3TelnetEndOfRecord};
+    [processedOutput appendBytes: &endOfRecordBytes length: 2];
+  }
+  
+  if (stateMachine.telnetConfirmed && ![self optionYesForUs: J3TelnetOptionSuppressGoAhead])
+  {
+    uint8_t goAheadBytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
+    [processedOutput appendBytes: &goAheadBytes length: 2];
+  }
+  
+  return processedOutput;
 }
 
 #pragma mark -
@@ -375,7 +394,7 @@ static NSArray *offerableCharsets;
 
 #pragma mark -
 
-@implementation J3TelnetEngine (Private)
+@implementation J3TelnetProtocolHandler (Private)
 
 - (void) deallocOptions
 {
@@ -414,26 +433,26 @@ static NSArray *offerableCharsets;
 
 - (void) parseByte: (uint8_t) byte
 {
-  [self at: &state put: [state parse: byte forEngine: self]];
+  [stateMachine parse: byte forProtocol: self];
 }
 
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, command, byte};
-  [delegate writeData: [NSData dataWithBytes: bytes length: 3]];
+  [delegate writeDataToSocket: [NSData dataWithBytes: bytes length: 3]];
 }
 
 - (void) sendEscapedByte: (uint8_t) byte
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand, byte};
-  [delegate writeData: [NSData dataWithBytes: bytes length: 2]];
+  [delegate writeDataToSocket: [NSData dataWithBytes: bytes length: 2]];
 }
 
 @end
 
 #pragma mark -
 
-@implementation J3TelnetEngine (Subnegotiation)
+@implementation J3TelnetProtocolHandler (Subnegotiation)
 
 - (void) sendSubnegotiationWithBytes: (const uint8_t *) payloadBytes length: (unsigned) payloadLength
 {
@@ -445,7 +464,7 @@ static NSArray *offerableCharsets;
   [data appendBytes: payloadBytes length: payloadLength];
   [data appendBytes: footerBytes length: 2];
   
-  [delegate writeData: data];
+  [delegate writeDataToSocket: data];
 }
 
 - (void) sendSubnegotiationWithData: (NSData *) payloadData
@@ -512,10 +531,10 @@ static NSArray *offerableCharsets;
       {
         if ([acceptableCharsets containsObject: charset])
         {
-          stringEncoding = [self stringEncodingForName: charset];
+          self.connectionState.stringEncoding = [self stringEncodingForName: charset];
           [self sendCharsetAcceptedSubnegotiationForCharset: charset];
           
-          if (stringEncoding == NSASCIIStringEncoding)
+          if (self.connectionState.stringEncoding == NSASCIIStringEncoding)
           {
             [self disableOptionForUs: J3TelnetOptionTransmitBinary];
             [self disableOptionForHim: J3TelnetOptionTransmitBinary];
@@ -535,7 +554,7 @@ static NSArray *offerableCharsets;
       
     case J3TelnetCharsetAccepted:
     {
-      if (charsetNegotiationStatus != J3TelnetCharsetNegotiationActive)
+      if (self.connectionState.charsetNegotiationStatus != J3TelnetCharsetNegotiationActive)
       {
         [self log: @"Telnet irregularity: Received %@ ACCEPTED subnegotiation, but no active negotiation in progress.", length, [self optionNameForByte: bytes[0]]];
       }
@@ -548,13 +567,13 @@ static NSArray *offerableCharsets;
       
       NSString *acceptedCharset = [[[NSString alloc] initWithBytes: bytes + 2 length: length - 2 encoding: NSASCIIStringEncoding] autorelease];
       
-      charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
+      self.connectionState.charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
       
       if ([acceptableCharsets containsObject: acceptedCharset])
       {
-        stringEncoding = [self stringEncodingForName: acceptedCharset];
+        self.connectionState.stringEncoding = [self stringEncodingForName: acceptedCharset];
         
-        if (stringEncoding == NSASCIIStringEncoding)
+        if (self.connectionState.stringEncoding == NSASCIIStringEncoding)
         {
           [self disableOptionForUs: J3TelnetOptionTransmitBinary];
           [self disableOptionForHim: J3TelnetOptionTransmitBinary];
@@ -574,10 +593,10 @@ static NSArray *offerableCharsets;
     }
       
     case J3TelnetCharsetRejected:
-      if (charsetNegotiationStatus == J3TelnetCharsetNegotiationInactive)
+      if (self.connectionState.charsetNegotiationStatus == J3TelnetCharsetNegotiationInactive)
         [self log: @"Telnet irregularity: Received %@ REJECTED subnegotiation, but no active negotiation in progress.", length, [self optionNameForByte: bytes[0]]];
       
-      charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
+      self.connectionState.charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
       
       if (length > 2)
         [self log: @"Telnet irregularity: Invalid length of %u for %@ REJECTED subnegotiation. [%@]", length, [self optionNameForByte: bytes[0]], subnegotiationData];
@@ -615,10 +634,10 @@ static NSArray *offerableCharsets;
   [charsetAcceptedData appendBytes: [charset cStringUsingEncoding: NSASCIIStringEncoding]
                             length: [charset lengthOfBytesUsingEncoding: NSASCIIStringEncoding]];
   
-  if (charsetNegotiationStatus == J3TelnetCharsetNegotiationActive)
-    charsetNegotiationStatus = J3TelnetCharsetNegotiationIgnoreRejected;
+  if (self.connectionState.charsetNegotiationStatus == J3TelnetCharsetNegotiationActive)
+    self.connectionState.charsetNegotiationStatus = J3TelnetCharsetNegotiationIgnoreRejected;
   else
-    charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
+    self.connectionState.charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
   
   [self sendSubnegotiationWithData: charsetAcceptedData];
   [self log: @"    Sent: IAC SB %@ ACCEPTED %@ IAC SE.", [self optionNameForByte: J3TelnetOptionCharset], charset];
@@ -629,10 +648,10 @@ static NSArray *offerableCharsets;
   uint8_t bytes[] = {J3TelnetOptionCharset, J3TelnetCharsetRejected};
   NSMutableData *charsetRejectedData = [NSMutableData dataWithBytes: bytes length: 2];
   
-  if (charsetNegotiationStatus == J3TelnetCharsetNegotiationActive)
-    charsetNegotiationStatus = J3TelnetCharsetNegotiationIgnoreRejected;
+  if (self.connectionState.charsetNegotiationStatus == J3TelnetCharsetNegotiationActive)
+    self.connectionState.charsetNegotiationStatus = J3TelnetCharsetNegotiationIgnoreRejected;
   else
-    charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
+    self.connectionState.charsetNegotiationStatus = J3TelnetCharsetNegotiationInactive;
   
   [self sendSubnegotiationWithData: charsetRejectedData];
   [self log: @"    Sent: IAC SB %@ REJECTED IAC SE.", [self optionNameForByte: J3TelnetOptionCharset]];
@@ -640,7 +659,7 @@ static NSArray *offerableCharsets;
 
 - (void) sendCharsetRequestSubnegotiation
 {
-  if (charsetNegotiationStatus == J3TelnetCharsetNegotiationActive)
+  if (self.connectionState.charsetNegotiationStatus == J3TelnetCharsetNegotiationActive)
     return;
   
   uint8_t bytes[] = {J3TelnetOptionCharset, J3TelnetCharsetRequest};
@@ -654,7 +673,7 @@ static NSArray *offerableCharsets;
                              length: [charset lengthOfBytesUsingEncoding: NSASCIIStringEncoding]];
   }
   
-  charsetNegotiationStatus = J3TelnetCharsetNegotiationActive;
+  self.connectionState.charsetNegotiationStatus = J3TelnetCharsetNegotiationActive;
   
   [self sendSubnegotiationWithData: charsetRequestData];
   [self log: @"    Sent: IAC SB %@ REQUEST <%@> IAC SE.", [self optionNameForByte: J3TelnetOptionCharset], [offerableCharsets componentsJoinedByString: @" "]];
@@ -797,10 +816,10 @@ static NSArray *offerableCharsets;
   uint8_t prefixBytes[] = {J3TelnetOptionTerminalType, J3TelnetTerminalTypeIs};
   NSMutableData *terminalTypeData = [NSMutableData dataWithBytes: prefixBytes length: 2];
   
-  NSString *terminalType = [offerableTerminalTypes objectAtIndex: nextTerminalTypeIndex++];
+  NSString *terminalType = [offerableTerminalTypes objectAtIndex: self.connectionState.nextTerminalTypeIndex++];
   
-  if (nextTerminalTypeIndex >= [offerableTerminalTypes count])
-    nextTerminalTypeIndex = 0;
+  if (self.connectionState.nextTerminalTypeIndex >= [offerableTerminalTypes count])
+    self.connectionState.nextTerminalTypeIndex = 0;
   
   [terminalTypeData appendBytes: [terminalType cStringUsingEncoding: NSASCIIStringEncoding]
                          length: [terminalType lengthOfBytesUsingEncoding: NSASCIIStringEncoding]];

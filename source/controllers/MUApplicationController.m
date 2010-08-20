@@ -438,12 +438,9 @@
 {
   if (cont)
   {
-    unsigned count = [connectionWindowControllers count];
-    
-    while (count--)
+    for (MUConnectionWindowController *controller in connectionWindowControllers)
     {
-      MUConnectionWindowController *controller = [connectionWindowControllers objectAtIndex: count];
-      if (controller && [controller isConnectedOrConnecting])
+      if ([controller isConnectedOrConnecting])
       {
         [controller confirmClose: @selector (recursivelyConfirmClose:)];
         return;

@@ -7,6 +7,7 @@
 #import "J3SocketFactory.h"
 #import "J3Socket.h"
 #import "J3TelnetConnection.h"
+#import "J3TelnetProtocolHandler.h"
 
 NSString *J3TelnetConnectionDidConnectNotification = @"J3TelnetConnectionDidConnectNotification";
 NSString *J3TelnetConnectionIsConnectingNotification = @"J3TelnetConnectionIsConnectingNotification";
@@ -33,6 +34,8 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 
 @implementation J3TelnetConnection
 
+@synthesize socket, state;
+
 + (id) telnetWithSocketFactory: (J3SocketFactory *) factory
                       hostname: (NSString *) hostname
                           port: (int) port
@@ -56,28 +59,32 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
   if (!(self = [super init]))
     return nil;
   
-  [self at: &socketFactory put: factory];
-  [self at: &hostname put: newHostname];
+  state = [[J3TelnetConnectionState connectionState] retain];
+  socketFactory = [factory retain];
+  hostname = [newHostname copy];
   port = newPort;
-  [self at: &engine put: [J3TelnetEngine engine]];
-  [engine setDelegate: self];
-  [self setDelegate: newDelegate];
-  [self at: &readBuffer put: [J3ReadBuffer buffer]];
   pollTimer = nil;
+  
+  protocolStack = [[J3ProtocolStack alloc] init];
+  J3TelnetProtocolHandler *handler = [J3TelnetProtocolHandler protocolHandlerWithConnectionState: state];
+  [handler setDelegate: self];
+  [protocolStack addProtocol: handler];
+  
+  self.delegate = newDelegate;
   return self;
 }
 
 - (void) dealloc
 {
-  [self unregisterObjectForNotifications: delegate];
-  delegate = nil;
+  self.delegate = nil;
   
   [self close];
   [self cleanUpPollTimer];
   
+  [socketFactory release];
   [socket release];
-  [readBuffer release];
-  [engine release];
+  [hostname release];
+  [protocolStack release];
   [super dealloc];
 }
 
@@ -99,28 +106,21 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 
 - (void) close
 {
-  [socket close];
-}
-
-- (BOOL) hasReadBuffer: (NSObject <J3ReadBuffer> *) buffer
-{
-  return readBuffer == buffer;
+  [self.socket close];
 }
 
 - (void) open
 {
   [self initializeSocket];
   [self schedulePollTimer];
-  [socket open];
+  [self.socket open];
 }
 
 - (void) writeLine: (NSString *) line
 {
   NSString *lineWithLineEnding = [NSString stringWithFormat: @"%@\r\n",line];
-  NSData *encodedData = [lineWithLineEnding dataUsingEncoding: [engine stringEncoding] allowLossyConversion: YES];
+  NSData *encodedData = [lineWithLineEnding dataUsingEncoding: [self.state stringEncoding] allowLossyConversion: YES];
   [self writeDataWithPreprocessing: encodedData];
-  [engine goAhead];
-  [engine endOfRecord];
 }
 
 #pragma mark -
@@ -194,31 +194,16 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 }
 
 #pragma mark -
-#pragma mark J3TelnetEngineDelegate
-
-- (void) bufferInputByte: (uint8_t) byte
-{
-  [readBuffer appendByte: byte];
-}
-
-- (void) consumeReadBufferAsSubnegotiation
-{
-  [engine handleIncomingSubnegotiation: [readBuffer dataByConsumingBuffer]];
-}
-
-- (void) consumeReadBufferAsText
-{
-  [delegate displayString: [readBuffer stringByConsumingBufferWithEncoding: [engine stringEncoding]]];
-}
+#pragma mark J3TelnetProtocolHandlerDelegate
 
 - (void) log: (NSString *) message arguments: (va_list) args
 {
   NSLog (@"[%@:%d] %@", hostname, port, [[[NSString alloc] initWithFormat: message arguments: args] autorelease]);
 }
 
-- (void) writeData: (NSData *) data
+- (void) writeDataToSocket: (NSData *) data
 {
-  [socket write: data];
+  [self.socket write: data];
 }
 
 @end
@@ -240,13 +225,13 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 
 - (void) initializeSocket
 {
-  [self at: &socket put: [socketFactory makeSocketWithHostname: hostname port: port]];
-  [socket setDelegate: self];
+  self.socket = [socketFactory makeSocketWithHostname: hostname port: port];
+  self.socket.delegate = self;
 }
 
 - (BOOL) isUsingSocket: (J3Socket *) possibleSocket
 {
-  return possibleSocket == socket;
+  return possibleSocket == self.socket;
 }
 
 - (void) poll
@@ -254,15 +239,18 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
   // It is possible for the connection to have been released but for there to
   // be a pending timer fire that was registered before the timers were
   // invalidated.
-  if (!socket || ![socket isConnected])
+  if (!self.socket || ![self.socket isConnected])
     return;
   
-  [socket poll];
+  [self.socket poll];
   
-  if ([socket hasDataAvailable])
-    [engine parseData: [socket readUpToLength: [socket availableBytes]]];
-  else
-    [self consumeReadBufferAsText];
+  if ([self.socket hasDataAvailable])
+  {
+    NSData *parsedData = [protocolStack parseData: [self.socket readUpToLength: [self.socket availableBytes]]];
+    NSString *parsedString = [[[NSString alloc] initWithBytes: [parsedData bytes] length: [parsedData length] encoding: [self.state stringEncoding]] autorelease];
+    
+    [self.delegate displayString: parsedString];
+  }
 }
 
 - (void) registerObjectForNotifications: (id) object
@@ -313,7 +301,7 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 
 - (void) writeDataWithPreprocessing: (NSData *) data
 {
-  [self writeData: [engine preprocessOutput: data]];
+  [self writeDataToSocket: [protocolStack preprocessOutput: data]];
 }
 
 @end

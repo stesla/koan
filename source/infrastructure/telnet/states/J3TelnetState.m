@@ -55,10 +55,12 @@ static NSMutableDictionary *states;
     -1];
 }
 
-- (J3TelnetState *) parse: (uint8_t) byte forEngine: (J3TelnetEngine *) engine
+- (J3TelnetState *) parse: (uint8_t) byte
+          forStateMachine: (J3TelnetStateMachine *) stateMachine
+                 protocol: (NSObject <J3TelnetProtocolHandler> *) protocol
 {
   @throw [NSException exceptionWithName: @"SubclassResponsibility"
-                                 reason: @"Subclass failed to implement -[parse:forEngine:]"
+                                 reason: @"Subclass failed to implement -[parse:forStateMachine:protocol]"
                                userInfo: nil];
 }
 

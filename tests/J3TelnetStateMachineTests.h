@@ -6,11 +6,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import <J3Testing/J3Testcase.h>
-#import "J3TelnetEngine.h"
+#import "J3TelnetProtocolHandler.h"
+#import "J3TelnetStateMachine.h"
 
-@interface J3TelnetStateMachineTests : J3TestCase <J3TelnetEngineDelegate>
+@interface J3TelnetStateMachineTests : J3TestCase <J3TelnetProtocolHandler>
 {
-  J3TelnetEngine *engine;
+  J3TelnetStateMachine *stateMachine;
   int lastByteInput;
   NSMutableData *output;
 }

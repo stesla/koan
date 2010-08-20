@@ -8,7 +8,6 @@
 #import "J3ProxySettings.h"
 #import "J3ProxySocket.h"
 #import "J3Socket.h"
-#import "J3TelnetEngine.h"
 
 static J3SocketFactory *defaultFactory = nil;
 
