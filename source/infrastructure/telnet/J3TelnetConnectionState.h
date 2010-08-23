@@ -16,11 +16,13 @@ enum charsetNegotiationStatus
 @interface J3TelnetConnectionState : NSObject
 {
   enum charsetNegotiationStatus charsetNegotiationStatus;
+  BOOL incomingStreamCompressed;
   unsigned nextTerminalTypeIndex;
   NSStringEncoding stringEncoding;
 }
 
 @property (assign, nonatomic) enum charsetNegotiationStatus charsetNegotiationStatus;
+@property (assign, nonatomic) BOOL incomingStreamCompressed;
 @property (assign, nonatomic) unsigned nextTerminalTypeIndex;
 @property (assign, nonatomic) NSStringEncoding stringEncoding;
 

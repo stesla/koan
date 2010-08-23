@@ -57,6 +57,7 @@ extern NSString *J3TelnetConnectionErrorMessageKey;
                         port: (int) port
                     delegate: (NSObject <J3TelnetConnectionDelegate> *) delegate;
 
+- (void) log: (NSString *) message, ...;
 - (void) writeLine: (NSString *) line;
 
 @end

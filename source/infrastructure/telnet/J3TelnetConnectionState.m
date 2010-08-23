@@ -8,7 +8,7 @@
 
 @implementation J3TelnetConnectionState
 
-@synthesize charsetNegotiationStatus, nextTerminalTypeIndex, stringEncoding;
+@synthesize charsetNegotiationStatus, incomingStreamCompressed, nextTerminalTypeIndex, stringEncoding;
 
 + (id) connectionState
 {

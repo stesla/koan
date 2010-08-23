@@ -6,7 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface J3ProtocolHandler : NSObject
+@interface J3ByteProtocolHandler : NSObject
 
 + (id) protocolHandler;
 
@@ -19,11 +19,11 @@
 
 @interface J3ProtocolStack : NSObject
 {
-  NSMutableArray *protocolHandlers;
+  NSMutableArray *byteProtocolHandlers;
 }
 
-- (void) addProtocol: (J3ProtocolHandler *) protocol;
-- (void) clearProtocols;
+- (void) addByteProtocol: (J3ByteProtocolHandler *) protocol;
+- (void) clearAllProtocols;
 
 - (NSData *) parseData: (NSData *) data;
 - (NSData *) preprocessOutput: (NSData *) data;

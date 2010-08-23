@@ -4,7 +4,6 @@
 // Copyright (c) 2010 3James Software.
 //
 
-#import "J3ReadBuffer.h"
 #import "J3TelnetProtocolHandler.h"
 #import "J3WriteBuffer.h"
 
@@ -432,8 +431,8 @@ static NSArray *offerableCharsets;
   [self forOption: J3TelnetOptionEndOfRecord allowWill: YES allowDo: YES];
   [self forOption: J3TelnetOptionCharset allowWill: YES allowDo: YES];
   [self forOption: J3TelnetOptionMSSP allowWill: YES allowDo: NO];
-  //[self forOption: J3TelnetOptionMCCP1 allowWill: YES allowDo: NO];
-  //[self forOption: J3TelnetOptionMCCP2 allowWill: YES allowDo: NO];
+  [self forOption: J3TelnetOptionMCCP1 allowWill: YES allowDo: NO];
+  [self forOption: J3TelnetOptionMCCP2 allowWill: YES allowDo: NO];
 }
 
 - (void) negotiateOptions
@@ -757,6 +756,8 @@ static NSArray *offerableCharsets;
     [self log: @"MCCP irregularity: First byte is not %@. [%@]", [self optionNameForByte: versionByte], subnegotiationData];
     return;
   }
+  
+  self.connectionState.incomingStreamCompressed = YES;
   
   switch (versionByte)
   {

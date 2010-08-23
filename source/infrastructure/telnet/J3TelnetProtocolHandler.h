@@ -35,7 +35,7 @@
 
 #pragma mark -
 
-@interface J3TelnetProtocolHandler : J3ProtocolHandler <J3TelnetProtocolHandler, J3TelnetOptionDelegate>
+@interface J3TelnetProtocolHandler : J3ByteProtocolHandler <J3TelnetProtocolHandler, J3TelnetOptionDelegate>
 {
   J3TelnetConnectionState *connectionState;
   J3TelnetStateMachine *stateMachine;

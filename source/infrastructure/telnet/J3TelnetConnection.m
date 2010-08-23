@@ -23,7 +23,6 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (void) fireTimer: (NSTimer *) timer;
 - (void) initializeSocket;
 - (BOOL) isUsingSocket: (J3Socket *) possibleSocket;
-- (void) log: (NSString *) message, ...;
 - (void) poll;
 - (void) registerObjectForNotifications: (id) object;
 - (void) schedulePollTimer;
@@ -68,10 +67,12 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
   pollTimer = nil;
   
   protocolStack = [[J3ProtocolStack alloc] init];
-  J3TelnetProtocolHandler *handler = [J3TelnetProtocolHandler protocolHandlerWithConnectionState: state];
-  [handler setDelegate: self];
-  [protocolStack addProtocol: handler];
-  [protocolStack addProtocol: [MUMCCPProtocolHandler protocolHandler]];
+  
+  J3TelnetProtocolHandler *telnetProtocolHandler = [J3TelnetProtocolHandler protocolHandlerWithConnectionState: state];
+  [telnetProtocolHandler setDelegate: self];
+  [protocolStack addByteProtocol: telnetProtocolHandler];
+  
+  [protocolStack addByteProtocol: [MUMCCPProtocolHandler protocolHandlerWithConnectionState: state]];
   
   self.delegate = newDelegate;
   return self;
@@ -107,16 +108,14 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
   delegate = object;
 }
 
-- (void) close
+- (void) log: (NSString *) message, ...
 {
-  [self.socket close];
-}
-
-- (void) open
-{
-  [self initializeSocket];
-  [self schedulePollTimer];
-  [self.socket open];
+  va_list args;
+  va_start (args, message);
+  
+  [self log: message arguments: args];
+  
+  va_end (args);
 }
 
 - (void) writeLine: (NSString *) line
@@ -128,6 +127,18 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 
 #pragma mark -
 #pragma mark J3Connection overrides
+
+- (void) close
+{
+  [self.socket close];
+}
+
+- (void) open
+{
+  [self initializeSocket];
+  [self schedulePollTimer];
+  [self.socket open];
+}
 
 - (void) setStatusConnected
 {
@@ -239,16 +250,6 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 - (BOOL) isUsingSocket: (J3Socket *) possibleSocket
 {
   return possibleSocket == self.socket;
-}
-
-- (void) log: (NSString *) message, ...
-{
-  va_list args;
-  va_start (args, message);
-  
-  [self log: message arguments: args];
-  
-  va_end (args);
 }
 
 - (void) poll

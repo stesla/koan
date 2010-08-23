@@ -6,7 +6,7 @@
 
 #import "J3Protocol.h"
 
-@implementation J3ProtocolHandler
+@implementation J3ByteProtocolHandler
 
 + (id) protocolHandler
 {
@@ -38,30 +38,30 @@
   if (!(self = [super init]))
     return nil;
   
-  protocolHandlers = [[NSMutableArray alloc] init];
+  byteProtocolHandlers = [[NSMutableArray alloc] init];
   return self;
 }
 
 - (void) dealloc
 {
-  [protocolHandlers release];
+  [byteProtocolHandlers release];
   [super dealloc];
 }
 
-- (void) addProtocol: (J3ProtocolHandler *) protocol
+- (void) addByteProtocol: (J3ByteProtocolHandler *) protocol
 {
-  [protocolHandlers addObject: protocol];
+  [byteProtocolHandlers addObject: protocol];
 }
 
-- (void) clearProtocols
+- (void) clearAllProtocols
 {
-  [protocolHandlers removeAllObjects];
+  [byteProtocolHandlers removeAllObjects];
 }
 
 - (NSData *) parseData: (NSData *) data
 {
   NSData *workingData = data;
-  for (J3ProtocolHandler *protocolHandler in [protocolHandlers reverseObjectEnumerator])
+  for (J3ByteProtocolHandler *protocolHandler in [byteProtocolHandlers reverseObjectEnumerator])
   {
     NSData *newWorkingData = [protocolHandler parseData: workingData];
     workingData = newWorkingData;
@@ -73,7 +73,7 @@
 - (NSData *) preprocessOutput: (NSData *) data
 {
   NSData *workingData = data;
-  for (J3ProtocolHandler *protocolHandler in protocolHandlers)
+  for (J3ByteProtocolHandler *protocolHandler in byteProtocolHandlers)
   {
     NSData *newWorkingData = [protocolHandler preprocessOutput: workingData];
     workingData = newWorkingData;
@@ -81,5 +81,7 @@
   
   return workingData;
 }
+
+
 
 @end
