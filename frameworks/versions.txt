@@ -1,0 +1,3 @@
+BWToolkit: 1.2.5
+Growl: Needs update.
+Sparkle: 1.5b6
