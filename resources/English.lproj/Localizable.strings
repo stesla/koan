@@ -21,14 +21,10 @@
 
 // Growl messages.
 
-"GrowlConnectionClosedByErrorName" = "Connection closed by error";
-"GrowlConnectionClosedByErrorDescription" = "An error caused the connection to close:  %@";
-"GrowlConnectionClosedByServerName" = "Connection closed by server";
-"GrowlConnectionClosedByServerDescription" = "The connection was closed by the server.";
-"GrowlConnectionClosedName" = "Connection closed";
-"GrowlConnectionClosedDescription" = "The connection was closed.";
-"GrowlConnectionOpenedName" = "Connection opened";
-"GrowlConnectionOpenedDescription" = "The connection was opened successfully.";
+"GrowlConnectionOpened" = "The connection was opened successfully.";
+"GrowlConnectionClosed" = "The connection was closed.";
+"GrowlConnectionClosedByServer" = "The connection was closed by the server.";
+"GrowlConnectionClosedByError" = "An error caused the connection to close:  %@";
 
 // Alert panel messages.
 

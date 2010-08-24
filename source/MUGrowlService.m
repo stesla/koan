@@ -46,44 +46,39 @@ static MUGrowlService *defaultGrowlService;
   return self;
 }
 
-+ (void) connectionClosedByErrorForTitle: (NSString *) title error: (NSString *) error
++ (void) connectionOpenedForTitle: (NSString *) title
 {
-  NSString *description = [NSString stringWithFormat: _(MUGConnectionClosedByErrorDescription),
-    error];
-  
-  [[MUGrowlService defaultGrowlService] notifyWithName: _(MUGConnectionClosedByErrorName)
+  [[MUGrowlService defaultGrowlService] notifyWithName: @"Connection opened"
                                                  title: title
-                                           description: description];
-}
-
-+ (void) connectionClosedByServerForTitle: (NSString *) title
-{
-  [[MUGrowlService defaultGrowlService] notifyWithName: _(MUGConnectionClosedByServerName)
-                                                 title: title
-                                           description: _(MUGConnectionClosedByServerDescription)];
+                                           description: _(MUGConnectionOpened)];
 }
 
 + (void) connectionClosedForTitle: (NSString *) title
 {
-  [[MUGrowlService defaultGrowlService] notifyWithName: _(MUGConnectionClosedName)
+  [[MUGrowlService defaultGrowlService] notifyWithName: @"Connection closed"
                                                  title: title
-                                           description: _(MUGConnectionClosedDescription)];
+                                           description: _(MUGConnectionClosed)];
 }
 
-+ (void) connectionOpenedForTitle: (NSString *) title
++ (void) connectionClosedByServerForTitle: (NSString *) title
 {
-  [[MUGrowlService defaultGrowlService] notifyWithName: _(MUGConnectionOpenedName)
+  [[MUGrowlService defaultGrowlService] notifyWithName: @"Connection closed by server"
                                                  title: title
-                                           description: _(MUGConnectionOpenedDescription)];
+                                           description: _(MUGConnectionClosedByServer)];
+}
+
++ (void) connectionClosedByErrorForTitle: (NSString *) title error: (NSString *) error
+{
+  NSString *description = [NSString stringWithFormat: _(MUGConnectionClosedByError),
+                           error];
+  
+  [[MUGrowlService defaultGrowlService] notifyWithName: @"Connection closed by error"
+                                                 title: title
+                                           description: description];
 }
 
 #pragma mark -
 #pragma mark GrowlApplicationBridge delegate
-
-- (NSData *) applicationIconDataForGrowl
-{
-  return [[NSImage imageNamed: @"NSApplicationIcon"] TIFFRepresentation];
-}
 
 - (NSString *) applicationNameForGrowl
 {
@@ -93,27 +88,6 @@ static MUGrowlService *defaultGrowlService;
 - (void) growlIsReady
 {
   growlIsReady = YES;
-}
-
-- (NSDictionary *) registrationDictionaryForGrowl
-{
-  NSArray *allNotifications = [NSArray arrayWithObjects:
-  	_(MUGConnectionOpenedName),
-  	_(MUGConnectionClosedName),
-  	_(MUGConnectionClosedByServerName),
-  	_(MUGConnectionClosedByErrorName),
-  	nil];
-  NSArray *defaultNotifications = [NSArray arrayWithObjects:
-  	_(MUGConnectionOpenedName),
-  	_(MUGConnectionClosedName),
-  	_(MUGConnectionClosedByServerName),
-  	_(MUGConnectionClosedByErrorName),
-  	nil];
-  
-  return [NSDictionary dictionaryWithObjectsAndKeys:
-  	allNotifications, GROWL_NOTIFICATIONS_ALL,
-  	defaultNotifications, GROWL_NOTIFICATIONS_DEFAULT,
-  	nil];
 }
 
 @end

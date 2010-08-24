@@ -69,14 +69,10 @@ extern NSString *MULEditProfile;
 
 #pragma mark Growl constants.
 
-extern NSString *MUGConnectionClosedByErrorName;
-extern NSString *MUGConnectionClosedByErrorDescription;
-extern NSString *MUGConnectionClosedByServerName;
-extern NSString *MUGConnectionClosedByServerDescription;
-extern NSString *MUGConnectionClosedName;
-extern NSString *MUGConnectionClosedDescription;
-extern NSString *MUGConnectionOpenedName;
-extern NSString *MUGConnectionOpenedDescription;
+extern NSString *MUGConnectionOpened;
+extern NSString *MUGConnectionClosed;
+extern NSString *MUGConnectionClosedByServer;
+extern NSString *MUGConnectionClosedByError;
 
 #pragma mark Status message localization constants.
 

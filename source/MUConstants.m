@@ -67,14 +67,10 @@ NSString *MULEditProfile = @"EditProfile";
 
 #pragma mark Growl localization constants.
 
-NSString *MUGConnectionClosedByErrorName = @"GrowlConnectionClosedByErrorName";
-NSString *MUGConnectionClosedByErrorDescription = @"GrowlConnectionClosedByErrorDescription";
-NSString *MUGConnectionClosedByServerName = @"GrowlConnectionClosedByServerName";
-NSString *MUGConnectionClosedByServerDescription = @"GrowlConnectionClosedByServerDescription";
-NSString *MUGConnectionClosedName = @"GrowlConnectionClosedName";
-NSString *MUGConnectionClosedDescription = @"GrowlConnectionClosedDescription";
-NSString *MUGConnectionOpenedName = @"GrowlConnectionOpenedName";
-NSString *MUGConnectionOpenedDescription = @"GrowlConnectionOpenedDescription";
+NSString *MUGConnectionOpened = @"GrowlConnectionOpened";
+NSString *MUGConnectionClosed = @"GrowlConnectionClosed";
+NSString *MUGConnectionClosedByServer = @"GrowlConnectionClosedByServer";
+NSString *MUGConnectionClosedByError = @"GrowlConnectionClosedByError";
 
 #pragma mark Status message localization constants.
 
