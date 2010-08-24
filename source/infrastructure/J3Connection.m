@@ -4,7 +4,6 @@
 // Copyright (c) 2010 3James Software.
 //
 
-
 #import "J3Connection.h"
 
 @implementation J3Connection
@@ -18,7 +17,9 @@
 {
   if (!(self = [super init]))
     return nil;
+  
   status = J3ConnectionStatusNotConnected;
+  
   return self;
 }
 
