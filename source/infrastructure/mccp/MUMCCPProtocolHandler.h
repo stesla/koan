@@ -11,9 +11,13 @@
 
 #include <zlib.h>
 
+@protocol MUMCCPProtocolHandlerDelegate;
+
 @interface MUMCCPProtocolHandler : J3ByteProtocolHandler
 {
   J3TelnetConnectionState *connectionState;
+  NSObject <MUMCCPProtocolHandlerDelegate> *delegate;
+  
   z_stream *stream;
   
   uint8_t *inbuf;
@@ -25,7 +29,18 @@
   unsigned outsize;
 }
 
-+ (id) protocolHandlerWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState;
-- (id) initWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState;
++ (id) protocolHandlerWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState;
+- (id) initWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState;
+
+- (NSObject <MUMCCPProtocolHandlerDelegate> *) delegate;
+- (void) setDelegate: (NSObject <MUMCCPProtocolHandlerDelegate> *) object;
+
+@end
+
+#pragma mark -
+
+@protocol MUMCCPProtocolHandlerDelegate
+
+- (void) log: (NSString *) message arguments: (va_list) args;
 
 @end

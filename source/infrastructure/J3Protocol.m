@@ -8,22 +8,52 @@
 
 @implementation J3ByteProtocolHandler
 
-+ (id) protocolHandler
++ (id) protocolHandlerWithStack: (J3ProtocolStack *) stack
 {
-  return [[[self alloc] init] autorelease];
+  return [[[self alloc] initWithStack: stack] autorelease];
 }
 
-- (NSData *) parseData: (NSData *) data
+- (id) initWithStack: (J3ProtocolStack *) stack
+{
+  if (!(self = [super init]))
+    return nil;
+  
+  protocolStack = [stack retain];
+  
+  return self;
+}
+
+- (void) dealloc
+{
+  [protocolStack release];
+  [super dealloc];
+}
+
+- (void) parseByte: (uint8_t) byte
 {
   @throw [NSException exceptionWithName: @"SubclassResponsibility"
-                                 reason: @"Subclass failed to implement -[parseData:]"
+                                 reason: @"Subclass failed to implement -[parseByte:]"
                                userInfo: nil];
 }
 
-- (NSData *) preprocessOutput: (NSData *) data
+- (NSData *) headerForPreprocessedData
 {
   @throw [NSException exceptionWithName: @"SubclassResponsibility"
-                                 reason: @"Subclass failed to implement -[preprocessOutput:]"
+                                 reason: @"Subclass failed to implement -[headerForPreprocessedData]"
+                               userInfo: nil];
+}
+
+- (NSData *) footerForPreprocessedData
+{
+  @throw [NSException exceptionWithName: @"SubclassResponsibility"
+                                 reason: @"Subclass failed to implement -[footerForPreprocessedData]"
+                               userInfo: nil];
+}
+
+- (void) preprocessByte: (uint8_t) byte
+{
+  @throw [NSException exceptionWithName: @"SubclassResponsibility"
+                                 reason: @"Subclass failed to implement -[preprocessByte:]"
                                userInfo: nil];
 }
 
@@ -39,6 +69,9 @@
     return nil;
   
   byteProtocolHandlers = [[NSMutableArray alloc] init];
+  parsingBuffer = nil;
+  preprocessingBuffer = nil;
+  
   return self;
 }
 
@@ -60,28 +93,78 @@
 
 - (NSData *) parseData: (NSData *) data
 {
-  NSData *workingData = data;
-  for (J3ByteProtocolHandler *protocolHandler in [byteProtocolHandlers reverseObjectEnumerator])
-  {
-    NSData *newWorkingData = [protocolHandler parseData: workingData];
-    workingData = newWorkingData;
-  }
+  if ([byteProtocolHandlers count] == 0)
+    return nil;
   
-  return workingData;
+  const uint8_t *bytes = [data bytes];
+  unsigned dataLength = [data length];
+  
+  parsingBuffer = [[NSMutableData alloc] initWithCapacity: dataLength];
+  
+  unsigned firstLevel = [byteProtocolHandlers count] - 1;
+  J3ByteProtocolHandler *firstProtocolHandler = [byteProtocolHandlers objectAtIndex: firstLevel];
+  
+  for (unsigned i = 0; i < dataLength; i++)
+    [firstProtocolHandler parseByte: bytes[i]];
+  
+  NSData *parsedData = parsingBuffer;
+  parsingBuffer = nil;
+  
+  return [parsedData autorelease];
 }
 
 - (NSData *) preprocessOutput: (NSData *) data
 {
-  NSData *workingData = data;
-  for (J3ByteProtocolHandler *protocolHandler in byteProtocolHandlers)
-  {
-    NSData *newWorkingData = [protocolHandler preprocessOutput: workingData];
-    workingData = newWorkingData;
-  }
+  if ([byteProtocolHandlers count] == 0)
+    return nil;
   
-  return workingData;
+  const uint8_t *bytes = [data bytes];
+  unsigned dataLength = [data length];
+  
+  preprocessingBuffer = [[NSMutableData alloc] initWithCapacity: dataLength];
+  
+  for (J3ByteProtocolHandler *handler in byteProtocolHandlers)
+    [preprocessingBuffer appendData: [handler headerForPreprocessedData]];
+  
+  unsigned firstLevel = 0;
+  J3ByteProtocolHandler *firstProtocolHandler = [byteProtocolHandlers objectAtIndex: firstLevel];
+  
+  for (unsigned i = 0; i < dataLength; i++)
+    [firstProtocolHandler preprocessByte: bytes[i]];
+  
+  for (J3ByteProtocolHandler *handler in byteProtocolHandlers)
+    [preprocessingBuffer appendData: [handler footerForPreprocessedData]];
+  
+  NSData *preprocessedData = preprocessingBuffer;
+  preprocessingBuffer = nil;
+  
+  return [preprocessedData autorelease];
 }
 
+- (void) parseByte: (uint8_t) byte previousProtocolHandler: (J3ByteProtocolHandler *) previousHandler
+{
+  unsigned previousLevel = [byteProtocolHandlers indexOfObject: previousHandler];
+  if (previousLevel > 0)
+  {
+    int nextLevel = previousLevel - 1;
+    J3ByteProtocolHandler *nextProtocolHandler = [byteProtocolHandlers objectAtIndex: nextLevel];
+    [nextProtocolHandler parseByte: byte];
+  }
+  else
+    [parsingBuffer appendBytes: &byte length: 1];
+}
 
+- (void) preprocessByte: (uint8_t) byte previousProtocolHandler: (J3ByteProtocolHandler *) previousHandler
+{
+  unsigned previousLevel = [byteProtocolHandlers indexOfObject: previousHandler];
+  if (previousLevel < [byteProtocolHandlers count] - 1)
+  {
+    int nextLevel = previousLevel + 1;
+    J3ByteProtocolHandler *nextProtocolHandler = [byteProtocolHandlers objectAtIndex: nextLevel];
+    [nextProtocolHandler preprocessByte: byte];
+  }
+  else
+    [preprocessingBuffer appendBytes: &byte length: 1];
+}
 
 @end

@@ -6,12 +6,21 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class J3ProtocolStack;
+
 @interface J3ByteProtocolHandler : NSObject
+{
+  J3ProtocolStack *protocolStack;
+}
 
-+ (id) protocolHandler;
++ (id) protocolHandlerWithStack: (J3ProtocolStack *) stack;
+- (id) initWithStack: (J3ProtocolStack *) stack;
 
-- (NSData *) parseData: (NSData *) data;
-- (NSData *) preprocessOutput: (NSData *) data;
+- (void) parseByte: (uint8_t) byte;
+
+- (NSData *) headerForPreprocessedData;
+- (NSData *) footerForPreprocessedData;
+- (void) preprocessByte: (uint8_t) byte;
 
 @end
 
@@ -20,6 +29,8 @@
 @interface J3ProtocolStack : NSObject
 {
   NSMutableArray *byteProtocolHandlers;
+  NSMutableData *parsingBuffer;
+  NSMutableData *preprocessingBuffer;
 }
 
 - (void) addByteProtocol: (J3ByteProtocolHandler *) protocol;
@@ -27,5 +38,8 @@
 
 - (NSData *) parseData: (NSData *) data;
 - (NSData *) preprocessOutput: (NSData *) data;
+
+- (void) parseByte: (uint8_t) byte previousProtocolHandler: (J3ByteProtocolHandler *) previousHandler;
+- (void) preprocessByte: (uint8_t) byte previousProtocolHandler: (J3ByteProtocolHandler *) previousHandler;
 
 @end

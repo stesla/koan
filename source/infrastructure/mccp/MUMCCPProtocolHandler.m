@@ -11,7 +11,8 @@
 - (unsigned) bytesPending;
 - (void) cleanUpStream;
 - (void) decompressInbuf;
-- (void) decompressAfterAppendingToData: (NSMutableData *) data;
+- (void) decompressAfterClearingOutbuf;
+- (void) log: (NSString *) message, ...;
 - (void) maybeGrowInbuf: (unsigned) size;
 - (void) maybeGrowOutbuf: (unsigned) size;
 - (BOOL) initializeStream;
@@ -22,17 +23,17 @@
 
 @implementation MUMCCPProtocolHandler
 
-+ (id) protocolHandlerWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState
++ (id) protocolHandlerWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState
 {
-  return [[[self alloc] initWithConnectionState: telnetConnectionState] autorelease];
+  return [[[self alloc] initWithStack: stack connectionState: telnetConnectionState] autorelease];
 }
 
-- (id) initWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState
+- (id) initWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState
 {
-  if (!(self = [super init]))
+  if (!(self = [super initWithStack: stack]))
     return nil;
   
-  connectionState = telnetConnectionState;
+  connectionState = [telnetConnectionState retain];
   stream = NULL;
   insize = 0;
   outsize = 0;
@@ -43,49 +44,71 @@
 - (void) dealloc
 {
   [self cleanUpStream];
+  [connectionState release];
   if (inbuf) free (inbuf);
   if (outbuf) free (outbuf);
   [super dealloc];
 }
 
-- (NSData *) parseData: (NSData *) data
+- (NSObject <MUMCCPProtocolHandlerDelegate> *) delegate
+{
+  return delegate;
+}
+
+- (void) setDelegate: (NSObject <MUMCCPProtocolHandlerDelegate> *) object
+{
+  delegate = object;
+}
+
+#pragma mark -
+#pragma mark J3ByteProtocolHandler overrides
+
+- (void) parseByte: (uint8_t) byte
 {
   if (!connectionState.incomingStreamCompressed)
-    return data;
-  
-  unsigned dataLength = [data length];
+  {
+    [protocolStack parseByte: byte previousProtocolHandler: self];
+    return;
+  }
   
   if (!stream)
   {
     if ([self initializeStream])
     {
+      [self log: @"    MCCP: Decompression of incoming data started."];
       [self maybeGrowOutbuf: 2048];
     }
     else
     {
       // FIXME: Failing to initialize the stream is a fatal error.
-      return [NSData data];
+      return;
     }
   }
   
-  [self maybeGrowInbuf: dataLength];
-  memcpy (inbuf + insize, [data bytes], dataLength);
-  insize += dataLength;
+  [self maybeGrowInbuf: 1];
+  memcpy (inbuf + insize, &byte, 1);
+  insize += 1;
   
   [self decompressInbuf];
   
-  NSMutableData *decompressedData = [NSMutableData dataWithCapacity: dataLength * 2];
-  
   while ([self bytesPending])
-    [self decompressAfterAppendingToData: decompressedData];
-  
-  return decompressedData;
+    [self decompressAfterClearingOutbuf];
 }
 
-- (NSData *) preprocessOutput: (NSData *) data
+- (NSData *) headerForPreprocessedData
+{
+  return nil;
+}
+
+- (NSData *) footerForPreprocessedData
+{
+  return nil;
+}
+
+- (void) preprocessByte: (uint8_t) byte
 {
   // We don't compress outgoing. There's no point, and no servers support it.
-  return data;
+  [protocolStack preprocessByte: byte previousProtocolHandler: self];
 }
 
 @end
@@ -93,6 +116,11 @@
 #pragma mark -
 
 @implementation MUMCCPProtocolHandler (Private)
+
+- (unsigned) bytesPending
+{
+  return outsize;
+}
 
 - (void) cleanUpStream
 {
@@ -102,6 +130,71 @@
     free (stream);
     stream = NULL;
   }
+}
+
+- (void) decompressAfterClearingOutbuf
+{
+  if (!outsize)
+    return;
+  
+  for (unsigned i = 0; i < outsize; i++)
+    [protocolStack parseByte: outbuf[i] previousProtocolHandler: self];
+  
+  outsize = 0;
+  
+  [self decompressInbuf];
+}
+
+- (void) decompressInbuf
+{
+  int status;
+  
+  if (!insize)
+    return;
+  
+  stream->next_in = inbuf;
+  stream->next_out = outbuf + outsize;
+  stream->avail_in = insize;
+  stream->avail_out = outalloc - outsize;
+  
+  status = inflate (stream, Z_SYNC_FLUSH);
+  
+  if (status == Z_OK || status == Z_STREAM_END)
+  {
+    memmove (inbuf, stream->next_in, stream->avail_in);
+    insize = stream->avail_in;
+    outsize = stream->next_out - outbuf;
+    
+    if (status == Z_STREAM_END)
+    {
+      [self maybeGrowOutbuf: insize];
+      
+      // Anything left in inbuf is uncompressed data.
+      memcpy (outbuf + outsize, inbuf, insize);
+      outsize += insize;
+      insize = 0;
+      
+      [self cleanUpStream];
+      [self log: @"    MCCP: Decompression of incoming data ended."];
+      connectionState.incomingStreamCompressed = NO;
+    }
+    
+    return;
+  }
+  
+  if (status == Z_BUF_ERROR)
+  {
+    if (outsize * 2 > outalloc)
+    {
+      [self maybeGrowOutbuf: outalloc];
+      [self decompressInbuf];
+    }
+    
+    return;
+  }
+  
+  // We have some other status error.
+  // FIXME: this is a fatal error.
 }
 
 - (BOOL) initializeStream
@@ -122,6 +215,16 @@
   }
   
   return YES;
+}
+
+- (void) log: (NSString *) message, ...
+{
+  va_list args;
+  va_start (args, message);
+  
+  [delegate log: message arguments: args];
+  
+  va_end (args);
 }
 
 - (void) maybeGrowOutbuf: (unsigned) bytes
@@ -160,73 +263,6 @@
     if (old != inalloc)
       inbuf = realloc (inbuf, inalloc);
   }
-}
-
-- (void) decompressAfterAppendingToData: (NSMutableData *) data
-{
-  if (!outsize)
-    return;
-  
-  [data appendBytes: outbuf length: outsize];
-  
-  outsize = 0;
-  
-  [self decompressInbuf];
-}
-
-- (void) decompressInbuf
-{
-  int status;
-  
-  if (!insize)
-    return;
-  
-  stream->next_in = inbuf;
-  stream->next_out = outbuf + outsize;
-  stream->avail_in = insize;
-  stream->avail_out = outalloc - outsize;
-  
-  status = inflate (stream, Z_SYNC_FLUSH);
-  
-  if (status == Z_OK || status == Z_STREAM_END)
-  {
-    memmove (inbuf, stream->next_in, stream->avail_in);
-    insize = stream->avail_in;
-    outsize = stream->next_out - outbuf;
-    
-    if (status == Z_STREAM_END)
-    {
-      [self maybeGrowOutbuf: insize];
-      
-      memcpy (outbuf + outsize, inbuf, insize);
-      outsize += insize;
-      insize = 0;
-      
-      [self cleanUpStream];
-      connectionState.incomingStreamCompressed = NO;
-    }
-    
-    return;
-  }
-  
-  if (status == Z_BUF_ERROR)
-  {
-    if (outsize * 2 > outalloc)
-    {
-      [self maybeGrowOutbuf: outalloc];
-      [self decompressInbuf];
-    }
-    
-    return;
-  }
-  
-  // We have some other status error.
-  // FIXME: this is a fatal error.
-}
-
-- (unsigned) bytesPending
-{
-  return outsize;
 }
 
 @end

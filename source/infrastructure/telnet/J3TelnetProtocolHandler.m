@@ -19,7 +19,6 @@ static NSArray *offerableCharsets;
 - (void) forOption: (uint8_t) option allowWill: (BOOL) willValue allowDo: (BOOL) doValue;
 - (void) initializeOptions;
 - (void) negotiateOptions;
-- (void) parseByte: (uint8_t) byte;
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte;
 - (void) sendEscapedByte: (uint8_t) byte;
 
@@ -64,20 +63,19 @@ static NSArray *offerableCharsets;
   offerableCharsets = [[NSArray alloc] initWithObjects: @"UTF-8", @"ISO-8859-1", @"US-ASCII", nil];
 }
 
-+ (id) protocolHandlerWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState
++ (id) protocolHandlerWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState
 {
-  return [[[self alloc] initWithConnectionState: telnetConnectionState] autorelease];
+  return [[[self alloc] initWithStack: stack connectionState: telnetConnectionState] autorelease];
 }
 
-- (id) initWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState
+- (id) initWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState
 {
-  if (!(self = [super init]))
+  if (!(self = [super initWithStack: stack]))
     return nil;
   
-  textBuffer = nil;
-  subnegotiationBuffer = nil;
+  subnegotiationBuffer = [[NSMutableData alloc] initWithCapacity: 64];
   
-  connectionState = telnetConnectionState;
+  connectionState = [telnetConnectionState retain];
   stateMachine = [[J3TelnetStateMachine stateMachine] retain];
   
   [self initializeOptions];
@@ -87,6 +85,8 @@ static NSArray *offerableCharsets;
 - (void) dealloc
 {
   [self deallocOptions];
+  [subnegotiationBuffer release];
+  [connectionState release];
   [stateMachine release];
   [super dealloc];
 }
@@ -94,6 +94,11 @@ static NSArray *offerableCharsets;
 - (NSObject <J3TelnetProtocolHandlerDelegate> *) delegate
 {
   return delegate;
+}
+
+- (void) setDelegate: (NSObject <J3TelnetProtocolHandlerDelegate> *) object
+{
+  delegate = object;
 }
 
 - (void) disableOptionForHim: (uint8_t) option
@@ -140,11 +145,6 @@ static NSArray *offerableCharsets;
   [options[option] weAreAllowedToUse: value];
 }
 
-- (void) setDelegate: (NSObject <J3TelnetProtocolHandlerDelegate> *) object
-{
-  delegate = object;
-}
-
 - (BOOL) telnetConfirmed
 {
   return stateMachine.telnetConfirmed;
@@ -165,16 +165,15 @@ static NSArray *offerableCharsets;
     receivedCR = NO;
     if (byte == '\0')
     {
-      uint8_t carriageReturnByte = '\r';
-      [textBuffer appendBytes: &carriageReturnByte length: 1];
+      [protocolStack parseByte: '\r' previousProtocolHandler: self];
     }
     else
-      [textBuffer appendBytes: &byte length: 1];
+      [protocolStack parseByte: byte previousProtocolHandler: self];
   } 
   else if (byte == '\r')
     receivedCR = YES;
   else
-    [textBuffer appendBytes: &byte length: 1];
+    [protocolStack parseByte: byte previousProtocolHandler: self];
 }
 
 - (void) handleBufferedSubnegotiation
@@ -213,8 +212,7 @@ static NSArray *offerableCharsets;
       break;
   }
   
-  [subnegotiationBuffer release];
-  subnegotiationBuffer = [[NSMutableData alloc] initWithCapacity: 64];
+  [subnegotiationBuffer setData: [NSData data]];
 }
 
 - (void) log: (NSString *) message, ...
@@ -343,57 +341,45 @@ static NSArray *offerableCharsets;
 #pragma mark -
 #pragma mark J3ProtocolHandler overrides
 
-- (NSData *) parseData: (NSData *) data
+- (void) parseByte: (uint8_t) byte
 {
   BOOL wasConfirmed = stateMachine.telnetConfirmed;
-  const uint8_t *bytes = [data bytes];
-  unsigned dataLength = [data length];
   
-  textBuffer = [[NSMutableData alloc] initWithCapacity: dataLength];
-  subnegotiationBuffer = [[NSMutableData alloc] initWithCapacity: 64];
-  
-  for (unsigned i = 0; i < dataLength; i++)
-    [self parseByte: bytes[i]];
+  [stateMachine parse: byte forProtocol: self];
   
   if (!wasConfirmed && stateMachine.telnetConfirmed)
     [self negotiateOptions];
-  
-  NSData *parsedData = textBuffer;
-  
-  [textBuffer autorelease];
-  textBuffer = nil;
-  
-  [subnegotiationBuffer release];
-  subnegotiationBuffer = nil;
-  
-  return parsedData;
 }
 
-- (NSData *) preprocessOutput: (NSData *) data
+- (NSData *) headerForPreprocessedData
 {
-  const uint8_t *bytes = [data bytes];
-  NSMutableData *processedOutput = [NSMutableData dataWithCapacity: [data length]];
-  
-  for (unsigned i = 0; i < [data length]; ++i)
-  {
-    if (bytes[i] == J3TelnetInterpretAsCommand)
-      [processedOutput appendBytes: bytes + i length: 1];
-    [processedOutput appendBytes: bytes + i length: 1];
-  }
+  return nil;
+}
+
+- (NSData *) footerForPreprocessedData
+{
+  NSMutableData *footerData = [NSMutableData dataWithCapacity: 4];
   
   if ([self optionYesForUs: J3TelnetOptionEndOfRecord])
   {
     uint8_t endOfRecordBytes[] = {J3TelnetInterpretAsCommand, J3TelnetEndOfRecord};
-    [processedOutput appendBytes: &endOfRecordBytes length: 2];
+    [footerData appendBytes: &endOfRecordBytes length: 2];
   }
   
   if (stateMachine.telnetConfirmed && ![self optionYesForUs: J3TelnetOptionSuppressGoAhead])
   {
     uint8_t goAheadBytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead};
-    [processedOutput appendBytes: &goAheadBytes length: 2];
+    [footerData appendBytes: &goAheadBytes length: 2];
   }
   
-  return processedOutput;
+  return footerData;
+}
+
+- (void) preprocessByte: (uint8_t) byte
+{
+  if (byte == J3TelnetInterpretAsCommand)
+    [protocolStack preprocessByte: byte previousProtocolHandler: self];
+  [protocolStack preprocessByte: byte previousProtocolHandler: self];
 }
 
 #pragma mark -
@@ -464,11 +450,6 @@ static NSArray *offerableCharsets;
   // IAC WILL SGA.  If we send IAC DO SGA it will request that
   // we also IAC DO SGA, so that results in a good set of options.
   [self enableOptionForHim: J3TelnetOptionSuppressGoAhead];
-}
-
-- (void) parseByte: (uint8_t) byte
-{
-  [stateMachine parse: byte forProtocol: self];
 }
 
 - (void) sendCommand: (uint8_t) command withByte: (uint8_t) byte
@@ -778,8 +759,6 @@ static NSArray *offerableCharsets;
     return;
   }
   
-  self.connectionState.incomingStreamCompressed = YES;
-  
   switch (versionByte)
   {
     case J3TelnetOptionMCCP1:
@@ -790,6 +769,8 @@ static NSArray *offerableCharsets;
       [self log: @"Received: IAC SB %@ IAC SE.", [self optionNameForByte: versionByte]];
       break;
   }
+  
+  self.connectionState.incomingStreamCompressed = YES;
 }
 
 #pragma mark -

@@ -40,7 +40,6 @@
   J3TelnetConnectionState *connectionState;
   J3TelnetStateMachine *stateMachine;
   
-  NSMutableData *textBuffer;
   NSMutableData *subnegotiationBuffer;
   
   NSObject <J3TelnetProtocolHandlerDelegate> *delegate;
@@ -50,8 +49,8 @@
 
 @property (readonly) J3TelnetConnectionState *connectionState;
 
-+ (id) protocolHandlerWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState;
-- (id) initWithConnectionState: (J3TelnetConnectionState *) telnetConnectionState;
++ (id) protocolHandlerWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState;
+- (id) initWithStack: (J3ProtocolStack *) stack connectionState: (J3TelnetConnectionState *) telnetConnectionState;
 
 - (NSObject <J3TelnetProtocolHandlerDelegate> *) delegate;
 - (void) setDelegate: (NSObject <J3TelnetProtocolHandlerDelegate> *) object;

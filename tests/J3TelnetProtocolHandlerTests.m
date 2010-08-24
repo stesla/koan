@@ -6,6 +6,7 @@
 
 #import "J3TelnetProtocolHandlerTests.h"
 
+#import "J3Protocol.h"
 #import "J3TelnetConnectionState.h"
 #import "J3TelnetConstants.h"
 
@@ -15,7 +16,7 @@
 - (void) confirmTelnetWithDontEcho;
 - (NSData *) parseBytesWithZeroTerminator: (const uint8_t *) bytes;
 - (NSData *) parseCString: (const char *) string;
-- (void) resetProtocolHandler;
+- (void) resetProtocolStack;
 - (void) simulateDo: (uint8_t) option;
 - (void) simulateIncomingSubnegotation: (const uint8_t *) payload length: (unsigned) payloadLength;
 - (void) simulateWill: (uint8_t) option;
@@ -28,13 +29,13 @@
 
 - (void) setUp
 {
-  [self resetProtocolHandler];
+  [self resetProtocolStack];
   mockSocketData = [[NSMutableData alloc] init];
 }
 
 - (void) tearDown
 {
-  [protocolHandler release];
+  [protocolStack release];
   [mockSocketData release];
 }
 
@@ -42,7 +43,7 @@
 {
   uint8_t bytes[] = {J3TelnetInterpretAsCommand};
   NSData *data = [NSData dataWithBytes: bytes length: 1];
-  NSData *preprocessedData = [protocolHandler preprocessOutput: data];
+  NSData *preprocessedData = [protocolStack preprocessOutput: data];
   
   const char expectedBytes[] = {J3TelnetInterpretAsCommand, J3TelnetInterpretAsCommand, 0};
   [self assertData: preprocessedData hasBytesWithZeroTerminator: expectedBytes];
@@ -50,7 +51,7 @@
 
 - (void) testTelnetNotSentWhenNotConfirmed
 {
-  [self resetProtocolHandler];
+  [self resetProtocolStack];
   [protocolHandler enableOptionForUs: 0];
   [protocolHandler enableOptionForHim: 0];
   [protocolHandler disableOptionForUs: 0];
@@ -78,7 +79,7 @@
 
 - (void) testParseCRNUL
 {
-  NSData *parsedData = [protocolHandler parseData: [NSData dataWithBytes: "\r\0" length: 2]];
+  NSData *parsedData = [protocolStack parseData: [NSData dataWithBytes: "\r\0" length: 2]];
   [self assertData: parsedData hasBytesWithZeroTerminator: "\r"];
 }
 
@@ -91,7 +92,7 @@
     if (i == '\n' || i == '\r')
       continue;
     bytes[1] = i;
-    NSData *parsedData = [protocolHandler parseData: [NSData dataWithBytes: bytes length: 2]];
+    NSData *parsedData = [protocolStack parseData: [NSData dataWithBytes: bytes length: 2]];
     [self assert: parsedData equals: [NSData dataWithBytes: bytes + 1 length: 1]];
   }
 }
@@ -100,7 +101,7 @@
 {
   uint8_t bytes[9] = {J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionTerminalType, J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, J3TelnetTerminalTypeSend, J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation};
   
-  NSData *parsedData = [protocolHandler parseData: [NSData dataWithBytes: bytes length: 9]];
+  NSData *parsedData = [protocolStack parseData: [NSData dataWithBytes: bytes length: 9]];
   [self assertInt: [parsedData length] equals: 0];
 }
 
@@ -108,7 +109,7 @@
 {
   uint8_t bytes[13] = {'a', 'b', J3TelnetInterpretAsCommand, J3TelnetDo, J3TelnetOptionTerminalType, J3TelnetInterpretAsCommand, J3TelnetBeginSubnegotiation, J3TelnetOptionTerminalType, J3TelnetTerminalTypeSend, J3TelnetInterpretAsCommand, J3TelnetEndSubnegotiation, 'c', 'd'};
   
-  NSData *parsedData = [protocolHandler parseData: [NSData dataWithBytes: bytes length: 13]];
+  NSData *parsedData = [protocolStack parseData: [NSData dataWithBytes: bytes length: 13]];
   
   uint8_t expectedBytes[4] = {'a', 'b', 'c', 'd'};
   [self assert: parsedData equals: [NSData dataWithBytes: expectedBytes length: 4]];
@@ -117,7 +118,7 @@
 - (void) testParseCRWithSomeTelnetThrownIn
 {
   uint8_t bytes[4] = {'\r', J3TelnetInterpretAsCommand, J3TelnetNoOperation, 0};
-  NSData *parsedData = [protocolHandler parseData: [NSData dataWithBytes: bytes length: 4]];
+  NSData *parsedData = [protocolStack parseData: [NSData dataWithBytes: bytes length: 4]];
   [self assertData: parsedData hasBytesWithZeroTerminator: "\r"];
 }
 
@@ -130,7 +131,7 @@
 
 - (void) testParseLFCRNUL
 {
-  NSData *parsedData = [protocolHandler parseData: [NSData dataWithBytes: "\n\r\0" length: 3]];
+  NSData *parsedData = [protocolStack parseData: [NSData dataWithBytes: "\n\r\0" length: 3]];
   [self assertData: parsedData hasBytesWithZeroTerminator: "\n\r"];
 }
 
@@ -148,7 +149,7 @@
 
 - (void) testParseCRCRNUL
 {
-  NSData *parsedData = [protocolHandler parseData: [NSData dataWithBytes: "\r\r\0" length: 3]];
+  NSData *parsedData = [protocolStack parseData: [NSData dataWithBytes: "\r\r\0" length: 3]];
   [self assertData: parsedData hasBytesWithZeroTerminator: "\r"];
 }
 
@@ -171,7 +172,7 @@
 {
   [self confirmTelnetWithDontEcho];
   
-  NSData *preprocessedData = [protocolHandler preprocessOutput: [NSData data]];
+  NSData *preprocessedData = [protocolStack preprocessOutput: [NSData data]];
   
   const char bytes[] = {J3TelnetInterpretAsCommand, J3TelnetGoAhead, 0};
   [self assertData: preprocessedData hasBytesWithZeroTerminator: bytes];
@@ -182,7 +183,7 @@
   [protocolHandler enableOptionForUs: J3TelnetOptionSuppressGoAhead];
   [self simulateDo: J3TelnetOptionSuppressGoAhead];
   
-  NSData *preprocessedData = [protocolHandler preprocessOutput: [NSData data]];
+  NSData *preprocessedData = [protocolStack preprocessOutput: [NSData data]];
   [self assertInt: [preprocessedData length] equals: 0];
 }
 
@@ -323,12 +324,12 @@
 {
   [self simulateDo: J3TelnetOptionSuppressGoAhead];
   
-  NSData *preprocessedData = [protocolHandler preprocessOutput: [NSData data]];
+  NSData *preprocessedData = [protocolStack preprocessOutput: [NSData data]];
   [self assertInt: [preprocessedData length] equals: 0];
   
   [self simulateDo: J3TelnetOptionEndOfRecord];
   
-  preprocessedData = [protocolHandler preprocessOutput: [NSData data]];
+  preprocessedData = [protocolStack preprocessOutput: [NSData data]];
   
   uint8_t expectedBytes[2] = {J3TelnetInterpretAsCommand, J3TelnetEndOfRecord};
   [self assert: preprocessedData equals: [NSData dataWithBytes: expectedBytes length: 2]];
@@ -361,12 +362,12 @@
 - (void) confirmTelnetWithDontEcho
 {
   uint8_t bytes[3] = {J3TelnetInterpretAsCommand, J3TelnetDont, J3TelnetOptionEcho};
-  [protocolHandler parseData: [NSData dataWithBytes: bytes length: 3]];
+  [protocolStack parseData: [NSData dataWithBytes: bytes length: 3]];
 }
 
 - (NSData *) parseBytesWithZeroTerminator: (const uint8_t *) bytes
 {
-  return [protocolHandler parseData: [NSData dataWithBytes: bytes length: strlen ((const char *) bytes)]];
+  return [protocolStack parseData: [NSData dataWithBytes: bytes length: strlen ((const char *) bytes)]];
 }
 
 - (NSData *) parseCString: (const char *) string
@@ -374,18 +375,22 @@
   return [self parseBytesWithZeroTerminator: (const uint8_t *) string];
 }
 
-- (void) resetProtocolHandler
+- (void) resetProtocolStack
 {
-  if (protocolHandler)
-    [protocolHandler release];
-  protocolHandler = [[J3TelnetProtocolHandler protocolHandlerWithConnectionState: [J3TelnetConnectionState connectionState]] retain];
+  if (protocolStack)
+    [protocolStack release];
+  
+  protocolStack = [[J3ProtocolStack alloc] init];
+  
+  protocolHandler = [J3TelnetProtocolHandler protocolHandlerWithStack: protocolStack connectionState: [J3TelnetConnectionState connectionState]];
   [protocolHandler setDelegate: self];
+  [protocolStack addByteProtocol: protocolHandler];
 }
 
 - (void) simulateDo: (uint8_t) option
 {
   const uint8_t doRequest[] = {J3TelnetInterpretAsCommand, J3TelnetDo, option};
-  [protocolHandler parseData: [NSData dataWithBytes: doRequest length: 3]];
+  [protocolStack parseData: [NSData dataWithBytes: doRequest length: 3]];
 }
 
 - (void) simulateIncomingSubnegotation: (const uint8_t *) payload length: (unsigned) payloadLength
@@ -396,13 +401,13 @@
   [data appendBytes: header length: 2];
   [data appendBytes: payload length: payloadLength];
   [data appendBytes: footer length: 2];
-  [protocolHandler parseData: data];
+  [protocolStack parseData: data];
 }
 
 - (void) simulateWill: (uint8_t) option
 {
   const uint8_t willRequest[] = {J3TelnetInterpretAsCommand, J3TelnetWill, option};
-  [protocolHandler parseData: [NSData dataWithBytes: willRequest length: 3]];
+  [protocolStack parseData: [NSData dataWithBytes: willRequest length: 3]];
 }
 
 @end

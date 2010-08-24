@@ -68,11 +68,13 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
   
   protocolStack = [[J3ProtocolStack alloc] init];
   
-  J3TelnetProtocolHandler *telnetProtocolHandler = [J3TelnetProtocolHandler protocolHandlerWithConnectionState: state];
+  J3TelnetProtocolHandler *telnetProtocolHandler = [J3TelnetProtocolHandler protocolHandlerWithStack: protocolStack connectionState: state];
   [telnetProtocolHandler setDelegate: self];
   [protocolStack addByteProtocol: telnetProtocolHandler];
   
-  [protocolStack addByteProtocol: [MUMCCPProtocolHandler protocolHandlerWithConnectionState: state]];
+  MUMCCPProtocolHandler *mccpProtocolHandler = [MUMCCPProtocolHandler protocolHandlerWithStack: protocolStack connectionState: state];
+  [mccpProtocolHandler setDelegate: self];
+  [protocolStack addByteProtocol: mccpProtocolHandler];
   
   self.delegate = newDelegate;
   return self;
@@ -212,12 +214,15 @@ NSString *J3TelnetConnectionErrorMessageKey = @"J3TelnetConnectionErrorMessageKe
 }
 
 #pragma mark -
-#pragma mark J3TelnetProtocolHandlerDelegate
+#pragma mark Various delegates
 
 - (void) log: (NSString *) message arguments: (va_list) args
 {
   NSLog (@"[%@:%d] %@", hostname, port, [[[NSString alloc] initWithFormat: message arguments: args] autorelease]);
 }
+
+#pragma mark -
+#pragma mark J3TelnetProtocolHandlerDelegate
 
 - (void) writeDataToSocket: (NSData *) data
 {
