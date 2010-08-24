@@ -40,6 +40,7 @@
 		2F7092C212239AF900E0D178 /* CTBadge_3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7092BE12239AF900E0D178 /* CTBadge_3.pdf */; };
 		2F7092C312239AF900E0D178 /* CTBadge_4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7092BF12239AF900E0D178 /* CTBadge_4.pdf */; };
 		2F7092C412239AF900E0D178 /* CTBadge_5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7092C012239AF900E0D178 /* CTBadge_5.pdf */; };
+		2F7093D61223B3F000E0D178 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 2F7093D51223B3F000E0D178 /* Growl Registration Ticket.growlRegDict */; };
 		2F7B4F3B0BCAB87B00C1586D /* MULogBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */; };
 		2F7B4FB90BCAC1FD00C1586D /* MUDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FB70BCAC1FD00C1586D /* MUDocumentController.m */; };
 		2F7B4FED0BCAC40F00C1586D /* MUTextLogDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */; };
@@ -255,6 +256,8 @@
 		2F7092BE12239AF900E0D178 /* CTBadge_3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_3.pdf; sourceTree = "<group>"; };
 		2F7092BF12239AF900E0D178 /* CTBadge_4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_4.pdf; sourceTree = "<group>"; };
 		2F7092C012239AF900E0D178 /* CTBadge_5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_5.pdf; sourceTree = "<group>"; };
+		2F7093C01223B11100E0D178 /* GC Notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "GC Notes.txt"; sourceTree = "<group>"; };
+		2F7093D51223B3F000E0D178 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
 		2F7B4F380BCAB87B00C1586D /* MULogBrowserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MULogBrowserWindowController.h; sourceTree = "<group>"; };
 		2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MULogBrowserWindowController.m; sourceTree = "<group>"; };
 		2F7B4FB60BCAC1FD00C1586D /* MUDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUDocumentController.h; sourceTree = "<group>"; };
@@ -590,6 +593,7 @@
 			children = (
 				2F7092BC12239AEE00E0D178 /* Badges */,
 				E6B5E3AA06A6EE0C00F53EBB /* Xibs */,
+				2F7093D51223B3F000E0D178 /* Growl Registration Ticket.growlRegDict */,
 				2F6C72A90BB46BD000709320 /* Koan.sdef */,
 				E65CE071075438F9003A796A /* Koan.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
@@ -890,6 +894,7 @@
 				E62F2B9F07CD4EC400DC8C1B /* Backlog.txt */,
 				2F2D76E90BBB1C8400BBB71A /* Characteristics.txt */,
 				E65055A9077EBA820016F30E /* Credits.rtf */,
+				2F7093C01223B11100E0D178 /* GC Notes.txt */,
 				E6505ABF07820CC00016F30E /* User Stories.rtf */,
 			);
 			name = Documentation;
@@ -1102,6 +1107,7 @@
 				2F7092C212239AF900E0D178 /* CTBadge_3.pdf in Resources */,
 				2F7092C312239AF900E0D178 /* CTBadge_4.pdf in Resources */,
 				2F7092C412239AF900E0D178 /* CTBadge_5.pdf in Resources */,
+				2F7093D61223B3F000E0D178 /* Growl Registration Ticket.growlRegDict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1201,6 +1207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F7092A01223966F00E0D178 /* CTBadge.m in Sources */,
 				E60DDB86076CE889009870E4 /* FontNameToDisplayNameTransformer.m in Sources */,
 				7E43C1C20ACB1A4000A8E677 /* J3ANSIFormattingFilter.m in Sources */,
 				7E26CB300BD80AAF00FC3843 /* J3ByteSet.m in Sources */,
@@ -1247,6 +1254,7 @@
 				2FB40CDB0BF0FA3D004E13F8 /* MUFugueEditFilter.m in Sources */,
 				E653A7D207AEFAB900023476 /* MUGrowlService.m in Sources */,
 				2F7B4F3B0BCAB87B00C1586D /* MULogBrowserWindowController.m in Sources */,
+				2F7CDB76121EFC22001B4879 /* MUMCCPProtocolHandler.m in Sources */,
 				E677D2110778041F00B417D2 /* MUPlayer.m in Sources */,
 				E6914C52092FDAD1005DA235 /* MUPreferencesController.m in Sources */,
 				7E39EF9E0783938F0042A17A /* MUProfile.m in Sources */,
@@ -1277,8 +1285,6 @@
 				2F861FB811FD53F2007136D5 /* J3Protocol.m in Sources */,
 				2F2718EB12141166006710C7 /* J3TelnetConnectionState.m in Sources */,
 				2F0B277B12196B9C00AE6B62 /* J3TelnetStateMachine.m in Sources */,
-				2F7CDB76121EFC22001B4879 /* MUMCCPProtocolHandler.m in Sources */,
-				2F7092A01223966F00E0D178 /* CTBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
