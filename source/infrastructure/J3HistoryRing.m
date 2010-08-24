@@ -179,9 +179,7 @@
       NSString *candidate = [self stringAtIndex: searchCursor];
       
       if ([candidate hasPrefix: prefix] && ![candidate isEqualToString: prefix])
-      {
         return candidate;
-      }
     }
     
     searchCursor++;
@@ -213,9 +211,7 @@
       NSString *candidate = [self stringAtIndex: searchCursor];
       
       if ([candidate hasPrefix: prefix] && ![candidate isEqualToString: prefix])
-      {
         return candidate;
-      }
     }
     
     searchCursor--;
