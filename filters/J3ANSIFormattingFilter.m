@@ -92,6 +92,21 @@
   NSArray *codeComponents = [[ansiCode substringFromIndex: 2] componentsSeparatedByString: @";"];
   NSMutableArray *names = [NSMutableArray arrayWithCapacity: [codeComponents count]];
   
+  if ([codeComponents count] == 3
+      && [[codeComponents objectAtIndex: 1] intValue] == 5)
+  {
+    if ([[codeComponents objectAtIndex: 0] intValue] == J3ANSIBackground256)
+    {
+      [names addObject: NSBackgroundColorAttributeName];
+      return names;
+    }
+    else if ([[codeComponents objectAtIndex: 0] intValue] == J3ANSIForeground256)
+    {
+      [names addObject: NSForegroundColorAttributeName];
+      return names;
+    }
+  }
+  
   for (NSString *code in codeComponents)
   {
     switch ([code intValue])
@@ -143,6 +158,85 @@
 {
   NSArray *codeComponents = [[ansiCode substringFromIndex: 2] componentsSeparatedByString: @";"];
   NSMutableArray *values = [NSMutableArray arrayWithCapacity: [codeComponents count]];
+  
+  if ([codeComponents count] == 3
+      && [[codeComponents objectAtIndex: 1] intValue] == 5)
+  {
+    if ([[codeComponents objectAtIndex: 0] intValue] == J3ANSIBackground256
+        || [[codeComponents objectAtIndex: 0] intValue] == J3ANSIForeground256)
+    {
+      int value = [[codeComponents objectAtIndex: 2] intValue];
+      
+      if (value < 16)
+      {
+        switch (value)
+        {
+          case J3ANSI256Black:
+          case J3ANSI256BrightBlack:
+            [values addObject: [NSColor darkGrayColor]];
+            break;
+            
+          case J3ANSI256Red:
+          case J3ANSI256BrightRed:
+            [values addObject: [NSColor redColor]];
+            break;
+            
+          case J3ANSI256Green:
+          case J3ANSI256BrightGreen:
+            [values addObject: [NSColor greenColor]];
+            break;
+            
+          case J3ANSI256Yellow:
+          case J3ANSI256BrightYellow:
+            [values addObject: [NSColor yellowColor]];
+            break;
+            
+          case J3ANSI256Blue:
+          case J3ANSI256BrightBlue:
+            [values addObject: [NSColor blueColor]];
+            break;
+            
+          case J3ANSI256Magenta:
+          case J3ANSI256BrightMagenta:
+            [values addObject: [NSColor magentaColor]];
+            break;
+            
+          case J3ANSI256Cyan:
+          case J3ANSI256BrightCyan:
+            [values addObject: [NSColor cyanColor]];
+            break;
+            
+          case J3ANSI256White:
+          case J3ANSI256BrightWhite:
+            [values addObject: [NSColor whiteColor]];
+            break;
+        }
+      }
+      else if (value > 15 && value < 232)
+      {
+        int adjustedValue = value - 16;
+        int red = adjustedValue / 36;
+        int green = (adjustedValue % 36) / 6;
+        int blue = (adjustedValue % 36) % 6;
+        
+        NSColor *cubeColor = [NSColor colorWithCalibratedRed: 1. / 6. * red
+                                                       green: 1. / 6. * green
+                                                        blue: 1. / 6. * blue
+                                                       alpha: 1.0];
+        [values addObject: cubeColor];
+      }
+      else if (value > 231 && value < 256)
+      {
+        int adjustedValue = value - 231;
+        
+        NSColor *grayscaleColor = [NSColor colorWithCalibratedWhite: 1. / 25. * adjustedValue
+                                                              alpha: 1.0];
+        [values addObject: grayscaleColor];
+      }
+      
+      return values;
+    }
+  }
   
   for (NSString *code in codeComponents)
   {

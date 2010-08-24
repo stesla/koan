@@ -35,6 +35,7 @@ typedef enum J3ANSICode
   J3ANSIForegroundMagenta = 35,
   J3ANSIForegroundCyan = 36,
   J3ANSIForegroundWhite = 37,
+  J3ANSIForeground256 = 38,
   J3ANSIForegroundDefault = 39,
   J3ANSIBackgroundBlack = 40,
   J3ANSIBackgroundRed = 41,
@@ -44,8 +45,29 @@ typedef enum J3ANSICode
   J3ANSIBackgroundMagenta = 45,
   J3ANSIBackgroundCyan = 46,
   J3ANSIBackgroundWhite = 47,
+  J3ANSIBackground256 = 48,
   J3ANSIBackgroundDefault = 49
 } J3ANSICode;
+
+typedef enum J3ANSI256ColorCode
+{
+  J3ANSI256Black = 0,
+  J3ANSI256Red = 1,
+  J3ANSI256Green = 2,
+  J3ANSI256Yellow = 3,
+  J3ANSI256Blue = 4,
+  J3ANSI256Magenta = 5,
+  J3ANSI256Cyan = 6,
+  J3ANSI256White = 7,
+  J3ANSI256BrightBlack = 8,
+  J3ANSI256BrightRed = 9,
+  J3ANSI256BrightGreen = 10,
+  J3ANSI256BrightYellow = 11,
+  J3ANSI256BrightBlue = 12,
+  J3ANSI256BrightMagenta = 13,
+  J3ANSI256BrightCyan = 14,
+  J3ANSI256BrightWhite = 15,
+} J3ANSI256ColorCode;
 
 @interface J3ANSIFormattingFilter : J3Filter
 {

@@ -204,6 +204,107 @@
   [self assertString: output hasValue: [J3Formatter testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 4 message: @"e"];
 }
 
+- (void) testStandardForegroundColors
+{
+  NSAttributedString *input = [self constructAttributedStringForString: @"\x1B[30ma\x1B[31mb\x1B[32mc\x1B[33md\x1B[34me\x1B[35mf\x1B[36mg\x1B[37mh"];
+  NSAttributedString *output = [queue processAttributedString: input];
+  
+  [self assertString: output hasValue: [NSColor darkGrayColor] forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"a"];
+  [self assertString: output hasValue: [NSColor redColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b"];
+  [self assertString: output hasValue: [NSColor greenColor] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c"];
+  [self assertString: output hasValue: [NSColor yellowColor] forAttribute: NSForegroundColorAttributeName atIndex: 3 message: @"d"];
+  [self assertString: output hasValue: [NSColor blueColor] forAttribute: NSForegroundColorAttributeName atIndex: 4 message: @"e"];
+  [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSForegroundColorAttributeName atIndex: 5 message: @"f"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 6 message: @"g"];
+  [self assertString: output hasValue: [NSColor whiteColor] forAttribute: NSForegroundColorAttributeName atIndex: 7 message: @"h"];
+}
+
+- (void) testXTerm256ForegroundColor
+{
+  for (unsigned i = 0; i < 16; i++)
+  {
+    NSAttributedString *input = [self constructAttributedStringForString: [NSString stringWithFormat: @"\x1B[38;5;%dm%d", i, i]];
+    NSAttributedString *output = [queue processAttributedString: input];
+    
+    NSColor *targetColor;
+    
+    switch (i)
+    {
+      case J3ANSI256Black:
+      case J3ANSI256BrightBlack:
+        targetColor = [NSColor darkGrayColor];
+        break;
+        
+      case J3ANSI256Red:
+      case J3ANSI256BrightRed:
+        targetColor = [NSColor redColor];
+        break;
+        
+      case J3ANSI256Green:
+      case J3ANSI256BrightGreen:
+        targetColor = [NSColor greenColor];
+        break;
+        
+      case J3ANSI256Yellow:
+      case J3ANSI256BrightYellow:
+        targetColor = [NSColor yellowColor];
+        break;
+        
+      case J3ANSI256Blue:
+      case J3ANSI256BrightBlue:
+        targetColor = [NSColor blueColor];
+        break;
+        
+      case J3ANSI256Magenta:
+      case J3ANSI256BrightMagenta:
+        targetColor = [NSColor magentaColor];
+        break;
+        
+      case J3ANSI256Cyan:
+      case J3ANSI256BrightCyan:
+        targetColor = [NSColor cyanColor];
+        break;
+        
+      case J3ANSI256White:
+      case J3ANSI256BrightWhite:
+        targetColor = [NSColor whiteColor];
+    }
+    
+    [self assertString: output hasValue: targetColor forAttribute: NSForegroundColorAttributeName atIndex: 0 message: [NSString stringWithFormat: @"%d", i]];
+  }
+  
+  for (unsigned i = 16; i < 232; i++)
+  {
+    NSAttributedString *input = [self constructAttributedStringForString: [NSString stringWithFormat: @"\x1B[38;5;%dm%d", i, i]];
+    NSAttributedString *output = [queue processAttributedString: input];
+    
+    int adjustedValue = i - 16;
+    int red = adjustedValue / 36;
+    int green = (adjustedValue % 36) / 6;
+    int blue = (adjustedValue % 36) % 6;
+    
+    NSColor *cubeColor = [NSColor colorWithCalibratedRed: 1. / 6. * red
+                                                   green: 1. / 6. * green
+                                                    blue: 1. / 6. * blue
+                                                   alpha: 1.0];
+    
+    [self assertString: output hasValue: cubeColor forAttribute: NSForegroundColorAttributeName atIndex: 0 message: [NSString stringWithFormat: @"%d", i]];
+  }
+  
+  for (unsigned i = 232; i < 256; i++)
+  {
+    NSAttributedString *input = [self constructAttributedStringForString: [NSString stringWithFormat: @"\x1B[38;5;%dm%d", i, i]];
+    NSAttributedString *output = [queue processAttributedString: input];
+    
+    int adjustedValue = i - 231;
+    
+    NSColor *grayscaleColor = [NSColor colorWithCalibratedWhite: 1. / 25. * adjustedValue
+                                                          alpha: 1.0];
+    
+    [self assertString: output hasValue: grayscaleColor forAttribute: NSForegroundColorAttributeName atIndex: 0 message: [NSString stringWithFormat: @"%d", i]];
+  }
+}
+
 - (void) testBackgroundColor
 {
   NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[46mbc\x1B[45md\x1B[49me"];
@@ -214,6 +315,107 @@
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c"];
   [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSBackgroundColorAttributeName atIndex: 3 message: @"d"];
   [self assertString: output hasValue: [J3Formatter testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 4 message: @"e"];
+}
+
+- (void) testStandardBackgroundColors
+{
+  NSAttributedString *input = [self constructAttributedStringForString: @"\x1B[40ma\x1B[41mb\x1B[42mc\x1B[43md\x1B[44me\x1B[45mf\x1B[46mg\x1B[47mh"];
+  NSAttributedString *output = [queue processAttributedString: input];
+  
+  [self assertString: output hasValue: [NSColor darkGrayColor] forAttribute: NSBackgroundColorAttributeName atIndex: 0 message: @"a"];
+  [self assertString: output hasValue: [NSColor redColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b"];
+  [self assertString: output hasValue: [NSColor greenColor] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c"];
+  [self assertString: output hasValue: [NSColor yellowColor] forAttribute: NSBackgroundColorAttributeName atIndex: 3 message: @"d"];
+  [self assertString: output hasValue: [NSColor blueColor] forAttribute: NSBackgroundColorAttributeName atIndex: 4 message: @"e"];
+  [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSBackgroundColorAttributeName atIndex: 5 message: @"f"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 6 message: @"g"];
+  [self assertString: output hasValue: [NSColor whiteColor] forAttribute: NSBackgroundColorAttributeName atIndex: 7 message: @"h"];
+}
+
+- (void) testXTerm256BackgroundColor
+{
+  for (unsigned i = 0; i < 16; i++)
+  {
+    NSAttributedString *input = [self constructAttributedStringForString: [NSString stringWithFormat: @"\x1B[48;5;%dm%d", i, i]];
+    NSAttributedString *output = [queue processAttributedString: input];
+    
+    NSColor *targetColor;
+    
+    switch (i)
+    {
+      case J3ANSI256Black:
+      case J3ANSI256BrightBlack:
+        targetColor = [NSColor darkGrayColor];
+        break;
+        
+      case J3ANSI256Red:
+      case J3ANSI256BrightRed:
+        targetColor = [NSColor redColor];
+        break;
+        
+      case J3ANSI256Green:
+      case J3ANSI256BrightGreen:
+        targetColor = [NSColor greenColor];
+        break;
+        
+      case J3ANSI256Yellow:
+      case J3ANSI256BrightYellow:
+        targetColor = [NSColor yellowColor];
+        break;
+        
+      case J3ANSI256Blue:
+      case J3ANSI256BrightBlue:
+        targetColor = [NSColor blueColor];
+        break;
+        
+      case J3ANSI256Magenta:
+      case J3ANSI256BrightMagenta:
+        targetColor = [NSColor magentaColor];
+        break;
+        
+      case J3ANSI256Cyan:
+      case J3ANSI256BrightCyan:
+        targetColor = [NSColor cyanColor];
+        break;
+        
+      case J3ANSI256White:
+      case J3ANSI256BrightWhite:
+        targetColor = [NSColor whiteColor];
+    }
+    
+    [self assertString: output hasValue: targetColor forAttribute: NSBackgroundColorAttributeName atIndex: 0 message: [NSString stringWithFormat: @"%d", i]];
+  }
+  
+  for (unsigned i = 16; i < 232; i++)
+  {
+    NSAttributedString *input = [self constructAttributedStringForString: [NSString stringWithFormat: @"\x1B[48;5;%dm%d", i, i]];
+    NSAttributedString *output = [queue processAttributedString: input];
+    
+    int adjustedValue = i - 16;
+    int red = adjustedValue / 36;
+    int green = (adjustedValue % 36) / 6;
+    int blue = (adjustedValue % 36) % 6;
+    
+    NSColor *cubeColor = [NSColor colorWithCalibratedRed: 1. / 6. * red
+                                                   green: 1. / 6. * green
+                                                    blue: 1. / 6. * blue
+                                                   alpha: 1.0];
+    
+    [self assertString: output hasValue: cubeColor forAttribute: NSBackgroundColorAttributeName atIndex: 0 message: [NSString stringWithFormat: @"%d", i]];
+  }
+  
+  for (unsigned i = 232; i < 256; i++)
+  {
+    NSAttributedString *input = [self constructAttributedStringForString: [NSString stringWithFormat: @"\x1B[48;5;%dm%d", i, i]];
+    NSAttributedString *output = [queue processAttributedString: input];
+    
+    int adjustedValue = i - 231;
+    
+    NSColor *grayscaleColor = [NSColor colorWithCalibratedWhite: 1. / 25. * adjustedValue
+                                                          alpha: 1.0];
+    
+    [self assertString: output hasValue: grayscaleColor forAttribute: NSBackgroundColorAttributeName atIndex: 0 message: [NSString stringWithFormat: @"%d", i]];
+  }
 }
 
 - (void) testForegroundAndBackgroundColorAsCompoundCode
