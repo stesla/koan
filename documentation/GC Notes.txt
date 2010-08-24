@@ -1,0 +1,1 @@
+If I ever move to GC instead of release/retain semantics, there is a DIFFERENT Sparkle bundle I need to get.
