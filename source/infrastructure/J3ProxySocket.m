@@ -15,7 +15,7 @@
 @interface J3ProxySocket (Private)
 
 - (void) makeRequest;
-- (void) performMethodSpecificNegotiation: (J3SocksMethod)method;
+- (void) performMethodSpecificNegotiation: (J3SocksMethod) method;
 - (void) performUsernamePasswordNegotiation;
 - (J3SocksMethod) selectMethod;
 
@@ -75,7 +75,7 @@
     [J3SocketException socketError: @"Unable to establish connection via proxy"];  
 }
 
-- (void) performMethodSpecificNegotiation: (J3SocksMethod)method
+- (void) performMethodSpecificNegotiation: (J3SocksMethod) method
 {
   if (method == J3SocksNoAcceptableMethods)
     [J3SocketException socketError: @"No acceptable SOCKS5 methods"];
