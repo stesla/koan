@@ -28,13 +28,13 @@
 
 @implementation NSCursor (Finger)
 
-+ (NSCursor *) fingerCursor;
++ (NSCursor *) fingerCursor
 {
   static NSCursor *fingerCursor = nil;
   
   if (fingerCursor == nil)
   {
-    fingerCursor = [[self alloc] initWithImage: [NSImage imageNamed:  @"finger-cursor"]
+    fingerCursor = [[self alloc] initWithImage: [NSImage imageNamed: @"finger-cursor"]
                                        hotSpot: NSMakePoint (6, 0)];
   }
   
