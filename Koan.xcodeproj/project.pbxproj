@@ -594,13 +594,12 @@
 				2F7092BC12239AEE00E0D178 /* Badges */,
 				E6B5E3AA06A6EE0C00F53EBB /* Xibs */,
 				2F7093D51223B3F000E0D178 /* Growl Registration Ticket.growlRegDict */,
-				2F6C72A90BB46BD000709320 /* Koan.sdef */,
-				E65CE071075438F9003A796A /* Koan.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				E6B5E3B706A6EEA600F53EBB /* InfoPlist.strings */,
+				E65CE071075438F9003A796A /* Koan.icns */,
+				2F6C72A90BB46BD000709320 /* Koan.sdef */,
 				E62C909E07422669005662BC /* Localizable.strings */,
 				7E87751909AD558700A883BC /* Unit Tests-Info.plist */,
-				E6B5E61106A73B0A00F53EBB /* version.plist */,
 				E6C9D448077BF6B5007BB2C1 /* add-pressed.png */,
 				E6C9D449077BF6B5007BB2C1 /* add.png */,
 				E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */,
@@ -613,6 +612,7 @@
 				E6C9D44D077BF6B5007BB2C1 /* remove.png */,
 				2FDFA14C0D67E85E007F0036 /* sparkle-icon.png */,
 				2FD06555117D704500B8BFDB /* ukprefspanel-icon.gif */,
+				E6B5E61106A73B0A00F53EBB /* version.plist */,
 			);
 			name = Resources;
 			path = resources;

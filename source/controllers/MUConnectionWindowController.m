@@ -52,7 +52,7 @@ enum MUSearchDirections
   historyRing = [[J3HistoryRing historyRing] retain];
   filterQueue = [[J3FilterQueue filterQueue] retain];
   
-  [filterQueue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [profile formatting]]];
+  [filterQueue addFilter: [J3ANSIFormattingFilter filterWithFormatter: [profile formatter]]];
   [filterQueue addFilter: [MUFugueEditFilter filterWithDelegate: self]];
   [filterQueue addFilter: [J3NaiveURLFilter filter]];
   [filterQueue addFilter: [self createLogger]];
@@ -329,8 +329,8 @@ enum MUSearchDirections
   
   [typingAttributes removeObjectForKey: NSLinkAttributeName];
   [typingAttributes removeObjectForKey: NSUnderlineStyleAttributeName];
-  [typingAttributes setObject: [[profile formatting] foreground] forKey: NSForegroundColorAttributeName];
-  [typingAttributes setObject: [[profile formatting] background] forKey: NSBackgroundColorDocumentAttribute];
+  [typingAttributes setObject: [[profile formatter] foreground] forKey: NSForegroundColorAttributeName];
+  [typingAttributes setObject: [[profile formatter] background] forKey: NSBackgroundColorDocumentAttribute];
   
   NSAttributedString *unfilteredString = [NSAttributedString attributedStringWithString: string attributes: typingAttributes];
   NSAttributedString *filteredString = [filterQueue processAttributedString: unfilteredString];

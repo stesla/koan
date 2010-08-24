@@ -8,12 +8,12 @@
 
 @implementation J3Formatter
 
-+ (id) formattingForTesting
++ (id) formatterForTesting
 {
-  return [self formattingWithForegroundColor: [J3Formatter testingForeground] backgroundColor: [J3Formatter testingBackground] font: [J3Formatter testingFont]];
+  return [self formatterWithForegroundColor: [J3Formatter testingForeground] backgroundColor: [J3Formatter testingBackground] font: [J3Formatter testingFont]];
 }
 
-+ (id) formattingWithForegroundColor: (NSColor *) fore backgroundColor: (NSColor *) back font: (NSFont *) font
++ (id) formatterWithForegroundColor: (NSColor *) fore backgroundColor: (NSColor *) back font: (NSFont *) font
 {
   return [[[self alloc] initWithForegroundColor: fore backgroundColor: back font: font] autorelease];
 }

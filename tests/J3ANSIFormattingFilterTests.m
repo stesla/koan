@@ -209,16 +209,44 @@
   NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[46mbc\x1B[45md\x1B[49me"];
   NSAttributedString *output = [queue processAttributedString: input];
   
-  [self assertString: output hasValue: nil forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"a"];
+  [self assertString: output hasValue: nil forAttribute: NSBackgroundColorAttributeName atIndex: 0 message: @"a"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b"];
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c"];
   [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSBackgroundColorAttributeName atIndex: 3 message: @"d"];
   [self assertString: output hasValue: [J3Formatter testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 4 message: @"e"];
 }
 
+- (void) testForegroundAndBackgroundColorAsCompoundCode
+{
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[36;46mbc\x1B[45;35md\x1B[39;49me"];
+  NSAttributedString *output = [queue processAttributedString: input];
+  
+  [self assertString: output hasValue: nil forAttribute: NSForegroundColorAttributeName atIndex: 0 message: @"a foreground"];
+  [self assertString: output hasValue: nil forAttribute: NSBackgroundColorAttributeName atIndex: 0 message: @"a background"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b foreground"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c background"];
+  [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSForegroundColorAttributeName atIndex: 3 message: @"d foreground"];
+  [self assertString: output hasValue: [NSColor magentaColor] forAttribute: NSBackgroundColorAttributeName atIndex: 3 message: @"d background"];
+  [self assertString: output hasValue: [J3Formatter testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 4 message: @"e foreground"];
+  [self assertString: output hasValue: [J3Formatter testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 4 message: @"e background"];
+}
+
 - (void) testResetDisplayMode
 {
   NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[36m\x1B[46mb\x1B[0mc"];
+  NSAttributedString *output = [queue processAttributedString: input];
+  
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
+  [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSForegroundColorAttributeName atIndex: 1 message: @"b foreground"];
+  [self assertString: output hasValue: [J3Formatter testingBackground] forAttribute: NSBackgroundColorAttributeName atIndex: 2 message: @"c background"];  
+  [self assertString: output hasValue: [J3Formatter testingForeground] forAttribute: NSForegroundColorAttributeName atIndex: 2 message: @"c foreground"];  
+}
+
+- (void) testCompoundSetThenResetDisplayMode
+{
+  NSAttributedString *input = [self constructAttributedStringForString: @"a\x1B[36;46mb\x1B[0mc"];
   NSAttributedString *output = [queue processAttributedString: input];
   
   [self assertString: output hasValue: [NSColor cyanColor] forAttribute: NSBackgroundColorAttributeName atIndex: 1 message: @"b background"];
@@ -270,7 +298,7 @@
   NSFont *boldFont = [[J3Formatter testingFont] fontWithTrait: NSBoldFontMask];
   
   [queue clearFilters];
-  [queue addFilter: [J3ANSIFormattingFilter filterWithFormatting: [J3Formatter formattingWithForegroundColor: [J3Formatter testingForeground] backgroundColor: [J3Formatter testingBackground] font: boldFont]]];
+  [queue addFilter: [J3ANSIFormattingFilter filterWithFormatter: [J3Formatter formatterWithForegroundColor: [J3Formatter testingForeground] backgroundColor: [J3Formatter testingBackground] font: boldFont]]];
 
   output = [queue processAttributedString: input];
   [self assertString: output hasTrait: NSBoldFontMask atIndex: 0 message: @"a"];

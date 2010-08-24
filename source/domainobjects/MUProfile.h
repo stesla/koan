@@ -70,7 +70,7 @@
 - (void) setLinkColor: (NSColor *) newLinkColor;
 - (NSColor *) visitedLinkColor;
 - (void) setVisitedLinkColor: (NSColor *) newVisitedLinkColor;
-- (NSObject <J3Formatter> *) formatting;
+- (NSObject <J3Formatter> *) formatter;
 
 // Derived bindings.
 - (NSFont *) effectiveFont;

@@ -9,20 +9,6 @@
 
 @protocol J3Formatter;
 
-@interface J3ANSIFormattingFilter : J3Filter
-{
-  BOOL inCode;
-  NSString *ansiCode;
-  NSObject <J3Formatter> *formatting;
-  NSMutableDictionary *currentAttributes;
-}
-
-+ (J3Filter *) filterWithFormatting: (NSObject <J3Formatter> *) format;
-
-- (id) initWithFormatting: (NSObject <J3Formatter> *) format;
-
-@end
-
 // All of the below codes are supported except for italics and strike.
 // I am merely documenting them here for completeness.  They are not
 // implemented because my survey of mushes indicates that they are
@@ -60,3 +46,17 @@ typedef enum J3ANSICode
   J3ANSIBackgroundWhite = 47,
   J3ANSIBackgroundDefault = 49
 } J3ANSICode;
+
+@interface J3ANSIFormattingFilter : J3Filter
+{
+  BOOL inCode;
+  NSString *ansiCode;
+  NSObject <J3Formatter> *formatter;
+  NSMutableDictionary *currentAttributes;
+}
+
++ (J3Filter *) filterWithFormatter: (NSObject <J3Formatter> *) newFormatter;
+
+- (id) initWithFormatter: (NSObject <J3Formatter> *) newFormatter;
+
+@end

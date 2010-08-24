@@ -23,8 +23,8 @@
   NSColor *foreground;
 }
 
-+ (id) formattingForTesting;
-+ (id) formattingWithForegroundColor: (NSColor *) fore backgroundColor: (NSColor *) back font: (NSFont *) font;
++ (id) formatterForTesting;
++ (id) formatterWithForegroundColor: (NSColor *) fore backgroundColor: (NSColor *) back font: (NSFont *) font;
 + (NSColor *) testingBackground;
 + (NSFont *) testingFont;
 + (NSColor *) testingForeground;

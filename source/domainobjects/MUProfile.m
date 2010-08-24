@@ -212,7 +212,7 @@
   [self didChangeValueForKey: @"effectiveVisitedLinkColor"];
 }
 
-- (NSObject <J3Formatter> *) formatting
+- (NSObject <J3Formatter> *) formatter
 {
   return [[[MUProfileFormatting alloc] initWithProfile: self] autorelease];
 }
