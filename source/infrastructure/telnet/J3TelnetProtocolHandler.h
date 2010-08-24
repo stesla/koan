@@ -45,6 +45,7 @@
   NSObject <J3TelnetProtocolHandlerDelegate> *delegate;
   J3TelnetOption *options[TELNET_OPTION_MAX];
   BOOL receivedCR;
+  BOOL optionRequestSent;
 }
 
 @property (readonly) J3TelnetConnectionState *connectionState;

@@ -77,6 +77,8 @@ static NSArray *offerableCharsets;
   
   connectionState = [telnetConnectionState retain];
   stateMachine = [[J3TelnetStateMachine stateMachine] retain];
+  receivedCR = NO;
+  optionRequestSent = NO;
   
   [self initializeOptions];
   return self;
@@ -343,12 +345,13 @@ static NSArray *offerableCharsets;
 
 - (void) parseByte: (uint8_t) byte
 {
-  BOOL wasConfirmed = stateMachine.telnetConfirmed;
-  
   [stateMachine parse: byte forProtocol: self];
   
-  if (!wasConfirmed && stateMachine.telnetConfirmed)
+  if (!optionRequestSent && stateMachine.telnetConfirmed)
+  {
+    optionRequestSent = YES;
     [self negotiateOptions];
+  }
 }
 
 - (NSData *) headerForPreprocessedData
