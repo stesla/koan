@@ -33,7 +33,7 @@
     contains[byte] = YES;
 }
 
-- (void) addBytes: (uint8_t) first, ...;
+- (void) addBytes: (uint8_t) first, ...
 {
   va_list args;
   va_start (args, first);
