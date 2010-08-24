@@ -6,6 +6,8 @@
 
 #import "MUMCCPProtocolHandler.h"
 
+#include <zlib.h>
+
 @interface MUMCCPProtocolHandler (Private)
 
 - (unsigned) bytesPending;

@@ -9,7 +9,7 @@
 #import "J3Protocol.h"
 #import "J3TelnetConnectionState.h"
 
-#include <zlib.h>
+typedef struct z_stream_s z_stream;
 
 @protocol MUMCCPProtocolHandlerDelegate;
 
