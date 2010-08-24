@@ -237,11 +237,14 @@ static NSArray *offerableCharsets;
     case J3TelnetOptionEcho:
       return @"ECHO";
       
-    case J3TelnetOptionStatus:
-      return @"STATUS";
-      
   	case J3TelnetOptionSuppressGoAhead:
   		return @"SUPPRESS-GO-AHEAD";
+      
+    case J3TelnetOptionStatus:
+      return @"STATUS";
+  		
+  	case J3TelnetOptionTimingMark:
+  		return @"TIMING-MARK";
   		
   	case J3TelnetOptionTerminalType:
   		return @"TERMINAL-TYPE";
@@ -264,6 +267,9 @@ static NSArray *offerableCharsets;
     case J3TelnetOptionXDisplayLocation:
       return @"X-DISPLAY-LOCATION";
       
+    case J3TelnetOptionEnvironment:
+      return @"ENVIRON";
+      
     case J3TelnetOptionNewEnvironment:
       return @"NEW-ENVIRON";
       
@@ -272,6 +278,9 @@ static NSArray *offerableCharsets;
       
     case J3TelnetOptionStartTLS:
       return @"START-TLS";
+      
+    case J3TelnetOptionMSDP:
+      return @"MSDP";
       
     case J3TelnetOptionMSSP:
       return @"MSSP";
@@ -287,6 +296,18 @@ static NSArray *offerableCharsets;
       
     case J3TelnetOptionMXP:
       return @"MXP";
+      
+    case J3TelnetOptionZMP:
+      return @"ZMP";
+      
+    case J3TelnetOptionAardwolf:
+      return @"AARDWOLF";
+      
+    case J3TelnetOptionATCP:
+      return @"ATCP";
+      
+    case J3TelnetOptionGMCP:
+      return @"GMCP";
       
   	default:
   		return [NSString stringWithFormat: @"%u (unknown option)", (unsigned) byte];
