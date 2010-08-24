@@ -35,6 +35,11 @@
 		2F51E46011781EF800F6DF65 /* MUProxySettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F51E45911781EF800F6DF65 /* MUProxySettings.xib */; };
 		2F6C71F40BB460CA00709320 /* MUURLHandlerCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F6C71F20BB460CA00709320 /* MUURLHandlerCommand.m */; };
 		2F6C72AA0BB46BD000709320 /* Koan.sdef in Resources */ = {isa = PBXBuildFile; fileRef = 2F6C72A90BB46BD000709320 /* Koan.sdef */; };
+		2F7092A01223966F00E0D178 /* CTBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F70929F1223966F00E0D178 /* CTBadge.m */; };
+		2F7092C112239AF900E0D178 /* CTBadge_1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7092BD12239AF900E0D178 /* CTBadge_1.pdf */; };
+		2F7092C212239AF900E0D178 /* CTBadge_3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7092BE12239AF900E0D178 /* CTBadge_3.pdf */; };
+		2F7092C312239AF900E0D178 /* CTBadge_4.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7092BF12239AF900E0D178 /* CTBadge_4.pdf */; };
+		2F7092C412239AF900E0D178 /* CTBadge_5.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 2F7092C012239AF900E0D178 /* CTBadge_5.pdf */; };
 		2F7B4F3B0BCAB87B00C1586D /* MULogBrowserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */; };
 		2F7B4FB90BCAC1FD00C1586D /* MUDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FB70BCAC1FD00C1586D /* MUDocumentController.m */; };
 		2F7B4FED0BCAC40F00C1586D /* MUTextLogDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F7B4FEB0BCAC40F00C1586D /* MUTextLogDocument.m */; };
@@ -150,10 +155,6 @@
 		E6C9D451077BF6B5007BB2C1 /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D44B077BF6B5007BB2C1 /* edit.png */; };
 		E6C9D452077BF6B5007BB2C1 /* remove-pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D44C077BF6B5007BB2C1 /* remove-pressed.png */; };
 		E6C9D453077BF6B5007BB2C1 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D44D077BF6B5007BB2C1 /* remove.png */; };
-		E6C9D4EB077C0FA3007BB2C1 /* badge-1-2.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D4E7077C0FA3007BB2C1 /* badge-1-2.png */; };
-		E6C9D4EC077C0FA3007BB2C1 /* badge-3.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D4E8077C0FA3007BB2C1 /* badge-3.png */; };
-		E6C9D4ED077C0FA3007BB2C1 /* badge-4.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D4E9077C0FA3007BB2C1 /* badge-4.png */; };
-		E6C9D4EE077C0FA3007BB2C1 /* badge-5.png in Resources */ = {isa = PBXBuildFile; fileRef = E6C9D4EA077C0FA3007BB2C1 /* badge-5.png */; };
 		E6C9D607077C2DC6007BB2C1 /* J3NaiveURLFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C9D605077C2DC6007BB2C1 /* J3NaiveURLFilter.m */; };
 		E6DA667307776D9900C46267 /* MUWorld.m in Sources */ = {isa = PBXBuildFile; fileRef = E6DA667107776D9900C46267 /* MUWorld.m */; };
 		E6E7A62807496940007005AC /* J3HistoryRing.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E7A62707496940007005AC /* J3HistoryRing.m */; };
@@ -248,6 +249,12 @@
 		2F6C71F10BB460CA00709320 /* MUURLHandlerCommand.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MUURLHandlerCommand.h; sourceTree = "<group>"; };
 		2F6C71F20BB460CA00709320 /* MUURLHandlerCommand.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MUURLHandlerCommand.m; sourceTree = "<group>"; };
 		2F6C72A90BB46BD000709320 /* Koan.sdef */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.sdef; path = Koan.sdef; sourceTree = "<group>"; };
+		2F70929E1223966F00E0D178 /* CTBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CTBadge.h; sourceTree = "<group>"; };
+		2F70929F1223966F00E0D178 /* CTBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CTBadge.m; sourceTree = "<group>"; };
+		2F7092BD12239AF900E0D178 /* CTBadge_1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_1.pdf; sourceTree = "<group>"; };
+		2F7092BE12239AF900E0D178 /* CTBadge_3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_3.pdf; sourceTree = "<group>"; };
+		2F7092BF12239AF900E0D178 /* CTBadge_4.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_4.pdf; sourceTree = "<group>"; };
+		2F7092C012239AF900E0D178 /* CTBadge_5.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = CTBadge_5.pdf; sourceTree = "<group>"; };
 		2F7B4F380BCAB87B00C1586D /* MULogBrowserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MULogBrowserWindowController.h; sourceTree = "<group>"; };
 		2F7B4F390BCAB87B00C1586D /* MULogBrowserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MULogBrowserWindowController.m; sourceTree = "<group>"; };
 		2F7B4FB60BCAC1FD00C1586D /* MUDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUDocumentController.h; sourceTree = "<group>"; };
@@ -451,10 +458,6 @@
 		E6C9D44B077BF6B5007BB2C1 /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		E6C9D44C077BF6B5007BB2C1 /* remove-pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "remove-pressed.png"; sourceTree = "<group>"; };
 		E6C9D44D077BF6B5007BB2C1 /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
-		E6C9D4E7077C0FA3007BB2C1 /* badge-1-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "badge-1-2.png"; sourceTree = "<group>"; };
-		E6C9D4E8077C0FA3007BB2C1 /* badge-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "badge-3.png"; sourceTree = "<group>"; };
-		E6C9D4E9077C0FA3007BB2C1 /* badge-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "badge-4.png"; sourceTree = "<group>"; };
-		E6C9D4EA077C0FA3007BB2C1 /* badge-5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "badge-5.png"; sourceTree = "<group>"; };
 		E6C9D604077C2DC6007BB2C1 /* J3NaiveURLFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = J3NaiveURLFilter.h; sourceTree = "<group>"; };
 		E6C9D605077C2DC6007BB2C1 /* J3NaiveURLFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = J3NaiveURLFilter.m; sourceTree = "<group>"; };
 		E6DA667007776D9900C46267 /* MUWorld.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MUWorld.h; sourceTree = "<group>"; };
@@ -585,6 +588,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2F7092BC12239AEE00E0D178 /* Badges */,
 				E6B5E3AA06A6EE0C00F53EBB /* Xibs */,
 				2F6C72A90BB46BD000709320 /* Koan.sdef */,
 				E65CE071075438F9003A796A /* Koan.icns */,
@@ -595,10 +599,6 @@
 				E6B5E61106A73B0A00F53EBB /* version.plist */,
 				E6C9D448077BF6B5007BB2C1 /* add-pressed.png */,
 				E6C9D449077BF6B5007BB2C1 /* add.png */,
-				E6C9D4E7077C0FA3007BB2C1 /* badge-1-2.png */,
-				E6C9D4E8077C0FA3007BB2C1 /* badge-3.png */,
-				E6C9D4E9077C0FA3007BB2C1 /* badge-4.png */,
-				E6C9D4EA077C0FA3007BB2C1 /* badge-5.png */,
 				E6C9D44A077BF6B5007BB2C1 /* edit-pressed.png */,
 				E6C9D44B077BF6B5007BB2C1 /* edit.png */,
 				E6E7BF0D07867F080065EDD6 /* finger-cursor.png */,
@@ -634,6 +634,17 @@
 			path = scripting;
 			sourceTree = "<group>";
 		};
+		2F7092BC12239AEE00E0D178 /* Badges */ = {
+			isa = PBXGroup;
+			children = (
+				2F7092BD12239AF900E0D178 /* CTBadge_1.pdf */,
+				2F7092BE12239AF900E0D178 /* CTBadge_3.pdf */,
+				2F7092BF12239AF900E0D178 /* CTBadge_4.pdf */,
+				2F7092C012239AF900E0D178 /* CTBadge_5.pdf */,
+			);
+			name = Badges;
+			sourceTree = "<group>";
+		};
 		2F7B4FD40BCAC3A800C1586D /* Documents */ = {
 			isa = PBXGroup;
 			children = (
@@ -657,6 +668,8 @@
 		2FE366630BCAC8D40068A6AA /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				2F70929E1223966F00E0D178 /* CTBadge.h */,
+				2F70929F1223966F00E0D178 /* CTBadge.m */,
 				E60DDB83076CE889009870E4 /* FontNameToDisplayNameTransformer.h */,
 				E60DDB84076CE889009870E4 /* FontNameToDisplayNameTransformer.m */,
 				2F51E43211781DD400F6DF65 /* RBSplitSubview.h */,
@@ -1075,10 +1088,6 @@
 				E6B5E61206A73B0A00F53EBB /* version.plist in Resources */,
 				E6C9D44E077BF6B5007BB2C1 /* add-pressed.png in Resources */,
 				E6C9D44F077BF6B5007BB2C1 /* add.png in Resources */,
-				E6C9D4EB077C0FA3007BB2C1 /* badge-1-2.png in Resources */,
-				E6C9D4EC077C0FA3007BB2C1 /* badge-3.png in Resources */,
-				E6C9D4ED077C0FA3007BB2C1 /* badge-4.png in Resources */,
-				E6C9D4EE077C0FA3007BB2C1 /* badge-5.png in Resources */,
 				E6C9D450077BF6B5007BB2C1 /* edit-pressed.png in Resources */,
 				E6C9D451077BF6B5007BB2C1 /* edit.png in Resources */,
 				E6E7BF0E07867F080065EDD6 /* finger-cursor.png in Resources */,
@@ -1089,6 +1098,10 @@
 				E6C9D453077BF6B5007BB2C1 /* remove.png in Resources */,
 				2FDFA14D0D67E85E007F0036 /* sparkle-icon.png in Resources */,
 				2FD06556117D704500B8BFDB /* ukprefspanel-icon.gif in Resources */,
+				2F7092C112239AF900E0D178 /* CTBadge_1.pdf in Resources */,
+				2F7092C212239AF900E0D178 /* CTBadge_3.pdf in Resources */,
+				2F7092C312239AF900E0D178 /* CTBadge_4.pdf in Resources */,
+				2F7092C412239AF900E0D178 /* CTBadge_5.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1265,6 +1278,7 @@
 				2F2718EB12141166006710C7 /* J3TelnetConnectionState.m in Sources */,
 				2F0B277B12196B9C00AE6B62 /* J3TelnetStateMachine.m in Sources */,
 				2F7CDB76121EFC22001B4879 /* MUMCCPProtocolHandler.m in Sources */,
+				2F7092A01223966F00E0D178 /* CTBadge.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

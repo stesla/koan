@@ -6,6 +6,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "CTBadge.h"
 @class MUAcknowledgementsController;
 @class MUPreferencesController;
 @class MUProfilesController;
@@ -23,6 +24,7 @@
   IBOutlet MUPreferencesController *preferencesController;
   
   unsigned unreadCount;
+  CTBadge *dockBadge;
   
   NSMutableArray *connectionWindowControllers;
   MUAcknowledgementsController *acknowledgementsController;
