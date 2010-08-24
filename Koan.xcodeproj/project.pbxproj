@@ -649,6 +649,14 @@
 			name = Badges;
 			sourceTree = "<group>";
 		};
+		2F7094031223BB1B00E0D178 /* MCP */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = MCP;
+			path = mcp;
+			sourceTree = "<group>";
+		};
 		2F7B4FD40BCAC3A800C1586D /* Documents */ = {
 			isa = PBXGroup;
 			children = (
@@ -941,13 +949,13 @@
 			isa = PBXGroup;
 			children = (
 				2F7CDB73121EFB39001B4879 /* MCCP */,
+				2F7094031223BB1B00E0D178 /* MCP */,
 				7E0709EF09339A1E000A36CF /* SOCKS5 */,
 				7E68DC33092AC2FB004554BD /* Telnet */,
 				7E68DCD4092AC77D004554BD /* J3ByteDestination.h */,
 				7E26CB2D0BD80AAF00FC3843 /* J3ByteSet.h */,
 				7E26CB2E0BD80AAF00FC3843 /* J3ByteSet.m */,
 				7EC61429092EFF72004DF3CD /* J3ByteSource.h */,
-				7E87735109AD44DE00A883BC /* J3SocketFactory.h */,
 				7E0EEC130C27140E0043FA91 /* J3Connection.h */,
 				7E0EEC140C27140E0043FA91 /* J3Connection.m */,
 				E6E7A6210749693A007005AC /* J3HistoryRing.h */,
@@ -964,6 +972,7 @@
 				7E68DC35092AC2FB004554BD /* J3ReadBuffer.m */,
 				7E68DC38092AC2FB004554BD /* J3Socket.h */,
 				7E68DC39092AC2FB004554BD /* J3Socket.m */,
+				7E87735109AD44DE00A883BC /* J3SocketFactory.h */,
 				7E87735209AD44DE00A883BC /* J3SocketFactory.m */,
 				7EC301B3092B78F200AFA5C7 /* J3WriteBuffer.h */,
 				7EC301B4092B78F200AFA5C7 /* J3WriteBuffer.m */,
